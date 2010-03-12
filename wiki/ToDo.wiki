@@ -1,7 +1,5 @@
 = ToDo list =
 
-<font color='red'>- Докуменация на английском</font>
-
 <font color='green'>+ в репортах форматирование суммы добавить</font>
 
 <font color='green'>+ GotoIF тип ящика</font>
@@ -25,6 +23,8 @@
 <font color='green'>+ TTS engine парметр в описание голосов</font>
 
 <font color='red'>- Ajax для добавления\удаления списочных элементов\сообщений</font>
+
+<font color='red'>- Докуменация на английском</font>
 
 <font color='green'>+ addon_info поменять на tt</font>
 
