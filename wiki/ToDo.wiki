@@ -1,5 +1,7 @@
 = ToDo list =
 
+<font color='red'>-несколько входящих номеров для одного пользователя</font>
+
 <font color='green'>+ в репортах форматирование суммы добавить</font>
 
 <font color='green'>+ GotoIF тип ящика</font>
