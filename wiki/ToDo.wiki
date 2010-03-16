@@ -12,7 +12,7 @@
 
 <font color='blue'>- ??? GoogleAnalitics</font>
 
-<font color='red'>- Изменение голоса для DialOut'a ( voicechanger )</font>
+<font color='blue'>- ??? Изменение голоса для DialOut'a ( voicechanger )</font>
 
 <font color='green'>+ Fagi.pl положить в пакет fagi</font>
 
