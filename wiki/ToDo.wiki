@@ -10,6 +10,8 @@
 
 <font color='green'>+ Пользовательские переменные</font>
 
+<font color='green'>+ Переход в зывисимости от статуса звонка в Dialout BUSY/NOANSWER/... </font> ( 24.03.10 )
+
 <font color='blue'>- ??? GoogleAnalitics</font>
 
 <font color='blue'>- ??? Изменение голоса для DialOut'a ( voicechanger )</font>
