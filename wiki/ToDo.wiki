@@ -1,7 +1,9 @@
 = ToDo list =
 
 
-<font color='red'>- Лимиты на входящие\callblast</font>
+<font color='red'>- Лимиты на callblast</font>
+
+<font color='green'>+ Лимиты на входящие</font> ( 04.04.10 )
 
 <font color='green'>+ несколько входящих номеров для одного пользователя</font> ( 18.03.10 )
 
