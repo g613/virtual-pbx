@@ -1,6 +1,6 @@
 = ToDo list =
 
-<font color='red'>- - минимальная длина записываемого сообщения</font>
+<font color='red'>- минимальная длина записываемого сообщения</font>
 
 <font color='red'>- ScreenCast с комментариями</font>
 
@@ -204,7 +204,7 @@
 
 <font color='green'>+ визуализация таблиц статистики CDR</font>
 
-<font color='red'>- конфигурацию для openser'a</font>
+<font color='red'>- доделать конфигурацию для openser'a ( текущая нагрузка на ноды )</font>
 
 <font color='green'>+ Сделать запоминание состояния показа информации подробно\кратко</font>
 
