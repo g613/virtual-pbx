@@ -1,5 +1,7 @@
 = ToDo list =
 
+<font color='red'>- - минимальная длина записываемого сообщения</font>
+
 <font color='red'>- ScreenCast с комментариями</font>
 
 <font color='red'>- Лимиты на callblast</font>
