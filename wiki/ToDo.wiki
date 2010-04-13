@@ -1,6 +1,6 @@
 = ToDo list =
 
-<font color='red'>- минимальная длина записываемого сообщения</font>
+<font color='green'>+ минимальная длина записываемого сообщения</font> ( 13.04.10 )
 
 <font color='red'>- ScreenCast с комментариями</font>
 
