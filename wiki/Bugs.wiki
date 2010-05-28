@@ -1,4 +1,4 @@
-11.04.2010<br />
+11.04.2010<br /> ( fixed in build 3511 )
 <font color='red'>
 After run vmware image please run following command:
  perl */etc/cron.hourly/xvb-0-MemCached.pl*
