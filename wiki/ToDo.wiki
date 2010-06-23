@@ -1,4 +1,6 @@
 = ToDo list =
+<font color='red'>- GoogleCalendar для проверки статуса занят\не_занят</font>
+
 <font color='green'>+ Полнофункциональный будильник с записью голосового напоминания и управлением через телефон</font> ( 18.05.2010 )
 
 <font color='blue'>??? добавить новый тип ящика LDAP Directory</font>
