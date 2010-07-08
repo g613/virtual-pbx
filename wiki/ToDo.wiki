@@ -1,5 +1,5 @@
 = ToDo list =
-<font color='red'>- Произношение баланса\заделженности</font>
+<font color='red'>- Произношение баланса\задолженности</font>
 
 <font color='green'>+ GoogleCalendar для проверки статуса занят\не_занят</font> ( 24.06.2010 / build 3524 )
 
