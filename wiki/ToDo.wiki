@@ -1,7 +1,7 @@
 = ToDo list =
-<font color='red'>- Настраиваемое ограничение одновременных звонков для CallBlast</font>
+<font color='green'>+ Настраиваемое ограничение одновременных звонков для CallBlast</font> ( 24.07.2010 / build 3593)
 
-<font color='red'>- Расписание для CallBlast</font>
+<font color='green'>+ Расписание для CallBlast</font> ( 24.07.2010 / build 3593)
 
 <font color='green'>+ Добавить пользовательсякие переменные в список настройки CallBLAST</font> ( 21.07.2010 / build 3573 )
 
