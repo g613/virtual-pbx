@@ -1,4 +1,8 @@
 = ToDo list =
+<font color='green'>+ Excel export для CallBlast / Directory list</font> ( 26.07.2010 / build 3608 )
+
+<font color='green'>+ Pagging  для CallBlast / Directory list</font> ( 26.07.2010 / build 3608 )
+
 <font color='green'>+ Настраиваемое ограничение одновременных звонков для CallBlast</font> ( 24.07.2010 / build 3593)
 
 <font color='green'>+ Расписание для CallBlast</font> ( 24.07.2010 / build 3593)
