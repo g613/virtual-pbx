@@ -1,4 +1,6 @@
 = ToDo list =
+<font color='green'>+ Новый параметр для DISA PhonePattern - шаблон допустимого номера</font> ( 30.07.2010 / build 3629 )
+
 <font color='green'>+ Excel import для CallBlast / Directory list</font> ( 27.07.2010 / build 3617 )
 
 <font color='green'>+ Excel export для CallBlast / Directory list</font> ( 26.07.2010 / build 3608 )
