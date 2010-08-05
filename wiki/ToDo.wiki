@@ -1,4 +1,6 @@
 = ToDo list =
+<font color='green'>+ Трэкинг звонков в GoogleAnalitics</font> ( 05.08.2010 / build 3662 )
+
 <font color='green'>+ Новый параметр для DISA PhonePattern - шаблон допустимого номера</font> ( 30.07.2010 / build 3629 )
 
 <font color='green'>+ Excel import для CallBlast / Directory list</font> ( 27.07.2010 / build 3617 )
@@ -46,8 +48,6 @@
 <font color='green'>+ Пользовательские переменные</font>
 
 <font color='green'>+ Переход в зывисимости от статуса звонка в Dialout BUSY/NOANSWER/... </font> ( 24.03.10 )
-
-<font color='blue'>- ??? GoogleAnalitics</font>
 
 <font color='blue'>- ??? Изменение голоса для DialOut'a ( voicechanger )</font>
 
