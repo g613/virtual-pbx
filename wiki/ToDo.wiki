@@ -33,7 +33,6 @@
 
 <font color='red'>- ScreenCast с комментариями</font>
 
-<font color='red'>- Лимиты на callblast</font>
 
 <font color='green'>+ Лимиты на входящие</font> ( 04.04.10 )
 
