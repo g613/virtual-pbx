@@ -1,7 +1,8 @@
-
 11.08.2010 ( fixed in build 3685 )
 
-<font color="red">Call monitor for FindMe? and Queues is broken in build 3684</font>
+<font color="red">Call monitor for FindMe and Queues is broken in build 3684</font>
+
+
 
 
 11.04.2010 ( fixed in build 3511 )<br />
