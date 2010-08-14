@@ -1,5 +1,5 @@
 = ToDo list =
-<font color='red'>- Добавить поддержку Basic auth для WebRequest & WebVars</font>
+<font color='green'>+ Добавить поддержку Basic auth для WebRequest & WebVars</font> ( 14.08.2010 / build 3701 )
 
 <font color='green'>+ Трэкинг звонков в GoogleAnalytics</font> ( 05.08.2010 / build 3662 )
 
