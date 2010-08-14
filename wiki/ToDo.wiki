@@ -1,4 +1,6 @@
 = ToDo list =
+<font color='red'>- Добавить поддержку Basic auth для WebRequest & WebVars</font>
+
 <font color='green'>+ Трэкинг звонков в GoogleAnalytics</font> ( 05.08.2010 / build 3662 )
 
 <font color='green'>+ Новый параметр для DISA PhonePattern - шаблон допустимого номера</font> ( 30.07.2010 / build 3629 )
