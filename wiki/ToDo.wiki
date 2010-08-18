@@ -1,4 +1,6 @@
 = ToDo list =
+<font color='green'>+ Добавить поддержку MP3 Streaming VB</font> ( 18.08.2010 / build 3763 )
+
 <font color='green'>+ Добавить поддержку Twitter notify</font> ( 15.08.2010 / build 3718 )
 
 <font color='green'>+ Добавить поддержку Basic auth для WebRequest & WebVars</font> ( 14.08.2010 / build 3701 )
