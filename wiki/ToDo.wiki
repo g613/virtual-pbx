@@ -1,4 +1,6 @@
 = ToDo list =
+<font color='green'>+ Добавить SIP заголовок в исходящие звонки, через общий контекст, для аутентификации клиента</font> ( 18.09.2010 / build 3954 )
+
 <font color='green'>+ Добавить radius accounting</font> ( 15.09.2010 / build 3945 )
 
 <font color='green'>+ Добавить опцию включить\выключить API в настройку группы</font> ( 14.09.2010 / build 3934 )
