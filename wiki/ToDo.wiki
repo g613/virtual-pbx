@@ -1,5 +1,5 @@
 = ToDo list =
-<font color='red'>- Отказ от поддержки asterisk 1.4</font>
+<font color='green'>+ Отказ от поддержки asterisk 1.4</font> ( 23.09.2010 / build_4003 )
 
 <font color='green'>+ Изолированная парковка\подбор вызовов (только для 1.6 )</font> ( 23.09.2010 / build 3987 )
 
