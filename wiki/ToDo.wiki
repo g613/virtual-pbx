@@ -1,3 +1,4 @@
+#labels Featured
 = ToDo list =
 <font color='green'>+ Биндинг интернациональных расскладок на имена\фамилии из списка Directory</font> ( 29.09.2010 / build_4076 )
 
