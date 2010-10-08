@@ -1,5 +1,7 @@
 #labels Featured
 = ToDo list =
+<font color='green'>+ Добавить возможность записи логов в Syslog </font> ( 08.10.2010 / build_4126 )
+
 <font color='green'>+ Добавить возможность разделить DB инстансы - запись \ чтение </font> ( 04.10.2010 / build_4107 )
 
 <font color='green'>+ Биндинг интернациональных расскладок на имена\фамилии из списка Directory</font> ( 29.09.2010 / build_4076 )
