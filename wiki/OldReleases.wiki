@@ -1,6 +1,0 @@
-#labels Featured
-==Old VMWare images :==
-
-  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1912473465/VirtualPBX-1_4076.tar.bz2 build 4076]
-
-  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1911997690/VirtualPBX-1_3767-img2.tar.bz2 build 3767]
