@@ -1,4 +1,6 @@
 ==All VMWare images :==
+  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1913083500/VirtualPBX-1_4194.tar.bz2 build 4194]
+
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1912727713/VirtualPBX-1_4178.tar.bz2 build 4178]
 
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1912473465/VirtualPBX-1_4076.tar.bz2 build 4076]
