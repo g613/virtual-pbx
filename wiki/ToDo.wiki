@@ -1,5 +1,7 @@
 #labels Featured
 = ToDo list =
+<font color='red'>- Изменение голоса для DialOut'a ( PITCH_SHIFT )</font>
+
 <font color='red'>- переход на 1.8</font>
 
 <font color='red'>- пользовательские репорты</font>
@@ -88,8 +90,6 @@
 <font color='green'>+ Пользовательские переменные</font>
 
 <font color='green'>+ Переход в зывисимости от статуса звонка в Dialout BUSY/NOANSWER/... </font> ( 24.03.10 )
-
-<font color='blue'>- ??? Изменение голоса для DialOut'a ( voicechanger )</font>
 
 <font color='green'>+ Fagi.pl положить в пакет fagi</font>
 
