@@ -1,8 +1,8 @@
 #labels Featured
 = ToDo list =
-<font color='red'>- Изменение голоса для DialOut'a ( PITCH_SHIFT )</font>
+<font color='green'>+ Изменение голоса для DialOut'a ( PITCH_SHIFT )</font> ( 28.11.2010 / build 4224 )
 
-<font color='red'>- переход на 1.8</font>
+<font color='green'>+ переход на 1.8</font> ( 28.11.2010 / build 4220 )
 
 <font color='red'>- пользовательские репорты</font>
 
