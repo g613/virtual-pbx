@@ -1,2 +1,1 @@
-#labels Deprecated
 Remove GA code from /opt/VirtualPBX/web/js/xvb.js
