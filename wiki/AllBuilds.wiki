@@ -1,7 +1,7 @@
 ==All VMWare images :==
-  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1913309928/VirtualPBX-1_4236.tar.bz2 build 4236]
+  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1913309928/VirtualPBX-1_4236.tar.bz2 build 4236] ( asterisk 1.8.1.1 )
 
-  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1913125338/VirtualPBX-1_4224.tar.bz2 build 4224] ( asterisk 1.8, many bugs... )
+  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1913125338/VirtualPBX-1_4224.tar.bz2 build 4224] ( asterisk 1.8.0, many bugs... )
 
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1913083500/VirtualPBX-1_4194.tar.bz2 build 4194] ( asterisk 1.6.0.xx )
 
