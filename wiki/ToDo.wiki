@@ -1,6 +1,6 @@
 #labels Featured
 = ToDo list =
-<font color='red'>HD codecs ( g722 or slin16 )</font>
+<font color='red'>-HD codecs ( g722 or slin16 )</font>
 
 <font color='green'>+ Изменение голоса для DialOut'a ( PITCH_SHIFT )</font> ( 28.11.2010 / build 4224 )
 
