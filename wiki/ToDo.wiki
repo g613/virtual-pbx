@@ -1,11 +1,11 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>-HD codecs ( g722 )</font>
+<font color='green'>+ Prefered codec for GROUPs ( recordings )</font> ( 25.12.2010 / build 4325 )
 
-<font color='red'>-Floating secs in GA timeout</font>
+<font color='green'>+ Floating secs in GA timeout</font> ( 25.12.2010 / build 4322 )
 
-<font color='red'>-Prefered codec for GROUPs ( recordings )</font>
+<font color='green'>+ HD codecs ( g722 )</font> ( 23.12.2010 / build 4313 )
 
 <font color='green'>+ Изменение голоса для DialOut'a ( PITCH_SHIFT )</font> ( 28.11.2010 / build 4224 )
 
