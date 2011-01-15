@@ -1,0 +1,42 @@
+<html>
+<!-- $Id: new_message.tt,v 1.4 2010-12-23 12:03:52 gosha Exp $ -->
+<head>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="[% CGI_SERVER %]/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+</head>
+
+<body link=blue vlink=purple>
+<p align='left'>
+[% IF USER_CREDS.LOGO_HREF eq '' %]
+	<img border='0' src='[% CGI_SERVER %]/xvb/images/logo-small.png' alt='Virtual PBX' />
+[% ELSE %]
+	<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+[% END %]
+</p>
+
+Hello,
+
+<p>
+Just wanted to let you know you were just left message in mailbox <b>[% USER_CREDS.ACCESS_CODE | html %]</b>@<b>[% USER_CREDS.VOICENUMBER | html %]</b> # <b>[% _USER_VBOX.EXT_NUMBER | html %]</b>
+from <b>[% callerid | html %]</b>, on <b>[% origdate | html %]</b>, so you might want to check it when you get a chance.
+</p>
+
+<p>
+[% IF FILE_LINK ne '' %]
+[% IF is_voice %]
+<a href="[% FILE_LINK %]&media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]">
+[% ELSE %]
+<a href="[% FILE_LINK %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]">
+[% END %]
+You can download the file here.</a>
+[% END %]
+</p>
+
+Thanks!
+
+</body>
+</html>
+

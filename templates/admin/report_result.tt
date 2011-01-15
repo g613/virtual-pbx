@@ -1,0 +1,99 @@
+<html>
+<head>
+	<title>Virtual PBX - reports</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<link rel="stylesheet" type="text/css" href="/xvb/css/tablesorter.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/table-sorter/jquery.tablesorter.min.js"></script> 
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='center'><h2>Report result</h2><h4>[% REPORT_INFO.NAME | html %]</h4></td>
+			<td align='right' width='20%'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='98%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				<a href='?action=report_list'>All reports</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=report_info&report_id=[% REPORT_INFO.ID %]'>Edit report</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=report_del&report_id=[% REPORT_INFO.ID %]'>Delete report</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='98%' class='tablesorter' id='report_table'>
+		<thead>
+		<tr class='list_data'>
+			[% FOREACH h = REPORT_HDR %]
+				<th>[% h | html %]</th>
+			[% END %]
+		</tr>
+		</thead>
+
+		<tbody>
+		[% FOREACH t = REPORT_DATA %]
+		<tr align='center' class='nocolor'>
+			[% FOREACH rd = t %]
+				<td>[% rd | html %]</td>
+			[% END %]
+		</tr>
+		[% END %]
+		</tbody>
+	
+	</table>
+	</p>
+
+	<script language='Javascript'>
+		$(document).ready(function() 
+			{ 
+				$("#report_table").tablesorter(); 
+			} 
+		); 
+	</script>
+
+	<p>
+	<table width='98%' class='bottom_hr'>
+		<tr align='center'>
+			<td>
+				<a class='headers' href='?action=report_del&report_id=[% REPORT_INFO.ID %]'>Delete report</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=report_info&report_id=[% REPORT_INFO.ID %]'>Edit report</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=report_list'>All reports</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

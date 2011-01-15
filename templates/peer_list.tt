@@ -1,0 +1,167 @@
+<html>
+<!-- $Id: peer_list.tt,v 1.14 2010-01-21 23:50:30 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - SIP Peers - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			[% IF USER_CREDS.LOGO_HREF eq '' %]
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			[% ELSE %]
+				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+			[% END %]
+			</td>
+			<td align='center'><h2>SIP Peers</h2></td>
+			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=route_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Routes</a>
+				[% IF USER_CREDS.ALLOW_PHONES %]
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=phone_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Phones</a>
+				[% END %]
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='list_data' id='d-tbl'>
+		<tr class='list_data'>
+			<th>Proxy (*)</th>
+			<th>Port (*)</th>
+			<th>Domain</th>
+			<th>User</th>
+			<th>Password</th>
+			<th>Peer Name (*)</th>
+			<th>DTMF mode</th>
+			<th>Proto</th>
+			<th>Actions</th>
+		</tr>
+		
+		[% FOREACH p = PEERS %]
+		<tr align='center' class='backlight' id='d-tr-[% p.DATA_ID %]'>
+			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+			<td><input class='in_t0' size="19" name='host' type'text' value='[% p.host | html %]'></td>
+			<td><input class='in_t0' size="5" name='port' type='text' value="[% p.port | html %]"></td>
+			<td><input class='in_t0' size="19" name='domain' type='text' value="[% p.fromdomain | html %]"></td>
+			<td><input class='in_t0' size="10" name='username' type='text' value="[% p.username | html %]"></td>
+			<td><input class='in_t0' size="10" name='secret' type='text' value="[% p.secret | html %]"></td>
+			<td><input class='in_t0' size="18" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"></td>
+			<td>
+				<select name="dtmfmode" class='in_t0'>
+					<option value="[% p.dtmfmode %]" selected>[% p.dtmfmode %]</option>
+					<option value="rfc2833">rfc2833</option>
+					<option value="info">info</option>
+					<option value="shortinfo">shortinfo</option>
+					<option value="inband">inband</option>
+					<option value="auto">auto</option>
+				</select>
+			</td>
+			<td>
+				<select name="proto" class='in_t0' onchange='CLStop(this)'>
+				[% IF p.transport eq 'tcp' %]
+					<option value="tcp" selected>TCP</option>
+					<option value="udp">UDP</option>
+				[% ELSE %]
+					<option value="udp" selected>UDP</option>
+					<option value="tcp">TCP</option>
+				[% END %]
+				</select>
+			</td>
+			<td>
+				<input type='hidden' value='[% p.DATA_ID %]' name='data_id'>
+				<input type='hidden' value='peer_update' name='action'>
+				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<a title='delete peer' href='?action=peer_del&data_id=[% p.DATA_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% p.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
+				<script language='JavaScript'>
+					writeUpdateLinks( 'save changes' );
+				</script>
+				<noscript><input value='change' type='submit'></noscript>
+				</span>
+			</td>
+			</form>
+		</tr>
+		[% END %]
+		<tr class='nocolor' align='center'>
+			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
+			<td><input size="19" name='host' type'text'></td>
+			<td><input size="5" name='port' type='text'></td>
+			<td><input size="19" name='domain' type='text'></td>
+			<td><input size="10" name='username' type='text'></td>
+			<td><input size="10" name='secret' type='text'></td>
+			<td><input size="18" name='DESCRIPTION' type='text'></td>
+			<td>
+				<select name="dtmfmode">
+					<option value="rfc2833" selected>rfc2833</option>
+					<option value="info">info</option>
+					<option value="shortinfo">shortinfo</option>
+					<option value="inband">inband</option>
+					<option value="auto">auto</option>
+				</select>
+			</td>
+			<td>
+				<select name="proto">
+					<option value="udp" selected>UDP</option>
+					<option value="tcp">TCP</option>
+				</select>
+			</td>
+			<td>
+				<input type='hidden' value='peer_add' name='action'>
+				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<input value='&nbsp;&nbsp;create&nbsp;&nbsp;' type='submit'>
+			</td>
+			</form>
+		</tr>
+		<tr><td colspan='9'>&nbsp;</td></tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			[% IF USER_CREDS.ALLOW_PHONES %]
+			<td>
+				<a class='headers'  href='?action=phone_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Phones</a>
+			</td>
+			[% END %]
+			<td>
+				<a class='headers' href='?action=route_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Routes</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

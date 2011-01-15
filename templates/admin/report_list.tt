@@ -1,0 +1,155 @@
+<html>
+<head>
+	<title>Virtual PBX - reports</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='center'><h2>Reports</h2></td>
+			<td align='right' width='20%'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='98%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				<a href='?action=node_list'>Nodes</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=group_list'>Groups</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=user_list'>Users</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=did_list'>DIDs</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				Reports
+			[% IF USE_BILLING %]
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=tariff_list'>Tariffs</a>
+			[% END %]
+			</td>
+			<form method='post'>
+			<td align='right' width='60%'>
+				N
+				<input type='hidden' name='action' value='report_run'>
+				<input type='text' name='report_id' size='5'>
+				<input value='Run' type='submit'>
+				<!--
+					<input value='Excel' name='need_excel' type='submit'>
+				-->
+			</td>
+			</form>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='98%' class='list_data'>
+		<tr class='list_data'>
+			<th>&nbsp;N&nbsp;</th>
+			<th>Name</th>
+			<th>Create date</th>
+			<th>Owner</th>
+			<th>Cache TTL</th>
+			<th>Actions</th>
+		</tr>
+			
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='3'>
+				<a title='previous page' href='?action=reports_list&name=[% SEARCH_NAME | html %]&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH t = REPORTS %]
+		<tr align='center' class='backlight'>
+			<td>[% t.ID %]</td>
+			<td>[% t.NAME | html %]</td>
+			<td>[% t.CREATE_DATE %]</td>
+			<td>
+				[% IF t.TYPE eq '1' %]
+					admin
+				[% ELSE %]
+					user
+				[% END %]
+			</td>
+			<td>[% t.TTL | duration_str | html %]</td>
+			<td>
+				<table>
+					<tr>
+						<td>
+							<a title='run report' href='?action=report_run&report_id=[% t.ID %]'"><img border='0' src='/xvb/images/run.png' alt='run' /></a>
+						</td>
+						<td>
+							<a title='get excel table' href='?action=report_run&report_id=[% t.ID %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
+						</td>
+						<td>
+							<a title='edit report' href='?action=report_info&report_id=[% t.ID %]'"><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
+						</td>
+						<td>
+							<a title='delete report' href='?action=report_del&report_id=[% t.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		[% END %]
+	
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='3'>
+				<a title='next page' href='?action=report_list&name=[% SEARCH_NAME | html %]&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+			</td>
+		</tr>
+		[% END %]
+	</table>
+	</p>
+
+	<p>
+	<table width='98%' class='bottom_hr'>
+		<tr>
+			<form method="post">
+			<td align='left'>
+				&nbsp;&nbsp;
+				<input size='20' name='R_NAME' type='text'>
+				<input type='hidden' value='report_add' name='action'>
+				<input value='&nbsp;&nbsp;ADD&nbsp;&nbsp;' type='submit'>
+			</td>
+			</form>
+			<form method="post">
+			<td align='right'>
+				Name: 
+				<input size='20' name='name' type='text' value='[% SEARCH_NAME %]'>
+				<input type='hidden' value='report_list' name='action'>
+				<input value='Search' type='submit'>
+				&nbsp;&nbsp;
+			</td>
+			</form>
+	</table>
+	</p>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

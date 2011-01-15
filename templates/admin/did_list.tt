@@ -1,0 +1,135 @@
+<html>
+<head>
+	<title>Virtual PBX - DIDs</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='center'><h2>DIDs</h2></td>
+			<td align='right' width='20%'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				<a href='?action=node_list'>Nodes</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=group_list'>Groups</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=user_list'>Users</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				DIDs
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=report_list'>Reports</a>
+			[% IF USE_BILLING %]
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=tariff_list'>Tariffs</a>
+			[% END %]
+			</td>
+		</tr>
+	</table>
+	</p>
+		
+	<p>
+	<table width='95%' class='list_data'>
+		<tr class='list_data'>
+			<th>DID</th>
+			<th colspan='3'>Assigned to</th>
+			<th>Actions</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='3'>
+				<a title='previous page' href='?action=did_list&from=[% MSG_PREV %]&f_vn=[% F_VN | html %]&f_ac=[% F_AC | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+		
+		[% FOREACH did = DIDS %]
+		<tr align='center' class='backlight'>
+			<td>[% did.DID | html %]</td>
+			<td align='right'>
+				[% did.VOICENUMBER | html %]
+			</td>
+			<td>
+				<b>#</b>
+			</td>
+			<td align='left'>
+				<a href='?action=user_list&f_ac=[% did.ACCESS_CODE | html %]'>[% did.ACCESS_CODE | html %]</a>
+			</td>
+			<td>
+				<a href='?action=did_del&did_id=[% did.ID %]&user_id=[% did.SUBSCR_ID | html %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+			</td>
+		</tr>
+		[% END %]
+		<form>
+		<tr align='center'>
+			<td><input size='15' type='text' name='did'></td>
+			<td align='right'>
+				<input size='15' type='text' name='pn'>
+			</td>
+			<td>
+				#
+			</td>
+			<td align='left'>
+				<input size='8' type='text' name='ac'></td>
+			<td>
+				<input value='&nbsp;&nbsp;&nbsp;&nbsp;ADD&nbsp;&nbsp;&nbsp;&nbsp;' type='submit'>
+				<input type='hidden' value='did_add' name='action'>
+			</td>
+		</tr>
+		</form>
+
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='3'>
+				<a title='next page' href='?action=did_list&from=[% MSG_NEXT %]&f_vn=[% F_VN | html %]&f_ac=[% F_AC | html %]'><img border='0' src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+			</td>
+		</tr>
+		[% END %]
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<form method='post'>
+		<tr align='right'>
+			<td>
+			DID:
+			<input size='11' name='f_vn' type='text' value='[% F_VN | html %]'>
+			Access code:
+			<input size='10' name='f_ac' type='text' value='[% F_AC | html %]'>
+			<input type='hidden' value='did_list' name='action'>
+			<input value='search' type='submit'>
+			</td>
+		</tr>
+		</form>
+	</table>
+	</p>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

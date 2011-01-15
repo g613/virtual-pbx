@@ -1,0 +1,251 @@
+<html>
+<!-- $Id: messages_list.tt,v 1.5 2010-12-23 12:03:52 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
+
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
+
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
+</head>
+
+<body>
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			[% IF USER_CREDS.LOGO_HREF eq '' %]
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			[% ELSE %]
+				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+			[% END %]
+			</td>
+			<td align='center'><h2>Messages</h2></td>
+			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=msg_delete&clear_ext=1&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all messages?')">Clear VoiceBOX</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=get_itunes&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Itunes</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=get_rss&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Rss</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=vb_view&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX info</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='list_data'>
+		[% IF MSG_LIST scalar %]
+		<tr class='list_data'>
+			<th>#</th>
+			<th>Type</th>
+			<th>Date</th>
+			<th>From</th>
+			<th>Duration</th>
+			<th>Size</th>
+			<th>Actions</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='7'>
+				<a title='previous page' href='?action=msg_list&id=[% ROOT_EXT_ID %]&from=[% MSG_PREV %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+		[% FOREACH msg = MSG_LIST %]
+		[% IF msg.MSG_NUM div2 %]
+		<tr class='nocolor'>
+		[% ELSE %]
+		<tr class='backlight'>
+		[% END %]
+			<td>&nbsp;[% msg.MSG_NUM %]</td>
+			<td align='center'>
+			[% FOREACH ft = FTYPE %]
+				[% IF ft.ID eq msg.FILE_TYPE %]
+					[% ft.DESCRIPTION | html %]
+				[% END %]
+			[% END %]
+			</td>
+			<td align='center'>[% msg.MSG_DATE | html %]</td>
+			<td align='center'>[% msg.CALLERID | html %]</td>
+			[% IF msg.IS_VOICE %]
+			<td align='center'>[% msg.DURATION | duration_str | html %]</td>
+			[% ELSIF msg.FILE_NAME contain '.avi' %]
+			<td align='center'>[% msg.DURATION | duration_str | html %]</td>
+			[% ELSE %]
+			<td align='center'>--------</td>
+			[% END %]
+			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
+			<td>
+				<table>
+					<tr>
+					<td>
+				[% IF msg.IS_VOICE %]
+						<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+				[% ELSIF msg.FILE_NAME contain '.tif' %]
+						<a title='download tiff file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='tif' /></a>
+				[% ELSIF msg.FILE_NAME contain '.dat' %]
+						<a title='download message' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].txt?media=txt&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='txt' /></a>
+				[% ELSIF msg.FILE_NAME contain '.avi' %]
+						<a title='download avi file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='avi' /></a>
+				[% ELSE %]
+						<a title='download message' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+				[% END %]
+					</td>
+
+					<td>
+						<a title='delete message' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+					</td>
+
+				[% IF msg.IS_VOICE %]
+					<td>
+						<a title='play' 
+							onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+							href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+					</td>
+				[% END %]
+
+				[% IF msg.FILE_TYPE eq '30' %]
+					<td>
+						<a title='Mark message as OLD' href='?action=msg_status&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=40&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
+					</td>
+				[% ELSIF msg.FILE_TYPE eq '40' %]
+					<td>
+						<a title='Mark message as NEW' href='?action=msg_status&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=30&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
+					</td>
+				[% END %] 
+					</tr>
+				</table>
+			</td>
+		</tr>
+		[% END %]
+
+		[% ELSE %]
+		<tr class='list_data'>
+			<td colspan='7'>&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan='7' align='center'><h4>No messages</h4></td>
+		</tr>
+		[% END %]
+
+		<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
+		<tr class='noclolor'>
+			<td colspan='6' align='right'>
+				<input type='file' name='msg'>
+				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+				<input type='hidden' name='action' value='msg_upload'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<input type='hidden' name='go' value='vb'>
+				<select name="type">
+					<option value="1">Name</option>
+					<option value="2">Greeting</option>
+					[% IF VBOX_PREF.TYPE eq '4' %]
+					<option value="3">Announcement</option>
+					<option value="4">RetryDial</option>
+					<option value="5">Music On Hold</option>
+					[% ELSIF VBOX_PREF.TYPE eq '4096' %]
+					<option value="3">Announcement</option>
+					<option value="4">RetryDial</option>
+					<option value="5">Music On Hold</option>
+					[% ELSIF VBOX_PREF.TYPE eq '32768' %]
+					<option value="6">Fax on Demand</option>
+					[% END %]
+				</select>
+			</td>
+			<td>
+				<input type='submit' value='upload'>
+			</td>
+		</tr>
+		</form>
+
+		<tr>
+		[% IF MSG_NEXT ne '' %]
+			<td align='right' colspan='7'>
+				<a title='next page' href='?action=msg_list&id=[% ROOT_EXT_ID %]&from=[% MSG_NEXT %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+			</td>
+		[% ELSE %]
+			<td align='left' colspan='7'>
+				&nbsp;
+			</td>
+		[% END %]
+		</tr>
+	
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='right'>
+			<form method="get" action="[% CGI_URL %]">
+			<td width='100%'>
+				From date:
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<button type="button">...</button>
+				&nbsp;
+				To date:
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<button type="button">...</button>
+				<input name='action' value='msg_list' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
+				&nbsp;
+				Caller ID:
+				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
+				<input value='Search' type='submit'>
+				&nbsp;&nbsp;
+			</td>
+			</form>
+		</tr>
+	</table>
+	</p>
+
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</center>
+</body>
+</html>
+	

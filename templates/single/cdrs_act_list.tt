@@ -1,0 +1,118 @@
+<html>
+<!-- $Id: cdrs_act_list.tt,v 1.2 2009-10-27 21:20:56 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Call Detail - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+</head>
+
+<body>
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			[% IF USER_CREDS.LOGO_HREF eq '' %]
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			[% ELSE %]
+				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+			[% END %]
+			</td>
+			<td align='center'><h2>Call Detail</h2></td>
+			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
+		</tr>
+	</table>
+	</p>
+
+	<p>	
+	<table width='95%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=vb_view&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX info</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=msg_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Messages</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='list_data'>
+		<tr class='list_data'>
+			<th>Start Date</th>
+			<th>Caller ID</th>
+			<th>Duration</th>
+			<th>Type</th>
+			<th>Actions</th>
+			<th width='25%'>Data</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='6'>
+				<a title='previous page' href='?action=act_list&id=[% ROOT_EXT_ID %]&from=[% MSG_PREV %]&call_id=[% CDR_CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+		
+		[% FOREACH msg = CDR_LIST %]
+		[% IF msg.CDR_NUM div2 %]
+		<tr class='nocolor' align='center'>
+		[% ELSE %]
+		<tr class='backlight' align='center'>
+		[% END %]
+			<td align='center'>[% msg.CDR_DATE | html %]</td>
+			<td align='center'>[% msg.CALLER_ID | html %]</td>
+			<td>[% msg.CDR_DURATION | duration_str %]</td>
+			<td>[% msg.TYPE | html %]</td>
+			<td>
+				[% IF msg.EXT_ID %]
+				<a href='?action=cid_add&id=[% msg.EXT_ID %]&cid_list_type=1&cid_type=1&cid=[% msg.CALLER_ID | html %]&description=for call at [% msg.CDR_DATE | html %]&uniq=[% USER_CREDS.UNIQ %]' title='add CID to black list'><img border='0' src='/xvb/images/vb_edit_black.png' alt='add' /></a>
+				[% END %]
+			</td>
+			<td align='left'>[% msg.DATA | html %]</td>
+		</tr>
+		[% END %]
+		<tr>
+		[% IF MSG_NEXT ne '' %]
+			<td align='right' colspan='6'>
+				<a title='next page' href='?action=act_list&id=[% ROOT_EXT_ID %]&from=[% MSG_NEXT %]&call_id=[% CDR_CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+			</td>
+		[% ELSE %]
+			<td colspan='6'>&nbsp;</td>
+		[% END %]
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			<td>
+				<a class='headers' href='?action=j_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=msg_delete&clear_ext=1&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all messages?')">Clear extension</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=user_info&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+	</center>
+</body>
+</html>
+

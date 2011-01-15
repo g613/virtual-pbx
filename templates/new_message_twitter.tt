@@ -1,0 +1,1 @@
+[% IF FILE_LINK ne '' %]New message in mailbox [% USER_CREDS.ACCESS_CODE | html %]@[% USER_CREDS.VOICENUMBER | html %] # [% _USER_VBOX.EXT_NUMBER | html %] from [% callerid | html %], on [% origdate | html %][% END %]

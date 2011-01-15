@@ -1,0 +1,110 @@
+<html>
+<!-- $Id: statements.tt,v 1.13 2010-10-22 10:33:58 gosha Exp $ -->
+<head>
+	<style>
+	body { 
+		background: white;
+		color:#454545;
+		font-family:Tahoma,Arial,San-Serif;
+	}
+	tr.list_data {
+		background-color: #9eb9ff;
+		margin: 0px;
+		padding: 4px;
+	}
+	.backlight {
+		background-color: #efefef;
+	}
+	</style>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="[% CGI_SERVER %]/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+</head>
+
+<body onLoad="XVBInit()">
+<p align='left'>
+[% IF USER_CREDS.LOGO_HREF eq '' %]
+	<img border='0' src='[% CGI_SERVER %]/xvb/images/logo-small.png' alt='Virtual PBX' />
+[% ELSE %]
+	<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+[% END %]
+</p>
+
+<p>
+<table width='80%' class='statement'>
+	<tr>
+		<td colspan='5'><h4>Информация об отчете:</h4></td>
+	</tr>
+	<tr>
+		<td colspan='5'>
+			<ul>
+				<li>Телефонный номер: [% USER_CREDS.VOICENUMBER | html %]</li>
+				<li>Код доступа: [% USER_CREDS.ACCESS_CODE | html %]</li>
+				<li>Отчетный период: [% REPORT_DATE | html %]</li>
+			</ul>
+		</td>
+	</tr>
+	
+	[% IF SUMMARY scalar %]
+	<tr>
+		<td colspan='5'><h4>Virtual PBX общий отчет:</h4></td>
+	</tr>
+	<tr class='list_data'>
+		<th>Внутренний номер</th>
+		<th>Активность</th>
+		<th>Количество</th>
+		<th>Продолжительность</th>
+		<th>Цена</th>
+	</tr>
+	[% FOREACH msg = SUMMARY %]
+		[% IF msg.TYPE eq 'CALL' %]
+		<tr class='nocolor' align='center'>
+			<td>[% msg.CALL_TYPE | html %]</td>
+		[% ELSE %]
+		<tr class='backlight' align='center'>
+			<td>[% msg.EXT_NUMBER | html %]</td>
+		[% END %]
+			<td>[% msg.TYPE | html %]</td>
+			<td>[% msg.CNT | html %]</td>
+			<td>[% msg.DURATION | duration_str %]</td>
+			[% IF msg.TYPE eq 'CALL' %]
+			<td>[% msg.USER_COST %] ([% msg.RU_DESCRIPTION %])</td>
+			[% ELSE %]
+			<td>&nbsp;</td>
+			[% END %]
+		</tr>
+		[% END %]
+		[% END %]
+	[% END %]
+	
+	[% IF CALLS scalar %]
+		<tr>
+			<td colspan='5'><h4>Virtual PBX отчет по звонкам:</h4></td>
+		</tr>
+		<tr class='list_data'>
+			<th>Дата и время звонка</th>
+			<th colspan='2'>Номер звонящего</th>
+			<th>Продолжительность</th>
+			<th>Цена</th>
+		</tr>
+		[% FOREACH msg = CALLS %]
+			[% IF msg.CDR_NUM div2 %]
+			<tr class='nocolor' align='center'>
+			[% ELSE %]
+			<tr class='backlight' align='center'>
+			[% END %]
+				<td>[% msg.CDR_DATE | html %]</td>
+				<td colspan='2'>[% msg.CALLER_ID | html %]</td>
+				<td>[% msg.CDR_DURATION | duration_str %]</td>
+				<td>[% msg.COST %] ([% msg.RU_DESCRIPTION %])</td>
+			</tr>
+			[% END %]
+			[% END %]
+		[% END %]
+	</table>
+	</p>
+	<br><br>-- <br>   Спасибо !
+</html>
+	

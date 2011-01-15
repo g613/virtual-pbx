@@ -1,0 +1,239 @@
+body { 
+	background: white;
+	color: #3D3D3D;
+	font-family:arial;
+}
+
+form {
+	margin: 0px;
+	padding:0;
+	border:0
+}
+
+table.top_hr {
+	background-color: #ffffff;
+	margin: 0px;
+	padding: 4px;
+	border: 0px;
+	color: #ababab;
+	border-collapse:collapse;
+}
+table.bottom_hr {
+	margin: 0px;
+	padding: 4px;
+	border:0px;
+	border-collapse:collapse;
+	background-color: #aec9ff;
+}
+table.addon_data {
+	border-collapse:collapse;
+}
+tr.addon_data {
+	background-color: #f7f7f7
+}
+table.list_data {
+	border-collapse:collapse;
+}
+tr.list_data {
+	color: #000000;
+	background-color: #aec9ff;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+tr.backlight {
+	background-color: #f7f7f7
+}
+tr.nocolor {
+	background-color: #ffffff;
+}
+tr.backlight:hover {
+	background-color: #ccddee;
+}
+tr.nocolor:hover {
+	background-color: #ccddee;
+}
+
+th {
+	border: solid 1px #ababab;
+	font-weight: normal;
+	padding: 4px;
+}
+a:hover {
+	color:red;
+}
+a {
+	color:blue;
+	text-decoration:none;
+}
+
+a.headers:hover {
+	color:blue;
+}
+
+a.headers {
+	color:#ffffff;
+	text-decoration:none;
+}
+
+a.vb_name {
+        font-weight: normal;
+}
+
+/* Tips */
+a.info {
+	position:relative;
+	color:black;
+	font-weight: normal;
+	border-bottom:1px dashed #ccc;
+}
+a.info:hover {
+	z-index:3;
+}
+a.info span{
+	display: none;
+}
+a.info:hover span{
+	display:block;
+	position:absolute;
+	z-index:1;
+	top:2em;
+	left:15em;
+	width:30em;
+	border:1px solid #9eb9ff;
+	background-color:#efefef;
+	color:#000;
+	text-align:justify;
+	font-size:14px;
+	font-weight:normal;
+	padding:3px;
+	line-height:15px;
+}
+/* End Tips */
+
+/* Helps */
+a.help {
+	position:relative;
+	color:black;
+	font-weight: normal;
+}
+a.help:hover {
+	z-index:3;
+}
+a.help span{
+	display: none;
+}
+a.help:hover span{
+	display:block;
+	position:absolute;
+	z-index:1;
+	top:2em;
+	left:-33em;
+	width:30em;
+	border:1px solid #9eb9ff;
+	background-color:#efefef;
+	color:#000;
+	text-align:justify;
+	font-size:14px;
+	font-weight:normal;
+	padding:3px;
+	line-height:15px;
+}
+/* End Helps */
+
+.addon_info {
+	display: none;
+}
+
+.addon_info_open {}
+
+.ext_preffix {
+	color: #bbccdd;
+}
+
+.error {
+	color:red;
+	font-weight: bold;
+}
+
+.success {
+	color:green;
+}
+
+a.success {
+	color:green;
+	border-bottom:1px dashed #ccc;
+}
+
+/* form changer */
+.in_t0 {
+	border:none;
+	background:none;
+}
+.in_t0:hover {
+	border:none;
+	background:none;
+	cursor: pointer;
+}
+.in_t1 {
+	border:normal;
+}
+.in_t2 {
+	border:none;
+	background:none;
+	color:red;
+}
+.in_t2:hover {
+	border:none;
+	background:none;
+	color:red;
+	cursor: pointer;
+}
+.in_t {
+	display: none;
+}
+.in_t_open {}
+
+/* Shaddow */
+#shadow {
+	filter:alpha(opacity=20); 
+	opacity: 0.2; 
+	width: 100%; 
+	height: 100%; 
+	top: 0px; 
+	right: 0px;
+	left: 0px; 
+	bottom: 0px; 
+	background: gray; 
+	position: fixed; 
+	visibility: hidden;
+	z-index: 10;
+}
+
+/* Loading */
+#loading {
+	position: fixed; 
+	z-index: 99; 
+	position: fixed; 
+	top: 35%; 
+	left: 47%;
+}
+
+/* Player */
+#center {
+	width: 500px; 
+	height: 100px; 
+	z-index: 99;
+	position: fixed; 
+	top: 50%; 
+	left: 50%; 
+	margin-left: -250px; 
+	margin-top: -50px; 
+	background-color: #fdfdfd; 
+	display:none; 
+}
+html * #center {
+	position: fixed; 
+	z-index: 99; 
+	left: expression(window.clientWidth/2+document.body.scrollLeft + 'px'); 
+	top: expression(window.clientHeight/2+document.body.scrollTop + 'px');
+}

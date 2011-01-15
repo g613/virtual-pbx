@@ -1,0 +1,117 @@
+<html>
+<!-- $Id: statements.tt,v 1.5 2010-10-22 10:33:57 gosha Exp $ -->
+<head>
+	<style>
+	body { 
+		background: white;
+		color:#454545;
+		font-family:Tahoma,Arial,San-Serif;
+	}
+	tr.list_data {
+		background-color: #9eb9ff;
+		margin: 0px;
+		padding: 4px;
+	}
+	.backlight {
+		background-color: #efefef;
+	}
+	</style>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="[% CGI_SERVER %]/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+</head>
+
+<body>
+	<p align='left'>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			[% IF USER_CREDS.LOGO_HREF eq '' %]
+				<img border='0' src='[% CGI_SERVER %]/xvb/images/logo-small.png' alt='Virtual PBX' />
+			[% ELSE %]
+				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+			[% END %]
+			</td>
+			<td>
+				<h4>Thank you for using our VirtualPBX service. Below you will find the details of your calls. Have a nice day!</h4>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='80%' class='statement'>
+		<tr>
+			<td colspan='5'><h4>Statement info:</h4></td>
+		</tr>
+		<tr>
+			<td colspan='5'>
+				<ul>
+					<li>Dial-in number: [% USER_CREDS.VOICENUMBER | html %]</li>
+					<li>Access code: [% USER_CREDS.ACCESS_CODE | html %]</li>
+					<li>Period: [% REPORT_DATE | html %]</li>
+				</ul>
+			</td>
+		</tr>
+		
+		[% IF SUMMARY scalar %]
+			<tr>
+				<td colspan='5'><h4>Virtual PBX summary report:</h4></td>
+			</tr>
+			<tr class='list_data'>
+				<th>Event</th>
+				<th>Count</th>
+				<th>Duration</th>
+				<th>Cost</th>
+			</tr>
+			[% FOREACH msg = SUMMARY %]
+				[% IF msg.TYPE eq 'CALL' %]
+				<tr class='nocolor' align='center'>
+					<td>[% msg.TYPE | html %] ([% msg.CALL_TYPE %])</td>
+				[% ELSE %]
+				<tr class='backlight' align='center'>
+					<td>[% msg.TYPE | html %]</td>
+				[% END %]
+					<td>[% msg.CNT | html %]</td>
+					<td>[% msg.DURATION | duration_str %]</td>
+					[% IF msg.TYPE eq 'CALL' %]
+						<td>[% msg.USER_COST %] ( [% msg.DESCRIPTION %])</td>
+					[% ELSE %]
+						<td>&nbsp;</td>
+					[% END %]
+				</tr>
+			[% END %]
+			[% END %]
+		[% END %]
+	
+		[% IF CALLS scalar %]
+			<tr>
+				<td colspan='5'><h4>Virtual PBX call report:</h4></td>
+			</tr>
+			<tr class='list_data'>
+				<th>Start Date</th>
+				<th colspan='2'>Caller ID</th>
+				<th>Duration</th>
+				<th>Cost</th>
+			</tr>
+			[% FOREACH msg = CALLS %]
+				[% IF msg.CDR_NUM div2 %]
+				<tr class='nocolor' align='center'>
+				[% ELSE %]
+				<tr class='backlight' align='center'>
+				[% END %]
+					<td>[% msg.CDR_DATE | html %]</td>
+					<td colspan='2'>[% msg.CALLER_ID | html %]</td>
+					<td>[% msg.CDR_DURATION | duration_str %]</td>
+					<td>[% msg.COST %] ([% msg.DESCRIPTION %])</td>
+				</tr>
+			[% END %]
+			[% END %]
+		[% END %]
+	</table>
+	</p>
+	<br><br>-- <br>   Thanks!
+</html>
+	

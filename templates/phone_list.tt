@@ -1,0 +1,126 @@
+<html>
+<!-- $Id: phone_list.tt,v 1.10 2010-08-26 20:20:31 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			[% IF USER_CREDS.LOGO_HREF eq '' %]
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			[% ELSE %]
+				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+			[% END %]
+			</td>
+			<td align='center'><h2>SIP Phones</h2></td>
+			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+				[% IF USER_CREDS.CUSTOM_ROUTE %]
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=peer_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>SIP Peers</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=route_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Routes</a>
+				[% END %]
+			</td>
+			<td align='right'>
+				<a title='get excel table' href='?action=phone_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;&nbsp;
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='list_data' id='d-tbl'>
+		<tr class='list_data'>
+			<th>AuthName</th>
+			<th>Phone</th>
+			<th>Name</th>
+			<th>Password</th>
+			<th>Actions</th>
+		</tr>
+		
+		[% FOREACH p = PHONES %]
+		<tr align='center' class='backlight' id='d-tr-[% p.DATA_ID %]'>
+			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+			<td align='right'>[% p.name %]</td>
+			<td><input class='in_t0' size="10" name='callerid' type='text' value="[% p.callerid | html %]"></td>
+			<td><input class='in_t0' size="18" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"></td>
+			<td><input class='in_t0' size="10" name='secret' type='text' value="[% p.secret | html %]"></td>
+			<td>
+				<input type='hidden' value='[% p.DATA_ID %]' name='data_id'>
+				<input type='hidden' value='phone_update' name='action'>
+				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<a title='delete phone' href='?action=phone_del&data_id=[% p.DATA_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% p.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
+				<script language='JavaScript'>
+					writeUpdateLinks( 'save changes' );
+				</script>
+				<noscript><input value='change' type='submit'></noscript>
+				</span>
+			</td>
+			</form>
+		</tr>
+		[% END %]
+		<tr class='nocolor' align='center'>
+			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
+			<td>&nbsp;</td>
+			<td><input size="10" name='callerid' type='text'></td>
+			<td><input size="18" name='DESCRIPTION' type='text'></td>
+			<td><input size="10" name='secret' type='text'></td>
+			<td>
+				<input type='hidden' value='phone_add' name='action'>
+				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<input value='&nbsp;&nbsp;create&nbsp;&nbsp;' type='submit'>
+			</td>
+			</form>
+		</tr>
+		<tr><td colspan='4'>&nbsp;</td></tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			[% IF USER_CREDS.CUSTOM_ROUTE %]
+			<td>
+				<a class='headers'  href='?action=route_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Routes</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=peer_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>SIP Peers</a>
+			</td>
+			[% END %]
+			<td>
+				<a class='headers' href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+			</td>
+			<td width='35%'>
+				<a class='headers' href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
