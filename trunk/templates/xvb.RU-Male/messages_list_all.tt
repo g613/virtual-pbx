@@ -1,0 +1,214 @@
+<html>
+<!-- $Id -->
+<head>
+	<title>Virtual PBX - Все сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
+
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
+
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-ru.min.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			[% IF USER_CREDS.LOGO_HREF eq '' %]
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			[% ELSE %]
+				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+			[% END %]
+			</td>
+			<td align='center'><h2>Все сообщения</h2></td>
+			<td align='right' width='20%'><a href=?action=logout>выход</a></td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='top_hr'>
+		<tr align='left'>
+			<td>
+		[% IF USER_CREDS.ROOT eq '0' %]
+				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+		[% END %]
+				<a href='?action=get_rss_all&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Rss</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=get_itunes_all&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Подкасты</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=vb_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='list_data' id='d-tbl'>
+		[% IF MSG_LIST scalar %]
+		<tr class='list_data'>
+			<th>#</th>
+			<th>Номер</th>
+			<th>Тип</th>
+			<th>Дата</th>
+			<th>От кого</th>
+			<th>Длина</th>
+			<th>Размер</th>
+			<th>Действия</th>
+		</tr>
+		<tr>
+		[% IF MSG_PREV ne '' %]
+			<td align='left' colspan='8'>
+				<a title='предыдущая страница ([% MSG_PREV %])' href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+		[% END %]
+		</tr>
+		[% FOREACH msg = MSG_LIST %]
+		[% IF msg.MSG_NUM div2 %]
+		<tr class='nocolor' id='d-tr-[% msg.FILE_NAME %]'>
+		[% ELSE %]
+		<tr class='backlight' id='d-tr-[% msg.FILE_NAME %]'>
+		[% END %]
+			<td>&nbsp;[% msg.MSG_NUM %]</td>
+			<td>&nbsp;<a href='?action=vb_view&id=[% msg.ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
+			<td align='center'>
+			[% msg.RU_DESCRIPTION | html %]
+			</td>
+			<td align='center'>[% msg.MSG_DATE | html %]</td>
+			<td align='center'>[% msg.CALLERID | html %]</td>
+			[% IF msg.IS_VOICE %]
+				<td align='center'>[% msg.DURATION | duration_str | html %]</td>
+			[% ELSIF msg.FILE_NAME contain '.avi' %]
+				<td align='center'>[% msg.DURATION | duration_str | html %]</td>
+			[% ELSE %]
+				<td align='center'>--------</td>
+			[% END %]
+			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
+			<td>
+				<table>
+					<tr>
+					<td>
+				[% IF msg.IS_VOICE %]
+						<a title='скачать сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+				[% ELSIF msg.FILE_NAME contain '.tif' %]
+						<a title='скачить tiff' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='tif' /></a>
+				[% ELSIF msg.FILE_NAME contain '.dat' %]
+						<a title=скачать сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].txt?media=txt&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='txt' /></a>
+				[% ELSIF msg.FILE_NAME contain '.avi' %]
+						<a title='скачать avi' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='avi' /></a>
+				[% ELSE %]
+						<a title='скачать сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+				[% END %]
+					</td>
+
+					<td>
+						<a title='удалить сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+					</td>
+
+				[% IF msg.IS_VOICE %]
+					<td>
+						<a title='прослушать' 
+							onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+							href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+					</td>
+				[% END %]
+
+				[% IF msg.FILE_TYPE eq '30' %]
+					<td>
+						<a title='Пометить как старое' href='?action=msg_status&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=40'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
+					</td>
+				[% ELSIF msg.FILE_TYPE eq '40' %]
+					<td>
+						<a title='Пометить как новое' href='?action=msg_status&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=30'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
+					</td>
+				[% END %] 
+					</tr>
+				</table>
+			</td>
+		</tr>
+		[% END %]
+		<tr>
+		[% IF MSG_NEXT ne '' %]
+			<td align='right' colspan='8'>
+				<a title='следующая страница ([% MSG_NEXT %])' href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+			</td>
+		[% ELSE %]
+			<td colspan='7'>&nbsp;</td>
+		[% END %]
+		</tr>
+		[% ELSE %]
+		<tr class='list_data'>
+			<td colspan='8'>&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan='8' align='center'><h4>Сообщений нет</h4></td>
+		</tr>
+		<tr>
+			<td colspan='8'>&nbsp</td>
+		</tr>
+		[% END %]
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='right'>
+			<form method="get" action="[% CGI_URL %]">
+			<td width='100%'>
+				С даты:
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<button type="button">...</button>
+				&nbsp;
+				По дату:
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<button type="button">...</button>
+				<input name='action' value='msg_list' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
+				&nbsp;
+				Номер звонящего:
+				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
+				<input value='Поиск' type='submit'>
+				&nbsp;&nbsp;
+			</td>
+			</form>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
+

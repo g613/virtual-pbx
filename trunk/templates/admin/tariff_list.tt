@@ -1,0 +1,181 @@
+<html>
+<head>
+	<title>Virtual PBX - tariffs</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='center'><h2>Tariffs</h2></td>
+			<td align='right' width='20%'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='98%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				<a href='?action=node_list'>Nodes</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=group_list'>Groups</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=user_list'>Users</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=did_list'>DIDs</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=report_list'>Reports</a>
+			[% IF USE_BILLING %]
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				Tariffs
+			[% END %]
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='98%' class='list_data'>
+		<tr class='list_data'>
+			<th rowspan='3'>Id</th>
+			<th rowspan='3'>Name</th>
+			<th colspan='8'>Prices</th>
+			<th rowspan='3'>Currency</th>
+			<th rowspan='3'>Actions</th>
+		</tr>
+		<tr class='list_data'>
+			<th rowspan='2'>Monthly</th>
+			<th rowspan='2'>Daily</th>
+			<th colspan='2'>IVR</th>
+			<th colspan='2'>CallBlast</th>
+			<th colspan='2'>CallBack</th>
+		</tr>
+		<tr class='list_data'>
+			<th>Minute</th>
+			<th>Call</th>
+			<th>Minute</th>
+			<th>Call</th>
+			<th>Minute</th>
+			<th>Call</th>
+		</tr>
+			
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='11'>
+				<a title='previous page' href='?action=tariff_list&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH t = TARIFFS %]
+		<tr align='center' class='backlight'>
+			<form method='post'>
+			<td>[% t.ID | html %]</td>
+			<td><input size='25' name='T_NAME' type='text' value='[% t.NAME | html %]'></td>
+			<td><input size='5' name='T_MONTHLY_PRICE' type='text' value='[% t.MONTHLY_PRICE | html %]'></td>
+			<td><input size='5' name='T_DAILY_PRICE' type='text' value='[% t.DAILY_PRICE | html %]'></td>
+			<td><input size='5' name='T_MINUTE_PRICE' type='text' value='[% t.MINUTE_PRICE | html %]'></td>
+			<td><input size='5' name='T_CALL_PRICE' type='text' value='[% t.CALL_PRICE | html %]'></td>
+			<td><input size='5' name='T_MINUTE_PRICE_CBL' type='text' value='[% t.MINUTE_PRICE_CBL | html %]'></td>
+			<td><input size='5' name='T_CALL_PRICE_CBL' type='text' value='[% t.CALL_PRICE_CBL | html %]'></td>
+			<td><input size='5' name='T_MINUTE_PRICE_CB' type='text' value='[% t.MINUTE_PRICE_CB | html %]'></td>
+			<td><input size='5' name='T_CALL_PRICE_CB' type='text' value='[% t.CALL_PRICE_CB | html %]'></td>
+			<td>
+				<select name='T_CURRENCY_ID'>
+					[% FOREACH c = CURRENCY %]
+						[% IF t.CURRENCY_ID eq c.CUR_ID %]
+							<option value="[% c.CUR_ID | html %]" selected>[% c.DESCRIPTION | html %]</option>
+						[% ELSE %]
+							<option value="[% c.CUR_ID | html %]">[% c.DESCRIPTION | html %]</option>
+						[% END %]
+					[% END %]
+				</select>
+			</td>
+			<td>
+				<input type='hidden' value='[% t.ID %]' name='tariff_id'>
+				<input type='hidden' value='tariff_update' name='action'>
+				<input type='hidden' value='[% MSG_FROM %]' name='from'>
+				<script language='JavaScript'>
+					writeUpdateLinks( 'save changes' );
+				</script>
+				<noscript><input value='change' type='submit'></noscript>
+				<a title='delete node' href='?action=tariff_del&tariff_id=[% t.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+			</td>
+			</form>
+		</tr>
+		[% END %]
+		<form>
+		<tr align='center'>
+			<td><input size='3' name='T_ID' type='text'></td>
+			<td><input size='25' name='T_NAME' type='text'></td>
+			<td><input size='5' name='T_MONTHLY_PRICE' type='text'></td>
+			<td><input size='5' name='T_DAILY_PRICE' type='text'></td>
+			<td><input size='5' name='T_MINUTE_PRICE' type='text'></td>
+			<td><input size='5' name='T_CALL_PRICE' type='text'></td>
+			<td><input size='5' name='T_MINUTE_PRICE_CBL' type='text'></td>
+			<td><input size='5' name='T_CALL_PRICE_CBL' type='text'></td>
+			<td><input size='5' name='T_MINUTE_PRICE_CB' type='text'></td>
+			<td><input size='5' name='T_CALL_PRICE_CB' type='text'></td>
+			<td>
+				<select name='T_CURRENCY_ID'>
+				[% FOREACH c = CURRENCY %]
+					<option value="[% c.CUR_ID | html %]">[% c.DESCRIPTION | html %]</option>
+				[% END %]
+				</select>
+			</td>
+			<td>
+				<input value='ADD' type='submit'>
+				<input type='hidden' value='tariff_add' name='action'>
+			</td>
+		</tr>
+		</form>
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='11'>
+				<a title='next page' href='?action=tariff_list&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+			</td>
+		</tr>
+		[% END %]
+	</table>
+	</p>
+
+	<p>
+	<table width='98%' class='bottom_hr'>
+		<tr align='center'>
+			<td>
+				<a class='headers' href='?action=report_list'>Reports</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=group_list'>Nodes</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=group_list'>Groups</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=user_list'>Users</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

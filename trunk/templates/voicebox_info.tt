@@ -1,0 +1,2557 @@
+<html>
+<!-- $Id: voicebox_info.tt,v 1.175 2011-01-05 07:42:11 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
+	
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			[% IF USER_CREDS.LOGO_HREF eq '' %]
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			[% ELSE %]
+				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+			[% END %]
+			</td>
+			<td align='center'><h2>Extension# <b>[% VBOX_PREF.EXT_NUMBER | html %]</h2></td>
+			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			[% IF USER_CREDS.ROOT eq '0' %]
+			<td>
+				<a class='headers' href='?action=user_info&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
+			</td>
+			[% END %]
+			<td>
+				<a class='headers' href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Clone</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Stats</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')">Delete extension</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=vb_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+			</td>
+			<td>
+				<select onchange="LoadingOn(); ChangeExten(this.value,'[% USER_CREDS.UNIQ %]')">
+					<option value="[% VBOX_PREF.ID | html %]">View extension</option>
+					[% FOREACH vb = VB_LIST %]
+					[% IF vb.NAME %]
+					<option value="[% vb.ID | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
+					[% ELSE %]
+					<option value="[% vb.ID | html %]">[% vb.EXT_NUMBER | html %] - [% vb.DESCRIPTION | html %]</option>
+					[% END %]
+					[% END %]
+				</select>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table class='vb_data' width='95%'>
+		<tr>
+			<td colspan='2'>&nbsp;</td>
+			<td align='right'>
+				[% IF VBOX_PREF.TYPE eq '1' %]
+				<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
+				<h4>Playback hints:</h4>
+				If 'Allow greeting rewind' checked, during a call, you can press:
+				<ul>
+					<li><b>4</b> - rew greeting ( -30 sec )</li>
+					<li><b>6</b> - ff greeting ( +30 sec )</li>
+					<li><b>5</b> - paused</li>
+				</ul>
+				</span></a>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '3' %]
+				<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
+				<h4>Find-Me hints:</h4>
+				During a call, you can press:
+						<ul>
+							<li><b>*9</b> - For call transfer</li>
+							<li><b>*8</b> - For call parking</li>
+							<li><b>*4XXX</b> - Pitch control</li>
+							<li><b>*3XX</b> - Background Music</li>
+							<ul>
+								<li><b>01</b> - Ball Game</li>
+								<li><b>02</b> - Bowling</li>
+								<li><b>03</b> - Camion poubelle</li>
+								<li><b>04</b> - Cock-A-Doodle Doo!</li>
+								<li><b>05</b> - Cris Inhumains</li>
+								<li><b>06</b> - Unhappy Dog</li>
+								<li><b>07</b> - Slamming Doors</li>
+								<li><b>08</b> - Electric Drill</li>
+								<li><b>09</b> - Drum (Played By A Child)</li>
+								<li><b>10</b> - Orgasm (Exceptional)</li>
+								<li><b>11</b> - Phone Ringing</li>
+								<li><b>12</b> - Pigeons</li>
+								<li><b>13</b> - Domestic Squabble</li>
+								<li><b>14</b> - Footsteps (High Heels)</li>
+								<li><b>15</b> - Train</li>
+								<li><b>16</b> - Embouteillage</li>
+								<li><b>17</b> - Faire ses gammes (Violon)</li>
+								<li><b>18</b> - music</li>
+								<li><b>19</b> - music</li>
+								<li><b>20</b> - music</li>
+								<li><b>21</b> - music</li>
+								<li><b>22</b> - music</li>
+							</ul>
+							<li><b>*2XX</b> - Background Music (Loop)</li>
+							<li><b>*1</b> - For start/pause record</li>
+							<li><b>*0</b> - For call terminate</li>
+						</ul>
+				</span></a>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '5' %]
+				<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
+				<h4>Schedule hints:</h4>
+				When editing 'schedule data' fields can be used:
+					<ul>CallerID Black list ( BL# )</ul>
+					<ul>CallerID White list ( WL# )</ul>
+					<ul>CallerID Regexp ( R#regexp):
+						<li><b>X</b> - any digit from 0-9</li>
+						<li><b>Z</b> - any digit from 1-9</li>
+						<li><b>N</b> - any digit from 2-9</li>
+						<li><b>[12-49]</b> -  any digit in the brackets (in this example, 1,2,3,4,9)</li>
+						<li><b>.</b> - wildcard, matches anything remaining</li>
+						<li><b>!</b> - negative matches ( R#!712. - all except 712.)</li>
+						<li><b>*</b> - any</li>
+					</ul>
+					<ul>Formats:
+						<li><b>time</b> - hh:mm-hh:mm</li>
+						<li><b>day of week</b> - day-day ( mon,tue,wed,thu,fri,sat,sun )</li>
+						<li><b>day of month</b> - day-day ( 1..31 )</li>
+						<li><b>month</b> - month-month ( jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec )</li>
+						<li><b>year</b> - year-year ( 2009-2009 - for example )
+						<li><b>*</b> - any</li>
+					</ul>
+				</span></a>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '13' %]
+				<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
+				<h4>Queue hints:</h4>
+				During a call, you can press:
+						<ul>
+							<li><b>*9</b> - For call transfer</li>
+							<li><b>*8</b> - For call parking</li>
+							<li><b>*4XXX</b> - Pitch control</li>
+							<li><b>*3XX</b> - Background Music</li>
+							<ul>
+								<li><b>01</b> - Ball Game</li>
+								<li><b>02</b> - Bowling</li>
+								<li><b>03</b> - Camion poubelle</li>
+								<li><b>04</b> - Cock-A-Doodle Doo!</li>
+								<li><b>05</b> - Cris Inhumains</li>
+								<li><b>06</b> - Unhappy Dog</li>
+								<li><b>07</b> - Slamming Doors</li>
+								<li><b>08</b> - Electric Drill</li>
+								<li><b>09</b> - Drum (Played By A Child)</li>
+								<li><b>10</b> - Orgasm (Exceptional)</li>
+								<li><b>11</b> - Phone Ringing</li>
+								<li><b>12</b> - Pigeons</li>
+								<li><b>13</b> - Domestic Squabble</li>
+								<li><b>14</b> - Footsteps (High Heels)</li>
+								<li><b>15</b> - Train</li>
+								<li><b>16</b> - Embouteillage</li>
+								<li><b>17</b> - Faire ses gammes (Violon)</li>
+								<li><b>18</b> - music</li>
+								<li><b>19</b> - music</li>
+								<li><b>20</b> - music</li>
+								<li><b>21</b> - music</li>
+								<li><b>22</b> - music</li>
+							</ul>
+							<li><b>*2XX</b> - Background Music (Loop)</li>
+							<li><b>*1</b> - For start/pause record</li>
+							<li><b>*0</b> - For call terminate</li>
+						</ul>
+				</span></a>
+				[% END %]
+		</td>
+	</tr>
+	<tr>
+		<td width='48%' valign='top'>
+		<table class='ext_data' width='100%'>
+			<form method="post" action="[% CGI_URL %]">
+			<tr>
+				<td class='ext_pn'>Type:</td>
+				<td class='ext_pv'>
+					<input type='hidden' name='action' value='vb_change_type'>
+					<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+					<select name="type" onchange="LoadingOn(); ChangeVbType(this.value,'[% VBOX_PREF.ID %]','[% USER_CREDS.UNIQ %]')">
+					[% FOREACH vt = VB_TYPES %]
+						[% IF VBOX_PREF.TYPE eq vt.ID %]
+						<option value="[% vt.ID %]" selected>[% vt.DESCRIPTION | html %]</option>
+						[% ELSE %]
+							[% IF vt.ID vb_allow '0' %]
+								<option value="[% vt.ID %]">[% vt.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+					[% END %]
+					</select>
+					&nbsp;&nbsp;
+					<noscript><input type='submit' value='&nbsp;change&nbsp;'></noscript>
+				</td>
+			</tr>
+			</form>
+			<form name='vb_opt' method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+			<tr id='EXT_NUMBER'>
+				<td class='ext_pn'>Number:</td>
+				<td class='ext_pv'>
+					[% IF VBOX_PREF.EXT_NUMBER eq '0' %]
+					<input size='30' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]' readonly>
+					[% ELSE %]
+					<input size='30' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]'>
+					[% END %]
+					<input type='hidden' name='action' value='vb_update'>
+					<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				</td>
+			</tr>
+			<tr id='NEXTEXTENSION'>
+				<td class='ext_pn'>Next Extension: </td>
+				<td class='ext_pv'>
+					<select name='NEXTEXTENSION'>
+						<option selected value="[% VBOX_PREF.NEXTEXTENSION | html %]"  >[% VBOX_PREF.NEXTEXTENSION | html %] - Current setting</option>
+						[% FOREACH vb = VB_LIST_EXT %]
+							[% IF vb.EXT_NUMBER eq VBOX_PREF.NEXTEXTENSION %]
+						<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option> 
+							[% ELSE %]
+						<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option> 
+							[% END %]
+						[% END %]
+					</select>
+					[% FOREACH vb = VB_LIST %]
+						[% IF vb.EXT_NUMBER eq VBOX_PREF.NEXTEXTENSION %]
+							<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
+						[% END %]
+					[% END %]
+				</td>
+			</tr>
+			<tr class='addon_info' id='PIN_CODE'>
+				<td class='ext_pn'>Pin code: </td>
+				<td class='ext_pv'>
+					<input size='12' type='text' name='PIN_CODE' value='[% VBOX_PREF.PIN_CODE | html %]'>
+					#
+					<input size='12' type='text' name='PIN_CODE2' value='[% VBOX_PREF.PIN_CODE2 | html %]'>
+				</td>
+			</tr>
+			<tr id='NAME'>
+				<td class='ext_pn'>Name: </td>
+				<td class='ext_pv'>
+					<input size='30' type='text' name='NAME' value='[% VBOX_PREF.NAME | html %]'>
+				</td>
+			</tr>
+			[% IF USER_CREDS.TTS_GREETING ne '0' %]
+			<tr id='GREETING'>
+				<td class='ext_pn'>Greeting: </td>
+				<td class='ext_pv'>
+					<textarea rows='[% VBOX_PREF.GREETING | textarea_rows %]' cols='35' name='GREETING'>[% VBOX_PREF.GREETING | html %]</textarea>
+				</td>
+			</tr>
+			[% END %]
+			<tr class='addon_info' id='GREET_REPEAT_CNT'>
+				<td class='ext_pn'>Repeat greeting: </td>
+				<td class='ext_pv'>
+					<input size='3' type='text' name='GREET_REPEAT_CNT' value='[% VBOX_PREF.GREET_REPEAT_CNT %]'>
+					&nbsp;&nbsp;&nbsp;( 0 - don't repeat )
+				</td>
+			</tr>
+			<tr id='NOTIFYEMAIL'>
+				<td class='ext_pn'>Recipient notification: </td>
+				<td class='ext_pv'>
+					<input size='30' type='text' name='NOTIFYEMAIL' value='[% VBOX_PREF.NOTIFYEMAIL | html %]'>
+				</td>
+			</tr>
+			<tr id='WAITEXTENSION'>
+				<td class='ext_pn'>Wait Extension: </td>
+				<td class='ext_pv'>
+				[% IF VBOX_PREF.WAITEXTENSION %]
+					<input name="WAITEXTENSION" type="checkbox" checked>
+				[% ELSE %]
+					<input name="WAITEXTENSION" type="checkbox">
+				[% END %]
+				</td>
+			</tr>
+			<tr class='addon_info' id='HIDDEN'>
+				<td class='ext_pn'>Hide extension: </td>
+				<td class='ext_pv'>
+				[% IF VBOX_PREF.HIDDEN %]
+					<input name="HIDDEN" type="checkbox" checked>
+				[% ELSE %]
+					<input name="HIDDEN" type="checkbox">
+				[% END %]
+				</td>
+			</tr>
+			<tr class='addon_info' id='PROTECT'>
+				<td class='ext_pn'>Protected with pin code: </td>
+				<td class='ext_pv'>
+				[% IF VBOX_PREF.PROTECT %]
+					<input name="PROTECT" type="checkbox" checked>
+				[% ELSE %]
+					<input name="PROTECT" type="checkbox">
+				[% END %]
+				</td>
+			</tr>
+			<tr class='addon_info' id='DIRECT'>
+				<td class='ext_pn'>Direct access: </td>
+				<td class='ext_pv'>
+				[% IF VBOX_PREF.DIRECT %]
+					<input name="DIRECT" type="checkbox" checked>
+				[% ELSE %]
+					<input name="DIRECT" type="checkbox">
+				[% END %]
+				</td>
+			</tr>
+			<tr class='addon_info' id='GLOBAL'>
+				<td class='ext_pn'>Global extension: </td>
+				<td class='ext_pv'>
+				[% IF VBOX_PREF.GLOBAL %]
+					<input name="GLOBAL" type="checkbox" checked>
+				[% ELSE %]
+					<input name="GLOBAL" type="checkbox">
+				[% END %]
+				</td>
+			</tr>
+			[% IF VBOX_PREF.TYPE eq '1' %]
+			<tr id='GREETING_CONTROL'>
+				<td class='ext_pn'>Allow greeting rewind: </td>
+				<td class='ext_pv'>
+				[% IF VBOX_PREF.GREETING_CONTROL %]
+					<input name="GREETING_CONTROL" type="checkbox" checked>
+				[% ELSE %]
+					<input name="GREETING_CONTROL" type="checkbox">
+				[% END %]
+				</td>
+			</tr>
+			[% END %]
+
+			<tr class='addon_info' id='CID'>
+				<td class='ext_pn'>
+					CID filters:&nbsp;&nbsp;(
+					<a href='?action=cid_list&id=[% VBOX_PREF.ID %]&cid_list_type=2&cid_type=1&uniq=[% USER_CREDS.UNIQ %]' title='edit CID white list'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a> /
+					<a href='?action=cid_list&id=[% VBOX_PREF.ID %]&cid_list_type=1&cid_type=1&uniq=[% USER_CREDS.UNIQ %]' title='edit CID black list'><img border='0' src='/xvb/images/vb_edit_black.png' alt='edit' /></a> )
+				</td>
+				<td class='ext_pv'>
+					<select name="CID">
+					[% FOREACH ct = CID_TYPES %]
+						[% IF VBOX_PREF.CID eq ct.ID %]
+						<option value="[% ct.ID %]" selected>[% ct.DESCRIPTION | html %]</option>
+						[% ELSE %]
+						<option value="[% ct.ID %]">[% ct.DESCRIPTION | html %]</option>
+						[% END %]
+					[% END %]
+					</select>
+				</td>
+			</tr>
+			<tr class='addon_info' id='CID_ACTION'>
+				<td class='ext_pn'>CID action:</td>
+				<td class='ext_pv'>
+					<select name="CID_ACTION">
+					[% FOREACH ca = CID_ACTIONS %]
+						[% IF VBOX_PREF.CID_ACTION eq ca.ID %]
+						<option value="[% ca.ID %]" selected>[% ca.DESCRIPTION | html %]</option>
+						[% ELSE %]
+						<option value="[% ca.ID %]">[% ca.DESCRIPTION | html %]</option>
+						[% END %]
+					[% END %]
+					</select>
+				</td>
+			</tr>
+			<tr class='addon_info' id='USER_LANG'>
+				<td class='ext_pn'>Prompt language:</td>
+				<td class='ext_pv'>
+					<select name='LANG_ID'>
+						[% FOREACH lang = LANG %]
+							[% IF VBOX_PREF.LANG_ID eq lang.ID %]
+								<option value="[% lang.ID | html %]" selected>[% lang.DESCRIPTION | html %]</option>
+							[% ELSE %]
+								<option value="[% lang.ID | html %]">[% lang.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+					</select>
+				</td>
+			</tr>
+			<tr id='VOLUME_CONTROL' class='addon_info'>
+				<td class='ext_pn'>Volume control RX/TX:</td>
+				<td class='ext_pv'>
+					<table>
+						<tr>
+							<td>
+								<input size='4' name="VOLUME_RX" value="[% VBOX_PREF.VOLUME_RX | html %]" type="text">
+							</td>
+							<td>&nbsp;/&nbsp;</td>
+							<td>
+								<input size='4' name="VOLUME_TX" value="[% VBOX_PREF.VOLUME_TX | html %]" type="text">
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr id='PITCH_CONTROL' class='addon_info'>
+				<td class='ext_pn'>Pitch control RX/TX:</td>
+				<td class='ext_pv'>
+					<table>
+						<tr>
+							<td>
+								<input size='4' name="PITCH_RX" value="[% VBOX_PREF.PITCH_RX | html %]" type="text">
+							</td>
+							<td>&nbsp;/&nbsp;</td>
+							<td>
+								<input size='4' name="PITCH_TX" value="[% VBOX_PREF.PITCH_TX | html %]" type="text">
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr class='addon_info'><td colspan='2'>&nbsp;</td></tr>
+			
+			[% IF VBOX_PREF.TYPE eq '2' %]
+			<tr class='addon_info' id='MAX_MSG_DURATION'>
+				<td class='ext_pn'>Max message duaration: </td>
+				<td class='ext_pv'>
+					<input size='8' name="MAX_MSG_DURATION" value="[% VBOX_PREF.MAX_MSG_DURATION | html %]" type="text">
+					( in sec, -1 - for unlimit  )
+				</td>
+			</tr>
+			<tr class='addon_info' id='MIN_MSG_DURATION'>
+				<td class='ext_pn'>Min message duaration: </td>
+				<td class='ext_pv'>
+					<input size='8' name="MIN_MSG_DURATION" value="[% VBOX_PREF.MIN_MSG_DURATION | html %]" type="text">
+					( in sec, -1 - for unlimit  )
+				</td>
+			</tr>
+			<tr id='SENDNOTIFYEMAIL'>
+				<td class='ext_pn'>Send notify to: </td>
+				<td class='ext_pv'>
+					<select name="SENDNOTIFYEMAIL">
+					[% FOREACH ca = NOTIFY_TYPES %]
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
+						<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
+						[% ELSE %]
+						<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
+						[% END %]
+					[% END %]
+					</select>
+				</td>
+			</tr>
+			<tr class='addon_info' id='SEND_ATTACH'>
+				<td class='ext_pn'>Send attachment: </td>
+				<td class='ext_pv'>
+				[% IF VBOX_PREF.SEND_ATTACH %]
+					<input name="SEND_ATTACH" type="checkbox" checked>
+				[% ELSE %]
+					<input name="SEND_ATTACH" type="checkbox">
+				[% END %]
+			</td>
+			<tr class='addon_info' id='KEEP_MSG'>
+				<td class='ext_pn'>Keep message on the server: </td>
+				<td class='ext_pv'>
+				[% IF VBOX_PREF.KEEP_MSG %]
+					<input name="KEEP_MSG" type="checkbox" checked>
+				[% ELSE %]
+					<input name="KEEP_MSG" type="checkbox">
+				[% END %]
+				</td>
+			</tr>
+			[% END %]
+			
+			[% IF VBOX_PREF.TYPE eq '3' %]
+			<tr id='CALL_NUMBER'>
+				<td class='ext_pn'>Find-Me list: </td>
+				<td class='ext_pv'>
+					<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+				</td>
+			</tr>
+			<tr class='addon_info' id='GOTO_IF_FAIL'>
+			<td class='ext_pn'>Goto if call fail: </td>
+				<td class='ext_pv'>
+					<select name="GOTO_IF_FAIL">
+						<option value="" selected>------------------------------</option>
+						[% FOREACH vb = VB_LIST %]
+							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
+						<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
+							[% ELSE %]
+						<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
+							[% END %]
+						[% END %]
+					</select>
+					[% FOREACH vb = VB_LIST %]
+						[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
+							<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
+						[% END %]
+					[% END %]
+				</td>
+			</tr>
+			<tr class='addon_info' id='GOTO_IF_CALL_STATUS'>
+				<td class='ext_pn'>GoTo if call status: </td>
+				<td class='ext_pv'>
+					<textarea rows='[% VBOX_PREF.GOTO_IF_CALL_STATUS | textarea_rows %]' cols='35' name='GOTO_IF_CALL_STATUS'>[% VBOX_PREF.GOTO_IF_CALL_STATUS | html %]</textarea>
+				</td>
+			</tr>
+			<tr id='MOH_ID' class='addon_info'>
+				<td class='ext_pn'>Music on hold:</td>
+				<td class='ext_pv'>
+					<select name='MOH_ID'>
+						[% FOREACH moh = MOH %]
+							[% IF VBOX_PREF.MOH_ID eq moh.ID %]
+								<option value="[% moh.ID | html %]" selected>[% moh.DESCRIPTION | html %]</option>
+							[% ELSE %]
+								<option value="[% moh.ID | html %]">[% moh.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+					</select>
+				</td>
+			</tr>
+			<tr class='addon_info' id='CALL_TYPE'>
+				<td class='ext_pn'>Ring strategy: </td>
+				<td class='ext_pv'>
+					<select name="CALL_TYPE">
+					[% FOREACH ct = CALL_TYPES %]
+						[% IF VBOX_PREF.CALL_TYPE eq ct.ID %]
+							<option value="[% ct.ID %]" selected>[% ct.DESCRIPTION | html %]</option>
+						[% ELSE %]
+							<option value="[% ct.ID %]">[% ct.DESCRIPTION | html %]</option>
+						[% END %]
+					[% END %]
+					</select> 
+				</td>
+			</tr>
+			<tr id='SENDNOTIFYEMAIL'>
+				<td class='ext_pn'>Send notify to: </td>
+				<td class='ext_pv'>
+					<select name="SENDNOTIFYEMAIL">
+					[% FOREACH ca = NOTIFY_TYPES %]
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
+						<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
+						[% ELSE %]
+						<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
+						[% END %]
+					[% END %]
+					</select>
+				</td>
+			</tr>
+			<tr class='addon_info' id='RING_TIMEOUT'>
+				<td class='ext_pn'>Ring timeout (sec): </td>
+				<td class='ext_pv'>
+					<input size='30' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
+				</td>
+			</tr>
+				<tr class='addon_info' id='SEND_DIGITS'>
+					<td class='ext_pn'>Send DTMF (0-9#*w): </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='SEND_DIGITS' value='[% VBOX_PREF.SEND_DIGITS | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info' id='TRANSFER_PREF'>
+					<td class='ext_pn'>Call transfer prefix: </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='TRANSFER_PREF' value='[% VBOX_PREF.TRANSFER_PREF | html %]'>
+					</td>
+				</tr>
+				[% IF USER_CREDS.VBL_27 ne '0' %]
+				<tr class='addon_info' id='PARKING_EXT'>
+					<td class='ext_pn'>Parking extension: </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='PARKING_EXT' value='[% VBOX_PREF.PARKING_EXT | html %]'>
+					</td>
+				</tr>
+				[% END %]
+				<tr class='addon_info' id='CONFIRM_CALL'>
+					<td class='ext_pn'>Confirm calls: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.CONFIRM_CALL %]
+							<input name="CONFIRM_CALL" type="checkbox" checked>
+						[% ELSE %]
+							<input name="CONFIRM_CALL" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info' id='SAY_CALLERID'>
+					<td class='ext_pn'>Say callerid: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.SAY_CALLERID %]
+							<input name="SAY_CALLERID" type="checkbox" checked>
+						[% ELSE %]
+							<input name="SAY_CALLERID" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info' id='SCREENING_MODE'>
+					<td class='ext_pn'>Screening mode: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.SCREENING_MODE %]
+							<input name="SCREENING_MODE" type="checkbox" checked>
+						[% ELSE %]
+							<input name="SCREENING_MODE" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr id='RECORD_IF_FAIL'>
+					<td class='ext_pn'>Start voicemail if call fail: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.RECORD_IF_FAIL %]
+							<input name="RECORD_IF_FAIL" type="checkbox" checked>
+						[% ELSE %]
+							<input name="RECORD_IF_FAIL" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr id='RECORD_CALL'>
+					<td class='ext_pn'>Record calls: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.RECORD_CALL %]
+							<input name="RECORD_CALL" type="checkbox" checked>
+						[% ELSE %]
+							<input name="RECORD_CALL" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info' id='RETRYDIAL_INTERVAL'>
+					<td class='ext_pn'>RetryDial interval (sec): </td>
+					<td class='ext_pv'>
+						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
+						( 0-120, 0 - disable )
+					</td>
+				</tr>
+				<tr class='addon_info' id='RETRYDIAL_LOOPS'>
+					<td class='ext_pn'>RetryDial loops: </td>
+					<td class='ext_pv'>
+						<input size='4' type='text' name='RETRYDIAL_LOOPS' value='[% VBOX_PREF.RETRYDIAL_LOOPS | html %]'>
+						( -1 - for unlimit )
+					</td>
+				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '4' %]
+				<tr id='USE_FIRSTNAME'>
+					<td class='ext_pn'>Use First name: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.USE_FIRSTNAME == '1' %]
+							<input name="USE_FIRSTNAME" type="radio" value="1" checked>
+						[% ELSE %]
+							<input name="USE_FIRSTNAME" type="radio" value="1">
+						[% END %]
+					</td>
+				</tr>
+				<tr>
+					<td class='ext_pn'>Use Last name: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.USE_FIRSTNAME == '0' %]
+							<input name="USE_FIRSTNAME" type="radio" value="0" checked>
+						[% ELSE %]
+							<input name="USE_FIRSTNAME" type="radio" value="0">
+						[% END %]
+					</td>
+				</tr>
+				<tr>
+					<td class='ext_pn'>Use First or Last name: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.USE_FIRSTNAME == '2' %]
+							<input name="USE_FIRSTNAME" type="radio" value="2" checked>
+						[% ELSE %]
+							<input name="USE_FIRSTNAME" type="radio" value="2">
+						[% END %]
+					</td>
+				</tr>
+				[% IF USER_CREDS.TTS_GREETING ne '0' %]
+				<tr class='addon_info' id='USE_TTS_NAME'>
+					<td class='ext_pn'>Use TTS: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.USE_TTS_NAME %]
+							<input name="USE_TTS_NAME" type="checkbox" checked>
+						[% ELSE %]
+							<input name="USE_TTS_NAME" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				[% END %]
+				<tr class='addon_info' id='DIR_LANG'>
+					<td class='ext_pn'>Keyboard layout: </td>
+					<td class='ext_pv'>
+					<select name="DIR_LANG">
+					[% FOREACH llang = DIR_LANG %]
+						[% IF VBOX_PREF.DIR_LANG eq llang.ID %]
+						<option value="[% llang.ID %]" selected>[% llang.DESCRIPTION | html %]</option>
+						[% ELSE %]
+						<option value="[% llang.ID %]">[% llang.DESCRIPTION | html %]</option>
+						[% END %]
+					[% END %]
+					</select>
+					</td>
+				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '5' %]
+				<tr id='TZ_NAME' class='addon_info'>
+					<td class='ext_pn'>Schedule Time Zone</td>
+					<td class='ext_pv'>
+						<select name="TIME_ZONE">
+						[% FOREACH t = TZ %]
+							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
+								<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | html %]</option>
+							[% ELSE %]
+								<option value="[% t.ID | html %]">[% t.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+						</select>
+					</td>
+				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '6' %]
+				<tr id='TTS_METHOD'>
+					<td class='ext_pn'>Request Method: </td>
+					<td class='ext_pv'>
+						<select name="TTS_METHOD">
+						[% IF VBOX_PREF.TTS_METHOD eq 'POST' %]
+							<option selected value="POST">POST</option>
+							<option value="GET">GET</option>
+						[% ELSE %]
+							<option selected value="GET">GET</option>
+							<option value="POST">POST</option>
+						[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr id='TTS_URL'>
+					<td class='ext_pn'>Text URL: </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='TTS_URL' value='[% VBOX_PREF.TTS_URL | html %]'>
+					</td>
+				</tr>
+				<tr id='TTS_POST_PARAMS'>
+					<td class='ext_pn'>Post params: </td>
+					<td class='ext_pv'>
+						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='35' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
+					</td>
+				</tr>
+				<tr class='addon_info' id='GOTO_IF_FAIL'>
+					<td class='ext_pn'>Goto if request fail: </td>
+					<td class='ext_pv'>
+						<select name="GOTO_IF_FAIL">
+							<option selected value="">------------------------------</option>
+							[% FOREACH vb = VB_LIST %]
+								[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
+							<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
+								[% ELSE %]
+							<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+						[% FOREACH vb = VB_LIST %]
+							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
+								<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
+							[% END %]
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info' id='QUIET_MODE'>
+					<td class='ext_pn'>Quiet mode: </td>
+					<td class='ext_pv'>
+					[% IF VBOX_PREF.QUIET_MODE %]
+						<input name="QUIET_MODE" type="checkbox" checked>
+					[% ELSE %]
+						<input name="QUIET_MODE" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info' id='NEED_PARAMS'>
+					<td class='ext_pn'>Read user params: </td>
+					<td class='ext_pv'>
+					[% IF VBOX_PREF.NEED_PARAMS %]
+						<input name="NEED_PARAMS" type="checkbox" checked>
+					[% ELSE %]
+						<input name="NEED_PARAMS" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				<tr id='MOH_ID' class='addon_info'>
+					<td class='ext_pn'>Music on hold:</td>
+					<td class='ext_pv'>
+						<select name='MOH_ID'>
+							[% FOREACH moh = MOH %]
+								[% IF VBOX_PREF.MOH_ID eq moh.ID %]
+									<option value="[% moh.ID | html %]" selected>[% moh.DESCRIPTION | html %]</option>
+								[% ELSE %]
+									<option value="[% moh.ID | html %]">[% moh.DESCRIPTION | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr class='addon_info' id='TTS_REQ_UA'>
+					<td class='ext_pn'>User Agent: </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='TTS_REQ_UA' value='[% VBOX_PREF.TTS_REQ_UA | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info' id='TTS_REQ_COOKIE'>
+					<td class='ext_pn'>Cookie: </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='TTS_REQ_COOKIE' value='[% VBOX_PREF.TTS_REQ_COOKIE | html %]'>
+					</td>
+				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '8' %]
+				<tr id='HEADERINFO'>
+					<td class='ext_pn'>Fax Header: </td>
+					<td class='ext_pv'>
+						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='35' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
+					</td>
+				</tr>
+				<tr id='SENDNOTIFYEMAIL'>
+					<td class='ext_pn'>Send notify to: </td>
+					<td class='ext_pv'>
+						<select name="SENDNOTIFYEMAIL">
+						[% FOREACH ca = NOTIFY_TYPES %]
+							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
+							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
+							[% ELSE %]
+							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr class='addon_info' id='SEND_ATTACH'>
+					<td class='ext_pn'>Send attachment: </td>
+					<td class='ext_pv'>
+					[% IF VBOX_PREF.SEND_ATTACH %]
+						<input name="SEND_ATTACH" type="checkbox" checked>
+					[% ELSE %]
+						<input name="SEND_ATTACH" type="checkbox">
+					[% END %]
+				</td>
+				<tr class='addon_info' id='KEEP_MSG'>
+					<td class='ext_pn'>Keep message on the server: </td>
+					<td class='ext_pv'>
+					[% IF VBOX_PREF.KEEP_MSG %]
+						<input name="KEEP_MSG" type="checkbox" checked>
+					[% ELSE %]
+						<input name="KEEP_MSG" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '9' %]
+				<tr id='DTMF_PATTERN'>
+					<td class='ext_pn'>Input pattern:</td>
+					<td class='ext_pv'>
+						<select name='DTMF_PATTERN_ID'>
+							[% FOREACH dtmf = DTMF_PATTERN %]
+								[% IF VBOX_PREF.DTMF_PATTERN_ID eq dtmf.ID %]
+									<option value="[% dtmf.ID | html %]" selected>[% dtmf.DESCRIPTION | html %]</option>
+								[% ELSE %]
+									<option value="[% dtmf.ID | html %]">[% dtmf.DESCRIPTION | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr class='addon_info' id='MAX_DIGITS'>
+					<td class='ext_pn'>Max digits: </td>
+					<td class='ext_pv'>
+						<input size='10' name="MAX_DIGITS" value="[% VBOX_PREF.MAX_DIGITS | html %]" type="text">
+						( -1 for unlimit )
+					</td>
+				</tr>
+				<tr class='addon_info' id='VAR_NAME'>
+					<td class='ext_pn'>Variable name: </td>
+					<td class='ext_pv'>
+						<input size='10' name="VAR_NAME" value="[% VBOX_PREF.VAR_NAME | html %]" type="text">
+					</td>
+				</tr>
+				<tr class='addon_info' id='OTHER_VARS'>
+					<td class='ext_pn'>Other vars: </td>
+					<td class='ext_pv'>
+						<textarea rows='[% VBOX_PREF.OTHER_VARS | textarea_rows %]' cols='35' name='OTHER_VARS'>[% VBOX_PREF.OTHER_VARS | html %]</textarea>
+					</td>
+				</tr>
+				<tr id='SENDNOTIFYEMAIL'>
+					<td class='ext_pn'>Send notify to: </td>
+					<td class='ext_pv'>
+						<select name="SENDNOTIFYEMAIL">
+						[% FOREACH ca = NOTIFY_TYPES %]
+							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
+							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
+							[% ELSE %]
+							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr class='addon_info' id='SEND_ATTACH'>
+					<td class='ext_pn'>Send attachment: </td>
+					<td class='ext_pv'>
+					[% IF VBOX_PREF.SEND_ATTACH %]
+						<input name="SEND_ATTACH" type="checkbox" checked>
+					[% ELSE %]
+						<input name="SEND_ATTACH" type="checkbox">
+					[% END %]
+				</td>
+				<tr class='addon_info' id='KEEP_MSG'>
+					<td class='ext_pn'>Keep message on the server: </td>
+					<td class='ext_pv'>
+					[% IF VBOX_PREF.KEEP_MSG %]
+						<input name="KEEP_MSG" type="checkbox" checked>
+					[% ELSE %]
+						<input name="KEEP_MSG" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info' id='NEED_FORMATED'>
+					<td class='ext_pn'>Format input var: </td>
+					<td class='ext_pv'>
+					[% IF VBOX_PREF.NEED_FORMATED %]
+						<input name="NEED_FORMATED" type="checkbox" checked>
+					[% ELSE %]
+						<input name="NEED_FORMATED" type="checkbox">
+					[% END %]
+				</td>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '10' %]
+				<tr id='ALLOW_DIGITS'>
+					<td class='ext_pn'>Allow digits: </td>
+					<td class='ext_pv'>
+						<input size='10' name="ALLOW_DIGITS" value="[% VBOX_PREF.ALLOW_DIGITS | html %]" type="text">
+						( comma separated )
+					</td>
+				</tr>
+				<tr class='addon_info' id='UNIQ_CIDS'>
+					<td class='ext_pn'>Uniq CIDs: </td>
+					<td class='ext_pv'>
+					[% IF VBOX_PREF.UNIQ_CIDS %]
+						<input name="UNIQ_CIDS" type="checkbox" checked>
+					[% ELSE %]
+						<input name="UNIQ_CIDS" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '11' %]
+				<tr id='MOH_ID' class='addon_info'>
+					<td class='ext_pn'>Music on hold:</td>
+					<td class='ext_pv'>
+						<select name='MOH_ID'>
+							[% FOREACH moh = MOH %]
+								[% IF VBOX_PREF.MOH_ID eq moh.ID %]
+									<option value="[% moh.ID | html %]" selected>[% moh.DESCRIPTION | html %]</option>
+								[% ELSE %]
+									<option value="[% moh.ID | html %]">[% moh.DESCRIPTION | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr class='addon_info' id='PHONE_PATTERN'>
+					<td class='ext_pn'>Phone pattern: </td>
+					<td class='ext_pv'>
+						<input size='30' name="PHONE_PATTERN" value="[% VBOX_PREF.PHONE_PATTERN | html %]" type="text">
+					</td>
+				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '12' %]
+				<tr id='PODCAST_URL'>
+					<td class='ext_pn'>Podcast url (rss): </td>
+					<td class='ext_pv'>
+						<input size='30' name="PODCAST_URL" value="[% VBOX_PREF.PODCAST_URL | html %]" type="text">
+					</td>
+				</tr>
+				<tr id='PODCAST_ANNOUNCEMENT' class='addon_info'>
+					<td class='ext_pn'>Play podcast announcement: </td>
+					<td class='ext_pv'>
+					[% IF VBOX_PREF.PODCAST_ANNOUNCEMENT %]
+						<input name="PODCAST_ANNOUNCEMENT" type="checkbox" checked>
+					[% ELSE %]
+						<input name="PODCAST_ANNOUNCEMENT" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '13' %]
+				<tr id='CALL_NUMBER'>
+					<td class='ext_pn'>Agents list: </td>
+					<td class='ext_pv'>
+						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+					</td>
+				</tr>
+				<tr id='MOH_ID' class='addon_info'>
+					<td class='ext_pn'>Music on hold:</td>
+					<td class='ext_pv'>
+						<select name='MOH_ID'>
+							[% FOREACH moh = MOH %]
+								[% IF VBOX_PREF.MOH_ID eq moh.ID %]
+									<option value="[% moh.ID | html %]" selected>[% moh.DESCRIPTION | html %]</option>
+								[% ELSE %]
+									<option value="[% moh.ID | html %]">[% moh.DESCRIPTION | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr class='addon_info' id='CALL_TYPE'>
+					<td class='ext_pn'>Ring strategy: </td>
+					<td class='ext_pv'>
+						<select name="CALL_TYPE">
+						[% FOREACH ct = CALL_TYPES %]
+							[% IF VBOX_PREF.CALL_TYPE eq ct.ID %]
+								<option value="[% ct.ID %]" selected>[% ct.DESCRIPTION | html %]</option>
+							[% ELSE %]
+								<option value="[% ct.ID %]">[% ct.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+						</select> 
+					</td>
+				</tr>
+				<tr class='addon_info' id='RING_TIMEOUT'>
+					<td class='ext_pn'>Ring timeout (sec): </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info' id='Q_TIMEOUT'>
+					<td class='ext_pn'>Queue timeout (sec): </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='Q_TIMEOUT' value='[% VBOX_PREF.Q_TIMEOUT | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info' id='Q_MAX_W_CALLS'>
+					<td class='ext_pn'>Queue max waiting calls: </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='Q_MAX_W_CALLS' value='[% VBOX_PREF.Q_MAX_W_CALLS | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info' id='ANNOUNCE_FREQUENCY'>
+					<td class='ext_pn'>Queue announce frequency (sec): </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='ANNOUNCE_FREQUENCY' value='[% VBOX_PREF.ANNOUNCE_FREQUENCY | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info' id='ANNOUNCE_HOLDTIME'>
+					<td class='ext_pn'>Announce Queue holdtime: </td>
+					<td class='ext_pv'>
+					[% IF VBOX_PREF.ANNOUNCE_HOLDTIME %]
+						<input name="ANNOUNCE_HOLDTIME" type="checkbox" checked>
+					[% ELSE %]
+						<input name="ANNOUNCE_HOLDTIME" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info' id='RECORD_CALL'>
+					<td class='ext_pn'>Record calls: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.RECORD_CALL %]
+							<input name="RECORD_CALL" type="checkbox" checked>
+						[% ELSE %]
+							<input name="RECORD_CALL" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info' id='WAIT_BUSY_ONLY'>
+					<td class='ext_pn'>Clean queue: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.WAIT_BUSY_ONLY %]
+							<input name="WAIT_BUSY_ONLY" type="checkbox" checked>
+						[% ELSE %]
+							<input name="WAIT_BUSY_ONLY" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info' id='GOTO_IF_FAIL'>
+					<td class='ext_pn'>Goto if queues fail: </td>
+					<td class='ext_pv'>
+						<select name="GOTO_IF_FAIL">
+							<option selected value="">------------------------------</option>
+							[% FOREACH vb = VB_LIST %]
+								[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
+							<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
+								[% ELSE %]
+							<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+						[% FOREACH vb = VB_LIST %]
+							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
+								<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
+							[% END %]
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info' id='TRANSFER_PREF'>
+					<td class='ext_pn'>Call transfer prefix: </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='TRANSFER_PREF' value='[% VBOX_PREF.TRANSFER_PREF | html %]'>
+					</td>
+				</tr>
+				[% IF USER_CREDS.VBL_27 ne '0' %]
+				<tr class='addon_info' id='PARKING_EXT'>
+					<td class='ext_pn'>Parking extension: </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='PARKING_EXT' value='[% VBOX_PREF.PARKING_EXT | html %]'>
+					</td>
+				</tr>
+				[% END %]
+				<tr class='addon_info' id='CALLERID_PREF'>
+					<td class='ext_pn'>CID Name preffix: </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='CALLERID_PREF' value='[% VBOX_PREF.CALLERID_PREF | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info' id='CALLERIDNUM_PREF'>
+					<td class='ext_pn'>CID Number preffix: </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='CALLERIDNUM_PREF' value='[% VBOX_PREF.CALLERIDNUM_PREF | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info' id='Q_URL'>
+					<td class='ext_pn'>CRMs
+						<select name='crm' onchange='javascript:document.vb_opt.Q_URL.value=this.value'>
+							<option selected value='[% VBOX_PREF.Q_URL | html %]'>Web URL</option>
+							<option value='http://www.anywho.com/qry/wp_rl?npa=% CID:1:3 %&telephone=% CID:4:10 %'>AnyWho</option>
+							<option value='http://www.google.com/search?rls=en&q=phonebook:% CID:1:10 %'>Google</option>
+							<option value='http://www.phonenumber.com/10004/search/ReversePhone?phone=% CID:1:10 %'>Phone Number</option>
+							<option value='http://www.switchboard.com/bin/cgirlookup.dll?SR=&MEM=1&TYPE=BOTH&PH=% CID:1:10 %&search.x=0&search.y=0&search=Search'>Switch board</option>
+							<option value='http://www.whitepages.com/search/ReversePhone?full_phone=% CID:1:10 %&localtime=survey'>White Pages</option>
+							<option value='https://REPLACEME/search/SearchResults?searchType=1&sen=003&setLast=1&sbstr=% CID:1:10 %'>Salesforce.com</option>
+							<option value='http://${ YOUR HOST ADDRESS }:8080/vtigercrm/index.php?phone_number=% CID:1:10 %'>vtiger CRM</option>
+						</select> :
+					</td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='Q_URL' value='[% VBOX_PREF.Q_URL | html %]'>
+					</td>
+				</tr>
+				[% END %]
+				
+				[% IF VBOX_PREF.TYPE eq '14' %]
+				<tr class='addon_info' id='CB_NUMBER'>
+					<td class='ext_pn'>CallBack number: </td>
+					<td class='ext_pv'>
+						<input size='20' type='text' name='CB_NUMBER' value='[% VBOX_PREF.CB_NUMBER | html %]'>
+						 ( null == callerid )
+					</td>
+				</tr>
+				<tr class='addon_info' id='CB_EXT'>
+					<td class='ext_pn'>Goto exten: </td>
+					<td class='ext_pv'>
+						<select name="CB_EXT">
+							<option selected value="">------------------------------</option>
+							[% FOREACH vb = VB_LIST %]
+								[% IF vb.EXT_NUMBER eq VBOX_PREF.CB_EXT %]
+							<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
+								[% ELSE %]
+							<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+						[% FOREACH vb = VB_LIST %]
+							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
+								<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
+							[% END %]
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info' id='CB_USE_TIMEOFFSET'>
+					<td class='ext_pn'>Allow callback delay: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.CB_USE_TIMEOFFSET %]
+							<input name="CB_USE_TIMEOFFSET" type="checkbox" checked>
+						[% ELSE %]
+							<input name="CB_USE_TIMEOFFSET" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info' id='CB_DYNAMIC_EXT'>
+					<td class='ext_pn'>Allow the selection of ext: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.CB_DYNAMIC_EXT %]
+							<input name="CB_DYNAMIC_EXT" type="checkbox" checked>
+						[% ELSE %]
+							<input name="CB_DYNAMIC_EXT" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '15' %]
+				<tr id='TZ_NAME' class='addon_info'>
+					<td class='ext_pn'>Time Zone</td>
+					<td class='ext_pv'>
+						<select name="TIME_ZONE">
+						[% FOREACH t = TZ %]
+							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
+								<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | html %]</option>
+							[% ELSE %]
+								<option value="[% t.ID | html %]">[% t.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr id='TIME_FORMAT' class='addon_info'>
+					<td class='ext_pn'>Say date/time: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.TIME_FORMAT == '0' %]
+							<input name="TIME_FORMAT" type="radio" value="0" checked>
+						[% ELSE %]
+							<input name="TIME_FORMAT" type="radio" value="0">
+						[% END %]
+					</td>
+				</tr>
+				<tr id='TIME_FORMAT' class='addon_info'>
+					<td class='ext_pn'>Say time: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.TIME_FORMAT == '1' %]
+							<input name="TIME_FORMAT" type="radio" value="1" checked>
+						[% ELSE %]
+							<input name="TIME_FORMAT" type="radio" value="1">
+						[% END %]
+					</td>
+				</tr>
+				<tr id='TIME_FORMAT' class='addon_info'>
+					<td class='ext_pn'>Say date: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.TIME_FORMAT == '2' %]
+							<input name="TIME_FORMAT" type="radio" value="2" checked>
+						[% ELSE %]
+							<input name="TIME_FORMAT" type="radio" value="2">
+						[% END %]
+					</td>
+				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '16' %]
+				<tr id='HEADERINFO'>
+					<td class='ext_pn'>Fax Header: </td>
+					<td class='ext_pv'>
+						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='35' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
+					</td>
+				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '17' %]
+				<tr class='addon_info' id='MAX_MSG_DURATION'>
+					<td class='ext_pn'>Max message duaration: </td>
+					<td class='ext_pv'>
+						<input size='8' name="MAX_MSG_DURATION" value="[% VBOX_PREF.MAX_MSG_DURATION | html %]" type="text">
+						( in sec, -1 - for unlimit  )
+					</td>
+				</tr>
+				<tr class='addon_info' id='MIN_MSG_DURATION'>
+					<td class='ext_pn'>Min message duaration: </td>
+					<td class='ext_pv'>
+						<input size='8' name="MIN_MSG_DURATION" value="[% VBOX_PREF.MIN_MSG_DURATION | html %]" type="text">
+						( in sec, -1 - for unlimit  )
+					</td>
+				</tr>
+				<tr class='addon_info' id='SECRET_KEY'>
+					<td class='ext_pn'>Secret key ( for rec ): </td>
+					<td class='ext_pv'>
+						<input size='8' name="SECRET_KEY" value="[% VBOX_PREF.SECRET_KEY | html %]" type="text">
+					</td>
+				</tr>
+				<tr class='addon_info' id='MSG_LIMITS'>
+					<td class='ext_pn'>Post interval ( sec ): </td>
+					<td class='ext_pv'>
+						<input size='8' name="MSG_LIMITS" value="[% VBOX_PREF.MSG_LIMITS | html %]" type="text">
+						<select name='bbs_ttl' onchange='javascript:document.vb_opt.MSG_LIMITS.value=this.value'>
+							<option selected value='-1'>unlimit</option>
+							<option value='3600'>1 hour</option>
+							<option value='86400'>1 day</option>
+							<option value='604800'>7 days</option>
+							<option value='2592000'>30 days</option>
+						</select>
+					</td>
+				</tr>
+				[% END %]
+				
+				[% IF VBOX_PREF.TYPE eq '18' %]
+				<tr id='ACTIVE'>
+					<td class='ext_pn'>Activate CallBlast: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.ACTIVE %]
+							<input name="ACTIVE" type="checkbox" checked>
+						[% ELSE %]
+							<input name="ACTIVE" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr id='START_AFTER_CHANGE'>
+					<td class='ext_pn'>Monitoring for greeting: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.START_AFTER_CHANGE %]
+							<input name="START_AFTER_CHANGE" type="checkbox" checked>
+						[% ELSE %]
+							<input name="START_AFTER_CHANGE" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr id='START_DATE'>
+					<td class='ext_pn'>Start CallBlast at: </td>
+					<td class='ext_pv'>
+						<input name="START_TIMESTAMP" value="[% VBOX_PREF.START_TIMESTAMP | html %]" type="hidden">
+						<input size='16' name="START_DATE" value="[% BLAST_START_DATE | html %]" type="text">
+						&nbsp;yyyy/mm/dd hh:mm
+					</td>
+				</tr>
+				<tr id='STOP_DATE'>
+					<td class='ext_pn'>Stop CallBlast at: </td>
+					<td class='ext_pv'>
+						<input name="STOP_TIMESTAMP" value="[% VBOX_PREF.STOP_TIMESTAMP | html %]" type="hidden">
+						<input size='16' name="STOP_DATE" value="[% BLAST_STOP_DATE | html %]" type="text">
+						&nbsp;yyyy/mm/dd hh:mm
+					</td>
+				</tr>
+				<tr class='addon_info' id='RING_TIMEOUT'>
+					<td class='ext_pn'>Ring timeout (sec): </td>
+					<td class='ext_pv'>
+						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
+						( 10 - 120 )
+					</td>
+				</tr>
+				<tr class='addon_info' id='RETRYDIAL_INTERVAL'>
+					<td class='ext_pn'>RetryDial interval (minute): </td>
+					<td class='ext_pv'>
+						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info' id='RETRYDIAL_LOOPS'>
+					<td class='ext_pn'>Retry call attempts: </td>
+					<td class='ext_pv'>
+						<input size='4' type='text' name='RETRYDIAL_LOOPS' value='[% VBOX_PREF.RETRYDIAL_LOOPS | html %]'>
+					</td>
+				</tr>
+				<tr id='CALL_LIMIT'>
+					<td class='ext_pn'>Concurent calls: </td>
+					<td class='ext_pv'>
+						<input size='4' type='text' name='CALL_LIMIT' value='[% VBOX_PREF.CALL_LIMIT | html %]'>
+						( 0 - unlimit )
+					</td>
+				</tr>
+				<tr id='TZ_NAME' class='addon_info'>
+					<td class='ext_pn'>Time Zone</td>
+					<td class='ext_pv'>
+						<select name="TIME_ZONE">
+						[% FOREACH t = TZ %]
+							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
+								<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | html %]</option>
+							[% ELSE %]
+								<option value="[% t.ID | html %]">[% t.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+						</select>
+					</td>
+				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '19' %]
+				<tr id='VAR_NAME'>
+					<td class='ext_pn'>Variable name: </td>
+					<td class='ext_pv'>
+						<input size='10' name="VAR_NAME" value="[% VBOX_PREF.VAR_NAME | html %]" type="text">
+					</td>
+				</tr>
+				<tr id='DTMF_PATTERN'>
+					<td class='ext_pn'>Input pattern:</td>
+					<td class='ext_pv'>
+						<select name='DTMF_PATTERN_ID'>
+							[% FOREACH dtmf = DTMF_PATTERN %]
+								[% IF VBOX_PREF.DTMF_PATTERN_ID eq dtmf.ID %]
+									<option value="[% dtmf.ID | html %]" selected>[% dtmf.DESCRIPTION | html %]</option>
+								[% ELSE %]
+									<option value="[% dtmf.ID | html %]">[% dtmf.DESCRIPTION | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr class='addon_info' id='MAX_DIGITS'>
+					<td class='ext_pn'>Max digits: </td>
+					<td class='ext_pv'>
+						<input size='10' name="MAX_DIGITS" value="[% VBOX_PREF.MAX_DIGITS | html %]" type="text">
+							( -1 for unlimit )
+					</td>
+				</tr>
+				<tr class='addon_info' id='NEED_FORMATED'>
+					<td class='ext_pn'>Format input var: </td>
+					<td class='ext_pv'>
+					[% IF VBOX_PREF.NEED_FORMATED %]
+						<input name="NEED_FORMATED" type="checkbox" checked>
+					[% ELSE %]
+						<input name="NEED_FORMATED" type="checkbox">
+					[% END %]
+				</td>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '20' %]
+				<tr id='WEBVAR_URL'>
+					<td class='ext_pn'>URL: </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='WEBVAR_URL' value='[% VBOX_PREF.WEBVAR_URL | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info' id='GOTO_IF_FAIL'>
+					<td class='ext_pn'>Goto if request fail: </td>
+					<td class='ext_pv'>
+						<select name="GOTO_IF_FAIL">
+							<option selected value="">------------------------------</option>
+							[% FOREACH vb = VB_LIST %]
+								[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
+							<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
+								[% ELSE %]
+							<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+						[% FOREACH vb = VB_LIST %]
+							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
+								<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
+							[% END %]
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info' id='NEED_PARAMS'>
+					<td class='ext_pn'>Read user params: </td>
+					<td class='ext_pv'>
+					[% IF VBOX_PREF.NEED_PARAMS %]
+						<input name="NEED_PARAMS" type="checkbox" checked>
+					[% ELSE %]
+						<input name="NEED_PARAMS" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				[% END %]
+				
+				[% IF VBOX_PREF.TYPE eq '22' %]
+				<tr id='VAR_VALUE'>
+					<td class='ext_pn'>Current value: </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='VAR_VALUE' value='[% VBOX_PREF.VAR_VALUE | html %]'>
+					</td>
+				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '23' %]
+				<tr class='addon_info' id='AC_CB_NUMBER'>
+					<td class='ext_pn'>CallBack number: </td>
+					<td class='ext_pv'>
+						<input size='20' type='text' name='AC_CB_NUMBER' value='[% VBOX_PREF.AC_CB_NUMBER | html %]'>
+						 ( null == callerid )
+					</td>
+				</tr>
+				<tr id='AC_AUTO_REMOVE'>
+					<td class='ext_pn'>Remove message after dial: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.AC_AUTO_REMOVE %]
+							<input name="AC_AUTO_REMOVE" type="checkbox" checked>
+						[% ELSE %]
+							<input name="AC_AUTO_REMOVE" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info' id='RING_TIMEOUT'>
+					<td class='ext_pn'>Ring timeout (sec): </td>
+					<td class='ext_pv'>
+						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
+						( 10 - 120 )
+					</td>
+				</tr>
+				<tr class='addon_info' id='RETRYDIAL_INTERVAL'>
+					<td class='ext_pn'>RetryDial interval (sec): </td>
+					<td class='ext_pv'>
+						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
+						( 30 - 180 )
+					</td>
+				</tr>
+				<tr class='addon_info' id='RETRYDIAL_LOOPS'>
+					<td class='ext_pn'>Call attempts: </td>
+					<td class='ext_pv'>
+						<input size='4' type='text' name='RETRYDIAL_LOOPS' value='[% VBOX_PREF.RETRYDIAL_LOOPS | html %]'>
+					</td>
+				</tr>
+				[% END %]
+				
+				[% IF VBOX_PREF.TYPE eq '24' %]
+				<tr id='GOOGLE_USER'>
+					<td class='ext_pn'>Google user: </td>
+					<td class='ext_pv'>
+						<input size='20' type='text' name='GOOGLE_USER' value='[% VBOX_PREF.GOOGLE_USER | html %]'>
+					</td>
+				</tr>
+				<tr id='GOOGLE_PSWD'>
+					<td class='ext_pn'>Google password: </td>
+					<td class='ext_pv'>
+						<input size='20' type='password' name='GOOGLE_PSWD' value='[% VBOX_PREF.GOOGLE_PSWD | html %]'>
+					</td>
+				</tr>
+				<tr id='GOOGLE_CALENDAR'>
+					<td class='ext_pn'>Calendar name: </td>
+					<td class='ext_pv'>
+						<input size='20' type='text' name='GOOGLE_CALENDAR' value='[% VBOX_PREF.GOOGLE_CALENDAR | html %]'>
+						( null == all calendars )
+					</td>
+				</tr>
+				<tr id='GOTO_IF_OK'>
+					<td class='ext_pn'>Go to if not busy: </td>
+					<td class='ext_pv'>
+						<select name='GOTO_IF_OK'>
+							<option selected value="[% VBOX_PREF.GOTO_IF_OK | html %]"  >[% VBOX_PREF.GOTO_IF_OK | html %] - Current setting</option>
+							[% FOREACH vb = VB_LIST %]
+								[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_OK %]
+							<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option> 
+								[% ELSE %]
+							<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option> 
+								[% END %]
+							[% END %]
+						</select>
+						[% FOREACH vb = VB_LIST %]
+							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_OK %]
+								<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
+							[% END %]
+						[% END %]
+					</td>
+				</tr>
+				<tr id='GOTO_IF_BUSY'>
+					<td class='ext_pn'>Go to if busy: </td>
+					<td class='ext_pv'>
+						<select name='GOTO_IF_BUSY'>
+							<option selected value="[% VBOX_PREF.GOTO_IF_BUSY | html %]"  >[% VBOX_PREF.GOTO_IF_BUSY | html %] - Current setting</option>
+							[% FOREACH vb = VB_LIST %]
+								[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_BUSY %]
+							<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option> 
+								[% ELSE %]
+							<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option> 
+								[% END %]
+							[% END %]
+						</select>
+						[% FOREACH vb = VB_LIST %]
+							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_BUSY %]
+								<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
+							[% END %]
+						[% END %]
+					</td>
+				</tr>
+				[% END %]
+				
+				[% IF VBOX_PREF.TYPE eq '25' %]
+				<tr id='SAY_PATTERN'>
+					<td class='ext_pn'>Text type:</td>
+					<td class='ext_pv'>
+						<select name='SAY_PATTERN_ID'>
+							[% FOREACH say = SAY_PATTERN %]
+								[% IF VBOX_PREF.SAY_PATTERN_ID eq say.ID %]
+									<option value="[% say.ID | html %]" selected>[% say.DESCRIPTION | html %]</option>
+								[% ELSE %]
+									<option value="[% say.ID | html %]">[% say.DESCRIPTION | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr id='TEXT_STR'>
+					<td class='ext_pn'>Text string: </td>
+					<td class='ext_pv'>
+						<input size='20' name="TEXT_STR" value="[% VBOX_PREF.TEXT_STR | html %]" type="text">
+					</td>
+				</tr>
+				[% END %]
+				
+				[% IF VBOX_PREF.TYPE eq '26' %]
+				<tr id='STREAM_URL'>
+					<td class='ext_pn'>URL: </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='STREAM_URL' value='[% VBOX_PREF.STREAM_URL | html %]'>
+					</td>
+				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '27' %]
+				<tr class='addon_info'>
+					<td class='ext_pn'>Music on hold:</td>
+					<td class='ext_pv'>
+						<select name='MOH_ID'>
+							[% FOREACH moh = MOH %]
+								[% IF VBOX_PREF.MOH_ID eq moh.ID %]
+									<option value="[% moh.ID | html %]" selected>[% moh.DESCRIPTION | html %]</option>
+								[% ELSE %]
+									<option value="[% moh.ID | html %]">[% moh.DESCRIPTION | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr id='RING_TIMEOUT'>
+					<td class='ext_pn'>Max Hold Time (sec): </td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info' id='GOTO_IF_FAIL'>
+				<td class='ext_pn'>Goto if UNParking: </td>
+					<td class='ext_pv'>
+						<select name="GOTO_IF_FAIL">
+							<option value="" selected>------------------------------</option>
+							[% FOREACH vb = VB_LIST %]
+								[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
+							<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
+								[% ELSE %]
+							<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+						[% FOREACH vb = VB_LIST %]
+							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
+								<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
+							[% END %]
+						[% END %]
+					</td>
+				</tr>
+				[% END %]
+				
+				<tr><td colspan='2'>&nbsp;</td></tr>
+				<tr id='MORE_OPTIONS'>
+					<td align='center'>
+						<a id='xvb_view_mode_selector' href='#' onclick="return MoreExtOptions(this,0,'all options','core options')">&nbsp;</a>
+					</td>
+					<td colspan='2' align='center'>
+						<input type='submit' value='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;change&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'>
+					</td>
+				</tr>
+				</form>
+			</table>
+			</td>
+
+			<td width='2%' valign='top'>&nbsp;&nbsp;&nbsp;</td>
+
+			<td valign='top' width='50%' align='left'>
+				<table class='addon_data' width='100%' id='d-tbl-s'>
+					<tr><td colspan='2'><h4>System files:</h4></td></tr>
+
+					[% IF VBOX_PREF.NAME_FILE %]
+					<tr class='addon_data' id='d-tr-s0'>
+						<td class='ext_pn'>User Name: </td>
+						<td class='ext_pv' align='right'>
+							<a title='play' 
+								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.NAME_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
+							<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.NAME_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							<a title='delete' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% VBOX_PREF.NAME_FILE %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-s0','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+						</td>
+					</tr>
+					[% END %]
+					
+					[% IF VBOX_PREF.GREET_FILE %]
+					<tr class='addon_data' id='d-tr-s1'>
+						<td class='ext_pn'>User Greeting: </td>
+						<td class='ext_pv' align='right'>
+							<a title='play' 
+								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.GREET_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
+							<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.GREET_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							<a title='delete' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% VBOX_PREF.GREET_FILE %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-s1','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+						</td>
+					</tr>
+					[% END %]
+					
+					[% IF VBOX_PREF.TYPE eq '3' %]
+					[% IF VBOX_PREF.ANNOUNCEMENT_FILE %]
+					<tr class='addon_data' id='d-tr-s2'>
+						<td class='ext_pn'>Find-Me announcement: </td>
+						<td class='ext_pv' align='right'>
+							<a title='play' 
+								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
+							<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							<a title='delete' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-s2','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+						</td>
+					</tr>
+					[% END %]
+					
+					[% IF VBOX_PREF.RETRYDIAL_FILE %]
+					<tr class='addon_data' id='d-tr-s3'>
+						<td class='ext_pn'>RetryDial announcement: </td>
+						<td class='ext_pv' align='right'>
+							<a title='play' 
+								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.RETRYDIAL_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
+							<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							<a title='delete' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-s3','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+						</td>
+					</tr>
+					[% END %]
+					[% END %]
+					
+					[% IF VBOX_PREF.TYPE eq '13' %]
+					[% IF VBOX_PREF.ANNOUNCEMENT_FILE %]
+					<tr class='addon_data' id='d-tr-s4'>
+						<td class='ext_pn'>Find-Me announcement: </td>
+						<td class='ext_pv' align='right'>
+							<a title='play' 
+								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
+							<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							<a title='delete' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-s4','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+						</td>
+					</tr>
+					[% END %]
+
+					[% IF VBOX_PREF.RETRYDIAL_FILE %]
+					<tr class='addon_data' id='d-tr-s5'>
+						<td class='ext_pn'>RetryDial announcement: </td>
+						<td class='ext_pv' align='right'>
+							<a title='play' 
+								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.RETRYDIAL_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
+							<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							<a title='delete' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-s5','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+						</td>
+					</tr>
+					[% END %]
+					[% END %]
+
+					[% IF VBOX_PREF.TYPE eq '16' %]
+					[% IF VBOX_PREF.FAX_FILE %]
+					<tr class='addon_data' id='d-tr-s6'>
+						<td class='ext_pn'>Fax on Demand: </td>
+						<td class='ext_pv' align='right'>
+							<a title='download' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.FAX_FILE %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>&nbsp;&nbsp;
+							<a title='delete' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% VBOX_PREF.FAX_FILE %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-s6','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+						</td>
+					</tr>
+					[% END %]
+					[% END %]
+					
+					<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+					<tr class='addon_data'>
+						<td colspan='2'>
+							<input type='file' name='msg'>
+							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='action' value='msg_upload'>
+							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+							<select name="type">
+								<option selected value="1">Name</option>
+								<option value="2">Greeting</option>
+
+								[% IF VBOX_PREF.TYPE eq '3' %]
+								<option value="3">Announcement</option>
+								<option value="4">RetryDial</option>
+								[% END %]
+
+								[% IF VBOX_PREF.TYPE eq '13' %]
+								<option value="3">Announcement</option>
+								<option value="4">RetryDial</option>
+								[% END %]
+								
+								[% IF VBOX_PREF.TYPE eq '16' %]
+								<option value="6">Fax on Demand</option>
+								[% END %]
+							</select> 
+							<input type='submit' value='upload'>
+						</td>
+					</tr>
+					</form>
+					
+					<tr class='addon_info'>
+						<td colspan='2'>&nbsp;</td>
+					</tr>
+					<tr class='addon_info' id='backup-restore'>
+						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+						<td>
+							<input type='file' name='config_file'>
+							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='action' value='ext_restore'>
+							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+							<input type='submit' value='restore schema'>
+						</td>
+						<td align='center'>
+							<a title='backup schema' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/ext_backup/[% VBOX_PREF.ID %]?uniq=[% USER_CREDS.UNIQ | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='schema' /></a>
+						</td>
+						</form>
+					</tr>
+
+					[% IF VBOX_PREF.TYPE eq '3' %]
+					[% IF VB_DATA %]
+					<tr><td colspan='2'>&nbsp;</td></tr>
+					<tr>
+						<td colspan='2' align='left'><h4>Call statistics ( started [% CALL_STAT_DATE | html %] ):</h4></td>
+					</tr>
+					<tr>
+						<td colspan='2' align='center' width='100%'>
+						<table width='100%' class='addon_data'>
+							<tr class='list_data'>
+								<th>Phone number</th>
+								<th>All calls</th>
+								<th>Answered calls</th>
+								<th>Duaration</th>
+								<th>Duration AVG</th>
+								<th>RingTime AVG</th>
+							</tr>
+							[% FOREACH param = VB_DATA %]
+							[% IF param.NUMBER eq '===' %]
+							<tr align='center'>
+								<td align='center'>
+									<a href='?action=callout_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to reset statistics ?' )" title='reset call statistics'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+								</td>
+							[% ELSE %]
+							<tr align='center' class='addon_data'>
+								<td align='left'>[% param.NUMBER | html %]</td>
+							[% END %]
+								<td>[% param.ALL | html %]</td>
+								<td>[% param.ANSWERED | html %]</td>
+								<td>[% param.DURATION | duration_str | html %]</td>
+								<td>[% param.DURATION_AVG | duration_str | html %]</td>
+								<td>[% param.RING_TIME_AVG | html %]</td>
+							</tr>
+							[% END %]
+						</table>
+						</td>
+					</tr>
+					[% END %]
+					[% END %]
+
+					[% IF VBOX_PREF.TYPE eq '4' %]
+					<tr><td colspan='2'>&nbsp;</td></tr>
+					<tr>
+						<td align='left'><h4>Directory data ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ):</h4></td>
+						<td align='right'>
+							<a title='get excel table' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
+							&nbsp;&nbsp;&nbsp;
+							<a href='?action=dir_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL directory items'><img border='0' src='/xvb/images/msg_delete.png' alt='del all items' /></a>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='2' align='center'>
+						<table width='90%' class='addon_data' id='d-tbl'>
+							<tr class='list_data'>
+								<th>User Name</th>
+								<th>Extension Number</th>
+								<th>Actions</th>
+							</tr>
+							[% IF MSG_PREV ne '' %]
+							<tr>
+								<td align='left' colspan='3'>
+									<a title='previous page' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+								</td>
+							</tr>
+							[% END %]
+							[% FOREACH param = VB_DATA %]
+							<tr align='center' class='backlight' id='d-tr-[% param.DATA_ID %]'>
+								<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+								<input type='hidden' name='action' value='dir_update'>
+								<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+								<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
+								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+								<td><input class='in_t0' type='text' name='name' value='[% param.NAME | html %]' size='20'></td>
+								<td><input class='in_t0' type='text' name='redir_to' value='[% param.REDIRECT_TO | html %]' size='15'></td>
+								<td align='left'>
+									<table>
+										<tr>
+											<td>
+												<a href='?action=dir_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete directory item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+											</td>
+											<td>
+												<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+												<script language='JavaScript'>
+													writeUpdateLinks( 'save changes' );
+												</script>
+												<noscript><input value='change' type='submit'></noscript>
+												</span>
+											</td>
+											<td>
+												[% FOREACH vb = VB_LIST %]
+												[% IF vb.EXT_NUMBER eq param.REDIRECT_TO %]
+													<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
+												[% END %]
+												[% END %]
+											</td>
+										</tr>
+									</table>
+								</td>
+								</form>
+							</tr>
+							[% END %]
+							[% IF MSG_NEXT ne '' %]
+							<tr>
+								<td align='right' colspan='3'>
+									<a title='next page' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+								</td>
+							</tr>
+							[% END %]
+							<tr align='center' class='nocolor'>
+								<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+								<input type='hidden' name='action' value='dir_add'>
+								<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+								<td><input type='text' name='name' value='' size='20'></td>
+								<td><input type='text' name='redir_to' value='' size='15'></td>
+								<td align='center'>
+									<input type='submit' value='add'>
+								</td>
+								</form>
+							</tr>
+							<tr><td colspan='3'>&nbsp;</td></tr>
+							<tr id='csv-import'>
+								<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+								<td colspan='3' align='right'>
+									<input type='file' name='config_file'>
+									<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+									<input type='hidden' name='action' value='ext_restore'>
+									<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+									<input name='is_excel' type='submit' value='Append data from CSV'>
+								</td>
+								</form>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					[% END %]
+
+					[% IF VBOX_PREF.TYPE eq '10' %]
+					<tr><td colspan='2'>&nbsp;</td></tr>
+					<tr>
+						<td colspan='2' align='left'><h4>Voting results ( started [% VOTING_STAT_DATE | html %] ):</h4></td>
+					</tr>
+					<tr>
+						<td colspan='2' align='center'>
+						<table width='90%' class='addon_data'>
+							<tr>
+								<td colspan='3'><pre>[% VBOX_PREF.GREETING | html %]</pre></td>
+							</tr>
+							<table width='90%' class='addon_data'>
+							<tr class='list_data'>
+								<th>Variant</th>
+								<th>Count</th>
+								<th>Percent</th>
+							</tr>
+							[% FOREACH param = VB_DATA %]
+							[% IF param.DIGIT eq '===' %]
+							<tr align='center'>
+								<td align='center'>
+									<a href='?action=voting_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to reset statistics ?' )" title='reset voting results'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+								</td>
+							[% ELSE %]
+							<tr align='center' class='addon_data'>
+								<td>[% param.DIGIT | html %]</td>
+							[% END %]
+								<td>[% param.COUNT | html %]</td>
+								<td>[% param.PRC | html %] %</td>
+							</tr>
+							[% END %]
+						</table>
+						</td>
+					</tr>
+					[% END %]
+					
+					[% IF VBOX_PREF.TYPE eq '12' %]
+					<tr><td colspan='2'>&nbsp;</td></tr>
+					<tr>
+						<td colspan='2' align='left'><h4>Exists podcasts:</h4></td>
+					</tr>
+					<tr>
+						<td colspan='2' align='center'>
+						<table width='100%' class='addon_data'>
+							<tr class='list_data' align='center'>
+								<th>Create time</th>
+								<th>Download time</th>
+								<th>File size</th>
+								<th>Duaration</th>
+							</tr>
+							[% FOREACH param = VB_DATA %]
+							<tr align='center'>
+								<td>[% param.CREATE_DATE | html %]</td>
+								<td>[% param.DOWNLOAD_DATE | html %]</td>
+								<td align='right'>[% param.FILE_SIZE | fsize %]</td>
+								<td>[% param.DURATION | duration_str | html %]</td>
+							</tr>
+							[% END %]
+						</table>
+						</td>
+					</tr>
+					[% END %]
+					
+					[% IF VBOX_PREF.TYPE eq '13' %]
+					[% IF VB_DATA %]
+					<tr><td colspan='2'>&nbsp;</td></tr>
+					<tr>
+						<td colspan='2' align='left'><h4>Agent statistics ( started [% CALL_STAT_DATE | html %] ):</h4></td>
+					</tr>
+					<tr>
+						<td colspan='2' align='center' width='100%'>
+						<table width='100%' class='addon_data'>
+							<tr class='list_data'>
+								<th>Phone number</th>
+								<th>All calls</th>
+								<th>Answered calls</th>
+								<th>Duaration</th>
+								<th>Duration AVG</th>
+								<th>RingTime AVG</th>
+							</tr>
+							[% FOREACH param = VB_DATA %]
+							[% IF param.NUMBER eq '===' %]
+							<tr align='center'>
+								<td align='center'>
+									<a href='?action=callout_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to reset statistics ?' )" title='reset call statistics'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+								</td>
+							[% ELSE %]
+							<tr align='center' class='addon_data'>
+								<td align='left'>[% param.NUMBER | html %]</td>
+							[% END %]
+								<td>[% param.ALL | html %]</td>
+								<td>[% param.ANSWERED | html %]</td>
+								<td>[% param.DURATION | duration_str | html %]</td>
+								<td>[% param.DURATION_AVG | duration_str | html %]</td>
+								<td>[% param.RING_TIME_AVG | html %]</td>
+							</tr>
+							[% END %]
+						</table>
+						</td>
+					</tr>
+					[% END %]
+					[% END %]
+					
+					[% IF VBOX_PREF.TYPE eq '18' %]
+					[% IF BLAST_STAT %]
+					<tr><td colspan='2'>&nbsp;</td></tr>
+					<tr>
+						<td colspan='2' align='left'><h4>CallBlast statistics:</h4></td>
+					</tr>
+					<tr>
+						<td colspan='2' align='right'>live calls: [% BLAST_CALLS | html %]</td>
+					</tr>
+					<tr>
+						<td colspan='2' align='center' width='100%'>
+						<table width='100%' class='addon_data'>
+							<tr class='list_data'>
+								<th>Call Status</th>
+								<th>Count</th>
+								<th>Percent</th>
+							</tr>
+							<tr align='right' class='addon_data'>
+								<td>Success</td>
+								<td>[% BLAST_STAT.success | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.success_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right' class='addon_data'>
+								<td>Failed</td>
+								<td>[% BLAST_STAT.failed | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.failed_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right' class='addon_data'>
+								<td>Wait redial</td>
+								<td>[% BLAST_STAT.failedwait | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.failedwait_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right' class='addon_data'>
+								<td>Wait</td>
+								<td>[% BLAST_STAT.wait | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.wait_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right' class='addon_data'>
+								<td>Expired</td>
+								<td>[% BLAST_STAT.expired | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.expired_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right'>
+								<td>All records</td>
+								<td>[% BLAST_STAT.all | html %]&nbsp;</td>
+								<td>100.00 %&nbsp;</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					[% END %]
+			
+					<tr>
+						<td colspan='2' align='left'>&nbsp;</td>
+					</tr>
+					<tr>
+						<td colspan='2' align='left'><h4>CallBlast Schedule:</h4></td>
+						<td align='right'>
+							<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL schedule items'><img border='0' src='/xvb/images/msg_delete.png' alt='del all items' /></a>
+						</td>
+					</tr>
+					<tr>
+					<td colspan='3' align='center'>
+						<table width='90%' class='addon_data' id='d-tbl-d1'>
+							<tr class='list_data'>
+								<th>Priority</th>
+								<th>Time</th>
+								<th>Day Of Week</th>
+								<th>Day Of Month</th>
+								<th>Month</th>
+								<th>Year</th>
+								<th>Actions</th>
+							</tr>
+							[% FOREACH param = BLAST_SCHEDULE %]
+							<tr align='center' class='backlight' id='d-tr-[% param.DATA_ID %]'>
+								<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+								<input type='hidden' name='action' value='schedule_update'>
+								<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+								<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
+								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+								<td><input class='in_t0' size='5'  name='priority' type='text' value='[% param.PRIORITY | html %]'></td>
+								<td><input class='in_t0' size='11' name='time_h'type='text' value='[% param.TIME_H | html %]'></td>
+								<td><input class='in_t0' size='5'  name='dayofweek' type='text' value='[% param.DAYOFWEEK | html %]'></td>
+								<td><input class='in_t0' size='5'  name='dayofmonth' type='text' value='[% param.DAYOFMONTH | html %]'></td>
+								<td><input class='in_t0' size='5'  name='month' type='text' value='[% param.MONTH | html %]'></td>
+								<td><input class='in_t0' size='5'  name='year' vtype='text' value='[% param.YEAR | html %]'></td>
+								<td align='left'>
+									<table>
+										<tr>
+											<td>
+												<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]','d-tbl-d1')" title='delete schedule item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+											</td>
+											<td>
+												<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+												<script language='JavaScript'>
+													writeUpdateLinks( 'save changes' );
+												</script>
+												<noscript><input value='change' type='submit'></noscript>
+												</span>
+											</td>
+										</tr>
+									</table>
+								</td>
+								</form>
+							</tr>
+							[% END %]
+						
+							<tr align='center' class='nocolor'>
+								<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+								<input type='hidden' name='action' value='schedule_add'>
+								<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+								<td><input size='5' type='text'  name='priority' value='5'></td>
+								<td><input size='11' type='text' name='time_h' value='*'></td>
+								<td><input size='5' type='text'  name='dayofweek' value='*'></td>
+								<td><input size='5' type='text'  name='dayofmonth' value='*'></td>
+								<td><input size='5' type='text'  name='month' value='*'></td>
+								<td><input size='5' type='text'  name='year' value='*'></td>
+								<td align='center'>
+									<input type='submit' value='add'>
+								</td>
+								</form>
+							</tr>
+						</table>
+					</td>
+					</tr>
+					[% END %]
+					
+					[% IF VBOX_PREF.TYPE eq '27' %]
+					[% IF VB_DATA scalar %]
+					<tr><td colspan='2'>&nbsp;</td></tr>
+					<tr>
+						<td colspan='2' align='left'><h4>Parked calls:</h4></td>
+					</tr>
+					<tr>
+						<td colspan='2' align='center' width='100%'>
+						<table width='100%' class='addon_data'>
+							<tr class='list_data'>
+								<th>Phone number</th>
+								<th>Parking slot</th>
+								<th>Hold time</th>
+							</tr>
+							[% FOREACH param = VB_DATA %]
+							<tr align='center' class='addon_data'>
+								<td align='left'>[% param.CALLER_ID | html %]</td>
+								<td>[% param.SLOT | html %]</td>
+								<td>[% param.HOLD_TIME | duration_str | html %]</td>
+							</tr>
+							[% END %]
+						</table>
+						</td>
+					</tr>
+					[% END %]
+					[% END %]
+				</table>
+			</td>
+			</tr>
+			
+			[% IF VBOX_PREF.TYPE eq '5' %]
+			<tr><td colspan='3'>&nbsp;</td></tr>
+			<tr>
+				<td colspan='2' align='left'><h4>Schedule data:</h4></td>
+				<td align='right'>
+					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL schedule items'><img border='0' src='/xvb/images/msg_delete.png' alt='del all items' /></a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan='3' align='center'>
+					<table width='90%' class='addon_data' id='d-tbl'>
+						<tr class='list_data'>
+							<th>Priority</th>
+							<th>CallerID</th>
+							<th>Time</th>
+							<th>Day Of Week</th>
+							<th>Day Of Month</th>
+							<th>Month</th>
+							<th>Year</th>
+							<th>Extension Number</th>
+							<th>Actions</th>
+						</tr>
+						[% FOREACH param = VB_DATA %]
+						<tr align='center' class='backlight' id='d-tr-[% param.DATA_ID %]'>
+							<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+							<input type='hidden' name='action' value='schedule_update'>
+							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
+							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+							<td><input class='in_t0' size='5'  name='priority' type='text' value='[% param.PRIORITY | html %]'></td>
+							<td><input class='in_t0' size='11' name='callerid'  type='text' value='[% param.CALLERID | html %]'></td>
+							<td><input class='in_t0' size='11' name='time_h'type='text' value='[% param.TIME_H | html %]'></td>
+							<td><input class='in_t0' size='7'  name='dayofweek' type='text' value='[% param.DAYOFWEEK | html %]'></td>
+							<td><input class='in_t0' size='7'  name='dayofmonth' type='text' value='[% param.DAYOFMONTH | html %]'></td>
+							<td><input class='in_t0' size='5'  name='month' type='text' value='[% param.MONTH | html %]'></td>
+							<td><input class='in_t0' size='9'  name='year' vtype='text' value='[% param.YEAR | html %]'></td>
+							<td><input class='in_t0' size='11'  name='redirect_to' type='text' value='[% param.REDIRECT_TO | html %]'></td>
+							<td align='left'>
+								<table>
+									<tr>
+										<td>
+											<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete schedule item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+										</td>
+										<td>
+											<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+											<script language='JavaScript'>
+												writeUpdateLinks( 'save changes' );
+											</script>
+											<noscript><input value='change' type='submit'></noscript>
+											</span>
+										</td>
+										<td>
+											[% FOREACH vb = VB_LIST %]
+											[% IF vb.EXT_NUMBER eq param.REDIRECT_TO %]
+												<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
+											[% END %]
+											[% END %]
+										</td>
+									</tr>
+								</table>
+							</td>
+							</form>
+						</tr>
+						[% END %]
+						<tr align='center' class='nocolor'>
+							<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<input type='hidden' name='action' value='schedule_add'>
+							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+							<td><input size='5' type='text'  name='priority' value='5'></td>
+							<td><input size='11' type='text' name='callerid' value='*'></td>
+							<td><input size='11' type='text' name='time_h' value='*'></td>
+							<td><input size='7' type='text'  name='dayofweek' value='*'></td>
+							<td><input size='7' type='text'  name='dayofmonth' value='*'></td>
+							<td><input size='5' type='text'  name='month' value='*'></td>
+							<td><input size='9' type='text'  name='year' value='*'></td>
+							<td><input size='11' type='text'  name='redirect_to' value='0'></td>
+							<td align='center'>
+								<input type='submit' value='add'>
+							</td>
+							</form>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			[% END %]
+
+			[% IF VBOX_PREF.TYPE eq '18' %]
+			<tr><td colspan='3'>&nbsp;</td></tr>
+			<tr>
+				<td colspan='2' align='left'><h4>CallBlast data ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ) :</h4></td>
+				<td align='right'>
+					<a title='get excel table' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
+					&nbsp;&nbsp;&nbsp;
+					<a href='?action=callblast_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL callblast items'><img border='0' src='/xvb/images/msg_delete.png' alt='del all items' /></a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan='3' align='center'>
+				<table width='95%' class='addon_data' id='d-tbl'>
+					<tr class='list_data'>
+						<th>Name</th>
+						<th>Phone Number(s)</th>
+						<th>User vars</th>
+						<th>Status</th>
+						<th>Attempt</th>
+						<th>Handle time</th>
+						<th>Actions</th>
+					</tr>
+					[% IF MSG_PREV ne '' %]
+					<tr>
+						<td align='left' colspan='7'>
+							<a title='previous page' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+						</td>
+					</tr>
+					[% END %]
+					[% FOREACH param = VB_DATA %]
+					<tr align='center' class='backlight' id='d-tr-[% param.DATA_ID %]'>
+						<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+						<input type='hidden' name='action' value='callblast_update'>
+						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+						<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
+						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+						<td><input class='in_t0' size='20' type='text' name='name' value='[% param.NAME | html %]'></td>
+						<td><input class='in_t0' size='35' type='text' name='pn' value='[% param.PHONE_NUMBER | html %]'></td>
+						<td><input class='in_t0' size='35' type='text' name='uv' value='[% param.USER_VARS | html %]'></td>
+						<td>
+							[% IF param.CALL_STATUS contain 'success' %]
+								<a class='success' href='?action=act_list&call_id=[% param.CALL_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
+							[% ELSIF param.CALL_STATUS eq 'wait' %]
+								wait	
+							[% ELSIF param.CALL_STATUS %]
+								<span class='error'>[% param.CALL_STATUS | html %]</span>
+							[% ELSE %]
+								unknown
+							[% END %]
+						</td>
+						<td>[% param.ATTEMPT %]</td>
+						<td>
+							[% param.PROCESS_DATE | html %]
+						</td>
+						<td align='center'>
+							<table>
+								<tr>
+									<td>
+										<a href='?action=callblast_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+									</td>
+									<td>
+										<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+										<script language='JavaScript'>
+											writeUpdateLinks( 'save changes' );
+										</script>
+										<noscript><input value='change' type='submit'></noscript>
+										</span>
+									</td>
+								</tr>
+							</table>
+						</td>
+						</form>
+					</tr>
+					[% END %]
+					[% IF MSG_NEXT ne '' %]
+					<tr>
+						<td align='right' colspan='7'>
+							<a title='next page' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+						</td>
+					</tr>
+					[% END %]
+					<tr align='center' class='nocolor'>
+						<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+						<input type='hidden' name='action' value='callblast_add'>
+						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+						<td><input type='text' name='name' value='' size='20'></td>
+						<td><input size='35' type='text' name='pn' value=''></td>
+						<td><input size='35' type='text' name='uv' value=''></td>
+						<td colspan='3'>&nbsp;</td>
+						<td align='center'>
+							<input type='submit' value='add'>
+						</td>
+						</form>
+					</tr>
+					<tr><td colspan='7'>&nbsp;</td></tr>
+					<tr id='csv-import'>
+						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+						<td colspan='3'>&nbsp;</td>
+						<td colspan='4' align='right'>
+							<input type='file' name='config_file'>
+							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='action' value='ext_restore'>
+							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+							<input name='is_excel' type='submit' value='Append data from CSV'>
+						</td>
+						</form>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			[% END %]
+
+			[% IF VBOX_PREF.TYPE eq '21' %]
+			<tr><td colspan='3'>&nbsp;</td></tr>
+			<tr>
+				<td colspan='2' align='left'><h4>Goto If data:</h4></td>
+				<td align='right'>
+					<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL gotoif items'><img border='0' src='/xvb/images/msg_delete.png' alt='del all items' /></a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan='3' align='center'>
+					<table width='90%' class='addon_data' id='d-tbl'>
+						<tr class='list_data'>
+							<th>Priority</th>
+							<th>Function</th>
+							<th>Variable</th>
+							<th>Condition</th>
+							<th>Value</th>
+							<th>Extension Number</th>
+							<th>Actions</th>
+						</tr>
+						[% FOREACH param = VB_DATA %]
+						<tr align='center' class='backlight' id='d-tr-[% param.DATA_ID %]'>
+							<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+							<input type='hidden' name='action' value='gotoif_update'>
+							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
+							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+							<td><input class='in_t0' size='5'  name='priority' type='text' value='[% param.PRIORITY | html %]'></td>
+							<td>
+								<select class='in_t0'  name="func">
+									<option selected value="[% param.FUNC | html %]" selected>[% param.FUNC | html %]</option>
+									<option value="value">value</option>
+									<option value="strlen">strlen</option>
+								</select> 
+							</td>
+							<td><input class='in_t0' size='15' name='var_name' type='text' value='[% param.VAR_NAME | html %]'></td>
+							<td>
+								<select class='in_t0' name="cond">
+									<option selected value="[% param.COND | html %]" selected>[% param.COND | html %]</option>
+									<option value="<">&lt;</option>
+									<option value=">">&gt;</option>
+									<option value="<=">&lt;=</option>
+									<option value=">=">&gt;=</option>
+									<option value="==">==</option>
+									<option value="!-">!-</option>
+									<option value="contain">contain</option>
+									<option value="regexp">regexp</option>
+								</select> 
+							</td>
+							<td><input class='in_t0' size='15' name='var_value' type='text' value='[% param.VAR_VALUE | html %]'></td>
+							<td><input class='in_t0' size='11'  name='redirect_to' type='text' value='[% param.REDIRECT_TO | html %]'></td>
+							<td align='left'>
+								<table>
+									<tr>
+										<td>
+											<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete gotoif item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+										</td>
+										<td>
+											<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+											<script language='JavaScript'>
+												writeUpdateLinks( 'save changes' );
+											</script>
+											<noscript><input value='change' type='submit'></noscript>
+											</span>
+										</td>
+										<td>
+											[% FOREACH vb = VB_LIST %]
+											[% IF vb.EXT_NUMBER eq param.REDIRECT_TO %]
+												<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
+											[% END %]
+											[% END %]
+										</td>
+									</tr>
+								</table>
+							</td>
+							</form>
+						</tr>
+						[% END %]
+						<tr align='center' class='nocolor'>
+							<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<input type='hidden' name='action' value='gotoif_add'>
+							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+							<td><input size='5' type='text'  name='priority' value='5'></td>
+							<td>
+								<select name="func">
+									<option selected value="value">value</option>
+									<option value="strlen">strlen</option>
+								</select> 
+							</td>
+							<td><input size='15' name='var_name' type='text'></td>
+							<td>
+								<select name="cond">
+									<option value="==">==</option>
+									<option value="!=">!=</option>
+									<option value="<">&lt;</option>
+									<option value=">">&gt;</option>
+									<option value="<=">&lt;=</option>
+									<option value=">=">&gt;=</option>
+									<option value="contain">contain</option>
+									<option value="regexp">regexp</option>
+								</select> 
+							</td>
+							<td><input size='15' name='var_value' type='text'></td>
+							<td><input size='11' name='redirect_to' type='text'></td>
+							<td align='center'>
+								<input type='submit' value='add'>
+							</td>
+							</form>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			[% END %]
+
+		</table>
+		</p>
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+			<td align='center'>
+				<input name='action' value='vb_add' type='hidden'>
+				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input size='6' type='text' name='new_ext'>
+				<input value='Create new' type='submit'>
+			</td>
+			</form>
+			<td>
+				<a class='headers' href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Clone</a>
+			</td>
+			[% IF USER_CREDS.ROOT eq '0' %]
+			<td>
+				<a class='headers' href='?action=user_info&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
+			</td>
+			[% END %]
+			<td>
+				<a class='headers' href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Stats</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')">Delete extension</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=vb_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</center>
+	<script language='JavaScript'>MoreExtOptions(document.getElementById('xvb_view_mode_selector'),1,'all options','core options');</script>
+</body>
+</html>

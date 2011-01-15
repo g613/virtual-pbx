@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: itunes.tt,v 1.11 2010-12-23 12:03:52 gosha Exp $ -->
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+<channel>
+	<ttl>60</ttl>
+	<title>VirtualPBX Itunes  Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	<link>[% CGI_SERVER %][% CGI_URL %]</link>
+	<language>en-us</language>
+	<description>VirtualPBX Itunes</description>
+	<itunes:author>Igor Okunev</itunes:author>
+	<image>
+		<title>VirtualPBX</title>
+		<url>
+			[% IF USER_CREDS.LOGO_HREF eq '' %]
+				[% CGI_SERVER %]/xvb/images/logo-small.png
+			[% ELSE %]
+				[% USER_CREDS.LOGO_HREF %]
+			[% END %]
+		</url>
+		<link>[% CGI_SERVER %][% CGI_URL %]</link>
+	</image>
+
+[% FOREACH msg = MSG_LIST %]
+[% IF msg.IS_VOICE %]
+<item>
+	<title>id:[% msg.FILE_ID %] Сообщение от [% msg.CALLERID | html %]</title>
+	<guid>[% msg.ID | html %]-[% msg.FILE_NAME | html %]</guid>
+	<description>
+	&lt;ul&gt;
+	&lt;li&gt;Внутренний номер: [% msg.EXT_NUMBER | html %]&lt;/li&gt;
+	&lt;li&gt;Длительность: [% msg.DURATION | duration_str %]&lt;/li&gt;
+	&lt;/ul&gt;
+	</description>
+	<pubDate>[% msg.MSG_DATE2 | html %]</pubDate>
+	<enclosure url="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?type=listen;media=[% USER_CREDS.SOUND_FORMAT %];uniq=[% USER_CREDS.ACCESS_CODE | html %]" length="[% msg.FILE_SIZE %]" type="audio/x-[% USER_CREDS.SOUND_FORMAT %]" />
+	<itunes:author>[% msg.CALLERID | html %]</itunes:author>
+</item>
+[% END %]
+[% END %]
+</channel>
+</rss>

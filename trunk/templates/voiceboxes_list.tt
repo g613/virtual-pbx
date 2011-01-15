@@ -1,0 +1,166 @@
+<html>
+<!-- $Id: voiceboxes_list.tt,v 1.44 2010-11-27 16:46:02 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Extensions - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			[% IF USER_CREDS.LOGO_HREF eq '' %]
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			[% ELSE %]
+				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+			[% END %]
+			</td>
+			<td align='center'><h2>Extensions List</h2></td>
+			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='top_hr'>
+		<tr align='left'>
+			<td>
+	[% IF USER_CREDS.ROOT eq '0' %]
+				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=j_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+	[% END %]
+				<a href='?action=msg_list_all&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>All messages</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='list_data' id='d-tbl'>
+		<tr class='list_data'>
+				<th rowspan='2'>Extension</th>
+				<th rowspan='2'>Name</th>
+				<th rowspan='2'>Type</th>
+				<th colspan='5'>Options</th>
+				<th rowspan='2'>Next Exten</th>
+				<th rowspan='2'>Recipient notification</th>
+				<th rowspan='2'>Actions</th>
+		</tr>
+		<tr class='list_data'>
+			<th>W</th>
+			<th>H</th>
+			<th>D</th>
+			<th>P</th>
+			<th>G</th>
+		</tr>
+		[% FOREACH vb = VB_LIST %]
+		[% IF vb.VB_IND div2 %]
+		<tr class='nocolor' id='d-tr-[% vb.ID %]'>
+		[% ELSE %]
+		<tr class='backlight' id='d-tr-[% vb.ID %]'>
+		[% END %]
+			[% IF vb.EXT_NUMBER eq '0' %]
+			<td>&nbsp;START</td>
+			[% ELSE %]
+			<td>&nbsp;[% vb.EXT_NUMBER | html | vb_tree %]</td>
+			[% END %]
+			<td>
+			[% IF vb.NAME ne '' %]
+				<a class='vb_name' href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% vb.NAME | html %]</a>
+			[% ELSE %]
+				[% vb.NAME | html %]
+			[% END %]
+			</td>
+			<td align='center'>
+				[% vb.DESCRIPTION | html %]
+			</td>
+			<td align='center'>
+			[% IF vb.WAITEXTENSION eq '1' %]
+				<img border='0' src='/xvb/images/check.png' alt='*' />
+			[% ELSE %]
+				-
+			[% END %]
+			</td>
+			<td align='center'>
+			[% IF vb.HIDDEN eq '1' %]
+				<img border='0' src='/xvb/images/check.png' alt='*' />
+			[% ELSE %]
+				-
+			[% END %]
+			</td>
+			<td align='center'>
+			[% IF vb.DIRECT %]
+				<img border='0' src='/xvb/images/check.png' alt='*' />
+			[% ELSE %]
+				-
+			[% END %]
+			</td>
+			<td align='center'>
+			[% IF vb.PROTECT %]
+				<img border='0' src='/xvb/images/check.png' alt='*' />
+			[% ELSE %]
+				-
+			[% END %]
+			</td>
+			<td align='center'>
+			[% IF vb.GLOBAL %]
+				<img border='0' src='/xvb/images/check.png' alt='*' />
+			[% ELSE %]
+				-
+			[% END %]
+			</td>
+			<td align='center'>[% vb.NEXTEXTENSION | html %]</td>
+			<td>[% vb.NOTIFYEMAIL | html %]</td>
+			<td align='center'>
+				<table>
+					<tr>
+						<td>
+							<a href='?action=msg_list&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='view messages'><img border='0' src='/xvb/images/msg_list.png' alt='msgs' /></a>
+						</td>
+						<td>
+							<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
+						</td>
+						<td>
+							<a href='?action=vb_del&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% vb.ID %]')" title='delete extension'><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		[% END %]
+		<tr><td colspan='10'>&nbsp;</td></tr>
+	</table>
+	</p>
+
+	<p>	
+	<table width='95%' class='bottom_hr'>
+		<tr align='left'>
+			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+			<td>
+				&nbsp;
+				<input size='6' type='text' name='new_ext'>
+				<input value='create new' type='submit'>
+				<input name='action' value='vb_add' type='hidden'>
+				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='go' value='list' type='hidden'>
+			</td>
+			</form>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>

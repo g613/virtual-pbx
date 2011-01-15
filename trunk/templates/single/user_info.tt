@@ -1,0 +1,420 @@
+<html>
+<!-- $Id: user_info.tt,v 1.11 2010-09-07 09:37:22 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body>
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			[% IF USER_CREDS.LOGO_HREF eq '' %]
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			[% ELSE %]
+				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+			[% END %]
+			</td>
+			<td align='center'><h2>User info AC# <b>[% USER_CREDS.ACCESS_CODE | html %]</h2></td>
+			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			<td>
+				<a class='headers' href='?action=j_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
+			</td>
+			<td align='center'>
+				<a class='headers' href='?action=vb_view&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX</a>
+			</td>
+			<td align='center'>
+				<a class='headers' href='?action=msg_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Messages</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%'>
+		<tr>
+			<td valign='top'>
+			<table class='user_data'>
+				<tr>
+					<td colspan='2'><h4>Core options:</h4></td>
+				</tr>
+				<form method="post" action="[% CGI_URL %]" name='user_prefs' onSubmit='JavaScript:return xmlhttpPost(this,0)'>
+				<tr id='USER_FIRST_NAME'>
+					<td class='ext_pn'>First Name:</td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='FIRST_NAME' value='[% USER_CREDS.FIRST_NAME | html %]'>
+						<input type='hidden' name='action' value='user_update'>
+						<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+					</td>
+				</tr>
+				<tr id='USER_LAST_NAME'>
+					<td class='ext_pn'>Last Name:</td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='LAST_NAME' value='[% USER_CREDS.LAST_NAME | html %]'>
+					</td>
+				</tr>
+				<tr id='USER_EMAIL'>
+					<td class='ext_pn'>Email:</td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='EMAIL' value='[% USER_CREDS.EMAIL | html %]'>
+					</td>
+				</tr>
+				<tr id='USER_LOGO_HREF'>
+					<td class='ext_pn'>Logo href:</td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='LOGO_HREF' value='[% USER_CREDS.LOGO_HREF | html %]'>
+					</td>
+				</tr>
+				<tr id='USER_CSS_HREF'>
+					<td class='ext_pn'>
+						<select selected name='skins' onchange='javascript:document.user_prefs.CSS_HREF.value=this.value'>
+							<option value='[% USER_CREDS.CSS_HREF | html %]'>CSS href:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+							<option value='/xvb/xvb-green.css'>CSS - green skin</option>
+							<option value=''>CSS - default skin</option>
+						</select>
+					</td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='CSS_HREF' value='[% USER_CREDS.CSS_HREF | html %]'>
+					</td>
+				</tr>
+				<tr id='USER_MSG_IN_PAGE'>
+					<td class='ext_pn'>Messages in page:</td>
+					<td class='ext_pv'>
+						<input size='30' type='text' name='MSG_IN_PAGE' value='[% USER_CREDS.MSG_IN_PAGE | html %]'>
+					</td>
+				</tr>
+				<tr id='USER_MSG_STORE_PERIOD'>
+					<td class='ext_pn'>Record storage time (days):</td>
+					<td class='ext_pv'>
+						<input size='10' type='text' name='MSG_STORE_PERIOD' value='[% USER_CREDS.MSG_STORE_PERIOD | html %]'>
+						( 0 - unlimit )
+					</td>
+				</tr>
+				<tr id='USER_LANG'>
+					<td class='ext_pn'>Default language:</td>
+					<td class='ext_pv'>
+						<select name='LANG'>
+							[% FOREACH lang = LANG %]
+								[% IF USER_CREDS.LANG eq lang.ID %]
+									<option value="[% lang.ID | html %]" selected>[% lang.DESCRIPTION | html %]</option>
+								[% ELSE %]
+									[% IF lang.ID %]
+										<option value="[% lang.ID | html %]">[% lang.DESCRIPTION | html %]</option>
+									[% END %]
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr id='USER_SOUND_FORMAT'>
+					<td class='ext_pn'>Sound Format:</td>
+					<td class='ext_pv'>
+						<select name='SOUND_FORMAT'>
+							[% FOREACH fm = SOUND_F %]
+								[% IF USER_CREDS.SOUND_FORMAT eq fm %]
+									<option value="[% fm | html %]" selected>[% fm | html %]</option>
+								[% ELSE %]
+									<option value="[% fm | html %]">[% fm | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr id='USER_TZ'>
+					<td class='ext_pn'>Time Zone:</td>
+					<td class='ext_pv'>
+						<select name='TIME_ZONE'>
+							[% FOREACH t = TZ %]
+								[% IF USER_CREDS.TIME_ZONE eq t.ID %]
+									<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | html %]</option>
+								[% ELSE %]
+									[% IF t.ID %]
+										<option value="[% t.ID | html %]">[% t.DESCRIPTION | html %]</option>
+									[% END %]
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr id='USER_SOUND_FORMAT'>
+					<td class='ext_pn'>Date Format:</td>
+					<td class='ext_pv'>
+						<select name='DATE_FORMAT'>
+							[% FOREACH fm = DATE_FORMAT %]
+								[% IF USER_CREDS.DATE_FORMAT eq fm.ID %]
+									<option value="[% fm.ID %]" selected>[% fm.DESCRIPTION | html %]</option>
+								[% ELSE %]
+									<option value="[% fm.ID %]">[% fm.DESCRIPTION | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr id='USER_STATEMENTS'>
+					<td class='ext_pn'>Daily statements:</td>
+					<td class='ext_pv'>
+						<select name='STATEMENTS'>
+							[% IF USER_CREDS.STATEMENTS eq '0' %]
+								<option value="0" selected>disable</option>
+								<option value="2">summary only</option>
+								<option value="6">all</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '2' %]
+								<option value="0">disable</option>
+								<option value="2" selected>summary only</option>
+								<option value="6">all</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '6' %]
+								<option value="0">disable</option>
+								<option value="2">summary only</option>
+								<option value="6" selected>all</option>
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr id='FILTER'>
+					<td class='ext_pn'>Common filters:</td>
+					<td class='ext_pv'>
+						<a href='?action=cid_list&id=[% ROOT_EXT_ID %]&cid_list_type=2&cid_type=2&uniq=[% USER_CREDS.UNIQ %]' title='edit CID white list'>White list</a> / 
+						<a href='?action=cid_list&id=[% ROOT_EXT_ID %]&cid_list_type=1&cid_type=2&uniq=[% USER_CREDS.UNIQ %]' title='edit CID black list'>Black list</a>
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan='2' align='center'>
+						<input type='submit' value='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;change&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'>
+					</td>
+				</tr>
+				</form>
+			</table>
+			</td>
+			
+			<td valign='top'>
+			<table class='user_data'>
+				[% IF USE_BILLING %]
+				<tr>
+					<td colspan='2'>
+						<table width='90%' class='addon_data'>
+							<tr><td colspan='8'><h4>Billing:</h4></td></tr>
+							<tr>
+								<td class='ext_pn'>Tariff:</td>
+								<td colspan='7'><b>[% TARIFF.NAME | html %]</b> ( currency  [% TARIFF.DESCRIPTION %] )</td>
+							</tr>
+							<tr class='list_data' align='center'>
+								<th rowspan='2'>Monthly</th>
+								<th rowspan='2'>Daily</th>
+								<th colspan='2'>IVR</th>
+								[% IF USER_CREDS.VBL_14 ne '0' %]
+									<th colspan='2'>CallBack</th>
+								[% END %]
+								[% IF USER_CREDS.VBL_18 ne '0' %]
+									<th colspan='2'>CallBlast</th>
+								[% END %]
+							</tr>
+							<tr class='list_data' align='center'>
+								<th>Minute</th>
+								<th>Call</th>
+								[% IF USER_CREDS.VBL_14 ne '0' %]
+									<th>Minute</th>
+									<th>Call</th>
+								[% END %]
+								[% IF USER_CREDS.VBL_18 ne '0' %]
+									<th>Minute</th>
+									<th>Call</th>
+								[% END %]
+							</tr>
+							<tr class='addon_data' align='right'>
+								<td>[% TARIFF.MONTHLY_PRICE %]</td>
+								<td>[% TARIFF.DAILY_PRICE %]</td>
+								<td>[% TARIFF.MINUTE_PRICE %]</td>
+								<td>[% TARIFF.CALL_PRICE %]</td>
+								[% IF USER_CREDS.VBL_14 ne '0' %]
+									<td>[% TARIFF.MINUTE_PRICE_CB %]</td>
+									<td>[% TARIFF.CALL_PRICE_CB %]</td>
+								[% END %]
+								[% IF USER_CREDS.VBL_18 ne '0' %]
+									<td>[% TARIFF.MINUTE_PRICE_CBL %]</td>
+									<td>[% TARIFF.CALL_PRICE_CBL %]</td>
+								[% END %]
+							</tr>
+							<tr>
+								<td colspan='8' class='ext_pn'>
+									Balance:
+								</td>
+							</tr>
+							<tr class='addon_data'>
+								<td colspan='8'>
+									&nbsp;
+									&nbsp;
+									&nbsp;
+									<b>[% TARIFF.USER_BALANCE | bill_float %]</b> [% TARIFF.DESCRIPTION %] ( as at [% CACHE_TIME | html %] )
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				[% END %]
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan='2'><h4>Limits:</h4></td>
+				</tr>
+				<tr>
+					<td class='ext_pn'>Maximum messages in extetnsion: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_EXT_MSGS %]</td>
+				</tr>
+				<tr>
+					<td class='ext_pn'>Maximum number of CID filters: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_EXT_CIDS %]</td>
+				</tr>
+				[% IF USER_CREDS.VBL_4 ne '0' %]
+				<tr>
+					<td class='ext_pn'>Maximum Number of Directory items: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_DIRECTORY_ITEMS %]</td>
+				</tr>
+				[% END %]
+				[% IF USER_CREDS.VBL_5 ne '0' %]
+				<tr>
+					<td class='ext_pn'>Maximum Number of Schedule items: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_SCHEDULE_ITEMS %]</td>
+				</tr>
+				[% END %]
+				<tr>
+					<td class='ext_pn'>Maximum Phones for Follow-Me & Queues: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_EXT_PHONES | html %]</td>
+				</tr>
+				[% IF USER_CREDS.VBL_18 ne '0' %]
+				<tr>
+					<td class='ext_pn'>Maximum Number of CallBlast items: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_CALLBLAST_ITEMS %]</td>
+				</tr>
+				<tr>
+					<td class='ext_pn'>Maximum Phones for CallBlast item: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_CB_PHONES | html %]</td>
+				</tr>
+				[% END %]
+				[% IF USER_CREDS.TTS_GREETING %]
+				<tr>
+					<td class='ext_pn'>Maximum TTS length: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_TTS_LENGTH | fsize %]</td>
+				</tr>
+				[% END %]
+				<tr>
+					<td class='ext_pn'>Maximum email-attachment size: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_ATTACH_SIZE | fsize %]</td>
+				</tr>
+				<tr>
+					<td class='ext_pn'>Maximum TTS download size: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_DOWNLOAD_SIZE | fsize %]</td>
+				</tr>
+				<tr>
+					<td class='ext_pn'>Maximum voice mesage duration: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_MESSAGE_DURATION | duration_str %]</td>
+				</tr>
+				<tr>
+					<td class='ext_pn'>Maximum User Name duration: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_NAME_DURATION | duration_str %]</td>
+				</tr>
+				<tr>
+					<td class='ext_pn'>Maximum User Greeting duration: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_GREET_DURATION | duration_str %]</td>
+				</tr>
+				<tr>
+					<td class='ext_pn'>Maximum Follow-Me announcement duration: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_ANNOUNCEMENT_DURATION | duration_str %]</td>
+				</tr>
+				<tr>
+					<td class='ext_pn'>Maximum RetryDial anouncement duration: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_RETRYDIAL_DURATION | duration_str %]</td>
+				</tr>
+				<tr>
+					<td class='ext_pn'>Maximum music on hold duration: </td>
+					<td class='ext_pv'>[% USER_CREDS.MAX_MOH_DURATION | duration_str %]</td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+	
+		<tr>
+			<td colspan='2'>
+			<table class='user_data'>
+				<tr>
+					<td colspan='2'><h4>Backup options:</h4></td>
+				</tr>
+				<tr>
+					<form method="post" action="[% CGI_URL %]">
+					<td>
+						Media backup: <input type='checkbox' name='full_backup'>
+						<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+						<input type='hidden' name='action' value='backup'>
+					</td>
+					<td align='left'>
+						<input type='submit' value='Backup configuration'>
+					</td>
+					</form>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
+					<td>
+						Merge: <input type='checkbox' name='merge'>
+						<input type='file' name='config_file'>
+						<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+						<input type='hidden' name='action' value='restore'>
+					</td>
+					<td align='left'>
+						<input type='submit' value='Upload configuration'>
+					</td>
+					</form>
+				</tr>
+			</table>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			<td>
+				<a class='headers' href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=j_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=vb_view&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=msg_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Messages</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</center>
+</body>
+</html>

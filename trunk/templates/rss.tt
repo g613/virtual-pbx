@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: rss.tt,v 1.18 2010-12-23 12:03:51 gosha Exp $ -->
+<rss version="0.91">
+<channel>
+	<title>VirtualPBX RSS feed  Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	<link>[% CGI_SERVER %][% CGI_URL %]</link>
+	<description>VirtualPBX RSS feed.</description>
+	<image>
+		<title>VirtualPBX</title>
+		<url>
+			[% IF USER_CREDS.LOGO_HREF eq '' %]
+				[% CGI_SERVER %]/xvb/images/logo-small.png
+			[% ELSE %]
+				[% USER_CREDS.LOGO_HREF %]
+			[% END %]
+		</url>
+		<link>[% CGI_SERVER %][% CGI_URL %]</link>
+	</image>
+
+[% FOREACH msg = MSG_LIST %]
+<item>
+	<title>id:[% msg.FILE_ID %] Message from [% msg.CALLERID | html %]</title>
+	<guid>[% msg.ID | html %]-[% msg.FILE_NAME | html %]</guid>
+	[% IF msg.IS_VOICE %]
+		<link>https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?type=listen;media=[% USER_CREDS.SOUND_FORMAT %];uniq=[% USER_CREDS.ACCESS_CODE | html %]</link>
+	[% ELSE %]
+		<link>https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]</link>
+	[% END %]
+	<description>
+	&lt;ul&gt;
+	&lt;li&gt;Extension: [% msg.EXT_NUMBER | html %]&lt;/li&gt;
+	[% IF msg.IS_VOICE %]
+	&lt;li&gt;Duration: [% msg.DURATION | duration_str %]&lt;/li&gt;
+	[% END %]
+	&lt;li&gt;File size: [% msg.FILE_SIZE | fsize %]&lt;/li&gt;
+	&lt;/ul&gt;
+	</description>
+	<pubDate>[% msg.MSG_DATE2 | html %]</pubDate>
+	<author>[% msg.CALLERID | html %]</author>
+</item>
+[% END %]
+</channel>
+</rss>
