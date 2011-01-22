@@ -1,5 +1,5 @@
 <html>
-<!-- $Id -->
+<!-- $Id: voicebox_info.tt,v 1.117 2011-01-16 22:01:10 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
