@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.21 2010-11-27 17:56:40 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.22 2011-01-16 08:46:56 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -295,7 +295,21 @@ function ShowPlayer( file ) {
 	var el=document.getElementById('shadow');
 	el.style.visibility='visible';
 	var div_id = document.getElementById('center');
-	var player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td><object type="application/x-shockwave-flash" data="/xvb/js/flowplayer/ump3player_500x70.swf" height="70" width="470"><param name="wmode" VALUE="transparent" /><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="movie" value="/xvb/js/flowplayer/ump3player_500x70.swf" /><param name="FlashVars" value="way='+file+'&amp;swf=/xvb/js/flowplayer/ump3player_500x70.swf&amp;w=470&amp;h=70&amp;time_seconds=0&amp;autoplay=1&amp;q=&amp;skin=white&amp;volume=90&amp;comment=Voice messages" /></object></td></tr></table>';
+	var player_data = '';
+	if (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) {
+		// flash
+		player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td><object type="application/x-shockwave-flash" data="/xvb/js/flowplayer/ump3player_500x70.swf" height="70" width="470"><param name="wmode" VALUE="transparent" /><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="movie" value="/xvb/js/flowplayer/ump3player_500x70.swf" /><param name="FlashVars" value="way='+file+'&amp;swf=/xvb/js/flowplayer/ump3player_500x70.swf&amp;w=470&amp;h=70&amp;time_seconds=0&amp;autoplay=1&amp;q=&amp;skin=white&amp;volume=90&amp;comment=Voice messages" /></object></td></tr></table>';
+	} else {
+		// html5: fixme - codec support
+		var wav_file = '';
+		if (navigator.userAgent.indexOf("Firefox")!=-1) {
+			wav_file = file.replace("wav?media=mp3;","wav?");
+			wav_file = wav_file.replace("=mp3","=wav");
+		} else {
+			wav_file = file;
+		}
+		player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+	}
 	div_id.innerHTML = player_data;
 	div_id.style.display = 'block';
 
@@ -306,6 +320,10 @@ function HidePlayer() {
 	var el=document.getElementById('shadow');
 	el.style.visibility='hidden';
 	var div_id = document.getElementById('center');
+	if (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) {
+	} else {
+		div_id.innerHTML = '<audio tabindex="0" autoplay="autoplay" controls="controls"></audio>';
+	}
 	div_id.style.display = 'none';
 	
 	return false;
