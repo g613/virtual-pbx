@@ -218,6 +218,12 @@ find -name '*.tt' -exec perl ../contrib/utils/build/html_clean.pl {} ';'
 find -name '*.bak' -exec rm -f {} ';'
 ln -s xvb.RU-Male xvb.RU-Male-Dmitri
 ln -s xvb.RU-Male xvb.RU-Female-Olga
+ln -s . default
+ln -s . xvb.EN-Male
+ln -s . xvb.EN-Female
+ln -s . single/xvb.EN-Male
+ln -s . single/xvb.EN-Female
+
 cd - > /dev/null
 
 #
@@ -305,6 +311,8 @@ ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.EN-Male/digits %ASTERISK_VARLIB_HOME/soun
 # with out tts
 ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.RU-Male-Dmitri/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.RU-Male-Dmitri &> /dev/null
 ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.RU-Male-Olga/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.RU-Male-Olga &> /dev/null
+#
+ln -s %ASTERISK_VARLIB_HOME/sounds %CORE_DIR
 
 #
 # install MOH
