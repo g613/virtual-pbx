@@ -55,7 +55,7 @@
 		<tr>
 			<td class='ext_pn'>Group Name: </td>
 			<td class='ext_pv'><input name='GR_GROUP_NAME' type='text' value="[% GROUP.GROUP_NAME | html %]"></td>
-			<td class='ext_pv' rowspan='31' valign='top'>
+			<td class='ext_pv' rowspan='33' valign='top'>
 				<table>
 					<tr>
 						<td class='ext_pn' colspan='2'><h4>Limits on the number of extensions:</h4></td>
@@ -284,7 +284,7 @@
 			<td class='ext_pv'><input name='GR_MAX_DOWNLOAD_SIZE' type='text' value="[% GROUP.MAX_DOWNLOAD_SIZE | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum TTS string ( byte ): </td>
+			<td class='ext_pn'>Maximum TTS string size ( byte ): </td>
 			<td class='ext_pv'><input name='GR_MAX_TTS_LENGTH' type='text' value="[% GROUP.MAX_TTS_LENGTH | html %]"></td>
 		</tr>
 		<tr>
@@ -312,12 +312,30 @@
 			<td class='ext_pv'><input name='GR_MAX_MOH_DURATION' type='text' value="[% GROUP.MAX_MOH_DURATION | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Sub template path: </td>
+			<td class='ext_pn'>Custom template prefix: </td>
 			<td class='ext_pv'><input name='GR_SUB_TEMPLATE_DIR' type='text' value="[% GROUP.SUB_TEMPLATE_DIR | html %]"></td>
+		</tr>
+		<tr>
+			<td class='ext_pn'>Custom sound prefix: </td>
+			<td class='ext_pv'><input name='GR_SUB_SOUND_DIR' type='text' value="[% GROUP.SUB_SOUND_DIR | html %]"></td>
 		</tr>
 		<tr>
 			<td class='ext_pn'>Prefered codec ( for recordings ): </td>
 			<td class='ext_pv'><input name='GR_PREF_CODEC' type='text' value="[% GROUP.PREF_CODEC | html %]"></td>
+		</tr>
+		<tr>
+			<td class='ext_pn'>Prefered language:</td>
+			<td class='ext_pv'>
+				<select name='GR_PREF_LANG'>
+					[% FOREACH lang = LANG %]
+						[% IF GROUP.PREF_LANG eq lang.ID %]
+							<option value="[% lang.ID %]" selected>[% lang.DESCRIPTION | html %]</option>
+						[% ELSE %]
+							<option value="[% lang.ID | html %]">[% lang.DESCRIPTION | html %]</option>
+						[% END %]
+					[% END %]
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td class='ext_pn'>SERVER ID:</td>

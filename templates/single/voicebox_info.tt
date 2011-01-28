@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.26 2011-01-05 07:42:12 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.28 2011-01-28 14:24:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -936,18 +936,6 @@
 				<tr id='MORE_OPTIONS'>
 					<td align='center'>
 						<a id='xvb_view_mode_selector' href='#' onclick="return MoreExtOptions(this,0,'all options','core options')">&nbsp;</a>
-					</td>
-					<td colspan='2' align='center'>
-						<input type='submit' value='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;change&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'>
-					</td>
-				</tr>
-				</form>
-			</table>
-			</td>
-				<tr><td colspan='2'>&nbsp;</td></tr>
-				<tr id='MORE_OPTIONS'>
-					<td align='center'>
-						<a id='xvb_view_mode_selector' href='#' onclick="return MoreExtOptions(this,0,'all options','core options')">&nbsp;</a>
 						<script language='JavaScript'>MoreExtOptions(document.getElementById('xvb_view_mode_selector'),1,'all options','core options');</script>
 					</td>
 					<td colspan='2' align='center'>
@@ -956,7 +944,6 @@
 				</tr>
 				</form>
 			</table>
-			</td>
 
 			<td valign='top'>
 			
