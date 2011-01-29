@@ -1,5 +1,8 @@
 #labels Featured
 = ToDo list =
+<font color='green'>+ Укоротить URL c /xvb/cgi-bin/ui до /ui </font> ( 29.01.2011 / build 4388 )
+
+<font color='green'>+ Возможность задать свой путь к звуковым файлам для группы</font> ( 28.01.2011 / build 4382 )
 
 <font color='green'>+ Prefered codec for GROUPs ( recordings )</font> ( 25.12.2010 / build 4325 )
 
