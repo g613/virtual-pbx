@@ -1,5 +1,7 @@
 #labels Featured
 = ToDo list =
+<font color='red'>- инсталировать fail2ban в vmware image</font>
+
 <font color='green'>+ Укоротить URL c /xvb/cgi-bin/ui до /ui </font> ( 29.01.2011 / build 4388 )
 
 <font color='green'>+ Возможность задать свой путь к звуковым файлам для группы</font> ( 28.01.2011 / build 4382 )
