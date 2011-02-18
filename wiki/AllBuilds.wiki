@@ -1,5 +1,7 @@
 ==All VMWare images :==
 
+* [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1913905251/VirtualPBX-1_4418.tar.bz2 build 4418 (18.02.2011) ] ( back to 1.6 - more stable / less features )
+
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1913500336/VirtualPBX-1_4353.tar.bz2 build 4353 (08.01.2011) ] ( bug fixed release )
 
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1913390571/VirtualPBX-1_4334.tar.bz2 build 4334 (26.12.2010) ] ( asterisk 1.8.1.1 with HD ( g722 ) )
