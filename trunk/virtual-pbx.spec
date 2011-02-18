@@ -249,7 +249,7 @@ rm $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds/*.tgz
 ####################################################
 #
 %pre voip
-service asterisk stop || true
+#service asterisk stop || true
 
 
 ####################################################
@@ -346,7 +346,16 @@ if [ -f %{_sysconfdir}/asterisk/features.conf ]; then
 fi
 
 chkconfig asterisk on
-service asterisk start
+
+STR=`service asterisk status | grep running`
+if [ "x$STR" = "x" ]; then
+	service asterisk start;
+else
+	asterisk -rx 'dialplan reload';
+	asterisk -rx 'features reload';
+	asterisk -rx 'moh reload';
+fi
+
 
 
 ####################################################

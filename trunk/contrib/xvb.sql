@@ -884,6 +884,7 @@ create	table VPBX_VBOXES_DISA
 (
 	ID				INT(16)		    not null,
 	MOH_ID			INT(16)			not null default 0,
+	SPY_MODE 		INT(16) 		not null default 0,
 	PHONE_PATTERN	VARCHAR(255),	
 
 	unique(ID),
