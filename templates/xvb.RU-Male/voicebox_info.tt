@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.117 2011-01-16 22:01:10 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.119 2011-02-16 21:23:38 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -88,7 +88,9 @@
 					<ul>
 						<li><b>*9</b> - для трансфера звонка</li>
 						<li><b>*8</b> - для парковки звонка</li>
+						[% IF ASTERISK_VERSION eq '18' %]
 						<li><b>*4XXX</b> - изменение тембра голоса</li>
+						[% END %]
 						<li><b>*3XX</b> - фоновая музыка \ звуки</li>
 							<ul>
 								<li><b>01</b> - мяч</li>
@@ -154,7 +156,9 @@
 					<ul>
 						<li><b>*9</b> - для трансфера звонка</li>
 						<li><b>*8</b> - для парковки звонка</li>
+						[% IF ASTERISK_VERSION eq '18' %]
 						<li><b>*4XXX</b> - изменение тембра голоса</li>
+						[% END %]
 						<li><b>*3XX</b> - фоновая музыка \ звуки</li>
 							<ul>
 								<li><b>01</b> - мяч</li>
@@ -492,6 +496,7 @@
 						</table>
 					</td>
 				</tr>
+				[% IF ASTERISK_VERSION eq '18' %]
 				<tr id='PITCH_CONTROL' class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Тембр голоса Вх/Исх:<span>
 							Допустимые значения от 0.1 ( низкий тембр ) до 4 ( высокий тембр )
@@ -510,6 +515,7 @@
 						</table>
 					</td>
 				</tr>
+				[% END %]
 				<tr class='addon_info'><td colspan='2'>&nbsp;</td></tr>
 
 				[% IF VBOX_PREF.TYPE eq '2' %]
@@ -1149,6 +1155,18 @@
 						<input size='30' name="PHONE_PATTERN" value="[% VBOX_PREF.PHONE_PATTERN | html %]" type="text">
 					</td>
 				</tr>
+				[% IF ASTERISK_VERSION ne '18' %]
+				<tr id='SPY_MODE' class='addon_info'>
+					<td class='ext_pn'>Режим 'шпиона':</td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.SPY_MODE %]
+							<input name="SPY_MODE" type="checkbox" checked>
+						[% ELSE %]
+							<input name="SPY_MODE" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				[% END %]
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '12' %]
