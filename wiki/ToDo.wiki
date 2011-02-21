@@ -2,7 +2,7 @@
 = ToDo list =
 <font color='green'>- Откатываемся назад на 1.6.x ( 1.8 в 2 раза больше грузит системы и память течет... :( )</font>  ( 16.02.2011 / build 4406 )
 
-<font color='red'>- IceCast интегрировать в chatroom</font>
+<font color='green'>- IceCast интегрировать в chatroom</font> ( 19.0.2011 / build 4450 )
 
 <font color='green'>- инсталировать fail2ban в vmware image</font> ( 16.02.2011 / build 4406 )
 
