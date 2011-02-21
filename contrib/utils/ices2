@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# $Id: ices2,v 1.1 2011-02-21 07:18:34 gosha Exp $
+#
+NEED_MP3=`echo $1 | grep ezstream`
+
+if [ "x${NEED_MP3}" = "x" ]; then
+	/usr/local/bin/ices-ogg $@
+else
+	/usr/bin/lame -r -s 8 -m mono --preset cbr 64 - - 2> /dev/null | /usr/local/bin/ezstream -qvc $1
+fi
+

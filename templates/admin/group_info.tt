@@ -204,6 +204,20 @@
 						</select>
 						</td>
 					</tr>
+					<tr>
+						<td class='ext_pn'>Allow IceCast: </td>
+						<td class='ext_pv'>
+						<select name="GR_ALLOW_ICECAST">
+						[% IF GROUP.ALLOW_ICECAST %]
+							<option value="1">yes</option>
+							<option value="0">no</option>
+						[% ELSE %]
+							<option value="0">no</option>
+							<option value="1">yes</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
 			</table>
 			</td>
 		</tr>
