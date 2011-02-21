@@ -397,6 +397,8 @@ service httpd start
 %attr(755,root,root) %CORE_DIR/contrib/utils/mc_view.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/MemCached.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/node_stat.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/icecast-db-init.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/ices2
 %attr(755,root,root) %CORE_DIR/contrib/utils/nodes_admin/*
 %attr(755,root,root) %CORE_DIR/contrib/utils/rpm/*
 %CORE_DIR/lib/*
@@ -406,6 +408,7 @@ service httpd start
 %CORE_DIR/doc/XVB-AI.odt
 %CORE_DIR/doc/XVB-AI.pdf
 %CORE_DIR/contrib/xvb.sql
+%CORE_DIR/contrib/icecast.xml
 %CORE_DIR/etc/BOM-*.txt
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/db
 

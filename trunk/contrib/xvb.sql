@@ -9,6 +9,18 @@ create  table VPBX_DB_INFO
 	TIME	INT(16)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+create table VPBX_ICECAST_POOL (
+	ID					INT(16)  not null AUTO_INCREMENT,
+
+	LEASE_TIMESTAMP		INT(16),
+	EXT_ID				INT(16),
+	CONF_FILE			VARCHAR(255),
+	URL					VARCHAR(255),
+
+    unique (CONF_FILE),
+    CONSTRAINT PK_VPBX_ICECAST PRIMARY KEY (ID)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
 create table VPBX_REPORTS (
 	ID		INT(16)  not null AUTO_INCREMENT,
     
@@ -244,6 +256,7 @@ create	table VPBX_GROUPS
 	ALLOW_PHONES				INT(1) default 0,
 	ALLOW_GA					INT(1) default 0,
 	ALLOW_API					INT(1) default 0,
+	ALLOW_ICECAST				INT(1) default 0,
 	ADVANCED_CALLBLAST			INT(1) default 0,
 
 	MAX_EXT_MSGS				INT(10) default 100,
@@ -779,7 +792,8 @@ create	table VPBX_VBOXES_TTS
 
 create	table VPBX_VBOXES_CONFERENCE
 (
-	ID				INT(16)		    not null,
+	ID					INT(16)		    not null,
+	SHARE_VIA_ICECAST	INT(1)			not null default 0,
 
 	unique(ID),
 

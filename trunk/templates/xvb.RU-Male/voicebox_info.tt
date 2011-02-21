@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.119 2011-02-16 21:23:38 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.121 2011-02-21 12:52:41 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -515,6 +515,9 @@
 						</table>
 					</td>
 				</tr>
+				[% ELSE %]
+					<input name="PITCH_RX" value="[% VBOX_PREF.PITCH_RX | html %]" type="hidden">
+					<input name="PITCH_TX" value="[% VBOX_PREF.PITCH_TX | html %]" type="hidden">
 				[% END %]
 				<tr class='addon_info'><td colspan='2'>&nbsp;</td></tr>
 
@@ -977,6 +980,23 @@
 						<input size='30' type='text' name='TTS_REQ_COOKIE' value='[% VBOX_PREF.TTS_REQ_COOKIE | html %]'>
 					</td>
 				</tr>
+				[% END %]
+
+				[% IF VBOX_PREF.TYPE eq '7' %]
+				[% IF USER_CREDS.ALLOW_ICECAST %]
+				<tr class='addon_info' id='SHARE_VIA_ICECAST'>
+					<td class='ext_pn'><a href='#' class='info'>HTTP-Трансляция: <span>
+							При установке данного флага Вам выдадут временный URL через который будет транслироваться конференция.
+						</span></a></td>
+					<td class='ext_pv'>
+					[% IF VBOX_PREF.SHARE_VIA_ICECAST %]
+						<input name="SHARE_VIA_ICECAST" type="checkbox" checked>
+					[% ELSE %]
+						<input name="SHARE_VIA_ICECAST" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				[% END %]
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '8' %]
@@ -2206,6 +2226,23 @@
 						</table>
 						</td>
 					</tr>
+					[% END %]
+					
+					[% IF VBOX_PREF.TYPE eq '7' %]
+					[% IF USER_CREDS.ALLOW_ICECAST %]
+					[% IF ICECAST_URL %]
+					<tr><td colspan='2'>&nbsp;</td></tr>
+					<tr>
+						<td colspan='2' align='left'>
+							<h4>HTTP-Вещание:</h4>
+							<ul>
+								<li>URL: <a href='[% ICECAST_URL | html %]'>[% ICECAST_URL | html %]</a></li>
+								<li>Действительно до: [% ICECAST_EXPIRE_DATE | html %]</li>
+							</ul>
+						</td>
+					</tr>
+					[% END %]
+					[% END %]
 					[% END %]
 
 					[% IF VBOX_PREF.TYPE eq '10' %]
