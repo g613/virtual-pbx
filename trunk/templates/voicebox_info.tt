@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.179 2011-02-21 12:52:39 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.180 2011-02-22 14:13:24 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -840,6 +840,16 @@
 					</td>
 				</tr>
 				[% END %]
+				<tr id='RECORD_CALL'>
+					<td class='ext_pn'>Record conference: </td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.RECORD_CALL %]
+							<input name="RECORD_CALL" type="checkbox" checked>
+						[% ELSE %]
+							<input name="RECORD_CALL" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
 				[% END %]
 				
 				[% IF VBOX_PREF.TYPE eq '8' %]
