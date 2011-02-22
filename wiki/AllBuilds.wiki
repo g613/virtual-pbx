@@ -1,7 +1,7 @@
 ==All VMWare images :==
 
 
-  * build 4457 (21.02.2011) / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/6083784001/VirtualPBX-1_4457.tar.bz2.html yandex-disk-mirror] ( IceCast integration )
+  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1913941795/VirtualPBX-1_4457.tar.bz2 build 4457 (21.02.2011)] / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/6083784001/VirtualPBX-1_4457.tar.bz2.html yandex-disk-mirror] ( IceCast integration )
 
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1913905251/VirtualPBX-1_4418.tar.bz2 build 4418 (18.02.2011)] / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/5847468001/VirtualPBX-1_4418.tar.bz2.html yandex-disk-mirror] ( back to 1.6 - more stable / less features )
 
