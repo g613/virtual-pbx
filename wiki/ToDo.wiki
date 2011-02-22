@@ -1,13 +1,13 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Запись в chatroom</font>
+<font color='green'>+ Запись в chatroom</font> ( 22.02.2011 / build 4465 )
 
-<font color='green'>- Откатываемся назад на 1.6.x ( 1.8 в 2 раза больше грузит системы и память течет... :( )</font>  ( 16.02.2011 / build 4406 )
+<font color='green'>+ Откатываемся назад на 1.6.x ( 1.8 в 2 раза больше грузит системы и память течет... :( )</font>  ( 16.02.2011 / build 4406 )
 
-<font color='green'>- IceCast интегрировать в chatroom</font> ( 19.0.2011 / build 4450 )
+<font color='green'>+ IceCast интегрировать в chatroom</font> ( 19.0.2011 / build 4450 )
 
-<font color='green'>- инсталировать fail2ban в vmware image</font> ( 16.02.2011 / build 4406 )
+<font color='green'>+ инсталировать fail2ban в vmware image</font> ( 16.02.2011 / build 4406 )
 
 <font color='green'>+ Укоротить URL c /xvb/cgi-bin/ui до /ui </font> ( 29.01.2011 / build 4388 )
 
