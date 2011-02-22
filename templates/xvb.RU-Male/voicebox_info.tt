@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.121 2011-02-21 12:52:41 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.123 2011-02-22 16:18:52 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -997,6 +997,18 @@
 					</td>
 				</tr>
 				[% END %]
+				<tr id='RECORD_CALL'>
+					<td class='ext_pn'><a href='#' class='info'>Запись конференции:  <span>
+							Автоматически включать запись при входе в конференц комнату.
+						</span></a></td>
+					<td class='ext_pv'>
+						[% IF VBOX_PREF.RECORD_CALL %]
+							<input name="RECORD_CALL" type="checkbox" checked>
+						[% ELSE %]
+							<input name="RECORD_CALL" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '8' %]
