@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.180 2011-02-22 14:13:24 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.183 2011-02-23 16:22:19 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -352,6 +352,9 @@
 				[% END %]
 				</td>
 			</tr>
+			[% END %]
+			[% IF VBOX_PREF.TYPE ne '1' %]
+				<input name="GREETING_CONTROL" type="hidden" value="[% VBOX_PREF.GREETING_CONTROL %]">
 			[% END %]
 
 			<tr class='addon_info' id='CID'>

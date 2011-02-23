@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 ########################################################################
 #
-# $Id: tt_preprocess.pl,v 1.13 2010-09-23 10:33:54 gosha Exp $
+# $Id: tt_preprocess.pl,v 1.14 2011-02-23 16:15:10 gosha Exp $
 #
 #    2010 Okunev Igor <igor[at]prv.mts-nn.ru>
 #
@@ -34,6 +34,13 @@ foreach my $vb_type ( 1 .. 27 ) {
 		if ( $str =~ /^\[\%[ \t]+(?:IF|FOREACH)[ \t][^%]*\%\]/ ) {
 			if ( $str =~ /IF\s+VBOX_PREF.TYPE\s+eq\s+['"](\d+)['"]/ ) {
 				if ( $1 ne $vb_type ) {
+					$need_print = 0;
+					$if_ind_bad = $if_cnt;
+				} else {
+					$if_ind_good = $if_cnt;
+				}
+			} elsif ( $str =~ /IF\s+VBOX_PREF.TYPE\s+ne\s+['"](\d+)['"]/ ) {
+				if ( $1 eq $vb_type ) {
 					$need_print = 0;
 					$if_ind_bad = $if_cnt;
 				} else {
