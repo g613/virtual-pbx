@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- Запись исходящих пользовательских звонков</font>
+
 <font color='green'>+ Запись в chatroom</font> ( 22.02.2011 / build 4465 )
 
 <font color='green'>+ Откатываемся назад на 1.6.x ( 1.8 в 2 раза больше грузит системы и память течет... :( )</font>  ( 16.02.2011 / build 4406 )
