@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Запись исходящих пользовательских звонков</font>
+<font color='green'>+ Запись исходящих пользовательских звонков</font> ( 27.02.2011 / build 4509 )
 
 <font color='green'>+ Скрипт добавления системного MOH</font> ( 26.02.2011 / build 4482 )
 
