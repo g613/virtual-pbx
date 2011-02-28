@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.14 2010-01-21 23:50:29 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.15 2011-02-28 10:41:56 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Actions journal - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -51,7 +51,7 @@
 	</p>
 
 	<p>
-	<table width='95%' class='list_data'>
+	<table width='95%' class='list_data' id='d-tbl'>
 		<tr class='list_data'>
 			<th width='5%'>Ext</th>
 			<th width='10%'>Action</th>
@@ -68,11 +68,7 @@
 		[% END %]
 
 		[% FOREACH msg = J_LIST %]
-			[% IF msg.J_NUM div2 %]
 			<tr class='nocolor'>
-			[% ELSE %]
-			<tr class='backlight'>
-			[% END %]
 				[% IF msg.EXT_ID %]
 				<td>&nbsp;<a href='?action=vb_view&id=[% msg.EXT_ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
 				[% ELSE %]
@@ -96,6 +92,8 @@
 		</tr>
 	</table>
 	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
 	<p>	
 	<table width='95%' class='bottom_hr'>

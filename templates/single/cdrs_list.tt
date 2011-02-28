@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.9 2010-10-22 10:33:57 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.10 2011-02-28 10:41:58 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -51,7 +51,7 @@
 	</p>
 		
 	<p>
-	<table width='95%' class='list_data'>
+	<table width='95%' class='list_data' id='d-tbl'>
 		<tr class='list_data'>
 			<th>Start Date</th>
 			<th>Caller ID</th>
@@ -69,11 +69,7 @@
 		[% END %]
 
 		[% FOREACH msg = CDR_LIST %]
-		[% IF msg.CDR_NUM div2 %]
 		<tr class='nocolor' align='center'>
-		[% ELSE %]
-		<tr class='backlight' align='center'>
-		[% END %]
 			<td><a title='call detail' href='?action=act_list&call_id=[% msg.CALL_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
 			<td>[% msg.CALLER_ID | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
@@ -94,7 +90,9 @@
 		</tr>
 	</table>
 	</p>
-	
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+
 	<p>
 	<table width='95%' class='bottom_hr'>
 		<form method="get" action="[% CGI_URL %]">

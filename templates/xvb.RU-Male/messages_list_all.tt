@@ -72,11 +72,7 @@
 		[% END %]
 		</tr>
 		[% FOREACH msg = MSG_LIST %]
-		[% IF msg.MSG_NUM div2 %]
 		<tr class='nocolor' id='d-tr-[% msg.FILE_NAME %]'>
-		[% ELSE %]
-		<tr class='backlight' id='d-tr-[% msg.FILE_NAME %]'>
-		[% END %]
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
 			<td>&nbsp;<a href='?action=vb_view&id=[% msg.ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
 			<td align='center'>
@@ -98,14 +94,8 @@
 					<td>
 				[% IF msg.IS_VOICE %]
 						<a title='скачать сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-				[% ELSIF msg.FILE_NAME contain '.tif' %]
-						<a title='скачить tiff' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='tif' /></a>
-				[% ELSIF msg.FILE_NAME contain '.dat' %]
-						<a title=скачать сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].txt?media=txt&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='txt' /></a>
-				[% ELSIF msg.FILE_NAME contain '.avi' %]
-						<a title='скачать avi' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='avi' /></a>
 				[% ELSE %]
-						<a title='скачать сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+						<a title='скачать файл' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% END %]
 					</td>
 
@@ -157,6 +147,8 @@
 		[% END %]
 	</table>
 	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
 	<p>
 	<table width='95%' class='bottom_hr'>

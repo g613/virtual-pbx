@@ -59,7 +59,7 @@
 		</tr>
 		
 		[% FOREACH r = ROUTES %]
-		<tr align='center' class='backlight' id='d-tr-[% r.DATA_ID %]'>
+		<tr align='center' class='nocolor' id='d-tr-[% r.DATA_ID %]'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 			<td><input class='in_t0' size="6" name='r_PRIORITY' type'text' value='[% r.PRIORITY | html %]'></td>
 			<td><input class='in_t0' size="20" name='r_PATTERN' type='text' value="[% r.PATTERN | html %]"></td>
@@ -93,7 +93,7 @@
 			</form>
 		</tr>
 		[% END %]
-		<tr class='nocolor' align='center'>
+		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
 			<td><input size="6" name='r_PRIORITY' type'text'></td>
 			<td><input size="20" name='r_PATTERN' type='text'></td>
@@ -118,6 +118,8 @@
 		<tr><td colspan='7'>&nbsp;</td></tr>
 	</table>
 	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
 	<p>
 	<table width='95%' class='bottom_hr'>

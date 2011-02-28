@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.183 2011-02-23 16:22:19 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.185 2011-02-28 16:30:46 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -9,6 +9,15 @@
 	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
 	[% END %]
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script language="JavaScript">
+		var e_list = [];
+		e_list['hangup'] = [ null, null,'Exit from PBX' ];
+		e_list['back'] = [ null, null, 'GoTo previous ext' ];
+		e_list['repeat'] = [ null, null, 'Repeat current ext' ];
+		[% FOREACH vb = VB_LIST %]
+		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | html %]','[% vb.NAME | html %]'];
+		[% END %]
+	</script>
 </head>
 
 <body onLoad="XVBInit()">
@@ -54,14 +63,7 @@
 			</td>
 			<td>
 				<select onchange="LoadingOn(); ChangeExten(this.value,'[% USER_CREDS.UNIQ %]')">
-					<option value="[% VBOX_PREF.ID | html %]">View extension</option>
-					[% FOREACH vb = VB_LIST %]
-					[% IF vb.NAME %]
-					<option value="[% vb.ID | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
-					[% ELSE %]
-					<option value="[% vb.ID | html %]">[% vb.EXT_NUMBER | html %] - [% vb.DESCRIPTION | html %]</option>
-					[% END %]
-					[% END %]
+					<script language="JavaScript">exten_dropdown('<option value="[% VBOX_PREF.ID | html %]">View extension</option>')</script>
 				</select>
 			</td>
 		</tr>
@@ -239,21 +241,11 @@
 			<tr id='NEXTEXTENSION'>
 				<td class='ext_pn'>Next Extension: </td>
 				<td class='ext_pv'>
-					<select name='NEXTEXTENSION'>
-						<option selected value="[% VBOX_PREF.NEXTEXTENSION | html %]"  >[% VBOX_PREF.NEXTEXTENSION | html %] - Current setting</option>
-						[% FOREACH vb = VB_LIST_EXT %]
-							[% IF vb.EXT_NUMBER eq VBOX_PREF.NEXTEXTENSION %]
-						<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option> 
-							[% ELSE %]
-						<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option> 
-							[% END %]
-						[% END %]
-					</select>
-					[% FOREACH vb = VB_LIST %]
-						[% IF vb.EXT_NUMBER eq VBOX_PREF.NEXTEXTENSION %]
-							<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
-						[% END %]
-					[% END %]
+					<script language="JavaScript">
+						exten_dropdown2('NEXTEXTENSION','[% VBOX_PREF.NEXTEXTENSION | html %]','<option selected value="[% VBOX_PREF.NEXTEXTENSION | html %]">[% VBOX_PREF.NEXTEXTENSION | html %] - Current setting</option>')
+						exten_icon( '[% VBOX_PREF.NEXTEXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+					</script>
+					<noscript><input size='12' type='text' name='NEXTEXTENSION' value='[% VBOX_PREF.NEXTEXTENSION | html %]'></noscript>
 				</td>
 			</tr>
 			<tr class='addon_info' id='PIN_CODE'>
@@ -502,21 +494,11 @@
 			<tr class='addon_info' id='GOTO_IF_FAIL'>
 			<td class='ext_pn'>Goto if call fail: </td>
 				<td class='ext_pv'>
-					<select name="GOTO_IF_FAIL">
-						<option value="" selected>------------------------------</option>
-						[% FOREACH vb = VB_LIST %]
-							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
-						<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
-							[% ELSE %]
-						<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
-							[% END %]
-						[% END %]
-					</select>
-					[% FOREACH vb = VB_LIST %]
-						[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
-							<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
-						[% END %]
-					[% END %]
+					<script language="JavaScript">
+						exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+						exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+					</script>
+					<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 				</td>
 			</tr>
 			<tr class='addon_info' id='GOTO_IF_CALL_STATUS'>
@@ -765,21 +747,11 @@
 				<tr class='addon_info' id='GOTO_IF_FAIL'>
 					<td class='ext_pn'>Goto if request fail: </td>
 					<td class='ext_pv'>
-						<select name="GOTO_IF_FAIL">
-							<option selected value="">------------------------------</option>
-							[% FOREACH vb = VB_LIST %]
-								[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
-							<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
-								[% ELSE %]
-							<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
-								[% END %]
-							[% END %]
-						</select>
-						[% FOREACH vb = VB_LIST %]
-							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
-								<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
-							[% END %]
-						[% END %]
+						<script language="JavaScript">
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+						</script>
+						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
 				<tr class='addon_info' id='QUIET_MODE'>
@@ -1141,21 +1113,11 @@
 				<tr class='addon_info' id='GOTO_IF_FAIL'>
 					<td class='ext_pn'>Goto if queues fail: </td>
 					<td class='ext_pv'>
-						<select name="GOTO_IF_FAIL">
-							<option selected value="">------------------------------</option>
-							[% FOREACH vb = VB_LIST %]
-								[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
-							<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
-								[% ELSE %]
-							<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
-								[% END %]
-							[% END %]
-						</select>
-						[% FOREACH vb = VB_LIST %]
-							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
-								<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
-							[% END %]
-						[% END %]
+						<script language="JavaScript">
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+						</script>
+						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
 				<tr class='addon_info' id='TRANSFER_PREF'>
@@ -1214,21 +1176,11 @@
 				<tr class='addon_info' id='CB_EXT'>
 					<td class='ext_pn'>Goto exten: </td>
 					<td class='ext_pv'>
-						<select name="CB_EXT">
-							<option selected value="">------------------------------</option>
-							[% FOREACH vb = VB_LIST %]
-								[% IF vb.EXT_NUMBER eq VBOX_PREF.CB_EXT %]
-							<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
-								[% ELSE %]
-							<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
-								[% END %]
-							[% END %]
-						</select>
-						[% FOREACH vb = VB_LIST %]
-							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
-								<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
-							[% END %]
-						[% END %]
+						<script language="JavaScript">
+							exten_dropdown2( 'CB_EXT','[% VBOX_PREF.CB_EXT | html %]','<option value="">------------------------------</option>')
+							exten_icon( '[% VBOX_PREF.CB_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+						</script>
+						<noscript><input size='12' type='text' name='CB_EXT' value='[% VBOX_PREF.CB_EXT | html %]'></noscript>
 					</td>
 				</tr>
 				<tr class='addon_info' id='CB_USE_TIMEOFFSET'>
@@ -1473,21 +1425,11 @@
 				<tr class='addon_info' id='GOTO_IF_FAIL'>
 					<td class='ext_pn'>Goto if request fail: </td>
 					<td class='ext_pv'>
-						<select name="GOTO_IF_FAIL">
-							<option selected value="">------------------------------</option>
-							[% FOREACH vb = VB_LIST %]
-								[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
-							<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
-								[% ELSE %]
-							<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
-								[% END %]
-							[% END %]
-						</select>
-						[% FOREACH vb = VB_LIST %]
-							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
-								<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
-							[% END %]
-						[% END %]
+						<script language="JavaScript">
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+						</script>
+						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
 				<tr class='addon_info' id='NEED_PARAMS'>
@@ -1574,41 +1516,21 @@
 				<tr id='GOTO_IF_OK'>
 					<td class='ext_pn'>Go to if not busy: </td>
 					<td class='ext_pv'>
-						<select name='GOTO_IF_OK'>
-							<option selected value="[% VBOX_PREF.GOTO_IF_OK | html %]"  >[% VBOX_PREF.GOTO_IF_OK | html %] - Current setting</option>
-							[% FOREACH vb = VB_LIST %]
-								[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_OK %]
-							<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option> 
-								[% ELSE %]
-							<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option> 
-								[% END %]
-							[% END %]
-						</select>
-						[% FOREACH vb = VB_LIST %]
-							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_OK %]
-								<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
-							[% END %]
-						[% END %]
+						<script language="JavaScript">
+							exten_dropdown2( 'GOTO_IF_OK','[% VBOX_PREF.GOTO_IF_OK | html %]','<option value="[% VBOX_PREF.GOTO_IF_OK | html %]">[% VBOX_PREF.GOTO_IF_OK | html %] - Current setting</option>')
+							exten_icon( '[% VBOX_PREF.GOTO_IF_OK | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+						</script>
+						<noscript><input size='12' type='text' name='GOTO_IF_OK' value='[% VBOX_PREF.GOTO_IF_OK | html %]'></noscript>
 					</td>
 				</tr>
 				<tr id='GOTO_IF_BUSY'>
 					<td class='ext_pn'>Go to if busy: </td>
 					<td class='ext_pv'>
-						<select name='GOTO_IF_BUSY'>
-							<option selected value="[% VBOX_PREF.GOTO_IF_BUSY | html %]"  >[% VBOX_PREF.GOTO_IF_BUSY | html %] - Current setting</option>
-							[% FOREACH vb = VB_LIST %]
-								[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_BUSY %]
-							<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option> 
-								[% ELSE %]
-							<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option> 
-								[% END %]
-							[% END %]
-						</select>
-						[% FOREACH vb = VB_LIST %]
-							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_BUSY %]
-								<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
-							[% END %]
-						[% END %]
+						<script language="JavaScript">
+							exten_dropdown2( 'GOTO_IF_OK','[% VBOX_PREF.GOTO_IF_BUSY | html %]','<option value="[% VBOX_PREF.GOTO_IF_BUSY | html %]">[% VBOX_PREF.GOTO_IF_BUSY | html %] - Current setting</option>')
+							exten_icon( '[% VBOX_PREF.GOTO_IF_BUSY | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+						</script>
+						<noscript><input size='12' type='text' name='GOTO_IF_BUSY' value='[% VBOX_PREF.GOTO_IF_BUSY | html %]'></noscript>
 					</td>
 				</tr>
 				[% END %]
@@ -1669,21 +1591,11 @@
 				<tr class='addon_info' id='GOTO_IF_FAIL'>
 				<td class='ext_pn'>Goto if UNParking: </td>
 					<td class='ext_pv'>
-						<select name="GOTO_IF_FAIL">
-							<option value="" selected>------------------------------</option>
-							[% FOREACH vb = VB_LIST %]
-								[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
-							<option value="[% vb.EXT_NUMBER | html %]" selected>[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
-								[% ELSE %]
-							<option value="[% vb.EXT_NUMBER | html %]">[% vb.EXT_NUMBER | html %] - [% vb.NAME | html %]</option>
-								[% END %]
-							[% END %]
-						</select>
-						[% FOREACH vb = VB_LIST %]
-							[% IF vb.EXT_NUMBER eq VBOX_PREF.GOTO_IF_FAIL %]
-								<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
-							[% END %]
-						[% END %]
+						<script language="JavaScript">
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+						</script>
+						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
 				[% END %]
@@ -1857,7 +1769,7 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='addon_data'>
+						<table width='100%' class='addon_data' id='addon-data'>
 							<tr class='list_data'>
 								<th>Phone number</th>
 								<th>All calls</th>
@@ -1868,12 +1780,12 @@
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							[% IF param.NUMBER eq '===' %]
-							<tr align='center'>
+							<tr align='center' class='resume'>
 								<td align='center'>
 									<a href='?action=callout_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to reset statistics ?' )" title='reset call statistics'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
 								</td>
 							[% ELSE %]
-							<tr align='center' class='addon_data'>
+							<tr align='center' class='nocolor'>
 								<td align='left'>[% param.NUMBER | html %]</td>
 							[% END %]
 								<td>[% param.ALL | html %]</td>
@@ -1884,6 +1796,7 @@
 							</tr>
 							[% END %]
 						</table>
+						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
 						</td>
 					</tr>
 					[% END %]
@@ -1915,7 +1828,7 @@
 							</tr>
 							[% END %]
 							[% FOREACH param = VB_DATA %]
-							<tr align='center' class='backlight' id='d-tr-[% param.DATA_ID %]'>
+							<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
 								<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 								<input type='hidden' name='action' value='dir_update'>
 								<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -1938,11 +1851,9 @@
 												</span>
 											</td>
 											<td>
-												[% FOREACH vb = VB_LIST %]
-												[% IF vb.EXT_NUMBER eq param.REDIRECT_TO %]
-													<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
-												[% END %]
-												[% END %]
+												<script language="JavaScript">
+													exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+												</script>
 											</td>
 										</tr>
 									</table>
@@ -1957,7 +1868,7 @@
 								</td>
 							</tr>
 							[% END %]
-							<tr align='center' class='nocolor'>
+							<tr align='center'>
 								<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 								<input type='hidden' name='action' value='dir_add'>
 								<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -1984,6 +1895,7 @@
 						</table>
 						</td>
 					</tr>
+					<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 					[% END %]
 
 					[% IF VBOX_PREF.TYPE eq '7' %]
@@ -2014,7 +1926,7 @@
 							<tr>
 								<td colspan='3'><pre>[% VBOX_PREF.GREETING | html %]</pre></td>
 							</tr>
-							<table width='90%' class='addon_data'>
+							<table width='90%' class='addon_data' id='addon-data'>
 							<tr class='list_data'>
 								<th>Variant</th>
 								<th>Count</th>
@@ -2022,19 +1934,21 @@
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							[% IF param.DIGIT eq '===' %]
-							<tr align='center'>
+							<tr align='center' class='resume'>
 								<td align='center'>
 									<a href='?action=voting_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to reset statistics ?' )" title='reset voting results'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
 								</td>
 							[% ELSE %]
-							<tr align='center' class='addon_data'>
+							<tr align='center' class='nocolor'>
 								<td>[% param.DIGIT | html %]</td>
 							[% END %]
 								<td>[% param.COUNT | html %]</td>
 								<td>[% param.PRC | html %] %</td>
 							</tr>
 							[% END %]
+							</table>
 						</table>
+						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
 						</td>
 					</tr>
 					[% END %]
@@ -2046,7 +1960,7 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center'>
-						<table width='100%' class='addon_data'>
+						<table width='100%' class='addon_data' id='addon-data'>
 							<tr class='list_data' align='center'>
 								<th>Create time</th>
 								<th>Download time</th>
@@ -2054,7 +1968,7 @@
 								<th>Duaration</th>
 							</tr>
 							[% FOREACH param = VB_DATA %]
-							<tr align='center'>
+							<tr align='center' class='nocolor'>
 								<td>[% param.CREATE_DATE | html %]</td>
 								<td>[% param.DOWNLOAD_DATE | html %]</td>
 								<td align='right'>[% param.FILE_SIZE | fsize %]</td>
@@ -2062,6 +1976,7 @@
 							</tr>
 							[% END %]
 						</table>
+						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
 						</td>
 					</tr>
 					[% END %]
@@ -2074,7 +1989,7 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='addon_data'>
+						<table width='100%' class='addon_data' id='addon-data'>
 							<tr class='list_data'>
 								<th>Phone number</th>
 								<th>All calls</th>
@@ -2085,12 +2000,12 @@
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							[% IF param.NUMBER eq '===' %]
-							<tr align='center'>
+							<tr align='center' class='resume'>
 								<td align='center'>
 									<a href='?action=callout_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to reset statistics ?' )" title='reset call statistics'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
 								</td>
 							[% ELSE %]
-							<tr align='center' class='addon_data'>
+							<tr align='center' class='nocolor'>
 								<td align='left'>[% param.NUMBER | html %]</td>
 							[% END %]
 								<td>[% param.ALL | html %]</td>
@@ -2101,6 +2016,7 @@
 							</tr>
 							[% END %]
 						</table>
+						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
 						</td>
 					</tr>
 					[% END %]
@@ -2117,43 +2033,44 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='addon_data'>
+						<table width='100%' class='addon_data' id='addon-data'>
 							<tr class='list_data'>
 								<th>Call Status</th>
 								<th>Count</th>
 								<th>Percent</th>
 							</tr>
-							<tr align='right' class='addon_data'>
+							<tr align='right' class='nocolor'>
 								<td>Success</td>
 								<td>[% BLAST_STAT.success | html %]&nbsp;</td>
 								<td>[% BLAST_STAT.success_prc | bill_float | html %] %&nbsp;</td>
 							</tr>
-							<tr align='right' class='addon_data'>
+							<tr align='right' class='nocolor'>
 								<td>Failed</td>
 								<td>[% BLAST_STAT.failed | html %]&nbsp;</td>
 								<td>[% BLAST_STAT.failed_prc | bill_float | html %] %&nbsp;</td>
 							</tr>
-							<tr align='right' class='addon_data'>
+							<tr align='right' class='nocolor'>
 								<td>Wait redial</td>
 								<td>[% BLAST_STAT.failedwait | html %]&nbsp;</td>
 								<td>[% BLAST_STAT.failedwait_prc | bill_float | html %] %&nbsp;</td>
 							</tr>
-							<tr align='right' class='addon_data'>
+							<tr align='right' class='nocolor'>
 								<td>Wait</td>
 								<td>[% BLAST_STAT.wait | html %]&nbsp;</td>
 								<td>[% BLAST_STAT.wait_prc | bill_float | html %] %&nbsp;</td>
 							</tr>
-							<tr align='right' class='addon_data'>
+							<tr align='right' class='nocolor'>
 								<td>Expired</td>
 								<td>[% BLAST_STAT.expired | html %]&nbsp;</td>
 								<td>[% BLAST_STAT.expired_prc | bill_float | html %] %&nbsp;</td>
 							</tr>
-							<tr align='right'>
+							<tr align='right' class='resume'>
 								<td>All records</td>
 								<td>[% BLAST_STAT.all | html %]&nbsp;</td>
 								<td>100.00 %&nbsp;</td>
 							</tr>
 						</table>
+						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
 						</td>
 					</tr>
 					[% END %]
@@ -2180,7 +2097,7 @@
 								<th>Actions</th>
 							</tr>
 							[% FOREACH param = BLAST_SCHEDULE %]
-							<tr align='center' class='backlight' id='d-tr-[% param.DATA_ID %]'>
+							<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
 								<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 								<input type='hidden' name='action' value='schedule_update'>
 								<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -2213,7 +2130,7 @@
 							</tr>
 							[% END %]
 						
-							<tr align='center' class='nocolor'>
+							<tr align='center'>
 								<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 								<input type='hidden' name='action' value='schedule_add'>
 								<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -2230,6 +2147,7 @@
 								</form>
 							</tr>
 						</table>
+						<script language='JavaScript'>listcolorer( 'd-tbl-d1' );</script>
 					</td>
 					</tr>
 					[% END %]
@@ -2242,8 +2160,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='addon_data'>
-							<tr class='list_data'>
+						<table width='100%' class='addon_data' id='addon-data'>
+							<tr class='nocolor'>
 								<th>Phone number</th>
 								<th>Parking slot</th>
 								<th>Hold time</th>
@@ -2256,6 +2174,7 @@
 							</tr>
 							[% END %]
 						</table>
+						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
 						</td>
 					</tr>
 					[% END %]
@@ -2287,7 +2206,7 @@
 							<th>Actions</th>
 						</tr>
 						[% FOREACH param = VB_DATA %]
-						<tr align='center' class='backlight' id='d-tr-[% param.DATA_ID %]'>
+						<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
 							<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 							<input type='hidden' name='action' value='schedule_update'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -2316,11 +2235,9 @@
 											</span>
 										</td>
 										<td>
-											[% FOREACH vb = VB_LIST %]
-											[% IF vb.EXT_NUMBER eq param.REDIRECT_TO %]
-												<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
-											[% END %]
-											[% END %]
+											<script language="JavaScript">
+												exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+											</script>
 										</td>
 									</tr>
 								</table>
@@ -2328,7 +2245,7 @@
 							</form>
 						</tr>
 						[% END %]
-						<tr align='center' class='nocolor'>
+						<tr align='center'>
 							<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 							<input type='hidden' name='action' value='schedule_add'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -2347,6 +2264,7 @@
 							</form>
 						</tr>
 					</table>
+					<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 				</td>
 			</tr>
 			[% END %]
@@ -2381,7 +2299,7 @@
 					</tr>
 					[% END %]
 					[% FOREACH param = VB_DATA %]
-					<tr align='center' class='backlight' id='d-tr-[% param.DATA_ID %]'>
+					<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
 						<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 						<input type='hidden' name='action' value='callblast_update'>
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -2432,7 +2350,7 @@
 						</td>
 					</tr>
 					[% END %]
-					<tr align='center' class='nocolor'>
+					<tr align='center'>
 						<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 						<input type='hidden' name='action' value='callblast_add'>
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -2460,6 +2378,7 @@
 						</form>
 					</tr>
 					</table>
+					<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 				</td>
 			</tr>
 			[% END %]
@@ -2485,7 +2404,7 @@
 							<th>Actions</th>
 						</tr>
 						[% FOREACH param = VB_DATA %]
-						<tr align='center' class='backlight' id='d-tr-[% param.DATA_ID %]'>
+						<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
 							<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 							<input type='hidden' name='action' value='gotoif_update'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -2530,11 +2449,9 @@
 											</span>
 										</td>
 										<td>
-											[% FOREACH vb = VB_LIST %]
-											[% IF vb.EXT_NUMBER eq param.REDIRECT_TO %]
-												<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
-											[% END %]
-											[% END %]
+											<script language="JavaScript">
+												exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+											</script>
 										</td>
 									</tr>
 								</table>
@@ -2542,7 +2459,7 @@
 							</form>
 						</tr>
 						[% END %]
-						<tr align='center' class='nocolor'>
+						<tr align='center'>
 							<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 							<input type='hidden' name='action' value='gotoif_add'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -2575,6 +2492,7 @@
 							</form>
 						</tr>
 					</table>
+					<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 				</td>
 			</tr>
 			[% END %]

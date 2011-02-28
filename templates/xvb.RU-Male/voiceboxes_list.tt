@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.13 2010-11-27 16:46:04 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.14 2011-02-28 10:42:00 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список внутренних номеров - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -66,11 +66,7 @@
 			<th>Г</th>
 		</tr>
 		[% FOREACH vb = VB_LIST %]
-		[% IF vb.VB_IND div2 %]
 		<tr class='nocolor' id='d-tr-[% vb.ID %]'>
-		[% ELSE %]
-		<tr class='backlight' id='d-tr-[% vb.ID %]'>
-		[% END %]
 			[% IF vb.EXT_NUMBER eq '0' %]
 			<td>&nbsp;Начало</td>
 			[% ELSE %]
@@ -143,6 +139,8 @@
 		<tr><td colspan='10'>&nbsp;</td></tr>
 	</table>
 	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
 	<p>	
 	<table width='95%' class='bottom_hr'>
