@@ -462,7 +462,10 @@ create table VPBX_SIPPEERS (
 	callerid		VARCHAR(80) 	NOT NULL DEFAULT '',
     SUBSCR_ID		INT(16)			not null,
     DESCRIPTION     VARCHAR(100)	not null,
-	
+
+	REC_MODE		INT(1)			not null default 0,
+	REC_EXT			VARCHAR(255)	not null default '0',
+
     CONSTRAINT FK_VPBX_SIPPPERS_SUBSCR FOREIGN KEY (SUBSCR_ID) REFERENCES VPBX_ACCOUNTS(ID) ON DELETE CASCADE,
 
 	PRIMARY KEY (DATA_ID)
@@ -794,6 +797,7 @@ create	table VPBX_VBOXES_CONFERENCE
 (
 	ID					INT(16)		    not null,
 	SHARE_VIA_ICECAST	INT(1)			not null default 0,
+	RECORD_CALL			INT(1)			default 0,
 
 	unique(ID),
 

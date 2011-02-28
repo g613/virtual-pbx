@@ -53,6 +53,11 @@ tr.nocolor:hover {
 	background-color: #ccddee;
 }
 
+tr.resume {
+	background-color: #ffffff;
+	font-weight: bold;
+}
+
 th {
 	border: solid 1px #ababab;
 	font-weight: normal;

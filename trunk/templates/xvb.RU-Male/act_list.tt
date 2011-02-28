@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.6 2010-08-26 20:22:03 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.9 2011-02-28 10:41:58 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Статистика номера - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -48,7 +48,7 @@
 	</p>
 
 	<p>
-	<table width='95%' class='list_data'>
+	<table width='95%' class='list_data' id='d-tbl'>
 		<tr class='list_data'>
 			<th>Время действия</th>
 			<th>Номер звонящего</th>
@@ -65,11 +65,7 @@
 		[% END %]
 		
 		[% FOREACH msg = CDR_LIST %]
-		[% IF msg.CDR_NUM div2 %]
 		<tr class='nocolor' align='center'>
-		[% ELSE %]
-		<tr class='backlight' align='center'>
-		[% END %]
 			<td align='center'>[% msg.CDR_DATE | html %]</td>
 			<td align='center'>[% msg.CALLER_ID | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
@@ -89,6 +85,12 @@
 	</table>
 	</p>
 
+	<script language='JavaScript'>
+		var url="<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/$1/0/$2.[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'>FILE</a>";
+		cdrfilters( 'd-tbl', url, 4 );
+		listcolorer( 'd-tbl' );
+	</script>
+	
 	<p>
 	<table width='95%' class='bottom_hr'>
 		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>

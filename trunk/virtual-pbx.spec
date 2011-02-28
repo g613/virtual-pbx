@@ -394,6 +394,7 @@ service httpd start
 %attr(755,root,root) %CORE_DIR/contrib/utils/backup_restore.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/callblast.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/db_backup.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/file2moh.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/mc_view.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/MemCached.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/node_stat.pl

@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.22 2011-01-16 08:46:56 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.28 2011-02-28 16:09:26 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -471,6 +471,80 @@ function setShadowAttr() {
 				all_el[i].onclick = function() { this.form.onsubmit=false; this.form.submit };
 			}
 		}
+	}
+}
+
+/* cdr filters */
+function cdrfilters( element_id, url, col_num ) {
+	/* fiters */
+	var re = /FILE=(\d+):(\w+\.\w+)/g;
+	
+	var el = document.getElementById(element_id).getElementsByTagName('tr');
+	for( i=0; i < el.length; i++ ) {
+		var td_obj = el[i].getElementsByTagName('td');
+		if ( td_obj[col_num] != null ) {
+			var data = td_obj[col_num].innerHTML;
+			var new_str = data.replace(re, url);
+			if ( data != new_str ) {
+				td_obj[col_num].innerHTML = new_str;
+			}
+		}
+	}
+}
+
+/* list colorer */
+function listcolorer( element_id ) {
+	var el = document.getElementById(element_id).getElementsByTagName('tr');
+	var ind = 0;
+	for( i=0; i < el.length; i++ ) {
+		if ( el[i].className == 'nocolor' ) {
+			if ( ind % 2 == 1 ) {
+				el[i].className = 'backlight';
+			}
+			ind++;
+		}
+	}
+}
+
+/* dropdown creaters */
+function exten_dropdown( prefix ) {
+	document.write(prefix);
+	for ( ext_num in e_list ) {
+		/* by ID */
+		if ( e_list[ext_num][0] != null ) {
+			document.write('<option value="'+ e_list[ext_num][0] +'">' + ext_num + ' - ');
+			if ( e_list[ext_num][2].length > 0 ) {
+				document.write( e_list[ext_num][2] );
+			} else {
+				document.write( e_list[ext_num][1] );
+			}
+			document.write('</option>');
+		}
+	}
+}
+function exten_dropdown2( select_name, extension, prefix ) {
+	document.write('<select name="'+ select_name +'">' + prefix);
+	for ( ext_num in e_list ) {
+		/* by Ext Name */
+		document.write('<option value="'+ ext_num +'"');
+		if ( ext_num == extension ) {
+			document.write(' selected ');
+		}
+		document.write( '>' + ext_num + ' - ');
+		if ( e_list[ext_num][2].length > 0 ) {
+			document.write( e_list[ext_num][2] );
+		} else {
+			document.write( e_list[ext_num][1] );
+		}
+		document.write('</option>');
+	}
+	document.write('</select>');
+}
+/* vb edit icon */
+function exten_icon( extension, uniq, title ) {
+	/* edit icon */
+	if ( e_list[extension] != null && e_list[extension][0] != null ) {
+		document.write("<a href='?action=vb_view&id="+ e_list[extension][0] +"&uniq="+ uniq +" ' title='"+ title +"'><img border='0' src='/xvb/images/vb_edit.png' alt='"+ title +"' /></a>");
 	}
 }
 
