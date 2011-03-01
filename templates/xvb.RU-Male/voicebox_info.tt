@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.129 2011-02-28 16:30:47 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.130 2011-02-28 22:17:46 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -235,7 +235,7 @@
 				</tr>
 				</form>
 				<form name='vb_opt' method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
-				<tr id='EXT_NUMBER'>
+				<tr>
 					<td class='ext_pn'>Внутренний номер:</td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.EXT_NUMBER eq '0' %]
@@ -248,7 +248,7 @@
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 					</td>
 				</tr>
-				<tr id='NEXTEXTENSION'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Перейти к: <span>
 							Номер на который следует перейти после после выполнения действий в текущем номере
 							</span></a></td>
@@ -260,7 +260,7 @@
 						<noscript><input size='12' type='text' name='NEXTEXTENSION' value='[% VBOX_PREF.NEXTEXTENSION | html %]'></noscript>
 					</td>
 				</tr>
-				<tr class='addon_info' id='PIN_CODE'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Пин код:<span>
 							Пин код данного номера.<br>Используется для доступа через WEB, 
 							а также при установленном флаге 'Защитить пин кодом' при звонке 
@@ -276,21 +276,21 @@
 						<input size='12' type='text' name='PIN_CODE2' value='[% VBOX_PREF.PIN_CODE2 | html %]'>
 					</td>
 				</tr>
-				<tr id='NAME'>
+				<tr>
 					<td class='ext_pn'>Имя: </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='NAME' value='[% VBOX_PREF.NAME | html %]'>
 					</td>
 				</tr>
 				[% IF USER_CREDS.TTS_GREETING ne '0' %]
-				<tr id='GREETING'>
+				<tr>
 					<td class='ext_pn'>Приветствие: </td>
 					<td class='ext_pv'>
 						<textarea rows='[% VBOX_PREF.GREETING | textarea_rows %]' cols='35' name='GREETING'>[% VBOX_PREF.GREETING | html %]</textarea>
 					</td>
 				</tr>
 				[% END %]
-				<tr class='addon_info' id='GREET_REPEAT_CNT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Повторить приветствие:<span>
 							Количество раз, сколько нужно повторить приветствие если пользователь
 							не нажал ни на какую кнопку во время проигрывания приветствия...
@@ -300,7 +300,7 @@
 						&nbsp;&nbsp;&nbsp;( 0 - не повторять )
 					</td>
 				</tr>
-				<tr id='NOTIFYEMAIL'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Получатель оповещения: <span>
 							Адрес электронной почты ( например: gosha@mail.ru ) или</ br>
 							Twitter аккаунт ( например: gosha:goshapassword - для публичных. gosha:goshapswd@to - для приватных сообщений )
@@ -310,7 +310,7 @@
 						<input size='30' type='text' name='NOTIFYEMAIL' value='[% VBOX_PREF.NOTIFYEMAIL | html %]'>
 					</td>
 				</tr>
-				<tr id='WAITEXTENSION'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'><b>Ж</b>дать ввода:<span>
 							Ожидать во время проигрывания приветствия набора номера или нет 
 							( для перехода на следующий уровень вложенного меню например )
@@ -323,7 +323,7 @@
 					[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='HIDDEN'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'><b>С</b>прятать номер:<span>
 							спрятать номер ( запретить переход на данный<br>
 							номер через IVR, после запрета остается возможность<br>
@@ -341,7 +341,7 @@
 					[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='PROTECT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'><b>З</b>ащита пин кодом: <span>
 							Доступ к данному номеру будет возможен только после ввода Пин-кода
 						</span></a></td>
@@ -353,7 +353,7 @@
 					[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='DIRECT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'><b>П</b>рямой доступ:<span>
 							разрешить использовать данный номер без запуска<br>
 							промежуточных номеров.<br>
@@ -370,7 +370,7 @@
 					[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='GLOBAL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'><b>Г</b>лобальный номер:<span>
 							номер доступен из любой точки IVR<br>
 							например, есть такая структура номеров:<br>
@@ -398,7 +398,7 @@
 					</td>
 				</tr>
 				[% IF VBOX_PREF.TYPE eq '1' %]
-				<tr class='addon_info' id='GREETING_CONTROL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Разрешить перемотку:<span>
 							Разрешить пользователю при прослушивании приветствия пользоваться кнопками:
 								<b>4</b> - перемотка на 30 секунд назад<br>
@@ -418,7 +418,7 @@
 					<input name="GREETING_CONTROL" type="hidden" value="[% VBOX_PREF.GREETING_CONTROL %]">
 				[% END %]
 
-				<tr class='addon_info' id='CID'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>CID фильтры<span>
 							Фильтры доступа к номеру на основе номера звонящего. 
 							Белый лист - список абонентов кому разрешено пользоваться 
@@ -442,7 +442,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='CID_ACTION'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Действие срабатывания CID:<span>
 								Действие которое выполнить при попадании абонента в черный список 
 								( или не попадании в белый список ).
@@ -459,7 +459,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='USER_LANG'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Язык сообщений:</td>
 					<td class='ext_pv'>
 						<select name='LANG_ID'>
@@ -473,7 +473,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr id='VOLUME_CONTROL' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Регулировка громкости Вх/Исх:<span>
 							Допустимые значения от -4 до 4
 							</span></a></td>
@@ -492,7 +492,7 @@
 					</td>
 				</tr>
 				[% IF ASTERISK_VERSION eq '18' %]
-				<tr id='PITCH_CONTROL' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Тембр голоса Вх/Исх:<span>
 							Допустимые значения от 0.1 ( низкий тембр ) до 4 ( высокий тембр )
 							</span></a></td>
@@ -517,21 +517,21 @@
 				<tr class='addon_info'><td colspan='2'>&nbsp;</td></tr>
 
 				[% IF VBOX_PREF.TYPE eq '2' %]
-				<tr class='addon_info' id='MAX_MSG_DURATION'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Максимальная длина сообщения: </td>
 					<td class='ext_pv'>
 						<input size='8' name="MAX_MSG_DURATION" value="[% VBOX_PREF.MAX_MSG_DURATION | html %]" type="text">
 						( в секундах, -1 - системное ограничение  )
 					</td>
 				</tr>
-				<tr class='addon_info' id='MIN_MSG_DURATION'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Минимальная длина сообщения: </td>
 					<td class='ext_pv'>
 						<input size='8' name="MIN_MSG_DURATION" value="[% VBOX_PREF.MIN_MSG_DURATION | html %]" type="text">
 						( в секундах, -1 - без ограничения  )
 					</td>
 				</tr>
-				<tr id='SENDNOTIFYEMAIL'>
+				<tr>
 					<td class='ext_pn'>Отправлять оповещения: </td>
 					<td class='ext_pv'>
 						<select name="SENDNOTIFYEMAIL">
@@ -545,7 +545,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='SEND_ATTACH'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Вложить сообщение в письмо: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.SEND_ATTACH %]
@@ -554,7 +554,7 @@
 						<input name="SEND_ATTACH" type="checkbox">
 					[% END %]
 				</td>
-				<tr class='addon_info' id='KEEP_MSG'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Сохранить сообщение на сервере: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.KEEP_MSG %]
@@ -567,7 +567,7 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '3' %]
-				<tr id='CALL_NUMBER'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Список номеров:<span>
 							Список номеров по которым система будет искать пользователя, 
 							допускается несколько номеров разделенных запятой.
@@ -577,7 +577,7 @@
 						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
-				<tr class='addon_info' id='GOTO_IF_FAIL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Если не дозвонились, перейти к:<span>
 							Внутренний номер на который будет осуществлен переход в случае неудачного звонка.
 							Используется в случае если необходимо сделать какие либо действия, сложнее чем VoiceMail при неудачном звонке.
@@ -590,7 +590,7 @@
 						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
-				<tr class='addon_info' id='GOTO_IF_CALL_STATUS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Перейти если статус:<span>
 							Список статусов и внутренних номеров на которые нужно перейти в зависимости от статуса при не успешном звонке.
 							<i>Пример:</i><br>
@@ -607,7 +607,7 @@
 						<textarea rows='[% VBOX_PREF.GOTO_IF_CALL_STATUS | textarea_rows %]' cols='35' name='GOTO_IF_CALL_STATUS'>[% VBOX_PREF.GOTO_IF_CALL_STATUS | html %]</textarea>
 					</td>
 				</tr>
-				<tr id='USER_MOH' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Музыка вместо гудков:</td>
 					<td class='ext_pv'>
 						<select name='MOH_ID'>
@@ -621,7 +621,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='CALL_TYPE'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Алгоритм вызова: </td>
 					<td class='ext_pv'>
 						<select name="CALL_TYPE">
@@ -635,13 +635,13 @@
 						</select> 
 					</td>
 				</tr>
-				<tr class='addon_info' id='RING_TIMEOUT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Таймаут соединения (сек): </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='SEND_DIGITS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Отправить DTMF (0-9#*w):<span>
 							После установления соединения отправить данную последовательность символов удаленной стороне.
 							w - пауза. Использовать например для автоматического донабора внутреннего номера.
@@ -650,7 +650,7 @@
 						<input size='30' type='text' name='SEND_DIGITS' value='[% VBOX_PREF.SEND_DIGITS | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='TRANSFER_PREF'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Префикс трансфера звонка: <span>
 							Префик для трансфера. Например при установлении значения в '*9*', если пользователь
 							выполнит трансфер звонка на номер 89, то перевод будет осуществлен на номер '9*89'
@@ -660,7 +660,7 @@
 					</td>
 				</tr>
 				[% IF USER_CREDS.VBL_27 ne '0' %]
-				<tr class='addon_info' id='PARKING_EXT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Внутренний номер парковки: <span>
 							Номер для парковки звонка. Если не определен то по нажатии на *8 пользователя
 							попросят ввести этот номер.
@@ -670,7 +670,7 @@
 					</td>
 				</tr>
 				[% END %]
-				<tr id='SENDNOTIFYEMAIL'>
+				<tr>
 					<td class='ext_pn'>Отправлять оповещения: </td>
 					<td class='ext_pv'>
 						<select name="SENDNOTIFYEMAIL">
@@ -684,7 +684,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='CONFIRM_CALL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Подтверждение звонка: <span>
 							При установленном флаге вызываемому абоненту будет проигран файл 'Анонс исходящего вызова'
 							и предложение принять\отклонить\перевести данный вызов.
@@ -697,7 +697,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='SAY_CALLERID'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Анонс номера звонящего:  <span>
 							При установленном флаге вызываемому абоненту будет проигран номер звонящего.
 						</span></a></td>
@@ -709,7 +709,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='SCREENING_MODE'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Защитный режим: <span>
 							При установленном флаге вызывающего абонента попросят назвать себя и цель звонка, 
 							далее даное сообщение будет проиграно вызываемому абоненту,
@@ -723,7 +723,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr id='RECORD_IF_FAIL'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Запустить голосовую почту: <span>
 							При установленном флаге в слкчае неудачного вызова будет записана голосовая почта.
 							При установленном флаге 'Если не дозвонились, перейти к' данный флаг игнорируется.
@@ -736,7 +736,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr id='RECORD_CALL'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Запись разговора:  <span>
 							Атоматически включать запись всех разговоров.
 						</span></a></td>
@@ -748,7 +748,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='RETRYDIAL_INTERVAL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Интервал повторного вызова (сек): <span>
 							При установленном значении данного параметра, в случае неудачной попытки
 							вызвать удаленный номер звонящему будет воспроизведен файл 'Анонс удержания вызова',
@@ -760,7 +760,7 @@
 						( 0-120, 0 - без повторов )
 					</td>
 				</tr>
-				<tr class='addon_info' id='RETRYDIAL_LOOPS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Количество повторных вызовов: </td>
 					<td class='ext_pv'>
 						<input size='4' type='text' name='RETRYDIAL_LOOPS' value='[% VBOX_PREF.RETRYDIAL_LOOPS | html %]'>
@@ -770,7 +770,7 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '4' %]
-				<tr id='USE_FIRSTNAME'>
+				<tr>
 					<td class='ext_pn'>Использовать имя: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.USE_FIRSTNAME == '1' %]
@@ -801,7 +801,7 @@
 					</td>
 				</tr>
 				[% IF USER_CREDS.TTS_GREETING ne '0' %]
-				<tr class='addon_info' id='USE_TTS_NAME'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Использовать TTS: <span>
 							При установленном значении данного параметра, и отсутствующем файле 'Имя' для
 							выбранного внутреннего номера будет сгенерирован TTS текст. В противном случае
@@ -816,7 +816,7 @@
 					</td>
 				</tr>
 				[% END %]
-				<tr class='addon_info' id='DIR_LANG'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Раскладка клавиатуры: <span>
 							выбор привязки символов к цифрам. Например для русскоого:
 							 2 - абвг</br>
@@ -843,7 +843,7 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '5' %]
-				<tr id='TZ_NAME' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Часовой пояс расписания</td>
 					<td class='ext_pv'>
 						<select name="TIME_ZONE">
@@ -860,7 +860,7 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '6' %]
-				<tr id='TTS_METHOD'>
+				<tr>
 					<td class='ext_pn'>Метод запроса: </td>
 					<td class='ext_pv'>
 						<select name="TTS_METHOD">
@@ -874,19 +874,19 @@
 						</select>
 					</td>
 				</tr>
-				<tr id='TTS_URL'>
+				<tr>
 					<td class='ext_pn'>Адрес страницы: </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='TTS_URL' value='[% VBOX_PREF.TTS_URL | html %]'>
 					</td>
 				</tr>
-				<tr id='TTS_POST_PARAMS'>
+				<tr>
 					<td class='ext_pn'>Параметры POST: </td>
 					<td class='ext_pv'>
 						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='35' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
 					</td>
 				</tr>
-				<tr class='addon_info' id='GOTO_IF_FAIL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Перейти к: <span>
 							Перейти к данному внутреннему номеру в случае неудачного WEB запроса
 						</span></a></td>
@@ -898,7 +898,7 @@
 						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
-				<tr class='addon_info' id='QUIET_MODE'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Ничего не говорить: <span>
 							Выполнить WEB запрос не проговаривая полученный результат
 						</span></a></td>
@@ -910,7 +910,7 @@
 					[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='NEED_PARAMS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Запросить дополнительные параметры: <span>
 							Запросить у пользователя дополнительные параметры. Параметры разделенные '*', в 
 							дальнейшем их можно использовать как %DTMF_INPUT0%,%DTMF_INPUT1% и nд.
@@ -923,7 +923,7 @@
 					[% END %]
 					</td>
 				</tr>
-				<tr id='USER_MOH' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Музыка вместо гудков: <span>
 							Позволяет звонящему абоненту слушать музыку вместо гудков во время вызова внутреннего абонента.
 						</span></a></td>
@@ -939,7 +939,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='TTS_REQ_UA'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>User Agent: <span>
 							`Притвориться` данным броузером...
 						</span></a></td>
@@ -947,7 +947,7 @@
 						<input size='30' type='text' name='TTS_REQ_UA' value='[% VBOX_PREF.TTS_REQ_UA | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='TTS_REQ_COOKIE'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Cookie: <span>
 							Передать данные cookie на сервер
 						</span></a></td>
@@ -959,7 +959,7 @@
 
 				[% IF VBOX_PREF.TYPE eq '7' %]
 				[% IF USER_CREDS.ALLOW_ICECAST %]
-				<tr class='addon_info' id='SHARE_VIA_ICECAST'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>HTTP-Трансляция: <span>
 							При установке данного флага Вам выдадут временный URL через который будет транслироваться конференция.
 						</span></a></td>
@@ -972,7 +972,7 @@
 					</td>
 				</tr>
 				[% END %]
-				<tr id='RECORD_CALL'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Запись конференции:  <span>
 							Автоматически включать запись при входе в конференц комнату.
 						</span></a></td>
@@ -987,13 +987,13 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '8' %]
-				<tr id='HEADERINFO'>
+				<tr>
 					<td class='ext_pn'>Заголовок факса: </td>
 					<td class='ext_pv'>
 						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='35' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
 					</td>
 				</tr>
-				<tr id='SENDNOTIFYEMAIL'>
+				<tr>
 					<td class='ext_pn'>Отправлять оповещения: </td>
 					<td class='ext_pv'>
 						<select name="SENDNOTIFYEMAIL">
@@ -1007,7 +1007,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='SEND_ATTACH'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Отправить факс в письме: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.SEND_ATTACH %]
@@ -1016,7 +1016,7 @@
 						<input name="SEND_ATTACH" type="checkbox">
 					[% END %]
 				</td>
-				<tr class='addon_info' id='KEEP_MSG'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Оставить факс на сервере: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.KEEP_MSG %]
@@ -1029,7 +1029,7 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '9' %]
-				<tr id='DTMF_PATTERN'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Шаблоны:<span>
 							Вы можите выбрать один из шаблонов или задать в ручную длину запрашиваемых вами данных
 						</span></a></td>
@@ -1045,20 +1045,20 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='MAX_DIGITS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Максимальное количество цифр: </td>
 					<td class='ext_pv'>
 						<input size='10' name="MAX_DIGITS" value="[% VBOX_PREF.MAX_DIGITS | html %]" type="text">
 						( -1 без ограничения )
 					</td>
 				</tr>
-				<tr id='VAR_NAME'>
+				<tr>
 					<td class='ext_pn'>Имя переменной: </td>
 					<td class='ext_pv'>
 						<input size='10' name="VAR_NAME" value="[% VBOX_PREF.VAR_NAME | html %]" type="text">
 					</td>
 				</tr>
-				<tr class='addon_info' id='OTHER_VARS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Дополнительные переменные: <span>
 							Имена переменных которые были ранее установлены ( ящик типа `Пользовательская переменная` ) 
 							и которые необходимо включить в отчет. Может использоваться для многоуровнего опроса. 
@@ -1069,7 +1069,7 @@
 						<textarea rows='[% VBOX_PREF.OTHER_VARS | textarea_rows %]' cols='35' name='OTHER_VARS'>[% VBOX_PREF.OTHER_VARS | html %]</textarea>
 					</td>
 				</tr>
-				<tr id='SENDNOTIFYEMAIL'>
+				<tr>
 					<td class='ext_pn'>Отправлять оповещения: </td>
 					<td class='ext_pv'>
 						<select name="SENDNOTIFYEMAIL">
@@ -1083,7 +1083,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='SEND_ATTACH'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Отправить DTMF в письме: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.SEND_ATTACH %]
@@ -1092,7 +1092,7 @@
 						<input name="SEND_ATTACH" type="checkbox">
 					[% END %]
 				</td>
-				<tr class='addon_info' id='KEEP_MSG'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Хранить DTMF на сервере: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.KEEP_MSG %]
@@ -1102,7 +1102,7 @@
 					[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='NEED_FORMATED'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Форматировать данные:<span>
 							Данный параметр актуален только при использовании шаблонов. Заменяет разделитель на привычные человеческому глазу символы.
 							Например введенный IP адрес 127*0*0*1 на 127.0.0.1
@@ -1118,14 +1118,14 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '10' %]
-				<tr id='ALLOW_DIGITS'>
+				<tr>
 					<td class='ext_pn'>Варианты ответов: </td>
 					<td class='ext_pv'>
 						<input size='10' name="ALLOW_DIGITS" value="[% VBOX_PREF.ALLOW_DIGITS | html %]" type="text">
 						( разделенные запятой )
 					</td>
 				</tr>
-				<tr class='addon_info' id='UNIQ_CIDS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Проверять уникальность: <span>
 							При включении данного флага будет производится проверки уникальности голосования на основе номера звонящего и `Имени` голосования. Период для проверки уникальности равен периоду хранения CDR.
 						</span></a></td>
@@ -1140,7 +1140,7 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '11' %]
-				<tr id='USER_MOH' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Музыка вместо гудков:</td>
 					<td class='ext_pv'>
 						<select name='MOH_ID'>
@@ -1154,7 +1154,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='PHONE_PATTERN'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Шаблон номера: <span>
 							Устанавливает шаблон номера который может ввести пользователь. Если не определено то разрешено всё. Смотрите описание шаблонов.
 						</span></a></td>
@@ -1163,7 +1163,7 @@
 					</td>
 				</tr>
 				[% IF ASTERISK_VERSION ne '18' %]
-				<tr id='SPY_MODE' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Режим 'шпиона':</td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.SPY_MODE %]
@@ -1177,13 +1177,13 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '12' %]
-				<tr id='PODCAST_URL'>
+				<tr>
 					<td class='ext_pn'>URL подкастов (rss файл): </td>
 					<td class='ext_pv'>
 						<input size='30' name="PODCAST_URL" value="[% VBOX_PREF.PODCAST_URL | html %]" type="text">
 					</td>
 				</tr>
-				<tr id='PODCAST_ANNOUNCEMENT' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Сказать дату подкаста: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.PODCAST_ANNOUNCEMENT %]
@@ -1196,7 +1196,7 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '13' %]
-				<tr id='CALL_NUMBER'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Список агентов:<span>
 							Список номеров которые обслуживают очередь. Алгоритм вызова будет зависить от 'Алгоритма звонка'
 						</span></a></td>
@@ -1204,7 +1204,7 @@
 						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
-				<tr id='MOH_ID' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Музыка вместо гудков:</td>
 					<td class='ext_pv'>
 						<select name='MOH_ID'>
@@ -1218,7 +1218,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='CALL_TYPE'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Алгоритм вызова: </td>
 					<td class='ext_pv'>
 						<select name="CALL_TYPE">
@@ -1232,19 +1232,19 @@
 						</select> 
 					</td>
 				</tr>
-				<tr class='addon_info' id='RING_TIMEOUT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Время вызова агента (сек): </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='Q_TIMEOUT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Время ожидания очереди (сек): </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='Q_TIMEOUT' value='[% VBOX_PREF.Q_TIMEOUT | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='Q_MAX_W_CALLS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Макс кол-во ждущих звонков: <span>
 							Целое число больше нуля. Значение равное нулю означает не использовать данную проверку.
 							При превышении данного лимита звонящего сразу отправляют на номер 
@@ -1254,13 +1254,13 @@
 						<input size='30' type='text' name='Q_MAX_W_CALLS' value='[% VBOX_PREF.Q_MAX_W_CALLS | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='ANNOUNCE_FREQUENCY'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Переодичность анонсов (сек): </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='ANNOUNCE_FREQUENCY' value='[% VBOX_PREF.ANNOUNCE_FREQUENCY | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='ANNOUNCE_HOLDTIME'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Сказать положение в очереди : </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.ANNOUNCE_HOLDTIME %]
@@ -1270,7 +1270,7 @@
 					[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='RECORD_CALL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Записать разговор: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.RECORD_CALL %]
@@ -1280,7 +1280,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='WAIT_BUSY_ONLY'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Чистить очередь:<span>
 							Исключать из повторных попыток дозвона агентов со статусом отличным от BUSY. 
 							То есть если агент не берет трубку то он будет исключен из очереди ( для текущего звонка ).
@@ -1293,7 +1293,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='GOTO_IF_FAIL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Если не дозвонились, перейти к:<span>
 							Внутренний номер на который будет осуществлен переход в случае неудачного звонка.
 						</span></a></td>
@@ -1305,7 +1305,7 @@
 						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
-				<tr class='addon_info' id='TRANSFER_PREF'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Префикс трансфера звонка: <span>
 							Префик для трансфера. Например при установлении значения в '9*', если пользователь
 							выполнит трансфер звонка на номер 89, то перевод будет осуществлен на номер '9*89'
@@ -1315,7 +1315,7 @@
 					</td>
 				</tr>
 				[% IF USER_CREDS.VBL_27 ne '0' %]
-				<tr class='addon_info' id='PARKING_EXT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Внутренний номер парковки: <span>
 							Номер для парковки звонка. Если не определен то по нажатии на *8 пользователя
 							попросят ввести этот номер.
@@ -1325,7 +1325,7 @@
 					</td>
 				</tr>
 				[% END %]
-				<tr class='addon_info' id='CALLERID_PREF'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Преффикс имени звонящего: <span>
 							Можно использовать какой-то префикс для звонка в эту группу. Например, если 
 							это группа "Sales:", то, установив такой префикс для этой группы, можно видеть, 
@@ -1335,7 +1335,7 @@
 						<input size='30' type='text' name='CALLERID_PREF' value='[% VBOX_PREF.CALLERID_PREF | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='CALLERIDNUM_PREF'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Преффикс номера звонящего: <span>
 							Можно использовать какой-то префикс для звонка в эту группу. Например, если 
 							установив префикс 911, можно видеть, 
@@ -1345,7 +1345,7 @@
 						<input size='30' type='text' name='CALLERIDNUM_PREF' value='[% VBOX_PREF.CALLERIDNUM_PREF | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='Q_URL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>CRMs <span>
 							URL который передается на телефон агента при входящем звонке, есть 
 							возможность использовать макрросы в URL: QID - id очереди, 
@@ -1370,7 +1370,7 @@
 				[% END %]
 				
 				[% IF VBOX_PREF.TYPE eq '14' %]
-				<tr class='addon_info' id='CB_NUMBER'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Номер для CallBack:<span>
 							Если номер не определен то используется номер с которого звонят.
 							</span></a></td>
@@ -1378,7 +1378,7 @@
 						<input size='20' type='text' name='CB_NUMBER' value='[% VBOX_PREF.CB_NUMBER | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='CB_EXT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Начать с:<span>
 							Внутренний номер на который будет переброшен звонок после CallBack 
 							соединения, номер должен иметь установленный флаг 'Прямой доступ'
@@ -1391,7 +1391,7 @@
 						<noscript><input size='12' type='text' name='CB_EXT' value='[% VBOX_PREF.CB_EXT | html %]'></noscript>
 					</td>
 				</tr>
-				<tr class='addon_info' id='CB_USE_TIMEOFFSET'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Использовать отложенный вызов: <span>
 					Разрешить задать звонящему пользователю интервал времени через который следует перезвонить. Интервал задается в виде: 'чч*мм'
 							</span></a></td>
@@ -1403,7 +1403,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='CB_DYNAMIC_EXT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Динамический номер: <span>
 					Разрешить звонящему пользователю задать внутренний номер на который должна перейти система после того как дозвонилась до него. Если пользователь нажмет просто решетку то будет использован номер из 'Начать с:' номер который введет пользователь должен иметь установленный флаг 'Прямой доступ'
 							</span></a></td>
@@ -1418,7 +1418,7 @@
 				[% END %]
 				
 				[% IF VBOX_PREF.TYPE eq '15' %]
-				<tr id='TZ_NAME' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Time Zone</td>
 					<td class='ext_pv'>
 						<select name="TIME_ZONE">
@@ -1432,7 +1432,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr id='TIME_FORMAT'class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Сказать дату и время: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.TIME_FORMAT == '0' %]
@@ -1442,7 +1442,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr id='TIME_FORMAT'class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Сказать время: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.TIME_FORMAT == '1' %]
@@ -1452,7 +1452,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr id='TIME_FORMAT'class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Сказать дату: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.TIME_FORMAT == '2' %]
@@ -1465,7 +1465,7 @@
 				[% END %]
 				
 				[% IF VBOX_PREF.TYPE eq '16' %]
-				<tr id='HEADERINFO'>
+				<tr>
 					<td class='ext_pn'>Заголовок факса: </td>
 					<td class='ext_pv'>
 						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='35' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
@@ -1474,21 +1474,21 @@
 				[% END %]
 				
 				[% IF VBOX_PREF.TYPE eq '17' %]
-				<tr class='addon_info' id='MAX_MSG_DURATION'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Максимальная длина сообщения: </td>
 					<td class='ext_pv'>
 						<input size='8' name="MAX_MSG_DURATION" value="[% VBOX_PREF.MAX_MSG_DURATION | html %]" type="text">
 						( в секундах, -1 - системное ограничение  )
 					</td>
 				</tr>
-				<tr class='addon_info' id='MIN_MSG_DURATION'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Минимальная длина сообщения: </td>
 					<td class='ext_pv'>
 						<input size='8' name="MIN_MSG_DURATION" value="[% VBOX_PREF.MIN_MSG_DURATION | html %]" type="text">
 						( в секундах, -1 - без ограничения  )
 					</td>
 				</tr>
-				<tr class='addon_info' id='SECRET_KEY'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Код для записи: <span>
 						Код позволяющий добавлять сообщения в данный голосовой ящик. Не обязательный параметр. Может использоваться для организации подкаст-сервиса...
 					</span></a></td>
@@ -1496,7 +1496,7 @@
 						<input size='8' name="SECRET_KEY" value="[% VBOX_PREF.SECRET_KEY | html %]" type="text">
 					</td>
 				</tr>
-				<tr class='addon_info' id='MSG_LIMITS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Интервал сообщений: <span>
 						Интервал в течении которого нельзя записать повторно сообщение с одного и того же номера звонящего. В секундах. Может использоваться как некоторая защита от спама.
 					</span></a></td>
@@ -1514,7 +1514,7 @@
 				[% END %]
 				
 				[% IF VBOX_PREF.TYPE eq '18' %]
-				<tr id='ACTIVE'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Включить `Автоинформатор`:  <span>
 						Если Вы хотите приостановить работу автоинформатора выключите данный флаг.
 					</span></a></td>
@@ -1526,7 +1526,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr id='START_AFTER_CHANGE'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Следить за приветствием:  <span>
 						При установке данного флага система начнет автообзвон после изменения приветствия.
 					</span></a></td>
@@ -1538,7 +1538,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr id='START_DATE'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Начать звонить в: <span>
 						Время после которого система начанет совершать звонки.
 					</span></a></td>
@@ -1548,7 +1548,7 @@
 						&nbsp;гггг/мм/дд ЧЧ:ММ
 					</td>
 				</tr>
-				<tr id='STOP_DATE'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Закончить звонить в: <span>
 						Время после которого система перестанет совершать звонки.
 					</span></a></td>
@@ -1558,14 +1558,14 @@
 						&nbsp;гггг/мм/дд ЧЧ:ММ
 					</td>
 				</tr>
-				<tr class='addon_info' id='RING_TIMEOUT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Таймаут соединения (сек): </td>
 					<td class='ext_pv'>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 						( 10 - 120 )
 					</td>
 				</tr>
-				<tr class='addon_info' id='RETRYDIAL_LOOPS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Количество повторных вызовов: <span>
 							Количество повторных попыток вызвать абонента .
 						</span></a></td>
@@ -1573,7 +1573,7 @@
 						<input size='4' type='text' name='RETRYDIAL_LOOPS' value='[% VBOX_PREF.RETRYDIAL_LOOPS | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='RETRYDIAL_INTERVAL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Интервал повторного вызова (минуты): <span>
 							Пауза в минутах до повторного вызова абонента в случае неуспешного вызова.
 						</span></a></td>
@@ -1581,7 +1581,7 @@
 						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
 					</td>
 				</tr>
-				<tr id='CALL_LIMIT'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Одновременных звонков:  <span>
 							Количество одновременных вызовов. Например если после CallBlast'a звонок отправляется 
 							оператору и у вас всего 2 оператора, то данное значение логично установить в 2.
@@ -1591,7 +1591,7 @@
 						( 0 - не ограничено )
 					</td>
 				</tr>
-				<tr id='TZ_NAME' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Часовой пояс: </td>
 					<td class='ext_pv'>
 						<select name="TIME_ZONE">
@@ -1608,13 +1608,13 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '19' %]
-				<tr id='VAR_NAME'>
+				<tr>
 					<td class='ext_pn'>Имя переменной: </td>
 					<td class='ext_pv'>
 						<input size='10' name="VAR_NAME" value="[% VBOX_PREF.VAR_NAME | html %]" type="text">
 					</td>
 				</tr>
-				<tr id='DTMF_PATTERN'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Шаблоны:<span>
 							Вы можите выбрать один из шаблонов или задать в ручную длину запрашиваемых вами данных
 						</span></a></td>
@@ -1630,14 +1630,14 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='MAX_DIGITS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Максимальное количество цифр: </td>
 					<td class='ext_pv'>
 						<input size='10' name="MAX_DIGITS" value="[% VBOX_PREF.MAX_DIGITS | html %]" type="text">
 						( -1 без ограничения )
 					</td>
 				</tr>
-				<tr class='addon_info' id='NEED_FORMATED'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Форматировать данные:<span>
 							Данный параметр актуален только при использовании шаблонов. Заменяет разделитель на привычные человеческому глазу символы.
 							Например введенный IP адрес 127*0*0*1 на 127.0.0.1
@@ -1653,13 +1653,13 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '20' %]
-				<tr id='WEBVAR_URL'>
+				<tr>
 					<td class='ext_pn'>Адрес страницы: </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='WEBVAR_URL' value='[% VBOX_PREF.WEBVAR_URL | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='GOTO_IF_FAIL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Перейти к: <span>
 							Перейти к данному внутреннему номеру в случае неудачного WEB запроса
 						</span></a></td>
@@ -1671,7 +1671,7 @@
 						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
-				<tr class='addon_info' id='NEED_PARAMS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Запросить дополнительные параметры: <span>
 							Запросить у пользователя дополнительные параметры. Параметры разделенные '*', в 
 							дальнейшем их можно использовать как %DTMF_INPUT0%,%DTMF_INPUT1% и nд.
@@ -1687,7 +1687,7 @@
 				[% END %]
 				
 				[% IF VBOX_PREF.TYPE eq '22' %]
-				<tr id='VAR_VALUE'>
+				<tr>
 					<td class='ext_pn'>Текущее значение: </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='VAR_VALUE' value='[% VBOX_PREF.VAR_VALUE | html %]'>
@@ -1696,7 +1696,7 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '23' %]
-				<tr class='addon_info' id='AC_CB_NUMBER'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Номер для CallBack:<span>
 							Если номер не определен то используется номер с которого звонят.
 							</span></a></td>
@@ -1705,7 +1705,7 @@
 						 ( null == callerid )
 					</td>
 				</tr>
-				<tr id='AC_AUTO_REMOVE'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Удалять сообщения:<span>
 							Если установлен данный флаг, то после прослушивания `будильника` записанное сообщение автоматически удалиться.
 							</span></a></td>
@@ -1717,14 +1717,14 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='RING_TIMEOUT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Таймаут соединения (сек): </td>
 					<td class='ext_pv'>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 						( 10 - 120 )
 					</td>
 				</tr>
-				<tr class='addon_info' id='RETRYDIAL_LOOPS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Количество вызовов: <span>
 							Количество попыток вызвать абонента .
 						</span></a></td>
@@ -1732,7 +1732,7 @@
 						<input size='4' type='text' name='RETRYDIAL_LOOPS' value='[% VBOX_PREF.RETRYDIAL_LOOPS | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='RETRYDIAL_INTERVAL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Интервал повторного вызова (сек): <span>
 							Пауза в секундах до повторного вызова абонента в случае неуспешного вызова.
 						</span></a></td>
@@ -1744,7 +1744,7 @@
 				[% END %]
 				
 				[% IF VBOX_PREF.TYPE eq '24' %]
-				<tr id='GOOGLE_USER'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Пользователь google: <span>
 							Google логин, например g613@gmail.com
 						</span></a></td>
@@ -1752,13 +1752,13 @@
 						<input size='20' type='text' name='GOOGLE_USER' value='[% VBOX_PREF.GOOGLE_USER | html %]'>
 					</td>
 				</tr>
-				<tr id='GOOGLE_PSWD'>
+				<tr>
 					<td class='ext_pn'>Пароль google: </td>
 					<td class='ext_pv'>
 						<input size='20' type='password' name='GOOGLE_PSWD' value='[% VBOX_PREF.GOOGLE_PSWD | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='GOOGLE_CALENDAR'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Календарь: <span>
 							Оставьте пустым, чтобы использовать ВСЕ доступные календари
 						</span></a></td>
@@ -1766,7 +1766,7 @@
 						<input size='20' type='text' name='GOOGLE_CALENDAR' value='[% VBOX_PREF.GOOGLE_CALENDAR | html %]'>
 					</td>
 				</tr>
-				<tr id='GOTO_IF_OK'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Перейти если не занят: <span>
 							Перейти к данному пункту IVR если в календаре нет событий на это время
 						</span></a></td>
@@ -1778,7 +1778,7 @@
 						<noscript><input size='12' type='text' name='GOTO_IF_OK' value='[% VBOX_PREF.GOTO_IF_OK | html %]'></noscript>
 					</td>
 				</tr>
-				<tr id='GOTO_IF_BUSY'>
+				<tr>
 					<td class='ext_pn'><a href='#' class='info'>Перейти если занят: <span>
 							Перейти к данному пункту IVR если в календаре на данное время назначены какие либо события ( флаг занят\свободен не учитывается )
 						</span></a></td>
@@ -1793,7 +1793,7 @@
 				[% END %]
 				
 				[% IF VBOX_PREF.TYPE eq '25' %]
-				<tr id='SAY_PATTERN'>
+				<tr>
 					<td class='ext_pn'>Тип текста:</td>
 					<td class='ext_pv'>
 						<select name='SAY_PATTERN_ID'>
@@ -1807,7 +1807,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr id='TEXT_STR'>
+				<tr>
 					<td class='ext_pn'>Текст: </td>
 					<td class='ext_pv'>
 						<input size='20' name="TEXT_STR" value="[% VBOX_PREF.TEXT_STR | html %]" type="text">
@@ -1816,7 +1816,7 @@
 				[% END %]
 				
 				[% IF VBOX_PREF.TYPE eq '26' %]
-				<tr id='STREAM_URL'>
+				<tr>
 					<td class='ext_pn'>URL вещания: </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='STREAM_URL' value='[% VBOX_PREF.STREAM_URL | html %]'>
@@ -1825,7 +1825,7 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '27' %]
-				<tr id='MOH_ID'>
+				<tr>
 					<td class='ext_pn'>Музыка ожидания:</td>
 					<td class='ext_pv'>
 						<select name='MOH_ID'>
@@ -1839,13 +1839,13 @@
 						</select>
 					</td>
 				</tr>
-				<tr id='RING_TIMEOUT'>
+				<tr>
 					<td class='ext_pn'>Максимальное время ожидания: </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='GOTO_IF_FAIL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'><a href='#' class='info'>Если не подобрали, перейти к:<span>
 							Внутренний номер на который будет осуществлен переход
 							в случае неудачной парковки
@@ -1861,7 +1861,7 @@
 				[% END %]
 				
 				<tr><td colspan='2'>&nbsp;</td></tr>
-				<tr id='MORE_OPTIONS'>
+				<tr>
 					<td align='center'>
 						<a id='xvb_view_mode_selector' href='#' onclick="return MoreExtOptions(this,0,'все опции','стандартные опции')">&nbsp;</a>
 					</td>

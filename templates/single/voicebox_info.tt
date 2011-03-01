@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.28 2011-01-28 14:24:30 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.29 2011-02-28 22:17:46 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -84,7 +84,7 @@
 			</tr>
 			</form>
 			<form name='vb_opt' method="post" action="[% CGI_URL %]" onSubmit='JavaScript:return xmlhttpPost(this,0)'>
-			<tr class='addon_info' id='PIN_CODE'>
+			<tr class='addon_info'>
 				<td class='ext_pn'>Pin code: </td>
 				<td class='ext_pv'>
 					<input size='12' type='text' name='PIN_CODE' value='[% VBOX_PREF.PIN_CODE | html %]'>
@@ -95,27 +95,27 @@
 				<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 			</tr>
-			<tr id='NAME'>
+			<tr>
 				<td class='ext_pn'>Name: </td>
 				<td class='ext_pv'>
 					<input size='30' type='text' name='NAME' value='[% VBOX_PREF.NAME | html %]'>
 				</td>
 			</tr>
 			[% IF USER_CREDS.TTS_GREETING ne '0' %]
-			<tr id='GREETING'>
+			<tr>
 				<td class='ext_pn'>Greeting: </td>
 				<td class='ext_pv'>
 					<textarea rows='[% VBOX_PREF.GREETING | textarea_rows %]' cols='35' name='GREETING'>[% VBOX_PREF.GREETING | html %]</textarea>
 				</td>
 			</tr>
 			[% END %]
-			<tr id='NOTIFYEMAIL'>
+			<tr>
 				<td class='ext_pn'>Notify email: </td>
 				<td class='ext_pv'>
 					<input size='30' type='text' name='NOTIFYEMAIL' value='[% VBOX_PREF.NOTIFYEMAIL | html %]'>
 				</td>
 			</tr>
-			<tr class='addon_info' id='PROTECT'>
+			<tr class='addon_info'>
 				<td class='ext_pn'>Protected with pin code: </td>
 				<td class='ext_pv'>
 				[% IF VBOX_PREF.PROTECT %]
@@ -126,7 +126,7 @@
 				</td>
 			</tr>
 			[% IF VBOX_PREF.TYPE eq '1' %]
-			<tr id='GREETING_CONTROL'>
+			<tr>
 				<td class='ext_pn'>Allow greeting rewind: </td>
 				<td class='ext_pv'>
 				[% IF VBOX_PREF.GREETING_CONTROL %]
@@ -137,7 +137,7 @@
 				</td>
 			</tr>
 			[% END %]
-			<tr class='addon_info' id='CID_ACTION'>
+			<tr class='addon_info'>
 				<td class='ext_pn'>CID action:</td>
 				<td class='ext_pv'>
 					<select name="CID_ACTION">
@@ -154,21 +154,21 @@
 			<tr class='addon_info'><td colspan='2'>&nbsp;</td></tr>
 			
 			[% IF VBOX_PREF.TYPE eq '2' %]
-			<tr class='addon_info' id='MAX_MSG_DURATION'>
+			<tr class='addon_info'>
 				<td class='ext_pn'>Max message duaration: </td>
 				<td class='ext_pv'>
 					<input size='8' name="MAX_MSG_DURATION" value="[% VBOX_PREF.MAX_MSG_DURATION | html %]" type="text">
 					( in sec, -1 - for unlimit  )
 				</td>
 			</tr>
-			<tr class='addon_info' id='MIN_MSG_DURATION'>
+			<tr class='addon_info'>
 				<td class='ext_pn'>Min message duaration: </td>
 				<td class='ext_pv'>
 					<input size='8' name="MIN_MSG_DURATION" value="[% VBOX_PREF.MIN_MSG_DURATION | html %]" type="text">
 					( in sec, -1 - for unlimit  )
 				</td>
 			</tr>
-			<tr id='SENDNOTIFYEMAIL'>
+			<tr>
 				<td class='ext_pn'>Send notify email: </td>
 				<td class='ext_pv'>
 				[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
@@ -178,7 +178,7 @@
 				[% END %]
 				</td>
 			</tr>
-			<tr class='addon_info' id='SEND_ATTACH'>
+			<tr class='addon_info'>
 				<td class='ext_pn'>Send attachment: </td>
 				<td class='ext_pv'>
 				[% IF VBOX_PREF.SEND_ATTACH %]
@@ -187,7 +187,7 @@
 					<input name="SEND_ATTACH" type="checkbox">
 				[% END %]
 			</td>
-			<tr class='addon_info' id='KEEP_MSG'>
+			<tr class='addon_info'>
 				<td class='ext_pn'>Keep message on the server: </td>
 				<td class='ext_pv'>
 				[% IF VBOX_PREF.KEEP_MSG %]
@@ -200,13 +200,13 @@
 			[% END %]
 			
 			[% IF VBOX_PREF.TYPE eq '3' %]
-			<tr id='CALL_NUMBER'>
+			<tr>
 				<td class='ext_pn'>Find-Me list: </td>
 				<td class='ext_pv'>
 					<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 				</td>
 			</tr>
-			<tr id='MOH_ID' class='addon_info'>
+			<tr class='addon_info'>
 				<td class='ext_pn'>Music on hold:</td>
 				<td class='ext_pv'>
 					<select name='MOH_ID'>
@@ -220,7 +220,7 @@
 					</select>
 				</td>
 			</tr>
-			<tr class='addon_info' id='CALL_TYPE'>
+			<tr class='addon_info'>
 				<td class='ext_pn'>Ring strategy: </td>
 				<td class='ext_pv'>
 					<select name="CALL_TYPE">
@@ -234,19 +234,19 @@
 					</select> 
 				</td>
 			</tr>
-			<tr class='addon_info' id='RING_TIMEOUT'>
+			<tr class='addon_info'>
 				<td class='ext_pn'>Ring timeout (sec): </td>
 				<td class='ext_pv'>
 					<input size='30' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 				</td>
 			</tr>
-				<tr class='addon_info' id='SEND_DIGITS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Send DTMF (0-9#*w): </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='SEND_DIGITS' value='[% VBOX_PREF.SEND_DIGITS | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='CONFIRM_CALL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Confirm calls: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.CONFIRM_CALL %]
@@ -256,7 +256,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='SAY_CALLERID'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Say callerid: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.SAY_CALLERID %]
@@ -266,7 +266,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='SCREENING_MODE'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Screening mode: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.SCREENING_MODE %]
@@ -276,7 +276,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='SENDNOTIFYEMAIL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Send notify email: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
@@ -286,7 +286,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr id='RECORD_IF_FAIL'>
+				<tr>
 					<td class='ext_pn'>Start voicemail if call fail: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.RECORD_IF_FAIL %]
@@ -296,7 +296,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='RECORD_CALL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Record calls: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.RECORD_CALL %]
@@ -306,14 +306,14 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='RETRYDIAL_INTERVAL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>RetryDial interval (sec): </td>
 					<td class='ext_pv'>
 						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
 						( 0-120, 0 - disable )
 					</td>
 				</tr>
-				<tr class='addon_info' id='RETRYDIAL_LOOPS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Call attempts: </td>
 					<td class='ext_pv'>
 						<input size='4' type='text' name='RETRYDIAL_LOOPS' value='[% VBOX_PREF.RETRYDIAL_LOOPS | html %]'>
@@ -322,7 +322,7 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '6' %]
-				<tr id='TTS_METHOD'>
+				<tr>
 					<td class='ext_pn'>Request Method: </td>
 					<td class='ext_pv'>
 						<select name="TTS_METHOD">
@@ -336,19 +336,19 @@
 						</select>
 					</td>
 				</tr>
-				<tr id='TTS_URL'>
+				<tr>
 					<td class='ext_pn'>Text URL: </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='TTS_URL' value='[% VBOX_PREF.TTS_URL | html %]'>
 					</td>
 				</tr>
-				<tr id='TTS_POST_PARAMS'>
+				<tr>
 					<td class='ext_pn'>Post params: </td>
 					<td class='ext_pv'>
 						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='35' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
 					</td>
 				</tr>
-				<tr class='addon_info' id='QUIET_MODE'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Quiet mode: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.QUIET_MODE %]
@@ -358,7 +358,7 @@
 					[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='NEED_PARAMS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Read user params: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.NEED_PARAMS %]
@@ -368,7 +368,7 @@
 					[% END %]
 					</td>
 				</tr>
-				<tr id='MOH_ID' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Music on hold:</td>
 					<td class='ext_pv'>
 						<select name='MOH_ID'>
@@ -385,13 +385,13 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '8' %]
-				<tr id='HEADERINFO'>
+				<tr>
 					<td class='ext_pn'>Fax Header: </td>
 					<td class='ext_pv'>
 						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='35' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
 					</td>
 				</tr>
-				<tr id='SENDNOTIFYEMAIL'>
+				<tr>
 					<td class='ext_pn'>Send notify email: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
@@ -401,7 +401,7 @@
 					[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='SEND_ATTACH'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Send attachment: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.SEND_ATTACH %]
@@ -410,7 +410,7 @@
 						<input name="SEND_ATTACH" type="checkbox">
 					[% END %]
 				</td>
-				<tr class='addon_info' id='KEEP_MSG'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Keep message on the server: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.KEEP_MSG %]
@@ -423,7 +423,7 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '9' %]
-				<tr id='DTMF_PATTERN'>
+				<tr>
 					<td class='ext_pn'>Input pattern:</td>
 					<td class='ext_pv'>
 						<select name='DTMF_PATTERN_ID'>
@@ -437,26 +437,26 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='MAX_DIGITS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Max digits: </td>
 					<td class='ext_pv'>
 						<input size='10' name="MAX_DIGITS" value="[% VBOX_PREF.MAX_DIGITS | html %]" type="text">
 						( -1 for unlimit )
 					</td>
 				</tr>
-				<tr class='addon_info' id='VAR_NAME'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Variable name: </td>
 					<td class='ext_pv'>
 						<input size='10' name="VAR_NAME" value="[% VBOX_PREF.VAR_NAME | html %]" type="text">
 					</td>
 				</tr>
-				<tr class='addon_info' id='OTHER_VARS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Other vars: </td>
 					<td class='ext_pv'>
 						<textarea rows='[% VBOX_PREF.OTHER_VARS | textarea_rows %]' cols='35' name='OTHER_VARS'>[% VBOX_PREF.OTHER_VARS | html %]</textarea>
 					</td>
 				</tr>
-				<tr id='SENDNOTIFYEMAIL'>
+				<tr>
 					<td class='ext_pn'>Send notify email: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
@@ -466,7 +466,7 @@
 					[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='SEND_ATTACH'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Send attachment: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.SEND_ATTACH %]
@@ -475,7 +475,7 @@
 						<input name="SEND_ATTACH" type="checkbox">
 					[% END %]
 				</td>
-				<tr class='addon_info' id='KEEP_MSG'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Keep message on the server: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.KEEP_MSG %]
@@ -488,14 +488,14 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '10' %]
-				<tr id='ALLOW_DIGITS'>
+				<tr>
 					<td class='ext_pn'>Allow digits: </td>
 					<td class='ext_pv'>
 						<input size='10' name="ALLOW_DIGITS" value="[% VBOX_PREF.ALLOW_DIGITS | html %]" type="text">
 						( comma separated )
 					</td>
 				</tr>
-				<tr class='addon_info' id='UNIQ_CIDS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Uniq CIDs: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.UNIQ_CIDS %]
@@ -508,7 +508,7 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '11' %]
-				<tr id='MOH_ID' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Music on hold:</td>
 					<td class='ext_pv'>
 						<select name='MOH_ID'>
@@ -525,13 +525,13 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '12' %]
-				<tr id='PODCAST_URL'>
+				<tr>
 					<td class='ext_pn'>Podcast url (rss): </td>
 					<td class='ext_pv'>
 						<input size='30' name="PODCAST_URL" value="[% VBOX_PREF.PODCAST_URL | html %]" type="text">
 					</td>
 				</tr>
-				<tr id='PODCAST_ANNOUNCEMENT' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Play podcast announcement: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.PODCAST_ANNOUNCEMENT %]
@@ -544,13 +544,13 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '13' %]
-				<tr id='CALL_NUMBER'>
+				<tr>
 					<td class='ext_pn'>Agents list: </td>
 					<td class='ext_pv'>
 						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
-				<tr id='MOH_ID' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Music on hold:</td>
 					<td class='ext_pv'>
 						<select name='MOH_ID'>
@@ -564,7 +564,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='CALL_TYPE'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Ring strategy: </td>
 					<td class='ext_pv'>
 						<select name="CALL_TYPE">
@@ -578,31 +578,31 @@
 						</select> 
 					</td>
 				</tr>
-				<tr class='addon_info' id='RING_TIMEOUT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Ring timeout (sec): </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='Q_TIMEOUT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Queue timeout (sec): </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='Q_TIMEOUT' value='[% VBOX_PREF.Q_TIMEOUT | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='Q_MAX_W_CALLS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Queue max waiting calls: </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='Q_MAX_W_CALLS' value='[% VBOX_PREF.Q_MAX_W_CALLS | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='ANNOUNCE_FREQUENCY'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Queue announce frequency (sec): </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='ANNOUNCE_FREQUENCY' value='[% VBOX_PREF.ANNOUNCE_FREQUENCY | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='ANNOUNCE_HOLDTIME'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Announce Queue holdtime: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.ANNOUNCE_HOLDTIME %]
@@ -612,7 +612,7 @@
 					[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='RECORD_CALL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Record calls: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.RECORD_CALL %]
@@ -622,7 +622,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='WAIT_BUSY_ONLY'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Clean queue: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.WAIT_BUSY_ONLY %]
@@ -632,13 +632,13 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='CALLERID_PREF'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>CID Name preffix: </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='CALLERID_PREF' value='[% VBOX_PREF.CALLERID_PREF | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='Q_URL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>CRMs 
 						<select name='crm' onchange='javascript:document.vb_opt.Q_URL.value=this.value'>
 							<option selected value='[% VBOX_PREF.Q_URL | html %]'>Web URL</option>
@@ -658,7 +658,7 @@
 				[% END %]
 				
 				[% IF VBOX_PREF.TYPE eq '15' %]
-				<tr id='TZ_NAME' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Time Zone</td>
 					<td class='ext_pv'>
 						<select name="TIME_ZONE">
@@ -672,7 +672,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr id='TIME_FORMAT' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Say date/time: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.TIME_FORMAT == '0' %]
@@ -682,7 +682,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr id='TIME_FORMAT' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Say time: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.TIME_FORMAT == '1' %]
@@ -692,7 +692,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr id='TIME_FORMAT' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Say date: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.TIME_FORMAT == '2' %]
@@ -705,7 +705,7 @@
 				[% END %]
 				
 				[% IF VBOX_PREF.TYPE eq '16' %]
-				<tr id='HEADERINFO'>
+				<tr>
 					<td class='ext_pn'>Fax Header: </td>
 					<td class='ext_pv'>
 						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='35' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
@@ -714,27 +714,27 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '17' %]
-				<tr class='addon_info' id='MAX_MSG_DURATION'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Max message duaration: </td>
 					<td class='ext_pv'>
 						<input size='8' name="MAX_MSG_DURATION" value="[% VBOX_PREF.MAX_MSG_DURATION | html %]" type="text">
 						( in sec, -1 - for unlimit  )
 					</td>
 				</tr>
-				<tr class='addon_info' id='MIN_MSG_DURATION'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Min message duaration: </td>
 					<td class='ext_pv'>
 						<input size='8' name="MIN_MSG_DURATION" value="[% VBOX_PREF.MIN_MSG_DURATION | html %]" type="text">
 						( in sec, -1 - for unlimit  )
 					</td>
 				</tr>
-				<tr class='addon_info' id='SECRET_KEY'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Secret key ( for rec ): </td>
 					<td class='ext_pv'>
 						<input size='8' name="SECRET_KEY" value="[% VBOX_PREF.SECRET_KEY | html %]" type="text">
 					</td>
 				</tr>
-				<tr class='addon_info' id='MSG_LIMITS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Post interval ( sec ): </td>
 					<td class='ext_pv'>
 						<input size='8' name="MSG_LIMITS" value="[% VBOX_PREF.MSG_LIMITS | html %]" type="text">
@@ -750,7 +750,7 @@
 				[% END %]
 				
 				[% IF VBOX_PREF.TYPE eq '18' %]
-				<tr id='ACTIVE'>
+				<tr>
 					<td class='ext_pn'>Activate CallBlast: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.ACTIVE %]
@@ -760,7 +760,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr id='START_AFTER_CHANGE'>
+				<tr>
 					<td class='ext_pn'>Monitoring for greeting: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.START_AFTER_CHANGE %]
@@ -770,7 +770,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr id='START_DATE'>
+				<tr>
 					<td class='ext_pn'>Start CallBlast at: </td>
 					<td class='ext_pv'>
 						<input name="START_TIMESTAMP" value="[% VBOX_PREF.START_TIMESTAMP | html %]" type="hidden">
@@ -778,27 +778,27 @@
 						&nbsp;yyyy/mm/dd hh:mm
 					</td>
 				</tr>
-				<tr class='addon_info' id='RING_TIMEOUT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Ring timeout (sec): </td>
 					<td class='ext_pv'>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 						( 10 - 120 )
 					</td>
 				</tr>
-				<tr class='addon_info' id='RETRYDIAL_INTERVAL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>RetryDial interval (min): </td>
 					<td class='ext_pv'>
 						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='RETRYDIAL_LOOPS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>RetryDial loops: </td>
 					<td class='ext_pv'>
 						<input size='4' type='text' name='RETRYDIAL_LOOPS' value='[% VBOX_PREF.RETRYDIAL_LOOPS | html %]'>
 						( 0 - disable )
 					</td>
 				</tr>
-				<tr id='TZ_NAME' class='addon_info'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Time Zone</td>
 					<td class='ext_pv'>
 						<select name="TIME_ZONE">
@@ -815,13 +815,13 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '19' %]
-				<tr id='VAR_NAME'>
+				<tr>
 					<td class='ext_pn'>Variable name: </td>
 					<td class='ext_pv'>
 						<input size='10' name="VAR_NAME" value="[% VBOX_PREF.VAR_NAME | html %]" type="text">
 					</td>
 				</tr>
-				<tr id='DTMF_PATTERN'>
+				<tr>
 					<td class='ext_pn'>Input pattern:</td>
 					<td class='ext_pv'>
 						<select name='DTMF_PATTERN_ID'>
@@ -835,7 +835,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr class='addon_info' id='MAX_DIGITS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Max digits: </td>
 					<td class='ext_pv'>
 						<input size='10' name="MAX_DIGITS" value="[% VBOX_PREF.MAX_DIGITS | html %]" type="text">
@@ -845,13 +845,13 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '20' %]
-				<tr id='WEBVAR_URL'>
+				<tr>
 					<td class='ext_pn'>URL: </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='WEBVAR_URL' value='[% VBOX_PREF.WEBVAR_URL | html %]'>
 					</td>
 				</tr>
-				<tr class='addon_info' id='GOTO_IF_FAIL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Goto if request fail: </td>
 					<td class='ext_pv'>
 						<select name="GOTO_IF_FAIL">
@@ -871,7 +871,7 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='NEED_PARAMS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Read user params: </td>
 					<td class='ext_pv'>
 					[% IF VBOX_PREF.NEED_PARAMS %]
@@ -884,14 +884,14 @@
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '23' %]
-				<tr class='addon_info' id='AC_CB_NUMBER'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>CallBack number: </td>
 					<td class='ext_pv'>
 						<input size='20' type='text' name='AC_CB_NUMBER' value='[% VBOX_PREF.AC_CB_NUMBER | html %]'>
 						 ( null == callerid )
 					</td>
 				</tr>
-				<tr id='AC_AUTO_REMOVE'>
+				<tr>
 					<td class='ext_pn'>Remove message after dial: </td>
 					<td class='ext_pv'>
 						[% IF VBOX_PREF.AC_AUTO_REMOVE %]
@@ -901,21 +901,21 @@
 						[% END %]
 					</td>
 				</tr>
-				<tr class='addon_info' id='RING_TIMEOUT'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Ring timeout (sec): </td>
 					<td class='ext_pv'>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 						( 10 - 120 )
 					</td>
 				</tr>
-				<tr class='addon_info' id='RETRYDIAL_INTERVAL'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>RetryDial interval (sec): </td>
 					<td class='ext_pv'>
 						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
 						( 30 - 180 )
 					</td>
 				</tr>
-				<tr class='addon_info' id='RETRYDIAL_LOOPS'>
+				<tr class='addon_info'>
 					<td class='ext_pn'>Call attempts: </td>
 					<td class='ext_pv'>
 						<input size='4' type='text' name='RETRYDIAL_LOOPS' value='[% VBOX_PREF.RETRYDIAL_LOOPS | html %]'>
@@ -924,7 +924,7 @@
 				[% END %]
 				
 				[% IF VBOX_PREF.TYPE eq '26' %]
-				<tr id='STREAM_URL'>
+				<tr>
 					<td class='ext_pn'>URL: </td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='STREAM_URL' value='[% VBOX_PREF.STREAM_URL | html %]'>
@@ -933,7 +933,7 @@
 				[% END %]
 
 				<tr><td colspan='2'>&nbsp;</td></tr>
-				<tr id='MORE_OPTIONS'>
+				<tr>
 					<td align='center'>
 						<a id='xvb_view_mode_selector' href='#' onclick="return MoreExtOptions(this,0,'all options','core options')">&nbsp;</a>
 						<script language='JavaScript'>MoreExtOptions(document.getElementById('xvb_view_mode_selector'),1,'all options','core options');</script>

@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.28 2011-02-28 16:09:26 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.29 2011-02-28 22:02:16 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -377,7 +377,7 @@ function graphit(g,gwidth){
 
 	coll_width = parseInt(90/total.length-1);
 
-	output='<table width="95%" border="0" cellspacing="0" cellpadding="0" class="list_data"><tr class="list_data"><th width="5%">'+(g[0][0])+'</th>';
+	output='<table width="95%" border="0" cellspacing="0" cellpadding="0" class="list_data"><tr class="list_data"><th width="10%">'+(g[0][0])+'</th>';
 	for (i2=1;i2<g[0].length;i2++) {
 		//output+='<th colspan="2">'+ (g[0][i2]) +'</th>';
 		output+='<th colspan="2" width="'+coll_width+'%">'+g[0][i2]+'</th>';
