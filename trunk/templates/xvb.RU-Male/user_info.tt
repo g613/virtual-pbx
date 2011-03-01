@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.49 2010-12-23 12:03:52 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.50 2011-02-28 22:17:46 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -84,13 +84,13 @@
 					</td>
 				</tr>
 				<form method="post" action="[% CGI_URL %]" name='user_prefs' onSubmit='return xmlhttpPost(this,0)'>
-				<tr id='USER_LAST_NAME'>
+				<tr>
 					<td class='ext_pn'>Фамилия:</td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='LAST_NAME' value='[% USER_CREDS.LAST_NAME | html %]'>
 					</td>
 				</tr>
-				<tr id='USER_FIRST_NAME'>
+				<tr>
 					<td class='ext_pn'>Имя:</td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='FIRST_NAME' value='[% USER_CREDS.FIRST_NAME | html %]'>
@@ -99,13 +99,13 @@
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 					</td>
 				</tr>
-				<tr id='USER_EMAIL'>
+				<tr>
 					<td class='ext_pn'>Email:</td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='EMAIL' value='[% USER_CREDS.EMAIL | html %]'>
 					</td>
 				</tr>
-				<tr id='USER_CSS_HREF'>
+				<tr>
 					<td class='ext_pn'>
 						<select name='skins' onchange='javascript:document.user_prefs.CSS_HREF.value=this.value'>
 							<option value='[% USER_CREDS.CSS_HREF | html %]' selected>Ссылка на таблицу стилей:</option>
@@ -117,34 +117,34 @@
 						<input size='30' type='text' name='CSS_HREF' value='[% USER_CREDS.CSS_HREF | html %]'>
 					</td>
 				</tr>
-				<tr id='USER_LOGO_HREF'>
+				<tr>
 					<td class='ext_pn'>Ссылка на логотип:</td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='LOGO_HREF' value='[% USER_CREDS.LOGO_HREF | html %]'>
 					</td>
 				</tr>
 				[% IF USER_CREDS.ALLOW_GA %]
-				<tr id='GA_ACCOUNT'>
+				<tr>
 					<td class='ext_pn'>Google Analytics ID:</td>
 					<td class='ext_pv'>
 						<input size='30' type='text' name='GA_ACCOUNT' value='[% USER_CREDS.GA_ACCOUNT | html %]'>
 					</td>
 				</tr>
 				[% END %]
-				<tr id='USER_MSG_IN_PAGE'>
+				<tr>
 					<td class='ext_pn'>Сообщений на странице:</td>
 					<td class='ext_pv'>
 						<input size='10' type='text' name='MSG_IN_PAGE' value='[% USER_CREDS.MSG_IN_PAGE | html %]'>
 					</td>
 				</tr>
-				<tr id='USER_MSG_STORE_PERIOD'>
+				<tr>
 					<td class='ext_pn'>Время хранения записей (дней):</td>
 					<td class='ext_pv'>
 						<input size='10' type='text' name='MSG_STORE_PERIOD' value='[% USER_CREDS.MSG_STORE_PERIOD | html %]'>
 						( 0 - не удалять )
 					</td>
 				</tr>
-				<tr id='USER_LANG'>
+				<tr>
 					<td class='ext_pn'>Язык по умолчанию:</td>
 					<td class='ext_pv'>
 						<select name='LANG'>
@@ -160,7 +160,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr id='USER_SOUND_FORMAT'>
+				<tr>
 					<td class='ext_pn'>Формат звуковых файлов:</td>
 					<td class='ext_pv'>
 						<select name='SOUND_FORMAT'>
@@ -174,7 +174,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr id='USER_TZ'>
+				<tr>
 					<td class='ext_pn'>Часовой пояс:</td>
 					<td class='ext_pv'>
 						<select name='TIME_ZONE'>
@@ -190,7 +190,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr id='USER_SOUND_FORMAT'>
+				<tr>
 					<td class='ext_pn'>Формат даты и времени:</td>
 					<td class='ext_pv'>
 						<select name='DATE_FORMAT'>
@@ -204,7 +204,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr id='USER_STATEMENTS'>
+				<tr>
 					<td class='ext_pn'>Ежедневная статистика:</td>
 					<td class='ext_pv'>
 						<select name='STATEMENTS'>
@@ -224,7 +224,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr id='FILTER'>
+				<tr>
 					<td class='ext_pn'>Общие фильтры:</td>
 					<td class='ext_pv'>
 						<a href='?action=cid_list&id=[% ROOT_EXT_ID %]&cid_list_type=2&cid_type=2&uniq=[% USER_CREDS.UNIQ %]'>Белый список</a> / 
@@ -249,7 +249,7 @@
 				<tr>
 					<td colspan='2'><h4>Музыка вместо звонка:</h4></td>
 				</tr>
-				<tr id='MOH_FILE'>
+				<tr>
 					<td colspan='2'>
 						<table width='90%' class='addon_data' id='d-tbl'>
 							[% IF CUSTOM_MOH ne '' %]

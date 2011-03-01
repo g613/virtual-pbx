@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.9 2011-02-28 10:41:56 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.10 2011-02-28 22:02:15 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -127,6 +127,9 @@
 				</script>
 				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
 				<button type="button">...</button>
+				&nbsp;
+				Caller ID:
+				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				&nbsp;
 				Type:
 				<select name="act_type")">
