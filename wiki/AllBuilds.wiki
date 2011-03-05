@@ -1,5 +1,6 @@
 ==All VMWare images :==
 
+  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1914104460/VirtualPBX-1_4573.tar.bz2 build 4573 (01.03.2011)] / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/6734415001/VirtualPBX-1_4573.tar.bz2.html yandex-disk-mirror] ( Transit call recording )
 
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1913941795/VirtualPBX-1_4457.tar.bz2 build 4457 (21.02.2011)] / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/6083784001/VirtualPBX-1_4457.tar.bz2.html yandex-disk-mirror] ( IceCast integration )
 
