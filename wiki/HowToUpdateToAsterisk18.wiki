@@ -1,0 +1,8 @@
+How to update asterisk to 1.8:
+
+  * download tar archive ( *wget http://virtual-pbx.googlecode.com/files/asterisk18.tgz* )
+  * extract files ( *tar -xzvf asterisk18.tgz && cd asterisk18* )
+  * install rpm packages ( *rpm -Fvh `*`.rpm* )
+  * install app_konference ( *cp app_konference.so  /usr/lib/asterisk/modules/* )
+  * change XVB configuration file ( *cat xvb.conf >> /opt/VirtualPBX/etc/xvb.conf* )
+  * restart system
