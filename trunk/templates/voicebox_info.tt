@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.186 2011-02-28 22:17:45 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.188 2011-03-07 16:27:06 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1962,6 +1962,7 @@
 						<td colspan='2' align='center'>
 						<table width='100%' class='addon_data' id='addon-data'>
 							<tr class='list_data' align='center'>
+								<th colspan='2'>&nbsp;</th>
 								<th>Create time</th>
 								<th>Download time</th>
 								<th>File size</th>
@@ -1969,6 +1970,12 @@
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							<tr align='center' class='nocolor'>
+								<td>
+									<img border='0' src='/xvb/images/information-button.png' title="[% param.TITLE | html %]" />
+								</td>
+								<td align='center'>
+									<a title='download file' href='[% param.FILE_URL %]' onclick="return true"><img border='0' src='/xvb/images/msg_download.png' alt='download file' /></a>
+								</td>
 								<td>[% param.CREATE_DATE | html %]</td>
 								<td>[% param.DOWNLOAD_DATE | html %]</td>
 								<td align='right'>[% param.FILE_SIZE | fsize %]</td>
