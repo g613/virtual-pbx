@@ -34,8 +34,8 @@ Dynamic IVR / SOHO VirtualPBX - CORE files
 Summary: Dynamic IVR / SOHO VirtualPBX VOIP application
 Group:   System Environment/Services
 
-Requires: asterisk >= 1.4.22
-Requires: virtual-pbx-sound-files >= 1-1_2711
+Requires: asterisk >= 1.6.0.26
+Requires: virtual-pbx-sound-files >= 1-1_4584
 Requires: virtual-pbx = %{version}-%{release}
 Requires: festival
 Requires: sox >= 12.18.1
@@ -218,6 +218,7 @@ find -name '*.tt' -exec perl ../contrib/utils/build/html_clean.pl {} ';'
 find -name '*.bak' -exec rm -f {} ';'
 ln -s xvb.RU-Male xvb.RU-Male-Dmitri
 ln -s xvb.RU-Male xvb.RU-Female-Olga
+ln -s xvb.RU-Male xvb.RU-Female
 ln -s . default
 ln -s . xvb.EN-Male
 ln -s . xvb.EN-Female
@@ -310,7 +311,8 @@ ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.EN-Female/digits %ASTERISK_VARLIB_HOME/so
 ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.EN-Male/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.EN-Male &> /dev/null
 # with out tts
 ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.RU-Male-Dmitri/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.RU-Male-Dmitri &> /dev/null
-ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.RU-Male-Olga/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.RU-Male-Olga &> /dev/null
+ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.RU-Female-Olga/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.RU-Female-Olga &> /dev/null
+ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.RU-Female/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.RU-Female &> /dev/null
 #
 ln -s %ASTERISK_VARLIB_HOME/sounds %CORE_DIR
 
