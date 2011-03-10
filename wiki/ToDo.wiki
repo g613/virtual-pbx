@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='green'>+ инсталировать cache-dns в vmware image</font> ( 08.03.2011 / build 4592 )
+
 <font color='green'>+ GoogleTranslate для русского языка с TTS</font> ( 07.03.2011 / build 4591 )
 
 <font color='green'>+ Запись исходящих пользовательских звонков</font> ( 27.02.2011 / build 4509 )
