@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- интерфейс администратора системы `очеловечить`</font>
+<font color='red'>- интерфейс администратора системы 'очеловечить'</font>
 
 <font color='green'>+ инсталировать cache-dns в vmware image</font> ( 08.03.2011 / build 4592 )
 
