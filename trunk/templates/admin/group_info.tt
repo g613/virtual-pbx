@@ -33,17 +33,23 @@
 	<p>
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
-			<td width='25%'>
-				<a class='headers' href='?action=group_list'>Groups</a>
+			<td width='15%'>
+				<a class='headers' href='?action=group_del&group_id=[% GROUP.GROUP_ID %]' onclick="return DelConfirm('en')">Delete</a>
 			</td>
-			<td width='25%'>
-				<a class='headers' href='?action=user_list'>Users</a>
-			</td>
-			<td width='25%'>
+			<td width='15%'>
 				<a class='headers' href='?action=node_list'>Nodes</a>
 			</td>
-			<td width='25%'>
-				<a class='headers' href='?action=group_del&group_id=[% GROUP.GROUP_ID %]' onclick="return DelConfirm('en')">Delete</a>
+			<td width='15%'>
+				<a class='headers' href='?action=group_list'>Groups</a>
+			</td>
+			<td width='15%'>
+				<a class='headers' href='?action=user_list'>Users</a>
+			</td>
+			<td width='15%'>
+				<a class='headers' href='?action=did_list'>DIDs</a>
+			</td>
+			<td width='15%'>
+				<a class='headers' href='?action=report_list'>Reports</a>
 			</td>
 		</tr>
 	</table>
@@ -397,23 +403,23 @@
 	<p>
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
-			<form method='post'>
-			<td align='left' width='25%'>
-					&nbsp;
-					<input size='10' type='text' name='group_name'>
-					<input type='hidden' value='group_add' name='action'>
-					<input type='hidden' value='gr' name='go'>
-					<input value='Create new' type='submit'>
+			<td width='15%'>
+				<a class='headers' href='?action=report_list'>Reports</a>
 			</td>
-			</form>
-			<td width='25%'>
-				<a class='headers' href='?action=node_list'>Nodes</a>
+			<td width='15%'>
+				<a class='headers' href='?action=did_list'>DIDs</a>
 			</td>
-			<td width='25%'>
+			<td width='15%'>
 				<a class='headers' href='?action=user_list'>Users</a>
 			</td>
-			<td width='25%'>
+			<td width='15%'>
 				<a class='headers' href='?action=group_list'>Groups</a>
+			</td>
+			<td width='15%'>
+				<a class='headers' href='?action=node_list'>Nodes</a>
+			</td>
+			<td width='15%'>
+				<a class='headers' href='?action=group_del&group_id=[% GROUP.GROUP_ID %]' onclick="return DelConfirm('en')">Delete</a>
 			</td>
 		</tr>
 	</table>

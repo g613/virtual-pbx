@@ -48,15 +48,13 @@
 				<a href='?action=tariff_list'>Tariffs</a>
 			[% END %]
 			</td>
-			<form method='post'>
-			<td align='right' width='60%'>
-				N
-				<input type='hidden' name='action' value='report_run'>
-				<input type='text' name='report_id' size='5'>
-				<input value='Run' type='submit'>
-				<!--
-					<input value='Excel' name='need_excel' type='submit'>
-				-->
+			<form method="post">
+			<td align='right'>
+				Report name: 
+				<input size='20' name='name' type='text' value='[% SEARCH_NAME %]'>
+				<input type='hidden' value='report_list' name='action'>
+				<input value='Search' type='submit'>
+				&nbsp;&nbsp;
 			</td>
 			</form>
 		</tr>
@@ -64,10 +62,10 @@
 	</p>
 
 	<p>
-	<table width='98%' class='list_data'>
+	<table width='98%' class='list_data' id='list-data'>
 		<tr class='list_data'>
 			<th>&nbsp;N&nbsp;</th>
-			<th>Name</th>
+			<th>Report name</th>
 			<th>Create date</th>
 			<th>Owner</th>
 			<th>Cache TTL</th>
@@ -83,9 +81,9 @@
 		[% END %]
 
 		[% FOREACH t = REPORTS %]
-		<tr align='center' class='backlight'>
-			<td>[% t.ID %]</td>
-			<td>[% t.NAME | html %]</td>
+		<tr align='center' class='nocolor'>
+			<td><a title='edit report' href='?action=report_info&report_id=[% t.ID %]'>[% t.ID %]</a></td>
+			<td align='left'><a title='run report' href='?action=report_run&report_id=[% t.ID %]'>[% t.NAME | html %]</a></td>
 			<td>[% t.CREATE_DATE %]</td>
 			<td>
 				[% IF t.TYPE eq '1' %]
@@ -96,22 +94,10 @@
 			</td>
 			<td>[% t.TTL | duration_str | html %]</td>
 			<td>
-				<table>
-					<tr>
-						<td>
-							<a title='run report' href='?action=report_run&report_id=[% t.ID %]'"><img border='0' src='/xvb/images/run.png' alt='run' /></a>
-						</td>
-						<td>
-							<a title='get excel table' href='?action=report_run&report_id=[% t.ID %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
-						</td>
-						<td>
-							<a title='edit report' href='?action=report_info&report_id=[% t.ID %]'"><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
-						</td>
-						<td>
-							<a title='delete report' href='?action=report_del&report_id=[% t.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
-						</td>
-					</tr>
-				</table>
+				<a title='run report' href='?action=report_run&report_id=[% t.ID %]'><img border='0' src='/xvb/images/run.png' alt='run' /></a>&nbsp;&nbsp;
+				<a title='get excel table' href='?action=report_run&report_id=[% t.ID %]&need_excel=1'><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;&nbsp;
+				<a title='edit report' href='?action=report_info&report_id=[% t.ID %]'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>&nbsp;&nbsp;
+				<a title='delete report' href='?action=report_del&report_id=[% t.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -124,6 +110,7 @@
 		</tr>
 		[% END %]
 	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
 	</p>
 
 	<p>
@@ -131,19 +118,18 @@
 		<tr>
 			<form method="post">
 			<td align='left'>
-				&nbsp;&nbsp;
+				&nbsp;Report name : 
 				<input size='20' name='R_NAME' type='text'>
 				<input type='hidden' value='report_add' name='action'>
-				<input value='&nbsp;&nbsp;ADD&nbsp;&nbsp;' type='submit'>
+				<input value='&nbsp;&nbsp;Create new report&nbsp;&nbsp;' type='submit'>
 			</td>
 			</form>
-			<form method="post">
-			<td align='right'>
-				Name: 
-				<input size='20' name='name' type='text' value='[% SEARCH_NAME %]'>
-				<input type='hidden' value='report_list' name='action'>
-				<input value='Search' type='submit'>
-				&nbsp;&nbsp;
+			<form method='post'>
+			<td align='right' width='60%'>
+				Report # :
+				<input type='hidden' name='action' value='report_run'>
+				<input type='text' name='report_id' size='5'>
+				<input value='Run' type='submit'>
 			</td>
 			</form>
 	</table>

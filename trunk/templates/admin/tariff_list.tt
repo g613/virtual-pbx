@@ -53,7 +53,7 @@
 	</p>
 
 	<p>
-	<table width='98%' class='list_data'>
+	<table width='98%' class='list_data' id='list-data'>
 		<tr class='list_data'>
 			<th rowspan='3'>Id</th>
 			<th rowspan='3'>Name</th>
@@ -86,20 +86,20 @@
 		[% END %]
 
 		[% FOREACH t = TARIFFS %]
-		<tr align='center' class='backlight'>
+		<tr align='center' class='nocolor' id='d-tr-[% t.ID %]'>
 			<form method='post'>
 			<td>[% t.ID | html %]</td>
-			<td><input size='25' name='T_NAME' type='text' value='[% t.NAME | html %]'></td>
-			<td><input size='5' name='T_MONTHLY_PRICE' type='text' value='[% t.MONTHLY_PRICE | html %]'></td>
-			<td><input size='5' name='T_DAILY_PRICE' type='text' value='[% t.DAILY_PRICE | html %]'></td>
-			<td><input size='5' name='T_MINUTE_PRICE' type='text' value='[% t.MINUTE_PRICE | html %]'></td>
-			<td><input size='5' name='T_CALL_PRICE' type='text' value='[% t.CALL_PRICE | html %]'></td>
-			<td><input size='5' name='T_MINUTE_PRICE_CBL' type='text' value='[% t.MINUTE_PRICE_CBL | html %]'></td>
-			<td><input size='5' name='T_CALL_PRICE_CBL' type='text' value='[% t.CALL_PRICE_CBL | html %]'></td>
-			<td><input size='5' name='T_MINUTE_PRICE_CB' type='text' value='[% t.MINUTE_PRICE_CB | html %]'></td>
-			<td><input size='5' name='T_CALL_PRICE_CB' type='text' value='[% t.CALL_PRICE_CB | html %]'></td>
+			<td><input class='in_t0' size='25' name='T_NAME' type='text' value='[% t.NAME | html %]'></td>
+			<td><input class='in_t0' size='5' name='T_MONTHLY_PRICE' type='text' value='[% t.MONTHLY_PRICE | html %]'></td>
+			<td><input class='in_t0' size='5' name='T_DAILY_PRICE' type='text' value='[% t.DAILY_PRICE | html %]'></td>
+			<td><input class='in_t0' size='5' name='T_MINUTE_PRICE' type='text' value='[% t.MINUTE_PRICE | html %]'></td>
+			<td><input class='in_t0' size='5' name='T_CALL_PRICE' type='text' value='[% t.CALL_PRICE | html %]'></td>
+			<td><input class='in_t0' size='5' name='T_MINUTE_PRICE_CBL' type='text' value='[% t.MINUTE_PRICE_CBL | html %]'></td>
+			<td><input class='in_t0' size='5' name='T_CALL_PRICE_CBL' type='text' value='[% t.CALL_PRICE_CBL | html %]'></td>
+			<td><input class='in_t0' size='5' name='T_MINUTE_PRICE_CB' type='text' value='[% t.MINUTE_PRICE_CB | html %]'></td>
+			<td><input class='in_t0' size='5' name='T_CALL_PRICE_CB' type='text' value='[% t.CALL_PRICE_CB | html %]'></td>
 			<td>
-				<select name='T_CURRENCY_ID'>
+				<select class='in_t0' name='T_CURRENCY_ID'>
 					[% FOREACH c = CURRENCY %]
 						[% IF t.CURRENCY_ID eq c.CUR_ID %]
 							<option value="[% c.CUR_ID | html %]" selected>[% c.DESCRIPTION | html %]</option>
@@ -111,12 +111,15 @@
 			</td>
 			<td>
 				<input type='hidden' value='[% t.ID %]' name='tariff_id'>
+				<input type='hidden' value='[% t.ID %]' name='data_id'>
 				<input type='hidden' value='tariff_update' name='action'>
 				<input type='hidden' value='[% MSG_FROM %]' name='from'>
+				<span class='in_t' id='in_t_id-[% t.ID %]'>
 				<script language='JavaScript'>
 					writeUpdateLinks( 'save changes' );
 				</script>
 				<noscript><input value='change' type='submit'></noscript>
+				</span>
 				<a title='delete node' href='?action=tariff_del&tariff_id=[% t.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
 			</form>
@@ -155,22 +158,26 @@
 		</tr>
 		[% END %]
 	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
 	</p>
 
 	<p>
 	<table width='98%' class='bottom_hr'>
 		<tr align='center'>
 			<td>
-				<a class='headers' href='?action=report_list'>Reports</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=group_list'>Nodes</a>
+				<a class='headers' href='?action=node_list'>Nodes</a>
 			</td>
 			<td>
 				<a class='headers' href='?action=group_list'>Groups</a>
 			</td>
 			<td>
 				<a class='headers' href='?action=user_list'>Users</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=did_list'>DIDs</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=report_list'>Reports</a>
 			</td>
 		</tr>
 	</table>

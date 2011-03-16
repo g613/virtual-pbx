@@ -48,12 +48,22 @@
 				<a href='?action=tariff_list'>Tariffs</a>
 			[% END %]
 			</td>
+			<form method='post'>
+			<td align='right'>
+			DID:
+			<input size='11' name='f_vn' type='text' value='[% F_VN | html %]'>
+			Access code:
+			<input size='10' name='f_ac' type='text' value='[% F_AC | html %]'>
+			<input type='hidden' value='did_list' name='action'>
+			<input value='search' type='submit'>
+			</td>
+			</form>
 		</tr>
 	</table>
 	</p>
 		
 	<p>
-	<table width='95%' class='list_data'>
+	<table width='95%' class='list_data' id='list-data'>
 		<tr class='list_data'>
 			<th>DID</th>
 			<th colspan='3'>Assigned to</th>
@@ -68,8 +78,8 @@
 		[% END %]
 		
 		[% FOREACH did = DIDS %]
-		<tr align='center' class='backlight'>
-			<td>[% did.DID | html %]</td>
+		<tr align='center' class='nocolor'>
+			<td align='right'>[% did.DID | html %]</td>
 			<td align='right'>
 				[% did.VOICENUMBER | html %]
 			</td>
@@ -77,16 +87,16 @@
 				<b>#</b>
 			</td>
 			<td align='left'>
-				<a href='?action=user_list&f_ac=[% did.ACCESS_CODE | html %]'>[% did.ACCESS_CODE | html %]</a>
+				<a href='?action=user_info&ac=[% did.ACCESS_CODE | html %]'>[% did.ACCESS_CODE | html %]</a>
 			</td>
 			<td>
-				<a href='?action=did_del&did_id=[% did.ID %]&user_id=[% did.SUBSCR_ID | html %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+				<a title='delete DID' href='?action=did_del&did_id=[% did.ID %]&user_id=[% did.SUBSCR_ID | html %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
 		</tr>
 		[% END %]
 		<form>
 		<tr align='center'>
-			<td><input size='15' type='text' name='did'></td>
+			<td align='right'><input size='15' type='text' name='did'></td>
 			<td align='right'>
 				<input size='15' type='text' name='pn'>
 			</td>
@@ -110,22 +120,28 @@
 		</tr>
 		[% END %]
 	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
 	</p>
 
 	<p>
 	<table width='95%' class='bottom_hr'>
-		<form method='post'>
-		<tr align='right'>
+		<tr align='center'>
 			<td>
-			DID:
-			<input size='11' name='f_vn' type='text' value='[% F_VN | html %]'>
-			Access code:
-			<input size='10' name='f_ac' type='text' value='[% F_AC | html %]'>
-			<input type='hidden' value='did_list' name='action'>
-			<input value='search' type='submit'>
+				<a class='headers' href='?action=node_list'>Nodes</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=group_list'>Groups</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=user_list'>Users</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=did_list'>DIDs</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=report_list'>Reports</a>
 			</td>
 		</tr>
-		</form>
 	</table>
 	</p>
 

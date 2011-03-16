@@ -52,7 +52,7 @@
 	</p>
 		
 	<p>
-	<table width='95%' class='list_data'>
+	<table width='95%' class='list_data' id='list-data'>
 		<tr class='list_data'>
 			<th>Id</th>
 			<th>Download IP</th>
@@ -74,21 +74,23 @@
 		[% END %]
 
 		[% FOREACH node = NODES %]
-		<tr align='center' class='backlight'>
+		<tr align='center' class='nocolor' id='d-tr-[% node.NODE_ID %]'>
 			<form method='post'>
-			<td align='left'>[% node.NODE_ID | html %]</td>
-			<td><input size='15' name='N_DOWNLOAD_IP' type='text' value='[% node.DOWNLOAD_IP | html %]'></td>
-			<td><input size='15' name='N_NODE_IP' type='text' value='[% node.NODE_IP | html %]'></td>
-			<!--<td><input name='N_AMI_CREDS' type='text' value='[% node.AMI_CREDS | html %]'></td>-->
-			<td><input  name='N_NODE_DESC' type='text' value='[% node.NODE_DESC | html %]'></td>
-			<td><input  size='12' name='N_NODE_LIMITS' type='text' value='[% node.NODE_LIMITS | html %]'></td>
-			<td><input size='15' name='N_NODE_STAT_URL' type='text' value='[% node.NODE_STAT_URL | html %]'></td>
 			<td align='left'>
-				[% IF node.NODE_STAT_URL %]
-					<b><a href="[% node.NODE_STAT_URL %]">Calls:</a></b> [% node.stat.calls %]<br>
-				[% ELSE %]
-					<b>Calls:</b> [% node.stat.calls %]<br>
-				[% END %]
+			[% IF node.NODE_STAT_URL %]
+				<a title='system statistics' href="[% node.NODE_STAT_URL %]">[% node.NODE_ID | html %]</a>
+			[% ELSE %]
+				[% node.NODE_ID | html %]
+			[% END %]
+			</td>
+			<td><input class='in_t0' size='15' name='N_DOWNLOAD_IP' type='text' value='[% node.DOWNLOAD_IP | html %]'></td>
+			<td><input class='in_t0' size='15' name='N_NODE_IP' type='text' value='[% node.NODE_IP | html %]'></td>
+			<!--<td><input name='N_AMI_CREDS' type='text' value='[% node.AMI_CREDS | html %]'></td>-->
+			<td><input class='in_t0' size='15' name='N_NODE_DESC' type='text' value='[% node.NODE_DESC | html %]'></td>
+			<td><input class='in_t0' size='12' name='N_NODE_LIMITS' type='text' value='[% node.NODE_LIMITS | html %]'></td>
+			<td><input class='in_t0' size='20' name='N_NODE_STAT_URL' type='text' value='[% node.NODE_STAT_URL | html %]'></td>
+			<td align='left'>
+				<b>Calls:</b> [% node.stat.calls %]<br>
 				[% IF node.stat.la_1-time %]
 					<b>la_1/5/10:</b> [% node.stat.la_1 %] / [% node.stat.la_5 %] / [% node.stat.la_10 %]<br>
 					<b>Date:</b> [% node.stat.la_1-time | gmtime %]
@@ -96,12 +98,17 @@
 			</td>
 			<td>
 				<input type='hidden' value='[% node.NODE_ID %]' name='node_id'>
+				<input type='hidden' value='[% node.NODE_ID %]' name='data_id'>
 				<input type='hidden' value='node_update' name='action'>
 				<input type='hidden' value='[% MSG_FROM %]' name='from'>
+				
+				<span class='in_t' id='in_t_id-[% node.NODE_ID %]'>
 				<script language='JavaScript'>
 					writeUpdateLinks( 'save changes' );
 				</script>
 				<noscript><input value='change' type='submit'></noscript>
+				</span>
+				
 				<a title='delete node' href='?action=node_del&node_id=[% node.NODE_ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
 			</form>
@@ -114,9 +121,9 @@
 			<td><input size='15' type='text' name='N_DOWNLOAD_IP'></td>
 			<td><input size='15' type='text' name='N_NODE_IP'></td>
 			<!--<td><input type='text' name='N_AMI_CREDS'></td>-->
-			<td><input type='text' name='N_NODE_DESC'></td>
-			<td><input  size='12' name='N_NODE_LIMITS' type='text'></td>
-			<td><input size='15' name='N_NODE_STAT_URL' type='text'></td>
+			<td><input size='15' type='text' name='N_NODE_DESC'></td>
+			<td><input size='12' type='text' name='N_NODE_LIMITS'></td>
+			<td><input size='20' type='text' name='N_NODE_STAT_URL'></td>
 			<td>&nbsp;</td>
 			<td>
 				<input value='ADD' type='submit'>
@@ -132,19 +139,26 @@
 		</tr>
 		[% END %]
 	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
 	<p>
 
 	<p>
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
 			<td>
-				<a class='headers' href='?action=report_list'>Reports</a>
+				<a class='headers' href='?action=node_list'>Nodes</a>
 			</td>
 			<td>
 				<a class='headers' href='?action=group_list'>Groups</a>
 			</td>
 			<td>
 				<a class='headers' href='?action=user_list'>Users</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=did_list'>DIDs</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=report_list'>Reports</a>
 			</td>
 		</tr>
 	</table>
