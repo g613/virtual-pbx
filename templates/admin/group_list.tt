@@ -48,54 +48,49 @@
 				<a href='?action=tariff_list'>Tariffs</a>
 			[% END %]
 			</td>
+			<form method='post'>
+			<td align='right'>
+			Group name:
+			<input size='11' name='f_group' type='text' value='[% F_GROUP | html %]'>
+			<input type='hidden' value='group_list' name='action'>
+			<input value='search' type='submit'>
+			</td>
+			</form>
 		</tr>
 	</table>
 	</p>
 		
 	<p>
-	<table width='95%' class='list_data'>
+	<table width='95%' class='list_data' id='list-data'>
 		<tr class='list_data'>
 			<th>Id</th>
 			<th>Name</th>
-			<th>Dialout context</th>
-			<th>Conference context</th>
-			<th>Actions</th>
+			<th>Language</th>
+			<th>Tariff</th>
+			<th>Codec</th>
+			<th>Sound prefix</th>
+			<th>Template prefix</th>
+			<th>&nbsp;</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='5'>
-				<a title='previous page' href='?action=group_list&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			<td align='left' colspan='8'>
+				<a title='previous page' href='?action=group_list&from=[% MSG_PREV %]&f_group=[% F_GROUP | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
 		
 		[% FOREACH gr = GROUPS %]
-		<tr align='center' class='backlight'>
-		<form method='post'>
-			<td>[% gr.GROUP_ID %]</td>
-			<td><input size='18' name='GR_GROUP_NAME' type='text' value="[% gr.GROUP_NAME | html %]"></td>
-			<td><input size='18' name='GR_DIALOUT_CONTEXT' type='text' value="[% gr.DIALOUT_CONTEXT | html %]"></td>
-			<td><input size='18' name='GR_CONFERENCE_CONTEXT' type='text' value="[% gr.CONFERENCE_CONTEXT | html %]"></td>
+		<tr align='center' class='nocolor'>
+			<td><a title='edit group' href='?action=group_info&group_id=[% gr.GROUP_ID %]'>[% gr.GROUP_ID | html %]</a>
+			<td align='left'><a title='edit group' href='?action=group_info&group_id=[% gr.GROUP_ID %]'>[% gr.GROUP_NAME | html %]</a>
+			<td>[% gr.LANG_NAME | html %]</td>
+			<td>[% gr.TARIFF_NAME | html %]</td>
+			<td>[% gr.PREF_CODEC | html %]</td>
+			<td>[% gr.SUB_SOUND_DIR | html %]</td>
+			<td>[% gr.SUB_TEMPLATE_DIR | html %]</td>
 			<td>
-				<input type='hidden' value='[% gr.GROUP_ID %]' name='group_id'>
-				<input type='hidden' value='group_update' name='action'>
-				<input type='hidden' value='[% MSG_FROM %]' name='from'>
-				<table>
-					<tr>
-						<td>
-							<script language='JavaScript'>
-								writeUpdateLinks( 'save changes' );
-							</script>
-							<noscript><input value='change' type='submit'></noscript>
-						</td>
-						<td>
-							<a href='?action=group_del&group_id=[% gr.GROUP_ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
-						</td>
-						<td>
-							<a title='edit group' href='?action=group_info&group_id=[% gr.GROUP_ID %]'><img border='0'  src='/xvb/images/vb_edit.png' alt='group info' /></a>
-						</td>
-					</tr>
-				</table>
+				<a href='?action=group_del&group_id=[% gr.GROUP_ID %]&from=[% MSG_FROM %]&f_group=[% F_GROUP | html %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
 			</form>
 		</tr>
@@ -103,12 +98,13 @@
 
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right' colspan='5'>
-				<a title='next page' href='?action=group_list&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+			<td align='right' colspan='8'>
+				<a title='next page' href='?action=group_list&from=[% MSG_NEXT %]&f_group=[% F_GROUP | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
 		</tr>
 		[% END %]
 	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
 	</p>
 
 	<p>
@@ -116,15 +112,19 @@
 		<tr>
 			<form method='post'>
 			<td>
-				New group name : <input size='10' type='text' name='group_name'>
+				&nbsp;
+				Group name :
+				<input size='10' type='text' name='group_name'>
+				&nbsp;
+				Node : 
 				<select name='node_name'>
-					<option value="">select node</option>
 					[% FOREACH node = NODES %]
 					<option value="[% node.NODE_ID | html %]">[% node.NODE_ID | html %]</option>
 					[% END %]
 				</select>
+				&nbsp;
 				<input type='hidden' value='group_add' name='action'>
-				<input value='ADD' type='submit'>
+				<input value='&nbsp;&nbsp;Create new group&nbsp;&nbsp;' type='submit'>
 			</td>
 			</form>
 		</tr>
