@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.29 2011-02-28 22:02:16 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.30 2011-03-20 06:48:48 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -475,21 +475,84 @@ function setShadowAttr() {
 }
 
 /* cdr filters */
-function cdrfilters( element_id, url, col_num ) {
+function cdrfilters( element_id, col_num ) {
 	/* fiters */
 	var re = /FILE=(\d+):(\w+\.\w+)/g;
-	
+	var re2 = /^DTMF==([^,]*)/;
+
+	/* variables */
+	var url = download_file_url;
+
+	var callTimeOffset = 0;
+
+	if(typeof(js_date_str) !== 'undefined') {
+		var dateArray = js_date_str.split('-');
+		var callTime = new Date();
+		
+		callTime.setYear(dateArray[0]);
+		callTime.setMonth(dateArray[1]-1);
+		callTime.setDate(dateArray[2]);
+		callTime.setHours(dateArray[3]);
+		callTime.setMinutes(dateArray[4]);
+		callTime.setSeconds(dateArray[5]);
+
+		callTimeOffset = callTime.getTime();
+	}
+
 	var el = document.getElementById(element_id).getElementsByTagName('tr');
 	for( i=0; i < el.length; i++ ) {
 		var td_obj = el[i].getElementsByTagName('td');
 		if ( td_obj[col_num] != null ) {
 			var data = td_obj[col_num].innerHTML;
-			var new_str = data.replace(re, url);
-			if ( data != new_str ) {
+			if ( callTimeOffset > 0 && re2.test(data) ) {
+				// DTMF pattern
+				var dtmf_str = re2.exec(data);
+				var dtmf_chunks = dtmf_str[1].split(' ');
+				var out_str = '';
+				for( i2=0; i2 < dtmf_chunks.length; i2++ ) {
+					var user_input_array = dtmf_chunks[i2].split('w');
+					// calculate time
+					var hours = callTime.getHours();
+					var minutes = callTime.getMinutes();
+					var seconds = callTime.getSeconds();
+					if ( hours < 10 )
+						hours = "0"+hours;
+					if ( minutes < 10 )
+						minutes = "0"+minutes;
+					if ( seconds < 10 )
+						seconds = "0"+seconds;
+					if ( user_input_array[0].length > 0 ) {
+						out_str = out_str + hours  +':'+ minutes +':'+ seconds +'  -  [ '+ user_input_array[0] +' ]<br />';
+					}				
+					if ( user_input_array[1] != null ) {
+						callTimeOffset = callTimeOffset+(1000*user_input_array[1]);
+						callTime.setTime(callTimeOffset);
+					}
+				}
+				var new_str = '<a title="'+dateArray[6]+'" href="#" onclick=\'dtmf_history_win("'+out_str+'");return false\'>DTMF</a>';
+				new_str = data.replace(re2, new_str);
 				td_obj[col_num].innerHTML = new_str;
+			} else {
+				// FILE pattern
+				var new_str = data.replace(re, url);
+				if ( data != new_str ) {
+					td_obj[col_num].innerHTML = new_str;
+				}
 			}
 		}
 	}
+}
+
+/* list colorer */
+function dtmf_history_win( data ) {
+	var ScreenWidth=window.screen.width;
+	var ScreenHeight=window.screen.height;
+	var movefromedge=0;
+	placementx=(ScreenWidth/2)-((400)/2);
+	placementy=(ScreenHeight/2)-((300+50)/2);
+	WinPop=window.open("about:blank","","width=300,height=300,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy+",scre enX="+placementx+",screenY="+placementy);
+	WinPop.document.write('<html>\n<head><title>DTMF History</title>\n</head>\n<body>'+data+'</body></html>');
+	WinPop.document.close();
 }
 
 /* list colorer */
