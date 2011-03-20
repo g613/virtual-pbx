@@ -361,7 +361,9 @@ create table VPBX_ACCOUNTS
 	
 	GA_ACCOUNT		VARCHAR(50),
 
-    unique			    (ACCESS_CODE),
+	I_DIGIT_TIMEOUT	FLOAT(3,2) not null default 1,
+
+    unique			(ACCESS_CODE),
     CONSTRAINT PK_VPBX_SUBSCRIPTION PRIMARY KEY (ID),
     CONSTRAINT FK_VPBX_LANG FOREIGN KEY (LANG) REFERENCES VPBX_LANG(ID) ON UPDATE CASCADE,
     CONSTRAINT FK_VPBX_TZ FOREIGN KEY (TIME_ZONE) REFERENCES VPBX_TZ(ID) ON UPDATE CASCADE,
@@ -510,10 +512,8 @@ create	table VPBX_VBOXES_CORE
 	PROTECT		    INT(1) default 0,
 	GLOBAL		    INT(1) default 0,
 	GREETING_CONTROL INT(1) default 1,
-	LANG_ID			INT(16)			not null default 0,
+	LANG_ID			INT(16)	not null default 0,
 	
-	GREET_REPEAT_CNT INT(16) not null default 0,
-
 	VOLUME_RX		INT(4)	not null default 0,
 	VOLUME_TX		INT(4)	not null default 0,
 	
@@ -522,6 +522,9 @@ create	table VPBX_VBOXES_CORE
 
 	SENDNOTIFYEMAIL	INT(3) not null default 0,
 	NOTIFYEMAIL	    VARCHAR(255),
+
+	GREET_REPEAT_CNT	INT(4) not null default 1,
+	GREET_REPEAT_DELAY	FLOAT(3,2) not null default 1,
 
 	unique(SUBSCR_ID,EXT_NUMBER),
     CONSTRAINT PK_VPBX_VBOXES PRIMARY KEY (ID),

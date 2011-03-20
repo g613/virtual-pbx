@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.132 2011-03-07 16:27:06 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.134 2011-03-18 16:24:32 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -291,13 +291,18 @@
 				</tr>
 				[% END %]
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Повторить приветствие:<span>
-							Количество раз, сколько нужно повторить приветствие если пользователь
-							не нажал ни на какую кнопку во время проигрывания приветствия...
+					<td class='ext_pn'><a href='#' class='info'>Проиграть приветствие:<span>
+							Количество раз, сколько нужно воспроизвести приветствие если пользователь
+							не нажал ни на какую кнопку во время проигрывания приветствия 
+							( 0 - не проигрывать приветствие ).<br />
+							Пауза может быть с десятыми долями секунды ( 20, 1.3, 0.5 и тд. ), целая часть 
+							отделяется от дробной точкой.
 							</span></a></td>
 					<td class='ext_pv'>
-						<input size='3' type='text' name='GREET_REPEAT_CNT' value='[% VBOX_PREF.GREET_REPEAT_CNT %]'>
-						&nbsp;&nbsp;&nbsp;( 0 - не повторять )
+						<input size='2' type='text' name='GREET_REPEAT_CNT' value='[% VBOX_PREF.GREET_REPEAT_CNT %]'>
+						&nbsp;раз с&nbsp;
+						<input size='2' type='text' name='GREET_REPEAT_DELAY' value='[% VBOX_PREF.GREET_REPEAT_DELAY %]'>
+						&nbsp;сек паузой
 					</td>
 				</tr>
 				<tr>

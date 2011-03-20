@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.51 2011-03-16 08:45:01 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.52 2011-03-18 15:12:05 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -142,6 +142,12 @@
 					<td class='ext_pv'>
 						<input size='10' type='text' name='MSG_STORE_PERIOD' value='[% USER_CREDS.MSG_STORE_PERIOD | html %]'>
 						( 0 - не удалять )
+					</td>
+				</tr>
+				<tr>
+					<td class='ext_pn'>IVR: тайм-аут между нажатиями (сек):</td>
+					<td class='ext_pv'>
+						<input size='10' type='text' name='I_DIGIT_TIMEOUT' value='[% USER_CREDS.I_DIGIT_TIMEOUT | html %]'>
 					</td>
 				</tr>
 				<tr>
