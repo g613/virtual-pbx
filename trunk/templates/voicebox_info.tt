@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.188 2011-03-07 16:27:06 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.189 2011-03-18 12:33:13 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -271,10 +271,12 @@
 			</tr>
 			[% END %]
 			<tr class='addon_info'>
-				<td class='ext_pn'>Repeat greeting: </td>
+				<td class='ext_pn'>Play greeting: </td>
 				<td class='ext_pv'>
-					<input size='3' type='text' name='GREET_REPEAT_CNT' value='[% VBOX_PREF.GREET_REPEAT_CNT %]'>
-					&nbsp;&nbsp;&nbsp;( 0 - don't repeat )
+					<input size='2' type='text' name='GREET_REPEAT_CNT' value='[% VBOX_PREF.GREET_REPEAT_CNT %]'>
+					&nbsp;times with&nbsp;
+					<input size='2' type='text' name='GREET_REPEAT_DELAY' value='[% VBOX_PREF.GREET_REPEAT_DELAY %]'>
+					&nbsp;sec delay
 				</td>
 			</tr>
 			<tr>

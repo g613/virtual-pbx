@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.59 2011-02-28 22:17:45 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.60 2011-03-18 15:12:05 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -142,6 +142,12 @@ Prived: [% d.DID | html %]
 					<td class='ext_pv'>
 						<input size='10' type='text' name='MSG_STORE_PERIOD' value='[% USER_CREDS.MSG_STORE_PERIOD | html %]'>
 						( 0 - unlimit )
+					</td>
+				</tr>
+				<tr>
+					<td class='ext_pn'>IVR: Inter Digit Timeout (sec):</td>
+					<td class='ext_pv'>
+						<input size='10' type='text' name='I_DIGIT_TIMEOUT' value='[% USER_CREDS.I_DIGIT_TIMEOUT | html %]'>
 					</td>
 				</tr>
 				<tr>
