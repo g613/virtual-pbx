@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.10 2011-02-28 22:02:15 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.11 2011-03-20 06:48:48 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Статистика номера - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -86,8 +86,8 @@
 	</p>
 
 	<script language='JavaScript'>
-		var url="<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/$1/0/$2.[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'>FILE</a>";
-		cdrfilters( 'd-tbl', url, 4 );
+		var download_file_url="<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/$1/0/$2.[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'>FILE</a>";
+		cdrfilters( 'd-tbl', 4 );
 		listcolorer( 'd-tbl' );
 	</script>
 	
