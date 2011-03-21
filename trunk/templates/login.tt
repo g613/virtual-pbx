@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: login.tt,v 1.15 2010-08-05 20:51:19 gosha Exp $ -->
+<!-- $Id: login.tt,v 1.16 2011-03-20 21:30:36 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - login</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -34,20 +34,20 @@
 	<table width='50%'>
 		<form method='post'>
 			<tr>
-				<td class='ext_pn'>Phone number: </td>
-				<td class='ext_pv'><input name='phone' type='text'></td>
+				<td>Phone number: </td>
+				<td><input name='phone' type='text'></td>
 			</tr>
 			<tr>
-				<td class='ext_pn'>Access code :</td>
-				<td class='ext_pv'><input name='ac' type='text'></td>
+				<td>Access code :</td>
+				<td><input name='ac' type='text'></td>
 			</tr>
 			<tr>
-				<td class='ext_pn'>Extension :</td>
-				<td class='ext_pv'><input name='ext_id' type='text'></td>
+				<td>Extension :</td>
+				<td><input name='ext_id' type='text'></td>
 			</tr>
 			<tr>
-				<td class='ext_pn'>Pin code:</td>
-				<td class='ext_pv'><input name='pw' type='password'></td>
+				<td>Pin code:</td>
+				<td><input name='pw' type='password'></td>
 			</tr>
 			<tr>
 				<td colspan='2'>&nbsp;</td>

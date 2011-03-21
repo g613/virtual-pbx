@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.134 2011-03-18 16:24:32 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.137 2011-03-20 22:21:36 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -213,8 +213,8 @@
 			<table class='ext_data' width='100%'>
 				<form method="post" action="[% CGI_URL %]">
 				<tr>
-					<td class='ext_pn'>Тип номера:</td>
-					<td class='ext_pv'>
+					<td>Тип номера:</td>
+					<td>
 						<input type='hidden' name='action' value='vb_change_type'>
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
@@ -236,8 +236,8 @@
 				</form>
 				<form name='vb_opt' method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
 				<tr>
-					<td class='ext_pn'>Внутренний номер:</td>
-					<td class='ext_pv'>
+					<td>Внутренний номер:</td>
+					<td>
 						[% IF VBOX_PREF.EXT_NUMBER eq '0' %]
 						<input size='30' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]' readonly>
 						[% ELSE %]
@@ -249,10 +249,10 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Перейти к: <span>
+					<td><a href='#' class='info'>Перейти к: <span>
 							Номер на который следует перейти после после выполнения действий в текущем номере
 							</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<script language="JavaScript">
 							exten_dropdown2('NEXTEXTENSION','[% VBOX_PREF.NEXTEXTENSION | html %]','<option selected value="[% VBOX_PREF.NEXTEXTENSION | html %]">[% VBOX_PREF.NEXTEXTENSION | html %] - Текущее значение</option>')
 							exten_icon( '[% VBOX_PREF.NEXTEXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
@@ -261,7 +261,7 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Пин код:<span>
+					<td><a href='#' class='info'>Пин код:<span>
 							Пин код данного номера.<br>Используется для доступа через WEB, 
 							а также при установленном флаге 'Защитить пин кодом' при звонке 
 							на данный номер у удаленного пользователя будет спрашиваться 
@@ -270,35 +270,35 @@
 							первая половина - публичный пин код для доступа к даному пункту 
 							меню, вторая половил - для доступа к параметрам внутреннего номера...
 							</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='12' type='text' name='PIN_CODE' value='[% VBOX_PREF.PIN_CODE | html %]'>
 						#
 						<input size='12' type='text' name='PIN_CODE2' value='[% VBOX_PREF.PIN_CODE2 | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Имя: </td>
-					<td class='ext_pv'>
+					<td>Имя: </td>
+					<td>
 						<input size='30' type='text' name='NAME' value='[% VBOX_PREF.NAME | html %]'>
 					</td>
 				</tr>
 				[% IF USER_CREDS.TTS_GREETING ne '0' %]
 				<tr>
-					<td class='ext_pn'>Приветствие: </td>
-					<td class='ext_pv'>
+					<td>Приветствие: </td>
+					<td>
 						<textarea rows='[% VBOX_PREF.GREETING | textarea_rows %]' cols='35' name='GREETING'>[% VBOX_PREF.GREETING | html %]</textarea>
 					</td>
 				</tr>
 				[% END %]
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Проиграть приветствие:<span>
+					<td><a href='#' class='info'>Проиграть приветствие:<span>
 							Количество раз, сколько нужно воспроизвести приветствие если пользователь
 							не нажал ни на какую кнопку во время проигрывания приветствия 
 							( 0 - не проигрывать приветствие ).<br />
 							Пауза может быть с десятыми долями секунды ( 20, 1.3, 0.5 и тд. ), целая часть 
 							отделяется от дробной точкой.
 							</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='2' type='text' name='GREET_REPEAT_CNT' value='[% VBOX_PREF.GREET_REPEAT_CNT %]'>
 						&nbsp;раз с&nbsp;
 						<input size='2' type='text' name='GREET_REPEAT_DELAY' value='[% VBOX_PREF.GREET_REPEAT_DELAY %]'>
@@ -306,21 +306,21 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Получатель оповещения: <span>
+					<td><a href='#' class='info'>Получатель оповещения: <span>
 							Адрес электронной почты ( например: gosha@mail.ru ) или</ br>
 							Twitter аккаунт ( например: gosha:goshapassword - для публичных. gosha:goshapswd@to - для приватных сообщений )
 							используемый для уведомления о новых  сообщениях.<br><b>Наследуется вложенными номерами.</b>
 							</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' type='text' name='NOTIFYEMAIL' value='[% VBOX_PREF.NOTIFYEMAIL | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'><b>Ж</b>дать ввода:<span>
+					<td><a href='#' class='info'><b>Ж</b>дать ввода:<span>
 							Ожидать во время проигрывания приветствия набора номера или нет 
 							( для перехода на следующий уровень вложенного меню например )
 							</span></a> </td>
-					<td class='ext_pv'>
+					<td>
 					[% IF VBOX_PREF.WAITEXTENSION %]
 						<input name="WAITEXTENSION" type="checkbox" checked>
 					[% ELSE %]
@@ -329,7 +329,7 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'><b>С</b>прятать номер:<span>
+					<td><a href='#' class='info'><b>С</b>прятать номер:<span>
 							спрятать номер ( запретить переход на данный<br>
 							номер через IVR, после запрета остается возможность<br>
 							перехода на номер по средствам 	'Перейти к',<br>
@@ -338,7 +338,7 @@
 								'Список компании' - 'Перейти к',</br>
 								'Расписание' - 'Перейти к'</b></br>
 							</span></a></td>
-					<td class='ext_pv'>
+					<td>
 					[% IF VBOX_PREF.HIDDEN %]
 						<input name="HIDDEN" type="checkbox" checked>
 					[% ELSE %]
@@ -347,10 +347,10 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'><b>З</b>ащита пин кодом: <span>
+					<td><a href='#' class='info'><b>З</b>ащита пин кодом: <span>
 							Доступ к данному номеру будет возможен только после ввода Пин-кода
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 					[% IF VBOX_PREF.PROTECT %]
 						<input name="PROTECT" type="checkbox" checked>
 					[% ELSE %]
@@ -359,7 +359,7 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'><b>П</b>рямой доступ:<span>
+					<td><a href='#' class='info'><b>П</b>рямой доступ:<span>
 							разрешить использовать данный номер без запуска<br>
 							промежуточных номеров.<br>
 							например для номера 1*1*9 при выключенном флаге,<br>
@@ -367,7 +367,7 @@
 							ввода 9. При включенном флаге пользователь может<br>
 							набрать например сразу 1*1*9 из главного меню ( номер 0 )<br>
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 					[% IF VBOX_PREF.DIRECT %]
 						<input name="DIRECT" type="checkbox" checked>
 					[% ELSE %]
@@ -376,7 +376,7 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'><b>Г</b>лобальный номер:<span>
+					<td><a href='#' class='info'><b>Г</b>лобальный номер:<span>
 							номер доступен из любой точки IVR<br>
 							например, есть такая структура номеров:<br>
 							1<br>
@@ -394,7 +394,7 @@
 							при нахождении пользователя в пункте 1, установленном флаге `глобальный номер` 
 							для номера 2 пользователь нажав 2 перейдет на внутренний номер '1*2'
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 					[% IF VBOX_PREF.GLOBAL %]
 						<input name="GLOBAL" type="checkbox" checked>
 					[% ELSE %]
@@ -404,13 +404,13 @@
 				</tr>
 				[% IF VBOX_PREF.TYPE eq '1' %]
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Разрешить перемотку:<span>
+					<td><a href='#' class='info'>Разрешить перемотку:<span>
 							Разрешить пользователю при прослушивании приветствия пользоваться кнопками:
 								<b>4</b> - перемотка на 30 секунд назад<br>
 								<b>6</b> - перемотка на 30 секунд вперед<br>
 								<b>5</b> - пауза<br>
 							</span></a></td>
-					<td class='ext_pv'>
+					<td>
 					[% IF VBOX_PREF.GREETING_CONTROL %]
 						<input name="GREETING_CONTROL" type="checkbox" checked>
 					[% ELSE %]
@@ -424,7 +424,7 @@
 				[% END %]
 
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>CID фильтры<span>
+					<td><a href='#' class='info'>CID фильтры<span>
 							Фильтры доступа к номеру на основе номера звонящего. 
 							Белый лист - список абонентов кому разрешено пользоваться 
 							данным номером. Черный список - список абонентов кому 
@@ -435,7 +435,7 @@
 						<a href='?action=cid_list&id=[% VBOX_PREF.ID %]&cid_list_type=2&cid_type=1&uniq=[% USER_CREDS.UNIQ %]' title='Белый список абонентов'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a> /
 						<a href='?action=cid_list&id=[% VBOX_PREF.ID %]&cid_list_type=1&cid_type=1&uniq=[% USER_CREDS.UNIQ %]' title='Черный список абонентов'><img border='0' src='/xvb/images/vb_edit_black.png' alt='edit' /></a> )
 					</td>
-					<td class='ext_pv'>
+					<td>
 						<select name="CID">
 						[% FOREACH ct = CID_TYPES %]
 							[% IF VBOX_PREF.CID eq ct.ID %]
@@ -448,11 +448,11 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Действие срабатывания CID:<span>
+					<td><a href='#' class='info'>Действие срабатывания CID:<span>
 								Действие которое выполнить при попадании абонента в черный список 
 								( или не попадании в белый список ).
 							</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<select name="CID_ACTION">
 						[% FOREACH ca = CID_ACTIONS %]
 							[% IF VBOX_PREF.CID_ACTION eq ca.ID %]
@@ -465,8 +465,8 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Язык сообщений:</td>
-					<td class='ext_pv'>
+					<td>Язык сообщений:</td>
+					<td>
 						<select name='LANG_ID'>
 							[% FOREACH lang = LANG %]
 								[% IF VBOX_PREF.LANG_ID eq lang.ID %]
@@ -479,40 +479,26 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Регулировка громкости Вх/Исх:<span>
-							Допустимые значения от -4 до 4
-							</span></a></td>
-					<td class='ext_pv'>
-						<table>
-							<tr>
-								<td>
-									<input size='4' name="VOLUME_RX" value="[% VBOX_PREF.VOLUME_RX | html %]" type="text">
-								</td>
-								<td>&nbsp;/&nbsp;</td>
-								<td>
-									<input size='4' name="VOLUME_TX" value="[% VBOX_PREF.VOLUME_TX | html %]" type="text">
-								</td>
-							</tr>
-						</table>
+					<td><a href='#' class='info'>Регулировка громкости Вх/Исх:<span>
+						Допустимые значения от -4 до 4
+						</span></a>
+					</td>
+					<td nowrap='nowrap'>
+						<input size='4' name="VOLUME_RX" value="[% VBOX_PREF.VOLUME_RX | html %]" type="text">
+						&nbsp;/&nbsp;
+						<input size='4' name="VOLUME_TX" value="[% VBOX_PREF.VOLUME_TX | html %]" type="text">
 					</td>
 				</tr>
 				[% IF ASTERISK_VERSION eq '18' %]
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Тембр голоса Вх/Исх:<span>
-							Допустимые значения от 0.1 ( низкий тембр ) до 4 ( высокий тембр )
-							</span></a></td>
-					<td class='ext_pv'>
-						<table>
-							<tr>
-								<td>
-									<input size='4' name="PITCH_RX" value="[% VBOX_PREF.PITCH_RX | html %]" type="text">
-								</td>
-								<td>&nbsp;/&nbsp;</td>
-								<td>
-									<input size='4' name="PITCH_TX" value="[% VBOX_PREF.PITCH_TX | html %]" type="text">
-								</td>
-							</tr>
-						</table>
+					<td><a href='#' class='info'>Тембр голоса Вх/Исх:<span>
+						Допустимые значения от 0.1 ( низкий тембр ) до 4 ( высокий тембр )
+						</span></a>
+					</td>
+					<td nowrap='nowrap'>
+						<input size='4' name="PITCH_RX" value="[% VBOX_PREF.PITCH_RX | html %]" type="text">
+						&nbsp;/&nbsp;
+						<input size='4' name="PITCH_TX" value="[% VBOX_PREF.PITCH_TX | html %]" type="text">
 					</td>
 				</tr>
 				[% ELSE %]
@@ -523,22 +509,22 @@
 
 				[% IF VBOX_PREF.TYPE eq '2' %]
 				<tr class='addon_info'>
-					<td class='ext_pn'>Максимальная длина сообщения: </td>
-					<td class='ext_pv'>
+					<td>Максимальная длина сообщения: </td>
+					<td>
 						<input size='8' name="MAX_MSG_DURATION" value="[% VBOX_PREF.MAX_MSG_DURATION | html %]" type="text">
 						( в секундах, -1 - системное ограничение  )
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Минимальная длина сообщения: </td>
-					<td class='ext_pv'>
+					<td>Минимальная длина сообщения: </td>
+					<td>
 						<input size='8' name="MIN_MSG_DURATION" value="[% VBOX_PREF.MIN_MSG_DURATION | html %]" type="text">
 						( в секундах, -1 - без ограничения  )
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Отправлять оповещения: </td>
-					<td class='ext_pv'>
+					<td>Отправлять оповещения: </td>
+					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
 							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
@@ -551,8 +537,8 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Вложить сообщение в письмо: </td>
-					<td class='ext_pv'>
+					<td>Вложить сообщение в письмо: </td>
+					<td>
 					[% IF VBOX_PREF.SEND_ATTACH %]
 						<input name="SEND_ATTACH" type="checkbox" checked>
 					[% ELSE %]
@@ -560,8 +546,8 @@
 					[% END %]
 				</td>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Сохранить сообщение на сервере: </td>
-					<td class='ext_pv'>
+					<td>Сохранить сообщение на сервере: </td>
+					<td>
 					[% IF VBOX_PREF.KEEP_MSG %]
 						<input name="KEEP_MSG" type="checkbox" checked>
 					[% ELSE %]
@@ -573,21 +559,21 @@
 
 				[% IF VBOX_PREF.TYPE eq '3' %]
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Список номеров:<span>
+					<td><a href='#' class='info'>Список номеров:<span>
 							Список номеров по которым система будет искать пользователя, 
 							допускается несколько номеров разделенных запятой.
 							Алгоритм вызова будет зависить от 'Алгоритма звонка'
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Если не дозвонились, перейти к:<span>
+					<td><a href='#' class='info'>Если не дозвонились, перейти к:<span>
 							Внутренний номер на который будет осуществлен переход в случае неудачного звонка.
 							Используется в случае если необходимо сделать какие либо действия, сложнее чем VoiceMail при неудачном звонке.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
@@ -596,7 +582,7 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Перейти если статус:<span>
+					<td><a href='#' class='info'>Перейти если статус:<span>
 							Список статусов и внутренних номеров на которые нужно перейти в зависимости от статуса при не успешном звонке.
 							<i>Пример:</i><br>
 							BUSY=<b>1*1</b>,<br>
@@ -608,13 +594,13 @@
 							<i>Если Вы сомневаетесь, оставьте это поле незаполненным и используйте <b>`Если не дозвонились, перейти к:`</b> для любого статуса.<br>
 							<i><b>!!! Не используйте данное поле если в Вашем списке номеров больше 1 телефона !!!</b></i>
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<textarea rows='[% VBOX_PREF.GOTO_IF_CALL_STATUS | textarea_rows %]' cols='35' name='GOTO_IF_CALL_STATUS'>[% VBOX_PREF.GOTO_IF_CALL_STATUS | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Музыка вместо гудков:</td>
-					<td class='ext_pv'>
+					<td>Музыка вместо гудков:</td>
+					<td>
 						<select name='MOH_ID'>
 							[% FOREACH moh = MOH %]
 								[% IF VBOX_PREF.MOH_ID eq moh.ID %]
@@ -627,8 +613,8 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Алгоритм вызова: </td>
-					<td class='ext_pv'>
+					<td>Алгоритм вызова: </td>
+					<td>
 						<select name="CALL_TYPE">
 						[% FOREACH ct = CALL_TYPES %]
 							[% IF VBOX_PREF.CALL_TYPE eq ct.ID %]
@@ -641,43 +627,43 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Таймаут соединения (сек): </td>
-					<td class='ext_pv'>
+					<td>Таймаут соединения (сек): </td>
+					<td>
 						<input size='30' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Отправить DTMF (0-9#*w):<span>
+					<td><a href='#' class='info'>Отправить DTMF (0-9#*w):<span>
 							После установления соединения отправить данную последовательность символов удаленной стороне.
 							w - пауза. Использовать например для автоматического донабора внутреннего номера.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' type='text' name='SEND_DIGITS' value='[% VBOX_PREF.SEND_DIGITS | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Префикс трансфера звонка: <span>
+					<td><a href='#' class='info'>Префикс трансфера звонка: <span>
 							Префик для трансфера. Например при установлении значения в '*9*', если пользователь
 							выполнит трансфер звонка на номер 89, то перевод будет осуществлен на номер '9*89'
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' type='text' name='TRANSFER_PREF' value='[% VBOX_PREF.TRANSFER_PREF | html %]'>
 					</td>
 				</tr>
 				[% IF USER_CREDS.VBL_27 ne '0' %]
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Внутренний номер парковки: <span>
+					<td><a href='#' class='info'>Внутренний номер парковки: <span>
 							Номер для парковки звонка. Если не определен то по нажатии на *8 пользователя
 							попросят ввести этот номер.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' type='text' name='PARKING_EXT' value='[% VBOX_PREF.PARKING_EXT | html %]'>
 					</td>
 				</tr>
 				[% END %]
 				<tr>
-					<td class='ext_pn'>Отправлять оповещения: </td>
-					<td class='ext_pv'>
+					<td>Отправлять оповещения: </td>
+					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
 							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
@@ -690,11 +676,11 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Подтверждение звонка: <span>
+					<td><a href='#' class='info'>Подтверждение звонка: <span>
 							При установленном флаге вызываемому абоненту будет проигран файл 'Анонс исходящего вызова'
 							и предложение принять\отклонить\перевести данный вызов.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						[% IF VBOX_PREF.CONFIRM_CALL %]
 							<input name="CONFIRM_CALL" type="checkbox" checked>
 						[% ELSE %]
@@ -703,10 +689,10 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Анонс номера звонящего:  <span>
+					<td><a href='#' class='info'>Анонс номера звонящего:  <span>
 							При установленном флаге вызываемому абоненту будет проигран номер звонящего.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						[% IF VBOX_PREF.SAY_CALLERID %]
 							<input name="SAY_CALLERID" type="checkbox" checked>
 						[% ELSE %]
@@ -715,12 +701,12 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Защитный режим: <span>
+					<td><a href='#' class='info'>Защитный режим: <span>
 							При установленном флаге вызывающего абонента попросят назвать себя и цель звонка, 
 							далее даное сообщение будет проиграно вызываемому абоненту,
 							и предложение принять\отклонить\перевести данный вызов.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						[% IF VBOX_PREF.SCREENING_MODE %]
 							<input name="SCREENING_MODE" type="checkbox" checked>
 						[% ELSE %]
@@ -729,11 +715,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Запустить голосовую почту: <span>
+					<td><a href='#' class='info'>Запустить голосовую почту: <span>
 							При установленном флаге в слкчае неудачного вызова будет записана голосовая почта.
 							При установленном флаге 'Если не дозвонились, перейти к' данный флаг игнорируется.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						[% IF VBOX_PREF.RECORD_IF_FAIL %]
 							<input name="RECORD_IF_FAIL" type="checkbox" checked>
 						[% ELSE %]
@@ -742,10 +728,10 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Запись разговора:  <span>
+					<td><a href='#' class='info'>Запись разговора:  <span>
 							Атоматически включать запись всех разговоров.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						[% IF VBOX_PREF.RECORD_CALL %]
 							<input name="RECORD_CALL" type="checkbox" checked>
 						[% ELSE %]
@@ -754,20 +740,20 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Интервал повторного вызова (сек): <span>
+					<td><a href='#' class='info'>Интервал повторного вызова (сек): <span>
 							При установленном значении данного параметра, в случае неудачной попытки
 							вызвать удаленный номер звонящему будет воспроизведен файл 'Анонс удержания вызова',
 							и предпринята попытка позвонить еще раз через установленный интервал времени.
 							Звонящий абонент в это время слушает музыку.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
 						( 0-120, 0 - без повторов )
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Количество повторных вызовов: </td>
-					<td class='ext_pv'>
+					<td>Количество повторных вызовов: </td>
+					<td>
 						<input size='4' type='text' name='RETRYDIAL_LOOPS' value='[% VBOX_PREF.RETRYDIAL_LOOPS | html %]'>
 						( -1 - бесконечно )
 					</td>
@@ -776,8 +762,8 @@
 
 				[% IF VBOX_PREF.TYPE eq '4' %]
 				<tr>
-					<td class='ext_pn'>Использовать имя: </td>
-					<td class='ext_pv'>
+					<td>Использовать имя: </td>
+					<td>
 						[% IF VBOX_PREF.USE_FIRSTNAME == '1' %]
 							<input name="USE_FIRSTNAME" type="radio" value="1" checked>
 						[% ELSE %]
@@ -786,8 +772,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Использовать фамилию: </td>
-					<td class='ext_pv'>
+					<td>Использовать фамилию: </td>
+					<td>
 						[% IF VBOX_PREF.USE_FIRSTNAME == '0' %]
 							<input name="USE_FIRSTNAME" type="radio" value="0" checked>
 						[% ELSE %]
@@ -796,8 +782,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Использовать имя или фамилию: </td>
-					<td class='ext_pv'>
+					<td>Использовать имя или фамилию: </td>
+					<td>
 						[% IF VBOX_PREF.USE_FIRSTNAME == '2' %]
 							<input name="USE_FIRSTNAME" type="radio" value="2" checked>
 						[% ELSE %]
@@ -807,12 +793,12 @@
 				</tr>
 				[% IF USER_CREDS.TTS_GREETING ne '0' %]
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Использовать TTS: <span>
+					<td><a href='#' class='info'>Использовать TTS: <span>
 							При установленном значении данного параметра, и отсутствующем файле 'Имя' для
 							выбранного внутреннего номера будет сгенерирован TTS текст. В противном случае
 							Имя и Фамилия будут произнесены по буквам.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						[% IF VBOX_PREF.USE_TTS_NAME %]
 							<input name="USE_TTS_NAME" type="checkbox" checked>
 						[% ELSE %]
@@ -822,7 +808,7 @@
 				</tr>
 				[% END %]
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Раскладка клавиатуры: <span>
+					<td><a href='#' class='info'>Раскладка клавиатуры: <span>
 							выбор привязки символов к цифрам. Например для русскоого:
 							 2 - абвг</br>
 							 3 - дежз</br>
@@ -833,7 +819,7 @@
 							 8 - цчшщъ</br>
 							 9 - ыьэюя</br>
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 					<select name="DIR_LANG">
 					[% FOREACH llang = DIR_LANG %]
 						[% IF VBOX_PREF.DIR_LANG eq llang.ID %]
@@ -849,8 +835,8 @@
 
 				[% IF VBOX_PREF.TYPE eq '5' %]
 				<tr class='addon_info'>
-					<td class='ext_pn'>Часовой пояс расписания</td>
-					<td class='ext_pv'>
+					<td>Часовой пояс расписания</td>
+					<td>
 						<select name="TIME_ZONE">
 						[% FOREACH t = TZ %]
 							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
@@ -866,8 +852,8 @@
 
 				[% IF VBOX_PREF.TYPE eq '6' %]
 				<tr>
-					<td class='ext_pn'>Метод запроса: </td>
-					<td class='ext_pv'>
+					<td>Метод запроса: </td>
+					<td>
 						<select name="TTS_METHOD">
 						[% IF VBOX_PREF.TTS_METHOD eq 'POST' %]
 							<option value="POST" selected>POST</option>
@@ -880,22 +866,22 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Адрес страницы: </td>
-					<td class='ext_pv'>
+					<td>Адрес страницы: </td>
+					<td>
 						<input size='30' type='text' name='TTS_URL' value='[% VBOX_PREF.TTS_URL | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Параметры POST: </td>
-					<td class='ext_pv'>
+					<td>Параметры POST: </td>
+					<td>
 						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='35' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Перейти к: <span>
+					<td><a href='#' class='info'>Перейти к: <span>
 							Перейти к данному внутреннему номеру в случае неудачного WEB запроса
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
@@ -904,10 +890,10 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Ничего не говорить: <span>
+					<td><a href='#' class='info'>Ничего не говорить: <span>
 							Выполнить WEB запрос не проговаривая полученный результат
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 					[% IF VBOX_PREF.QUIET_MODE %]
 						<input name="QUIET_MODE" type="checkbox" checked>
 					[% ELSE %]
@@ -916,11 +902,11 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Запросить дополнительные параметры: <span>
+					<td><a href='#' class='info'>Запросить дополнительные параметры: <span>
 							Запросить у пользователя дополнительные параметры. Параметры разделенные '*', в 
 							дальнейшем их можно использовать как %DTMF_INPUT0%,%DTMF_INPUT1% и nд.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 					[% IF VBOX_PREF.NEED_PARAMS %]
 						<input name="NEED_PARAMS" type="checkbox" checked>
 					[% ELSE %]
@@ -929,10 +915,10 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Музыка вместо гудков: <span>
+					<td><a href='#' class='info'>Музыка вместо гудков: <span>
 							Позволяет звонящему абоненту слушать музыку вместо гудков во время вызова внутреннего абонента.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<select name='MOH_ID'>
 							[% FOREACH moh = MOH %]
 								[% IF VBOX_PREF.MOH_ID eq moh.ID %]
@@ -945,18 +931,18 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>User Agent: <span>
+					<td><a href='#' class='info'>User Agent: <span>
 							`Притвориться` данным броузером...
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' type='text' name='TTS_REQ_UA' value='[% VBOX_PREF.TTS_REQ_UA | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Cookie: <span>
+					<td><a href='#' class='info'>Cookie: <span>
 							Передать данные cookie на сервер
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' type='text' name='TTS_REQ_COOKIE' value='[% VBOX_PREF.TTS_REQ_COOKIE | html %]'>
 					</td>
 				</tr>
@@ -965,10 +951,10 @@
 				[% IF VBOX_PREF.TYPE eq '7' %]
 				[% IF USER_CREDS.ALLOW_ICECAST %]
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>HTTP-Трансляция: <span>
+					<td><a href='#' class='info'>HTTP-Трансляция: <span>
 							При установке данного флага Вам выдадут временный URL через который будет транслироваться конференция.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 					[% IF VBOX_PREF.SHARE_VIA_ICECAST %]
 						<input name="SHARE_VIA_ICECAST" type="checkbox" checked>
 					[% ELSE %]
@@ -978,10 +964,10 @@
 				</tr>
 				[% END %]
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Запись конференции:  <span>
+					<td><a href='#' class='info'>Запись конференции:  <span>
 							Автоматически включать запись при входе в конференц комнату.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						[% IF VBOX_PREF.RECORD_CALL %]
 							<input name="RECORD_CALL" type="checkbox" checked>
 						[% ELSE %]
@@ -993,14 +979,14 @@
 
 				[% IF VBOX_PREF.TYPE eq '8' %]
 				<tr>
-					<td class='ext_pn'>Заголовок факса: </td>
-					<td class='ext_pv'>
+					<td>Заголовок факса: </td>
+					<td>
 						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='35' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Отправлять оповещения: </td>
-					<td class='ext_pv'>
+					<td>Отправлять оповещения: </td>
+					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
 							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
@@ -1013,8 +999,8 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Отправить факс в письме: </td>
-					<td class='ext_pv'>
+					<td>Отправить факс в письме: </td>
+					<td>
 					[% IF VBOX_PREF.SEND_ATTACH %]
 						<input name="SEND_ATTACH" type="checkbox" checked>
 					[% ELSE %]
@@ -1022,8 +1008,8 @@
 					[% END %]
 				</td>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Оставить факс на сервере: </td>
-					<td class='ext_pv'>
+					<td>Оставить факс на сервере: </td>
+					<td>
 					[% IF VBOX_PREF.KEEP_MSG %]
 						<input name="KEEP_MSG" type="checkbox" checked>
 					[% ELSE %]
@@ -1035,10 +1021,10 @@
 
 				[% IF VBOX_PREF.TYPE eq '9' %]
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Шаблоны:<span>
+					<td><a href='#' class='info'>Шаблоны:<span>
 							Вы можите выбрать один из шаблонов или задать в ручную длину запрашиваемых вами данных
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<select name='DTMF_PATTERN_ID'>
 							[% FOREACH dtmf = DTMF_PATTERN %]
 								[% IF VBOX_PREF.DTMF_PATTERN_ID eq dtmf.ID %]
@@ -1051,32 +1037,32 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Максимальное количество цифр: </td>
-					<td class='ext_pv'>
+					<td>Максимальное количество цифр: </td>
+					<td>
 						<input size='10' name="MAX_DIGITS" value="[% VBOX_PREF.MAX_DIGITS | html %]" type="text">
 						( -1 без ограничения )
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Имя переменной: </td>
-					<td class='ext_pv'>
+					<td>Имя переменной: </td>
+					<td>
 						<input size='10' name="VAR_NAME" value="[% VBOX_PREF.VAR_NAME | html %]" type="text">
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Дополнительные переменные: <span>
+					<td><a href='#' class='info'>Дополнительные переменные: <span>
 							Имена переменных которые были ранее установлены ( ящик типа `Пользовательская переменная` ) 
 							и которые необходимо включить в отчет. Может использоваться для многоуровнего опроса. 
 							В полученном результате данные будут представлены построчно:
 							Переменная=Значение.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<textarea rows='[% VBOX_PREF.OTHER_VARS | textarea_rows %]' cols='35' name='OTHER_VARS'>[% VBOX_PREF.OTHER_VARS | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Отправлять оповещения: </td>
-					<td class='ext_pv'>
+					<td>Отправлять оповещения: </td>
+					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
 							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
@@ -1089,8 +1075,8 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Отправить DTMF в письме: </td>
-					<td class='ext_pv'>
+					<td>Отправить DTMF в письме: </td>
+					<td>
 					[% IF VBOX_PREF.SEND_ATTACH %]
 						<input name="SEND_ATTACH" type="checkbox" checked>
 					[% ELSE %]
@@ -1098,8 +1084,8 @@
 					[% END %]
 				</td>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Хранить DTMF на сервере: </td>
-					<td class='ext_pv'>
+					<td>Хранить DTMF на сервере: </td>
+					<td>
 					[% IF VBOX_PREF.KEEP_MSG %]
 						<input name="KEEP_MSG" type="checkbox" checked>
 					[% ELSE %]
@@ -1108,11 +1094,11 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Форматировать данные:<span>
+					<td><a href='#' class='info'>Форматировать данные:<span>
 							Данный параметр актуален только при использовании шаблонов. Заменяет разделитель на привычные человеческому глазу символы.
 							Например введенный IP адрес 127*0*0*1 на 127.0.0.1
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 					[% IF VBOX_PREF.NEED_FORMATED %]
 						<input name="NEED_FORMATED" type="checkbox" checked>
 					[% ELSE %]
@@ -1124,17 +1110,17 @@
 
 				[% IF VBOX_PREF.TYPE eq '10' %]
 				<tr>
-					<td class='ext_pn'>Варианты ответов: </td>
-					<td class='ext_pv'>
+					<td>Варианты ответов: </td>
+					<td>
 						<input size='10' name="ALLOW_DIGITS" value="[% VBOX_PREF.ALLOW_DIGITS | html %]" type="text">
 						( разделенные запятой )
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Проверять уникальность: <span>
+					<td><a href='#' class='info'>Проверять уникальность: <span>
 							При включении данного флага будет производится проверки уникальности голосования на основе номера звонящего и `Имени` голосования. Период для проверки уникальности равен периоду хранения CDR.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 					[% IF VBOX_PREF.UNIQ_CIDS %]
 						<input name="UNIQ_CIDS" type="checkbox" checked>
 					[% ELSE %]
@@ -1146,8 +1132,8 @@
 
 				[% IF VBOX_PREF.TYPE eq '11' %]
 				<tr class='addon_info'>
-					<td class='ext_pn'>Музыка вместо гудков:</td>
-					<td class='ext_pv'>
+					<td>Музыка вместо гудков:</td>
+					<td>
 						<select name='MOH_ID'>
 							[% FOREACH moh = MOH %]
 								[% IF VBOX_PREF.MOH_ID eq moh.ID %]
@@ -1160,17 +1146,17 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Шаблон номера: <span>
+					<td><a href='#' class='info'>Шаблон номера: <span>
 							Устанавливает шаблон номера который может ввести пользователь. Если не определено то разрешено всё. Смотрите описание шаблонов.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' name="PHONE_PATTERN" value="[% VBOX_PREF.PHONE_PATTERN | html %]" type="text">
 					</td>
 				</tr>
 				[% IF ASTERISK_VERSION ne '18' %]
 				<tr class='addon_info'>
-					<td class='ext_pn'>Режим 'шпиона':</td>
-					<td class='ext_pv'>
+					<td>Режим 'шпиона':</td>
+					<td>
 						[% IF VBOX_PREF.SPY_MODE %]
 							<input name="SPY_MODE" type="checkbox" checked>
 						[% ELSE %]
@@ -1183,14 +1169,14 @@
 
 				[% IF VBOX_PREF.TYPE eq '12' %]
 				<tr>
-					<td class='ext_pn'>URL подкастов (rss файл): </td>
-					<td class='ext_pv'>
+					<td>URL подкастов (rss файл): </td>
+					<td>
 						<input size='30' name="PODCAST_URL" value="[% VBOX_PREF.PODCAST_URL | html %]" type="text">
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Сказать дату подкаста: </td>
-					<td class='ext_pv'>
+					<td>Сказать дату подкаста: </td>
+					<td>
 					[% IF VBOX_PREF.PODCAST_ANNOUNCEMENT %]
 						<input name="PODCAST_ANNOUNCEMENT" type="checkbox" checked>
 					[% ELSE %]
@@ -1202,16 +1188,16 @@
 
 				[% IF VBOX_PREF.TYPE eq '13' %]
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Список агентов:<span>
+					<td><a href='#' class='info'>Список агентов:<span>
 							Список номеров которые обслуживают очередь. Алгоритм вызова будет зависить от 'Алгоритма звонка'
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Музыка вместо гудков:</td>
-					<td class='ext_pv'>
+					<td>Музыка вместо гудков:</td>
+					<td>
 						<select name='MOH_ID'>
 							[% FOREACH moh = MOH %]
 								[% IF VBOX_PREF.MOH_ID eq moh.ID %]
@@ -1224,8 +1210,8 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Алгоритм вызова: </td>
-					<td class='ext_pv'>
+					<td>Алгоритм вызова: </td>
+					<td>
 						<select name="CALL_TYPE">
 						[% FOREACH ct = CALL_TYPES %]
 							[% IF VBOX_PREF.CALL_TYPE eq ct.ID %]
@@ -1238,36 +1224,36 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Время вызова агента (сек): </td>
-					<td class='ext_pv'>
+					<td>Время вызова агента (сек): </td>
+					<td>
 						<input size='30' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Время ожидания очереди (сек): </td>
-					<td class='ext_pv'>
+					<td>Время ожидания очереди (сек): </td>
+					<td>
 						<input size='30' type='text' name='Q_TIMEOUT' value='[% VBOX_PREF.Q_TIMEOUT | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Макс кол-во ждущих звонков: <span>
+					<td><a href='#' class='info'>Макс кол-во ждущих звонков: <span>
 							Целое число больше нуля. Значение равное нулю означает не использовать данную проверку.
 							При превышении данного лимита звонящего сразу отправляют на номер 
 							`Если не дозвонились, перейти к` или если не определено ответят абонент не отвечает. 
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' type='text' name='Q_MAX_W_CALLS' value='[% VBOX_PREF.Q_MAX_W_CALLS | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Переодичность анонсов (сек): </td>
-					<td class='ext_pv'>
+					<td>Переодичность анонсов (сек): </td>
+					<td>
 						<input size='30' type='text' name='ANNOUNCE_FREQUENCY' value='[% VBOX_PREF.ANNOUNCE_FREQUENCY | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Сказать положение в очереди : </td>
-					<td class='ext_pv'>
+					<td>Сказать положение в очереди : </td>
+					<td>
 					[% IF VBOX_PREF.ANNOUNCE_HOLDTIME %]
 						<input name="ANNOUNCE_HOLDTIME" type="checkbox" checked>
 					[% ELSE %]
@@ -1276,8 +1262,8 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Записать разговор: </td>
-					<td class='ext_pv'>
+					<td>Записать разговор: </td>
+					<td>
 						[% IF VBOX_PREF.RECORD_CALL %]
 							<input name="RECORD_CALL" type="checkbox" checked>
 						[% ELSE %]
@@ -1286,11 +1272,11 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Чистить очередь:<span>
+					<td><a href='#' class='info'>Чистить очередь:<span>
 							Исключать из повторных попыток дозвона агентов со статусом отличным от BUSY. 
 							То есть если агент не берет трубку то он будет исключен из очереди ( для текущего звонка ).
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						[% IF VBOX_PREF.WAIT_BUSY_ONLY %]
 							<input name="WAIT_BUSY_ONLY" type="checkbox" checked>
 						[% ELSE %]
@@ -1299,10 +1285,10 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Если не дозвонились, перейти к:<span>
+					<td><a href='#' class='info'>Если не дозвонились, перейти к:<span>
 							Внутренний номер на который будет осуществлен переход в случае неудачного звонка.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
@@ -1311,47 +1297,47 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Префикс трансфера звонка: <span>
+					<td><a href='#' class='info'>Префикс трансфера звонка: <span>
 							Префик для трансфера. Например при установлении значения в '9*', если пользователь
 							выполнит трансфер звонка на номер 89, то перевод будет осуществлен на номер '9*89'
 						</span><a/></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' type='text' name='TRANSFER_PREF' value='[% VBOX_PREF.TRANSFER_PREF | html %]'>
 					</td>
 				</tr>
 				[% IF USER_CREDS.VBL_27 ne '0' %]
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Внутренний номер парковки: <span>
+					<td><a href='#' class='info'>Внутренний номер парковки: <span>
 							Номер для парковки звонка. Если не определен то по нажатии на *8 пользователя
 							попросят ввести этот номер.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' type='text' name='PARKING_EXT' value='[% VBOX_PREF.PARKING_EXT | html %]'>
 					</td>
 				</tr>
 				[% END %]
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Преффикс имени звонящего: <span>
+					<td><a href='#' class='info'>Преффикс имени звонящего: <span>
 							Можно использовать какой-то префикс для звонка в эту группу. Например, если 
 							это группа "Sales:", то, установив такой префикс для этой группы, можно видеть, 
 							если звонит 123456789, то мы увидим на дисплее Sales: 123456789 &lt;123456789&gt;
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' type='text' name='CALLERID_PREF' value='[% VBOX_PREF.CALLERID_PREF | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Преффикс номера звонящего: <span>
+					<td><a href='#' class='info'>Преффикс номера звонящего: <span>
 							Можно использовать какой-то префикс для звонка в эту группу. Например, если 
 							установив префикс 911, можно видеть, 
 							если звонит 123456789, то мы увидим на дисплее &lt;911123456789&gt;
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' type='text' name='CALLERIDNUM_PREF' value='[% VBOX_PREF.CALLERIDNUM_PREF | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>CRMs <span>
+					<td><a href='#' class='info'>CRMs <span>
 							URL который передается на телефон агента при входящем звонке, есть 
 							возможность использовать макрросы в URL: QID - id очереди, 
 							WT - время ожидания клиентом в очереди ( в секундах ), 
@@ -1368,7 +1354,7 @@
 							<option value='http://${ YOUR HOST ADDRESS }:8080/vtigercrm/index.php?phone_number=% CID:1:10 %'>vtiger CRM</option>
 						</select> :
 						</td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' type='text' name='Q_URL' value='[% VBOX_PREF.Q_URL | html %]'>
 					</td>
 				</tr>
@@ -1376,19 +1362,19 @@
 				
 				[% IF VBOX_PREF.TYPE eq '14' %]
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Номер для CallBack:<span>
+					<td><a href='#' class='info'>Номер для CallBack:<span>
 							Если номер не определен то используется номер с которого звонят.
 							</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='20' type='text' name='CB_NUMBER' value='[% VBOX_PREF.CB_NUMBER | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Начать с:<span>
+					<td><a href='#' class='info'>Начать с:<span>
 							Внутренний номер на который будет переброшен звонок после CallBack 
 							соединения, номер должен иметь установленный флаг 'Прямой доступ'
 							</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<script language="JavaScript">
 							exten_dropdown2( 'CB_EXT','[% VBOX_PREF.CB_EXT | html %]','<option value="">------------------------------</option>')
 							exten_icon( '[% VBOX_PREF.CB_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
@@ -1397,10 +1383,10 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Использовать отложенный вызов: <span>
+					<td><a href='#' class='info'>Использовать отложенный вызов: <span>
 					Разрешить задать звонящему пользователю интервал времени через который следует перезвонить. Интервал задается в виде: 'чч*мм'
 							</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						[% IF VBOX_PREF.CB_USE_TIMEOFFSET %]
 							<input name="CB_USE_TIMEOFFSET" type="checkbox" checked>
 						[% ELSE %]
@@ -1409,10 +1395,10 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Динамический номер: <span>
+					<td><a href='#' class='info'>Динамический номер: <span>
 					Разрешить звонящему пользователю задать внутренний номер на который должна перейти система после того как дозвонилась до него. Если пользователь нажмет просто решетку то будет использован номер из 'Начать с:' номер который введет пользователь должен иметь установленный флаг 'Прямой доступ'
 							</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						[% IF VBOX_PREF.CB_DYNAMIC_EXT %]
 							<input name="CB_DYNAMIC_EXT" type="checkbox" checked>
 						[% ELSE %]
@@ -1424,8 +1410,8 @@
 				
 				[% IF VBOX_PREF.TYPE eq '15' %]
 				<tr class='addon_info'>
-					<td class='ext_pn'>Time Zone</td>
-					<td class='ext_pv'>
+					<td>Time Zone</td>
+					<td>
 						<select name="TIME_ZONE">
 						[% FOREACH t = TZ %]
 							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
@@ -1438,8 +1424,8 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Сказать дату и время: </td>
-					<td class='ext_pv'>
+					<td>Сказать дату и время: </td>
+					<td>
 						[% IF VBOX_PREF.TIME_FORMAT == '0' %]
 							<input name="TIME_FORMAT" type="radio" value="0" checked>
 						[% ELSE %]
@@ -1448,8 +1434,8 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Сказать время: </td>
-					<td class='ext_pv'>
+					<td>Сказать время: </td>
+					<td>
 						[% IF VBOX_PREF.TIME_FORMAT == '1' %]
 							<input name="TIME_FORMAT" type="radio" value="1" checked>
 						[% ELSE %]
@@ -1458,8 +1444,8 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Сказать дату: </td>
-					<td class='ext_pv'>
+					<td>Сказать дату: </td>
+					<td>
 						[% IF VBOX_PREF.TIME_FORMAT == '2' %]
 							<input name="TIME_FORMAT" type="radio" value="2" checked>
 						[% ELSE %]
@@ -1471,8 +1457,8 @@
 				
 				[% IF VBOX_PREF.TYPE eq '16' %]
 				<tr>
-					<td class='ext_pn'>Заголовок факса: </td>
-					<td class='ext_pv'>
+					<td>Заголовок факса: </td>
+					<td>
 						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='35' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
 					</td>
 				</tr>
@@ -1480,32 +1466,32 @@
 				
 				[% IF VBOX_PREF.TYPE eq '17' %]
 				<tr class='addon_info'>
-					<td class='ext_pn'>Максимальная длина сообщения: </td>
-					<td class='ext_pv'>
+					<td>Максимальная длина сообщения: </td>
+					<td>
 						<input size='8' name="MAX_MSG_DURATION" value="[% VBOX_PREF.MAX_MSG_DURATION | html %]" type="text">
 						( в секундах, -1 - системное ограничение  )
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Минимальная длина сообщения: </td>
-					<td class='ext_pv'>
+					<td>Минимальная длина сообщения: </td>
+					<td>
 						<input size='8' name="MIN_MSG_DURATION" value="[% VBOX_PREF.MIN_MSG_DURATION | html %]" type="text">
 						( в секундах, -1 - без ограничения  )
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Код для записи: <span>
+					<td><a href='#' class='info'>Код для записи: <span>
 						Код позволяющий добавлять сообщения в данный голосовой ящик. Не обязательный параметр. Может использоваться для организации подкаст-сервиса...
 					</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='8' name="SECRET_KEY" value="[% VBOX_PREF.SECRET_KEY | html %]" type="text">
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Интервал сообщений: <span>
+					<td><a href='#' class='info'>Интервал сообщений: <span>
 						Интервал в течении которого нельзя записать повторно сообщение с одного и того же номера звонящего. В секундах. Может использоваться как некоторая защита от спама.
 					</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='8' name="MSG_LIMITS" value="[% VBOX_PREF.MSG_LIMITS | html %]" type="text">
 						<select name='bbs_ttl' onchange='javascript:document.vb_opt.MSG_LIMITS.value=this.value'>
 							<option value='-1' selected>не ограничен</option>
@@ -1520,10 +1506,10 @@
 				
 				[% IF VBOX_PREF.TYPE eq '18' %]
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Включить `Автоинформатор`:  <span>
+					<td><a href='#' class='info'>Включить `Автоинформатор`:  <span>
 						Если Вы хотите приостановить работу автоинформатора выключите данный флаг.
 					</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						[% IF VBOX_PREF.ACTIVE %]
 							<input name="ACTIVE" type="checkbox" checked>
 						[% ELSE %]
@@ -1532,10 +1518,10 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Следить за приветствием:  <span>
+					<td><a href='#' class='info'>Следить за приветствием:  <span>
 						При установке данного флага система начнет автообзвон после изменения приветствия.
 					</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						[% IF VBOX_PREF.START_AFTER_CHANGE %]
 							<input name="START_AFTER_CHANGE" type="checkbox" checked>
 						[% ELSE %]
@@ -1544,61 +1530,61 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Начать звонить в: <span>
+					<td><a href='#' class='info'>Начать звонить в: <span>
 						Время после которого система начанет совершать звонки.
 					</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input name="START_TIMESTAMP" value="[% VBOX_PREF.START_TIMESTAMP | html %]" type="hidden">
 						<input size='16' name="START_DATE" value="[% BLAST_START_DATE | html %]" type="text">
 						&nbsp;гггг/мм/дд ЧЧ:ММ
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Закончить звонить в: <span>
+					<td><a href='#' class='info'>Закончить звонить в: <span>
 						Время после которого система перестанет совершать звонки.
 					</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input name="STOP_TIMESTAMP" value="[% VBOX_PREF.STOP_TIMESTAMP | html %]" type="hidden">
 						<input size='16' name="STOP_DATE" value="[% BLAST_STOP_DATE | html %]" type="text">
 						&nbsp;гггг/мм/дд ЧЧ:ММ
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Таймаут соединения (сек): </td>
-					<td class='ext_pv'>
+					<td>Таймаут соединения (сек): </td>
+					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 						( 10 - 120 )
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Количество повторных вызовов: <span>
+					<td><a href='#' class='info'>Количество повторных вызовов: <span>
 							Количество повторных попыток вызвать абонента .
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='4' type='text' name='RETRYDIAL_LOOPS' value='[% VBOX_PREF.RETRYDIAL_LOOPS | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Интервал повторного вызова (минуты): <span>
+					<td><a href='#' class='info'>Интервал повторного вызова (минуты): <span>
 							Пауза в минутах до повторного вызова абонента в случае неуспешного вызова.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Одновременных звонков:  <span>
+					<td><a href='#' class='info'>Одновременных звонков:  <span>
 							Количество одновременных вызовов. Например если после CallBlast'a звонок отправляется 
 							оператору и у вас всего 2 оператора, то данное значение логично установить в 2.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='4' type='text' name='CALL_LIMIT' value='[% VBOX_PREF.CALL_LIMIT | html %]'>
 						( 0 - не ограничено )
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Часовой пояс: </td>
-					<td class='ext_pv'>
+					<td>Часовой пояс: </td>
+					<td>
 						<select name="TIME_ZONE">
 						[% FOREACH t = TZ %]
 							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
@@ -1614,16 +1600,16 @@
 
 				[% IF VBOX_PREF.TYPE eq '19' %]
 				<tr>
-					<td class='ext_pn'>Имя переменной: </td>
-					<td class='ext_pv'>
+					<td>Имя переменной: </td>
+					<td>
 						<input size='10' name="VAR_NAME" value="[% VBOX_PREF.VAR_NAME | html %]" type="text">
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Шаблоны:<span>
+					<td><a href='#' class='info'>Шаблоны:<span>
 							Вы можите выбрать один из шаблонов или задать в ручную длину запрашиваемых вами данных
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<select name='DTMF_PATTERN_ID'>
 							[% FOREACH dtmf = DTMF_PATTERN %]
 								[% IF VBOX_PREF.DTMF_PATTERN_ID eq dtmf.ID %]
@@ -1636,18 +1622,18 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Максимальное количество цифр: </td>
-					<td class='ext_pv'>
+					<td>Максимальное количество цифр: </td>
+					<td>
 						<input size='10' name="MAX_DIGITS" value="[% VBOX_PREF.MAX_DIGITS | html %]" type="text">
 						( -1 без ограничения )
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Форматировать данные:<span>
+					<td><a href='#' class='info'>Форматировать данные:<span>
 							Данный параметр актуален только при использовании шаблонов. Заменяет разделитель на привычные человеческому глазу символы.
 							Например введенный IP адрес 127*0*0*1 на 127.0.0.1
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 					[% IF VBOX_PREF.NEED_FORMATED %]
 						<input name="NEED_FORMATED" type="checkbox" checked>
 					[% ELSE %]
@@ -1659,16 +1645,16 @@
 
 				[% IF VBOX_PREF.TYPE eq '20' %]
 				<tr>
-					<td class='ext_pn'>Адрес страницы: </td>
-					<td class='ext_pv'>
+					<td>Адрес страницы: </td>
+					<td>
 						<input size='30' type='text' name='WEBVAR_URL' value='[% VBOX_PREF.WEBVAR_URL | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Перейти к: <span>
+					<td><a href='#' class='info'>Перейти к: <span>
 							Перейти к данному внутреннему номеру в случае неудачного WEB запроса
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
@@ -1677,11 +1663,11 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Запросить дополнительные параметры: <span>
+					<td><a href='#' class='info'>Запросить дополнительные параметры: <span>
 							Запросить у пользователя дополнительные параметры. Параметры разделенные '*', в 
 							дальнейшем их можно использовать как %DTMF_INPUT0%,%DTMF_INPUT1% и nд.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 					[% IF VBOX_PREF.NEED_PARAMS %]
 						<input name="NEED_PARAMS" type="checkbox" checked>
 					[% ELSE %]
@@ -1693,8 +1679,8 @@
 				
 				[% IF VBOX_PREF.TYPE eq '22' %]
 				<tr>
-					<td class='ext_pn'>Текущее значение: </td>
-					<td class='ext_pv'>
+					<td>Текущее значение: </td>
+					<td>
 						<input size='30' type='text' name='VAR_VALUE' value='[% VBOX_PREF.VAR_VALUE | html %]'>
 					</td>
 				</tr>
@@ -1702,19 +1688,19 @@
 
 				[% IF VBOX_PREF.TYPE eq '23' %]
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Номер для CallBack:<span>
+					<td><a href='#' class='info'>Номер для CallBack:<span>
 							Если номер не определен то используется номер с которого звонят.
 							</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='20' type='text' name='AC_CB_NUMBER' value='[% VBOX_PREF.AC_CB_NUMBER | html %]'>
 						 ( null == callerid )
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Удалять сообщения:<span>
+					<td><a href='#' class='info'>Удалять сообщения:<span>
 							Если установлен данный флаг, то после прослушивания `будильника` записанное сообщение автоматически удалиться.
 							</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						[% IF VBOX_PREF.AC_AUTO_REMOVE %]
 							<input name="AC_AUTO_REMOVE" type="checkbox" checked>
 						[% ELSE %]
@@ -1723,25 +1709,25 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'>Таймаут соединения (сек): </td>
-					<td class='ext_pv'>
+					<td>Таймаут соединения (сек): </td>
+					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 						( 10 - 120 )
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Количество вызовов: <span>
+					<td><a href='#' class='info'>Количество вызовов: <span>
 							Количество попыток вызвать абонента .
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='4' type='text' name='RETRYDIAL_LOOPS' value='[% VBOX_PREF.RETRYDIAL_LOOPS | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Интервал повторного вызова (сек): <span>
+					<td><a href='#' class='info'>Интервал повторного вызова (сек): <span>
 							Пауза в секундах до повторного вызова абонента в случае неуспешного вызова.
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
 						( 30 - 180 )
 					</td>
@@ -1750,32 +1736,32 @@
 				
 				[% IF VBOX_PREF.TYPE eq '24' %]
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Пользователь google: <span>
+					<td><a href='#' class='info'>Пользователь google: <span>
 							Google логин, например g613@gmail.com
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='20' type='text' name='GOOGLE_USER' value='[% VBOX_PREF.GOOGLE_USER | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Пароль google: </td>
-					<td class='ext_pv'>
+					<td>Пароль google: </td>
+					<td>
 						<input size='20' type='password' name='GOOGLE_PSWD' value='[% VBOX_PREF.GOOGLE_PSWD | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Календарь: <span>
+					<td><a href='#' class='info'>Календарь: <span>
 							Оставьте пустым, чтобы использовать ВСЕ доступные календари
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<input size='20' type='text' name='GOOGLE_CALENDAR' value='[% VBOX_PREF.GOOGLE_CALENDAR | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Перейти если не занят: <span>
+					<td><a href='#' class='info'>Перейти если не занят: <span>
 							Перейти к данному пункту IVR если в календаре нет событий на это время
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_OK','[% VBOX_PREF.GOTO_IF_OK | html %]','<option value="[% VBOX_PREF.GOTO_IF_OK | html %]">[% VBOX_PREF.GOTO_IF_OK | html %] - Текущее значение</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_OK | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
@@ -1784,10 +1770,10 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'><a href='#' class='info'>Перейти если занят: <span>
+					<td><a href='#' class='info'>Перейти если занят: <span>
 							Перейти к данному пункту IVR если в календаре на данное время назначены какие либо события ( флаг занят\свободен не учитывается )
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_OK','[% VBOX_PREF.GOTO_IF_BUSY | html %]','<option value="[% VBOX_PREF.GOTO_IF_BUSY | html %]">[% VBOX_PREF.GOTO_IF_BUSY | html %] - Текущее значение</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_BUSY | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
@@ -1799,8 +1785,8 @@
 				
 				[% IF VBOX_PREF.TYPE eq '25' %]
 				<tr>
-					<td class='ext_pn'>Тип текста:</td>
-					<td class='ext_pv'>
+					<td>Тип текста:</td>
+					<td>
 						<select name='SAY_PATTERN_ID'>
 							[% FOREACH say = SAY_PATTERN %]
 								[% IF VBOX_PREF.SAY_PATTERN_ID eq say.ID %]
@@ -1813,8 +1799,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Текст: </td>
-					<td class='ext_pv'>
+					<td>Текст: </td>
+					<td>
 						<input size='20' name="TEXT_STR" value="[% VBOX_PREF.TEXT_STR | html %]" type="text">
 					</td>
 				</tr>
@@ -1822,8 +1808,8 @@
 				
 				[% IF VBOX_PREF.TYPE eq '26' %]
 				<tr>
-					<td class='ext_pn'>URL вещания: </td>
-					<td class='ext_pv'>
+					<td>URL вещания: </td>
+					<td>
 						<input size='30' type='text' name='STREAM_URL' value='[% VBOX_PREF.STREAM_URL | html %]'>
 					</td>
 				</tr>
@@ -1831,8 +1817,8 @@
 
 				[% IF VBOX_PREF.TYPE eq '27' %]
 				<tr>
-					<td class='ext_pn'>Музыка ожидания:</td>
-					<td class='ext_pv'>
+					<td>Музыка ожидания:</td>
+					<td>
 						<select name='MOH_ID'>
 							[% FOREACH moh = MOH %]
 								[% IF VBOX_PREF.MOH_ID eq moh.ID %]
@@ -1845,17 +1831,17 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Максимальное время ожидания: </td>
-					<td class='ext_pv'>
+					<td>Максимальное время ожидания: </td>
+					<td>
 						<input size='30' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td class='ext_pn'><a href='#' class='info'>Если не подобрали, перейти к:<span>
+					<td><a href='#' class='info'>Если не подобрали, перейти к:<span>
 							Внутренний номер на который будет осуществлен переход
 							в случае неудачной парковки
 						</span></a></td>
-					<td class='ext_pv'>
+					<td>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
@@ -1885,25 +1871,25 @@
 					<tr><td colspan='2'><h4>Системные файлы:</h4></td></tr>
 					[% IF VBOX_PREF.NAME_FILE %]
 					<tr class='addon_data' id='d-tr-s0'>
-						<td class='ext_pn'>Имя пользователя: </td>
-						<td class='ext_pv' align='right'>
+						<td>Имя пользователя: </td>
+						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.NAME_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
-								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
-							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.NAME_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.NAME_FILE %]&type=1&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s0','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.NAME_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.NAME_FILE %]&type=1&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s0','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
 					[% IF VBOX_PREF.GREET_FILE %]
 					<tr class='addon_data' id='d-tr-s1'>
-						<td class='ext_pn'>Приветствие пользователя: </td>
-						<td class='ext_pv' align='right'>
+						<td>Приветствие пользователя: </td>
+						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.GREET_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
-								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
-							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.GREET_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.GREET_FILE %]&type=2&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s1','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.GREET_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.GREET_FILE %]&type=2&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s1','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
@@ -1911,25 +1897,25 @@
 					[% IF VBOX_PREF.TYPE eq '3' %]
 					[% IF VBOX_PREF.ANNOUNCEMENT_FILE %]
 					<tr class='addon_data' id='d-tr-s2'>
-						<td class='ext_pn'>Анонс исходящего звонка: </td>
-						<td class='ext_pv' align='right'>
+						<td>Анонс исходящего звонка: </td>
+						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
-								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
-							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s2','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s2','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
 					[% IF VBOX_PREF.RETRYDIAL_FILE %]
 					<tr class='addon_data' id='d-tr-s3'>
-						<td class='ext_pn'>Анонс удержания вызова: </td>
-						<td class='ext_pv' align='right'>
+						<td>Анонс удержания вызова: </td>
+						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.RETRYDIAL_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
-								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
-							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s3','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s3','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
@@ -1938,25 +1924,25 @@
 					[% IF VBOX_PREF.TYPE eq '13' %]
 					[% IF VBOX_PREF.ANNOUNCEMENT_FILE %]
 					<tr class='addon_data' id='d-tr-s4'>
-						<td class='ext_pn'>Анонс исходящего звонка: </td>
-						<td class='ext_pv' align='right'>
+						<td>Анонс исходящего звонка: </td>
+						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
-								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
-							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s4','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s4','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
 					[% IF VBOX_PREF.RETRYDIAL_FILE %]
 					<tr class='addon_data' id='d-tr-s5'>
-						<td class='ext_pn'>Анонс удержания вызова: </td>
-						<td class='ext_pv' align='right'>
+						<td>Анонс удержания вызова: </td>
+						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.RETRYDIAL_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
-								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
-							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s5','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s5','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
@@ -1965,10 +1951,10 @@
 					[% IF VBOX_PREF.TYPE eq '16' %]
 					[% IF VBOX_PREF.FAX_FILE %]
 					<tr class='addon_data' id='d-tr-s6'>
-						<td class='ext_pn'>Факс по запросу: </td>
-						<td class='ext_pv' align='right'>
+						<td>Факс по запросу: </td>
+						<td align='right' nowrap='nowrap'>
 							<a title='скачать tiff' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.FAX_FILE %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download_tif.png' alt='fax' /></a>
-							&nbsp;&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.FAX_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s6','d-tbl-s')" title='удалить факс'><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+							&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.FAX_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s6','d-tbl-s')" title='удалить факс'><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
@@ -1976,7 +1962,7 @@
 
 					<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 					<tr class='addon_data'>
-					<td colspan='2'>
+					<td colspan='2' nowrap='nowrap'>
 						<input type='file' name='msg'>
 						<select name="type">
 							<option value="1" selected>Имя пользователя</option>
@@ -1999,7 +1985,7 @@
 						<input type='hidden' name='action' value='msg_upload'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 						<input type='hidden' name='go' value='vb'>
-						<input type='submit' value='upload'>
+						<input type='submit' value='загрузить'>
 					</tr>
 					</form>
 					
@@ -2008,7 +1994,7 @@
 					</tr>
 					<tr class='addon_info' id='backup-restore'>
 						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
-						<td>
+						<td nowrap='nowrap'>
 							<input type='file' name='config_file'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
@@ -2096,27 +2082,17 @@
 								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 								<td><input class='in_t0' type='text' name='name' value='[% param.NAME | html %]'></td>
 								<td><input class='in_t0' type='text' name='redir_to' value='[% param.REDIRECT_TO | html %]'></td>
-								<td align='left'>
-									<table>
-										<tr>
-											<td>
-												<a href='?action=dir_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить данный пункт'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>
-											</td>
-											<td>
-												<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-												<script language='JavaScript'>
-													writeUpdateLinks( 'сохранить изменения' );
-												</script>
-												<noscript><input value='изменить' type='submit'></noscript>
-												</span>
-											</td>
-											<td>
-												<script language="JavaScript">
-													exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
-												</script>
-											</td>
-										</tr>
-									</table>
+								<td align='left' nowrap='nowrap'>
+									<a href='?action=dir_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить данный пункт'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+									<script language="JavaScript">
+										exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
+									</script>
+									<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+										<script language='JavaScript'>
+											writeUpdateLinks( 'сохранить изменения' );
+										</script>
+										<noscript><input value='изменить' type='submit'></noscript>
+									</span>
 								</td>
 								</form>
 							</tr>
@@ -2152,8 +2128,6 @@
 								</td>
 								</form>
 							</tr>
-						</form>
-					</tr>
 						</table>
 						</td>
 					</tr>
@@ -2183,12 +2157,11 @@
 						<td colspan='2' align='left'><h4>Результаты голосования ( начало [% VOTING_STAT_DATE | html %] ):</h4></td>
 					</tr>
 					<tr>
+						<td colspan='2'><pre>[% VBOX_PREF.GREETING | html %]</pre></td>
+					</tr>
+					<tr>
 						<td colspan='2' align='center'>
-						<table width='90%' class='addon_data'>
-							<tr>
-								<td colspan='3'><pre>[% VBOX_PREF.GREETING | html %]</pre></td>
-							</tr>
-							<table width='90%' class='addon_data' id='addon-data'>
+						<table width='90%' class='addon_data' id='addon-data'>
 							<tr class='list_data'>
 								<th>Вариант ответа</th>
 								<th>Количество голосов</th>
@@ -2208,7 +2181,6 @@
 								<td>[% param.PRC | html %] %</td>
 							</tr>
 							[% END %]
-							</table>
 						</table>
 						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
 						</td>
@@ -2378,22 +2350,14 @@
 								<td><input class='in_t0' size='5'  name='dayofmonth' type='text' value='[% param.DAYOFMONTH | html %]'></td>
 								<td><input class='in_t0' size='5'  name='month' type='text' value='[% param.MONTH | html %]'></td>
 								<td><input class='in_t0' size='5'  name='year' vtype='text' value='[% param.YEAR | html %]'></td>
-								<td align='left'>
-									<table>
-										<tr>
-											<td>
-												<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]','d-tbl-d1')" title='удалить пункт расписания'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>
-											</td>
-											<td>
-												<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-												<script language='JavaScript'>
-													writeUpdateLinks( 'сохранить изменения' );
-												</script>
-												<noscript><input value='изменить' type='submit'></noscript>
-												</span>
-											</td>
-										</tr>
-									</table>
+								<td align='left' nowrap='nowrap'>
+									<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]','d-tbl-d1')" title='удалить пункт расписания'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+									<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+										<script language='JavaScript'>
+											writeUpdateLinks( 'сохранить изменения' );
+										</script>
+										<noscript><input value='изменить' type='submit'></noscript>
+									</span>
 								</td>
 								</form>
 							</tr>
@@ -2489,27 +2453,17 @@
 							<td><input class='in_t0' size='5'  name='month' type='text' value='[% param.MONTH | html %]'></td>
 							<td><input class='in_t0' size='9'  name='year' vtype='text' value='[% param.YEAR | html %]'></td>
 							<td><input class='in_t0' size='11'  name='redirect_to' type='text' value='[% param.REDIRECT_TO | html %]'></td>
-							<td align='left'>
-								<table>
-									<tr>
-										<td>
-											<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить пункт расписания'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>
-										</td>
-										<td>
-											<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-											<script language='JavaScript'>
-												writeUpdateLinks( 'сохранить изменения' );
-											</script>
-											<noscript><input value='изменить' type='submit'></noscript>
-											</span>
-										</td>
-										<td>
-											<script language="JavaScript">
-												exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
-											</script>
-										</td>
-									</tr>
-								</table>
+							<td align='left' nowrap='nowrap'>
+								<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить пункт расписания'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+								<script language="JavaScript">
+									exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
+								</script>
+								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+									<script language='JavaScript'>
+										writeUpdateLinks( 'сохранить изменения' );
+									</script>
+									<noscript><input value='изменить' type='submit'></noscript>
+								</span>
 							</td>
 							</form>
 						</tr>
@@ -2592,22 +2546,14 @@
 						<td>
 							[% param.PROCESS_DATE | html %]
 						</td>
-						<td align='center'>
-							<table>
-								<tr>
-									<td>
-										<a href='?action=callblast_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>
-									</td>
-									<td>
-										<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-										<script language='JavaScript'>
-											writeUpdateLinks( 'сохранить изменения' );
-										</script>
-										<noscript><input value='change' type='submit'></noscript>
-										</span>
-									</td>
-								</tr>
-							</table>
+						<td align='left' nowrap='nowrap'>
+							<a href='?action=callblast_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+								<script language='JavaScript'>
+									writeUpdateLinks( 'сохранить изменения' );
+								</script>
+								<noscript><input value='change' type='submit'></noscript>
+							</span>
 						</td>
 						</form>
 					</tr>
@@ -2703,27 +2649,17 @@
 							</td>
 							<td><input class='in_t0' size='15' name='var_value' type='text' value='[% param.VAR_VALUE | html %]'></td>
 							<td><input class='in_t0' size='11'  name='redirect_to' type='text' value='[% param.REDIRECT_TO | html %]'></td>
-							<td align='left'>
-								<table>
-									<tr>
-										<td>
-											<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='удалить'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>
-										</td>
-										<td>
-											<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-											<script language='JavaScript'>
-												writeUpdateLinks( 'сохранить изменения' );
-											</script>
-											<noscript><input value='change' type='submit'></noscript>
-											</span>
-										</td>
-										<td>
-											<script language="JavaScript">
-												exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
-											</script>
-										</td>
-									</tr>
-								</table>
+							<td align='left' nowrap='nowrap'>
+								<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='удалить'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+								<script language="JavaScript">
+									exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
+								</script>
+								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+									<script language='JavaScript'>
+										writeUpdateLinks( 'сохранить изменения' );
+									</script>
+									<noscript><input value='change' type='submit'></noscript>
+								</span>
 							</td>
 							</form>
 						</tr>

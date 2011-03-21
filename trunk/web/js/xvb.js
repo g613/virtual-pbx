@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.30 2011-03-20 06:48:48 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.31 2011-03-20 20:12:55 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -358,7 +358,7 @@ function getCookie(name) {
 }
 
 function writeUpdateLinks( alt ) {
-	document.write("<input type='image' title='"+alt+"' name='"+alt+"' alt='"+alt+"' src='/xvb/images/save.png'>");
+	document.write("<input type='image' title='"+alt+"' name='"+alt+"' alt='"+alt+"' src='/xvb/images/save.png'>&nbsp;");
 }
 
 function graphit(g,gwidth){
@@ -478,7 +478,7 @@ function setShadowAttr() {
 function cdrfilters( element_id, col_num ) {
 	/* fiters */
 	var re = /FILE=(\d+):(\w+\.\w+)/g;
-	var re2 = /^DTMF==([^,]*)/;
+	var re2 = /^DTMF=([^,]*)/;
 
 	/* variables */
 	var url = download_file_url;
@@ -543,16 +543,44 @@ function cdrfilters( element_id, col_num ) {
 	}
 }
 
-/* list colorer */
+/* dtmf_history_win */
 function dtmf_history_win( data ) {
 	var ScreenWidth=window.screen.width;
-	var ScreenHeight=window.screen.height;
-	var movefromedge=0;
-	placementx=(ScreenWidth/2)-((400)/2);
-	placementy=(ScreenHeight/2)-((300+50)/2);
-	WinPop=window.open("about:blank","","width=300,height=300,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy+",scre enX="+placementx+",screenY="+placementy);
+	//var ScreenHeight=window.screen.height;
+	placementx=ScreenWidth-400;
+	placementy=200;
+	WinPop=window.open("","dtmf_history_win","width=300,height=300,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
 	WinPop.document.write('<html>\n<head><title>DTMF History</title>\n</head>\n<body>'+data+'</body></html>');
 	WinPop.document.close();
+}
+
+/* ext_list_build */
+function ext_list_build( element_id ) {
+	var el = document.getElementById(element_id).getElementsByTagName('tr');
+	
+	for( i=0; i < el.length; i++ ) {
+		var td_obj = el[i].getElementsByTagName('td');
+		
+		if ( td_obj[0] != null ) {
+			// tree-colorer
+			var data = td_obj[0].innerHTML;
+			var new_str = data.replace( /(.*\*)?([^*]+)$/, "<span class='ext_preffix'>$1</span>$2");
+			if ( data != new_str ) {
+				td_obj[0].innerHTML = new_str;
+			}
+		}
+		for( i2=3; i2 < 8; i2++ ) {
+			// Yes /  No
+			if ( td_obj[i2] != null ) {
+				var data = td_obj[i2].innerHTML;
+				var new_str = '-';
+				if ( data == 1 ) {
+					new_str = "<img border='0' src='/xvb/images/check.png' alt='*' />"
+				}
+				td_obj[i2].innerHTML = new_str;
+			}
+		}
+	}
 }
 
 /* list colorer */

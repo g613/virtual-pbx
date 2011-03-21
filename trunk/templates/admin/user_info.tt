@@ -142,7 +142,7 @@
 				<td>
 					Read only:
 				</td>
-				<td class='ext_pv'>
+				<td>
 					<select name="US_DEMO_MODE">
 					[% IF USER.DEMO_MODE %]
 						<option value="1">yes</option>
@@ -172,7 +172,7 @@
 					<td>
 						<table width='100%' class='addon_data'>
 							<tr>
-								<td class='ext_pn'><b>Tariff:</b></td>
+								<td><b>Tariff:</b></td>
 								<td colspan='7'><b>[% TARIFF.NAME | html %]</b> ( currency  [% TARIFF.DESCRIPTION %] )</td>
 							</tr>
 							<tr class='list_data' align='center'>
@@ -205,7 +205,7 @@
 								<td>[% TARIFF.CALL_PRICE_CBL %]</td>
 							</tr>
 							<tr>
-								<td colspan='8' class='ext_pn'>
+								<td colspan='8'>
 									Balance:
 								</td>
 							</tr>

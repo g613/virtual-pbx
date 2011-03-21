@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.60 2011-03-18 15:12:05 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.62 2011-03-20 21:30:36 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -85,8 +85,8 @@ Prived: [% d.DID | html %]
 				</tr>
 				<form method="post" action="[% CGI_URL %]" name='user_prefs' onSubmit='return xmlhttpPost(this,0)'>
 				<tr>
-					<td class='ext_pn'>First Name:</td>
-					<td class='ext_pv'>
+					<td>First Name:</td>
+					<td>
 						<input size='30' type='text' name='FIRST_NAME' value='[% USER_CREDS.FIRST_NAME | html %]'>
 						<input type='hidden' name='action' value='user_update'>
 						<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
@@ -94,65 +94,65 @@ Prived: [% d.DID | html %]
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Last Name:</td>
-					<td class='ext_pv'>
+					<td>Last Name:</td>
+					<td>
 						<input size='30' type='text' name='LAST_NAME' value='[% USER_CREDS.LAST_NAME | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Email:</td>
-					<td class='ext_pv'>
+					<td>Email:</td>
+					<td>
 						<input size='30' type='text' name='EMAIL' value='[% USER_CREDS.EMAIL | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>
+					<td>
 						<select name='skins' onchange='javascript:document.user_prefs.CSS_HREF.value=this.value'>
 							<option selected value='[% USER_CREDS.CSS_HREF | html %]'>CSS href:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
 							<option value='/xvb/xvb-green.css'>CSS - green skin</option>
 							<option value=''>CSS - default skin</option>
 						</select>
 					</td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' type='text' name='CSS_HREF' value='[% USER_CREDS.CSS_HREF | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Logo href:</td>
-					<td class='ext_pv'>
+					<td>Logo href:</td>
+					<td>
 						<input size='30' type='text' name='LOGO_HREF' value='[% USER_CREDS.LOGO_HREF | html %]'>
 					</td>
 				</tr>
 				[% IF USER_CREDS.ALLOW_GA %]
 				<tr>
-					<td class='ext_pn'>Google Analytics ID:</td>
-					<td class='ext_pv'>
+					<td>Google Analytics ID:</td>
+					<td>
 						<input size='30' type='text' name='GA_ACCOUNT' value='[% USER_CREDS.GA_ACCOUNT | html %]'>
 					</td>
 				</tr>
 				[% END %]
 				<tr>
-					<td class='ext_pn'>Messages in page:</td>
-					<td class='ext_pv'>
+					<td>Messages in page:</td>
+					<td>
 						<input size='10' type='text' name='MSG_IN_PAGE' value='[% USER_CREDS.MSG_IN_PAGE | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Record storage time (days):</td>
-					<td class='ext_pv'>
+					<td>Record storage time (days):</td>
+					<td>
 						<input size='10' type='text' name='MSG_STORE_PERIOD' value='[% USER_CREDS.MSG_STORE_PERIOD | html %]'>
 						( 0 - unlimit )
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>IVR: Inter Digit Timeout (sec):</td>
-					<td class='ext_pv'>
+					<td>IVR: Inter Digit Timeout (sec):</td>
+					<td>
 						<input size='10' type='text' name='I_DIGIT_TIMEOUT' value='[% USER_CREDS.I_DIGIT_TIMEOUT | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Default language:</td>
-					<td class='ext_pv'>
+					<td>Default language:</td>
+					<td>
 						<select name='LANG'>
 							[% FOREACH lang = LANG %]
 								[% IF USER_CREDS.LANG eq lang.ID %]
@@ -167,8 +167,8 @@ Prived: [% d.DID | html %]
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Sound Format:</td>
-					<td class='ext_pv'>
+					<td>Sound Format:</td>
+					<td>
 						<select name='SOUND_FORMAT'>
 							[% FOREACH fm = SOUND_F %]
 								[% IF USER_CREDS.SOUND_FORMAT eq fm %]
@@ -181,8 +181,8 @@ Prived: [% d.DID | html %]
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Time Zone:</td>
-					<td class='ext_pv'>
+					<td>Time Zone:</td>
+					<td>
 						<select name='TIME_ZONE'>
 							[% FOREACH t = TZ %]
 								[% IF USER_CREDS.TIME_ZONE eq t.ID %]
@@ -197,8 +197,8 @@ Prived: [% d.DID | html %]
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Date Format:</td>
-					<td class='ext_pv'>
+					<td>Date Format:</td>
+					<td>
 						<select name='DATE_FORMAT'>
 							[% FOREACH fm = DATE_FORMAT %]
 								[% IF USER_CREDS.DATE_FORMAT eq fm.ID %]
@@ -211,8 +211,8 @@ Prived: [% d.DID | html %]
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Daily statements:</td>
-					<td class='ext_pv'>
+					<td>Daily statements:</td>
+					<td>
 						<select name='STATEMENTS'>
 							[% IF USER_CREDS.STATEMENTS eq '0' %]
 								<option value="0" selected>disable</option>
@@ -231,8 +231,8 @@ Prived: [% d.DID | html %]
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Common filters:</td>
-					<td class='ext_pv'>
+					<td>Common filters:</td>
+					<td>
 						<a href='?action=cid_list&id=[% ROOT_EXT_ID %]&cid_list_type=2&cid_type=2&uniq=[% USER_CREDS.UNIQ %]' title='edit CID white list'>White list</a> / 
 						<a href='?action=cid_list&id=[% ROOT_EXT_ID %]&cid_list_type=1&cid_type=2&uniq=[% USER_CREDS.UNIQ %]' title='edit CID black list'>Black list</a>
 					</td>
@@ -258,13 +258,13 @@ Prived: [% d.DID | html %]
 						<table width='90%' class='addon_data' id='d-tbl'>
 							[% IF CUSTOM_MOH ne '' %]
 							<tr class='addon_data' id='d-tr'>
-								<td class='ext_pn'>Custom music on hold file: </td>
-								<td class='ext_pv' align='center'>
+								<td>Custom music on hold file: </td>
+								<td align='center' nowrap='nowrap'>
 									<a title='play' 
 										onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/0/[% CUSTOM_MOH %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
 										href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
 										<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/0/[% CUSTOM_MOH %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-									&nbsp;&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% CUSTOM_MOH %]&type=1&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr')" title='delete MOH file'><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+									&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% CUSTOM_MOH %]&type=1&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr')" title='delete MOH file'><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
 								</td>
 							</tr>
 							[% END %]
@@ -296,7 +296,7 @@ Prived: [% d.DID | html %]
 						<table width='100%' class='addon_data'>
 							<tr><td colspan='8'><h4>Billing:</h4></td></tr>
 							<tr>
-								<td class='ext_pn'>Tariff:</td>
+								<td>Tariff:</td>
 								<td colspan='7'><b>[% TARIFF.NAME | html %]</b> ( currency  [% TARIFF.DESCRIPTION %] )</td>
 							</tr>
 							<tr class='list_data' align='center'>
@@ -337,7 +337,7 @@ Prived: [% d.DID | html %]
 								[% END %]
 							</tr>
 							<tr>
-								<td colspan='8' class='ext_pn'>
+								<td colspan='8'>
 									Balance:
 								</td>
 							</tr>
@@ -360,8 +360,8 @@ Prived: [% d.DID | html %]
 					<td colspan='3'><h4>Limits:</h4></td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Maximum extensions (<a href='#' onclick='ShowEl("vb_limits"); return false'>detail</a>) :</td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_EXTENSIONS %]</td>
+					<td>Maximum extensions (<a href='#' onclick='ShowEl("vb_limits"); return false'>detail</a>) :</td>
+					<td align='right'>[% USER_CREDS.MAX_EXTENSIONS %]</td>
 					<td rowspan='22' id='vb_limits' class='addon_info'>
 						<table width='100%'>
 							<tr class='list_data' align='center'>
@@ -383,108 +383,108 @@ Prived: [% d.DID | html %]
 					</td>
 				</tr>	
 				<tr>
-					<td class='ext_pn'>Maximum messages in extetnsion: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_EXT_MSGS %]</td>
+					<td>Maximum messages in extetnsion: </td>
+					<td align='right'>[% USER_CREDS.MAX_EXT_MSGS %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Maximum all messages: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_ALL_MSGS %]</td>
+					<td>Maximum all messages: </td>
+					<td align='right'>[% USER_CREDS.MAX_ALL_MSGS %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Maximum number of CID filters: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_EXT_CIDS %]</td>
+					<td>Maximum number of CID filters: </td>
+					<td align='right'>[% USER_CREDS.MAX_EXT_CIDS %]</td>
 				</tr>
 				[% IF USER_CREDS.ALLOW_PHONES %]
 				<tr>
-					<td class='ext_pn'>Maximum Number of Phones: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_PHONES %]</td>
+					<td>Maximum Number of Phones: </td>
+					<td align='right'>[% USER_CREDS.MAX_PHONES %]</td>
 				</tr>
 				[% END %]
 				[% IF USER_CREDS.CUSTOM_ROUTE %]
 				<tr>
-					<td class='ext_pn'>Maximum Number of Peers: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_PEERS %]</td>
+					<td>Maximum Number of Peers: </td>
+					<td align='right'>[% USER_CREDS.MAX_PEERS %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Maximum Number of Routes: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_ROUTES %]</td>
+					<td>Maximum Number of Routes: </td>
+					<td align='right'>[% USER_CREDS.MAX_ROUTES %]</td>
 				</tr>
 				[% END %]
 				[% IF USER_CREDS.ALLOW_MACROS %]
 				<tr>
-					<td class='ext_pn'>Maximum Number of Macros: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_MACROS %]</td>
+					<td>Maximum Number of Macros: </td>
+					<td align='right'>[% USER_CREDS.MAX_MACROS %]</td>
 				</tr>
 				[% END %]
 				[% IF USER_CREDS.VBL_4 ne '0' %]
 				<tr>
-					<td class='ext_pn'>Maximum Number of Directory items: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_DIRECTORY_ITEMS %]</td>
+					<td>Maximum Number of Directory items: </td>
+					<td align='right'>[% USER_CREDS.MAX_DIRECTORY_ITEMS %]</td>
 				</tr>
 				[% END %]
 				[% IF USER_CREDS.VBL_5 ne '0' %]
 				<tr>
-					<td class='ext_pn'>Maximum Number of Schedule items: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_SCHEDULE_ITEMS %]</td>
+					<td>Maximum Number of Schedule items: </td>
+					<td align='right'>[% USER_CREDS.MAX_SCHEDULE_ITEMS %]</td>
 				</tr>
 				[% END %]
 				<tr>
-					<td class='ext_pn'>Maximum Phones for Follow-Me & Queues: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_EXT_PHONES | html %]</td>
+					<td>Maximum Phones for Follow-Me & Queues: </td>
+					<td align='right'>[% USER_CREDS.MAX_EXT_PHONES | html %]</td>
 				</tr>
 				[% IF USER_CREDS.VBL_18 ne '0' %]
 				<tr>
-					<td class='ext_pn'>Maximum Number of CallBlast items: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_CALLBLAST_ITEMS %]</td>
+					<td>Maximum Number of CallBlast items: </td>
+					<td align='right'>[% USER_CREDS.MAX_CALLBLAST_ITEMS %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Maximum Phones for CallBlast item: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_CB_PHONES | html %]</td>
+					<td>Maximum Phones for CallBlast item: </td>
+					<td align='right'>[% USER_CREDS.MAX_CB_PHONES | html %]</td>
 				</tr>
 				[% END %]
 				[% IF USER_CREDS.VBL_21 ne '0' %]
 				<tr>
-					<td class='ext_pn'>Maximum Number of GotoIF items: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_GOTOIF_ITEMS %]</td>
+					<td>Maximum Number of GotoIF items: </td>
+					<td align='right'>[% USER_CREDS.MAX_GOTOIF_ITEMS %]</td>
 				</tr>
 				[% END %]
 				[% IF USER_CREDS.TTS_GREETING %]
 				<tr>
-					<td class='ext_pn'>Maximum TTS length: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_TTS_LENGTH | fsize %]</td>
+					<td>Maximum TTS length: </td>
+					<td align='right'>[% USER_CREDS.MAX_TTS_LENGTH | fsize %]</td>
 				</tr>
 				[% END %]
 				<tr>
-					<td class='ext_pn'>Maximum email-attachment size: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_ATTACH_SIZE | fsize %]</td>
+					<td>Maximum email-attachment size: </td>
+					<td align='right'>[% USER_CREDS.MAX_ATTACH_SIZE | fsize %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Maximum TTS download size: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_DOWNLOAD_SIZE | fsize %]</td>
+					<td>Maximum TTS download size: </td>
+					<td align='right'>[% USER_CREDS.MAX_DOWNLOAD_SIZE | fsize %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Maximum voice mesage duration: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_MESSAGE_DURATION | duration_str %]</td>
+					<td>Maximum voice mesage duration: </td>
+					<td align='right'>[% USER_CREDS.MAX_MESSAGE_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Maximum User Name duration: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_NAME_DURATION | duration_str %]</td>
+					<td>Maximum User Name duration: </td>
+					<td align='right'>[% USER_CREDS.MAX_NAME_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Maximum User Greeting duration: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_GREET_DURATION | duration_str %]</td>
+					<td>Maximum User Greeting duration: </td>
+					<td align='right'>[% USER_CREDS.MAX_GREET_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Maximum Follow-Me announcement duration: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_ANNOUNCEMENT_DURATION | duration_str %]</td>
+					<td>Maximum Follow-Me announcement duration: </td>
+					<td align='right'>[% USER_CREDS.MAX_ANNOUNCEMENT_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Maximum RetryDial anouncement duration: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_RETRYDIAL_DURATION | duration_str %]</td>
+					<td>Maximum RetryDial anouncement duration: </td>
+					<td align='right'>[% USER_CREDS.MAX_RETRYDIAL_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Maximum music on hold duration: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_MOH_DURATION | duration_str %]</td>
+					<td>Maximum music on hold duration: </td>
+					<td align='right'>[% USER_CREDS.MAX_MOH_DURATION | duration_str %]</td>
 				</tr>
 			</table>
 			</td>

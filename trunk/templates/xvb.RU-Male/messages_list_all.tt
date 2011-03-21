@@ -68,7 +68,7 @@
 		<tr>
 		[% IF MSG_PREV ne '' %]
 			<td align='left' colspan='8'>
-				<a title='предыдущая страница ([% MSG_PREV %])' href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='предыдущая страница ([% MSG_PREV %])' href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 		[% END %]
 		</tr>
 		[% FOREACH msg = MSG_LIST %]
@@ -88,47 +88,30 @@
 				<td align='center'>--------</td>
 			[% END %]
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
-			<td>
-				<table>
-					<tr>
-					<td>
+			<td nowrap='nowrap'>
 				[% IF msg.IS_VOICE %]
-						<a title='скачать сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+					<a title='скачать сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% ELSE %]
-						<a title='скачать файл' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+					<a title='скачать файл' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% END %]
-					</td>
-
-					<td>
-						<a title='удалить сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
-					</td>
-
+					<a title='удалить сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 				[% IF msg.IS_VOICE %]
-					<td>
-						<a title='прослушать' 
-							onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
-							href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-					</td>
+					<a title='прослушать' 
+						onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+						href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
 				[% END %]
-
 				[% IF msg.FILE_TYPE eq '30' %]
-					<td>
-						<a title='Пометить как старое' href='?action=msg_status&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=40'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
-					</td>
+					<a title='Пометить как старое' href='?action=msg_status&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=40'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
 				[% ELSIF msg.FILE_TYPE eq '40' %]
-					<td>
-						<a title='Пометить как новое' href='?action=msg_status&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=30'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
-					</td>
+					<a title='Пометить как новое' href='?action=msg_status&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=30'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
 				[% END %] 
-					</tr>
-				</table>
 			</td>
 		</tr>
 		[% END %]
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='8'>
-				<a title='следующая страница ([% MSG_NEXT %])' href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='следующая страница ([% MSG_NEXT %])' href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
 		[% ELSE %]
 			<td colspan='7'>&nbsp;</td>
@@ -186,9 +169,23 @@
 				</script>
 				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
 				<button type="button">...</button>
-				<input name='action' value='msg_list' type='hidden'>
+				<input name='action' value='msg_list_all' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
+				&nbsp;
+				<select name="msg_type">
+					<option value="" >Тип сообщения</option>
+					<option value="30:40">Все пользовательские</option>
+					<option value="1:2:3:4:5:6">Все системные</option>
+					<option value="1">Имя пользователя</option>
+					<option value="2">Приветствие пользователя</option>
+					<option value="3">Аннонс исходящего звонка</option>
+					<option value="4">Анонс удержания вызова</option>
+					<option value="5">Музыка вместо звонка</option>
+					<option value="6">Факс по запросу</option>
+					<option value="30">Новое сообщение</option>
+					<option value="40">Старое сообщение</option>
+				</select>
 				&nbsp;
 				Номер звонящего:
 				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>

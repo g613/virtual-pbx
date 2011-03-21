@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.39 2011-02-28 10:41:57 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.41 2011-03-20 22:22:23 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -68,7 +68,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='8'>
-				<a title='previous page' href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&from=[% MSG_PREV %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -76,9 +76,7 @@
 		<tr class='nocolor' id='d-tr-[% msg.FILE_NAME %]'>
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
 			<td>&nbsp;<a href='?action=vb_view&id=[% msg.ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
-			<td align='center'>
-			[% msg.DESCRIPTION | html %]
-			</td>
+			<td align='center'>[% msg.DESCRIPTION | html %]</td>
 			<td align='center'>[% msg.MSG_DATE | html %]</td>
 			<td align='center'>[% msg.CALLERID | html %]</td>
 			[% IF msg.IS_VOICE %]
@@ -89,48 +87,31 @@
 			<td align='center'>--------</td>
 			[% END %]
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
-			<td>
-			<table>
-				<tr>
-					<td>
+			<td nowrap='nowrap'>
 				[% IF msg.IS_VOICE %]
-						<a title='download media' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+					<a title='download imedia' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% ELSE %]
-						<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+					<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% END %]
-					</td>
-
-					<td>
-						<a title='delete message' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% msg.FILE_NAME %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
-					</td>
+					<a title='delete message' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% msg.FILE_NAME %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 
 				[% IF msg.IS_VOICE %]
-					<td>
-						<a title='play' 
-							onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
-							href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-					</td>
+					<a title='play' 
+						onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+						href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
 				[% END %]
-
 				[% IF msg.FILE_TYPE eq '30' %]
-					<td>
-						<a title='Mark message as OLD' href='?action=msg_status&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=40&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
-					</td>
+					<a title='Mark message as OLD' href='?action=msg_status&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=40&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
 				[% ELSIF msg.FILE_TYPE eq '40' %]
-					<td>
-						<a title='Mark message as NEW' href='?action=msg_status&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=30&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
-					</td>
+					<a title='Mark message as NEW' href='?action=msg_status&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=30&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
 				[% END %] 
-
-				</tr>
-			</table>
 			</td>
 		</tr>
 		[% END %]
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='8'>
-				<a title='next page' href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='next page' href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&from=[% MSG_NEXT %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
 		[% ELSE %]
 			<td colspan='7'>&nbsp;</td>
@@ -191,6 +172,20 @@
 				<input name='action' value='msg_list_all' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
+				&nbsp;
+				<select name="msg_type">
+					<option value="" >Message type</option>
+					<option value="30:40">User messages</option>
+					<option value="1:2:3:4:5:6">System messages</option>
+					<option value="1">User name</option>
+					<option value="2">User greeting</option>
+					<option value="3">Follow-Me Announcement</option>
+					<option value="4">RetryDial Announcement</option>
+					<option value="5">Music on hold</option>
+					<option value="6">Fax on Demand</option>
+					<option value="30">New user message</option>
+					<option value="40">Old user message</option>
+				</select>
 				&nbsp;
 				Caller ID:
 				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
