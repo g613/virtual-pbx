@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.45 2011-02-28 10:41:58 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.46 2011-03-20 20:22:05 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extensions - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -65,73 +65,41 @@
 			<th>G</th>
 		</tr>
 		[% FOREACH vb = VB_LIST %]
-		<tr class='nocolor' id='d-tr-[% vb.ID %]'>
-			[% IF vb.EXT_NUMBER eq '0' %]
-			<td>&nbsp;START</td>
-			[% ELSE %]
-			<td>&nbsp;[% vb.EXT_NUMBER | html | vb_tree %]</td>
-			[% END %]
-			<td>
-			[% IF vb.NAME ne '' %]
-				<a class='vb_name' href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% vb.NAME | html %]</a>
-			[% ELSE %]
-				[% vb.NAME | html %]
-			[% END %]
+		<tr class='nocolor' id='d-tr-[% vb.ID %]' align='center'>
+			<td align='left'>
+				&nbsp;[% vb.EXT_NUMBER | html %]
 			</td>
-			<td align='center'>
+			<td align='left'>
+				<a class='vb_name' href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% vb.NAME | html %]</a>
+			</td>
+			<td>
 				[% vb.DESCRIPTION | html %]
 			</td>
-			<td align='center'>
-			[% IF vb.WAITEXTENSION eq '1' %]
-				<img border='0' src='/xvb/images/check.png' alt='*' />
-			[% ELSE %]
-				-
-			[% END %]
+			<td>
+				[% vb.WAITEXTENSION %]
 			</td>
-			<td align='center'>
-			[% IF vb.HIDDEN eq '1' %]
-				<img border='0' src='/xvb/images/check.png' alt='*' />
-			[% ELSE %]
-				-
-			[% END %]
+			<td>
+				[% vb.HIDDEN %]
 			</td>
-			<td align='center'>
-			[% IF vb.DIRECT %]
-				<img border='0' src='/xvb/images/check.png' alt='*' />
-			[% ELSE %]
-				-
-			[% END %]
+			<td>
+				[% vb.DIRECT %]
 			</td>
-			<td align='center'>
-			[% IF vb.PROTECT %]
-				<img border='0' src='/xvb/images/check.png' alt='*' />
-			[% ELSE %]
-				-
-			[% END %]
+			<td>
+				[% vb.PROTECT %]
 			</td>
-			<td align='center'>
-			[% IF vb.GLOBAL %]
-				<img border='0' src='/xvb/images/check.png' alt='*' />
-			[% ELSE %]
-				-
-			[% END %]
+			<td>
+				[% vb.GLOBAL %]
 			</td>
-			<td align='center'>[% vb.NEXTEXTENSION | html %]</td>
-			<td>[% vb.NOTIFYEMAIL | html %]</td>
-			<td align='center'>
-				<table>
-					<tr>
-						<td>
-							<a href='?action=msg_list&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='view messages'><img border='0' src='/xvb/images/msg_list.png' alt='msgs' /></a>
-						</td>
-						<td>
-							<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>
-						</td>
-						<td>
-							<a href='?action=vb_del&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% vb.ID %]')" title='delete extension'><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
-						</td>
-					</tr>
-				</table>
+			<td>
+				[% vb.NEXTEXTENSION | html %]
+			</td>
+			<td align='left'>
+				[% vb.NOTIFYEMAIL | html %]
+			</td>
+			<td nowrap="nowrap">
+				<a href='?action=msg_list&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='view messages'><img border='0' src='/xvb/images/msg_list.png' alt='msgs' /></a>&nbsp;
+				<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>&nbsp;
+				<a href='?action=vb_del&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% vb.ID %]')" title='delete extension'><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -139,7 +107,7 @@
 	</table>
 	</p>
 
-	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+	<script language='JavaScript'>listcolorer('d-tbl');ext_list_build('d-tbl');</script>
 
 	<p>	
 	<table width='95%' class='bottom_hr'>

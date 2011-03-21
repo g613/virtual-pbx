@@ -59,20 +59,20 @@
 	<table width='90%' class='group_info'>
 		<form method='post'>
 		<tr>
-			<td class='ext_pn'>Group Name: </td>
-			<td class='ext_pv'><input name='GR_GROUP_NAME' type='text' value="[% GROUP.GROUP_NAME | html %]"></td>
-			<td class='ext_pv' rowspan='33' valign='top'>
+			<td>Group Name: </td>
+			<td><input name='GR_GROUP_NAME' type='text' value="[% GROUP.GROUP_NAME | html %]"></td>
+			<td rowspan='33' valign='top'>
 				<table>
 					<tr>
-						<td class='ext_pn' colspan='2'><h4>Limits on the number of extensions:</h4></td>
+						<td colspan='2'><h4>Limits on the number of extensions:</h4></td>
 						<input name='VB_TYPE_0' type='hidden' value="1">
 					</tr>
 					[% FOREACH vb = VB_TYPES %]
 					<tr>
-						<td class='ext_pn'>
+						<td>
 							[% vb.DESCRIPTION | html %]
 						</td>
-						<td class='ext_pv'>
+						<td>
 							<input name='GR_VBL_[% vb.ID %]' type='text' size='5' value="[% vb.LIMIT_VALUE %]">
 						</td>
 					</tr>
@@ -82,11 +82,11 @@
 						<td>-1 - unlimit<br>0 - type not allowed</td>
 					</tr>
 					<tr>
-						<td class='ext_pn' colspan='2'><h4>Other feautures:</h4></td>
+						<td colspan='2'><h4>Other feautures:</h4></td>
 					</tr>
 					<tr>
-						<td class='ext_pn'>Allow TTS greetings: </td>
-						<td class='ext_pv'>
+						<td>Allow TTS greetings: </td>
+						<td>
 						<select name="GR_TTS_GREETING">
 						[% IF GROUP.TTS_GREETING %]
 							<option value="1">yes</option>
@@ -99,8 +99,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td class='ext_pn'>Allow Macros: </td>
-						<td class='ext_pv'>
+						<td>Allow Macros: </td>
+						<td>
 						<select name="GR_ALLOW_MACROS">
 						[% IF GROUP.ALLOW_MACROS %]
 							<option value="1">yes</option>
@@ -113,8 +113,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td class='ext_pn'>Dialout direct ( sip only ): </td>
-						<td class='ext_pv'>
+						<td>Dialout direct ( sip only ): </td>
+						<td>
 						<select name="GR_DIALOUT_DIRECT">
 						[% IF GROUP.DIALOUT_DIRECT %]
 							<option value="1">yes</option>
@@ -127,8 +127,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td class='ext_pn'>Dialout Custom routes: </td>
-						<td class='ext_pv'>
+						<td>Dialout Custom routes: </td>
+						<td>
 						<select name="GR_CUSTOM_ROUTE">
 						[% IF GROUP.CUSTOM_ROUTE %]
 							<option value="1">yes</option>
@@ -141,8 +141,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td class='ext_pn'>Allow Phones: </td>
-						<td class='ext_pv'>
+						<td>Allow Phones: </td>
+						<td>
 						<select name="GR_ALLOW_PHONES">
 						[% IF GROUP.ALLOW_PHONES %]
 							<option value="1">yes</option>
@@ -155,8 +155,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td class='ext_pn'>Upload custom system files: </td>
-						<td class='ext_pv'>
+						<td>Upload custom system files: </td>
+						<td>
 							<select name="GR_CUSTOM_FILES">
 							[% IF GROUP.CUSTOM_FILES %]
 								<option value="1">yes</option>
@@ -169,8 +169,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td class='ext_pn'>Advanced CallBlast: </td>
-						<td class='ext_pv'>
+						<td>Advanced CallBlast: </td>
+						<td>
 						<select name="GR_ADVANCED_CALLBLAST">
 						[% IF GROUP.ADVANCED_CALLBLAST %]
 							<option value="1">yes</option>
@@ -183,8 +183,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td class='ext_pn'>Eanble Google Analytics: </td>
-						<td class='ext_pv'>
+						<td>Eanble Google Analytics: </td>
+						<td>
 						<select name="GR_ALLOW_GA">
 						[% IF GROUP.ALLOW_GA %]
 							<option value="1">yes</option>
@@ -197,8 +197,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td class='ext_pn'>Eanble API: </td>
-						<td class='ext_pv'>
+						<td>Eanble API: </td>
+						<td>
 						<select name="GR_ALLOW_API">
 						[% IF GROUP.ALLOW_API %]
 							<option value="1">yes</option>
@@ -211,8 +211,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td class='ext_pn'>Allow IceCast: </td>
-						<td class='ext_pv'>
+						<td>Allow IceCast: </td>
+						<td>
 						<select name="GR_ALLOW_ICECAST">
 						[% IF GROUP.ALLOW_ICECAST %]
 							<option value="1">yes</option>
@@ -228,124 +228,124 @@
 			</td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Dialout asterisk context: </td>
-			<td class='ext_pv'><input name='GR_DIALOUT_CONTEXT' type='text' value="[% GROUP.DIALOUT_CONTEXT | html %]"></td>
+			<td>Dialout asterisk context: </td>
+			<td><input name='GR_DIALOUT_CONTEXT' type='text' value="[% GROUP.DIALOUT_CONTEXT | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Conference asterisk context: </td>
-			<td class='ext_pv'><input name='GR_CONFERENCE_CONTEXT' type='text' value="[% GROUP.CONFERENCE_CONTEXT | html %]"></td>
+			<td>Conference asterisk context: </td>
+			<td><input name='GR_CONFERENCE_CONTEXT' type='text' value="[% GROUP.CONFERENCE_CONTEXT | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum incomming concurrent calls: </td>
-			<td class='ext_pv'><input name='GR_MAX_CALLS_IN' type='text' value="[% GROUP.MAX_CALLS_IN | html %]"></td>
+			<td>Maximum incomming concurrent calls: </td>
+			<td><input name='GR_MAX_CALLS_IN' type='text' value="[% GROUP.MAX_CALLS_IN | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum messages in ext: </td>
-			<td class='ext_pv'><input name='GR_MAX_EXT_MSGS' type='text' value="[% GROUP.MAX_EXT_MSGS | html %]"></td>
+			<td>Maximum messages in ext: </td>
+			<td><input name='GR_MAX_EXT_MSGS' type='text' value="[% GROUP.MAX_EXT_MSGS | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum all messages: </td>
-			<td class='ext_pv'><input name='GR_MAX_ALL_MSGS' type='text' value="[% GROUP.MAX_ALL_MSGS | html %]"></td>
+			<td>Maximum all messages: </td>
+			<td><input name='GR_MAX_ALL_MSGS' type='text' value="[% GROUP.MAX_ALL_MSGS | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum extensions: </td>
-			<td class='ext_pv'><input name='GR_MAX_EXTENSIONS' type='text' value="[% GROUP.MAX_EXTENSIONS | html %]"></td>
+			<td>Maximum extensions: </td>
+			<td><input name='GR_MAX_EXTENSIONS' type='text' value="[% GROUP.MAX_EXTENSIONS | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum Number of CID Filters: </td>
-			<td class='ext_pv'><input name='GR_MAX_EXT_CIDS' type='text' value="[% GROUP.MAX_EXT_CIDS | html %]"></td>
+			<td>Maximum Number of CID Filters: </td>
+			<td><input name='GR_MAX_EXT_CIDS' type='text' value="[% GROUP.MAX_EXT_CIDS | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum Number of Routes: </td>
-			<td class='ext_pv'><input name='GR_MAX_ROUTES' type='text' value="[% GROUP.MAX_ROUTES | html %]"></td>
+			<td>Maximum Number of Routes: </td>
+			<td><input name='GR_MAX_ROUTES' type='text' value="[% GROUP.MAX_ROUTES | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum Number of Peers: </td>
-			<td class='ext_pv'><input name='GR_MAX_PEERS' type='text' value="[% GROUP.MAX_PEERS | html %]"></td>
+			<td>Maximum Number of Peers: </td>
+			<td><input name='GR_MAX_PEERS' type='text' value="[% GROUP.MAX_PEERS | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum Number of Phones: </td>
-			<td class='ext_pv'><input name='GR_MAX_PHONES' type='text' value="[% GROUP.MAX_PHONES | html %]"></td>
+			<td>Maximum Number of Phones: </td>
+			<td><input name='GR_MAX_PHONES' type='text' value="[% GROUP.MAX_PHONES | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum Number of Macros: </td>
-			<td class='ext_pv'><input name='GR_MAX_MACROS' type='text' value="[% GROUP.MAX_MACROS | html %]"></td>
+			<td>Maximum Number of Macros: </td>
+			<td><input name='GR_MAX_MACROS' type='text' value="[% GROUP.MAX_MACROS | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum Number of CallBlast items in ext: </td>
-			<td class='ext_pv'><input name='GR_MAX_CALLBLAST_ITEMS' type='text' value="[% GROUP.MAX_CALLBLAST_ITEMS | html %]"></td>
+			<td>Maximum Number of CallBlast items in ext: </td>
+			<td><input name='GR_MAX_CALLBLAST_ITEMS' type='text' value="[% GROUP.MAX_CALLBLAST_ITEMS | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum Number of GotoIF items in ext: </td>
-			<td class='ext_pv'><input name='GR_MAX_GOTOIF_ITEMS' type='text' value="[% GROUP.MAX_GOTOIF_ITEMS | html %]"></td>
+			<td>Maximum Number of GotoIF items in ext: </td>
+			<td><input name='GR_MAX_GOTOIF_ITEMS' type='text' value="[% GROUP.MAX_GOTOIF_ITEMS | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum Phones for FollowMe & Queues: </td>
-			<td class='ext_pv'><input name='GR_MAX_EXT_PHONES' type='text' value="[% GROUP.MAX_EXT_PHONES | html %]"></td>
+			<td>Maximum Phones for FollowMe & Queues: </td>
+			<td><input name='GR_MAX_EXT_PHONES' type='text' value="[% GROUP.MAX_EXT_PHONES | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum Phones for CallBlast item: </td>
-			<td class='ext_pv'><input name='GR_MAX_CB_PHONES' type='text' value="[% GROUP.MAX_CB_PHONES | html %]"></td>
+			<td>Maximum Phones for CallBlast item: </td>
+			<td><input name='GR_MAX_CB_PHONES' type='text' value="[% GROUP.MAX_CB_PHONES | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum Number of Schedule items in ext: </td>
-			<td class='ext_pv'><input name='GR_MAX_SCHEDULE_ITEMS' type='text' value="[% GROUP.MAX_SCHEDULE_ITEMS | html %]"></td>
+			<td>Maximum Number of Schedule items in ext: </td>
+			<td><input name='GR_MAX_SCHEDULE_ITEMS' type='text' value="[% GROUP.MAX_SCHEDULE_ITEMS | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum Number of podcasts in ext: </td>
-			<td class='ext_pv'><input name='GR_MAX_EXT_PODCAST' type='text' value="[% GROUP.MAX_EXT_PODCAST | html %]"></td>
+			<td>Maximum Number of podcasts in ext: </td>
+			<td><input name='GR_MAX_EXT_PODCAST' type='text' value="[% GROUP.MAX_EXT_PODCAST | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum email-attachment size ( byte ): </td>
-			<td class='ext_pv'><input name='GR_MAX_ATTACH_SIZE' type='text' value="[% GROUP.MAX_ATTACH_SIZE | html %]"></td>
+			<td>Maximum email-attachment size ( byte ): </td>
+			<td><input name='GR_MAX_ATTACH_SIZE' type='text' value="[% GROUP.MAX_ATTACH_SIZE | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum TTS download size ( byte ): </td>
-			<td class='ext_pv'><input name='GR_MAX_DOWNLOAD_SIZE' type='text' value="[% GROUP.MAX_DOWNLOAD_SIZE | html %]"></td>
+			<td>Maximum TTS download size ( byte ): </td>
+			<td><input name='GR_MAX_DOWNLOAD_SIZE' type='text' value="[% GROUP.MAX_DOWNLOAD_SIZE | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum TTS string size ( byte ): </td>
-			<td class='ext_pv'><input name='GR_MAX_TTS_LENGTH' type='text' value="[% GROUP.MAX_TTS_LENGTH | html %]"></td>
+			<td>Maximum TTS string size ( byte ): </td>
+			<td><input name='GR_MAX_TTS_LENGTH' type='text' value="[% GROUP.MAX_TTS_LENGTH | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum voice mesage duration ( sec ): </td>
-			<td class='ext_pv'><input name='GR_MAX_MESSAGE_DURATION' type='text' value="[% GROUP.MAX_MESSAGE_DURATION | html %]"></td>
+			<td>Maximum voice mesage duration ( sec ): </td>
+			<td><input name='GR_MAX_MESSAGE_DURATION' type='text' value="[% GROUP.MAX_MESSAGE_DURATION | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum User Name duration ( sec ): </td>
-			<td class='ext_pv'><input name='GR_MAX_NAME_DURATION' type='text' value="[% GROUP.MAX_NAME_DURATION | html %]"></td>
+			<td>Maximum User Name duration ( sec ): </td>
+			<td><input name='GR_MAX_NAME_DURATION' type='text' value="[% GROUP.MAX_NAME_DURATION | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum User Greeting duration ( sec ): </td>
-			<td class='ext_pv'><input name='GR_MAX_GREET_DURATION' type='text' value="[% GROUP.MAX_GREET_DURATION | html %]"></td>
+			<td>Maximum User Greeting duration ( sec ): </td>
+			<td><input name='GR_MAX_GREET_DURATION' type='text' value="[% GROUP.MAX_GREET_DURATION | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum Announcement duration ( sec ): </td>
-			<td class='ext_pv'><input name='GR_MAX_ANNOUNCEMENT_DURATION' type='text' value="[% GROUP.MAX_ANNOUNCEMENT_DURATION | html %]"></td>
+			<td>Maximum Announcement duration ( sec ): </td>
+			<td><input name='GR_MAX_ANNOUNCEMENT_DURATION' type='text' value="[% GROUP.MAX_ANNOUNCEMENT_DURATION | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum RetryDial duration ( sec ): </td>
-			<td class='ext_pv'><input name='GR_MAX_RETRYDIAL_DURATION' type='text' value="[% GROUP.MAX_RETRYDIAL_DURATION | html %]"></td>
+			<td>Maximum RetryDial duration ( sec ): </td>
+			<td><input name='GR_MAX_RETRYDIAL_DURATION' type='text' value="[% GROUP.MAX_RETRYDIAL_DURATION | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Maximum MOH duration ( sec ): </td>
-			<td class='ext_pv'><input name='GR_MAX_MOH_DURATION' type='text' value="[% GROUP.MAX_MOH_DURATION | html %]"></td>
+			<td>Maximum MOH duration ( sec ): </td>
+			<td><input name='GR_MAX_MOH_DURATION' type='text' value="[% GROUP.MAX_MOH_DURATION | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Custom template prefix: </td>
-			<td class='ext_pv'><input name='GR_SUB_TEMPLATE_DIR' type='text' value="[% GROUP.SUB_TEMPLATE_DIR | html %]"></td>
+			<td>Custom template prefix: </td>
+			<td><input name='GR_SUB_TEMPLATE_DIR' type='text' value="[% GROUP.SUB_TEMPLATE_DIR | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Custom sound prefix: </td>
-			<td class='ext_pv'><input name='GR_SUB_SOUND_DIR' type='text' value="[% GROUP.SUB_SOUND_DIR | html %]"></td>
+			<td>Custom sound prefix: </td>
+			<td><input name='GR_SUB_SOUND_DIR' type='text' value="[% GROUP.SUB_SOUND_DIR | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Prefered codec ( for recordings ): </td>
-			<td class='ext_pv'><input name='GR_PREF_CODEC' type='text' value="[% GROUP.PREF_CODEC | html %]"></td>
+			<td>Prefered codec ( for recordings ): </td>
+			<td><input name='GR_PREF_CODEC' type='text' value="[% GROUP.PREF_CODEC | html %]"></td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Prefered language:</td>
-			<td class='ext_pv'>
+			<td>Prefered language:</td>
+			<td>
 				<select name='GR_PREF_LANG'>
 					[% FOREACH lang = LANG %]
 						[% IF GROUP.PREF_LANG eq lang.ID %]
@@ -358,8 +358,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>SERVER ID:</td>
-			<td class='ext_pv'>
+			<td>SERVER ID:</td>
+			<td>
 				<select name='GR_SERVER_ID'>
 					[% FOREACH node = NODES %]
 						[% IF GROUP.SERVER_ID eq node.NODE_ID %]
@@ -372,8 +372,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td class='ext_pn'>Tariff:</td>
-			<td class='ext_pv'>
+			<td>Tariff:</td>
+			<td>
 				<select name='GR_TARIFF_ID'>
 					[% FOREACH t = TARIFFS %]
 						[% IF GROUP.TARIFF_ID eq t.ID %]

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.20 2011-02-28 11:26:37 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.21 2011-03-20 21:30:37 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -77,12 +77,12 @@
 				[% END %]
 				</select>
 			</td>
-			<td>
+			<td align='left'>
 				<input type='hidden' value='[% r.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='route_update' name='action'>
 				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='удалить маршрут' href='?action=route_del&data_id=[% r.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]&id=[% ROOT_EXT_ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% r.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>
+				<a title='удалить маршрут' href='?action=route_del&data_id=[% r.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]&id=[% ROOT_EXT_ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% r.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>&nbsp;
 				<span class='in_t' id='in_t_id-[% r.DATA_ID %]'>
 				<script language='JavaScript'>
 					writeUpdateLinks( 'сохранить изменения' );

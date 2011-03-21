@@ -461,6 +461,18 @@ create table VPBX_SIPPEERS (
 	regserver varchar(100) default NULL,
 	useragent varchar(20) default NULL,
 
+	videosupport		enum('yes','no','always') DEFAULT 'yes',
+	nat					varchar(5) DEFAULT NULL,
+	rtptimeout			char(5) DEFAULT NULL,
+	disallow			varchar(100) DEFAULT NULL,
+ 	allow				varchar(100) DEFAULT NULL, 
+	progressinband		enum('never','yes','no') DEFAULT NULL,
+	promiscredir		enum('yes','no') DEFAULT NULL,
+	`session-timers`	enum('originate','accept','refuse') DEFAULT 'accept',
+	`session-expires`	int(5) unsigned DEFAULT '1800',
+	`session-minse`		int(5) unsigned DEFAULT '90',
+	`session-refresher`	enum('uac','uas') DEFAULT 'uas', 
+
 	callerid		VARCHAR(80) 	NOT NULL DEFAULT '',
     SUBSCR_ID		INT(16)			not null,
     DESCRIPTION     VARCHAR(100)	not null,

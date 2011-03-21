@@ -87,40 +87,24 @@
 				<td align='center'>--------</td>
 			[% END %]
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
-			<td>
-				<table>
-					<tr>
-					<td>
+			<td nowrap='nowrap'>
 				[% IF msg.IS_VOICE %]
-						<a title='скачать сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+					<a title='скачать сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% ELSE %]
-						<a title='скачать файл' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+					<a title='скачать файл' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% END %]
-					</td>
-
-					<td>
-						<a title='удалить сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
-					</td>
-
+					<a title='удалить сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+				
 				[% IF msg.IS_VOICE %]
-					<td>
-						<a title='прослушать' 
-							onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
-							href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-					</td>
+					<a title='прослушать' 
+						onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+						href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
 				[% END %]
-
 				[% IF msg.FILE_TYPE eq '30' %]
-					<td>
-						<a title='Пометить как старое' href='?action=msg_status&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=40'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
-					</td>
+					<a title='Пометить как старое' href='?action=msg_status&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=40'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
 				[% ELSIF msg.FILE_TYPE eq '40' %]
-					<td>
-						<a title='Пометить как новое' href='?action=msg_status&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=30'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
-					</td>
+					<a title='Пометить как новое' href='?action=msg_status&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=30'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
 				[% END %] 
-					</tr>
-				</table>
 			</td>
 			</tr>
 			[% END %]

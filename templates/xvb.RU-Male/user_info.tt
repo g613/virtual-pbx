@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.52 2011-03-18 15:12:05 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.54 2011-03-20 21:30:37 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -85,14 +85,14 @@
 				</tr>
 				<form method="post" action="[% CGI_URL %]" name='user_prefs' onSubmit='return xmlhttpPost(this,0)'>
 				<tr>
-					<td class='ext_pn'>Фамилия:</td>
-					<td class='ext_pv'>
+					<td>Фамилия:</td>
+					<td>
 						<input size='30' type='text' name='LAST_NAME' value='[% USER_CREDS.LAST_NAME | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Имя:</td>
-					<td class='ext_pv'>
+					<td>Имя:</td>
+					<td>
 						<input size='30' type='text' name='FIRST_NAME' value='[% USER_CREDS.FIRST_NAME | html %]'>
 						<input type='hidden' name='action' value='user_update'>
 						<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
@@ -100,59 +100,59 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Email:</td>
-					<td class='ext_pv'>
+					<td>Email:</td>
+					<td>
 						<input size='30' type='text' name='EMAIL' value='[% USER_CREDS.EMAIL | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>
+					<td>
 						<select name='skins' onchange='javascript:document.user_prefs.CSS_HREF.value=this.value'>
 							<option value='[% USER_CREDS.CSS_HREF | html %]' selected>Ссылка на таблицу стилей:</option>
 							<option value='/xvb/xvb-green.css'>Стиль - зеленая палитра</option>
 							<option value='/xvb/xvb.css'>Стиль - по умолчанию</option>
 						</select>
 					</td>
-					<td class='ext_pv'>
+					<td>
 						<input size='30' type='text' name='CSS_HREF' value='[% USER_CREDS.CSS_HREF | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Ссылка на логотип:</td>
-					<td class='ext_pv'>
+					<td>Ссылка на логотип:</td>
+					<td>
 						<input size='30' type='text' name='LOGO_HREF' value='[% USER_CREDS.LOGO_HREF | html %]'>
 					</td>
 				</tr>
 				[% IF USER_CREDS.ALLOW_GA %]
 				<tr>
-					<td class='ext_pn'>Google Analytics ID:</td>
-					<td class='ext_pv'>
+					<td>Google Analytics ID:</td>
+					<td>
 						<input size='30' type='text' name='GA_ACCOUNT' value='[% USER_CREDS.GA_ACCOUNT | html %]'>
 					</td>
 				</tr>
 				[% END %]
 				<tr>
-					<td class='ext_pn'>Сообщений на странице:</td>
-					<td class='ext_pv'>
+					<td>Сообщений на странице:</td>
+					<td>
 						<input size='10' type='text' name='MSG_IN_PAGE' value='[% USER_CREDS.MSG_IN_PAGE | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Время хранения записей (дней):</td>
-					<td class='ext_pv'>
+					<td>Время хранения записей (дней):</td>
+					<td>
 						<input size='10' type='text' name='MSG_STORE_PERIOD' value='[% USER_CREDS.MSG_STORE_PERIOD | html %]'>
 						( 0 - не удалять )
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>IVR: тайм-аут между нажатиями (сек):</td>
-					<td class='ext_pv'>
+					<td>IVR: тайм-аут между нажатиями (сек):</td>
+					<td>
 						<input size='10' type='text' name='I_DIGIT_TIMEOUT' value='[% USER_CREDS.I_DIGIT_TIMEOUT | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Язык по умолчанию:</td>
-					<td class='ext_pv'>
+					<td>Язык по умолчанию:</td>
+					<td>
 						<select name='LANG'>
 							[% FOREACH lang = LANG %]
 								[% IF USER_CREDS.LANG eq lang.ID %]
@@ -167,8 +167,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Формат звуковых файлов:</td>
-					<td class='ext_pv'>
+					<td>Формат звуковых файлов:</td>
+					<td>
 						<select name='SOUND_FORMAT'>
 							[% FOREACH fm = SOUND_F %]
 								[% IF USER_CREDS.SOUND_FORMAT eq fm %]
@@ -181,8 +181,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Часовой пояс:</td>
-					<td class='ext_pv'>
+					<td>Часовой пояс:</td>
+					<td>
 						<select name='TIME_ZONE'>
 							[% FOREACH t = TZ %]
 								[% IF USER_CREDS.TIME_ZONE eq t.ID %]
@@ -197,8 +197,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Формат даты и времени:</td>
-					<td class='ext_pv'>
+					<td>Формат даты и времени:</td>
+					<td>
 						<select name='DATE_FORMAT'>
 							[% FOREACH fm = DATE_FORMAT %]
 								[% IF USER_CREDS.DATE_FORMAT eq fm.ID %]
@@ -211,8 +211,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Ежедневная статистика:</td>
-					<td class='ext_pv'>
+					<td>Ежедневная статистика:</td>
+					<td>
 						<select name='STATEMENTS'>
 							[% IF USER_CREDS.STATEMENTS eq '0' %]
 								<option value="0" selected>не требуется</option>
@@ -231,8 +231,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Общие фильтры:</td>
-					<td class='ext_pv'>
+					<td>Общие фильтры:</td>
+					<td>
 						<a href='?action=cid_list&id=[% ROOT_EXT_ID %]&cid_list_type=2&cid_type=2&uniq=[% USER_CREDS.UNIQ %]'>Белый список</a> / 
 						<a href='?action=cid_list&id=[% ROOT_EXT_ID %]&cid_list_type=1&cid_type=2&uniq=[% USER_CREDS.UNIQ %]'>Черный список</a>
 					</td>
@@ -260,13 +260,13 @@
 						<table width='90%' class='addon_data' id='d-tbl'>
 							[% IF CUSTOM_MOH ne '' %]
 							<tr class='addon_data' id='d-tr'>
-								<td class='ext_pn'>Текущая музыка вместо звонка</td>
-								<td class='ext_pv' align='center'>
+								<td>Текущая музыка вместо звонка</td>
+								<td align='center' nowrap='nowrap'>
 									<a title='прослушать' 
 										onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/0/[% CUSTOM_MOH %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
-										href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
-										<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/0/[% CUSTOM_MOH %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-									&nbsp;&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% CUSTOM_MOH %]&type=1&id=[% ROOT_EXT_ID %]' onclick="return xmlhttpDel(this,'ru','d-tr')" title='удалить файл'><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+										href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+									&nbsp;<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/0/[% CUSTOM_MOH %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+									&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% CUSTOM_MOH %]&type=1&id=[% ROOT_EXT_ID %]' onclick="return xmlhttpDel(this,'ru','d-tr')" title='удалить файл'><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
 								</td>
 							</tr>
 							[% END %]
@@ -298,7 +298,7 @@
 						<table width='100%' class='addon_data'>
 							<tr><td colspan='8'><h4>Биллинг:</h4></td></tr>
 							<tr>
-								<td class='ext_pn'>Тариф:</td>
+								<td>Тариф:</td>
 								<td colspan='7'><b>[% TARIFF.NAME | html %]</b> ( валюта  [% TARIFF.DESCRIPTION %] )</td>
 							</tr>
 							<tr class='list_data' align='center'>
@@ -339,7 +339,7 @@
 								[% END %]
 							</tr>
 							<tr>
-								<td colspan='8' class='ext_pn'>
+								<td colspan='8'>
 									Баланс:
 								</td>
 							</tr>
@@ -362,8 +362,8 @@
 					<td colspan='3'><h4>Ограничения на:</h4></td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>количество внутренних номеров (<a href='#' onclick='ShowEl("vb_limits"); return false'>подробно</a>) : </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_EXTENSIONS %]</td>
+					<td>количество внутренних номеров (<a href='#' onclick='ShowEl("vb_limits"); return false'>подробно</a>) : </td>
+					<td align='right'>[% USER_CREDS.MAX_EXTENSIONS %]</td>
 					<td rowspan='22' id='vb_limits' class='addon_info'>
 						<table width='100%'>
 							<tr class='list_data' align='center'>
@@ -385,108 +385,108 @@
 					</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>количество сообщений для одного номера: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_EXT_MSGS %]</td>
+					<td>количество сообщений для одного номера: </td>
+					<td align='right'>[% USER_CREDS.MAX_EXT_MSGS %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>количество сообщений: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_ALL_MSGS %]</td>
+					<td>количество сообщений: </td>
+					<td align='right'>[% USER_CREDS.MAX_ALL_MSGS %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>количество CID фильтров используемых за раз: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_EXT_CIDS %]</td>
+					<td>количество CID фильтров используемых за раз: </td>
+					<td align='right'>[% USER_CREDS.MAX_EXT_CIDS %]</td>
 				</tr>
 				[% IF USER_CREDS.ALLOW_PHONES %]
 				<tr>
-					<td class='ext_pn'>количество телефонов: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_PHONES %]</td>
+					<td>количество телефонов: </td>
+					<td align='right'>[% USER_CREDS.MAX_PHONES %]</td>
 				</tr>
 				[% END %]
 				[% IF USER_CREDS.CUSTOM_ROUTE %]
 				<tr>
-					<td class='ext_pn'>количество SIP шлюзов: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_PEERS %]</td>
+					<td>количество SIP шлюзов: </td>
+					<td align='right'>[% USER_CREDS.MAX_PEERS %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>количество маршрутов: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_ROUTES %]</td>
+					<td>количество маршрутов: </td>
+					<td align='right'>[% USER_CREDS.MAX_ROUTES %]</td>
 				</tr>
 				[% END %]
 				[% IF USER_CREDS.ALLOW_MACROS %]
 				<tr>
-					<td class='ext_pn'>количество макросов: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_MACROS %]</td>
+					<td>количество макросов: </td>
+					<td align='right'>[% USER_CREDS.MAX_MACROS %]</td>
 				</tr>
 				[% END %]
 				[% IF USER_CREDS.VBL_4 ne '0' %]
 				<tr>
-					<td class='ext_pn'>количество пунктов 'Списка сотрудников': </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_DIRECTORY_ITEMS %]</td>
+					<td>количество пунктов 'Списка сотрудников': </td>
+					<td align='right'>[% USER_CREDS.MAX_DIRECTORY_ITEMS %]</td>
 				</tr>
 				[% END %]
 				[% IF USER_CREDS.VBL_5 ne '0' %]
 				<tr>
-					<td class='ext_pn'>количество пунктов 'Расписания': </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_SCHEDULE_ITEMS %]</td>
+					<td>количество пунктов 'Расписания': </td>
+					<td align='right'>[% USER_CREDS.MAX_SCHEDULE_ITEMS %]</td>
 				</tr>
 				[% END %]
 				<tr>
-					<td class='ext_pn'>количество `исходящих телефонов`: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_EXT_PHONES | html %]</td>
+					<td>количество `исходящих телефонов`: </td>
+					<td align='right'>[% USER_CREDS.MAX_EXT_PHONES | html %]</td>
 				</tr>
 				[% IF USER_CREDS.VBL_18 ne '0' %]
 				<tr>
-					<td class='ext_pn'>количество пунктов 'Автоинформатор': </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_CALLBLAST_ITEMS %]</td>
+					<td>количество пунктов 'Автоинформатор': </td>
+					<td align='right'>[% USER_CREDS.MAX_CALLBLAST_ITEMS %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>количество телефонов в строке 'Авто и-р': </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_CB_PHONES | html %]</td>
+					<td>количество телефонов в строке 'Авто и-р': </td>
+					<td align='right'>[% USER_CREDS.MAX_CB_PHONES | html %]</td>
 				</tr>
 				[% END %]
 				[% IF USER_CREDS.VBL_21 ne '0' %]
 				<tr>
-					<td class='ext_pn'>количество пунктов `условного перехода`: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_GOTOIF_ITEMS %]</td>
+					<td>количество пунктов `условного перехода`: </td>
+					<td align='right'>[% USER_CREDS.MAX_GOTOIF_ITEMS %]</td>
 				</tr>
 				[% END %]
 				[% IF USER_CREDS.TTS_GREETING %]
 				<tr>
-					<td class='ext_pn'>длину строки TTS: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_TTS_LENGTH | fsize %]</td>
+					<td>длину строки TTS: </td>
+					<td align='right'>[% USER_CREDS.MAX_TTS_LENGTH | fsize %]</td>
 				</tr>
 				[% END %]
 				<tr>
-					<td class='ext_pn'>размер почтового сообщения: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_ATTACH_SIZE | fsize %]</td>
+					<td>размер почтового сообщения: </td>
+					<td align='right'>[% USER_CREDS.MAX_ATTACH_SIZE | fsize %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>размер файла для TTS: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_DOWNLOAD_SIZE | fsize %]</td>
+					<td>размер файла для TTS: </td>
+					<td align='right'>[% USER_CREDS.MAX_DOWNLOAD_SIZE | fsize %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>длину голосового сообщения: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_MESSAGE_DURATION | duration_str %]</td>
+					<td>длину голосового сообщения: </td>
+					<td align='right'>[% USER_CREDS.MAX_MESSAGE_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>длину имени польователя: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_NAME_DURATION | duration_str %]</td>
+					<td>длину имени польователя: </td>
+					<td align='right'>[% USER_CREDS.MAX_NAME_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>длину привествия пользователя: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_GREET_DURATION | duration_str %]</td>
+					<td>длину привествия пользователя: </td>
+					<td align='right'>[% USER_CREDS.MAX_GREET_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>длину анонса исходящего звонка: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_ANNOUNCEMENT_DURATION | duration_str %]</td>
+					<td>длину анонса исходящего звонка: </td>
+					<td align='right'>[% USER_CREDS.MAX_ANNOUNCEMENT_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>длину анонса удержания вызова: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_RETRYDIAL_DURATION | duration_str %]</td>
+					<td>длину анонса удержания вызова: </td>
+					<td align='right'>[% USER_CREDS.MAX_RETRYDIAL_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>длину музыки вместо звонка: </td>
-					<td class='ext_pv' align='right'>[% USER_CREDS.MAX_MOH_DURATION | duration_str %]</td>
+					<td>длину музыки вместо звонка: </td>
+					<td align='right'>[% USER_CREDS.MAX_MOH_DURATION | duration_str %]</td>
 				</tr>
 			</table>
 			</td>
