@@ -10,7 +10,7 @@ robotext-intro : "Now I say something.";
 #
 alarmclock-intro : "Please record message  for your alarm clock after the tone. Press # when finish."
 #
-dbvar-intro : "Please input digits after the tone. Press # when finish."
+dbvar-intro : "Please input digits. Press # when finish."
 dbvar-saved : "Your DTMF input has been saved."
 #
 call-limits-in : "Exceeded the number of simultaneous calls, please call later."
@@ -18,9 +18,9 @@ call-limits-in : "Exceeded the number of simultaneous calls, please call later."
 gotoif-intro : "."
 #
 webvar-intro : "Please wait"
-webvar-input-params : "Please input data after the tone. Press # when finish."
+webvar-input-params : "Please input data. Press # when finish."
 #
-uservar-intro : "Please input digits after the tone. Press # when finish."
+uservar-intro : "Please input digits. Press # when finish."
 #
 callblast-intro : "This is Answering Machine. Sorry for the unexpected call."
 #
@@ -37,10 +37,10 @@ bbs-already-exists : "Sorry but you recently recorded message, please try again 
 #
 tts-intro : "Please wait"
 tts-done : "Request processed"
-tts-input-params : "Please input data after the tone. Press # when finish."
+tts-input-params : "Please input data. Press # when finish."
 datetime-intro : "Current time"
 callback-intro : "Please wait call"
-callback-input-time : "Please enter the delay time for callback"
+callback-input-time : "Please enter the delay time for callback followed by the #."
 callback-input-ext : "Please enter extension followed by the #."
 callback-you-input : "You have entered"
 callback-confirm : "Press # to finish, or 0 to repeat the input."
@@ -65,7 +65,7 @@ directory-intro2 : "Welcome to the directory. Please enter the first three lette
 directory-multi : "If this is the person you are looking for press 1 now, otherwise please press * to continue or # to go to the main menu."
 directory-nomatch : "No directory entries match your search."
 directory-nomore : "There are no more compatible entries in the directory. "
-dtmfrx-intro : "Please input digits after the tone. Press # when finish."
+dtmfrx-intro : "Please input digits. Press # when finish."
 dtmfrx-saved : "Your DTMF input has been saved."
 schedule-intro : "."
 gc-schedule-intro : "."
