@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.137 2011-03-20 22:21:36 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.140 2011-03-29 06:39:57 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -855,13 +855,11 @@
 					<td>Метод запроса: </td>
 					<td>
 						<select name="TTS_METHOD">
-						[% IF VBOX_PREF.TTS_METHOD eq 'POST' %]
-							<option value="POST" selected>POST</option>
+							<option selected value="[% VBOX_PREF.TTS_METHOD %]">[% VBOX_PREF.TTS_METHOD %]</option>
 							<option value="GET">GET</option>
-						[% ELSE %]
-							<option value="GET" selected>GET</option>
 							<option value="POST">POST</option>
-						[% END %]
+							<option value="PUT">PUT</option>
+							<option value="DELETE">DELETE</option>
 						</select>
 					</td>
 				</tr>
@@ -872,7 +870,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Параметры POST: </td>
+					<td>Параметры POST/PUT: </td>
 					<td>
 						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='35' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
 					</td>
@@ -1851,6 +1849,80 @@
 				</tr>
 				[% END %]
 				
+				[% IF VBOX_PREF.TYPE eq '28' %]
+				<tr>
+					<td><a href='#' class='info'>Пользователь google: <span>
+							Google логин, например g613@gmail.com
+						</span></a></td>
+					<td>
+						<input size='20' type='text' name='GOOGLE_USER' value='[% VBOX_PREF.GOOGLE_USER | html %]'>
+					</td>
+				</tr>
+				<tr>
+					<td>Пароль google: </td>
+					<td>
+						<input size='20' type='password' name='GOOGLE_PSWD' value='[% VBOX_PREF.GOOGLE_PSWD | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Календарь: <span>
+							Оставьте пустым, чтобы использовать ВСЕ доступные календари
+						</span></a></td>
+					<td>
+						<input size='20' type='text' name='GOOGLE_CALENDAR' value='[% VBOX_PREF.GOOGLE_CALENDAR | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Какой день: <span>
+							Сколько дней пропустить. 0 - начать с сегодня, 1 - начать с завтра, и тд...
+						</span></a></td>
+					<td>
+						<input size='3' type='text' name='GOOGLE_START_DAYS_OFFSET' value='[% VBOX_PREF.GOOGLE_START_DAYS_OFFSET | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>За сколько дней: <span>
+							Количество дней за на которые нужно получить список мероприятий.
+						</span></a></td>
+					<td>
+						<input size='3' type='text' name='GOOGLE_STOP_DAYS_OFFSET' value='[% VBOX_PREF.GOOGLE_STOP_DAYS_OFFSET | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Анонс начала мероприятия: <span>
+							Форма объявления начала мероприятия.
+						</span></a></td>
+					<td>
+						<select name="TIME_FORMAT">
+							<option value="0" [% IF VBOX_PREF.TIME_FORMAT == '0' %] selected [% END %]>дата и время</option>
+							<option value="1" [% IF VBOX_PREF.TIME_FORMAT == '1' %] selected [% END %]>время</option>
+							<option value="2" [% IF VBOX_PREF.TIME_FORMAT == '2' %] selected [% END %]>дaта</option>
+						</select>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td colspan='2'>Фильтры мероприятий:</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Автор: </td>
+					<td>
+						<input size='20' type='text' name='GOOGLE_E_AUTHOR' value='[% VBOX_PREF.GOOGLE_E_AUTHOR | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Категория: </td>
+					<td>
+						<input size='20' type='text' name='GOOGLE_E_CATEGORY' value='[% VBOX_PREF.GOOGLE_E_CATEGORY | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Ключевое слово: </td>
+					<td>
+						<input size='20' type='text' name='GOOGLE_E_Q' value='[% VBOX_PREF.GOOGLE_E_Q | html %]'>
+					</td>
+				</tr>
+				[% END %]
+
 				<tr><td colspan='2'>&nbsp;</td></tr>
 				<tr>
 					<td align='center'>

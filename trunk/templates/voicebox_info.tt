@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.192 2011-03-20 22:21:22 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.196 2011-03-29 06:41:24 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -708,24 +708,22 @@
 					<td>Request Method: </td>
 					<td>
 						<select name="TTS_METHOD">
-						[% IF VBOX_PREF.TTS_METHOD eq 'POST' %]
-							<option selected value="POST">POST</option>
+							<option selected value="[% VBOX_PREF.TTS_METHOD %]">[% VBOX_PREF.TTS_METHOD %]</option>
 							<option value="GET">GET</option>
-						[% ELSE %]
-							<option selected value="GET">GET</option>
 							<option value="POST">POST</option>
-						[% END %]
+							<option value="PUT">PUT</option>
+							<option value="DELETE">DELETE</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td>Text URL: </td>
+					<td>URL: </td>
 					<td>
 						<input size='30' type='text' name='TTS_URL' value='[% VBOX_PREF.TTS_URL | html %]'>
 					</td>
 				</tr>
 				<tr>
-					<td>Post params: </td>
+					<td>Post/Put params: </td>
 					<td>
 						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='35' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
 					</td>
@@ -1586,6 +1584,72 @@
 				</tr>
 				[% END %]
 				
+				[% IF VBOX_PREF.TYPE eq '28' %]
+				<tr>
+					<td>Google user: </td>
+					<td>
+						<input size='20' type='text' name='GOOGLE_USER' value='[% VBOX_PREF.GOOGLE_USER | html %]'>
+					</td>
+				</tr>
+				<tr>
+					<td>Google password: </td>
+					<td>
+						<input size='20' type='password' name='GOOGLE_PSWD' value='[% VBOX_PREF.GOOGLE_PSWD | html %]'>
+					</td>
+				</tr>
+				<tr>
+					<td>Calendar name: </td>
+					<td>
+						<input size='20' type='text' name='GOOGLE_CALENDAR' value='[% VBOX_PREF.GOOGLE_CALENDAR | html %]'>
+						( null == all calendars )
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>What a day: </td>
+					<td>
+						<input size='3' type='text' name='GOOGLE_START_DAYS_OFFSET' value='[% VBOX_PREF.GOOGLE_START_DAYS_OFFSET | html %]'>
+						( 0 - today, 1 - tomorrow, ..., etc )
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>How many days: </td>
+					<td>
+						<input size='3' type='text' name='GOOGLE_STOP_DAYS_OFFSET' value='[% VBOX_PREF.GOOGLE_STOP_DAYS_OFFSET | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Announcement of the event started:</td>
+					<td>
+						<select name="TIME_FORMAT">
+							<option value="0" [% IF VBOX_PREF.TIME_FORMAT == '0' %] selected [% END %]>date and time</option>
+							<option value="1" [% IF VBOX_PREF.TIME_FORMAT == '1' %] selected [% END %]>time</option>
+							<option value="2" [% IF VBOX_PREF.TIME_FORMAT == '2' %] selected [% END %]>date</option>
+						</select>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Filters:</td><td>&nbsp;</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Author: </td>
+					<td>
+						<input size='20' type='text' name='GOOGLE_E_AUTHOR' value='[% VBOX_PREF.GOOGLE_E_AUTHOR | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Category: </td>
+					<td>
+						<input size='20' type='text' name='GOOGLE_E_CATEGORY' value='[% VBOX_PREF.GOOGLE_E_CATEGORY | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Substr: </td>
+					<td>
+						<input size='20' type='text' name='GOOGLE_E_Q' value='[% VBOX_PREF.GOOGLE_E_Q | html %]'>
+					</td>
+				</tr>
+				[% END %]
+
 				<tr><td colspan='2'>&nbsp;</td></tr>
 				<tr>
 					<td align='center'>
