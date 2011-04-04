@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.140 2011-03-29 06:39:57 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.143 2011-04-04 14:21:38 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1872,8 +1872,16 @@
 						<input size='20' type='text' name='GOOGLE_CALENDAR' value='[% VBOX_PREF.GOOGLE_CALENDAR | html %]'>
 					</td>
 				</tr>
+				<tr>
+					<td><a href='#' class='info'>Разрешить подтверждать мероприятия: <span>
+							Резрешить пользователю во время прослушивания воспользоваться кнопками: 1 - мероприятие, 3 - чтобы отказаться от мероприятия.
+						</span></a></td>
+					<td>
+						<input name="ACCESS_MODE" type="checkbox" [% IF VBOX_PREF.ACCESS_MODE %] checked [% END %]>
+					</td>
+				</tr>
 				<tr class='addon_info'>
-					<td><a href='#' class='info'>Какой день: <span>
+					<td><a href='#' class='info'>Сколько дней пропустить: <span>
 							Сколько дней пропустить. 0 - начать с сегодня, 1 - начать с завтра, и тд...
 						</span></a></td>
 					<td>
@@ -1896,8 +1904,17 @@
 						<select name="TIME_FORMAT">
 							<option value="0" [% IF VBOX_PREF.TIME_FORMAT == '0' %] selected [% END %]>дата и время</option>
 							<option value="1" [% IF VBOX_PREF.TIME_FORMAT == '1' %] selected [% END %]>время</option>
-							<option value="2" [% IF VBOX_PREF.TIME_FORMAT == '2' %] selected [% END %]>дaта</option>
+							<option value="2" [% IF VBOX_PREF.TIME_FORMAT == '2' %] selected [% END %]>дaта ДД/ММ/ГГ</option>
+							<option value="3" [% IF VBOX_PREF.TIME_FORMAT == '3' %] selected [% END %]>дaта ДД/ММ</option>
 						</select>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Количество мероприятий: <span>
+							Количество количество мероприятий запрашиваемых с сервера.
+						</span></a></td>
+					<td>
+						<input size='3' type='text' name='GOOGLE_MAX_EVENTS' value='[% VBOX_PREF.GOOGLE_MAX_EVENTS | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
