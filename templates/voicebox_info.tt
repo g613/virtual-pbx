@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.196 2011-03-29 06:41:24 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.199 2011-04-04 14:21:38 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1604,8 +1604,14 @@
 						( null == all calendars )
 					</td>
 				</tr>
+				<tr>
+					<td>Allow to confirm events: </td>
+					<td>
+						<input name="ACCESS_MODE" type="checkbox" [% IF VBOX_PREF.ACCESS_MODE %] checked [% END %]>
+					</td>
+				</tr>
 				<tr class='addon_info'>
-					<td>What a day: </td>
+					<td>Offset Days:: </td>
 					<td>
 						<input size='3' type='text' name='GOOGLE_START_DAYS_OFFSET' value='[% VBOX_PREF.GOOGLE_START_DAYS_OFFSET | html %]'>
 						( 0 - today, 1 - tomorrow, ..., etc )
@@ -1618,12 +1624,19 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
+					<td>Maximum events: </td>
+					<td>
+						<input size='3' type='text' name='GOOGLE_MAX_EVENTS' value='[% VBOX_PREF.GOOGLE_MAX_EVENTS | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
 					<td>Announcement of the event started:</td>
 					<td>
 						<select name="TIME_FORMAT">
 							<option value="0" [% IF VBOX_PREF.TIME_FORMAT == '0' %] selected [% END %]>date and time</option>
 							<option value="1" [% IF VBOX_PREF.TIME_FORMAT == '1' %] selected [% END %]>time</option>
-							<option value="2" [% IF VBOX_PREF.TIME_FORMAT == '2' %] selected [% END %]>date</option>
+							<option value="2" [% IF VBOX_PREF.TIME_FORMAT == '2' %] selected [% END %]>date dd/mm/yy</option>
+							<option value="3" [% IF VBOX_PREF.TIME_FORMAT == '3' %] selected [% END %]>date dd/mm</option>
 						</select>
 					</td>
 				</tr>

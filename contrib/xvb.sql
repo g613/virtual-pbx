@@ -279,6 +279,7 @@ create	table VPBX_GROUPS
 	MAX_CALLS_IN				INT(10) default 0,
 
 	MAX_EXT_PODCAST				INT(4) default 10,
+	MAX_GC_EVENTS				INT(5) default 30,
 
 	MAX_MESSAGE_DURATION		INT(10) default 14400,
 	MAX_GREET_DURATION			INT(10) default 14400,
@@ -734,10 +735,13 @@ create	table VPBX_VBOXES_GC_EXPLORER
 	GOOGLE_E_CATEGORY		VARCHAR(255),
 	GOOGLE_E_AUTHOR			VARCHAR(255),
 	
-	GOOGLE_START_DAYS_OFFSET INT(4) not null default 0,
-	GOOGLE_STOP_DAYS_OFFSET INT(4) not null default 1,
+	GOOGLE_START_DAYS_OFFSET	INT(4) not null default 0,
+	GOOGLE_STOP_DAYS_OFFSET		INT(4) not null default 1,
 	
-	TIME_FORMAT		INT(1)			default 0,
+	TIME_FORMAT					INT(1) not null default 0,
+	ACCESS_MODE					INT(1) not null default 0,
+	GOOGLE_MAX_EVENTS			INT(5) not null default 30,
+	
 
 	unique(ID),
 

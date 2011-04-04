@@ -61,7 +61,7 @@
 		<tr>
 			<td>Group Name: </td>
 			<td><input name='GR_GROUP_NAME' type='text' value="[% GROUP.GROUP_NAME | html %]"></td>
-			<td rowspan='33' valign='top'>
+			<td rowspan='34' valign='top'>
 				<table>
 					<tr>
 						<td colspan='2'><h4>Limits on the number of extensions:</h4></td>
@@ -294,6 +294,10 @@
 		<tr>
 			<td>Maximum Number of podcasts in ext: </td>
 			<td><input name='GR_MAX_EXT_PODCAST' type='text' value="[% GROUP.MAX_EXT_PODCAST | html %]"></td>
+		</tr>
+		<tr>
+			<td>Maximum Number of GoogleCallendar events: </td>
+			<td><input name='GR_MAX_GC_EVENTS' type='text' value="[% GROUP.MAX_GC_EVENTS | html %]"></td>
 		</tr>
 		<tr>
 			<td>Maximum email-attachment size ( byte ): </td>
