@@ -1,6 +1,6 @@
 ==All VMWare images :==
 
-  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1914569251/VirtualPBX-1_4801.tar.bz2 build 4801 (07.04.2011) ]  / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/9537808001/VirtualPBX-1_4801.tar.bz2.html yandex-disk-mirror] ( added GooglECalendaRExploreR )
+  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1914569251/VirtualPBX-1_4801.tar.bz2 build 4801 (07.04.2011) ]  / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/9537808001/VirtualPBX-1_4801.tar.bz2.html yandex-disk-mirror] ( added GoogleCalendarExplorer )
 
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1914174440/VirtualPBX-1_4719.tar.bz2 build 4719 (23.03.2011) ]  / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/8234090001/VirtualPBX-1_4719.tar.bz2.html yandex-disk-mirror] ( DTMF history, improved AI, new sound files )
 
