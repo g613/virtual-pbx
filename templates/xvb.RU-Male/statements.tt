@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.13 2010-10-22 10:33:58 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.14 2011-04-04 20:04:18 gosha Exp $ -->
 <head>
 	<style>
 	body { 
@@ -55,7 +55,7 @@
 		<th>Внутренний номер</th>
 		<th>Активность</th>
 		<th>Количество</th>
-		<th>Продолжительность</th>
+		<th>Длительность</th>
 		<th>Цена</th>
 	</tr>
 	[% FOREACH msg = SUMMARY %]
@@ -86,7 +86,7 @@
 		<tr class='list_data'>
 			<th>Дата и время звонка</th>
 			<th colspan='2'>Номер звонящего</th>
-			<th>Продолжительность</th>
+			<th>Длительность</th>
 			<th>Цена</th>
 		</tr>
 		[% FOREACH msg = CALLS %]

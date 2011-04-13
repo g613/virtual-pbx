@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.143 2011-04-04 14:21:38 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.144 2011-04-06 06:46:24 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1874,7 +1874,7 @@
 				</tr>
 				<tr>
 					<td><a href='#' class='info'>Разрешить подтверждать мероприятия: <span>
-							Резрешить пользователю во время прослушивания воспользоваться кнопками: 1 - мероприятие, 3 - чтобы отказаться от мероприятия.
+							Резрешить пользователю во время прослушивания воспользоваться кнопками: 1 - подтвердить мероприятие, 3 - чтобы отказаться от мероприятия.
 						</span></a></td>
 					<td>
 						<input name="ACCESS_MODE" type="checkbox" [% IF VBOX_PREF.ACCESS_MODE %] checked [% END %]>
