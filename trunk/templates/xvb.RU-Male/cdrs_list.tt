@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.25 2011-02-28 22:02:15 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.26 2011-04-04 20:04:18 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -53,7 +53,7 @@
 		<tr class='list_data'>
 			<th>Начало звонка</th>
 			<th>Номер звонящего</th>
-			<th>Длина</th>
+			<th>Длительность</th>
 			<th>Стоимость</th>
 			<th>Номер назначения</th>
 			<th>Тип</th>

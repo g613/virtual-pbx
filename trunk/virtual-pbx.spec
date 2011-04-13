@@ -14,6 +14,7 @@ BuildArch: noarch
 Requires: mysql
 Requires: mysql-server
 Requires: memcached
+Requires: libmad
 Requires: perl = 5.8.8
 Requires: perl(DBI)
 Requires: perl(DBD::mysql)
@@ -23,6 +24,8 @@ Requires: perl(MIME::Lite)
 Requires: perl(MIME::Types)
 Requires: perl(Email::Date::Format)
 Requires: perl(Cache::Memcached)
+Requires: perl(Net::SSLeay)
+Requires: perl(XML::SAX)
 
 %description
 Dynamic IVR / SOHO VirtualPBX - CORE files
@@ -43,6 +46,7 @@ Requires: ffmpeg
 Requires: lame
 Requires: lynx
 Requires: mpg123
+Requires: mysql-connector-odbc
 Requires: perl(Asterisk::AGI) >= 0.09
 Requires: perl(Time::HiRes)
 #RHEL5: Requires: MyODBC
@@ -75,6 +79,7 @@ Group:   System Environment/Services
 Requires: virtual-pbx = %{version}-%{release}
 Requires: httpd
 Requires: mod_perl
+Requires: mod_ssl
 Requires: perl(Apache::DBI)
 Requires: perl(XML::Simple)
 Requires: perl(XML::Parser)
