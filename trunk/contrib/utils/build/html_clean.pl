@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 ########################################################################
 #
-# $Id: html_clean.pl,v 1.12 2011-01-05 13:27:07 gosha Exp $
+# $Id: html_clean.pl,v 1.13 2011-04-20 07:28:34 gosha Exp $
 #
 # Copyright (c) 2009 Okunev Igor <igor[at]prv.mts-nn.ru>
 #
@@ -10,11 +10,16 @@ $^I = '.bak';
 
 undef $/; $_ = <>;
 
-s#>\s+<#><#gs;
-s#\%\]\s+#%] #gs;
-s#\s+\[\%# [%#gs;
-s#>\s+#> #gs;
-s#\s+<# <#gs;
+if ( $ARGV =~ /statements\.tt$/ ) {
+	# workaround - MIME::Lite->as_string deforms long strings...
+	s#\n\s+#\n#gs;
+} else {
+	s#>\s+<#><#gs;
+	s#\%\]\s+#%] #gs;
+	s#\s+\[\%# [%#gs;
+	s#>\s+#> #gs;
+	s#\s+<# <#gs;
+}
 
 if ( $ENV{'XVB_VERSION'} ) {
 	my $date = gmtime;

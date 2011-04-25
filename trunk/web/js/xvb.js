@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.31 2011-03-20 20:12:55 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.35 2011-04-25 05:53:45 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -198,6 +198,9 @@ function checkChanges( obj ) {
 				//alert( "Type: " + obj.elements[i].type + ' - checked 2'  );
 			}
 		}
+	}
+	if ( change_flag == true ) {
+		LoadingOn();
 	}
 	return change_flag;
 }
@@ -635,8 +638,57 @@ function exten_dropdown2( select_name, extension, prefix ) {
 function exten_icon( extension, uniq, title ) {
 	/* edit icon */
 	if ( e_list[extension] != null && e_list[extension][0] != null ) {
-		document.write("<a href='?action=vb_view&id="+ e_list[extension][0] +"&uniq="+ uniq +" ' title='"+ title +"'><img border='0' src='/xvb/images/vb_edit.png' alt='"+ title +"' /></a>");
+		document.write("<a href='?action=vb_view&id="+ e_list[extension][0] +"&uniq="+ uniq +" ' title='"+ title +"'><img border='0' src='/xvb/images/vb_edit.png' alt='"+ title +"' /></a>&nbsp;");
 	}
+}
+/* peers tmpl functions */
+function peers_list_init(obj,mode) {
+	if ( mode == 1 ) {
+		obj.form.host.size=5;
+		obj.form.host.style.visibility='hidden';
+		for ( ind = 0; ind < p_list.length; ind++ ) {
+			obj.options[ind].text = p_list[ind][1];
+		}
+	} else {
+		for ( ind = 0; ind < p_list.length; ind++ ) {
+			obj.options[ind].text = '';
+		}
+		obj.form.host.size=19;
+		obj.form.host.style.visibility='visible';
+	}
+	obj.selectedIndex = 0;
+}
+function peers_unhide( id ) {
+	var mode = id.host.disabled;
+
+	id.host.disabled = id.port.disabled = id.domain.disabled = id.dtmfmode.disabled = id.proto.disabled = 0;
+
+	var rc = checkChanges( id );
+
+	if ( rc == false ) {
+		id.host.disabled = id.port.disabled = id.domain.disabled = id.dtmfmode.disabled = id.proto.disabled = mode;
+	} else {
+		id.tmpl.disabled = 'disabled';
+	}
+	return rc;
+}
+function peers_hide( id ) {
+
+	id.domain.value = id.port.value = id.domain.value = '';
+
+	id.host.disabled = id.port.disabled = id.domain.disabled = id.dtmfmode.disabled = id.proto.disabled = 0;
+
+	if ( id.tmpl.value == '.' ) {
+		mode = 0;
+		id.host.value='';
+	} else {
+		mode = 'disabled';
+		id.host.value=id.tmpl.value;
+		id.DESCRIPTION.value=id.tmpl.options[ id.tmpl.selectedIndex ].text;
+	}
+	id.host.disabled = id.port.disabled = id.domain.disabled = id.dtmfmode.disabled = id.proto.disabled = mode;
+
+	id.username.focus();
 }
 
 /* init */

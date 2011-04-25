@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.14 2011-04-04 20:04:18 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.16 2011-04-22 15:08:42 gosha Exp $ -->
 <head>
 	<style>
 	body { 
@@ -76,7 +76,6 @@
 			[% END %]
 		</tr>
 		[% END %]
-		[% END %]
 	[% END %]
 	
 	[% IF CALLS scalar %]
@@ -101,10 +100,10 @@
 				<td>[% msg.COST %] ([% msg.RU_DESCRIPTION %])</td>
 			</tr>
 			[% END %]
-			[% END %]
 		[% END %]
 	</table>
 	</p>
 	<br><br>-- <br>   Спасибо !
+</body>
 </html>
 	

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.15 2011-03-20 21:30:37 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.18 2011-04-24 18:12:55 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP шлюзы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -49,7 +49,7 @@
 	<p>
 	<table width='95%' class='list_data' id='d-tbl'>
 		<tr class='list_data'>
-			<th>Прокси (*)</th>
+			<th width='20%'>Прокси (*)</th>
 			<th>Порт (*)</th>
 			<th>Домен</th>
 			<th>Пользователь</th>
@@ -61,7 +61,7 @@
 		</tr>
 		
 		[% FOREACH p = PEERS %]
-		<tr align='center' class='nocolor'>
+		<tr align='center' class='nocolor' id='d-tr-[% p.DATA_ID %]'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 			<td><input class='in_t0' size="19" name='host' type'text' value='[% p.host | html %]'></td>
 			<td><input class='in_t0' size="5" name='port' type='text' value="[% p.port | html %]"></td>
@@ -107,8 +107,28 @@
 		</tr>
 		[% END %]
 		<tr align='center'>
-			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
-			<td><input size="19" name='host' type'text'></td>
+			<form method='post' action='[% CGI_URL %]' onSubmit='return peers_unhide(this)'>
+			<td>
+				<input size="19" name='host' type'text'>
+				<script language='JavaScript'>
+					var options_ind = 1;
+					var options_str = '<select name="tmpl" onFocus="peers_list_init(this,1)" onBlur="peers_list_init(this,2)" onChange="peers_hide(this.form)"><option value="."></option>';
+					var p_list = [];
+					p_list[0] = [ '.', '-- Выберите провайдера --' ];
+					[% FOREACH p = PEERS_TMPL_LIST %]
+						options_str = options_str+'<option value="[% p.HOST %]"></option>';
+						p_list[options_ind] = [ '[% p.HOST %]', '[% p.NAME %]' ];
+						options_ind++;
+					[% END %]
+					p_list[options_ind] = [ '.', 'Другой' ];
+			  		
+					options_str = options_str + '<option value="."></option></select>';
+
+					if ( options_ind > 1 ) {
+		        			document.write( options_str );
+					}
+				</script>
+			</td>
 			<td><input size="5" name='port' type='text'></td>
 			<td><input size="19" name='domain' type='text'></td>
 			<td><input size="10" name='username' type='text'></td>
