@@ -26,6 +26,7 @@ Requires: perl(Email::Date::Format)
 Requires: perl(Cache::Memcached)
 Requires: perl(Net::SSLeay)
 Requires: perl(XML::SAX)
+Requires: perl(Env::C)
 
 %description
 Dynamic IVR / SOHO VirtualPBX - CORE files
@@ -302,6 +303,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_MOH
 perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_DATE_FORMAT
 perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_CID_TYPE
 perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_CID_ACTIONS
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATES
 
 ####################################################
 #
@@ -406,6 +408,7 @@ service httpd start
 %attr(755,root,root) %CORE_DIR/contrib/utils/MemCached.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/node_stat.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/icecast-db-init.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/google-voice-search.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/ices2
 %attr(755,root,root) %CORE_DIR/contrib/utils/nodes_admin/*
 %attr(755,root,root) %CORE_DIR/contrib/utils/rpm/*

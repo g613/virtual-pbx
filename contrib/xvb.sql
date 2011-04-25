@@ -9,6 +9,14 @@ create  table VPBX_DB_INFO
 	TIME	INT(16)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+create table VPBX_SIPPEERS_TEMPLATES {
+	ID					INT(16)  not null AUTO_INCREMENT,
+	HOST				VARCHAR(255),
+	NAME				VARCHAR(255),
+	DATA				TEXT(8192),
+    CONSTRAINT PK_VPBX_SIPPEERS_TEMPLATES PRIMARY KEY (ID)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
 create table VPBX_ICECAST_POOL (
 	ID					INT(16)  not null AUTO_INCREMENT,
 
@@ -2182,6 +2190,10 @@ insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,RU_DESCRIPTION) VALUES( 0, 'All',
 insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,RU_DESCRIPTION,CH_2,CH_3,CH_4,CH_5,CH_6,CH_7,CH_8,CH_9) VALUES( 1, 'English', 'Английский','abc','def','ghi','jkl','mno','pqrs','tuv','wxyz' );
 insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,RU_DESCRIPTION,CH_2,CH_3,CH_4,CH_5,CH_6,CH_7,CH_8,CH_9) VALUES( 2, 'Russian', 'Русский','абвг|АБВГ','дежз|ДЕЖЗ','ийкл|ИЙКЛ','мно|МНО','прс|ПРС','туфх|ТУФХ','цчшщъ|ЦЧШЩЪ','ыьэюя|ЫЬЭЮЯ' );
 
+insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sbc.megafon.ru','Multiphon',"$_[0]->{'fromdomain'}='multifon.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='inband'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='ulaw'; $_[0]->{'port'}='5060';");
+insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.telphin.com','Telphin',"$_[0]->{'fromdomain'}='sip.telphin.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5068';");
+insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sipnet.ru','Sipnet',"$_[0]->{'fromdomain'}='sipnet.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5060';");
+ 
 create user 'xvb'@'localhost' identified by 'pass1xvb';
 
 grant all on *.* to 'xvb'@'localhost';
