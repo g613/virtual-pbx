@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.35 2011-04-25 05:53:45 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.37 2011-04-28 13:54:56 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -21,7 +21,7 @@ function CLStop( obj ) {
 			obj.className='in_t2';
 		}
 	}
-	var change_flag = checkChanges( obj.form );
+	var change_flag = checkChanges( obj.form, 1 );
 	var img_id = 'in_t_id-' + obj.form.data_id.value;
 	if ( change_flag == true ) {
 		document.getElementById(img_id).className = 'in_t_open';
@@ -89,7 +89,7 @@ function xmlhttpPost(obj,r_type) {
 	//document.body.style.cursor='wait';
 	LoadingOn();
 
-	var needUpdate = checkChanges(obj);
+	var needUpdate = checkChanges(obj,1);
 	if ( needUpdate == false ) {
 		//document.body.style.cursor='default';
 		LoadingOff();
@@ -165,7 +165,7 @@ function updateAfterAjax( obj, r_type ) {
 	}
 }
 
-function checkChanges( obj ) {
+function checkChanges( obj, skip_shaddow ) {
 	var change_flag = false;
 	for( i=0; i < obj.elements.length; i++ ) {
 		if ( obj.elements[i].type == 'checkbox' || obj.elements[i].type == 'radio' ) {
@@ -199,8 +199,11 @@ function checkChanges( obj ) {
 			}
 		}
 	}
+
 	if ( change_flag == true ) {
-		LoadingOn();
+		if(typeof(skip_shaddow) == 'undefined') {
+			LoadingOn();
+		}
 	}
 	return change_flag;
 }
@@ -481,7 +484,7 @@ function setShadowAttr() {
 function cdrfilters( element_id, col_num ) {
 	/* fiters */
 	var re = /FILE=(\d+):(\w+\.\w+)/g;
-	var re2 = /^DTMF=([^,]*)/;
+	var re2 = /(^|, )DTMF=([^,]*)/;
 
 	/* variables */
 	var url = download_file_url;
@@ -510,7 +513,7 @@ function cdrfilters( element_id, col_num ) {
 			if ( callTimeOffset > 0 && re2.test(data) ) {
 				// DTMF pattern
 				var dtmf_str = re2.exec(data);
-				var dtmf_chunks = dtmf_str[1].split(' ');
+				var dtmf_chunks = dtmf_str[2].split(' ');
 				var out_str = '';
 				for( i2=0; i2 < dtmf_chunks.length; i2++ ) {
 					var user_input_array = dtmf_chunks[i2].split('w');
@@ -532,7 +535,7 @@ function cdrfilters( element_id, col_num ) {
 						callTime.setTime(callTimeOffset);
 					}
 				}
-				var new_str = '<a title="'+dateArray[6]+'" href="#" onclick=\'dtmf_history_win("'+out_str+'");return false\'>DTMF</a>';
+				var new_str = '<a title="'+dateArray[6]+'" href="#" onclick=\'dtmf_history_win("'+out_str+'");return false\'>$1DTMF</a>';
 				new_str = data.replace(re2, new_str);
 				td_obj[col_num].innerHTML = new_str;
 			} else {
