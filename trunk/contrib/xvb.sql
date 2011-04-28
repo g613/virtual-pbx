@@ -309,6 +309,8 @@ create	table VPBX_GROUPS
 	PREF_CODEC					VARCHAR(16),
 
 	PREF_LANG					INT(16)	not null default 0,
+
+	MAX_CALL_DURATION			INT(10)	not null default 0,
 	
 	VBL_1 INT(10) not NULL default -1,
 	VBL_2 INT(10) not NULL default -1,
