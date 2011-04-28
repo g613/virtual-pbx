@@ -61,7 +61,7 @@
 		<tr>
 			<td>Group Name: </td>
 			<td><input name='GR_GROUP_NAME' type='text' value="[% GROUP.GROUP_NAME | html %]"></td>
-			<td rowspan='34' valign='top'>
+			<td rowspan='35' valign='top'>
 				<table>
 					<tr>
 						<td colspan='2'><h4>Limits on the number of extensions:</h4></td>
@@ -310,6 +310,10 @@
 		<tr>
 			<td>Maximum TTS string size ( byte ): </td>
 			<td><input name='GR_MAX_TTS_LENGTH' type='text' value="[% GROUP.MAX_TTS_LENGTH | html %]"></td>
+		</tr>
+		<tr>
+			<td>Maximum incoming call duration ( sec ): </td>
+			<td><input name='GR_MAX_CALL_DURATION' type='text' value="[% GROUP.MAX_CALL_DURATION | html %]"></td>
 		</tr>
 		<tr>
 			<td>Maximum voice mesage duration ( sec ): </td>
