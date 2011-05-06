@@ -458,7 +458,7 @@ create table VPBX_SIPPEERS (
 	fromuser VARCHAR(255) DEFAULT NULL,
 	fromdomain VARCHAR(255) DEFAULT NULL,
 	
-	ipaddr VARCHAR(15) NOT NULL DEFAULT '',
+	ipaddr VARCHAR(45) NOT NULL DEFAULT '',
 	regseconds INT(11) NOT NULL default '0',
 	type VARCHAR(6) NOT NULL DEFAULT 'peer',
 	lastms VARCHAR(20) DEFAULT NULL,
