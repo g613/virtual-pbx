@@ -27,6 +27,7 @@ Requires: perl(Cache::Memcached)
 Requires: perl(Net::SSLeay)
 Requires: perl(XML::SAX)
 Requires: perl(Env::C)
+Requires: perl(IO::Socket::SSL)
 
 %description
 Dynamic IVR / SOHO VirtualPBX - CORE files
