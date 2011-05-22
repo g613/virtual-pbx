@@ -1432,6 +1432,9 @@ VALUES(9, 'memoryhunt', 'memoryhunt','прогресс-серийное-иска
 ;
 --  MOH CLASS
 INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION,RU_DESCRIPTION)
+VALUES(-1,'alwaysringing','Always ringing','Всегда гудки')
+;
+INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION,RU_DESCRIPTION)
 VALUES(0,'none','Disable','Не использовать')
 ;
 INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION,RU_DESCRIPTION)
@@ -2196,6 +2199,7 @@ insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,RU_DESCRIPTION,CH_2,CH_3,CH_4,CH_
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sbc.megafon.ru','Multiphon',"$_[0]->{'fromdomain'}='multifon.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='inband'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='ulaw'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.telphin.com','Telphin',"$_[0]->{'fromdomain'}='sip.telphin.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5068';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sipnet.ru','Sipnet',"$_[0]->{'fromdomain'}='sipnet.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5060';");
+insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('skype.sipnet.ru','Sipnet-Skype',"$_[0]->{'fromdomain'}='sipnet.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5060';");
  
 create user 'xvb'@'localhost' identified by 'pass1xvb';
 
