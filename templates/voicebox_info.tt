@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.199 2011-04-04 14:21:38 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.200 2011-05-11 15:09:12 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -2211,13 +2211,13 @@
 					<tr>
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%' class='addon_data' id='addon-data'>
-							<tr class='nocolor'>
+							<tr class='list_data'>
 								<th>Phone number</th>
 								<th>Parking slot</th>
 								<th>Hold time</th>
 							</tr>
 							[% FOREACH param = VB_DATA %]
-							<tr align='center' class='addon_data'>
+							<tr align='center' class='nocolor'>
 								<td align='left'>[% param.CALLER_ID | html %]</td>
 								<td>[% param.SLOT | html %]</td>
 								<td>[% param.HOLD_TIME | duration_str | html %]</td>
