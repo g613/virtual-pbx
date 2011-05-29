@@ -1,6 +1,7 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- В настройке телефонов добавить еще опции записи: внешние / внутренние</font>
 
 <font color='green'>- Kamailio в качестве регистратора пользователей</font> ( 29.05.2011 / build 4902 )
 
