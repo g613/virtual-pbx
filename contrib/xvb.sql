@@ -499,6 +499,7 @@ create table VPBX_SIPPEERS (
 	PRIMARY KEY (DATA_ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+
 create table VPBX_ROUTES (
 	DATA_ID			INT(16) NOT NULL AUTO_INCREMENT,
     SUBSCR_ID		INT(16)   not null,
@@ -2200,7 +2201,32 @@ insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sbc.megafon.ru','Mul
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.telphin.com','Telphin',"$_[0]->{'fromdomain'}='sip.telphin.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5068';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sipnet.ru','Sipnet',"$_[0]->{'fromdomain'}='sipnet.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('skype.sipnet.ru','Sipnet-Skype',"$_[0]->{'fromdomain'}='sipnet.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5060';");
- 
+
+-- OPENSER REGISTRAR
+create or replace view subscriber  ( id, username, domain, password, email_address, ha1, ha1b, rpid )
+	as
+select
+	DATA_ID, 
+	name,
+	'virtual-pbx',
+	secret,
+	'',
+	md5(concat(name,':virtual-pbx:',secret)),
+	md5(concat(name,'@virtual-pbx:virtual-pbx:',secret)),
+	NULL
+from
+	VPBX_SIPPEERS
+where type='friend';
+
+create table version (
+		table_name      VARCHAR(255),
+		table_version   int(10)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+insert into version values( 'subscriber', 6 );
+
+-- grants
+
 create user 'xvb'@'localhost' identified by 'pass1xvb';
 
 grant all on *.* to 'xvb'@'localhost';
