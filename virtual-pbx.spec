@@ -127,6 +127,7 @@ Dynamic IVR / SOHO VirtualPBX - devel
 %package balancer
 Summary: Dynamic IVR / SOHO VirtualPBX Load balancer
 Group:   System Environment/Services
+Requires: kamailio
 
 %description balancer
 Dynamic IVR / SOHO VirtualPBX - Load balancer

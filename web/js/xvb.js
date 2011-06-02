@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.37 2011-04-28 13:54:56 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.38 2011-06-01 06:24:05 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -485,9 +485,11 @@ function cdrfilters( element_id, col_num ) {
 	/* fiters */
 	var re = /FILE=(\d+):(\w+\.\w+)/g;
 	var re2 = /(^|, )DTMF=([^,]*)/;
+	var re3 = /(^|, )CALLID=([^,]*)/g;
 
 	/* variables */
 	var url = download_file_url;
+	var url3 = callback_cdr_url;
 
 	var callTimeOffset = 0;
 
@@ -540,7 +542,12 @@ function cdrfilters( element_id, col_num ) {
 				td_obj[col_num].innerHTML = new_str;
 			} else {
 				// FILE pattern
-				var new_str = data.replace(re, url);
+				var new_str = data.replace(re, download_file_url);
+				if ( data != new_str ) {
+					td_obj[col_num].innerHTML = new_str;
+				}
+				// CALLID pattern ( Callback / AlarmClock )
+				new_str = data.replace(re3, callback_cdr_url);
 				if ( data != new_str ) {
 					td_obj[col_num].innerHTML = new_str;
 				}

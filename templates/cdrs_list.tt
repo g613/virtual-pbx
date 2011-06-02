@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.26 2011-05-22 15:23:45 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.27 2011-06-01 06:24:04 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -142,6 +142,7 @@
 					<option value="internal">internal</option>
 					<option value="callback">callback</option>
 					<option value="callblast">callblast</option>
+					<option value="alarmclock">alarmclock</option>
 					<option value="service">service</option>
 				</select>
 				<input value='Search' type='submit'>

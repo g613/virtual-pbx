@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.27 2011-05-22 15:23:45 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.28 2011-06-01 06:24:05 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -141,6 +141,7 @@
 					<option value="internal">внутрений</option>
 					<option value="callback">callback</option>
 					<option value="callblast">callblast</option>
+					<option value="alarmclock">будильник</option>
 					<option value="service">сервисный</option>
 				</select>
 				<input value='Поиск' type='submit'>
