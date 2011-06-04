@@ -1,9 +1,9 @@
-_The VirtualPBX Installation to your equipment:_ *300 EUR*  / node
+_The VirtualPBX Installation to your equipment :_ *300 EUR*  / node
 
-_Integration with kamailio ( load balancing )_ - *500 EUR*
+_Integration with kamailio ( load balancing )_ : *500 EUR*
 
-_Integration with kamailio ( sip registrar )_ - *500 EUR*
+_Integration with kamailio ( sip registrar )_ : *500 EUR*
 
-_Consultation:_ *50 EUR* / hour (virtual-pbx | asterisk | linux )
+_Consultation_ : *50 EUR* / hour (virtual-pbx | asterisk | linux )
 
 Contacts: mailto:virtual-pbx@prv.mts-nn.ru
