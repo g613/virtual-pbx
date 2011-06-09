@@ -292,6 +292,7 @@ chkconfig memcached on
 # CleanUP cache
 perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup
 perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup tariffs
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup reports
 perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_TARIFF
 perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_CURRENCY
 perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_VBOX_TYPE

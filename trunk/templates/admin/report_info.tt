@@ -1,8 +1,13 @@
 <html>
 <head>
 	<title>Virtual PBX - reports</title>
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
 </head>
 
 <body onLoad="XVBInit()">
@@ -36,14 +41,17 @@
 			<td>
 				<a class='headers' href='?action=report_list'>All reports</a>
 			</td>
+			[% IF REPORT_DATA.DATE_START eq '' %]
 			<td>
 				<a class='headers' href='?action=report_run&report_id=[% REPORT_DATA.ID %]'>Run report</a>
 			</td>
+			[% END %]
 			<td>
 				<a class='headers' href='?action=report_del&report_id=[% REPORT_DATA.ID %]'>Delete report</a>
 			</td>
 		</tr>
 	</table>
+	</p>
 
 	<p>
 	<table width='90%' class='report_data'>
@@ -51,14 +59,27 @@
 		<tr>
 			<td>Create date: </td>
 			<td>[% REPORT_DATA.CREATE_DATE %]</td>
-			<td rowspan='5'>
-				SQL query:<br>
-				<textarea rows='16' cols='50' name='R_QUERY'>[% REPORT_DATA.QUERY | html %]</textarea>
+			<td rowspan='7' valign='midle' align='center'>
+				<p align='left'>SQL query:</p>
+				<textarea rows='16' cols='60' name='R_QUERY'>[% REPORT_DATA.QUERY | html %]</textarea>
+			</td>
+			<td rowspan='7' valign='midle' align='center'>
+				<input type='hidden' value='report_update' name='action'>
+				<input type='hidden' value='[% REPORT_DATA.ID %]' name='report_id'>
+				<input type='submit' value='&nbsp;change&nbsp;'>
 			</td>
 		</tr>
 		<tr>
 			<td>Name: </td>
 			<td><input type='text' size='30' value='[% REPORT_DATA.NAME | html %]' name='R_NAME'></td>
+		</tr>
+		<tr>
+			<td>Default start date: </td>
+			<td><input type='text' size='30' value='[% REPORT_DATA.DATE_START | html %]' name='R_DATE_START'></td>
+		</tr>
+		<tr>
+			<td>Default stop date: </td>
+			<td><input type='text' size='30' value='[% REPORT_DATA.DATE_STOP | html %]' name='R_DATE_STOP'></td>
 		</tr>
 		<tr>
 			<td>Cache TTL: </td>
@@ -83,17 +104,62 @@
 				<input type='file' name='R_FILE'>
 			</td>
 		</tr>
-		<tr>
-			<td colspan='3' align='center'>
-				<input type='hidden' value='report_update' name='action'>
-				<input type='hidden' value='[% REPORT_DATA.ID %]' name='report_id'>
-				<input type='submit' value='&nbsp;change&nbsp;'>
-			</td>
-		</tr>
-		</table>
+		</form>
 	</table>
 	</p>
 
+	[% IF REPORT_DATA.DATE_START %]
+	<p>
+	<br>
+	<br>
+	<table width='98%' class='bottom_hr'>
+		<form method="get" action='?'>
+		<tr align='right'>
+			<td width='100%'>
+				From date:
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<button type="button">...</button>
+				&nbsp;
+				To date:
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<button type="button">...</button>
+				&nbsp;
+				<input name='action' value='report_run' type='hidden'>
+				<input name='report_id' value='[% REPORT_DATA.ID %]' type='hidden'>
+				<input value='Run' type='submit'>
+				&nbsp;
+				<input name='need_excel' value='Excel' type='submit'>
+				&nbsp;
+			</td>
+		</tr>
+		</form>
+	</table>
+	</p>
+	[% ELSE %]
 	<p>
 	<table width='98%' class='bottom_hr'>
 		<tr align='center'>
@@ -109,6 +175,7 @@
 		</tr>
 	</table>
 	</p>
+	[% END %]
 
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
