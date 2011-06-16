@@ -2,7 +2,7 @@
 %define ASTERISK_VARLIB_HOME %{_datadir}/asterisk
 Name: virtual-pbx
 Summary: Dynamic IVR / SOHO VirtualPBX
-Version: 1
+Version: 2
 Release: 1
 License: GPL
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
@@ -366,6 +366,10 @@ else
 	asterisk -rx 'dialplan reload';
 	asterisk -rx 'features reload';
 	asterisk -rx 'moh reload';
+	#STR=`ps ax | grep VirtualPBX-perl-worker`
+	#if [ "x$STR" != "x" ]; then
+	#	killall VirtualPBX-perl-worker
+	#fi
 fi
 
 
@@ -410,6 +414,7 @@ service httpd start
 %attr(755,root,root) %CORE_DIR/contrib/utils/mc_view.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/MemCached.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/node_stat.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/check_updates.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/icecast-db-init.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/google-voice-search.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/ices2
@@ -434,6 +439,7 @@ service httpd start
 %attr(755,root,root) %{_sysconfdir}/cron.hourly/xvb-1-podcast_get.pl
 %attr(644,root,root) %{_sysconfdir}/cron.d/virtual-pbx.cron
 %attr(755,asterisk,asterisk) %CORE_DIR/agi-bin/*.agi
+%attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_perl_worker
 %CORE_DIR/contrib/asterisk/feautures.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*

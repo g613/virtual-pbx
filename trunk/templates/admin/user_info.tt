@@ -26,6 +26,7 @@
 			<td align='center'><h2>User info</h2></td>
 			<td align='right' width='20%'>
 				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
 			</td>
 		</tr>
 	</table>
