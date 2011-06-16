@@ -1,6 +1,10 @@
 #labels Featured
 = ToDo list =
 
+<font color='green'>+ perl сервер для обработки AGI</font> ( 16.06.2011 / build 5006 )
+
+<font color='green'>+ настраиваемая длина ввода для CompanyDirectory</font> ( 13.06.2011 / build 4988 )
+
 <font color='green'>+ автоматическая проверка обновлений</font> ( 12.06.2011 / build 4981 )
 
 <font color='green'>+ Репорты администратора по направлению исходящей связи</font> ( 07.06.2011 / build 4963 )
