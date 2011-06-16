@@ -768,7 +768,9 @@ create	table VPBX_VBOXES_DIRECTORY
 	ID				INT(16)		    not null,
 	USE_FIRSTNAME	INT(1)			default 0,
 	USE_TTS_NAME	INT(1)			default 0,
-	
+
+	KEY_LEN			INT(4)			not null default 3,
+
 	DIR_LANG		INT(16)			not null default 0,
 
 	unique(ID),

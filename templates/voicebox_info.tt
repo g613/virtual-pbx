@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.200 2011-05-11 15:09:12 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.201 2011-06-12 20:21:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -670,6 +670,12 @@
 					</td>
 				</tr>
 				[% END %]
+				<tr class='addon_info'>
+					<td>Number of characters: </td>
+					<td>
+						<input size='2' type='text' name='KEY_LEN' value='[% VBOX_PREF.KEY_LEN | html %]'>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Keyboard layout: </td>
 					<td>

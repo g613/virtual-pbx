@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.144 2011-04-06 06:46:24 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.145 2011-06-12 20:21:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -807,6 +807,16 @@
 					</td>
 				</tr>
 				[% END %]
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Число символов: <span>
+							Число символов, которые пользователь может ввести при выборе имени/фамилии. 
+							Для небольших списков сотрудников достаточно 3, если список 
+							сотрудников большой, то можно увеличить это значение.
+						</span></a></td>
+					<td>
+						<input size='2' type='text' name='KEY_LEN' value='[% VBOX_PREF.KEY_LEN | html %]'>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Раскладка клавиатуры: <span>
 							выбор привязки символов к цифрам. Например для русскоого:
