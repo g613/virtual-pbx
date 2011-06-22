@@ -14,6 +14,10 @@ BuildArch: noarch
 Requires: mysql
 Requires: mysql-server
 Requires: memcached
+Requires: sox >= 14.3.2
+Requires: ffmpeg
+Requires: lame
+Requires: mpg123
 Requires: libmad
 Requires: perl = 5.8.8
 Requires: perl(DBI)
@@ -39,20 +43,15 @@ Dynamic IVR / SOHO VirtualPBX - CORE files
 Summary: Dynamic IVR / SOHO VirtualPBX VOIP application
 Group:   System Environment/Services
 
-Requires: asterisk >= 1.6.0.26
+Requires: asterisk >= 1.6.0.28
 Requires: virtual-pbx-sound-files >= 1-1_4584
 Requires: virtual-pbx = %{version}-%{release}
 Requires: festival
-Requires: sox >= 12.18.1
-Requires: ffmpeg
-Requires: lame
 Requires: lynx
-Requires: mpg123
 Requires: mysql-connector-odbc
+Requires: unixODBC
 Requires: perl(Asterisk::AGI) >= 0.09
 Requires: perl(Time::HiRes)
-#RHEL5: Requires: MyODBC
-#RHEL4: Requires: mysql-connector-odbc
 
 %description voip
 Dynamic IVR / SOHO VirtualPBX - VOIP applications
@@ -194,6 +193,7 @@ mv contrib/XVB-AI.pdf $RPM_BUILD_ROOT/%CORE_DIR/doc/
 mv contrib/XVB-AI.odt $RPM_BUILD_ROOT/%CORE_DIR/doc/
 
 mv contrib/fagi.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-fagi
+mv contrib/perl-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-perl-worker
 mv sounds/*.tgz $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds/
 mv contrib/asterisk/extensions.conf $RPM_BUILD_ROOT/%{_sysconfdir}/asterisk/xvb/xvb.conf
 mv contrib/httpd.conf $RPM_BUILD_ROOT/%{_sysconfdir}/httpd/conf.d/xvb.conf
@@ -366,10 +366,10 @@ else
 	asterisk -rx 'dialplan reload';
 	asterisk -rx 'features reload';
 	asterisk -rx 'moh reload';
-	#STR=`ps ax | grep VirtualPBX-perl-worker`
-	#if [ "x$STR" != "x" ]; then
-	#	killall VirtualPBX-perl-worker
-	#fi
+	STR=`ps ax | grep [V]irtualPBX-perl-worker`
+	if [ "x$STR" != "x" ]; then
+		killall VirtualPBX.agi || true
+	fi
 fi
 
 
@@ -440,6 +440,7 @@ service httpd start
 %attr(644,root,root) %{_sysconfdir}/cron.d/virtual-pbx.cron
 %attr(755,asterisk,asterisk) %CORE_DIR/agi-bin/*.agi
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_perl_worker
+%attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-perl-worker
 %CORE_DIR/contrib/asterisk/feautures.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*
@@ -453,7 +454,7 @@ service httpd start
 %files voip-fagi
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_agi
 %attr(755,root,root) %CORE_DIR/contrib/utils/Fagi.pl
-%attr(755,root,root) %{_sysconfdir}/rc.d/init.d/*
+%attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-fagi
 %attr(755,root,root) %{_sysconfdir}/cron.hourly/xvb-0-MemCached.pl
 
 
