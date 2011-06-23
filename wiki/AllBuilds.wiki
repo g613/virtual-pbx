@@ -1,5 +1,7 @@
 ==All VMWare images :==
 
+  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1916242659/VirtualPBX-1_5016.tar.bz2 build 5016 (23.06.2011) ]  / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/16912336001/VirtualPBX-1_5016.tar.bz2.html yandex-disk-mirror] ( asterisk bug fixed, sox update, kamailio registrar, AGI => speedyAGI, more features )
+
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1915613876/VirtualPBX-1_4894.tar.bz2 build 4894 (22.05.2011) ]  / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/13724648001/VirtualPBX-1_4894.tar.bz2.html yandex-disk-mirror] ( bug fixed release )
 
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1915108269/VirtualPBX-1_4846.tar.bz2 build 4846 (04.05.2011) ]  / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/11762334001/VirtualPBX-1_4846.tar.bz2.html yandex-disk-mirror] ( CentOS 5.6, asterisk bug fixed: https://issues.asterisk.org/view.php?id=17954, support presettings for SIP providers, installed DAHDI tools, improved CDRs )
