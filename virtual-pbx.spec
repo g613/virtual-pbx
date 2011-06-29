@@ -3,7 +3,7 @@
 Name: virtual-pbx
 Summary: Dynamic IVR / SOHO VirtualPBX
 Version: 2
-Release: 1
+Release: 1_5029
 License: GPL
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
 Packager: Igor Okunev <igor.okunev@gmail.com>
@@ -357,6 +357,8 @@ if [ -f %{_sysconfdir}/asterisk/features.conf ]; then
 	fi
 fi
 
+touch /etc/asterisk/xvb/xvb-phone-service.conf || true
+
 chkconfig asterisk on
 
 STR=`service asterisk status | grep running`
@@ -428,6 +430,7 @@ service httpd start
 %CORE_DIR/doc/XVB-AI.pdf
 %CORE_DIR/contrib/xvb.sql
 %CORE_DIR/contrib/icecast.xml
+%CORE_DIR/contrib/spec-files/*.spec
 %CORE_DIR/etc/BOM-*.txt
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/db
 

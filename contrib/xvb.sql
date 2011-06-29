@@ -314,7 +314,9 @@ create	table VPBX_GROUPS
 	PREF_LANG					INT(16)	not null default 0,
 
 	MAX_CALL_DURATION			INT(10)	not null default 0,
-	
+
+	PH_FEATURES					VARCHAR(255) not null default '*',
+
 	VBL_1 INT(10) not NULL default -1,
 	VBL_2 INT(10) not NULL default -1,
 	VBL_3 INT(10) not NULL default -1,
@@ -2200,7 +2202,7 @@ INSERT INTO VPBX_NOTIFY_TYPE(NOTIFY_ID,DESCRIPTION,RU_DESCRIPTION,NAME) VALUES(2
 
 insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,RU_DESCRIPTION) VALUES( 0, 'All','Все' );
 insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,RU_DESCRIPTION,CH_2,CH_3,CH_4,CH_5,CH_6,CH_7,CH_8,CH_9) VALUES( 1, 'English', 'Английский','abc','def','ghi','jkl','mno','pqrs','tuv','wxyz' );
-insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,RU_DESCRIPTION,CH_2,CH_3,CH_4,CH_5,CH_6,CH_7,CH_8,CH_9) VALUES( 2, 'Russian', 'Русский','абвг|АБВГ','дежз|ДЕЖЗ','ийкл|ИЙКЛ','мно|МНО','прс|ПРС','туфх|ТУФХ','цчшщъ|ЦЧШЩЪ','ыьэюя|ЫЬЭЮЯ' );
+insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,RU_DESCRIPTION,CH_2,CH_3,CH_4,CH_5,CH_6,CH_7,CH_8,CH_9) VALUES( 2, 'Russian', 'Русский','абвгАБВГ','дежзДЕЖЗ','ийклИЙКЛ','мноМНО','прсПРС','туфхТУФХ','цчшщъЦЧШЩЪ','ыьэюяЫЬЭЮЯ' );
 
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sbc.megafon.ru','Multiphon',"$_[0]->{'fromdomain'}='multifon.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='inband'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='ulaw'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.telphin.com','Telphin',"$_[0]->{'fromdomain'}='sip.telphin.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5068';");

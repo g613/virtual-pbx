@@ -62,7 +62,7 @@
 		<tr>
 			<td>Group Name: </td>
 			<td><input name='GR_GROUP_NAME' type='text' value="[% GROUP.GROUP_NAME | html %]"></td>
-			<td rowspan='35' valign='top'>
+			<td rowspan='36' valign='top'>
 				<table>
 					<tr>
 						<td colspan='2'><h4>Limits on the number of extensions:</h4></td>
@@ -351,6 +351,12 @@
 		<tr>
 			<td>Prefered codec ( for recordings ): </td>
 			<td><input name='GR_PREF_CODEC' type='text' value="[% GROUP.PREF_CODEC | html %]"></td>
+		</tr>
+		<tr>
+			<td>Phone features ( comma separated, * - for all ):</td>
+			<td>
+				<textarea rows='2' cols='22' name='GR_PH_FEATURES'>[% GROUP.PH_FEATURES | html %]</textarea>
+			</td>
 		</tr>
 		<tr>
 			<td>Prefered language:</td>
