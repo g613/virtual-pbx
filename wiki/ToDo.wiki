@@ -1,6 +1,10 @@
 #labels Featured
 = ToDo list =
 
+<font color='green'>+ новый сервисный номер `*``*`1 - сказать номер телефона с которого звонят</font> ( 28.06.2011 / build 5026 )
+
+<font color='green'>+ новая пользовательская переменная CALLID</font> ( 25.06.2011 / build 5020 )
+
 <font color='green'>+ perl сервер для обработки AGI - уменьшение LA ~ в 3 раза, время отклика в 4... блR...</font> ( 16.06.2011 / build 5006 )
 
 <font color='green'>+ настраиваемая длина ввода для CompanyDirectory</font> ( 13.06.2011 / build 4988 )
