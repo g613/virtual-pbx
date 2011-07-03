@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'> page / intercom</font>
+<font color='red'>- page / intercom</font>
 
 <font color='green'>+ новый сервисный номер `*``*`1 - сказать номер телефона с которого звонят</font> ( 28.06.2011 / build 5026 )
 
