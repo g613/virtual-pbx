@@ -3,7 +3,7 @@
 Name: virtual-pbx
 Summary: Dynamic IVR / SOHO VirtualPBX
 Version: 2
-Release: 1_5029
+Release: 1
 License: GPL
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
 Packager: Igor Okunev <igor.okunev@gmail.com>
@@ -205,7 +205,7 @@ mv contrib $RPM_BUILD_ROOT/%CORE_DIR/
 mv 3rdparty $RPM_BUILD_ROOT/%CORE_DIR/
 
 #
-# clean CVS tree
+# clemn CVS tree
 #
 cd $RPM_BUILD_ROOT/
 find -name CVS -type d | xargs rm -rf
@@ -367,7 +367,12 @@ if [ "x$STR" = "x" ]; then
 else
 	asterisk -rx 'dialplan reload';
 	asterisk -rx 'features reload';
-	asterisk -rx 'moh reload';
+	# moh reload
+	STR=`rpm -qv asterisk | grep '1.8'`
+	if [ "x$STR" = "x" ]; then
+		asterisk -rx 'moh reload';
+	fi
+	# perl-worker
 	STR=`ps ax | grep [V]irtualPBX-perl-worker`
 	if [ "x$STR" != "x" ]; then
 		killall VirtualPBX.agi || true

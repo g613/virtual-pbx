@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.12 2011-02-28 22:17:46 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.13 2011-07-04 05:17:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -218,7 +218,7 @@
 								<td class='ext_pn'>Tariff:</td>
 								<td colspan='7'><b>[% TARIFF.NAME | html %]</b> ( currency  [% TARIFF.DESCRIPTION %] )</td>
 							</tr>
-							<tr class='list_data' align='center'>
+							<tr class='list_addon_data' align='center'>
 								<th rowspan='2'>Monthly</th>
 								<th rowspan='2'>Daily</th>
 								<th colspan='2'>IVR</th>
@@ -229,7 +229,7 @@
 									<th colspan='2'>CallBlast</th>
 								[% END %]
 							</tr>
-							<tr class='list_data' align='center'>
+							<tr class='list_addon_data' align='center'>
 								<th>Minute</th>
 								<th>Call</th>
 								[% IF USER_CREDS.VBL_14 ne '0' %]
