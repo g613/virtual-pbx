@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.201 2011-06-12 20:21:42 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.204 2011-07-04 13:58:05 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -535,12 +535,6 @@
 					</select>
 				</td>
 			</tr>
-			<tr class='addon_info'>
-				<td>Ring timeout (sec): </td>
-				<td>
-					<input size='30' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-				</td>
-			</tr>
 				<tr class='addon_info'>
 					<td>Send DTMF (0-9#*w): </td>
 					<td>
@@ -609,6 +603,13 @@
 						[% ELSE %]
 							<input name="RECORD_CALL" type="checkbox">
 						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Ring timeout (sec): </td>
+					<td>
+						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
+						( 1 ring approximately equals 4 seconds )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1049,7 +1050,8 @@
 				<tr class='addon_info'>
 					<td>Ring timeout (sec): </td>
 					<td>
-						<input size='30' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
+						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
+						( 1 ring approximately equals 4 seconds )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1328,7 +1330,7 @@
 					<td>Ring timeout (sec): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-						( 10 - 120 )
+						( 10 - 120, 1 ring approximately equals 4 seconds )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1465,7 +1467,7 @@
 					<td>Ring timeout (sec): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-						( 10 - 120 )
+						( 10 - 120, 1 ring approximately equals 4 seconds )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1668,6 +1670,64 @@
 					</td>
 				</tr>
 				[% END %]
+				
+				[% IF VBOX_PREF.TYPE eq '29' %]
+				<tr>
+					<td>Phones: </td>
+					<td>
+						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>Timeout (sec): </td>
+					<td>
+						<input size='10' type='text' name='TIME_LIMIT' value='[% VBOX_PREF.TIME_LIMIT | html %]'>
+						( 0 - for unlimit )
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Alert-Info header: </td>
+					<td>
+						<input size='30' type='text' name='ALERT_INFO' value='[% VBOX_PREF.ALERT_INFO | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Call-Info header: </td>
+					<td>
+						<input size='30' type='text' name='CALL_INFO' value='[% VBOX_PREF.CALL_INFO | html %]'>
+					</td>
+				</tr>
+				<tr>
+					<td>2-way Intercom: </td>
+					<td>
+						[% IF VBOX_PREF.PAGING  %]
+							<input name="PAGING" type="radio" value="0">
+						[% ELSE %]
+							<input name="PAGING" type="radio" value="0" checked>
+						[% END %]
+					</td>
+				</tr>
+				<tr>
+					<td>1-way Paging: </td>
+					<td>
+						[% IF VBOX_PREF.PAGING  %]
+							<input name="PAGING" type="radio" value="1" checked>
+						[% ELSE %]
+							<input name="PAGING" type="radio" value="1">
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Record call: </td>
+					<td>
+						[% IF VBOX_PREF.RECORD_CALL %]
+							<input name="RECORD_CALL" type="checkbox" checked>
+						[% ELSE %]
+							<input name="RECORD_CALL" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				[% END %]
 
 				<tr><td colspan='2'>&nbsp;</td></tr>
 				<tr>
@@ -1839,7 +1899,7 @@
 					<tr>
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%' class='addon_data' id='addon-data'>
-							<tr class='list_data'>
+							<tr class='list_addon_data'>
 								<th>Phone number</th>
 								<th>All calls</th>
 								<th>Answered calls</th>
@@ -1884,7 +1944,7 @@
 					<tr>
 						<td colspan='2' align='center'>
 						<table width='90%' class='addon_data' id='d-tbl'>
-							<tr class='list_data'>
+							<tr class='list_addon_data'>
 								<th>User Name</th>
 								<th>Extension Number</th>
 								<th>Actions</th>
@@ -1985,7 +2045,7 @@
 					<tr>
 						<td colspan='2' align='center'>
 						<table width='90%' class='addon_data' id='addon-data'>
-							<tr class='list_data'>
+							<tr class='list_addon_data'>
 								<th>Variant</th>
 								<th>Count</th>
 								<th>Percent</th>
@@ -2018,7 +2078,7 @@
 					<tr>
 						<td colspan='2' align='center'>
 						<table width='100%' class='addon_data' id='addon-data'>
-							<tr class='list_data' align='center'>
+							<tr class='list_addon_data' align='center'>
 								<th colspan='2'>&nbsp;</th>
 								<th>Create time</th>
 								<th>Download time</th>
@@ -2054,7 +2114,7 @@
 					<tr>
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%' class='addon_data' id='addon-data'>
-							<tr class='list_data'>
+							<tr class='list_addon_data'>
 								<th>Phone number</th>
 								<th>All calls</th>
 								<th>Answered calls</th>
@@ -2098,7 +2158,7 @@
 					<tr>
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%' class='addon_data' id='addon-data'>
-							<tr class='list_data'>
+							<tr class='list_addon_data'>
 								<th>Call Status</th>
 								<th>Count</th>
 								<th>Percent</th>
@@ -2151,7 +2211,7 @@
 					<tr>
 					<td colspan='3' align='center'>
 						<table width='90%' class='addon_data' id='d-tbl-d1'>
-							<tr class='list_data'>
+							<tr class='list_addon_data'>
 								<th>Priority</th>
 								<th>Time</th>
 								<th>Day Of Week</th>
@@ -2217,7 +2277,7 @@
 					<tr>
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%' class='addon_data' id='addon-data'>
-							<tr class='list_data'>
+							<tr class='list_addon_data'>
 								<th>Phone number</th>
 								<th>Parking slot</th>
 								<th>Hold time</th>
@@ -2250,7 +2310,7 @@
 			<tr>
 				<td colspan='3' align='center'>
 					<table width='90%' class='addon_data' id='d-tbl'>
-						<tr class='list_data'>
+						<tr class='list_addon_data'>
 							<th>Priority</th>
 							<th>CallerID</th>
 							<th>Time</th>
@@ -2328,7 +2388,7 @@
 			<tr>
 				<td colspan='3' align='center'>
 				<table width='95%' class='addon_data' id='d-tbl'>
-					<tr class='list_data'>
+					<tr class='list_addon_data'>
 						<th>Name</th>
 						<th>Phone Number(s)</th>
 						<th>User vars</th>
@@ -2432,7 +2492,7 @@
 			<tr>
 				<td colspan='3' align='center'>
 					<table width='90%' class='addon_data' id='d-tbl'>
-						<tr class='list_data'>
+						<tr class='list_addon_data'>
 							<th>Priority</th>
 							<th>Function</th>
 							<th>Variable</th>

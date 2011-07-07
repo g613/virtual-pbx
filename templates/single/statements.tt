@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.5 2010-10-22 10:33:57 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.6 2011-04-22 15:08:42 gosha Exp $ -->
 <head>
 	<style>
 	body { 
@@ -113,5 +113,6 @@
 	</table>
 	</p>
 	<br><br>-- <br>   Thanks!
+</body>
 </html>
 	

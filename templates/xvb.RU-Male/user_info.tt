@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.54 2011-03-20 21:30:37 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.55 2011-07-04 05:17:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -301,7 +301,7 @@
 								<td>Тариф:</td>
 								<td colspan='7'><b>[% TARIFF.NAME | html %]</b> ( валюта  [% TARIFF.DESCRIPTION %] )</td>
 							</tr>
-							<tr class='list_data' align='center'>
+							<tr class='list_addon_data' align='center'>
 								<th rowspan='2'>Месяц</th>
 								<th rowspan='2'>День</th>
 								<th colspan='2'>IVR</th>
@@ -312,7 +312,7 @@
 									<th colspan='2'>CallBlast</th>
 								[% END %]
 							</tr>
-							<tr class='list_data' align='center'>
+							<tr class='list_addon_data' align='center'>
 								<th>Минута</th>
 								<th>Звонок</th>
 								[% IF USER_CREDS.VBL_14 ne '0' %]
@@ -366,7 +366,7 @@
 					<td align='right'>[% USER_CREDS.MAX_EXTENSIONS %]</td>
 					<td rowspan='22' id='vb_limits' class='addon_info'>
 						<table width='100%'>
-							<tr class='list_data' align='center'>
+							<tr class='list_addon_data' align='center'>
 								<th>Тип номера</th>
 								<th>Тек</th>
 								<th>Макс</th>

@@ -1,3 +1,5 @@
+intercom-intro : "Please speak after the tone."
+#
 gc-explorer-intro : "Please listen to the list of events."
 gc-explorer-noevents : "There are no events"
 gc-explorer-next-event : "Next event"

@@ -40,6 +40,15 @@ tr.list_data {
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
+table.list_addon_data {
+	border-collapse:collapse;
+}
+tr.list_addon_data {
+	color: #000000;
+	background-color: #ccccff;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
 tr.backlight {
 	background-color: #f7f7f7
 }

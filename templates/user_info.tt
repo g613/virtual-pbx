@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.62 2011-03-20 21:30:36 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.63 2011-07-04 05:17:41 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -299,7 +299,7 @@ Prived: [% d.DID | html %]
 								<td>Tariff:</td>
 								<td colspan='7'><b>[% TARIFF.NAME | html %]</b> ( currency  [% TARIFF.DESCRIPTION %] )</td>
 							</tr>
-							<tr class='list_data' align='center'>
+							<tr class='list_addon_data' align='center'>
 								<th rowspan='2'>Monthly</th>
 								<th rowspan='2'>Daily</th>
 								<th colspan='2'>IVR</th>
@@ -310,7 +310,7 @@ Prived: [% d.DID | html %]
 									<th colspan='2'>CallBlast</th>
 								[% END %]
 							</tr>
-							<tr class='list_data' align='center'>
+							<tr class='list_addon_data' align='center'>
 								<th>Minute</th>
 								<th>Call</th>
 								[% IF USER_CREDS.VBL_14 ne '0' %]
@@ -364,7 +364,7 @@ Prived: [% d.DID | html %]
 					<td align='right'>[% USER_CREDS.MAX_EXTENSIONS %]</td>
 					<td rowspan='22' id='vb_limits' class='addon_info'>
 						<table width='100%'>
-							<tr class='list_data' align='center'>
+							<tr class='list_addon_data' align='center'>
 								<th>Extension type</th>
 								<th>Cur</th>
 								<th>Max</th>
