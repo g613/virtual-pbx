@@ -5,7 +5,7 @@
 
 <font color='red'>- в черный\белый список добавить поддержку префикса '*phone:*' - звонок с локального телефона</font>
 
-<font color='red'>- page / intercom</font>
+<font color='green'>+ page / intercom</font> ( 09.07.2011 / build 5065 ) 
 
 <font color='green'>+ новый сервисный номер `*``*`1 - сказать номер телефона с которого звонят</font> ( 28.06.2011 / build 5026 )
 
