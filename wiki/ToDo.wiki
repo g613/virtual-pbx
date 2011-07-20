@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Безшовный трансфер звонков ( FMC - Fixed Mobile Convergence )</font>
+<font color='green'>+ Безшовный трансфер звонков ( FMC - Fixed Mobile Convergence )</font> ( 19.07.2011 / build 5125 )
 
 <font color='green'>+ Интеграция с gearmand - cdr, radius, email/twitter notify, GA для увеличения времени отклика\снижения потребляемой памяти</font> ( 16.07.2011 / build 5095 )
 
