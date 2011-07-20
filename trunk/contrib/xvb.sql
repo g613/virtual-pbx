@@ -586,6 +586,7 @@ create	table VPBX_VBOXES_RECORD
 	MIN_MSG_DURATION	INT(10)			not null default -1,
 	KEEP_MSG			INT(1)			not null default 1,
 	SEND_ATTACH			INT(1)			not null default 1,
+	WO_CONFIRM			INT(1)			not null default 0,
 
 	unique(ID),
 
@@ -642,6 +643,7 @@ create	table VPBX_VBOXES_DIALOUT
 	RETRYDIAL_LOOPS INT(6)			default -1,
 
 	MOH_ID			INT(16)			not null default 0,
+	FMC				VARCHAR(255),
 
 	unique(ID),
 

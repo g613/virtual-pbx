@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.204 2011-07-04 13:58:05 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.206 2011-07-17 20:50:45 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -468,6 +468,16 @@
 				[% END %]
 				</td>
 			</tr>
+			<tr class='addon_info'>
+				<td>Record without confirmation: </td>
+				<td>
+				[% IF VBOX_PREF.WO_CONFIRM %]
+					<input name="WO_CONFIRM" type="checkbox" checked>
+				[% ELSE %]
+					<input name="WO_CONFIRM" type="checkbox">
+				[% END %]
+				</td>
+			</tr>
 			[% END %]
 			
 			[% IF VBOX_PREF.TYPE eq '3' %]
@@ -485,6 +495,12 @@
 						exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
 					</script>
 					<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
+				</td>
+			</tr>
+			<tr class='addon_info'>
+				<td>Seamless transferring list: </td>
+				<td>
+					<textarea rows='[% VBOX_PREF.FMC | textarea_rows %]' cols='35' name='FMC'>[% VBOX_PREF.FMC | html %]</textarea>
 				</td>
 			</tr>
 			<tr class='addon_info'>

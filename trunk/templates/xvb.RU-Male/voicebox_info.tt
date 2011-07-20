@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.149 2011-07-04 13:58:06 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.152 2011-07-17 20:50:46 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -555,6 +555,21 @@
 					[% END %]
 					</td>
 				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Запись без подтверждения:<span>
+						При установке этого флага пользователю не будет предложено
+						дополнительное меню ( прослушать/отменить/повторить запись) 
+						после того как он запишет сообщение.
+						</span></a>
+					</td>
+					<td>
+					[% IF VBOX_PREF.WO_CONFIRM %]
+						<input name="WO_CONFIRM" type="checkbox" checked>
+					[% ELSE %]
+						<input name="WO_CONFIRM" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '3' %]
@@ -579,6 +594,14 @@
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
 						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Безшовный трансфер:<span>
+							Список номеров, через запятую, на которые возможен перевод звонка без разрыва соединения в одно касание ( кнопки 1 - 3 )
+						</span></a></td>
+					<td>
+						<textarea rows='[% VBOX_PREF.FMC | textarea_rows %]' cols='35' name='FMC'>[% VBOX_PREF.FMC | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
