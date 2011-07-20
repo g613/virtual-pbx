@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters_core.tt,v 1.21 2011-03-20 21:30:37 gosha Exp $ -->
+<!-- $Id: cidfilters_core.tt,v 1.22 2011-07-09 06:11:20 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID фильтры - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -72,7 +72,7 @@
 			<td><input class='in_t0' size='60' name='description'  type='text' value='[% param.DESCRIPTION | html %]'></td>
 	
 			<td align='left' nowrap='nowrap'>
-				<a href='?action=cid_del&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='delete schedule item'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+				<a href='?action=cid_del&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить запись'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
 				<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
 					<script language='JavaScript'>
 						writeUpdateLinks( 'сохранить изменения' );

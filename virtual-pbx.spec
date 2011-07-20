@@ -32,6 +32,9 @@ Requires: perl(Net::SSLeay)
 Requires: perl(XML::SAX)
 Requires: perl(Env::C)
 Requires: perl(IO::Socket::SSL)
+Requires: perl(Gearman::Client)
+Requires: perl(Gearman::Worker)
+Requires: perl(Authen::SASL)
 
 %description
 Dynamic IVR / SOHO VirtualPBX - CORE files
@@ -194,6 +197,7 @@ mv contrib/XVB-AI.odt $RPM_BUILD_ROOT/%CORE_DIR/doc/
 
 mv contrib/fagi.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-fagi
 mv contrib/perl-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-perl-worker
+mv contrib/gearman-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-gearman-worker
 mv sounds/*.tgz $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds/
 mv contrib/asterisk/extensions.conf $RPM_BUILD_ROOT/%{_sysconfdir}/asterisk/xvb/xvb.conf
 mv contrib/httpd.conf $RPM_BUILD_ROOT/%{_sysconfdir}/httpd/conf.d/xvb.conf
@@ -205,7 +209,7 @@ mv contrib $RPM_BUILD_ROOT/%CORE_DIR/
 mv 3rdparty $RPM_BUILD_ROOT/%CORE_DIR/
 
 #
-# clemn CVS tree
+# clean CVS tree
 #
 cd $RPM_BUILD_ROOT/
 find -name CVS -type d | xargs rm -rf
@@ -377,6 +381,11 @@ else
 	if [ "x$STR" != "x" ]; then
 		killall VirtualPBX.agi || true
 	fi
+	# gearman-worker
+	STR=`ps ax | grep [gG]earman-worker.pl`
+	if [ "x$STR" != "x" ]; then
+		killall gearman-worker.pl || true
+	fi
 fi
 
 
@@ -435,7 +444,7 @@ service httpd start
 %CORE_DIR/doc/XVB-AI.pdf
 %CORE_DIR/contrib/xvb.sql
 %CORE_DIR/contrib/icecast.xml
-%CORE_DIR/contrib/spec-files/*.spec
+%CORE_DIR/contrib/spec-files/*.gz
 %CORE_DIR/etc/BOM-*.txt
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/db
 
@@ -449,6 +458,9 @@ service httpd start
 %attr(755,asterisk,asterisk) %CORE_DIR/agi-bin/*.agi
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_perl_worker
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-perl-worker
+%attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_gearman_worker
+%attr(755,root,root) %CORE_DIR/contrib/utils/gearman-worker.pl
+%attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-gearman-worker
 %CORE_DIR/contrib/asterisk/feautures.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*
