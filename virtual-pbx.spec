@@ -163,6 +163,7 @@ mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/data
 perl contrib/utils/build/proj-obf.pl
 perl contrib/utils/viewlogs.pl dump project.files.sub $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/data/sub
 perl contrib/utils/viewlogs.pl dump project.files.var $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/data/var
+cp test-script.pl $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/
 #end-devel
 
 mv agi-bin $RPM_BUILD_ROOT/%CORE_DIR/

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.206 2011-07-17 20:50:45 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.207 2011-07-22 13:07:12 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1448,6 +1448,23 @@
 					[% ELSE %]
 						<input name="NEED_PARAMS" type="checkbox">
 					[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Record voice message: </td>
+					<td>
+					[% IF VBOX_PREF.NEED_VOICE %]
+						<input name="NEED_VOICE" type="checkbox" checked>
+					[% ELSE %]
+						<input name="NEED_VOICE" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Max message duaration: </td>
+					<td>
+						<input size='8' name="MAX_MSG_DURATION" value="[% VBOX_PREF.MAX_MSG_DURATION | html %]" type="text">
+						( in sec, -1 - for unlimit  )
 					</td>
 				</tr>
 				[% END %]

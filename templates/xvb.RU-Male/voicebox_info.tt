@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.152 2011-07-17 20:50:46 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.153 2011-07-22 13:07:12 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1706,6 +1706,28 @@
 					[% ELSE %]
 						<input name="NEED_PARAMS" type="checkbox">
 					[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Записать голосовое сообщение: </td>
+					<td><a href='#' class='info'>Записать голосовое сообщение: <span>
+							Записать голосовое сообщение пользователя и передать его по ссылке. 
+							Записанное сообщение передается в формате wav, в переменной: % VAR:FILE_DATA %
+							методом POST. 
+						</span></a></td>
+					<td>
+					[% IF VBOX_PREF.NEED_VOICE %]
+						<input name="NEED_VOICE" type="checkbox" checked>
+					[% ELSE %]
+						<input name="NEED_VOICE" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Максимальная длина сообщения: </td>
+					<td>
+						<input size='8' name="MAX_MSG_DURATION" value="[% VBOX_PREF.MAX_MSG_DURATION | html %]" type="text">
+						( в секундах, -1 - системное ограничение  )
 					</td>
 				</tr>
 				[% END %]

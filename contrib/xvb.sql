@@ -1098,9 +1098,11 @@ create	table VPBX_VBOXES_WEBVAR
 (
 	ID				INT(16)		    not null,
 
-	WEBVAR_URL		TEXT(1024)	not null,
-	GOTO_IF_FAIL	VARCHAR(255),
-	NEED_PARAMS		INT(1) not null default 0,
+	WEBVAR_URL			TEXT(1024)	not null,
+	GOTO_IF_FAIL		VARCHAR(255),
+	NEED_PARAMS			INT(1) not null default 0,
+	MAX_MSG_DURATION	INT(10) not null default -1,
+	NEED_VOICE			INT(1) not null default 0,
 
 	unique(ID),
 
