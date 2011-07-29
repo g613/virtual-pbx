@@ -47,9 +47,10 @@ Summary: Dynamic IVR / SOHO VirtualPBX VOIP application
 Group:   System Environment/Services
 
 Requires: asterisk >= 1.6.0.28
-Requires: virtual-pbx-sound-files >= 1-1_4584
+Requires: virtual-pbx-sound-files >= 1-1_5226
 Requires: virtual-pbx = %{version}-%{release}
 Requires: festival
+Requires: libshout
 Requires: lynx
 Requires: mysql-connector-odbc
 Requires: unixODBC
