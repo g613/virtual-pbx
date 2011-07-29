@@ -1,4 +1,4 @@
-drop database xvb;
+-- drop database xvb;
 create database xvb;
 use xvb;
 
@@ -9,7 +9,7 @@ create  table VPBX_DB_INFO
 	TIME	INT(16)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-create table VPBX_SIPPEERS_TEMPLATES {
+create table VPBX_SIPPEERS_TEMPLATES (
 	ID					INT(16)  not null AUTO_INCREMENT,
 	HOST				VARCHAR(255),
 	NAME				VARCHAR(255),
