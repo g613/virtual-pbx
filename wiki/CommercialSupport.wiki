@@ -4,6 +4,8 @@ _Integration with kamailio ( load balancing )_ : *500 EUR*
 
 _Integration with kamailio ( sip registrar )_ : *500 EUR*
 
+_Integration with gearmand ( sip registrar )_ : *100 EUR*
+
 _Consultation_ : *50 EUR* / hour (virtual-pbx | asterisk | linux )
 
 Contacts: mailto:virtual-pbx@prv.mts-nn.ru
