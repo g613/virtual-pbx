@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.153 2011-07-22 13:07:12 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.156 2011-08-08 07:37:03 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1263,9 +1263,9 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td>Время ожидания очереди (сек): </td>
+					<td>Время ожидания в очереди (сек): </td>
 					<td>
-						<input size='30' type='text' name='Q_TIMEOUT' value='[% VBOX_PREF.Q_TIMEOUT | html %]'>
+						<input size='4' type='text' name='Q_TIMEOUT' value='[% VBOX_PREF.Q_TIMEOUT | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1275,22 +1275,53 @@
 							`Если не дозвонились, перейти к` или если не определено ответят абонент не отвечает. 
 						</span></a></td>
 					<td>
-						<input size='30' type='text' name='Q_MAX_W_CALLS' value='[% VBOX_PREF.Q_MAX_W_CALLS | html %]'>
+						<input size='4' type='text' name='Q_MAX_W_CALLS' value='[% VBOX_PREF.Q_MAX_W_CALLS | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Пауза после разговора (сек): <span>
+							Целое число больше нуля. Значение равное нулю означает не использовать данную проверку.
+							Значение минимального промежутка времени ( в секундах ),
+							с момента, когда работа с абонентом завершена и до того,
+							как участник обработки очереди может принять новый вызов из очереди.
+					<td>
+						<input size='4' type='text' name='WRAPUPTIME' value='[% VBOX_PREF.WRAPUPTIME | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Переодичность анонсов (сек): </td>
 					<td>
-						<input size='30' type='text' name='ANNOUNCE_FREQUENCY' value='[% VBOX_PREF.ANNOUNCE_FREQUENCY | html %]'>
+						<input size='4' type='text' name='ANNOUNCE_FREQUENCY' value='[% VBOX_PREF.ANNOUNCE_FREQUENCY | html %]'>
+						( -1 - сказать один раз )
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Сказать время ожидания : </td>
+					<td>
+					<select name="ANNOUNCE_HOLDTIME">
+					[% IF VBOX_PREF.ANNOUNCE_HOLDTIME eq '2' %]
+						<option value="2">среднее за последний час</option>
+						<option value="0">нет</option>
+						<option value="1">среднее за все время</option>
+					[% ELSIF VBOX_PREF.ANNOUNCE_HOLDTIME eq '1' %]
+						<option value="1">среднее за все время</option>
+						<option value="0">нет</option>
+						<option value="2">среднее за последний час</option>
+					[% ELSE %]
+						<option value="0">нет</option>
+						<option value="1">среднее за все время</option>
+						<option value="2">среднее за последний час</option>
+					[% END %]
+					</select>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Сказать положение в очереди : </td>
 					<td>
-					[% IF VBOX_PREF.ANNOUNCE_HOLDTIME %]
-						<input name="ANNOUNCE_HOLDTIME" type="checkbox" checked>
+					[% IF VBOX_PREF.ANNOUNCE_POSITION %]
+						<input name="ANNOUNCE_POSITION" type="checkbox" checked>
 					[% ELSE %]
-						<input name="ANNOUNCE_HOLDTIME" type="checkbox">
+						<input name="ANNOUNCE_POSITION" type="checkbox">
 					[% END %]
 					</td>
 				</tr>
