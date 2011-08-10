@@ -47,7 +47,7 @@ Summary: Dynamic IVR / SOHO VirtualPBX VOIP application
 Group:   System Environment/Services
 
 Requires: asterisk >= 1.6.0.28
-Requires: virtual-pbx-sound-files >= 1-1_5226
+Requires: virtual-pbx-sound-files >= 2-1_5230
 Requires: virtual-pbx = %{version}-%{release}
 Requires: festival
 Requires: libshout
@@ -381,12 +381,12 @@ else
 	# perl-worker
 	STR=`ps ax | grep [V]irtualPBX-perl-worker`
 	if [ "x$STR" != "x" ]; then
-		killall VirtualPBX.agi || true
+		service xvb-perl-worker restart || killall VirtualPBX.agi || true
 	fi
 	# gearman-worker
 	STR=`ps ax | grep [gG]earman-worker.pl`
 	if [ "x$STR" != "x" ]; then
-		killall gearman-worker.pl || true
+		service xvb-gearman-worker restart || killall gearman-worker.pl || true
 	fi
 fi
 
@@ -427,6 +427,7 @@ service httpd start
 %attr(440,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/*.conf
 %attr(755,root,root) %CORE_DIR/contrib/utils/backup_restore.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/callblast.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/queues_hourly_avg.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/db_backup.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/file2moh.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/mc_view.pl

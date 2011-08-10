@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.207 2011-07-22 13:07:12 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.209 2011-08-08 07:09:57 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1073,28 +1073,55 @@
 				<tr class='addon_info'>
 					<td>Queue timeout (sec): </td>
 					<td>
-						<input size='30' type='text' name='Q_TIMEOUT' value='[% VBOX_PREF.Q_TIMEOUT | html %]'>
+						<input size='4' type='text' name='Q_TIMEOUT' value='[% VBOX_PREF.Q_TIMEOUT | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Queue max waiting calls: </td>
 					<td>
-						<input size='30' type='text' name='Q_MAX_W_CALLS' value='[% VBOX_PREF.Q_MAX_W_CALLS | html %]'>
+						<input size='4' type='text' name='Q_MAX_W_CALLS' value='[% VBOX_PREF.Q_MAX_W_CALLS | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Wrap up time (sec): </td>
+					<td>
+						<input size='4' type='text' name='WRAPUPTIME' value='[% VBOX_PREF.WRAPUPTIME | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Queue announce frequency (sec): </td>
 					<td>
-						<input size='30' type='text' name='ANNOUNCE_FREQUENCY' value='[% VBOX_PREF.ANNOUNCE_FREQUENCY | html %]'>
+						<input size='4' type='text' name='ANNOUNCE_FREQUENCY' value='[% VBOX_PREF.ANNOUNCE_FREQUENCY | html %]'>
+						( -1 - say once )
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Announce Queue holdtime: </td>
 					<td>
-					[% IF VBOX_PREF.ANNOUNCE_HOLDTIME %]
-						<input name="ANNOUNCE_HOLDTIME" type="checkbox" checked>
+						<select name="ANNOUNCE_HOLDTIME">
+						[% IF VBOX_PREF.ANNOUNCE_HOLDTIME eq '2' %]
+							<option value="2">the average for last hour</option>
+							<option value="0">none</option>
+							<option value="1">the average for all time</option>
+						[% ELSIF VBOX_PREF.ANNOUNCE_HOLDTIME eq '1' %]
+							<option value="1">the average for all time</option>
+							<option value="0">none</option>
+							<option value="2">the average for last hour</option>
+						[% ELSE %]
+							<option value="0">none</option>
+							<option value="1">the average for all time</option>
+							<option value="2">the average for last hour</option>
+						[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Announce Queue position: </td>
+					<td>
+					[% IF VBOX_PREF.ANNOUNCE_POSITION %]
+						<input name="ANNOUNCE_POSITION" type="checkbox" checked>
 					[% ELSE %]
-						<input name="ANNOUNCE_HOLDTIME" type="checkbox">
+						<input name="ANNOUNCE_POSITION" type="checkbox">
 					[% END %]
 					</td>
 				</tr>
