@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: safe_xvb_perl_worker,v 1.3 2011-06-17 20:27:02 gosha Exp $
+# $Id: safe_xvb_perl_worker,v 1.4 2011-08-11 05:16:20 gosha Exp $
 #
 # vim:textwidth=80:tabstop=4:shiftwidth=4:smartindent:autoindent
 
@@ -13,7 +13,7 @@ CONFIG=$1
 # Check if is already running.
 PROC=`ps ax | grep '[V]irtualPBX-perl-worker'`
 if [ "x$PROC" != "x" ]; then
-	echo "VirtualPBX perl worker is already running."
+	echo "VirtualPBX perl worker is already running." 1>&2
 	exit 1
 fi
 
@@ -28,14 +28,14 @@ run_xvb()
 		cd /tmp
 		sudo -u asterisk /opt/VirtualPBX/agi-bin/VirtualPBX.agi perl-worker $CONFIG
 		EXITSTATUS=$?
-		echo "ended with exit status $EXITSTATUS"
+		echo "ended with exit status $EXITSTATUS" 1>&2
 		if [ "$EXITSTATUS" = "0" ]; then
 			# Properly shutdown....
-			echo "shutdown normally."
+			echo "shutdown normally." 1>&2
 			exit 0
 		elif [ $EXITSTATUS -gt 128 ]; then
 			EXITSIGNAL=EXITSTATUS-128
-			echo "XVB perl worker exited on signal $EXITSIGNAL."
+			echo "XVB perl worker exited on signal $EXITSIGNAL."  1>&2
 			if [ "$NOTIFY" != "" ]; then
 				echo "XVB perl worker on $MACHINE exited on signal $EXITSIGNAL.  Might want to take a peek." | \
 				mail -s "XVB perl worker Died" $NOTIFY
@@ -44,9 +44,10 @@ run_xvb()
 				$EXEC
 			fi
 		else
-			echo "XVB perl worker exited on signal $EXITSIGNAL."
+			echo "XVB perl worker exited on signal $EXITSIGNAL." 1>&2
 		fi
-		echo "Automatically restarting XVB perl worker."
+		echo "Automatically restarting XVB perl worker." 1>&2
+		date  1>&2
 		sleep $SLEEPSECS
 	done
 }
