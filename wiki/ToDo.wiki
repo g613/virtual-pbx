@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
-<font color='green'>+ Для очердей доюавить парамер wrapuptime</font> ( 07.08.2011 / build 5284 )
+<font color='red'>- Для очердей добавить возможность вызова get запроса со стороны сервера после ответа агента</font>
+
+<font color='green'>+ Для очердей добавить парамер wrapuptime</font> ( 07.08.2011 / build 5284 )
 
 <font color='green'>+ Для очереди добавить параметр 'Анонс положения в очереди'</font> ( 05.08.2011 / build 5255 )
 
