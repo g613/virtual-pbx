@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.13 2011-06-01 06:24:04 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.14 2011-08-23 10:59:45 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Статистика номера - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -42,6 +42,10 @@
 				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Просмотреть сообщения</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Параметры номера</a>
+				[% IF EXTENDED_STAT %]
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=extended_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Расширенная статистика</a>
+				[% END %]
 			</td>
 		</tr>
 	</table>
