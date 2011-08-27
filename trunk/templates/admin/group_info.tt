@@ -86,31 +86,17 @@
 						<td colspan='2'><h4>Other feautures:</h4></td>
 					</tr>
 					<tr>
-						<td>Allow TTS greetings: </td>
+						<td>Upload custom system files: </td>
 						<td>
-						<select name="GR_TTS_GREETING">
-						[% IF GROUP.TTS_GREETING %]
-							<option value="1">yes</option>
-							<option value="0">no</option>
-						[% ELSE %]
-							<option value="0">no</option>
-							<option value="1">yes</option>
-						[% END %]
-						</select>
-						</td>
-					</tr>
-					<tr>
-						<td>Allow Macros: </td>
-						<td>
-						<select name="GR_ALLOW_MACROS">
-						[% IF GROUP.ALLOW_MACROS %]
-							<option value="1">yes</option>
-							<option value="0">no</option>
-						[% ELSE %]
-							<option value="0">no</option>
-							<option value="1">yes</option>
-						[% END %]
-						</select>
+							<select name="GR_CUSTOM_FILES">
+							[% IF GROUP.CUSTOM_FILES %]
+								<option value="1">yes</option>
+								<option value="0">no</option>
+							[% ELSE %]
+								<option value="0">no</option>
+								<option value="1">yes</option>
+							[% END %]
+							</select>
 						</td>
 					</tr>
 					<tr>
@@ -142,7 +128,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>Allow Phones: </td>
+						<td>Enable User Phones: </td>
 						<td>
 						<select name="GR_ALLOW_PHONES">
 						[% IF GROUP.ALLOW_PHONES %]
@@ -156,21 +142,35 @@
 						</td>
 					</tr>
 					<tr>
-						<td>Upload custom system files: </td>
+						<td>Enable TTS greetings: </td>
 						<td>
-							<select name="GR_CUSTOM_FILES">
-							[% IF GROUP.CUSTOM_FILES %]
-								<option value="1">yes</option>
-								<option value="0">no</option>
-							[% ELSE %]
-								<option value="0">no</option>
-								<option value="1">yes</option>
-							[% END %]
-							</select>
+						<select name="GR_TTS_GREETING">
+						[% IF GROUP.TTS_GREETING %]
+							<option value="1">yes</option>
+							<option value="0">no</option>
+						[% ELSE %]
+							<option value="0">no</option>
+							<option value="1">yes</option>
+						[% END %]
+						</select>
 						</td>
 					</tr>
 					<tr>
-						<td>Advanced CallBlast: </td>
+						<td>Enable Macros: </td>
+						<td>
+						<select name="GR_ALLOW_MACROS">
+						[% IF GROUP.ALLOW_MACROS %]
+							<option value="1">yes</option>
+							<option value="0">no</option>
+						[% ELSE %]
+							<option value="0">no</option>
+							<option value="1">yes</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Enable Advanced CallBlast: </td>
 						<td>
 						<select name="GR_ADVANCED_CALLBLAST">
 						[% IF GROUP.ADVANCED_CALLBLAST %]
@@ -198,7 +198,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>Eanble API: </td>
+						<td>Eanble WEB API: </td>
 						<td>
 						<select name="GR_ALLOW_API">
 						[% IF GROUP.ALLOW_API %]
@@ -212,10 +212,24 @@
 						</td>
 					</tr>
 					<tr>
-						<td>Allow IceCast: </td>
+						<td>Enable IceCast: </td>
 						<td>
 						<select name="GR_ALLOW_ICECAST">
 						[% IF GROUP.ALLOW_ICECAST %]
+							<option value="1">yes</option>
+							<option value="0">no</option>
+						[% ELSE %]
+							<option value="0">no</option>
+							<option value="1">yes</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Enable Extended stat: </td>
+						<td>
+						<select name="GR_ALLOW_EXTSTAT">
+						[% IF GROUP.ALLOW_EXTSTAT %]
 							<option value="1">yes</option>
 							<option value="0">no</option>
 						[% ELSE %]
@@ -281,7 +295,7 @@
 			<td><input name='GR_MAX_GOTOIF_ITEMS' type='text' value="[% GROUP.MAX_GOTOIF_ITEMS | html %]"></td>
 		</tr>
 		<tr>
-			<td>Maximum Phones for FollowMe & Queues: </td>
+			<td>Maximum Phones for FollowMe & Queue: </td>
 			<td><input name='GR_MAX_EXT_PHONES' type='text' value="[% GROUP.MAX_EXT_PHONES | html %]"></td>
 		</tr>
 		<tr>
