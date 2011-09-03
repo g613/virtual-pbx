@@ -1,5 +1,7 @@
 #labels Featured
 = ToDo list =
+<font color='green'>+ Расширенная статистика для Парковки, Dialout'a</font> ( 03.09.2011 / build 5410 )
+
 <font color='green'>+ Расширенная статистика для Голосования / Опросов</font> ( 25.08.2011 / build 5338 )
 
 <font color='green'>+ Расширенная статистика для очередей</font> ( 22.08.2011 / build 5326 )
