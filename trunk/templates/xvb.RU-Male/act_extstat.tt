@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.4 2011-08-25 18:55:51 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.7 2011-09-02 11:02:57 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -21,6 +21,27 @@
 
 		js_data = [% JS_DATA %];
 
+		[% IF VBOX_PREF.TYPE eq '3' %]
+		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
+		google.setOnLoadCallback(drawAllChart);
+		function drawAllChart() {
+			ExtStatdrawChart1('STATUS','Все звонки / статус звонка');
+			ExtStatdrawChart1('CAUSE','Все звонки / код разъединения');
+			ExtStatdrawChart1('DURATION','Отвеченные звонки / продолжительность (минуты)');
+			ExtStatdrawChart1('PN','Отвеченные звонки / телефоны');
+			ExtStatdrawChart2('TERM',['NOANSWER'],'NOANSWER','Не отвеченные звонки / кто завершил');
+			ExtStatdrawChart2('TERM',['ANSWER'],'ANSWER','Отвеченные звонки / кто завершил');
+			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Не отвеченные звонки/ время ожидания (сек)');
+			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Отвеченные звонки / время ожидания (сек)');
+		}
+		[% END %]
+		[% IF VBOX_PREF.TYPE eq '10' %]
+		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
+		google.setOnLoadCallback(drawAllChart);
+		function drawAllChart() {
+			ExtStatdrawChart1('SUMMARY','Общий отчет');
+		}
+		[% END %]
 		[% IF VBOX_PREF.TYPE eq '13' %]
 		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
 		google.setOnLoadCallback(drawAllChart);
@@ -38,43 +59,19 @@
 			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Не отвеченные звонки/ время ожидания (сек)');
 			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Отвеченные звонки / время ожидания (сек)');
 		}
-		[% ELSIF VBOX_PREF.TYPE eq '10' %]
+		[% END %]
+		[% IF VBOX_PREF.TYPE eq '27' %]
 		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
 		google.setOnLoadCallback(drawAllChart);
 		function drawAllChart() {
-			ExtStatdrawChart1('SUMMARY','Общий отчет');
+			ExtStatdrawChart1('STATUS','Все звонки / статус звонка');
+			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Не подобранные звонки/ время ожидания (сек)');
+			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Подобранные звонки / время ожидания (сек)');
 		}
 		[% END %]
-		
-		var period='[% CDR_PERIOD %]';
-		var group_by = '';
-		if ( period == '%Y-%m-%d' ) {
-			period = 'день';
-			group_by = 'd';
-		} else if ( period == '%W' ) {
-			period = 'день недели';
-			group_by = 'dw';
-		} else if ( period == '%V' ) {
-			period = 'неделя';
-			group_by = 'w';
-		} else if ( period == '%Y-%m' ) {
-			period = 'месяц';
-			group_by = 'm';
-		} else if ( period == '%Y' ) {
-			period = 'год';
-			group_by = 'y';
-		} else if ( period == '%H' ) {
-			period = 'час дня';
-			group_by = 'hd';
-		} else if ( period == '%Y-%m-%d %H' ) {
-			period = 'час';
-			group_by = 'h';
-		} else if ( period == '%Y-%m-%d %H:%i' ) {
-			period = 'минута';
-			group_by = 'min';
-		} else {
-			period = 'группировать по';
-		}
+		var time_period = getTimePeriod( 'ru','[% CDR_PERIOD %]' );
+		var period = time_period.period;
+		var group_by = time_period.group_by;
 	</script>
 </head>
 
@@ -173,6 +170,103 @@
 	</p>
 
 	<p>
+	[% IF VBOX_PREF.TYPE eq '3' %]
+	<table width='95%' border='0' align='center'>
+		<tr><td colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_STATUS"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_STATUS_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2' align='center'><br><h4>Время ожидания ответа на звонок</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_RING_TIME_ANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_RING_TIME_ANSWER_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2'><br><br></td></tr>
+		<tr>
+			<td>
+				<div id="chart_RING_TIME_NOANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_RING_TIME_NOANSWER_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>Распределение звонков по телефонам</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_PN"></div>
+			</td>
+			<td>
+				<div id="chart_PN_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>Завершение звонков</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_TERM_NOANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_TERM_NOANSWER_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2'><br><br></td></tr>
+		<tr>
+			<td>
+				<div id="chart_TERM_ANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_TERM_ANSWER_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2' align='center'><br><h4>Продолжительность звонков</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_DURATION"></div>
+			</td>
+			<td>
+				<div id="chart_DURATION_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>Техическая информация</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_CAUSE"></div>
+			</td>
+			<td>
+				<div id="chart_CAUSE_PRC"></div>
+			</td>
+		</tr>
+	</table>
+	[% END %]
+	[% IF VBOX_PREF.TYPE eq '10' %]
+	<table width='95%' border='0' align='center'>
+		<tr><td colspan='2' align='center'><h5>[% VBOX_PREF.GREETING | html %]</h5></td></tr>
+		<tr><td colspan='2' align='center'><br><h4>Общий отчет</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_SUMMARY"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_SUMMARY_PRC"></div>
+			</td>
+		</tr>
+	</table>
+	[% END %]
 	[% IF VBOX_PREF.TYPE eq '13' %]
 	<table width='95%' border='0' align='center'>
 		<tr><td colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
@@ -295,16 +389,36 @@
 			</td>
 		</tr>
 	</table>
-	[% ELSIF VBOX_PREF.TYPE eq '10' %]
+	[% END %]
+	[% IF VBOX_PREF.TYPE eq '27' %]
 	<table width='95%' border='0' align='center'>
-		<tr><td colspan='2' align='center'><h5>[% VBOX_PREF.GREETING | html %]</h5></td></tr>
-		<tr><td colspan='2' align='center'><br><h4>Общий отчет</h4></td></tr>
+		<tr><td colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
 		<tr>
 			<td width='60%'>
-				<div id="chart_SUMMARY"></div>
+				<div id="chart_STATUS"></div>
 			</td>
 			<td width='40%'>
-				<div id="chart_SUMMARY_PRC"></div>
+				<div id="chart_STATUS_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2' align='center'><br><h4>Время ожидания на парковке</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_RING_TIME_ANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_RING_TIME_ANSWER_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2'><br><br></td></tr>
+		<tr>
+			<td>
+				<div id="chart_RING_TIME_NOANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_RING_TIME_NOANSWER_PRC"></div>
 			</td>
 		</tr>
 	</table>

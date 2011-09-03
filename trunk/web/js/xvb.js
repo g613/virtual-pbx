@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.40 2011-08-23 17:54:28 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.43 2011-09-02 11:51:18 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -72,6 +72,11 @@ function xmlhttpDel(obj,lang,data_id,parent_id) {
 					}
 					var tr = document.getElementById(data_id);
 					table.deleteRow(tr.rowIndex);
+					if ( parent_id == null ) {
+						listcolorer( 'd-tbl' );
+					} else {
+						listcolorer( parent_id );
+					}
 				}
 			} else {
 				alert('Delete error: '+ self.xmlHttpReq.status +' : '+ self.xmlHttpReq.responseText );
@@ -601,9 +606,11 @@ function listcolorer( element_id ) {
 	var el = document.getElementById(element_id).getElementsByTagName('tr');
 	var ind = 0;
 	for( i=0; i < el.length; i++ ) {
-		if ( el[i].className == 'nocolor' ) {
+		if ( el[i].className == 'nocolor' || el[i].className == 'backlight' ) {
 			if ( ind % 2 == 1 ) {
 				el[i].className = 'backlight';
+			} else {
+				el[i].className = 'nocolor';
 			}
 			ind++;
 		}
@@ -914,6 +921,71 @@ function ExtStatdrawChart2(chart_param,subparam,divname,title) {
 		var chart_prc = new google.visualization.ImageBarChart(document.getElementById('chart_'+chart_param+'_'+divname+'_PRC'));
 		chart_prc.draw(data_prc, { min: 0, title: '% '+title });
 	}
+}
+
+/* Time Periods */
+function getTimePeriod(lang,period) {
+	var group_by = '';
+
+	if ( lang == 'ru' ) {
+		if ( period == '%Y-%m-%d' ) {
+			period = 'день';
+			group_by = 'd';
+		} else if ( period == '%W' ) {
+			period = 'день недели';
+			group_by = 'dw';
+		} else if ( period == '%V' ) {
+			period = 'неделя';
+			group_by = 'w';
+		} else if ( period == '%Y-%m' ) {
+			period = 'месяц';
+			group_by = 'm';
+		} else if ( period == '%Y' ) {
+			period = 'год';
+			group_by = 'y';
+		} else if ( period == '%H' ) {
+			period = 'час дня';
+			group_by = 'hd';
+		} else if ( period == '%Y-%m-%d %H' ) {
+			period = 'час';
+			group_by = 'h';
+		} else if ( period == '%Y-%m-%d %H:%i' ) {
+			period = 'минута';
+			group_by = 'min';
+		} else {
+			period = 'группировать по';
+		}
+	} else {
+		if ( period == '%Y-%m-%d' ) {
+			period = 'day';
+			group_by = 'd';
+		} else if ( period == '%W' ) {
+			period = 'day of week';
+			group_by = 'dw';
+		} else if ( period == '%V' ) {
+			period = 'week';
+			group_by = 'w';
+		} else if ( period == '%Y-%m' ) {
+			period = 'month';
+			group_by = 'm';
+		} else if ( period == '%Y' ) {
+			period = 'year';
+			group_by = 'y';
+		} else if ( period == '%H' ) {
+			period = 'hour of day';
+			group_by = 'hd';
+		} else if ( period == '%Y-%m-%d %H' ) {
+			period = 'hour';
+			group_by = 'h';
+		} else if ( period == '%Y-%m-%d %H:%i' ) {
+			period = 'minute';
+			group_by = 'min';
+		} else {
+			period = 'group by';
+		}
+	}
+
+	return { period:period, group_by:group_by };
 }
 
 /* init */
