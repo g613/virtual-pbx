@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters.tt,v 1.18 2011-03-20 21:30:36 gosha Exp $ -->
+<!-- $Id: cidfilters.tt,v 1.20 2011-09-02 11:51:15 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID filters - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]

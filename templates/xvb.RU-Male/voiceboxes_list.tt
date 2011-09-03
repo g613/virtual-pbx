@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.16 2011-03-21 08:08:51 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.18 2011-09-02 11:51:18 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список внутренних номеров - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]

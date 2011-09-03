@@ -226,6 +226,12 @@ find $RPM_BUILD_ROOT/%CORE_DIR/templates -name 'voicebox_info.tt' -type f |
 		perl $RPM_BUILD_ROOT/%CORE_DIR/contrib/utils/build/tt_preprocess.pl $f_name
 	done
 
+find $RPM_BUILD_ROOT/%CORE_DIR/templates -name 'act_extstat.tt' -type f |
+	while read f_name
+	do
+		perl $RPM_BUILD_ROOT/%CORE_DIR/contrib/utils/build/tt_preprocess.pl $f_name
+	done
+
 export XVB_VERSION=%{release}
 cd $RPM_BUILD_ROOT/%CORE_DIR/templates
 find -name '*.tt' -exec perl ../contrib/utils/build/html_clean.pl {} ';'

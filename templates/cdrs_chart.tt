@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.11 2011-08-25 18:55:51 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.12 2011-09-02 10:08:45 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -55,34 +55,9 @@
 	[% IF CDR_LIST scalar %]
 	<script language='JavaScript'>
 		var graphx=new Array();
-		var period='[% CDR_PERIOD %]';
-		var group_by = '';
-		if ( period == '%Y-%m-%d' ) {
-			period = 'day';
-			group_by = 'd';
-		} else if ( period == '%W' ) {
-			period = 'day of week';
-			group_by = 'dw';
-		} else if ( period == '%V' ) {
-			period = 'week';
-			group_by = 'w';
-		} else if ( period == '%Y-%m' ) {
-			period = 'month';
-			group_by = 'm';
-		} else if ( period == '%Y' ) {
-			period = 'year';
-			group_by = 'y';
-		} else if ( period == '%H' ) {
-			period = 'hour of day';
-			group_by = 'hd';
-		} else if ( period == '%Y-%m-%d %H' ) {
-			period = 'hour';
-		} else if ( period == '%Y-%m-%d %H:%i' ) {
-			period = 'minute';
-			group_by = 'min';
-		} else {
-			period = 'group by';
-		}
+		var time_period = getTimePeriod( 'en', '[% CDR_PERIOD %]' );
+		var period = time_period.period;
+		var group_by = time_period.group_by;
 		graphx[0] = [ period, 'Calls', 'Minutes', 'Minutes AVG', 'Cost' ];
 		var ind = 1;
 		[% FOREACH msg = CDR_LIST %]

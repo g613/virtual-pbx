@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.22 2011-05-30 12:52:29 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.24 2011-09-02 11:51:18 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: macros_list.tt,v 1.6 2011-02-28 10:41:59 gosha Exp $ -->
+<!-- $Id: macros_list.tt,v 1.8 2011-09-02 11:51:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Макросы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
