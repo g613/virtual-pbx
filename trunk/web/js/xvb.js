@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.43 2011-09-02 11:51:18 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.45 2011-09-12 04:35:02 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -542,7 +542,7 @@ function cdrfilters( element_id, col_num ) {
 						callTime.setTime(callTimeOffset);
 					}
 				}
-				var new_str = '<a title="'+dateArray[6]+'" href="#" onclick=\'dtmf_history_win("'+out_str+'");return false\'>$1DTMF</a>';
+				var new_str = '<a title="'+dateArray[6]+': '+ dtmf_str[2] +'" href="#" onclick=\'dtmf_history_win("'+out_str+'");return false\'>$1DTMF</a>';
 				new_str = data.replace(re2, new_str);
 				td_obj[col_num].innerHTML = new_str;
 			} else {
@@ -931,7 +931,7 @@ function getTimePeriod(lang,period) {
 		if ( period == '%Y-%m-%d' ) {
 			period = 'день';
 			group_by = 'd';
-		} else if ( period == '%W' ) {
+		} else if ( period == '%w - %W' ) {
 			period = 'день недели';
 			group_by = 'dw';
 		} else if ( period == '%V' ) {
@@ -959,7 +959,7 @@ function getTimePeriod(lang,period) {
 		if ( period == '%Y-%m-%d' ) {
 			period = 'day';
 			group_by = 'd';
-		} else if ( period == '%W' ) {
+		} else if ( period == '%w - %W' ) {
 			period = 'day of week';
 			group_by = 'dw';
 		} else if ( period == '%V' ) {
@@ -987,6 +987,98 @@ function getTimePeriod(lang,period) {
 
 	return { period:period, group_by:group_by };
 }
+
+/* Ajax row add 
+function xmlhttpAdd(obj,table_id,data_id,url) {
+	// need ADD
+	var needUpdate = checkChanges(obj,1);
+	if ( needUpdate == false ) {
+		return needUpdate;
+	}
+
+	// ajax only for exists data;
+	var table;
+	if ( table_id == null ) {
+		table = document.getElementById('d-tbl');
+	} else {
+		table = document.getElementById(table_id);
+	}
+	var tr = document.getElementById(data_id);
+	var new_index = tr.rowIndex;
+	var row_el = document.getElementById(table_id).getElementsByTagName('tr');
+	if ( row_el[new_index-1].className != 'nocolor' && row_el[new_index-1].className != 'backlight' ) {
+		needUpdate = true;
+	} else {
+		needUpdate = false;
+	}
+	if ( needUpdate == true ) {
+		return needUpdate;
+	}
+
+	// Shaddow
+	LoadingOn();
+
+	// build url
+	var post_url = '/ui?force2x=1';
+
+	for( i=0; i < obj.elements.length; i++ ) {
+		if ( obj.elements[i].type == 'checkbox' || obj.elements[i].type == 'radio' ) {
+			if ( obj.elements[i].checked ) {
+				post_url = post_url +'&'+ obj.elements[i].name + '=1';
+			}
+		} else if ( obj.elements[i].type == 'submit' ) {
+			obj.elements[i].blur();
+		} else if ( obj.elements[i].type == 'button' ) {
+			// NoOP
+		} else if ( obj.elements[i].type != 'select-one' ) {
+			post_url = post_url +'&'+ obj.elements[i].name + '=' + obj.elements[i].value;
+		} else {
+			post_url = post_url +'&'+ obj.elements[i].name + '=' + obj.elements[i].options[ obj.elements[i].selectedIndex ].value;
+		}
+	}
+
+	var xmlHttpReq = false;
+	var self = this;
+	// Mozilla/Safari
+	if (window.XMLHttpRequest) {
+		self.xmlHttpReq = new XMLHttpRequest();
+	}
+	// IE
+	else if (window.ActiveXObject) {
+		self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	self.xmlHttpReq.open('GET', post_url, true);
+
+	self.xmlHttpReq.onreadystatechange = function() {
+		if (self.xmlHttpReq.readyState == 4) {
+			if ( self.xmlHttpReq.statusText == 'Ok' || self.xmlHttpReq.status == 204 || self.xmlHttpReq.status == 1223 ) {
+				var new_row = table.insertRow(new_index);
+				new_row.className = 'nocolor';
+				new_row.innerHTML = row_el[new_index-1].innerHTML;
+				//var el = document.getElementById(data_id).getElementsByTagName('td');
+				//for( i=0; i < el.length; i++ ) {
+				//	var new_cel = new_row.insertCell(i);
+				//	new_cel.innerHTML = el[i].innerHTML;
+				//	new_cel.className = 'in_t0';
+				//}
+				if ( table_id == null ) {
+					listcolorer( 'd-tbl' );
+				} else {
+					listcolorer( table_id );
+				}
+			} else {
+				alert('Add error: '+ self.xmlHttpReq.status +' : '+ self.xmlHttpReq.responseText );
+			}
+			LoadingOff();
+			//document.body.style.cursor='default';
+		}
+	}
+	
+	self.xmlHttpReq.send();
+	return false;
+}
+*/
 
 /* init */
 function XVBInit() {
