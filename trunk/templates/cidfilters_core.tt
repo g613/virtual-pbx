@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters_core.tt,v 1.20 2011-09-02 11:51:16 gosha Exp $ -->
+<!-- $Id: cidfilters_core.tt,v 1.21 2011-09-07 06:02:18 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID filters - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -83,7 +83,8 @@
 		</form>
 		</tr>
 		[% END %]
-		<tr align='center'>
+		<tr align='center' id='submit_row'>
+		<!--<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpAdd(this,"d-tbl","submit_row","")'>-->
 		<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 			<input type='hidden' name='action' value='cid_add'>
 			<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
