@@ -1,5 +1,7 @@
 #labels Featured
 = ToDo list =
+<font color='green'>+ Расширенная статистика для callblast'a</font> ( 24.09.2011 / build 5470 )
+
 <font color='green'>+ Для callblast'a добавить новый параметр - минимальное время успешного звонка</font> ( 21.09.2011 / build 5465 )
 
 <font color='green'>+ Для callblast'a добавить CDR для каждой попытки вызова</font> ( 21.09.2011 / build 5465 )
