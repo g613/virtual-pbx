@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.157 2011-09-16 16:10:34 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.158 2011-09-21 11:36:56 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1649,7 +1649,7 @@
 						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
 					</td>
 				</tr>
-				<tr>
+				<tr class='addon_info'>
 					<td><a href='#' class='info'>Одновременных звонков:  <span>
 							Количество одновременных вызовов. Например если после CallBlast'a звонок отправляется 
 							оператору и у вас всего 2 оператора, то данное значение логично установить в 2.
@@ -1657,6 +1657,16 @@
 					<td>
 						<input size='4' type='text' name='CALL_LIMIT' value='[% VBOX_PREF.CALL_LIMIT | html %]'>
 						( 0 - не ограничено )
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Минимальная длительность звонка:  <span>
+							Минимальная длительность разговора при которой звонок считается состоявшимся. 
+							Например этот параметр можно использовать для уверенности, что сообщение было дослушано до конца.
+						</span></a></td>
+					<td>
+						<input size='4' type='text' name='MIN_CALL_DURATION' value='[% VBOX_PREF.MIN_CALL_DURATION | html %]'>
+						( 0 - не ограничено [сек] )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -2762,14 +2772,15 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-				<table width='95%' class='addon_data' id='d-tbl'>
+				<table width='100%' class='addon_data' id='d-tbl'>
 					<tr class='list_addon_data'>
+						<th>Время обработки</th>
 						<th>Имя</th>
 						<th>Номер(а) телефона</th>
 						<th>Переменные</th>
 						<th>Статус</th>
+						<th>Длительность</th>
 						<th>Попытка</th>
-						<th>Время обработки</th>
 						<th>Действия</th>
 					</tr>
 					[% IF MSG_PREV ne '' %]
@@ -2786,10 +2797,13 @@
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 						<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-						<td><input class='in_t0' type='text' size='20' name='name' value='[% param.NAME | html %]'></td>
-						<td><input class='in_t0' type='text' size='35' name='pn' value='[% param.PHONE_NUMBER | html %]'></td>
-						<td><input class='in_t0' type='text' size='35' name='uv' value='[% param.USER_VARS | html %]'></td>
 						<td>
+							[% param.PROCESS_DATE | html %]
+						</td>
+						<td><input class='in_t0' type='text' size='20' name='name' value='[% param.NAME | html %]'></td>
+						<td><input class='in_t0' type='text' size='33' name='pn' value='[% param.PHONE_NUMBER | html %]'></td>
+						<td><input class='in_t0' type='text' size='25' name='uv' value='[% param.USER_VARS | html %]'></td>
+						<td align='left'>
 							[% IF param.CALL_STATUS contain 'success' %]
 								<a class='success' href='?action=act_list&call_id=[% param.CALL_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
 							[% ELSIF param.CALL_STATUS eq 'wait' %]
@@ -2800,10 +2814,8 @@
 								unknown
 							[% END %]
 						</td>
+						<td>[% param.DURATION | duration_str | html %]</td>
 						<td>[% param.ATTEMPT %]</td>
-						<td>
-							[% param.PROCESS_DATE | html %]
-						</td>
 						<td align='left' nowrap='nowrap'>
 							<a href='?action=callblast_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
 							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
@@ -2828,20 +2840,20 @@
 						<input type='hidden' name='action' value='callblast_add'>
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+						<td>&nbsp;</td>
 						<td><input type='text' name='name' value='' size='20'></td>
-						<td><input type='text' size='35' name='pn' value=''></td>
-						<td><input type='text' size='35' name='uv' value=''></td>
-						<td colspan='3'>&nbsp;</td>
-						<td align='center'>
-							<input type='submit' value='add'>
+						<td><input size='33' type='text' name='pn' value=''></td>
+						<td><input size='25' type='text' name='uv' value=''></td>
+						<td colspan='4' align='center'>
+							<input type='submit' value=' добавить абонента '>
 						</td>
 						</form>
 					</tr>
-					<tr><td colspan='7'>&nbsp;</td></tr>
+					<tr><td colspan='8'>&nbsp;</td></tr>
 						<tr id='csv-import'>
 						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 						<td colspan='3'>&nbsp;</td>
-						<td colspan='4' align='right'>
+						<td colspan='5' align='right'>
 							<input type='file' name='config_file'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>

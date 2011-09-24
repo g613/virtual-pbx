@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.210 2011-09-16 16:10:31 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.211 2011-09-21 11:36:55 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1394,11 +1394,18 @@
 						<input size='4' type='text' name='RETRYDIAL_LOOPS' value='[% VBOX_PREF.RETRYDIAL_LOOPS | html %]'>
 					</td>
 				</tr>
-				<tr>
+				<tr class='addon_info'>
 					<td>Concurent calls: </td>
 					<td>
 						<input size='4' type='text' name='CALL_LIMIT' value='[% VBOX_PREF.CALL_LIMIT | html %]'>
 						( 0 - unlimit )
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Minimum duration of successful call: </td>
+					<td>
+						<input size='4' type='text' name='MIN_CALL_DURATION' value='[% VBOX_PREF.MIN_CALL_DURATION | html %]'>
+						( 0 - unlimit [sec] )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -2453,14 +2460,15 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-				<table width='95%' class='addon_data' id='d-tbl'>
+				<table width='100%' class='addon_data' id='d-tbl'>
 					<tr class='list_addon_data'>
+						<th>Handle time</th>
 						<th>Name</th>
 						<th>Phone Number(s)</th>
 						<th>User vars</th>
 						<th>Status</th>
+						<th>Duration</th>
 						<th>Attempt</th>
-						<th>Handle time</th>
 						<th>Actions</th>
 					</tr>
 					[% IF MSG_PREV ne '' %]
@@ -2477,10 +2485,13 @@
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 						<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-						<td><input class='in_t0' size='20' type='text' name='name' value='[% param.NAME | html %]'></td>
-						<td><input class='in_t0' size='35' type='text' name='pn' value='[% param.PHONE_NUMBER | html %]'></td>
-						<td><input class='in_t0' size='35' type='text' name='uv' value='[% param.USER_VARS | html %]'></td>
 						<td>
+							[% param.PROCESS_DATE | html %]
+						</td>
+						<td><input class='in_t0' size='20' type='text' name='name' value='[% param.NAME | html %]'></td>
+						<td><input class='in_t0' size='33' type='text' name='pn' value='[% param.PHONE_NUMBER | html %]'></td>
+						<td><input class='in_t0' size='25' type='text' name='uv' value='[% param.USER_VARS | html %]'></td>
+						<td align='left'>
 							[% IF param.CALL_STATUS contain 'success' %]
 								<a class='success' href='?action=act_list&call_id=[% param.CALL_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
 							[% ELSIF param.CALL_STATUS eq 'wait' %]
@@ -2491,10 +2502,8 @@
 								unknown
 							[% END %]
 						</td>
+						<td>[% param.DURATION | duration_str | html %]</td>
 						<td>[% param.ATTEMPT %]</td>
-						<td>
-							[% param.PROCESS_DATE | html %]
-						</td>
 						<td align='left' nowrap='nowrap'>
 							<a href='?action=callblast_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>&nbsp;
 							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
@@ -2519,20 +2528,20 @@
 						<input type='hidden' name='action' value='callblast_add'>
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+						<td>&nbsp;</td>
 						<td><input type='text' name='name' value='' size='20'></td>
-						<td><input size='35' type='text' name='pn' value=''></td>
-						<td><input size='35' type='text' name='uv' value=''></td>
-						<td colspan='3'>&nbsp;</td>
-						<td align='center'>
-							<input type='submit' value='add'>
+						<td><input size='33' type='text' name='pn' value=''></td>
+						<td><input size='25' type='text' name='uv' value=''></td>
+						<td colspan='4' align='center'>
+							<input type='submit' value=' add callblast item '>
 						</td>
 						</form>
 					</tr>
-					<tr><td colspan='7'>&nbsp;</td></tr>
+					<tr><td colspan='8'>&nbsp;</td></tr>
 					<tr id='csv-import'>
 						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 						<td colspan='3'>&nbsp;</td>
-						<td colspan='4' align='right'>
+						<td colspan='5' align='right'>
 							<input type='file' name='config_file'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
