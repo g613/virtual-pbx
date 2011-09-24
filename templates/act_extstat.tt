@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.6 2011-09-02 11:02:55 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.7 2011-09-22 15:09:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -58,6 +58,16 @@
 			ExtStatdrawChart2('TERM',['ANSWER'],'ANSWER','Answered calls / disconnect originator');
 			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Unanswered calls / wait time (sec)');
 			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Answered calls / wait time (sec)');
+		}
+		[% END %]
+		[% IF VBOX_PREF.TYPE eq '18' %]
+		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
+		google.setOnLoadCallback(drawAllChart);
+		function drawAllChart() {
+			ExtStatdrawChart1('ALL_STATUS','All calls / status');
+			ExtStatdrawChart1('STATUS','All calls / success or failed');
+			ExtStatdrawChart1('ATTEMPT','All calls / call attempt');
+			ExtStatdrawChart1('GOOD_ATTEMPT','Successful calls / call attempt');
 		}
 		[% END %]
 		[% IF VBOX_PREF.TYPE eq '27' %]
@@ -388,6 +398,49 @@
 			</td>
 			<td>
 				<div id="chart_CAUSE_PRC"></div>
+			</td>
+		</tr>
+	</table>
+	[% END %]
+	[% IF VBOX_PREF.TYPE eq '18' %]
+	<table width='95%' border='0' align='center'>
+		<tr><td colspan='2' align='center'><br><h4>All calls / status</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_ALL_STATUS"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_ALL_STATUS_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2' align='center'><br><h4>All calls / success or failed</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_STATUS"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_STATUS_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>All calls / call attempt</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_ATTEMPT"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_ATTEMPT_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>Successful calls / call attempt</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_GOOD_ATTEMPT"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_GOOD_ATTEMPT_PRC"></div>
 			</td>
 		</tr>
 	</table>

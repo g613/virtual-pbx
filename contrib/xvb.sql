@@ -1046,6 +1046,7 @@ create	table VPBX_VBOXES_CALLBLAST
 	RETRYDIAL_INTERVAL	INT(3)			default 0,
 	RETRYDIAL_LOOPS		INT(6)			default 1,
 	CALL_LIMIT			INT(3)			default 0,
+	MIN_CALL_DURATION	INT(16)			default 0,
 	
 	unique(ID),
 
@@ -1072,6 +1073,7 @@ create	table VPBX_VBOXES_CALLBLAST_DATA
 	ATTEMPT				INT(4) not null default 0,
 
 	CALL_ID				VARCHAR(32),
+	DURATION			INT(16) not null default 0,
 
 	unique(DATA_ID),
 	unique(ID,PHONE_NUMBER),
