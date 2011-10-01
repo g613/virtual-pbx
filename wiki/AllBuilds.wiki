@@ -1,6 +1,6 @@
 ==All VMWare images :==
 
-  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/F4AC6334EC0711E09676002481FAD55A/VirtualPBX-1_5479.tar.bz2 build 5479 (30.07.2011) ]  / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/26532162001/VirtualPBX-1_5479.tar.bz2.html yandex-disk-mirror] ( added extended statistics )
+  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/F4AC6334EC0711E09676002481FAD55A/VirtualPBX-1_5479.tar.bz2 build 5479 (30.09.2011) ]  / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/26532162001/VirtualPBX-1_5479.tar.bz2.html yandex-disk-mirror] ( added extended statistics )
 
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/1917002865/VirtualPBX-1_5230.tar.bz2 build 5230 (30.07.2011) ]  / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/20359318001/VirtualPBX-1_5230.tar.bz2.html yandex-disk-mirror] ( asterisk bug fixed, added gearmand support, intercom, FMC transfer, memory usage optimisations )
 
