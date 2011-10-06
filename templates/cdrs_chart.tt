@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.12 2011-09-02 10:08:45 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.13 2011-10-05 07:30:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -52,12 +52,14 @@
 	</p>
 	
 	<p>
-	[% IF CDR_LIST scalar %]
 	<script language='JavaScript'>
-		var graphx=new Array();
 		var time_period = getTimePeriod( 'en', '[% CDR_PERIOD %]' );
 		var period = time_period.period;
 		var group_by = time_period.group_by;
+	</script>
+	[% IF CDR_LIST scalar %]
+	<script language='JavaScript'>
+		var graphx=new Array();
 		graphx[0] = [ period, 'Calls', 'Minutes', 'Minutes AVG', 'Cost' ];
 		var ind = 1;
 		[% FOREACH msg = CDR_LIST %]
@@ -126,7 +128,7 @@
 				<input name='need_excel' value='Excel' type='submit'>
 				<script language='JavaScript'>
 					document.write("<input name='need_chart' value='Chart' type='submit'>");
-					document.write("<select name='chart_group_period'><option value='"+group_by+"'>"+period+"</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='w'>week</option><option value='m'>month</option><option value='y'>year</option></select>");
+					document.write("<select name='chart_group_period'><option value='"+group_by+"'>"+period+"</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='y'>year</option></select>");
 				</script>
 				&nbsp;
 			</td>
