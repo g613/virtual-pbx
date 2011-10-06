@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.7 2011-09-22 15:09:25 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.9 2011-10-05 07:30:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -25,58 +25,58 @@
 		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
 		google.setOnLoadCallback(drawAllChart);
 		function drawAllChart() {
-			ExtStatdrawChart1('STATUS','All calls / disposition');
-			ExtStatdrawChart1('CAUSE','All calls / cause code');
-			ExtStatdrawChart1('PN','Answered calls / phones');
-			ExtStatdrawChart1('DURATION','Answered calls / duration (minutes)');
-			ExtStatdrawChart2('TERM',['NOANSWER'],'NOANSWER','Unanswered calls / disconnect originator');
-			ExtStatdrawChart2('TERM',['ANSWER'],'ANSWER','Answered calls / disconnect originator');
-			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Unanswered calls / wait time (sec)');
-			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Answered calls / wait time (sec)');
+			ExtStatdrawChart1('STATUS','All calls / disposition',['Status','Count']);
+			ExtStatdrawChart1('CAUSE','All calls / cause code',['Cause','Count']);
+			ExtStatdrawChart1('PN','Answered calls / phones',['Phone number','Count']);
+			ExtStatdrawChart1('DURATION','Answered calls / duration (minutes)',['Duration','Count']);
+			ExtStatdrawChart2('TERM',['NOANSWER'],'NOANSWER','Unanswered calls / disconnect originator',['Disconnect originator','Count']);
+			ExtStatdrawChart2('TERM',['ANSWER'],'ANSWER','Answered calls / disconnect originator',['Disconnect originator','Count']);
+			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Unanswered calls / wait time (sec)',['Wait time','Count']);
+			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Answered calls / wait time (sec)',['Wait time','Count']);
 		}
 		[% END %]
 		[% IF VBOX_PREF.TYPE eq '10' %]
 		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
 		google.setOnLoadCallback(drawAllChart);
 		function drawAllChart() {
-			ExtStatdrawChart1('SUMMARY','Summary');
+			ExtStatdrawChart1('SUMMARY','Summary',['Poll summary','Count']);
 		}
 		[% END %]
 		[% IF VBOX_PREF.TYPE eq '13' %]
 		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
 		google.setOnLoadCallback(drawAllChart);
 		function drawAllChart() {
-			ExtStatdrawChart1('STATUS','All calls / disposition');
-			ExtStatdrawChart1('CAUSE','All calls / cause code');
-			ExtStatdrawChart1('DURATION','Answered calls / duration (minutes)');
-			ExtStatdrawChart1('PN','Answered calls / agent');
-			ExtStatdrawChart1('Q_NUM_OUT','Unanswered calls / out queue position');
-			ExtStatdrawChart2('Q_NUM',['NOANSWER'],'NOANSWER','Unanswered calls / start queue position');
-			ExtStatdrawChart2('Q_NUM',['ANSWER'],'ANSWER','Answered calls / start queue position');
-			ExtStatdrawChart2('Q_NUM',['ANSWER','NOANSWER'],'ALL','All calls / start queue position');
-			ExtStatdrawChart2('TERM',['NOANSWER'],'NOANSWER','Unanswered calls / disconnect originator');
-			ExtStatdrawChart2('TERM',['ANSWER'],'ANSWER','Answered calls / disconnect originator');
-			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Unanswered calls / wait time (sec)');
-			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Answered calls / wait time (sec)');
+			ExtStatdrawChart1('STATUS','All calls / disposition',['Status','Count']);
+			ExtStatdrawChart1('CAUSE','All calls / cause code',['Cause','Count']);
+			ExtStatdrawChart1('DURATION','Answered calls / duration (minutes)',['Duration','Count']);
+			ExtStatdrawChart1('PN','Answered calls / agent',['Agent','Count']);
+			ExtStatdrawChart1('Q_NUM_OUT','Unanswered calls / out queue position',['Position','Count']);
+			ExtStatdrawChart2('Q_NUM',['NOANSWER'],'NOANSWER','Unanswered calls / start queue position',['Position','Count']);
+			ExtStatdrawChart2('Q_NUM',['ANSWER'],'ANSWER','Answered calls / start queue position',['Position','Count']);
+			ExtStatdrawChart2('Q_NUM',['ANSWER','NOANSWER'],'ALL','All calls / start queue position',['Position','Count']);
+			ExtStatdrawChart2('TERM',['NOANSWER'],'NOANSWER','Unanswered calls / disconnect originator',['Disconnect originator','Count']);
+			ExtStatdrawChart2('TERM',['ANSWER'],'ANSWER','Answered calls / disconnect originator',['Disconnect originator','Count']);
+			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Unanswered calls / wait time (sec)',['Wait time','Count']);
+			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Answered calls / wait time (sec)',['Wait time','Count']);
 		}
 		[% END %]
 		[% IF VBOX_PREF.TYPE eq '18' %]
 		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
 		google.setOnLoadCallback(drawAllChart);
 		function drawAllChart() {
-			ExtStatdrawChart1('ALL_STATUS','All calls / status');
-			ExtStatdrawChart1('STATUS','All calls / success or failed');
-			ExtStatdrawChart1('ATTEMPT','All calls / call attempt');
-			ExtStatdrawChart1('GOOD_ATTEMPT','Successful calls / call attempt');
+			ExtStatdrawChart1('ALL_STATUS','All calls / status',['Status','Count']);
+			ExtStatdrawChart1('STATUS','All calls / success or failed',['Status','Count']);
+			ExtStatdrawChart1('ATTEMPT','All calls / call attempt',['Attempt','Count']);
+			ExtStatdrawChart1('GOOD_ATTEMPT','Successful calls / call attempt',['Attempt','Count']);
 		}
 		[% END %]
 		[% IF VBOX_PREF.TYPE eq '27' %]
 		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
 		google.setOnLoadCallback(drawAllChart);
 		function drawAllChart() {
-			ExtStatdrawChart1('STATUS','All calls / disposition');
-			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Unanswered calls / wait time (sec)');
-			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Answered calls / wait time (sec)');
+			ExtStatdrawChart1('STATUS','All calls / disposition',['Status','Count']);
+			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Unanswered calls / wait time (sec)',['Wait time','Count']);
+			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Answered calls / wait time (sec)',['Wait time','Count']);
 		}
 		[% END %]
 		var time_period = getTimePeriod( 'en','[% CDR_PERIOD %]' );
@@ -166,7 +166,7 @@
 				<noscript>
 				<option value=''>group by</option>
 				</noscript>
-				<option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='w'>week</option><option value='m'>month</option><option value='y'>year</option></select>
+				<option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='y'>year</option></select>
 				&nbsp;
 				<input name='action' value='extended_stat' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
@@ -527,7 +527,7 @@
 				<noscript>
 				<option value=''>group by</option>
 				</noscript>
-				<option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='w'>week</option><option value='m'>month</option><option value='y'>year</option></select>
+				<option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='y'>year</option></select>
 				&nbsp;
 				<input name='action' value='extended_stat' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>

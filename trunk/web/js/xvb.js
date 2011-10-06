@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.45 2011-09-12 04:35:02 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.47 2011-10-05 07:30:44 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -709,7 +709,7 @@ function peers_hide( id ) {
 }
 
 /* Extended stst */
-function ExtStatdrawChart1(chart_param,title) {
+function ExtStatdrawChart1(chart_param,title,title2) {
 	var data = new google.visualization.DataTable();
 	var data_prc = new google.visualization.DataTable();
 
@@ -735,11 +735,11 @@ function ExtStatdrawChart1(chart_param,title) {
 	all_rows.sort();
 	
 	if ( js_data['DATA_EXISTS'] == 1 ) {
-		data_prc.addColumn('string', 'Name');
+		data_prc.addColumn('string', title2[0]);
 		for ( var key2 in all_column ) {
 			data.addColumn('number', all_column[key2]);
 		}
-		data_prc.addColumn('number', 'Value');
+		data_prc.addColumn('number', title2[1]);
 		for ( var row_key in all_rows ) {
 			var key = all_rows[row_key];
 			for ( var key2 in all_column ) {
@@ -807,7 +807,7 @@ function ExtStatdrawChart1(chart_param,title) {
 	}
 }
 
-function ExtStatdrawChart2(chart_param,subparam,divname,title) {
+function ExtStatdrawChart2(chart_param,subparam,divname,title,title2) {
 	var data = new google.visualization.DataTable();
 	var data_prc = new google.visualization.DataTable();
 
@@ -837,11 +837,11 @@ function ExtStatdrawChart2(chart_param,subparam,divname,title) {
 	i = 0;
 
 	if ( js_data['DATA_EXISTS'] == 1 ) {
-		data_prc.addColumn('string', 'Name');
+		data_prc.addColumn('string', title2[0]);
 		for ( var key2 in all_column ) {
 			data.addColumn('number', all_column[key2]);
 		}
-		data_prc.addColumn('number', 'Value');
+		data_prc.addColumn('number', title2[1]);
 		
 		for ( var row_key in all_rows ) {
 			var key = all_rows[row_key];
@@ -934,6 +934,9 @@ function getTimePeriod(lang,period) {
 		} else if ( period == '%w - %W' ) {
 			period = 'день недели';
 			group_by = 'dw';
+		} else if ( period == '%d' ) {
+			period = 'день месяца';
+			group_by = 'dm';
 		} else if ( period == '%V' ) {
 			period = 'неделя';
 			group_by = 'w';
@@ -962,6 +965,9 @@ function getTimePeriod(lang,period) {
 		} else if ( period == '%w - %W' ) {
 			period = 'day of week';
 			group_by = 'dw';
+		} else if ( period == '%d' ) {
+			period = 'day of month';
+			group_by = 'dm';
 		} else if ( period == '%V' ) {
 			period = 'week';
 			group_by = 'w';

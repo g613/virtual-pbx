@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.27 2011-06-01 06:24:04 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.28 2011-10-05 07:30:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -149,7 +149,7 @@
 				<input name='need_excel' value='Excel' type='submit'>
 				<script language='JavaScript'>
 					document.write("<input name='need_chart' value='Chart' type='submit'>");
-					document.write("<select name='chart_group_period'><option value=''>group by</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='w'>week</option><option value='m'>month</option></select>");
+					document.write("<select name='chart_group_period'><option value=''>group by</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option></select>");
 				</script>
 				&nbsp;
 			</td>
