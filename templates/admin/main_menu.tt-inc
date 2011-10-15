@@ -1,0 +1,16 @@
+				<a href='?action=node_list'>Nodes</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=group_list'>Groups</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=user_list'>Users</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=did_list'>Private DIDs</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=did_attr_list'>DIDs attr</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=report_list'>Reports</a>
+			[% IF USE_BILLING %]
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=tariff_list'>Tariffs</a>
+			[% END %]
+
