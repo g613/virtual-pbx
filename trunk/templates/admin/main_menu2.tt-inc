@@ -1,0 +1,19 @@
+			<td>
+				<a class='headers' href='?action=node_list'>Nodes</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=group_list'>Groups</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=user_list'>Users</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=did_list'>Private DIDs</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=did_attr_list'>DIDs atr</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=report_list'>Reports</a>
+			</td>
+

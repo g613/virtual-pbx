@@ -391,6 +391,16 @@ create table VPBX_ACCOUNTS
     CONSTRAINT FK_VPBX_GROUPS FOREIGN KEY (GROUP_ID) REFERENCES VPBX_GROUPS(GROUP_ID) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+create table VPBX_DIDS_ATTR
+(
+	DID				VARCHAR(100)	not null,
+	LANG_ID			INT(16)			not null default 0,
+
+    unique			    (DID),
+    CONSTRAINT FK_VPBX_DIDS_ATTR_LANG FOREIGN KEY (LANG_ID) REFERENCES VPBX_LANG(ID) ON UPDATE CASCADE,
+    CONSTRAINT PK_VPBX_DIDS_ATTR PRIMARY KEY (ID)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
 create table VPBX_DIDS
 (
 	ID	            INT(16)		    not null AUTO_INCREMENT,
@@ -2237,6 +2247,8 @@ insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sbc.megafon.ru','Mul
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.telphin.com','Telphin',"$_[0]->{'fromdomain'}='sip.telphin.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5068';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sipnet.ru','Sipnet',"$_[0]->{'fromdomain'}='sipnet.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('skype.sipnet.ru','Sipnet-Skype',"$_[0]->{'fromdomain'}='sipnet.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5060';");
+
+insert insert VPBX_DIDS_ATTR(DID,LANG_ID) VALUES( '613', 0 );
 
 -- OPENSER REGISTRAR
 create or replace view subscriber  ( id, username, domain, password, email_address, ha1, ha1b, rpid )

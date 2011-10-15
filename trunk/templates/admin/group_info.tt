@@ -37,21 +37,7 @@
 			<td width='15%'>
 				<a class='headers' href='?action=group_del&group_id=[% GROUP.GROUP_ID %]' onclick="return DelConfirm('en')">Delete</a>
 			</td>
-			<td width='15%'>
-				<a class='headers' href='?action=node_list'>Nodes</a>
-			</td>
-			<td width='15%'>
-				<a class='headers' href='?action=group_list'>Groups</a>
-			</td>
-			<td width='15%'>
-				<a class='headers' href='?action=user_list'>Users</a>
-			</td>
-			<td width='15%'>
-				<a class='headers' href='?action=did_list'>DIDs</a>
-			</td>
-			<td width='15%'>
-				<a class='headers' href='?action=report_list'>Reports</a>
-			</td>
+			[% INCLUDE main_menu2.tt-inc %]
 		</tr>
 	</table>
 	</p>
@@ -432,21 +418,7 @@
 	<p>
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
-			<td width='15%'>
-				<a class='headers' href='?action=report_list'>Reports</a>
-			</td>
-			<td width='15%'>
-				<a class='headers' href='?action=did_list'>DIDs</a>
-			</td>
-			<td width='15%'>
-				<a class='headers' href='?action=user_list'>Users</a>
-			</td>
-			<td width='15%'>
-				<a class='headers' href='?action=group_list'>Groups</a>
-			</td>
-			<td width='15%'>
-				<a class='headers' href='?action=node_list'>Nodes</a>
-			</td>
+			[% INCLUDE main_menu2.tt-inc %]
 			<td width='15%'>
 				<a class='headers' href='?action=group_del&group_id=[% GROUP.GROUP_ID %]' onclick="return DelConfirm('en')">Delete</a>
 			</td>

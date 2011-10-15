@@ -34,19 +34,7 @@
 	<table width='95%' class='top_hr'>
 		<tr align='left'>
 			<td>
-				Nodes
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=group_list'>Groups</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=user_list'>Users</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=did_list'>DIDs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=report_list'>Reports</a>
-			[% IF USE_BILLING %]
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=tariff_list'>Tariffs</a>
-			[% END %]
+				[% INCLUDE main_menu.tt-inc %]
 			</td>
 		</tr>
 	</table>
@@ -102,6 +90,7 @@
 				<input type='hidden' value='[% node.NODE_ID %]' name='data_id'>
 				<input type='hidden' value='node_update' name='action'>
 				<input type='hidden' value='[% MSG_FROM %]' name='from'>
+				<a title='delete node' href='?action=node_del&node_id=[% node.NODE_ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 				
 				<span class='in_t' id='in_t_id-[% node.NODE_ID %]'>
 				<script language='JavaScript'>
@@ -110,7 +99,6 @@
 				<noscript><input value='change' type='submit'></noscript>
 				</span>
 				
-				<a title='delete node' href='?action=node_del&node_id=[% node.NODE_ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
 			</form>
 		</tr>
@@ -146,21 +134,7 @@
 	<p>
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
-			<td>
-				<a class='headers' href='?action=node_list'>Nodes</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=group_list'>Groups</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=user_list'>Users</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=did_list'>DIDs</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=report_list'>Reports</a>
-			</td>
+			[% INCLUDE main_menu2.tt-inc %]
 		</tr>
 	</table>
 	</p>

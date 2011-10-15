@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Virtual PBX - DIDs</title>
+	<title>Virtual PBX - Private DIDs</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 </head>
@@ -22,7 +22,7 @@
 			<td align='left' width='20%'>
 			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
-			<td align='center'><h2>DIDs</h2></td>
+			<td align='center'><h2>Private DIDs</h2></td>
 			<td align='right' width='20%'>
 				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
 				[% INCLUDE version.tt %]
@@ -35,19 +35,7 @@
 	<table width='95%' class='top_hr'>
 		<tr align='left'>
 			<td>
-				<a href='?action=node_list'>Nodes</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=group_list'>Groups</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=user_list'>Users</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				DIDs
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=report_list'>Reports</a>
-			[% IF USE_BILLING %]
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=tariff_list'>Tariffs</a>
-			[% END %]
+				[% INCLUDE main_menu.tt-inc %]
 			</td>
 			<form method='post'>
 			<td align='right'>
@@ -127,21 +115,7 @@
 	<p>
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
-			<td>
-				<a class='headers' href='?action=node_list'>Nodes</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=group_list'>Groups</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=user_list'>Users</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=did_list'>DIDs</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=report_list'>Reports</a>
-			</td>
+			[% INCLUDE main_menu2.tt-inc %]
 		</tr>
 	</table>
 	</p>
