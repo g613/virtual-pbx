@@ -1,5 +1,7 @@
 #labels Featured
 = ToDo list =
+<font color='red'>- Скорость проигрывания TTS промптоувеличить немного</font>
+
 <font color='green'>+ Атрибуты ( язык и пр ) для 'shared' DIDs</font> ( 17.10.2011 / build 5521 )
 
 <font color='green'>+ Расширенная статистика для callblast'a</font> ( 24.09.2011 / build 5470 )
