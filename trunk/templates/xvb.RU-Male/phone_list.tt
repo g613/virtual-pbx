@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.14 2011-09-02 11:51:18 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.15 2011-10-30 13:39:01 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -131,6 +131,8 @@
 					<option value="0">Выключено</option>
 					<option value="1">По запросу</option>
 					<option value="2">Всегда</option>
+					<option value="3">Внутренние</option>
+					<option value="4">Внешние</option>
 				</select>
 			</td>
 			<td><input size="10" name='REC_EXT' type='text'></td>
