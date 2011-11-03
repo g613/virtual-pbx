@@ -48,7 +48,7 @@
 		<tr>
 			<td>Group Name: </td>
 			<td><input name='GR_GROUP_NAME' type='text' value="[% GROUP.GROUP_NAME | html %]"></td>
-			<td rowspan='36' valign='top'>
+			<td rowspan='37' valign='top'>
 				<table>
 					<tr>
 						<td colspan='2'><h4>Limits on the number of extensions:</h4></td>
@@ -329,8 +329,12 @@
 			<td><input name='GR_MAX_GREET_DURATION' type='text' value="[% GROUP.MAX_GREET_DURATION | html %]"></td>
 		</tr>
 		<tr>
-			<td>Maximum Announcement duration ( sec ): </td>
+			<td>Maximum Announcement (callee) duration ( sec ): </td>
 			<td><input name='GR_MAX_ANNOUNCEMENT_DURATION' type='text' value="[% GROUP.MAX_ANNOUNCEMENT_DURATION | html %]"></td>
+		</tr>
+		<tr>
+			<td>Maximum Announcement (caller) duration ( sec ): </td>
+			<td><input name='GR_MAX_ANNOUNCEMENT_CALLER_DURATION' type='text' value="[% GROUP.MAX_ANNOUNCEMENT_CALLER_DURATION | html %]"></td>
 		</tr>
 		<tr>
 			<td>Maximum RetryDial duration ( sec ): </td>

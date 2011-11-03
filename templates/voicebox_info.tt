@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.211 2011-09-21 11:36:55 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.213 2011-11-03 21:12:56 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -229,13 +229,14 @@
 				<td>Number:</td>
 				<td>
 					[% IF VBOX_PREF.EXT_NUMBER eq '0' %]
-					<input size='30' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]' readonly>
+					<input size='15' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]' readonly>
 					[% ELSE %]
-					<input size='30' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]'>
+					<input size='15' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]'>
 					[% END %]
 					<input type='hidden' name='action' value='vb_update'>
 					<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+					&nbsp;&nbsp;id : [% VBOX_PREF.ID %]
 				</td>
 			</tr>
 			<tr>
@@ -1822,7 +1823,7 @@
 					<tr><td colspan='2'><h4>System files:</h4></td></tr>
 
 					[% IF VBOX_PREF.NAME_FILE %]
-					<tr class='addon_data' id='d-tr-s0'>
+					<tr class='nocolor' id='d-tr-s0'>
 						<td>User Name: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='play' 
@@ -1835,7 +1836,7 @@
 					[% END %]
 					
 					[% IF VBOX_PREF.GREET_FILE %]
-					<tr class='addon_data' id='d-tr-s1'>
+					<tr class='nocolor' id='d-tr-s1'>
 						<td>User Greeting: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='play' 
@@ -1849,8 +1850,8 @@
 					
 					[% IF VBOX_PREF.TYPE eq '3' %]
 					[% IF VBOX_PREF.ANNOUNCEMENT_FILE %]
-					<tr class='addon_data' id='d-tr-s2'>
-						<td>Find-Me announcement: </td>
+					<tr class='nocolor' id='d-tr-s2'>
+						<td>Announcement to callee: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='play' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
@@ -1861,8 +1862,21 @@
 					</tr>
 					[% END %]
 					
+					[% IF VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]
+					<tr class='nocolor' id='d-tr-s7'>
+						<td>Announcement to caller: </td>
+						<td align='right' nowrap='nowrap'>
+							<a title='play' 
+								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+							&nbsp;<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='delete' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-s7','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+						</td>
+					</tr>
+					[% END %]
+
 					[% IF VBOX_PREF.RETRYDIAL_FILE %]
-					<tr class='addon_data' id='d-tr-s3'>
+					<tr class='nocolor' id='d-tr-s3'>
 						<td>RetryDial announcement: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='play' 
@@ -1877,8 +1891,8 @@
 					
 					[% IF VBOX_PREF.TYPE eq '13' %]
 					[% IF VBOX_PREF.ANNOUNCEMENT_FILE %]
-					<tr class='addon_data' id='d-tr-s4'>
-						<td>Find-Me announcement: </td>
+					<tr class='nocolor' id='d-tr-s4'>
+						<td>Announcement to callee: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='play' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
@@ -1889,8 +1903,21 @@
 					</tr>
 					[% END %]
 
+					[% IF VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]
+					<tr class='nocolor' id='d-tr-s8'>
+						<td>Announcement to caller: </td>
+						<td align='right' nowrap='nowrap'>
+							<a title='play' 
+								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+							&nbsp;<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='delete' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-s8','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+						</td>
+					</tr>
+					[% END %]
+
 					[% IF VBOX_PREF.RETRYDIAL_FILE %]
-					<tr class='addon_data' id='d-tr-s5'>
+					<tr class='nocolor' id='d-tr-s5'>
 						<td>RetryDial announcement: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='play' 
@@ -1905,7 +1932,7 @@
 
 					[% IF VBOX_PREF.TYPE eq '16' %]
 					[% IF VBOX_PREF.FAX_FILE %]
-					<tr class='addon_data' id='d-tr-s6'>
+					<tr class='nocolor' id='d-tr-s6'>
 						<td>Fax on Demand: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='download' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.FAX_FILE %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
@@ -1916,9 +1943,8 @@
 					[% END %]
 					
 					<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
-					<tr class='addon_data'>
-						<td colspan='2' nowrap='nowrap'>
-							<input type='file' name='msg'>
+					<tr>
+						<td nowrap='nowrap'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='msg_upload'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
@@ -1927,19 +1953,24 @@
 								<option value="2">Greeting</option>
 
 								[% IF VBOX_PREF.TYPE eq '3' %]
-								<option value="3">Announcement</option>
+								<option value="3">Announcement to callee</option>
 								<option value="4">RetryDial</option>
+								<option value="7">Announcement to caller</option>
 								[% END %]
 
 								[% IF VBOX_PREF.TYPE eq '13' %]
-								<option value="3">Announcement</option>
+								<option value="3">Announcement to callee</option>
 								<option value="4">RetryDial</option>
+								<option value="7">Announcement to caller</option>
 								[% END %]
 								
 								[% IF VBOX_PREF.TYPE eq '16' %]
 								<option value="6">Fax on Demand</option>
 								[% END %]
 							</select> 
+							<input type='file' name='msg'>
+						</td>
+						<td align='right'>
 							<input type='submit' value='upload'>
 						</td>
 					</tr>
@@ -1948,6 +1979,7 @@
 					<tr class='addon_info'>
 						<td colspan='2'>&nbsp;</td>
 					</tr>
+					<tr class='addon_info'><td colspan='2'><h4>Backups:</h4></td></tr>
 					<tr class='addon_info' id='backup-restore'>
 						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 						<td nowrap='nowrap'>

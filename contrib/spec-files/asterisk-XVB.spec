@@ -13,7 +13,7 @@ Source2: app_fax-1_6_0_17.c
 
 Patch100: agi-dial-1.6.0.patch
 Patch101: app_mp3.c.patch
-Patch102: format_wav.c.patch
+#Patch102: format_wav.c.patch
 Patch103: format_wav16.c.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
@@ -44,7 +44,7 @@ to compile 3rd party modules.
 %setup0 -q
 %patch100 -p0
 %patch101 -p0
-%patch102 -p0
+#%patch102 -p0
 %patch103 -p0
 
 %configure

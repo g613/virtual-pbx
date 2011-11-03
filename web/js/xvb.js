@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.47 2011-10-05 07:30:44 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.48 2011-11-03 21:12:58 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -289,6 +289,7 @@ function MoreExtOptions(link,init_mode,expert_tytle,standard_title) {
 	setCookie('xvb_vb_view_mode',newOpt);
 
 	if ( link != null )
+		link.blur();
 		link.innerHTML = link_title;
 
 	return 0;
@@ -1094,14 +1095,3 @@ function XVBInit() {
 	var img = new Image();
 	img.src = '/xvb/images/loading.gif';
 }
-
-/* GA */
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-17895037-1']);
-_gaq.push(['_trackPageview']);
-
-(function() {
- var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
- ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
- var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
- })();

@@ -47,7 +47,7 @@ Summary: Dynamic IVR / SOHO VirtualPBX VOIP application
 Group:   System Environment/Services
 
 Requires: asterisk >= 1.6.0.28
-Requires: virtual-pbx-sound-files >= 2-1_5230
+Requires: virtual-pbx-sound-files >= 2-1_5547
 Requires: virtual-pbx = %{version}-%{release}
 Requires: festival
 Requires: libshout
@@ -412,9 +412,13 @@ service xvb-fagi start
 #
 %post web
 # apache password
-touch $RPM_BUILD_ROOT/%CORE_DIR/web/.htpasswd
+touch %CORE_DIR/web/.htpasswd
 # download spool init
 mkdir -p /tmp/xvb-download && chmod 777 /tmp/xvb-download 
+
+if [ -f %CORE_DIR/web/js/xvb-custom.js ]; then
+	cat %CORE_DIR/web/js/xvb-custom.js >> %CORE_DIR/web/js/xvb.js
+fi
 
 chkconfig httpd on
 service httpd start
