@@ -297,6 +297,7 @@ create	table VPBX_GROUPS
 	MAX_GREET_DURATION			INT(10) default 14400,
 	MAX_NAME_DURATION			INT(10) default 120,
 	MAX_ANNOUNCEMENT_DURATION	INT(10) default 300,
+	MAX_ANNOUNCEMENT_CALLER_DURATION	INT(10) default 300,
 	MAX_RETRYDIAL_DURATION		INT(10) default 300,
 	MAX_MOH_DURATION			INT(10) default 600,
 
@@ -1527,7 +1528,7 @@ INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
 VALUES(2, 'GREET', 'User greeting', 'Приветствие пользователя')
 ;
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(3, 'ANNOUNCEMENT', 'Follow-Me Announcement', 'Аннонс исходящего звонка')
+VALUES(3, 'ANNOUNCEMENT', 'Announcement to callee', 'Объявление для вызываемого')
 ;
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
 VALUES(4, 'RETRYDIAL', 'RetryDial Announcement', 'Анонс удержания вызова')
@@ -1537,6 +1538,9 @@ VALUES(5, 'MOH', 'Music on hold', 'Музыка вместо звонка')
 ;
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
 VALUES(6, 'FAX', 'Fax on Demand', 'Факс по запросу')
+;
+INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
+VALUES(7, 'ANNOUNCEMENT_CALLER', 'Announcement to caller', 'Объявление для звонящего')
 ;
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
 VALUES(30, 'NEW', 'New user message','Новое сообщение')

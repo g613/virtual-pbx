@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.56 2011-09-12 04:34:33 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.57 2011-11-03 21:12:57 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -477,8 +477,12 @@
 					<td align='right'>[% USER_CREDS.MAX_GREET_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td>длину анонса исходящего звонка: </td>
+					<td>длину объявления для вызываемого: </td>
 					<td align='right'>[% USER_CREDS.MAX_ANNOUNCEMENT_DURATION | duration_str %]</td>
+				</tr>
+				<tr>
+					<td>длину объявления для звонящего: </td>
+					<td align='right'>[% USER_CREDS.MAX_ANNOUNCEMENT_CALLER_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
 					<td>длину анонса удержания вызова: </td>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.158 2011-09-21 11:36:56 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.160 2011-11-03 21:12:58 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -239,13 +239,14 @@
 					<td>Внутренний номер:</td>
 					<td>
 						[% IF VBOX_PREF.EXT_NUMBER eq '0' %]
-						<input size='30' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]' readonly>
+						<input size='15' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]' readonly>
 						[% ELSE %]
-						<input size='30' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]'>
+						<input size='15' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]'>
 						[% END %]
 						<input type='hidden' name='action' value='vb_update'>
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+						&nbsp;&nbsp;id : [% VBOX_PREF.ID %]
 					</td>
 				</tr>
 				<tr>
@@ -2138,7 +2139,7 @@
 				<table class='addon_data' width='100%' id='d-tbl-s'>
 					<tr><td colspan='2'><h4>Системные файлы:</h4></td></tr>
 					[% IF VBOX_PREF.NAME_FILE %]
-					<tr class='addon_data' id='d-tr-s0'>
+					<tr class='nocolor' id='d-tr-s0'>
 						<td>Имя пользователя: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
@@ -2150,7 +2151,7 @@
 					</tr>
 					[% END %]
 					[% IF VBOX_PREF.GREET_FILE %]
-					<tr class='addon_data' id='d-tr-s1'>
+					<tr class='nocolor' id='d-tr-s1'>
 						<td>Приветствие пользователя: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
@@ -2164,8 +2165,8 @@
 					
 					[% IF VBOX_PREF.TYPE eq '3' %]
 					[% IF VBOX_PREF.ANNOUNCEMENT_FILE %]
-					<tr class='addon_data' id='d-tr-s2'>
-						<td>Анонс исходящего звонка: </td>
+					<tr class='nocolor' id='d-tr-s2'>
+						<td>Обьявление для вызываемого: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
@@ -2175,8 +2176,20 @@
 						</td>
 					</tr>
 					[% END %]
+					[% IF VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]
+					<tr class='nocolor' id='d-tr-s7'>
+						<td>Обьявление для звонящего: </td>
+						<td align='right' nowrap='nowrap'>
+							<a title='прослушать' 
+								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s7','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+						</td>
+					</tr>
+					[% END %]
 					[% IF VBOX_PREF.RETRYDIAL_FILE %]
-					<tr class='addon_data' id='d-tr-s3'>
+					<tr class='nocolor' id='d-tr-s3'>
 						<td>Анонс удержания вызова: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
@@ -2191,8 +2204,8 @@
 
 					[% IF VBOX_PREF.TYPE eq '13' %]
 					[% IF VBOX_PREF.ANNOUNCEMENT_FILE %]
-					<tr class='addon_data' id='d-tr-s4'>
-						<td>Анонс исходящего звонка: </td>
+					<tr class='nocolor' id='d-tr-s4'>
+						<td>Обьявление для вызываемого: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
@@ -2202,8 +2215,20 @@
 						</td>
 					</tr>
 					[% END %]
+					[% IF VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]
+					<tr class='nocolor' id='d-tr-s8'>
+						<td>Обьявление для звонящего: </td>
+						<td align='right' nowrap='nowrap'>
+							<a title='прослушать' 
+								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s8','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+						</td>
+					</tr>
+					[% END %]
 					[% IF VBOX_PREF.RETRYDIAL_FILE %]
-					<tr class='addon_data' id='d-tr-s5'>
+					<tr class='nocolor' id='d-tr-s5'>
 						<td>Анонс удержания вызова: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
@@ -2218,7 +2243,7 @@
 
 					[% IF VBOX_PREF.TYPE eq '16' %]
 					[% IF VBOX_PREF.FAX_FILE %]
-					<tr class='addon_data' id='d-tr-s6'>
+					<tr class='nocolor' id='d-tr-s6'>
 						<td>Факс по запросу: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='скачать tiff' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.FAX_FILE %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download_tif.png' alt='fax' /></a>
@@ -2229,37 +2254,43 @@
 					[% END %]
 
 					<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
-					<tr class='addon_data'>
-					<td colspan='2' nowrap='nowrap'>
-						<input type='file' name='msg'>
+					<tr>
+						<td nowrap='nowrap'>
 						<select name="type">
 							<option value="1" selected>Имя пользователя</option>
 							<option value="2">Приветствие пользователя</option>
 							[% IF VBOX_PREF.TYPE eq '3' %]
-							<option value="3">Анонс исходящего вызова</option>
+							<option value="3">Обьявление для вызываемого</option>
 							<option value="4">Анонс удержания вызова</option>
+							<option value="7">Обьявление для звонящего</option>
 							[% END %]
 
 							[% IF VBOX_PREF.TYPE eq '13' %]
-							<option value="3">Анонс исходящего вызова</option>
-							<option value="4">Анонс ожидания очереди</option>
+							<option value="3">Обьявление для вызываемого</option>
+							<option value="4">Анонс удержания вызова</option>
+							<option value="7">Обьявление для звонящего</option>
 							[% END %]
 
 							[% IF VBOX_PREF.TYPE eq '16' %]
 							<option value="6">Факс по запросу</option>
 							[% END %]
 						</select> 
+						<input type='file' name='msg'>
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 						<input type='hidden' name='action' value='msg_upload'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 						<input type='hidden' name='go' value='vb'>
+						</td>
+						<td align='right'>
 						<input type='submit' value='загрузить'>
+						</td>
 					</tr>
 					</form>
 					
 					<tr class='addon_info'>
 						<td colspan='2'>&nbsp;</td>
 					</tr>
+					<tr class='addon_info'><td colspan='2'><h4>Резервное копирование:</h4></td></tr>
 					<tr class='addon_info' id='backup-restore'>
 						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 						<td nowrap='nowrap'>
