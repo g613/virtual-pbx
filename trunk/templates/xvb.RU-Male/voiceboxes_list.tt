@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.19 2011-10-30 13:39:01 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.20 2011-11-06 08:28:38 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список внутренних номеров - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -115,12 +115,15 @@
 		<tr align='left'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 			<td colspan='10'>
+				&nbsp;
+				[% IF USER_CREDS.ROOT eq '0' %]
 				<input size='6' type='text' name='new_ext'>
 				<input value='Добавить номер' type='submit'>
 				<input name='action' value='vb_add' type='hidden'>
 				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='go' value='list' type='hidden'>
+				[% END %]
 			</td>
 			</form>
 		</tr>
