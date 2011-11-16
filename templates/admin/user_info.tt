@@ -228,13 +228,12 @@
 									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]' onclick="return DelConfirm('en')">[% d.DID | html %]</a>&nbsp;;&nbsp;
 								[% END %]
 								</td>
-								<td valign='top' width='20%' align='center'>
+								<td valign='top' width='20%' align='center' nowrap='nowrap'>
 								<form>
 									<input size='11' type='text' name='did'>
 									<input type='hidden' name='pn' value='[% USER.VOICENUMBER | html %]'>
 									<input type='hidden' name='ac' value='[% USER.ACCESS_CODE | html %]'>
-									<br />
-									<input value='&nbsp;&nbsp;&nbsp;add DID&nbsp;&nbsp;&nbsp;' type='submit'>
+									<input value='add DID' type='submit'>
 									<input type='hidden' value='did_add' name='action'>
 								</form>
 								</td>

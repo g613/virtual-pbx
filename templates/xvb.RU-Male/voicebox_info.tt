@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.160 2011-11-03 21:12:58 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.164 2011-11-11 09:21:29 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -43,6 +43,12 @@
 			<td>
 				<a class='headers' href='?action=user_info&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
 			</td>
+			<td>
+				<a class='headers' href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')">Удалить номер</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Клонировать</a>
+			</td>
 			[% END %]
 			<td>
 				<a class='headers' href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Просмотреть сообщения</a>
@@ -51,15 +57,13 @@
 				<a class='headers' href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Статистика</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')">Удалить номер</a>
-			</td>
-			<td>
 				<a class='headers' href='?action=vb_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
 			</td>
-			<td>
+			<td align='right'>
 				<select onchange="LoadingOn(); ChangeExten(this.value,'[% USER_CREDS.UNIQ %]')">
 					<script language="JavaScript">exten_dropdown('<option value="[% VBOX_PREF.ID | html %]">Перейти к номеру</option>')</script>
 				</select>
+				&nbsp;
 			</td>
 		</tr>
 	</table>
@@ -211,6 +215,7 @@
 		<tr>
 			<td width='48%' valign='top'>
 			<table class='ext_data' width='100%'>
+				[% IF USER_CREDS.ROOT eq '0' %]
 				<form method="post" action="[% CGI_URL %]">
 				<tr>
 					<td>Тип номера:</td>
@@ -249,6 +254,23 @@
 						&nbsp;&nbsp;id : [% VBOX_PREF.ID %]
 					</td>
 				</tr>
+				[% ELSE %]
+				<tr>
+					<td>Тип номера:</td>
+					<td>
+						<input size='30' type='text' name='type_description' value='[% VBOX_PREF.RU_DESCRIPTION | html %]' readonly>
+					</td>
+				</tr>
+				</form>
+				<form name='vb_opt' method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+				<tr>
+					<td>Внутренний номер:</td>
+					<td>
+						<input size='15' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]' readonly>
+						&nbsp;&nbsp;id : [% VBOX_PREF.ID %]
+					</td>
+				</tr>
+				[% END %]
 				<tr>
 					<td><a href='#' class='info'>Перейти к: <span>
 							Номер на который следует перейти после после выполнения действий в текущем номере
@@ -2292,18 +2314,20 @@
 					</tr>
 					<tr class='addon_info'><td colspan='2'><h4>Резервное копирование:</h4></td></tr>
 					<tr class='addon_info' id='backup-restore'>
-						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 						<td nowrap='nowrap'>
+							[% IF USER_CREDS.ROOT eq '0' %]
+							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 							<input type='file' name='config_file'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 							<input type='submit' value='восстановить схему'>
+							</form>
+							[% END %]
 						</td>
 						<td align='center'>
 							<a title='сохранить схему' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/ext_backup/[% VBOX_PREF.ID %]?uniq=[% USER_CREDS.UNIQ | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='схема' /></a>
 						</td>
-						</form>
 					</tr>
 
 					[% IF VBOX_PREF.TYPE eq '3' %]
@@ -2614,7 +2638,7 @@
 						</td>
 					</tr>
 					[% END %]
-					
+				
 					<tr>
 						<td colspan='2' align='left'>&nbsp;</td>
 					</tr>
@@ -2625,7 +2649,7 @@
 						</td>
 					</tr>
 					<tr>
-					<td colspan='3' align='center'>
+					<tr colspan='3' align='center'>
 						<table width='90%' class='addon_data' id='d-tbl-d1'>
 							<tr class='list_addon_data'>
 								<th>Приоритет</th>
@@ -2840,7 +2864,7 @@
 							[% ELSIF param.CALL_STATUS eq 'wait' %]
 								wait	
 							[% ELSIF param.CALL_STATUS %]
-								<span class='error'>[% param.CALL_STATUS | html %]</span>
+								<a class='error' href='?action=act_list&call_id=[% param.CALL_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
 							[% ELSE %]
 								unknown
 							[% END %]
@@ -3008,8 +3032,10 @@
 	<p>
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
+			[% IF USER_CREDS.ROOT eq '0' %]
 			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-			<td align='center'>
+			<td align='left'>
+				&nbsp;
 				<input name='action' value='vb_add' type='hidden'>
 				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
@@ -3019,8 +3045,15 @@
 			</td>
 			</form>
 			<td>
+				<a class='headers' href='?action=user_info&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')">Удалить номер</a>
+			</td>
+			<td>
 				<a class='headers' href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Клонировать</a>
 			</td>
+			[% END %]
 			<td>
 				<a class='headers' href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Просмотр сообщений</a>
 			</td>
@@ -3028,16 +3061,8 @@
 				<a class='headers' href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Статистика</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')">Удалить номер</a>
-			</td>
-			<td>
 				<a class='headers' href='?action=vb_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
 			</td>
-			[% IF USER_CREDS.ROOT eq '0' %]
-			<td>
-				<a class='headers' href='?action=user_info&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
-			</td>
-			[% END %]
 		</tr>
 	</table>
 	</p>

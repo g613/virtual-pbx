@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.213 2011-11-03 21:12:56 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.216 2011-11-11 09:21:28 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -45,10 +45,13 @@
 			<td>
 				<a class='headers' href='?action=user_info&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
 			</td>
-			[% END %]
 			<td>
 				<a class='headers' href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Clone</a>
 			</td>
+			<td>
+				<a class='headers' href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')">Delete extension</a>
+			</td>
+			[% END %]
 			<td>
 				<a class='headers' href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
 			</td>
@@ -56,15 +59,13 @@
 				<a class='headers' href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Stats</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')">Delete extension</a>
-			</td>
-			<td>
 				<a class='headers' href='?action=vb_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
 			</td>
-			<td>
+			<td align='right'>
 				<select onchange="LoadingOn(); ChangeExten(this.value,'[% USER_CREDS.UNIQ %]')">
 					<script language="JavaScript">exten_dropdown('<option value="[% VBOX_PREF.ID | html %]">View extension</option>')</script>
 				</select>
+				&nbsp;
 			</td>
 		</tr>
 	</table>
@@ -202,6 +203,7 @@
 		<td width='48%' valign='top'>
 		<table class='ext_data' width='100%'>
 			<form method="post" action="[% CGI_URL %]">
+			[% IF USER_CREDS.ROOT eq '0' %]
 			<tr>
 				<td>Type:</td>
 				<td>
@@ -239,6 +241,22 @@
 					&nbsp;&nbsp;id : [% VBOX_PREF.ID %]
 				</td>
 			</tr>
+			[% ELSE %]
+			<tr>
+				<td>Type:</td>
+				<td>
+					<input size='30' type='text' name='type_desc' value='[% VBOX_PREF.DESCRIPTION | html %]' readonly>
+				</td>
+			</tr>
+			<form name='vb_opt' method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+			<tr>
+				<td>Number:</td>
+				<td>
+					<input size='15' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]' readonly>
+					&nbsp;&nbsp;id : [% VBOX_PREF.ID %]
+				</td>
+			</tr>
+			[% END %]
 			<tr>
 				<td>Next Extension: </td>
 				<td>
@@ -1981,18 +1999,20 @@
 					</tr>
 					<tr class='addon_info'><td colspan='2'><h4>Backups:</h4></td></tr>
 					<tr class='addon_info' id='backup-restore'>
-						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 						<td nowrap='nowrap'>
+							[% IF USER_CREDS.ROOT eq '0' %]
+							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 							<input type='file' name='config_file'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 							<input type='submit' value='restore schema'>
+							</form>
+							[% END %]
 						</td>
 						<td align='center'>
 							<a title='backup schema' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/ext_backup/[% VBOX_PREF.ID %]?uniq=[% USER_CREDS.UNIQ | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='schema' /></a>
 						</td>
-						</form>
 					</tr>
 
 					[% IF VBOX_PREF.TYPE eq '3' %]
@@ -2529,7 +2549,7 @@
 							[% ELSIF param.CALL_STATUS eq 'wait' %]
 								wait	
 							[% ELSIF param.CALL_STATUS %]
-								<span class='error'>[% param.CALL_STATUS | html %]</span>
+								<a class='error' href='?action=act_list&call_id=[% param.CALL_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
 							[% ELSE %]
 								unknown
 							[% END %]
@@ -2697,8 +2717,10 @@
 	<p>
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
+			[% IF USER_CREDS.ROOT eq '0' %]
 			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-			<td align='center'>
+			<td align='left'>
+				&nbsp;
 				<input name='action' value='vb_add' type='hidden'>
 				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
@@ -2709,9 +2731,8 @@
 			<td>
 				<a class='headers' href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Clone</a>
 			</td>
-			[% IF USER_CREDS.ROOT eq '0' %]
 			<td>
-				<a class='headers' href='?action=user_info&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
+				<a class='headers' href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')">Delete extension</a>
 			</td>
 			[% END %]
 			<td>
@@ -2719,9 +2740,6 @@
 			</td>
 			<td>
 				<a class='headers' href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Stats</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')">Delete extension</a>
 			</td>
 			<td>
 				<a class='headers' href='?action=vb_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
