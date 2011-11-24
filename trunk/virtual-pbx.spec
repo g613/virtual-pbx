@@ -198,6 +198,7 @@ mv contrib/XVB-AI.pdf $RPM_BUILD_ROOT/%CORE_DIR/doc/
 mv contrib/XVB-AI.odt $RPM_BUILD_ROOT/%CORE_DIR/doc/
 
 mv contrib/fagi.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-fagi
+mv contrib/reg_uac.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-reg_uac
 mv contrib/perl-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-perl-worker
 mv contrib/gearman-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-gearman-worker
 mv sounds/*.tgz $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds/
@@ -369,6 +370,20 @@ if [ -f %{_sysconfdir}/asterisk/features.conf ]; then
 	fi
 fi
 
+# execinclude
+if [ -f %{_sysconfdir}/asterisk/asterisk.conf ]; then
+	STR=`grep '^;execincludes' %{_sysconfdir}/asterisk/asterisk.conf`
+	if [ "x$STR" != "x" ]; then
+		perl -i -p -e 's#^;execincludes#execincludes#' %{_sysconfdir}/asterisk/asterisk.conf
+	fi
+fi
+if [ -f %{_sysconfdir}/asterisk/sip.conf ]; then
+	STR=`grep 'reg_uac.pl' %{_sysconfdir}/asterisk/sip.conf`
+	if [ "x$STR" = "x" ]; then
+		perl -i -p -e 's{^\[general\]}{[general]\n\n#exec %CORE_DIR/contrib/utils/reg_uac.pl\n\n}' %{_sysconfdir}/asterisk/sip.conf
+	fi
+fi
+
 touch /etc/asterisk/xvb/xvb-phone-service.conf || true
 
 chkconfig asterisk on
@@ -393,6 +408,11 @@ else
 	STR=`ps ax | grep [gG]earman-worker.pl`
 	if [ "x$STR" != "x" ]; then
 		service xvb-gearman-worker restart || killall gearman-worker.pl || true
+	fi
+	# reg uac
+	STR=`ps ax | grep [Re]eg_uac.pl`
+	if [ "x$STR" != "x" ]; then
+		service xvb-reg_uac restart || killall reg_uac.pl || true
 	fi
 fi
 
@@ -474,6 +494,9 @@ service httpd start
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_gearman_worker
 %attr(755,root,root) %CORE_DIR/contrib/utils/gearman-worker.pl
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-gearman-worker
+%attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_reg_uac
+%attr(755,root,root) %CORE_DIR/contrib/utils/reg_uac.pl
+%attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-reg_uac
 %CORE_DIR/contrib/asterisk/feautures.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*
