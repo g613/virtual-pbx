@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+# $Id: safe_xvb_reg_uac,v 1.1 2011-11-23 12:06:04 gosha Exp $
+#
+# vim:textwidth=80:tabstop=4:shiftwidth=4:smartindent:autoindent
+
+#NOTIFY=ben@alkaloid.net	# Who to notify about crashes
+#EXEC=/path/to/somescript	# Run this command if Asterisk crashes
+MACHINE=`hostname`			# To specify which machine has crashed when getting the mail
+SLEEPSECS=4
+
+# Check if is already running.
+PROC=`ps ax | grep '[Rr]eg_uac.pl'`
+if [ "x$PROC" != "x" ]; then
+	echo "reg_uac is already running." 1>&2
+	exit 1
+fi
+
+#
+# Don't die if stdout/stderr can't be written to
+#
+trap '' PIPE
+
+run_xvb()
+{
+	while :; do 
+		cd /tmp
+		/opt/VirtualPBX/contrib/utils/reg_uac.pl daemon
+		EXITSTATUS=$?
+		echo "ended with exit status $EXITSTATUS" 1>&2
+		if [ "$EXITSTATUS" = "0" ]; then
+			# Properly shutdown....
+			echo "shutdown normally." 1>&2
+			exit 0
+		elif [ $EXITSTATUS -gt 128 ]; then
+			EXITSIGNAL=EXITSTATUS-128
+			echo "XVB REG_UAC exited on signal $EXITSIGNAL." 1>&2
+			if [ "$NOTIFY" != "" ]; then
+				echo "XVB REG_UAC server on $MACHINE exited on signal $EXITSIGNAL.  Might want to take a peek." | \
+				mail -s "XVB REG_UAC server Died" $NOTIFY
+			fi
+			if [ "$EXEC" != "" ]; then
+				$EXEC
+			fi
+		else
+			echo "XVB REG_UAC exited on signal $EXITSIGNAL." 1>&2
+		fi
+		echo "Automatically restarting XVB REG_UAC server." 1>&2
+		date  1>&2
+		sleep $SLEEPSECS
+	done
+}
+
+run_xvb &
