@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 ########################################################################
 #
-# $Id: reg_uac.pl,v 1.5 2011-11-23 18:36:57 gosha Exp $
+# $Id: reg_uac.pl,v 1.6 2011-11-24 15:34:27 gosha Exp $
 #
 # Copyright (c) 2011 Okunev Igor <igor[at]prv.mts-nn.ru>
 #
@@ -137,7 +137,7 @@ sub get_asterisk_conf {
 			$out_data .= 'register => '. $r_ref->{'username'};
 		}
 		$out_data .= '@'.
-					$r_ref->{'name'}		.':'. 
+					$r_ref->{'name'}		.'/'. 
 					#$r_ref->{'host'}		.':'. 
 					#$r_ref->{'port'}		.'/'. 
 					$r_ref->{'VOICENUMBER'} .'*'. $r_ref->{'ACCESS_CODE'} .'*'. $r_ref->{'INC_EXT'} ."\n";
