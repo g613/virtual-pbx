@@ -261,6 +261,7 @@ create	table VPBX_GROUPS
 	
 	DIALOUT_DIRECT				INT(1) default 1,
 	CUSTOM_ROUTE				INT(1) default 0,
+	CUSTOM_REGS					INT(1) default 0,
 	CUSTOM_FILES				INT(1) default 0,
 	TTS_GREETING				INT(1) default 1,
 	ALLOW_MACROS				INT(1) default 1,
@@ -277,6 +278,7 @@ create	table VPBX_GROUPS
 	MAX_EXT_CIDS				INT(10) default 200,
 	MAX_ROUTES					INT(10) default 200,
 	MAX_PEERS					INT(10) default 5,
+	MAX_REGS					INT(10) default 5,
 	MAX_PHONES					INT(10) default 10,
 	MAX_MACROS					INT(10) default 100,
 	MAX_TTS_LENGTH				INT(10) default 300,
@@ -476,6 +478,7 @@ create table VPBX_SIPPEERS (
 	fromuser VARCHAR(255) DEFAULT NULL,
 	fromdomain VARCHAR(255) DEFAULT NULL,
 	
+	insecure VARCHAR(255) DEFAULT NULL,
 	ipaddr VARCHAR(45) NOT NULL DEFAULT '',
 	regseconds INT(11) NOT NULL default '0',
 	type VARCHAR(6) NOT NULL DEFAULT 'peer',
@@ -510,6 +513,10 @@ create table VPBX_SIPPEERS (
 
 	REC_MODE		INT(1)			not null default 0,
 	REC_EXT			VARCHAR(255)	not null default '0',
+
+	NEED_REG		INT(1)			not null default 0,
+	INC_EXT			VARCHAR(255)	not null default '0',
+	PEER_TYPE		INT(1)			not null default 0,
 
 	unique(name),
     CONSTRAINT FK_VPBX_SIPPPERS_SUBSCR FOREIGN KEY (SUBSCR_ID) REFERENCES VPBX_ACCOUNTS(ID) ON DELETE CASCADE,
