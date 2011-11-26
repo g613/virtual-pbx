@@ -48,7 +48,7 @@
 		<tr>
 			<td>Group Name: </td>
 			<td><input name='GR_GROUP_NAME' type='text' value="[% GROUP.GROUP_NAME | html %]"></td>
-			<td rowspan='37' valign='top'>
+			<td rowspan='38' valign='top'>
 				<table>
 					<tr>
 						<td colspan='2'><h4>Limits on the number of extensions:</h4></td>
@@ -104,6 +104,20 @@
 						<td>
 						<select name="GR_CUSTOM_ROUTE">
 						[% IF GROUP.CUSTOM_ROUTE %]
+							<option value="1">yes</option>
+							<option value="0">no</option>
+						[% ELSE %]
+							<option value="0">no</option>
+							<option value="1">yes</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Enable incoming custom routes: </td>
+						<td>
+						<select name="GR_CUSTOM_REGS">
+						[% IF GROUP.CUSTOM_REGS %]
 							<option value="1">yes</option>
 							<option value="0">no</option>
 						[% ELSE %]
@@ -263,6 +277,10 @@
 		<tr>
 			<td>Maximum Number of Peers: </td>
 			<td><input name='GR_MAX_PEERS' type='text' value="[% GROUP.MAX_PEERS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Maximum Number of custom registrations: </td>
+			<td><input name='GR_MAX_REGS' type='text' value="[% GROUP.MAX_REGS | html %]"></td>
 		</tr>
 		<tr>
 			<td>Maximum Number of Phones: </td>

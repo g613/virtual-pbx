@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.216 2011-11-11 09:21:28 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.217 2011-11-26 09:15:46 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -2376,6 +2376,8 @@
 								<input type='hidden' name='action' value='schedule_add'>
 								<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+								<input type='hidden' name='redirect_to' value='0'>
+								<input type='hidden' name='callerid' value='*'>
 								<td><input size='5' type='text'  name='priority' value='5'></td>
 								<td><input size='11' type='text' name='time_h' value='*'></td>
 								<td><input size='5' type='text'  name='dayofweek' value='*'></td>
@@ -2505,7 +2507,7 @@
 			<tr>
 				<td colspan='2' align='left'><h4>CallBlast data ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ) :</h4></td>
 				<td align='right'>
-					<a title='get excel table' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
+					<a title='get excel table' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
 					&nbsp;&nbsp;&nbsp;
 					<a href='?action=callblast_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL callblast items'><img border='0' src='/xvb/images/msg_delete.png' alt='del all items' /></a>
 				</td>
@@ -2525,7 +2527,7 @@
 					</tr>
 					[% IF MSG_PREV ne '' %]
 					<tr>
-						<td align='left' colspan='7'>
+						<td align='left' colspan='8'>
 							<a title='previous page' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 						</td>
 					</tr>
@@ -2570,7 +2572,7 @@
 					[% END %]
 					[% IF MSG_NEXT ne '' %]
 					<tr>
-						<td align='right' colspan='7'>
+						<td align='right' colspan='8'>
 							<a title='next page' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
 						</td>
 					</tr>

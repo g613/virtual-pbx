@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.20 2011-09-02 11:51:18 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.24 2011-11-23 18:36:58 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP шлюзы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -57,6 +57,10 @@
 			<th>Имя шлюза (*)</th>
 			<th>DTMF режим</th>
 			<th>Протокол</th>
+			[% IF USER_CREDS.CUSTOM_REGS %]
+			<th>Принимать звонки</th>
+			<th>на вн. номер</th>
+			[% END %]
 			<th>Действия</th>
 		</tr>
 		
@@ -90,6 +94,22 @@
 				[% END %]
 				</select>
 			</td>
+			[% IF USER_CREDS.CUSTOM_REGS %]
+			<td>
+				<select name="NEED_REG" class='in_t0'>
+				[% IF p.NEED_REG eq '1' %]
+					<option value="1" selected>да</option>
+					<option value="0">нет</option>
+				[% ELSE %]
+					<option value="0" selected>нет</option>
+					<option value="1">да</option>
+				[% END %]
+				</select>
+			</td>
+			<td>
+				<input class='in_t0' size="8" name='INC_EXT' type='text' value="[% p.INC_EXT | html %]">
+			</td>
+			[% END %]
 			<td align='left'>
 				<input type='hidden' value='[% p.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='peer_update' name='action'>
@@ -149,6 +169,17 @@
 					<option value="tcp">TCP</option>
 				</select>
 			</td>
+			[% IF USER_CREDS.CUSTOM_REGS %]
+			<td>
+				<select name="NEED_REG">
+					<option value="0" selected>нет</option>
+					<option value="1">да</option>
+				</select>
+			</td>
+			<td>
+				<input size="8" name='INC_EXT' type='text'>
+			</td>
+			[% END %]
 			<td>
 				<input type='hidden' value='peer_add' name='action'>
 				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
