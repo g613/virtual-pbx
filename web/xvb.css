@@ -251,3 +251,11 @@ html * #center {
 	left: expression(window.clientWidth/2+document.body.scrollLeft + 'px'); 
 	top: expression(window.clientHeight/2+document.body.scrollTop + 'px');
 }
+
+.agent_state0 {
+	color:red;
+}
+
+.agent_state1 {
+	color:green;
+}

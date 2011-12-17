@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.165 2011-11-26 09:15:47 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.167 2011-12-17 06:33:23 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1439,6 +1439,7 @@
 							<option value='http://www.whitepages.com/search/ReversePhone?full_phone=% CID:1:10 %&localtime=survey'>White Pages</option>
 							<option value='https://REPLACEME/search/SearchResults?searchType=1&sen=003&setLast=1&sbstr=% CID:1:10 %'>Salesforce.com</option>
 							<option value='http://${ YOUR HOST ADDRESS }:8080/vtigercrm/index.php?phone_number=% CID:1:10 %'>vtiger CRM</option>
+							<option value='http://${ YOUR HOST ADDRESS }/index.php?query_string=%CID%&module=Home&advanced=true&action=UnifiedSearch&search_form=false&search_mod_Accounts=true&search_mod_Contacts=true&search_mod_Leads=true&search_mod_Project=true'>SugarCRM</option>
 						</select> :
 						</td>
 					<td>
@@ -2570,7 +2571,7 @@
 								</td>
 							[% ELSE %]
 							<tr align='center' class='nocolor'>
-								<td align='left'>[% param.NUMBER | html %]</td>
+								<td align='left'><span class='agent_state[% param.STATUS %]'>[% param.NUMBER | html %]</span></td>
 							[% END %]
 								<td>[% param.ALL | html %]</td>
 								<td>[% param.ANSWERED | html %]</td>
