@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.219 2011-12-17 06:33:22 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.221 2011-12-18 06:38:46 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1165,6 +1165,16 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
+					<td>Join empty: </td>
+					<td>
+						[% IF VBOX_PREF.JOINEMPTY %]
+							<input name="JOINEMPTY" type="checkbox" checked>
+						[% ELSE %]
+							<input name="JOINEMPTY" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
 					<td>Goto if queues fail: </td>
 					<td>
 						<script language="JavaScript">
@@ -2241,7 +2251,7 @@
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%' class='addon_data' id='addon-data'>
 							<tr class='list_addon_data'>
-								<th>Phone number</th>
+								<th><a href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='dynamic agents'>Phone number</a></th>
 								<th>All calls</th>
 								<th>Answered calls</th>
 								<th>Duaration</th>

@@ -1,0 +1,108 @@
+<html>
+<!-- $Id: agent_login.tt,v 1.1 2011-12-18 05:08:20 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - dynamic agents </title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			[% IF USER_CREDS.LOGO_HREF eq '' %]
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			[% ELSE %]
+				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+			[% END %]
+			</td>
+			<td align='center'><h2>Dynamic agents</h2></td>
+			<td align='right' width='20%'>
+				&nbsp;
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%'class='bottom_hr'>
+		<tr>
+			<td>&nbsp;&nbsp;</td>
+		</tr>
+	</table>
+	</p>
+
+	<p align='center'>
+	<table width='50%'>
+		<form method='post'>
+			<tr>
+				<td>Access code :</td>
+				<td><input name='uniq' type='text' value='[% USER_CREDS.ACCESS_CODE %]'></td>
+			</tr>
+			<tr>
+				<td>Queue ID :</td>
+				<td><input name='id' type='text' value='[% ROOT_EXT_ID %]'></td>
+			</tr>
+			<tr>
+				<td>Agent :</td>
+				<td><input name='agent' type='text' value='[% AGENT | html %]'></td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td><input name='pswd' type='password'></td>
+			</tr>
+			<tr>
+				<td>New status:</td>
+				<td>
+				<select name="status">
+					<option value="1">online</option>
+					<option value="0">offline</option>
+				</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Current status:</td>
+				<td>
+				[% IF STATUS eq '' %]
+					unknown
+				[% ELSIF STATUS eq '0' %]
+					offline
+				[% ELSE %]
+					online
+				[% END %]
+				</td>
+			</tr>
+			<tr>
+				<td colspan='2'>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan='2' align='center'>
+					<input name='action' type='hidden' value='agent_status'>
+					<input type='submit' value='&nbsp;&nbsp;&nbsp;Set status&nbsp;&nbsp;&nbsp;'>
+				</td>
+			</tr>
+		</form>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			<td>&nbsp;
+			[% IF ERROR_STR ne '' %]
+				<span class='error'>[% ERROR_STR | html %]</span>
+			[% END %]
+			</td>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
