@@ -1,6 +1,6 @@
 #labels Featured
 = ToDo list =
-<font color='green'>+  Для очереди добавить флаг JoinEmpty</font> ( 18.11.2011 / build 5659 )
+<font color='green'>+  Для очереди добавить флаг joinempty</font> ( 18.11.2011 / build 5659 )
 
 <font color='green'>+  Для агентов очереди добавить возможность регистраци для приема звонков</font> ( 18.11.2011 / build 5648 )
 
