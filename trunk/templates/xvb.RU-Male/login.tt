@@ -1,0 +1,80 @@
+<html>
+<!-- $Id: login.tt,v 1.1 2011-12-21 13:49:40 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - вход</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='center'><h2>Добро пожаловать в VirtualPBX</h2></td>
+			<td align='right' width='20%'>
+				<a href='/xvb/XVB.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='документация пользователя' /></a>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%'class='bottom_hr'>
+		<tr>
+			<td>&nbsp;&nbsp;</td>
+		</tr>
+	</table>
+	</p>
+
+	<p align='center'>
+	<table width='50%'>
+		<form method='post'>
+			<tr>
+				<td>Номер телефона: </td>
+				<td><input name='phone' type='text'></td>
+			</tr>
+			<tr>
+				<td>Код доступа: </td>
+				<td><input name='ac' type='text'></td>
+			</tr>
+			<tr>
+				<td>Внутренний номер: </td>
+				<td><input name='ext_id' type='text'></td>
+			</tr>
+			<tr>
+				<td>Пин код: </td>
+				<td><input name='pw' type='password'></td>
+			</tr>
+			<tr>
+				<td colspan='2'>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan='2' align='center'>
+					<input name='referer' type='hidden' value='[% REFERER | html %]'>
+					<input name='action' type='hidden' value='start'>
+					<input type='submit' value='&nbsp;&nbsp;&nbsp;Войти&nbsp;&nbsp;&nbsp;'>
+				</td>
+			</tr>
+		</form>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			<td>&nbsp;
+			[% IF ERROR_STR ne '' %]
+				<span class='error'>[% ERROR_STR | html %]</span>
+			[% END %]
+			</td>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
