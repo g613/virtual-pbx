@@ -23,7 +23,7 @@ system "mkdir $dir";
 
 my @chunks = split /(\[\%[ \t]+(?:IF|END|FOREACH)[ \t][^%]*\%\])/, $data;
 
-foreach my $vb_type ( 1 .. 27 ) {
+foreach my $vb_type ( 1 .. 29 ) {
 	my $need_print = 1;
 	my $if_cnt = 0;
 	my $if_ind_bad;
