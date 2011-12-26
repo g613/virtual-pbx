@@ -6,7 +6,7 @@ _Integration with kamailio ( sip registrar )_ : *500 EUR*
 
 _Integration with gearmand_ : *100 EUR*
 
-_flash 2 sip gateway ( web phone )_ : *1000 EUR*
+_flash2sip gateway ( web phone )_ : *1000 EUR*
 
 _Consultation_ : *50 EUR* / hour (virtual-pbx | asterisk | linux )
 
