@@ -1,7 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>-В cdr время надо писать в милисекундами</font>
+<font color='red'>- Добавить новый тип шаблона DTMF ввода - внутренний номер и его id</font>
+
+<font color='green'>+ В cdr время надо писать в милисекундах</font> ( 26.12.2011 / build 5679 )
 
 <font color='green'>+ Преобразование номера звонящего ( перед лукапом в белом\черном списке и записью в cdr)</font> ( 25.12.2011 / build 5670 )
 
