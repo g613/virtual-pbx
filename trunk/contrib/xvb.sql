@@ -1608,6 +1608,9 @@ VALUES( 14,'boolean','Boolean','Логический' )
 insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
 VALUES( 15,'currency','Currency','Деньги' )
 ;
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
+VALUES( 16,'extension','Extension / id (1*1,2,etc)','Внутренний номер / его id (1*1,2,и тд)' )
+;
 -- SAY PATTERN
 insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION,RU_DESCRIPTION)
 VALUES( 0, 'char','characters','символы' )
