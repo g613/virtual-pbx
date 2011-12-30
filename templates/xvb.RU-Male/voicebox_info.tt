@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.169 2011-12-18 06:38:46 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.170 2011-12-27 11:42:07 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1801,7 +1801,6 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td>Записать голосовое сообщение: </td>
 					<td><a href='#' class='info'>Записать голосовое сообщение: <span>
 							Записать голосовое сообщение пользователя и передать его по ссылке. 
 							Записанное сообщение передается в формате wav, в переменной: % VAR:FILE_DATA %
