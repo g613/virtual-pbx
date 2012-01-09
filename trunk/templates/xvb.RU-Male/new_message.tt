@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: new_message.tt,v 1.9 2010-12-23 12:03:52 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.10 2012-01-09 14:24:48 gosha Exp $ -->
 <head>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -31,7 +31,7 @@
 [% ELSE %]
 <a href="[% FILE_LINK %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]">
 [% END %]
-Вы можите скачать сообщение по этой ссылке</a>
+Вы можете скачать сообщение по этой ссылке</a>
 [% END %]
 </p>
 

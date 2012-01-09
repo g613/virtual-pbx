@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.11 2011-10-05 07:30:43 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.12 2012-01-09 14:24:48 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -252,7 +252,7 @@
 			</td>
 		</tr>
 
-		<tr><td colspan='2' align='center'><br><h4>Техическая информация</h4></td></tr>
+		<tr><td colspan='2' align='center'><br><h4>Техническая информация</h4></td></tr>
 		<tr>
 			<td>
 				<div id="chart_CAUSE"></div>
@@ -389,7 +389,7 @@
 			</td>
 		</tr>
 
-		<tr><td colspan='2' align='center'><br><h4>Техическая информация</h4></td></tr>
+		<tr><td colspan='2' align='center'><br><h4>Техническая информация</h4></td></tr>
 		<tr>
 			<td>
 				<div id="chart_CAUSE"></div>
@@ -422,7 +422,7 @@
 			</td>
 		</tr>
 
-		<tr><td colspan='2' align='center'><br><h4>Все звонки / попытка звока</h4></td></tr>
+		<tr><td colspan='2' align='center'><br><h4>Все звонки / попытка звонка</h4></td></tr>
 		<tr>
 			<td width='60%'>
 				<div id="chart_ATTEMPT"></div>

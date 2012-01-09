@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.170 2011-12-27 11:42:07 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.171 2012-01-09 14:24:48 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -77,7 +77,7 @@
 					[% IF VBOX_PREF.TYPE eq '1' %]
 					<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
 					<h4>Советы:</h4>
-					При разрешенноей перемотке 'приветствия пользователя' 
+					При разрешенной перемотке 'приветствия пользователя' 
 					звонящий абонент может использовать клавиши:
 					<ul>
 						<li><b>4</b> - назад на 30 секунд</li>
@@ -205,7 +205,7 @@
 						<li><b>0</b> - узнать дату сообщения</li>
 						<li><b>4</b> - прослушать предыдущее сообщение</li>
 						<li><b>5</b> - повторить сообщение сообщение</li>
-						<li><b>6</b> - просушать следующее сообщение</li>
+						<li><b>6</b> - прослушать следующее сообщение</li>
 						<li><b>9</b> - записать объявление</li>
 					</ul>
 					</span></a>
@@ -290,7 +290,7 @@
 							на данный номер у удаленного пользователя будет спрашиваться 
 							данный пин код. Второе поле не обязательно, если оно определено, 
 							то для редактирования нужно будет вводить оба пинкода. То есть 
-							первая половина - публичный пин код для доступа к даному пункту 
+							первая половина - публичный пин код для доступа к данному пункту 
 							меню, вторая половил - для доступа к параметрам внутреннего номера...
 							</span></a></td>
 					<td>
@@ -600,7 +600,7 @@
 					<td><a href='#' class='info'>Список номеров:<span>
 							Список номеров по которым система будет искать пользователя, 
 							допускается несколько номеров разделенных запятой.
-							Алгоритм вызова будет зависить от 'Алгоритма звонка'
+							Алгоритм вызова будет зависеть от 'Алгоритма звонка'
 						</span></a></td>
 					<td>
 						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
@@ -620,7 +620,7 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td><a href='#' class='info'>Безшовный трансфер:<span>
+					<td><a href='#' class='info'>Бесшовный трансфер:<span>
 							Список номеров, через запятую, на которые возможен перевод звонка без разрыва соединения в одно касание ( кнопки 1 - 3 )
 						</span></a></td>
 					<td>
@@ -750,7 +750,7 @@
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Защитный режим: <span>
 							При установленном флаге вызывающего абонента попросят назвать себя и цель звонка, 
-							далее даное сообщение будет проиграно вызываемому абоненту,
+							далее данное сообщение будет проиграно вызываемому абоненту,
 							и предложение принять\отклонить\перевести данный вызов.
 						</span></a></td>
 					<td>
@@ -763,7 +763,7 @@
 				</tr>
 				<tr>
 					<td><a href='#' class='info'>Запустить голосовую почту: <span>
-							При установленном флаге в слкчае неудачного вызова будет записана голосовая почта.
+							При установленном флаге в случае неудачного вызова будет записана голосовая почта.
 							При установленном флаге 'Если не дозвонились, перейти к' данный флаг игнорируется.
 						</span></a></td>
 					<td>
@@ -776,7 +776,7 @@
 				</tr>
 				<tr>
 					<td><a href='#' class='info'>Запись разговора:  <span>
-							Атоматически включать запись всех разговоров.
+							Автоматически включать запись всех разговоров.
 						</span></a></td>
 					<td>
 						[% IF VBOX_PREF.RECORD_CALL %]
@@ -866,7 +866,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Раскладка клавиатуры: <span>
-							выбор привязки символов к цифрам. Например для русскоого:
+							выбор привязки символов к цифрам. Например для русского:
 							 2 - абвг</br>
 							 3 - дежз</br>
 							 4 - ийкл</br>
@@ -1244,7 +1244,7 @@
 				[% IF VBOX_PREF.TYPE eq '13' %]
 				<tr>
 					<td><a href='#' class='info'>Список агентов:<span>
-							Список номеров которые обслуживают очередь. Алгоритм вызова будет зависить от 'Алгоритма звонка'
+							Список номеров которые обслуживают очередь. Алгоритм вызова будет зависеть от 'Алгоритма звонка'
 						</span></a></td>
 					<td>
 						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
@@ -1374,7 +1374,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Чистить очередь:<span>
-							Исключать из повторных попыток дозвона агентов со статусом отличным от BUSY. 
+							Исключать из повторных попыток вызова агентов со статусом отличным от BUSY. 
 							То есть если агент не берет трубку то он будет исключен из очереди ( для текущего звонка ).
 						</span></a></td>
 					<td>
@@ -1399,7 +1399,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Префикс трансфера звонка: <span>
-							Префик для трансфера. Например при установлении значения в '9*', если пользователь
+							Префикс для трансфера. Например при установлении значения в '9*', если пользователь
 							выполнит трансфер звонка на номер 89, то перевод будет осуществлен на номер '9*89'
 						</span><a/></td>
 					<td>
@@ -1462,7 +1462,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Веб запрос после ответа<span>
-							URL который выполнятется VirtualPBX после ответа агента, есть 
+							URL который выполняется VirtualPBX после ответа агента, есть 
 							возможность использовать переменные в URL: QID - id очереди, 
 							ANSWERED_NUMBER - номер ответившего агента.
 							Данный метод можно использовать вместо предыдущего ( URL для телефона )
@@ -1646,7 +1646,7 @@
 				</tr>
 				<tr>
 					<td><a href='#' class='info'>Начать звонить в: <span>
-						Время после которого система начанет совершать звонки.
+						Время после которого система начнет совершать звонки.
 					</span></a></td>
 					<td>
 						<input name="START_TIMESTAMP" value="[% VBOX_PREF.START_TIMESTAMP | html %]" type="hidden">
@@ -1681,7 +1681,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Интервал повторного вызова (минуты): <span>
-							Пауза в минутах до повторного вызова абонента в случае неуспешного вызова.
+							Пауза в минутах до повторного вызова абонента в случае безуспешного вызова.
 						</span></a></td>
 					<td>
 						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
@@ -1700,7 +1700,7 @@
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Минимальная длительность звонка:  <span>
 							Минимальная длительность разговора при которой звонок считается состоявшимся. 
-							Например этот параметр можно использовать для уверенности, что сообщение было дослушано до конца.
+							Например этот параметр можно использовать для уверенности, что сообщение было прослушано до конца.
 						</span></a></td>
 					<td>
 						<input size='4' type='text' name='MIN_CALL_DURATION' value='[% VBOX_PREF.MIN_CALL_DURATION | html %]'>
@@ -1871,7 +1871,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Интервал повторного вызова (сек): <span>
-							Пауза в секундах до повторного вызова абонента в случае неуспешного вызова.
+							Пауза в секундах до повторного вызова абонента в случае безуспешного вызова.
 						</span></a></td>
 					<td>
 						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
@@ -2022,7 +2022,7 @@
 				</tr>
 				<tr>
 					<td><a href='#' class='info'>Разрешить подтверждать мероприятия: <span>
-							Резрешить пользователю во время прослушивания воспользоваться кнопками: 1 - подтвердить мероприятие, 3 - чтобы отказаться от мероприятия.
+							Разрешить пользователю во время прослушивания воспользоваться кнопками: 1 - подтвердить мероприятие, 3 - чтобы отказаться от мероприятия.
 						</span></a></td>
 					<td>
 						<input name="ACCESS_MODE" type="checkbox" [% IF VBOX_PREF.ACCESS_MODE %] checked [% END %]>
@@ -2144,7 +2144,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Запись разговора:  <span>
-							Атоматически включать запись всех разговоров.
+							Автоматически включать запись всех разговоров.
 						</span></a></td>
 					<td>
 						[% IF VBOX_PREF.RECORD_CALL %]
@@ -2202,7 +2202,7 @@
 					[% IF VBOX_PREF.TYPE eq '3' %]
 					[% IF VBOX_PREF.ANNOUNCEMENT_FILE %]
 					<tr class='nocolor' id='d-tr-s2'>
-						<td>Обьявление для вызываемого: </td>
+						<td>Объявление для вызываемого: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
@@ -2214,7 +2214,7 @@
 					[% END %]
 					[% IF VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]
 					<tr class='nocolor' id='d-tr-s7'>
-						<td>Обьявление для звонящего: </td>
+						<td>Объявление для звонящего: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
@@ -2241,7 +2241,7 @@
 					[% IF VBOX_PREF.TYPE eq '13' %]
 					[% IF VBOX_PREF.ANNOUNCEMENT_FILE %]
 					<tr class='nocolor' id='d-tr-s4'>
-						<td>Обьявление для вызываемого: </td>
+						<td>Объявление для вызываемого: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
@@ -2253,7 +2253,7 @@
 					[% END %]
 					[% IF VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]
 					<tr class='nocolor' id='d-tr-s8'>
-						<td>Обьявление для звонящего: </td>
+						<td>Объявление для звонящего: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/0/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
@@ -2296,15 +2296,15 @@
 							<option value="1" selected>Имя пользователя</option>
 							<option value="2">Приветствие пользователя</option>
 							[% IF VBOX_PREF.TYPE eq '3' %]
-							<option value="3">Обьявление для вызываемого</option>
+							<option value="3">Объявление для вызываемого</option>
 							<option value="4">Анонс удержания вызова</option>
-							<option value="7">Обьявление для звонящего</option>
+							<option value="7">Объявление для звонящего</option>
 							[% END %]
 
 							[% IF VBOX_PREF.TYPE eq '13' %]
-							<option value="3">Обьявление для вызываемого</option>
+							<option value="3">Объявление для вызываемого</option>
 							<option value="4">Анонс удержания вызова</option>
-							<option value="7">Обьявление для звонящего</option>
+							<option value="7">Объявление для звонящего</option>
 							[% END %]
 
 							[% IF VBOX_PREF.TYPE eq '16' %]
