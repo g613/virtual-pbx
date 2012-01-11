@@ -1362,12 +1362,6 @@ INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, RU_DESCRIPTION, LANG_VOICE, LAN
 VALUES(3,'xvb.EN-Male','English (Male+TTS)','Английский (мужчина+TTS)','cmu_us_awb_arctic_clunits','en_US.UTF-8','Festival')
 ;
 INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, RU_DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE)
-VALUES(4,'xvb.RU-Male-Dmitri','Russian (Male - Dmitri+TTS)','Русский (Дмитрий+TTS)','Dmitri','ru_RU.UTF-8','Loquendo')
-;
-INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, RU_DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE)
-VALUES(5,'xvb.RU-Female-Olga','Russian (Female - Olga)','Русский (Ольга)','NO-VOICE','ru_RU.UTF-8','Loquendo')
-;
-INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, RU_DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE)
 VALUES(6,'xvb.RU-Female','Russian (Female+TTS)','Русский (женщина+TTS)','ru','ru_RU.UTF-8','GTranslate')
 ;
 -- VB Types
