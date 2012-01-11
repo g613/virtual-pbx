@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- Добавить поддержку microsofttranslator.com для TTS</font>
+
 <font color='green'>+ Добавить новый тип шаблона DTMF ввода - внутренний номер и его id</font> ( 29.12.2011 / build 5690 )
 
 <font color='green'>+ В cdr время надо писать в милисекундах</font> ( 26.12.2011 / build 5679 )
