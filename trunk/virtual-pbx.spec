@@ -237,8 +237,6 @@ export XVB_VERSION=%{release}
 cd $RPM_BUILD_ROOT/%CORE_DIR/templates
 find -name '*.tt' -exec perl ../contrib/utils/build/html_clean.pl {} ';'
 find -name '*.bak' -exec rm -f {} ';'
-ln -s xvb.RU-Male xvb.RU-Male-Dmitri
-ln -s xvb.RU-Male xvb.RU-Female-Olga
 ln -s xvb.RU-Male xvb.RU-Female
 ln -s . default
 ln -s . xvb.EN-Male
@@ -332,9 +330,6 @@ find %ASTERISK_VARLIB_HOME/sounds/ -name '*.wav16' -exec perl %CORE_DIR/contrib/
 ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.RU-Male/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.RU-Male &> /dev/null
 ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.EN-Female/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.EN-Female &> /dev/null
 ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.EN-Male/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.EN-Male &> /dev/null
-# with out tts
-ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.RU-Male-Dmitri/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.RU-Male-Dmitri &> /dev/null
-ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.RU-Female-Olga/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.RU-Female-Olga &> /dev/null
 ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.RU-Female/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.RU-Female &> /dev/null
 #
 ln -s %ASTERISK_VARLIB_HOME/sounds %CORE_DIR
@@ -410,7 +405,7 @@ else
 		service xvb-gearman-worker restart || killall gearman-worker.pl || true
 	fi
 	# reg uac
-	STR=`ps ax | grep [Re]eg_uac.pl`
+	STR=`ps ax | grep [Rr]eg_uac.pl`
 	if [ "x$STR" != "x" ]; then
 		service xvb-reg_uac restart || killall reg_uac.pl || true
 	fi
