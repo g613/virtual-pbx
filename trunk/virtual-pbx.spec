@@ -1,7 +1,7 @@
 %define CORE_DIR /opt/VirtualPBX
 %define ASTERISK_VARLIB_HOME %{_datadir}/asterisk
 Name: virtual-pbx
-Summary: Dynamic IVR / SOHO VirtualPBX
+Summary: Voice Application Server / HostedIVR solution based on asterisk - Core files
 Version: 2
 Release: 1
 License: GPL
@@ -37,13 +37,83 @@ Requires: perl(Gearman::Worker)
 Requires: perl(Authen::SASL)
 
 %description
-Dynamic IVR / SOHO VirtualPBX - CORE files
+The virtual-pbx application is intended for processing incoming/outgoing calls and rapid organization IVR menu.
+also provides an isolated environment (numbered plan, routing calls, institute phones and so forth. )
+for multiple users.
 
+Virtual-pbx application include:
+	- Processing incoming / outgoing calls.
+	- Completely isolated environment for different users 
+	  ( incoming / outgoing routes, dial plan, sip-endpoints, web-interface, cdrs, call-recordings, etc ).
+	- Custom user greetings support.
+	- Email/Twitter notifications.
+	- Multiple language voice prompts.
+	- Text To Speech ( TTS ) for multiple languages.
+	- Easy / Advanced configuration mode.
+	- Custom music on hold (MOH) for each user.
+	- Multiple language WEB interface with xml/json API support.
+	- Flexible customisation for system voice messages.
+	- Managing voice mail via phone or WEB interface.
+	- User specified time zones support.
+	- Call transfer support ( blind transfer ).
+	- White / Black lists support for each IVR item.
+	- Journal configuration changes.
+	- CDR support.
+	- IVR logging.
+	- XML backup / restore configuration.
+	- Multiple roles within a single IVR account.
+	- Privated / Shared DIDs support.
+	- SQL reports.
+	- Management API.
+	- Google Calendar integration.
+	- Support Google Analytics for calls trekking.
+	- Radius accounting.
+	- Background music for Find-Me / Queue calls.
+	- Support HD codec ( g722 ).
+	- Email/Web interface Branding.
+	- Recording outgoing calls ( auto / on demand ).
+	- Full DTMF history for each call.
+	- Support presettings for SIP providers.
+	- Support Multi-tenant asterisk with Kamailio as sip registrar server / load balancer.
+	- Easy to update.
+	- speedyAGI server.
+	- FMC - Fixed Mobile Convergence
+	- google-chart for extended statistics for: DialOut, Queue, CallBlast, Polling
+	- WEB logon / logoff for the agents of the queue.
+	- Several types of extensions:
+		Playback / Auto Attendant
+		VoiceMail
+		DialOut with Find-Me feautures.
+		Company Directory
+		Schedule
+		WEB-Request
+		Chat-Room ( with WEB broadcasting via IceCast and call recording )
+		Fax2Email
+		DTMF2Email
+		Polling (Voting)
+		DISA
+		Podcast2Phone gate
+		ACD Queues
+		CallBack
+		DateTime
+		Fax on Demand
+		Bulletin board system
+		CallBlast ( Predictive Dialer )
+		WEB Variables
+		Stored DB variables
+		Goto If
+		Alarm Clock ( Telephone Reminder / Wake Up )
+		Google Calendar - Shedule: checks status busy / free.
+		RoboTEXT with support money, date, time, phonenumber, percent, degree formats
+		MP3 Streaming
+		Call Parking
+		GoogleCalendar - Events: reads events via TTS + confirmation / cancellation of events.
+		Paging / Intercom
 
 ####################################################
 #
 %package voip
-Summary: Dynamic IVR / SOHO VirtualPBX VOIP application
+Summary: Voice Application Server / HostedIVR solution based on asterisk - VOIP application
 Group:   System Environment/Services
 
 Requires: asterisk >= 1.6.0.28
@@ -58,13 +128,13 @@ Requires: perl(Asterisk::AGI) >= 0.09
 Requires: perl(Time::HiRes)
 
 %description voip
-Dynamic IVR / SOHO VirtualPBX - VOIP applications
+Voice Application Server / HostedIVR solution based on asterisk - VOIP applications
 
 
 ####################################################
 #
 %package voip-fagi
-Summary: Dynamic IVR / SOHO VirtualPBX FastAGI utils
+Summary: Voice Application Server / HostedIVR solution based on asterisk - FastAGI utils
 Group:   System Environment/Services
 
 Requires: virtual-pbx-voip
@@ -72,13 +142,13 @@ Requires: perl(Authen::Radius)
 Requires: freeradius
 
 %description voip-fagi
-Dynamic IVR / SOHO VirtualPBX - FastAGI utils
+Voice Application Server / HostedIVR solution based on asterisk - FastAGI utils
 
 
 ####################################################
 #
 %package web
-Summary: Dynamic IVR / SOHO VirtualPBX - WEB interface
+Summary: Voice Application Server / HostedIVR solution based on asterisk - WEB interface
 Group:   System Environment/Services
 
 Requires: virtual-pbx = %{version}-%{release}
@@ -91,49 +161,49 @@ Requires: perl(XML::Parser)
 Requires: perl(JSON::XS)
 
 %description web
-Dynamic IVR / SOHO VirtualPBX  - WEB interface
+Voice Application Server / HostedIVR solution based on asterisk  - WEB interface
 
 
 ####################################################
 #
 %package management
-Summary: Dynamic IVR / SOHO VirtualPBX - Management utilites
+Summary: Voice Application Server / HostedIVR solution based on asterisk - Management utilites
 Group:   System Environment/Services
 
 Requires: virtual-pbx = %{version}-%{release}
 %description management
-Dynamic IVR / SOHO VirtualPBX  - Management utilites
+Voice Application Server / HostedIVR solution based on asterisk  - Management utilites
 
 
 ####################################################
 #
 %package sound-files
-Summary: Dynamic IVR / SOHO VirtualPBX Sound files
+Summary: Voice Application Server / HostedIVR solution based on asterisk - Sound files
 Group:   System Environment/Services
 
 %description sound-files
-Dynamic IVR / SOHO VirtualPBX - Sound files
+Voice Application Server / HostedIVR solution based on asterisk - Sound files
 
 
 ####################################################
 #
 %package devel
-Summary: Dynamic IVR / SOHO VirtualPBX devel
+Summary: Voice Application Server / HostedIVR solution based on asterisk - devel
 Group:   System Environment/Services
 
 %description devel
-Dynamic IVR / SOHO VirtualPBX - devel
+Voice Application Server / HostedIVR solution based on asterisk - devel
 
 
 ####################################################
 #
 %package balancer
-Summary: Dynamic IVR / SOHO VirtualPBX Load balancer
+Summary: Voice Application Server / HostedIVR solution based on asterisk - Load balancer
 Group:   System Environment/Services
 Requires: kamailio
 
 %description balancer
-Dynamic IVR / SOHO VirtualPBX - Load balancer
+Voice Application Server / HostedIVR solution based on asterisk - Load balancer
 
 
 ####################################################
