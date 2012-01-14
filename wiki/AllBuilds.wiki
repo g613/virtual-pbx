@@ -1,5 +1,5 @@
 ==All VMWare images :==
-* [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/30493799001/VirtualPBX-1_5555.tar.bz2.html build 5555 (04.11.2011) ]
+  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/30493799001/VirtualPBX-1_5555.tar.bz2.html build 5555 (04.11.2011) ] ( ahared DIDs attributes )
 
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/F4AC6334EC0711E09676002481FAD55A/VirtualPBX-1_5479.tar.bz2 build 5479 (30.09.2011) ]  / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/26532162001/VirtualPBX-1_5479.tar.bz2.html yandex-disk-mirror] ( added extended statistics )
 
