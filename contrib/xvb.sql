@@ -516,6 +516,7 @@ create table VPBX_SIPPEERS (
 
 	NEED_REG		INT(1)			not null default 0,
 	INC_EXT			VARCHAR(255)	not null default '0',
+	PICKUP_GROUPS	VARCHAR(255)	not null default '',
 	PEER_TYPE		INT(1)			not null default 0,
 
 	unique(name),
