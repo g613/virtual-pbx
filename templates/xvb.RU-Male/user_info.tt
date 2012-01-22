@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.58 2012-01-09 14:24:48 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.61 2012-01-22 19:55:12 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -151,7 +151,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Язык по умолчанию:</td>
+					<td>Язык интерфейса и голос по умолчанию:</td>
 					<td>
 						<select name='LANG'>
 							[% FOREACH lang = LANG %]
@@ -259,8 +259,8 @@
 					<td colspan='2'>
 						<table width='90%' class='addon_data' id='d-tbl'>
 							[% IF CUSTOM_MOH ne '' %]
-							<tr class='addon_data' id='d-tr'>
-								<td>Текущая музыка вместо звонка</td>
+							<tr id='d-tr'>
+								<td>Текущая музыка вместо гудков</td>
 								<td align='center' nowrap='nowrap'>
 									<a title='прослушать' 
 										onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/0/[% CUSTOM_MOH %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
@@ -270,7 +270,7 @@
 								</td>
 							</tr>
 							[% END %]
-							<tr class='addon_data'>
+							<tr>
 							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 								<td>
 									<input type='file' name='msg'>
@@ -285,6 +285,45 @@
 							</form>
 							</tr>
 						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan='2'>
+					<table class='user_data'>
+						<tr>
+							<td colspan='2'><h4>Резервное копирование:</h4></td>
+						</tr>
+						<tr>
+							<form enctype="multipart/form-data" method="post" action="[% CGI_URL %]">
+							<td>
+								Сохранить звуковые файлы: <input type='checkbox' name='full_backup'>
+								<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+								<input type='hidden' name='action' value='backup'>
+							</td>
+							<td align='center'>
+								<input name='submit' type='submit' value='Сохранить конфигурацию'>
+							</td>
+							</form>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<form enctype="multipart/form-data" method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<td>
+								<a href='#' class='info'>Добавить<span>при включении данного флага старые данные не удаляются</span></a>: <input type='checkbox' name='merge'>
+								<input type='file' name='config_file'>
+								<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+								<input type='hidden' name='action' value='restore'>
+							</td>
+							<td align='center'>
+								<input type='submit' value='Загрузить конфигурацию'>
+							</td>
+							</form>
+						</tr>
+					</table>
 					</td>
 				</tr>
 			</table>
@@ -491,46 +530,6 @@
 				<tr>
 					<td>длину музыки вместо звонка: </td>
 					<td align='right'>[% USER_CREDS.MAX_MOH_DURATION | duration_str %]</td>
-				</tr>
-			</table>
-			</td>
-		</tr>
-	
-		<tr>
-			<td colspan='2'>
-			<table class='user_data'>
-				<tr>
-					<td colspan='2'><h4>Резервное копирование:</h4></td>
-				</tr>
-				<tr>
-					<form enctype="multipart/form-data" method="post" action="[% CGI_URL %]">
-					<td>
-						Сохранить звуковые файлы: <input type='checkbox' name='full_backup'>
-						<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
-						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-						<input type='hidden' name='action' value='backup'>
-					</td>
-					<td align='center'>
-						<input name='submit' type='submit' value='Сохранить конфигурацию'>
-					</td>
-					</form>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-				</tr>
-				<tr>
-					<form enctype="multipart/form-data" method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-					<td>
-						<a href='#' class='info'>Добавить<span>при включении данного флага старые данные не удаляются</span></a>: <input type='checkbox' name='merge'>
-						<input type='file' name='config_file'>
-						<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
-						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-						<input type='hidden' name='action' value='restore'>
-					</td>
-					<td align='center'>
-						<input type='submit' value='Загрузить конфигурацию'>
-					</td>
-					</form>
 				</tr>
 			</table>
 			</td>

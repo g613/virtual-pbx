@@ -74,11 +74,9 @@
 		[% FOREACH msg = MSG_LIST %]
 		<tr class='nocolor' id='d-tr-[% msg.FILE_NAME %]'>
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
-			<td align='center'>
-			[% msg.RU_DESCRIPTION | html %]
-			</td>
+			<td>[% msg.RU_DESCRIPTION | html %]</td>
 			<td align='center'>[% msg.MSG_DATE | html %]</td>
-			<td align='center'>[% msg.CALLERID | html %]</td>
+			<td>[% msg.CALLERID | html %]</td>
 			[% IF msg.IS_VOICE %]
 				<td align='center'>[% msg.DURATION | duration_str | html %]</td>
 			[% ELSIF msg.FILE_NAME contain '.avi' %]

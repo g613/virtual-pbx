@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.43 2011-09-02 11:51:16 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.44 2012-01-21 21:10:38 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -76,9 +76,9 @@
 		<tr class='nocolor' id='d-tr-[% msg.FILE_NAME %]'>
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
 			<td>&nbsp;<a href='?action=vb_view&id=[% msg.ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
-			<td align='center'>[% msg.DESCRIPTION | html %]</td>
+			<td>[% msg.DESCRIPTION | html %]</td>
 			<td align='center'>[% msg.MSG_DATE | html %]</td>
-			<td align='center'>[% msg.CALLERID | html %]</td>
+			<td>[% msg.CALLERID | html %]</td>
 			[% IF msg.IS_VOICE %]
 			<td align='center'>[% msg.DURATION | duration_str | html %]</td>
 			[% ELSIF msg.FILE_NAME contain '.avi' %]

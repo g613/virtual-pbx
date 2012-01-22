@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: login.tt,v 1.1 2011-12-21 13:49:40 gosha Exp $ -->
+<!-- $Id: login.tt,v 1.2 2012-01-22 13:57:09 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - вход</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -34,26 +34,34 @@
 	<table width='50%'>
 		<form method='post'>
 			<tr>
+				<td width='25%'>&nbsp;</td>
 				<td>Номер телефона: </td>
 				<td><input name='phone' type='text'></td>
+				<td width='25%'>&nbsp;</td>
 			</tr>
 			<tr>
+				<td width='25%'>&nbsp;</td>
 				<td>Код доступа: </td>
 				<td><input name='ac' type='text'></td>
+				<td width='25%'>&nbsp;</td>
 			</tr>
 			<tr>
+				<td width='25%'>&nbsp;</td>
 				<td>Внутренний номер: </td>
 				<td><input name='ext_id' type='text'></td>
+				<td width='25%'>&nbsp;</td>
 			</tr>
 			<tr>
+				<td width='25%'>&nbsp;</td>
 				<td>Пин код: </td>
 				<td><input name='pw' type='password'></td>
+				<td width='25%'>&nbsp;</td>
 			</tr>
 			<tr>
-				<td colspan='2'>&nbsp;</td>
+				<td colspan='4'>&nbsp;</td>
 			</tr>
 			<tr>
-				<td colspan='2' align='center'>
+				<td colspan='4' align='center'>
 					<input name='referer' type='hidden' value='[% REFERER | html %]'>
 					<input name='action' type='hidden' value='start'>
 					<input type='submit' value='&nbsp;&nbsp;&nbsp;Войти&nbsp;&nbsp;&nbsp;'>
