@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.49 2011-11-06 08:28:37 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.50 2012-01-21 21:10:39 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extensions - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -72,7 +72,7 @@
 			<td align='left'>
 				<a class='vb_name' href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% vb.NAME | html %]</a>
 			</td>
-			<td>
+			<td align='left'>
 				[% vb.DESCRIPTION | html %]
 			</td>
 			<td>

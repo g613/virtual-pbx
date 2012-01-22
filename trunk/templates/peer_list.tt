@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.24 2011-11-23 18:36:58 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.25 2012-01-21 21:10:38 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -67,12 +67,12 @@
 		[% FOREACH p = PEERS %]
 		<tr align='center' class='nocolor' id='d-tr-[% p.DATA_ID %]'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
-			<td><input class='in_t0' size="19" name='host' type'text' value='[% p.host | html %]'></td>
+			<td><input class='in_t0' size="17" name='host' type'text' value='[% p.host | html %]'></td>
 			<td><input class='in_t0' size="5" name='port' type='text' value="[% p.port | html %]"></td>
-			<td><input class='in_t0' size="19" name='domain' type='text' value="[% p.fromdomain | html %]"></td>
+			<td><input class='in_t0' size="17" name='domain' type='text' value="[% p.fromdomain | html %]"></td>
 			<td><input class='in_t0' size="10" name='username' type='text' value="[% p.username | html %]"></td>
 			<td><input class='in_t0' size="10" name='secret' type='text' value="[% p.secret | html %]"></td>
-			<td><input class='in_t0' size="18" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"></td>
+			<td><input class='in_t0' size="17" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"></td>
 			<td>
 				<select name="dtmfmode" class='in_t0'>
 					<option value="[% p.dtmfmode %]" selected>[% p.dtmfmode %]</option>
@@ -128,8 +128,8 @@
 		[% END %]
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return peers_unhide(this)'>
-			<td>
-				<input size="19" name='host' type'text'>
+			<td nowrap="nowrap">
+				<input size="17" name='host' type'text'>
 				<script language='JavaScript'>
 					var options_ind = 1;
 					var options_str = '<select name="tmpl" onFocus="peers_list_init(this,1)" onBlur="peers_list_init(this,2)" onChange="peers_hide(this.form)"><option value="."></option>';
@@ -150,10 +150,10 @@
 				</script>
 			</td>
 			<td><input size="5" name='port' type='text'></td>
-			<td><input size="19" name='domain' type='text'></td>
+			<td><input size="17" name='domain' type='text'></td>
 			<td><input size="10" name='username' type='text'></td>
 			<td><input size="10" name='secret' type='text'></td>
-			<td><input size="18" name='DESCRIPTION' type='text'></td>
+			<td><input size="17" name='DESCRIPTION' type='text'></td>
 			<td>
 				<select name="dtmfmode">
 					<option value="rfc2833" selected>rfc2833</option>

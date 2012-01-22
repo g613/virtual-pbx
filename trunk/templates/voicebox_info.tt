@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.221 2011-12-18 06:38:46 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.225 2012-01-22 19:55:12 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -73,9 +73,31 @@
 
 	<p>
 	<table class='vb_data' width='95%'>
-		<tr>
-			<td colspan='2'>&nbsp;</td>
-			<td align='right'>
+	<tr>
+		<td width='53%' valign='top'>
+		<table class='ext_data' width='100%'>
+			<form method="post" action="[% CGI_URL %]">
+			[% IF USER_CREDS.ROOT eq '0' %]
+			<tr>
+				<td>Type:</td>
+				<td>
+					<input type='hidden' name='action' value='vb_change_type'>
+					<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+					<select name="type" onchange="LoadingOn(); ChangeVbType(this.value,'[% VBOX_PREF.ID %]','[% USER_CREDS.UNIQ %]')">
+					[% FOREACH vt = VB_TYPES %]
+						[% IF VBOX_PREF.TYPE eq vt.ID %]
+						<option value="[% vt.ID %]" selected>[% vt.DESCRIPTION | html %]</option>
+						[% ELSE %]
+							[% IF vt.ID vb_allow '0' %]
+								<option value="[% vt.ID %]">[% vt.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+					[% END %]
+					</select>
+					&nbsp;&nbsp;
+					<noscript><input type='submit' value='&nbsp;change&nbsp;'></noscript>
+				
 				[% IF VBOX_PREF.TYPE eq '1' %]
 				<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
 				<h4>Playback hints:</h4>
@@ -147,7 +169,7 @@
 					</ul>
 					<ul>Formats:
 						<li><b>time</b> - hh:mm-hh:mm</li>
-						<li><b>day of week</b> - day-day ( mon,tue,wed,thu,fri,sat,sun )</li>
+						<li><b>day of week</b> - day-day ( sun,mon,tue,wed,thu,fri,sat )</li>
 						<li><b>day of month</b> - day-day ( 1..31 )</li>
 						<li><b>month</b> - month-month ( jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec )</li>
 						<li><b>year</b> - year-year ( 2009-2009 - for example )
@@ -197,32 +219,7 @@
 						</ul>
 				</span></a>
 				[% END %]
-		</td>
-	</tr>
-	<tr>
-		<td width='48%' valign='top'>
-		<table class='ext_data' width='100%'>
-			<form method="post" action="[% CGI_URL %]">
-			[% IF USER_CREDS.ROOT eq '0' %]
-			<tr>
-				<td>Type:</td>
-				<td>
-					<input type='hidden' name='action' value='vb_change_type'>
-					<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
-					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-					<select name="type" onchange="LoadingOn(); ChangeVbType(this.value,'[% VBOX_PREF.ID %]','[% USER_CREDS.UNIQ %]')">
-					[% FOREACH vt = VB_TYPES %]
-						[% IF VBOX_PREF.TYPE eq vt.ID %]
-						<option value="[% vt.ID %]" selected>[% vt.DESCRIPTION | html %]</option>
-						[% ELSE %]
-							[% IF vt.ID vb_allow '0' %]
-								<option value="[% vt.ID %]">[% vt.DESCRIPTION | html %]</option>
-							[% END %]
-						[% END %]
-					[% END %]
-					</select>
-					&nbsp;&nbsp;
-					<noscript><input type='submit' value='&nbsp;change&nbsp;'></noscript>
+
 				</td>
 			</tr>
 			</form>
@@ -1845,12 +1842,277 @@
 			</table>
 			</td>
 
-			<td width='2%' valign='top'>&nbsp;</td>
+			<td width='1%' valign='top'>&nbsp;</td>
 
-			<td valign='top' width='50%' align='left'>
-				<table class='addon_data' width='100%' id='d-tbl-s'>
-					<tr><td colspan='2'><h4>System files:</h4></td></tr>
+			<td valign='top' width='46%' align='left'>
+				<table class='stat_data' width='100%' id='d-tbl-s'>
+					[% IF VBOX_PREF.TYPE eq '3' %]
+					[% IF VB_DATA %]
+					<tr>
+						<td colspan='2' align='left'><h4>Call statistics ( started [% CALL_STAT_DATE | html %] ):</h4></td>
+					</tr>
+					<tr>
+						<td colspan='2' align='center' width='100%'>
+						<table width='100%' class='addon_data' id='addon-data'>
+							<tr class='list_addon_data'>
+								<th>Phone number</th>
+								<th>All calls</th>
+								<th>Answered calls</th>
+								<th>Duaration</th>
+								<th>Duration AVG</th>
+								<th>RingTime AVG</th>
+							</tr>
+							[% FOREACH param = VB_DATA %]
+							[% IF param.NUMBER eq '===' %]
+							<tr align='center' class='resume'>
+								<td align='center'>
+									<a href='?action=callout_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to reset statistics ?' )" title='reset call statistics'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+								</td>
+							[% ELSE %]
+							<tr align='center' class='nocolor'>
+								<td align='left'>[% param.NUMBER | html %]</td>
+							[% END %]
+								<td>[% param.ALL | html %]</td>
+								<td>[% param.ANSWERED | html %]</td>
+								<td>[% param.DURATION | duration_str | html %]</td>
+								<td>[% param.DURATION_AVG | duration_str | html %]</td>
+								<td>[% param.RING_TIME_AVG | html %]</td>
+							</tr>
+							[% END %]
+						</table>
+						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='2'>&nbsp;</td>
+					</tr>
+					[% END %]
+					[% END %]
 
+					[% IF VBOX_PREF.TYPE eq '7' %]
+					[% IF USER_CREDS.ALLOW_ICECAST %]
+					[% IF ICECAST_URL %]
+					<tr>
+						<td colspan='2' align='left'>
+							<h4>HTTP-Broadcast:</h4>
+							<ul>
+								<li>URL: <a href='[% ICECAST_URL | html %]'>[% ICECAST_URL | html %]</a></li>
+								<li>Expire date: [% ICECAST_EXPIRE_DATE | html %]</li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='2'>&nbsp;</td>
+					</tr>
+					[% END %]
+					[% END %]
+					[% END %]
+
+					[% IF VBOX_PREF.TYPE eq '10' %]
+					<tr>
+						<td colspan='2' align='left'><h4>Voting results ( started [% VOTING_STAT_DATE | html %] ):</h4></td>
+					</tr>
+					<tr>
+						<td colspan='2'><pre>[% VBOX_PREF.GREETING | html %]</pre></td>
+					</tr>
+					<tr>
+						<td colspan='2' align='center'>
+						<table width='90%' class='stat_data' id='addon-data'>
+							<tr class='list_addon_data'>
+								<th>Variant</th>
+								<th>Count</th>
+								<th>Percent</th>
+							</tr>
+							[% FOREACH param = VB_DATA %]
+							[% IF param.DIGIT eq '===' %]
+							<tr align='center' class='resume'>
+								<td align='center'>
+									<a href='?action=voting_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to reset statistics ?' )" title='reset voting results'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+								</td>
+							[% ELSE %]
+							<tr align='center' class='nocolor'>
+								<td>[% param.DIGIT | html %]</td>
+							[% END %]
+								<td>[% param.COUNT | html %]</td>
+								<td>[% param.PRC | html %] %</td>
+							</tr>
+							[% END %]
+						</table>
+						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='2'>&nbsp;</td>
+					</tr>
+					[% END %]
+					
+					[% IF VBOX_PREF.TYPE eq '12' %]
+					<tr>
+						<td colspan='2' align='left'><h4>Exists podcasts:</h4></td>
+					</tr>
+					<tr>
+						<td colspan='2' align='center'>
+						<table width='100%' class='stat_data' id='addon-data'>
+							<tr class='list_addon_data' align='center'>
+								<th colspan='2'>&nbsp;</th>
+								<th>Create time</th>
+								<th>Download time</th>
+								<th>File size</th>
+								<th>Duaration</th>
+							</tr>
+							[% FOREACH param = VB_DATA %]
+							<tr align='center' class='nocolor'>
+								<td>
+									<img border='0' src='/xvb/images/information-button.png' title="[% param.TITLE | html %]" />
+								</td>
+								<td align='center'>
+									<a title='download file' href='[% param.FILE_URL %]' onclick="return true"><img border='0' src='/xvb/images/msg_download.png' alt='download file' /></a>
+								</td>
+								<td>[% param.CREATE_DATE | html %]</td>
+								<td>[% param.DOWNLOAD_DATE | html %]</td>
+								<td align='right'>[% param.FILE_SIZE | fsize %]</td>
+								<td>[% param.DURATION | duration_str | html %]</td>
+							</tr>
+							[% END %]
+						</table>
+						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='2'>&nbsp;</td>
+					</tr>
+					[% END %]
+					
+					[% IF VBOX_PREF.TYPE eq '13' %]
+					[% IF VB_DATA %]
+					<tr>
+						<td colspan='2' align='left'><h4>Agent statistics ( started [% CALL_STAT_DATE | html %] ):</h4></td>
+					</tr>
+					<tr>
+						<td colspan='2' align='center' width='100%'>
+						<table width='100%' class='stat_data' id='addon-data'>
+							<tr class='list_addon_data'>
+								<th><a href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='dynamic agents'>Phone number</a></th>
+								<th>All calls</th>
+								<th>Answered calls</th>
+								<th>Duaration</th>
+								<th>Duration AVG</th>
+								<th>RingTime AVG</th>
+							</tr>
+							[% FOREACH param = VB_DATA %]
+							[% IF param.NUMBER eq '===' %]
+							<tr align='center' class='resume'>
+								<td align='center'>
+									<a href='?action=callout_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to reset statistics ?' )" title='reset call statistics'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+								</td>
+							[% ELSE %]
+							<tr align='center' class='nocolor'>
+								<td align='left'><span class='agent_state[% param.STATUS %]'>[% param.NUMBER | html %]</span></td>
+							[% END %]
+								<td>[% param.ALL | html %]</td>
+								<td>[% param.ANSWERED | html %]</td>
+								<td>[% param.DURATION | duration_str | html %]</td>
+								<td>[% param.DURATION_AVG | duration_str | html %]</td>
+								<td>[% param.RING_TIME_AVG | html %]</td>
+							</tr>
+							[% END %]
+						</table>
+						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='2'>&nbsp;</td>
+					</tr>
+					[% END %]
+					[% END %]
+					
+					[% IF VBOX_PREF.TYPE eq '18' %]
+					[% IF BLAST_STAT %]
+					<tr>
+						<td align='left'><h4>CallBlast statistics:</h4></td>
+						<td align='right'>live calls: [% BLAST_CALLS | html %]</td>
+					</tr>
+					<tr>
+						<td colspan='2' align='center' width='100%'>
+						<table width='100%' class='stat_data' id='addon-data'>
+							<tr class='list_addon_data'>
+								<th>Call Status</th>
+								<th>Count</th>
+								<th>Percent</th>
+							</tr>
+							<tr align='right' class='nocolor'>
+								<td>Success</td>
+								<td>[% BLAST_STAT.success | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.success_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right' class='nocolor'>
+								<td>Failed</td>
+								<td>[% BLAST_STAT.failed | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.failed_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right' class='nocolor'>
+								<td>Wait redial</td>
+								<td>[% BLAST_STAT.failedwait | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.failedwait_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right' class='nocolor'>
+								<td>Wait</td>
+								<td>[% BLAST_STAT.wait | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.wait_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right' class='nocolor'>
+								<td>Expired</td>
+								<td>[% BLAST_STAT.expired | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.expired_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right' class='resume'>
+								<td>All records</td>
+								<td>[% BLAST_STAT.all | html %]&nbsp;</td>
+								<td>100.00 %&nbsp;</td>
+							</tr>
+						</table>
+						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='2'>&nbsp;</td>
+					</tr>
+					[% END %]
+					[% END %]
+					
+					[% IF VBOX_PREF.TYPE eq '27' %]
+					[% IF VB_DATA scalar %]
+					<tr>
+						<td colspan='2' align='left'><h4>Parked calls:</h4></td>
+					</tr>
+					<tr>
+						<td colspan='2' align='center' width='100%'>
+						<table width='100%' class='stat_data' id='addon-data'>
+							<tr class='list_addon_data'>
+								<th>Phone number</th>
+								<th>Parking slot</th>
+								<th>Hold time</th>
+							</tr>
+							[% FOREACH param = VB_DATA %]
+							<tr align='center' class='nocolor'>
+								<td align='left'>[% param.CALLER_ID | html %]</td>
+								<td>[% param.SLOT | html %]</td>
+								<td>[% param.HOLD_TIME | duration_str | html %]</td>
+							</tr>
+							[% END %]
+						</table>
+						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='2'>&nbsp;</td>
+					</tr>
+					[% END %]
+					[% END %]
+					
+					<tr>
+						<td colspan='2'><h4>System files:</h4></td>
+					</tr>
 					[% IF VBOX_PREF.NAME_FILE %]
 					<tr class='nocolor' id='d-tr-s0'>
 						<td>User Name: </td>
@@ -2026,49 +2288,10 @@
 						</td>
 					</tr>
 
-					[% IF VBOX_PREF.TYPE eq '3' %]
-					[% IF VB_DATA %]
-					<tr><td colspan='2'>&nbsp;</td></tr>
-					<tr>
-						<td colspan='2' align='left'><h4>Call statistics ( started [% CALL_STAT_DATE | html %] ):</h4></td>
-					</tr>
-					<tr>
-						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='addon_data' id='addon-data'>
-							<tr class='list_addon_data'>
-								<th>Phone number</th>
-								<th>All calls</th>
-								<th>Answered calls</th>
-								<th>Duaration</th>
-								<th>Duration AVG</th>
-								<th>RingTime AVG</th>
-							</tr>
-							[% FOREACH param = VB_DATA %]
-							[% IF param.NUMBER eq '===' %]
-							<tr align='center' class='resume'>
-								<td align='center'>
-									<a href='?action=callout_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to reset statistics ?' )" title='reset call statistics'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
-								</td>
-							[% ELSE %]
-							<tr align='center' class='nocolor'>
-								<td align='left'>[% param.NUMBER | html %]</td>
-							[% END %]
-								<td>[% param.ALL | html %]</td>
-								<td>[% param.ANSWERED | html %]</td>
-								<td>[% param.DURATION | duration_str | html %]</td>
-								<td>[% param.DURATION_AVG | duration_str | html %]</td>
-								<td>[% param.RING_TIME_AVG | html %]</td>
-							</tr>
-							[% END %]
-						</table>
-						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
-						</td>
-					</tr>
-					[% END %]
-					[% END %]
-
 					[% IF VBOX_PREF.TYPE eq '4' %]
-					<tr><td colspan='2'>&nbsp;</td></tr>
+					<tr>
+						<td colspan='2'>&nbsp;</td>
+					</tr>
 					<tr>
 						<td align='left'><h4>Directory data ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ):</h4></td>
 						<td align='right'>
@@ -2106,6 +2329,7 @@
 									<script language="JavaScript">
 										exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
 									</script>
+									&nbsp;
 									<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
 										<script language='JavaScript'>
 											writeUpdateLinks( 'save changes' );
@@ -2153,188 +2377,7 @@
 					<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 					[% END %]
 
-					[% IF VBOX_PREF.TYPE eq '7' %]
-					[% IF USER_CREDS.ALLOW_ICECAST %]
-					[% IF ICECAST_URL %]
-					<tr><td colspan='2'>&nbsp;</td></tr>
-					<tr>
-						<td colspan='2' align='left'>
-							<h4>HTTP-Broadcast:</h4>
-							<ul>
-								<li>URL: <a href='[% ICECAST_URL | html %]'>[% ICECAST_URL | html %]</a></li>
-								<li>Expire date: [% ICECAST_EXPIRE_DATE | html %]</li>
-							</ul>
-						</td>
-					</tr>
-					[% END %]
-					[% END %]
-					[% END %]
-
-					[% IF VBOX_PREF.TYPE eq '10' %]
-					<tr><td colspan='2'>&nbsp;</td></tr>
-					<tr>
-						<td colspan='2' align='left'><h4>Voting results ( started [% VOTING_STAT_DATE | html %] ):</h4></td>
-					</tr>
-					<tr>
-						<td colspan='2'><pre>[% VBOX_PREF.GREETING | html %]</pre></td>
-					</tr>
-					<tr>
-						<td colspan='2' align='center'>
-						<table width='90%' class='addon_data' id='addon-data'>
-							<tr class='list_addon_data'>
-								<th>Variant</th>
-								<th>Count</th>
-								<th>Percent</th>
-							</tr>
-							[% FOREACH param = VB_DATA %]
-							[% IF param.DIGIT eq '===' %]
-							<tr align='center' class='resume'>
-								<td align='center'>
-									<a href='?action=voting_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to reset statistics ?' )" title='reset voting results'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
-								</td>
-							[% ELSE %]
-							<tr align='center' class='nocolor'>
-								<td>[% param.DIGIT | html %]</td>
-							[% END %]
-								<td>[% param.COUNT | html %]</td>
-								<td>[% param.PRC | html %] %</td>
-							</tr>
-							[% END %]
-						</table>
-						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
-						</td>
-					</tr>
-					[% END %]
-					
-					[% IF VBOX_PREF.TYPE eq '12' %]
-					<tr><td colspan='2'>&nbsp;</td></tr>
-					<tr>
-						<td colspan='2' align='left'><h4>Exists podcasts:</h4></td>
-					</tr>
-					<tr>
-						<td colspan='2' align='center'>
-						<table width='100%' class='addon_data' id='addon-data'>
-							<tr class='list_addon_data' align='center'>
-								<th colspan='2'>&nbsp;</th>
-								<th>Create time</th>
-								<th>Download time</th>
-								<th>File size</th>
-								<th>Duaration</th>
-							</tr>
-							[% FOREACH param = VB_DATA %]
-							<tr align='center' class='nocolor'>
-								<td>
-									<img border='0' src='/xvb/images/information-button.png' title="[% param.TITLE | html %]" />
-								</td>
-								<td align='center'>
-									<a title='download file' href='[% param.FILE_URL %]' onclick="return true"><img border='0' src='/xvb/images/msg_download.png' alt='download file' /></a>
-								</td>
-								<td>[% param.CREATE_DATE | html %]</td>
-								<td>[% param.DOWNLOAD_DATE | html %]</td>
-								<td align='right'>[% param.FILE_SIZE | fsize %]</td>
-								<td>[% param.DURATION | duration_str | html %]</td>
-							</tr>
-							[% END %]
-						</table>
-						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
-						</td>
-					</tr>
-					[% END %]
-					
-					[% IF VBOX_PREF.TYPE eq '13' %]
-					[% IF VB_DATA %]
-					<tr><td colspan='2'>&nbsp;</td></tr>
-					<tr>
-						<td colspan='2' align='left'><h4>Agent statistics ( started [% CALL_STAT_DATE | html %] ):</h4></td>
-					</tr>
-					<tr>
-						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='addon_data' id='addon-data'>
-							<tr class='list_addon_data'>
-								<th><a href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='dynamic agents'>Phone number</a></th>
-								<th>All calls</th>
-								<th>Answered calls</th>
-								<th>Duaration</th>
-								<th>Duration AVG</th>
-								<th>RingTime AVG</th>
-							</tr>
-							[% FOREACH param = VB_DATA %]
-							[% IF param.NUMBER eq '===' %]
-							<tr align='center' class='resume'>
-								<td align='center'>
-									<a href='?action=callout_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to reset statistics ?' )" title='reset call statistics'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
-								</td>
-							[% ELSE %]
-							<tr align='center' class='nocolor'>
-								<td align='left'><span class='agent_state[% param.STATUS %]'>[% param.NUMBER | html %]</span></td>
-							[% END %]
-								<td>[% param.ALL | html %]</td>
-								<td>[% param.ANSWERED | html %]</td>
-								<td>[% param.DURATION | duration_str | html %]</td>
-								<td>[% param.DURATION_AVG | duration_str | html %]</td>
-								<td>[% param.RING_TIME_AVG | html %]</td>
-							</tr>
-							[% END %]
-						</table>
-						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
-						</td>
-					</tr>
-					[% END %]
-					[% END %]
-					
 					[% IF VBOX_PREF.TYPE eq '18' %]
-					[% IF BLAST_STAT %]
-					<tr><td colspan='2'>&nbsp;</td></tr>
-					<tr>
-						<td colspan='2' align='left'><h4>CallBlast statistics:</h4></td>
-					</tr>
-					<tr>
-						<td colspan='2' align='right'>live calls: [% BLAST_CALLS | html %]</td>
-					</tr>
-					<tr>
-						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='addon_data' id='addon-data'>
-							<tr class='list_addon_data'>
-								<th>Call Status</th>
-								<th>Count</th>
-								<th>Percent</th>
-							</tr>
-							<tr align='right' class='nocolor'>
-								<td>Success</td>
-								<td>[% BLAST_STAT.success | html %]&nbsp;</td>
-								<td>[% BLAST_STAT.success_prc | bill_float | html %] %&nbsp;</td>
-							</tr>
-							<tr align='right' class='nocolor'>
-								<td>Failed</td>
-								<td>[% BLAST_STAT.failed | html %]&nbsp;</td>
-								<td>[% BLAST_STAT.failed_prc | bill_float | html %] %&nbsp;</td>
-							</tr>
-							<tr align='right' class='nocolor'>
-								<td>Wait redial</td>
-								<td>[% BLAST_STAT.failedwait | html %]&nbsp;</td>
-								<td>[% BLAST_STAT.failedwait_prc | bill_float | html %] %&nbsp;</td>
-							</tr>
-							<tr align='right' class='nocolor'>
-								<td>Wait</td>
-								<td>[% BLAST_STAT.wait | html %]&nbsp;</td>
-								<td>[% BLAST_STAT.wait_prc | bill_float | html %] %&nbsp;</td>
-							</tr>
-							<tr align='right' class='nocolor'>
-								<td>Expired</td>
-								<td>[% BLAST_STAT.expired | html %]&nbsp;</td>
-								<td>[% BLAST_STAT.expired_prc | bill_float | html %] %&nbsp;</td>
-							</tr>
-							<tr align='right' class='resume'>
-								<td>All records</td>
-								<td>[% BLAST_STAT.all | html %]&nbsp;</td>
-								<td>100.00 %&nbsp;</td>
-							</tr>
-						</table>
-						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
-						</td>
-					</tr>
-					[% END %]
-			
 					<tr>
 						<td colspan='2' align='left'>&nbsp;</td>
 					</tr>
@@ -2406,33 +2449,6 @@
 					</tr>
 					[% END %]
 					
-					[% IF VBOX_PREF.TYPE eq '27' %]
-					[% IF VB_DATA scalar %]
-					<tr><td colspan='2'>&nbsp;</td></tr>
-					<tr>
-						<td colspan='2' align='left'><h4>Parked calls:</h4></td>
-					</tr>
-					<tr>
-						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='addon_data' id='addon-data'>
-							<tr class='list_addon_data'>
-								<th>Phone number</th>
-								<th>Parking slot</th>
-								<th>Hold time</th>
-							</tr>
-							[% FOREACH param = VB_DATA %]
-							<tr align='center' class='nocolor'>
-								<td align='left'>[% param.CALLER_ID | html %]</td>
-								<td>[% param.SLOT | html %]</td>
-								<td>[% param.HOLD_TIME | duration_str | html %]</td>
-							</tr>
-							[% END %]
-						</table>
-						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
-						</td>
-					</tr>
-					[% END %]
-					[% END %]
 				</table>
 			</td>
 			</tr>
@@ -2514,7 +2530,6 @@
 			[% END %]
 
 			[% IF VBOX_PREF.TYPE eq '18' %]
-			<tr><td colspan='3'>&nbsp;</td></tr>
 			<tr>
 				<td colspan='2' align='left'><h4>CallBlast data ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ) :</h4></td>
 				<td align='right'>

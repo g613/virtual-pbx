@@ -75,11 +75,9 @@
 		<tr class='nocolor' id='d-tr-[% msg.FILE_NAME %]'>
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
 			<td>&nbsp;<a href='?action=vb_view&id=[% msg.ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
-			<td align='center'>
-			[% msg.RU_DESCRIPTION | html %]
-			</td>
+			<td>[% msg.RU_DESCRIPTION | html %]</td>
 			<td align='center'>[% msg.MSG_DATE | html %]</td>
-			<td align='center'>[% msg.CALLERID | html %]</td>
+			<td>[% msg.CALLERID | html %]</td>
 			[% IF msg.IS_VOICE %]
 				<td align='center'>[% msg.DURATION | duration_str | html %]</td>
 			[% ELSIF msg.FILE_NAME contain '.avi' %]
