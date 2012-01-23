@@ -1,14 +1,18 @@
+Income support rates:
+
 _The VirtualPBX Installation to your equipment :_ *300 EUR*  / node
 
 _Integration with kamailio ( load balancing )_ : *500 EUR*
 
-_Integration with kamailio ( sip registrar )_ : *500 EUR*
+_Integration with kamailio ( sip registrar )_ : *1000 EUR*
 
 _Integration with gearmand_ : *100 EUR*
 
 _flash2sip gateway ( web phone )_ : *1000 EUR*
 
-_Consultation_ : *50 EUR* / hour (virtual-pbx | asterisk | linux )
+_Consultation / features request_ : *50 EUR* / hour (virtual-pbx | asterisk | linux )
 
 
-Contacts: mailto:virtual-pbx@prv.mts-nn.ru
+Contact name: Igor Okunev
+
+Contact email: mailto:virtual-pbx@prv.mts-nn.ru
