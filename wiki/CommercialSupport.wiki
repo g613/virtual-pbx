@@ -1,4 +1,4 @@
-Income support rates:
+==Income support rates:==
 
 _The VirtualPBX Installation to your equipment :_ *300 EUR*  / node
 
@@ -13,6 +13,6 @@ _flash2sip gateway ( web phone )_ : *1000 EUR*
 _Consultation / features request_ : *50 EUR* / hour (virtual-pbx | asterisk | linux )
 
 
-Contact name: Igor Okunev
+*Contact name*: Igor Okunev
 
-Contact email: mailto:virtual-pbx@prv.mts-nn.ru
+*Contact email*: mailto:virtual-pbx@prv.mts-nn.ru
