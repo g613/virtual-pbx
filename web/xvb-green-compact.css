@@ -281,7 +281,7 @@ html * #center {
 /* *************** */
 table th, 
 table td {
-	padding: 4px 4px 3px;
+	padding: 1px 1px 1px;
 }
 table { 
 	width: 100%;

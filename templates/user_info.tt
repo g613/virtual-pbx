@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.67 2012-01-22 19:55:12 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.68 2012-01-24 14:01:02 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -110,6 +110,7 @@ Prived: [% d.DID | html %]
 						<select name='skins' onchange='javascript:document.user_prefs.CSS_HREF.value=this.value'>
 							<option selected value='[% USER_CREDS.CSS_HREF | html %]'>CSS href:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
 							<option value='/xvb/xvb-green.css'>CSS - green skin</option>
+							<option value='/xvb/xvb-green-compact.css'>CSS - green-compact skin</option>
 							<option value=''>CSS - default skin</option>
 						</select>
 					</td>

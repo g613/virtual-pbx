@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.175 2012-01-22 20:26:11 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.176 2012-01-24 14:01:03 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -2354,7 +2354,7 @@
 					[% IF BLAST_STAT %]
 					<tr>
 						<td align='left'><h4>Статистика автоинформатора:</h4></td>
-						<td align='right'>Звонков в настоящее время : [% BLAST_CALLS | html %]</td>
+						<td align='right'>Звонков сейчас: [% BLAST_CALLS | html %]</td>
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>

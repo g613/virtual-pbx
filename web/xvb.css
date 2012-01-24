@@ -270,26 +270,16 @@ html * #center {
 }
 
 /* *************** */
-table th, table td {
-	padding: 5px 5px 4px;
+table th, 
+table td {
+	padding: 4px 4px 3px;
 }
-
-table.stat_data td,
-table.stat_data th {
-	padding: 5px 5px 4px;
-}       
-
-table.addon_data td,
-table.list_data td {
-	padding: 8px 8px 7px;
-}       
-
-table.addon_data th,
-table.list_data th {
-	padding: 7px 7px 6px;
-}       
 table { 
 	width: 100%;
+	padding: 0;
+}
+table.half-width { 
+	width: 50%;
 	padding: 0;
 }
 
