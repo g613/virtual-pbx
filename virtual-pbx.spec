@@ -434,7 +434,13 @@ if [ -f %{_sysconfdir}/asterisk/features.conf ]; then
 		cat %CORE_DIR/contrib/asterisk/feautures.conf >> %{_sysconfdir}/asterisk/features.conf
 	fi
 fi
-
+# pickupchan
+if [ -f %{_sysconfdir}/asterisk/modules.conf ]; then
+	STR=`grep '^noload => app_pickupchan.so' %{_sysconfdir}/asterisk/modules.conf`
+	if [ "x$STR" != "x" ]; then
+		perl -i -p -e 's#^noload => app_pickupchan.so#;noload => app_pickupchan.so#' %{_sysconfdir}/asterisk/modules.conf
+	fi
+fi
 # execinclude
 if [ -f %{_sysconfdir}/asterisk/asterisk.conf ]; then
 	STR=`grep '^;execincludes' %{_sysconfdir}/asterisk/asterisk.conf`
