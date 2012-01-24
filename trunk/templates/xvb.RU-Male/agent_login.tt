@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: agent_login.tt,v 1.1 2011-12-18 05:08:31 gosha Exp $ -->
+<!-- $Id: agent_login.tt,v 1.2 2012-01-24 14:01:03 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - динамические агенты очереди</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -39,7 +39,7 @@
 	</p>
 
 	<p align='center'>
-	<table width='50%'>
+	<table width='50%' class='half-width'>
 		<form method='post'>
 			<tr>
 				<td>Код доступа :</td>
