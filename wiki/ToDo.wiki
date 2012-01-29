@@ -2,6 +2,7 @@
 = ToDo list =
 
 <font color='red'>- Отключить autoanswer ( для случая если нет ivr, а просто forward звонка )</font>
+
 <font color='green'>+ PickUp звонков</font>( 22.01.2012 / build 5762 ) <font color='blue'>для standalone реджима или для астериска в качестве регистратора ользователя, c kamailio в качестве регистратора пользователя пока не дружит...</font>
 
 <font color='green'>+ Добавить поддержку microsofttranslator.com для TTS</font> ( 13.01.2012 / build 5735 )
