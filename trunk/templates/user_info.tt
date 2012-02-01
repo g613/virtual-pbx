@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.68 2012-01-24 14:01:02 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.69 2012-01-30 18:35:57 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -288,7 +288,7 @@ Prived: [% d.DID | html %]
 				</tr>
 	
 				<tr>
-					<td>
+					<td colspan='2'>
 					<table class='user_data'>
 						<tr>
 							<td colspan='2'><h4>Backup options:</h4></td>
