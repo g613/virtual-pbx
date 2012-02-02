@@ -1,14 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 #
-# $Id: safe_xvb_perl_worker,v 1.4 2011-08-11 05:16:20 gosha Exp $
+# $Id: safe_xvb_perl_worker,v 1.5 2012-02-02 11:40:00 gosha Exp $
 #
 # vim:textwidth=80:tabstop=4:shiftwidth=4:smartindent:autoindent
 
-#NOTIFY=ben@alkaloid.net	# Who to notify about crashes
-#EXEC=/path/to/somescript	# Run this command if Asterisk crashes
-MACHINE=`hostname`			# To specify which machine has crashed when getting the mail
-SLEEPSECS=4
-CONFIG=$1
+RC_CONFIG=${1-"/opt/VirtualPBX/etc/xvb-rc.cfg"}
+. ${RC_CONFIG}
 
 # Check if is already running.
 PROC=`ps ax | grep '[V]irtualPBX-perl-worker'`
@@ -26,7 +23,7 @@ run_xvb()
 {
 	while :; do 
 		cd /tmp
-		sudo -u asterisk /opt/VirtualPBX/agi-bin/VirtualPBX.agi perl-worker $CONFIG
+		sudo -u asterisk /opt/VirtualPBX/agi-bin/VirtualPBX.agi perl-worker $XVB_CONFIG
 		EXITSTATUS=$?
 		echo "ended with exit status $EXITSTATUS" 1>&2
 		if [ "$EXITSTATUS" = "0" ]; then
@@ -40,8 +37,8 @@ run_xvb()
 				echo "XVB perl worker on $MACHINE exited on signal $EXITSIGNAL.  Might want to take a peek." | \
 				mail -s "XVB perl worker Died" $NOTIFY
 			fi
-			if [ "$EXEC" != "" ]; then
-				$EXEC
+			if [ "$PERL_WORKER_EXEC" != "" ]; then
+				$PERL_WORKER_EXEC
 			fi
 		else
 			echo "XVB perl worker exited on signal $EXITSIGNAL." 1>&2
