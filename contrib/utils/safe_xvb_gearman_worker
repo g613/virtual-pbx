@@ -1,16 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 #
-# $Id: safe_xvb_gearman_worker,v 1.2 2011-08-11 05:16:20 gosha Exp $
+# $Id: safe_xvb_gearman_worker,v 1.3 2012-02-02 11:40:00 gosha Exp $
 #
 # vim:textwidth=80:tabstop=4:shiftwidth=4:smartindent:autoindent
 
-#NOTIFY=ben@alkaloid.net	# Who to notify about crashes
-#EXEC=/path/to/somescript	# Run this command if Asterisk crashes
-MACHINE=`hostname`			# To specify which machine has crashed when getting the mail
-SLEEPSECS=4
-MODE=$1
-CONFIG=$2
-CHILDS=$3
+RC_CONFIG=${1-"/opt/VirtualPBX/etc/xvb-rc.cfg"}
+. ${RC_CONFIG}
 
 # Check if is already running.
 PROC=`ps ax | grep '[gG]earman-worker.pl'`
@@ -28,7 +23,7 @@ run_xvb()
 {
 	while :; do 
 		cd /tmp
-		/opt/VirtualPBX/contrib/utils/gearman-worker.pl $MODE $CONFIG $CHILDS
+		/opt/VirtualPBX/contrib/utils/gearman-worker.pl "$XVB_CONFIG" "$GEARMAN_WORKER_CHILDS"
 		EXITSTATUS=$?
 		echo "ended with exit status $EXITSTATUS" 1>&2
 		if [ "$EXITSTATUS" = "0" ]; then
@@ -42,8 +37,8 @@ run_xvb()
 				echo "XVB Gearman worker on $MACHINE exited on signal $EXITSIGNAL.  Might want to take a peek." | \
 				mail -s "XVB Gearman worker Died" $NOTIFY
 			fi
-			if [ "$EXEC" != "" ]; then
-				$EXEC
+			if [ "$GEARMAN_WORKER_EXEC" != "" ]; then
+				$GEARMAN_WORKER_EXEC
 			fi
 		else
 			echo "XVB exited on signal $EXITSIGNAL." 1>&2
