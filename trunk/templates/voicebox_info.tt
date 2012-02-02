@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.225 2012-01-22 19:55:12 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.226 2012-02-02 20:10:56 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -113,7 +113,7 @@
 				[% IF VBOX_PREF.TYPE eq '3' %]
 				<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
 				<h4>Find-Me hints:</h4>
-				During a call, you can press:
+				During a call, callee party can press:
 						<ul>
 							<li><b>*9</b> - For call transfer</li>
 							<li><b>*8</b> - For call parking</li>
@@ -147,6 +147,10 @@
 							</ul>
 							<li><b>*2XX</b> - Background Music (Loop)</li>
 							<li><b>*1</b> - For start/pause record</li>
+						</ul>
+						<br />
+						Caller party can press:
+						<ul>
 							<li><b>*0</b> - For call terminate</li>
 						</ul>
 				</span></a>
@@ -181,7 +185,7 @@
 				[% IF VBOX_PREF.TYPE eq '13' %]
 				<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
 				<h4>Queue hints:</h4>
-				During a call, you can press:
+				During a call, callee party can press:
 						<ul>
 							<li><b>*9</b> - For call transfer</li>
 							<li><b>*8</b> - For call parking</li>
@@ -215,6 +219,10 @@
 							</ul>
 							<li><b>*2XX</b> - Background Music (Loop)</li>
 							<li><b>*1</b> - For start/pause record</li>
+						</ul>
+						<br />
+						Caller party can press:
+						<ul>
 							<li><b>*0</b> - For call terminate</li>
 						</ul>
 				</span></a>

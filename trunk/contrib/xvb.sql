@@ -1537,7 +1537,7 @@ INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
 VALUES(4, 'RETRYDIAL', 'RetryDial Announcement', 'Анонс удержания вызова')
 ;
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(5, 'MOH', 'Music on hold', 'Музыка вместо звонка')
+VALUES(5, 'MOH', 'Music on hold', 'Музыка вместо гудков')
 ;
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
 VALUES(6, 'FAX', 'Fax on Demand', 'Факс по запросу')
