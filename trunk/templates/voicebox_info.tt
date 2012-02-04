@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.226 2012-02-02 20:10:56 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.227 2012-02-04 07:11:08 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1180,7 +1180,7 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td>Goto if queues fail: </td>
+					<td>Goto if queue fail: </td>
 					<td>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')

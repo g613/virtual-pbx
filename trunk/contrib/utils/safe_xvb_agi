@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# $Id: safe_xvb_agi,v 1.4 2012-02-02 11:40:00 gosha Exp $
+# $Id: safe_xvb_agi,v 1.5 2012-02-04 07:11:07 gosha Exp $
 #
 # vim:textwidth=80:tabstop=4:shiftwidth=4:smartindent:autoindent
 
@@ -23,7 +23,7 @@ run_xvb()
 {
 	while :; do 
 		cd /tmp
-		/opt/VirtualPBX/contrib/utils/Fagi.pl fagi "$XVB_CONFIG" "$FAGI_CHILDS" "$FAGI_HOST" "$FAGI_PORT"
+		/opt/VirtualPBX/contrib/utils/Fagi.pl fagi "$XVB_CONFIG" "$FAGI_CHILDS" 0 "$FAGI_HOST" "$FAGI_PORT"
 		EXITSTATUS=$?
 		echo "ended with exit status $EXITSTATUS" 1>&2
 		if [ "$EXITSTATUS" = "0" ]; then
