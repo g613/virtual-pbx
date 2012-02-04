@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.48 2011-11-03 21:12:58 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.49 2012-02-04 11:46:07 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -122,8 +122,17 @@ function xmlhttpPost(obj,r_type) {
 			post_data = post_data +'&'+ obj.elements[i].name + '=' + encodeURIComponent(obj.elements[i].value);
 		}
 	}
-	
-	self.xmlHttpReq.open('GET', obj.getAttributeNode('action').value+'?'+post_data, true);
+
+	var max_get_req_len = 1536;
+
+	if ( obj.getAttributeNode('action').value.length + post_data.length < max_get_req_len ) {
+		self.xmlHttpReq.open('GET', obj.getAttributeNode('action').value+'?'+post_data, true);
+	} else {
+		self.xmlHttpReq.open('POST', obj.getAttributeNode('action').value, true);
+		self.xmlHttpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		self.xmlHttpReq.setRequestHeader("Content-length", post_data.length);
+		self.xmlHttpReq.setRequestHeader("Connection", "close");
+	}
 
 	self.xmlHttpReq.onreadystatechange = function() {
 		if (self.xmlHttpReq.readyState == 4) {
@@ -136,8 +145,12 @@ function xmlhttpPost(obj,r_type) {
 			LoadingOff();
 		}
 	}
-	
-	self.xmlHttpReq.send();
+
+	if ( obj.getAttributeNode('action').value.length + post_data.length < max_get_req_len ) {
+		self.xmlHttpReq.send();
+	} else {
+		self.xmlHttpReq.send(post_data);
+	}
 	return false;
 }
 
