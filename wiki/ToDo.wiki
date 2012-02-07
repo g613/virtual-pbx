@@ -1,7 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='green'>- Отключить autoanswer ( для случая если нет ivr, а просто forward звонка )</font> ( 29.01.2012 / build 5811 )
+<font color='red'>- Фэйловер для пользовательских маршрутов ( по весу )</font>
+
+<font color='green'>+ Отключить autoanswer ( для случая если нет ivr, а просто forward звонка )</font> ( 29.01.2012 / build 5811 )
 
 <font color='green'>+ PickUp звонков</font>( 22.01.2012 / build 5762 ) <font color='blue'>для standalone реджима или для астериска в качестве регистратора ользователя, c kamailio в качестве регистратора пользователя пока не дружит...</font>
 
