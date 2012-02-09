@@ -10,7 +10,7 @@ RC_CONFIG=${1-"/opt/VirtualPBX/etc/xvb-rc.cfg"}
 # Check if is already running.
 PROC=`ps ax | grep '[fF]agi.pl'`
 if [ "x$PROC" != "x" ]; then
-	echo "Fagi is already running." 1>&2
+	echo "Fagi is already running."
 	exit 1
 fi
 
@@ -25,14 +25,14 @@ run_xvb()
 		cd /tmp
 		/opt/VirtualPBX/contrib/utils/Fagi.pl fagi "$XVB_CONFIG" "$FAGI_CHILDS" 0 "$FAGI_HOST" "$FAGI_PORT"
 		EXITSTATUS=$?
-		echo "ended with exit status $EXITSTATUS" 1>&2
+		echo "ended with exit status $EXITSTATUS"
 		if [ "$EXITSTATUS" = "0" ]; then
 			# Properly shutdown....
-			echo "shutdown normally." 1>&2
+			echo "shutdown normally."
 			exit 0
 		elif [ $EXITSTATUS -gt 128 ]; then
 			EXITSIGNAL=EXITSTATUS-128
-			echo "XVB exited on signal $EXITSIGNAL." 1>&2
+			echo "XVB exited on signal $EXITSIGNAL."
 			if [ "$NOTIFY" != "" ]; then
 				echo "XVB AGI server on $MACHINE exited on signal $EXITSIGNAL.  Might want to take a peek." | \
 				mail -s "XVB AGI server Died" $NOTIFY
@@ -41,12 +41,12 @@ run_xvb()
 				$FAGI_EXEC
 			fi
 		else
-			echo "XVB exited on signal $EXITSIGNAL." 1>&2
+			echo "XVB exited on signal $EXITSIGNAL."
 		fi
-		echo "Automatically restarting XVB AGI server." 1>&2
-		date  1>&2
+		echo "Automatically restarting XVB AGI server."
+		date
 		sleep $SLEEPSECS
 	done
 }
 
-run_xvb &
+run_xvb 2>>/var/log/VirtualPBX/XVB.stderr 1>&2 &
