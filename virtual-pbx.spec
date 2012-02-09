@@ -527,6 +527,7 @@ service httpd start
 %attr(440,asterisk,asterisk) %config(noreplace) %CORE_DIR/etc/cid.cfg
 %attr(440,asterisk,asterisk) %config(noreplace) %CORE_DIR/etc/say.cfg
 %attr(440,asterisk,asterisk) %config(noreplace) %CORE_DIR/etc/xvb.cfg
+%attr(440,asterisk,asterisk) %config(noreplace) %CORE_DIR/etc/locale.cfg
 %attr(755,asterisk,asterisk) %config(noreplace) %CORE_DIR/etc/xvb-rc.cfg
 %attr(440,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/*.conf
 %attr(755,root,root) %CORE_DIR/contrib/utils/backup_restore.pl
