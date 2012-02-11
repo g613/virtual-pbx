@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- Долокализовать полностью страничку с событиями журнала/ типом звонков в cdr/ back|hangup|repeat</font>
+
 <font color='green'>+ Вынести русскую локаль наружу из БД</font> ( 11.02.2012 / build 5873 )
 
 <font color='green'>+ Вынести настройки rc скрптов в отдельный файл конфигурации</font> ( 05.02.2012 / build 5838 )
