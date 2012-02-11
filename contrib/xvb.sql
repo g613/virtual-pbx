@@ -48,7 +48,6 @@ create table VPBX_DIRECTORY_LANG (
 	ID					INT(16) NOT NULL,
 
 	DESCRIPTION         VARCHAR(100),
-	RU_DESCRIPTION		VARCHAR(100),
 
 	CH_2				VARCHAR(255),
 	CH_3				VARCHAR(255),
@@ -67,7 +66,6 @@ create table VPBX_DATE_FORMAT (
 	
 	DATE_FORMAT_STR		VARCHAR(100),
 	DESCRIPTION         VARCHAR(100),
-	RU_DESCRIPTION		VARCHAR(100),
 
     CONSTRAINT PK_SERVICE_DATE_FORMAT PRIMARY KEY (ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -77,7 +75,6 @@ create table VPBX_NOTIFY_TYPE (
     
 	NAME		        VARCHAR(100),
 	DESCRIPTION         VARCHAR(100),
-	RU_DESCRIPTION		VARCHAR(100),
 
     CONSTRAINT PK_SERVICE_VBOX_NOTIFY PRIMARY KEY (NOTIFY_ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -86,7 +83,6 @@ create table VPBX_CURRENCY (
 	CUR_ID				INT(16) NOT NULL,
     
 	DESCRIPTION         VARCHAR(100),
-	RU_DESCRIPTION		VARCHAR(100),
 
 	CONVERSION_RATE		FLOAT,
 
@@ -121,7 +117,6 @@ create	table VPBX_DTMF_PATTERN
 	ID 					INT(16) not null,
 	DTMF_PATTERN        VARCHAR(32) not null,
     DESCRIPTION         VARCHAR(100),
-	RU_DESCRIPTION		VARCHAR(100),
 
     CONSTRAINT PK_SERVICE_VBOX_DTMF_PATTERN PRIMARY KEY (ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -131,7 +126,6 @@ create	table VPBX_SAY_PATTERN
 	ID 					INT(16) not null,
 	SAY_PATTERN	        VARCHAR(32) not null,
     DESCRIPTION         VARCHAR(100),
-	RU_DESCRIPTION		VARCHAR(100),
 
     CONSTRAINT PK_SERVICE_VBOX_SAY_PATTERN PRIMARY KEY (ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -141,7 +135,6 @@ create	table VPBX_MOH
 	ID			        INT(16)	  not null,
 	MOH_CLASS           VARCHAR(100) not null,
     DESCRIPTION         VARCHAR(100),
-	RU_DESCRIPTION		VARCHAR(100),
 
     CONSTRAINT PK_SERVICE_VBOX_MOH PRIMARY KEY (ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -151,7 +144,6 @@ create	table VPBX_TZ
 	ID			        INT(16)		  not null,
 	TZ_NAME             VARCHAR(100) not null,
     DESCRIPTION         VARCHAR(100),
-	RU_DESCRIPTION		VARCHAR(100),
 
     CONSTRAINT PK_SERVICE_VBOX_TZ PRIMARY KEY (ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -163,7 +155,6 @@ create	table VPBX_LANG
 	LANG_VOICE				VARCHAR(100) not null default 'NO-VOICE',
 	LANG_LOCALE				VARCHAR(100),
     DESCRIPTION         VARCHAR(100),
-	RU_DESCRIPTION		VARCHAR(100),
 	LANG_TTS_ENGINE		VARCHAR(50) not null default 'Festival',
 	STATUS				INT(1) not null default 1,
 
@@ -175,7 +166,6 @@ create	table VPBX_VBOX_TYPE
 	ID			        INT(16)		  not null,
 	NAME                VARCHAR(100) not null,
     DESCRIPTION         VARCHAR(100),
-	RU_DESCRIPTION		VARCHAR(100),
 
     CONSTRAINT PK_SERVICE_VBOX_TYPE PRIMARY KEY (ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -185,7 +175,6 @@ create	table VPBX_VBOXES_RECORD_FTYPE
 	ID				INT(16)		    not null,
 	NAME                VARCHAR(100) not null,
     DESCRIPTION     VARCHAR(100),
-	RU_DESCRIPTION     VARCHAR(100),
 
     CONSTRAINT PK_VPBX_VBOXES_RECORD_FTYPE PRIMARY KEY (ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -195,7 +184,6 @@ create	table VPBX_VBOXES_DIALOUT_TYPE
 	ID			        INT(2)		  not null,
 	NAME                VARCHAR(100) not null,
     DESCRIPTION         VARCHAR(100),
-	RU_DESCRIPTION		VARCHAR(100),
 
     CONSTRAINT PK_SERVICE_DIALOUT_TYPE PRIMARY KEY (ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -204,7 +192,6 @@ create	table VPBX_CID_TYPE
 (
 	ID				INT(4)		    not null,
     DESCRIPTION     VARCHAR(100),
-	RU_DESCRIPTION     VARCHAR(100),
 
     CONSTRAINT PK_VPBX_CID_TYPE PRIMARY KEY (ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -213,7 +200,6 @@ create	table VPBX_CID_ACTIONS
 (
 	ID				INT(4)		    not null,
     DESCRIPTION     VARCHAR(100),
-	RU_DESCRIPTION     VARCHAR(100),
 
     CONSTRAINT PK_VPBX_CID_ACTIONS PRIMARY KEY (ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -1312,916 +1298,703 @@ create	table VPBX_CID_FILTERS
 -- Data
 
 -- CID ACTIONS
-INSERT INTO VPBX_CID_ACTIONS(ID, DESCRIPTION, RU_DESCRIPTION)
-VALUES(0, 'Say Extensions not found', 'Сказать номер не найден')
-;
-INSERT INTO VPBX_CID_ACTIONS(ID, DESCRIPTION, RU_DESCRIPTION)
-VALUES(1, 'Say User Busy', 'Сказать абонент занят')
-;
-INSERT INTO VPBX_CID_ACTIONS(ID, DESCRIPTION, RU_DESCRIPTION)
-VALUES(2, 'HungUp', 'Положить трубку')
-;
-INSERT INTO VPBX_CID_ACTIONS(ID, DESCRIPTION, RU_DESCRIPTION)
-VALUES(3, 'Start voicemail', 'Запустить голосовую почту')
-;
-INSERT INTO VPBX_CID_ACTIONS(ID, DESCRIPTION, RU_DESCRIPTION)
-VALUES(4, 'Go To next extension', 'Выполнить "Перейти к.."')
-;
+INSERT INTO VPBX_CID_ACTIONS(ID, DESCRIPTION) VALUES(0, 'Say Extensions not found');
+INSERT INTO VPBX_CID_ACTIONS(ID, DESCRIPTION) VALUES(1, 'Say User Busy');
+INSERT INTO VPBX_CID_ACTIONS(ID, DESCRIPTION) VALUES(2, 'HungUp');
+INSERT INTO VPBX_CID_ACTIONS(ID, DESCRIPTION) VALUES(3, 'Start voicemail');
+INSERT INTO VPBX_CID_ACTIONS(ID, DESCRIPTION) VALUES(4, 'Go To next extension');
 -- CID TYPE
-INSERT INTO VPBX_CID_TYPE(ID, DESCRIPTION, RU_DESCRIPTION)
-VALUES(0, 'No CID filters', 'Без фильтров')
-;
-INSERT INTO VPBX_CID_TYPE(ID, DESCRIPTION, RU_DESCRIPTION)
-VALUES(1, 'Black list - extension', 'Черный список для номера')
-;
-INSERT INTO VPBX_CID_TYPE(ID, DESCRIPTION, RU_DESCRIPTION)
-VALUES(2, 'Black list - common', 'Черный список общий')
-;
-INSERT INTO VPBX_CID_TYPE(ID, DESCRIPTION, RU_DESCRIPTION)
-VALUES(4, 'Black list - common & extension', 'Черный список - оба')
-;
-INSERT INTO VPBX_CID_TYPE(ID, DESCRIPTION, RU_DESCRIPTION)
-VALUES(8, 'White list - extension', 'Белый список для номера')
-;
-INSERT INTO VPBX_CID_TYPE(ID, DESCRIPTION, RU_DESCRIPTION)
-VALUES(16, 'White list - common', 'Белый список общий')
-;
-INSERT INTO VPBX_CID_TYPE(ID, DESCRIPTION, RU_DESCRIPTION)
-VALUES(32, 'White list - common & extension', 'Белый список - оба')
-;
+INSERT INTO VPBX_CID_TYPE(ID, DESCRIPTION) VALUES(0, 'No CID filters');
+INSERT INTO VPBX_CID_TYPE(ID, DESCRIPTION) VALUES(1, 'Black list - extension');
+INSERT INTO VPBX_CID_TYPE(ID, DESCRIPTION) VALUES(2, 'Black list - common');
+INSERT INTO VPBX_CID_TYPE(ID, DESCRIPTION) VALUES(4, 'Black list - common & extension');
+INSERT INTO VPBX_CID_TYPE(ID, DESCRIPTION) VALUES(8, 'White list - extension');
+INSERT INTO VPBX_CID_TYPE(ID, DESCRIPTION) VALUES(16, 'White list - common');
+INSERT INTO VPBX_CID_TYPE(ID, DESCRIPTION) VALUES(32, 'White list - common & extension');
 -- Lang
-INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, RU_DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE)
-VALUES(0,'xvb.EN-Female','Default','По умолчанию','cmu_us_slt_arctic_clunits','en_US.UTF-8','Festival')
-;
-INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, RU_DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE)
-VALUES(1,'xvb.RU-Male','Russian (Male+TTS)','Русский (мужчина+TTS)','msu_ru_nsh_clunits','ru_RU.UTF-8','Festival')
-;
-INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, RU_DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE)
-VALUES(2,'xvb.EN-Female','English (Female+TTS)','Английский (женщина+TTS)','cmu_us_slt_arctic_clunits','en_US.UTF-8','Festival')
-;
-INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, RU_DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE)
-VALUES(3,'xvb.EN-Male','English (Male+TTS)','Английский (мужчина+TTS)','cmu_us_awb_arctic_clunits','en_US.UTF-8','Festival')
-;
-INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, RU_DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE)
-VALUES(6,'xvb.RU-Female','Russian (Female+TTS)','Русский (женщина+TTS)','ru','ru_RU.UTF-8','GTranslate')
-;
+INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE) VALUES(0,'xvb.EN-Female','Default','cmu_us_slt_arctic_clunits','en_US.UTF-8','Festival');
+INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE) VALUES(1,'xvb.RU-Male','Russian (Male+TTS)','msu_ru_nsh_clunits','ru_RU.UTF-8','Festival');
+INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE) VALUES(2,'xvb.EN-Female','English (Female+TTS)','cmu_us_slt_arctic_clunits','en_US.UTF-8','Festival');
+INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE) VALUES(3,'xvb.EN-Male','English (Male+TTS)','cmu_us_awb_arctic_clunits','en_US.UTF-8','Festival');
+INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE) VALUES(6,'xvb.RU-Female','Russian (Female+TTS)','ru','ru_RU.UTF-8','GTranslate');
 -- VB Types
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(1, 'Playback', 'Playback only', 'Автоответчик')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(2, 'Record', 'VoiceMail', 'Голосовая почта')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(3, 'Dialout', 'Find Me', 'Исходящий звонок')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(4, 'Directory', 'Company directory', 'Список сотрудников')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(5, 'Schedule', 'Schedule', 'Расписание')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(6, 'WebRequest', 'WEB-Request','WEB-запрос')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(7, 'Conference', 'Chat-Room','Конференц-комната')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(8, 'FaxRX', 'Fax2Mail','Прием факса')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(9, 'DtmfRX', 'Dtmf2Email','Запись DTMF')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(10, 'Voting', 'Voting','Голосование')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(11, 'DISA', 'DISA', 'DISA')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(12, 'Podcast', 'Podcast', 'Подкасты')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(13, 'Queue', 'Queue', 'Очередь')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(14, 'Callback', 'Callback', 'Обратный звонок')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(15, 'DateTime', 'Date/Time', 'Время/Дата')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(16, 'FaxTX', 'Fax on Demand','Факс по запросу')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(17, 'BBS', 'Bulletin board system','Электронная доска объявлений')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(18, 'CallBlast', 'CallBlast','Автоинформатор')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(19, 'UserVar', 'User variable','Пользовательская переменная')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION) 
-VALUES(20, 'WebVar', 'Web variables','Web переменные')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(21, 'GotoIf', 'Goto If','Перейти если...')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(22, 'DBVar', 'Stored variable','Хранимая переменная')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(23, 'AlarmClock', 'Alarm Clock','Будильник')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(24, 'GoogleCalendarSchedule', 'Google Calendar - Schedule', 'Google календарь - расписание')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(25, 'RoboText', 'RoboText', 'RoboТекст')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(26, 'Streaming', 'MP3-Streaming', 'MP3-Вещание')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(27, 'Parking', 'Call parking', 'Парковка вызовов')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(28, 'GoogleCalendarExplorer', 'Google Calendar - Events', 'Google календарь - мероприятия')
-;
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(29, 'Intercom', 'Paging / Intercom', 'Пейджинг / Интерком')
-;
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(1, 'Playback', 'Playback only');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(2, 'Record', 'VoiceMail');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(3, 'Dialout', 'Find Me');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(4, 'Directory', 'Company directory');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(5, 'Schedule', 'Schedule');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(6, 'WebRequest', 'WEB-Request');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(7, 'Conference', 'Chat-Room');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(8, 'FaxRX', 'Fax2Mail');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(9, 'DtmfRX', 'Dtmf2Email');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(10, 'Voting', 'Voting');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(11, 'DISA', 'DISA');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(12, 'Podcast', 'Podcast');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(13, 'Queue', 'Queue');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(14, 'Callback', 'Callback');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(15, 'DateTime', 'Date/Time');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(16, 'FaxTX', 'Fax on Demand');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(17, 'BBS', 'Bulletin board system');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(18, 'CallBlast', 'CallBlast');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(19, 'UserVar', 'User variable');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(20, 'WebVar', 'Web variables');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(21, 'GotoIf', 'Goto If');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(22, 'DBVar', 'Stored variable');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(23, 'AlarmClock', 'Alarm Clock');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(24, 'GoogleCalendarSchedule', 'Google Calendar - Schedule');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(25, 'RoboText', 'RoboText');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(26, 'Streaming', 'MP3-Streaming');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(27, 'Parking', 'Call parking');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(28, 'GoogleCalendarExplorer', 'Google Calendar - Events');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(29, 'Intercom', 'Paging / Intercom');
 -- Ring strategi
-INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(1, 'ring all', 'ring all', 'звонить всем')
-;
-INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(2, 'hunt', 'hunt','по очереди')
-;
-INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(3, 'random', 'random','случайно')
-;
-INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(4, 'leastrecent', 'leastrecent','меньше вызывался')
-;
-INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(5, 'fewestcalls', 'fewestcalls','меньше отвечал')
-;
-INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(6, 'RoundRobin', 'round robin','циклически')
-;
-INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(7, 'LeastDuration', 'least duration','меньше разговаривал')
-;
-INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(8, 'Fastest', 'fastest','быстрее берет трубку')
-;
-INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(9, 'memoryhunt', 'memoryhunt','прогресс-серийное-искание')
-;
+INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(1, 'ring all', 'ring all');
+INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(2, 'hunt', 'hunt');
+INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(3, 'random', 'random');
+INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(4, 'leastrecent', 'leastrecent');
+INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(5, 'fewestcalls', 'fewestcalls');
+INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(6, 'RoundRobin', 'round robin');
+INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(7, 'LeastDuration', 'least duration');
+INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(8, 'Fastest', 'fastest');
+INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(9, 'memoryhunt', 'memoryhunt');
 --  MOH CLASS
-INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION,RU_DESCRIPTION)
-VALUES(-1,'alwaysringing','Always ringing','Всегда гудки')
-;
-INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION,RU_DESCRIPTION)
-VALUES(0,'none','Disable','Не использовать')
-;
-INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION,RU_DESCRIPTION)
-VALUES(1,'xvb-rock','AlisA','АлисА')
-;
-INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION,RU_DESCRIPTION)
-VALUES(2,'xvb-pop','Dont Worry, be Happy','Dont Worry, be Happy')
-;
-INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION,RU_DESCRIPTION)
-VALUES(3,'xvb-classic','Vanessa Mae - Contradanza','Vanessa Mae - Contradanza')
-;
-INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION,RU_DESCRIPTION)
-VALUES(9999,'custom','Custom','Пользовательская')
-;
+INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION) VALUES(-1,'alwaysringing','Always ringing');
+INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION) VALUES(0,'none','Disable');
+INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION) VALUES(1,'xvb-rock','AlisA');
+INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION) VALUES(2,'xvb-pop','Dont Worry, be Happy');
+INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION) VALUES(3,'xvb-classic','Vanessa Mae - Contradanza');
+INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION) VALUES(9999,'custom','Custom');
 -- System MOH static realtime
-INSERT INTO VPBX_AST_CONFIG(filename,category,var_name,var_val)
-VALUES('musiconhold.conf','xvb-rock','mode','files')
-;
-INSERT INTO VPBX_AST_CONFIG(filename,category,var_name,var_val)
-VALUES('musiconhold.conf','xvb-rock','directory','/opt/VirtualPBX/contrib/moh/rock')
-;
-INSERT INTO VPBX_AST_CONFIG(filename,category,var_name,var_val)
-VALUES('musiconhold.conf','xvb-pop','mode','files')
-;
-INSERT INTO VPBX_AST_CONFIG(filename,category,var_name,var_val)
-VALUES('musiconhold.conf','xvb-pop','directory','/opt/VirtualPBX/contrib/moh/pop')
-;
-INSERT INTO VPBX_AST_CONFIG(filename,category,var_name,var_val)
-VALUES('musiconhold.conf','xvb-classic','mode','files')
-;
-INSERT INTO VPBX_AST_CONFIG(filename,category,var_name,var_val)
-VALUES('musiconhold.conf','xvb-classic','directory','/opt/VirtualPBX/contrib/moh/classic')
-;
+INSERT INTO VPBX_AST_CONFIG(filename,category,var_name,var_val) VALUES('musiconhold.conf','xvb-rock','mode','files');
+INSERT INTO VPBX_AST_CONFIG(filename,category,var_name,var_val) VALUES('musiconhold.conf','xvb-rock','directory','/opt/VirtualPBX/contrib/moh/rock');
+INSERT INTO VPBX_AST_CONFIG(filename,category,var_name,var_val) VALUES('musiconhold.conf','xvb-pop','mode','files');
+INSERT INTO VPBX_AST_CONFIG(filename,category,var_name,var_val) VALUES('musiconhold.conf','xvb-pop','directory','/opt/VirtualPBX/contrib/moh/pop');
+INSERT INTO VPBX_AST_CONFIG(filename,category,var_name,var_val) VALUES('musiconhold.conf','xvb-classic','mode','files');
+INSERT INTO VPBX_AST_CONFIG(filename,category,var_name,var_val) VALUES('musiconhold.conf','xvb-classic','directory','/opt/VirtualPBX/contrib/moh/classic');
 --  Version
-INSERT INTO VPBX_DB_INFO(VERSION,TIME)
-VALUES('999999',0)
+INSERT INTO VPBX_DB_INFO(VERSION,TIME) VALUES('999999',0)
 ;
 --  Message types
-INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(1, 'NAME', 'User name', 'Имя пользователя')
-;
-INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(2, 'GREET', 'User greeting', 'Приветствие пользователя')
-;
-INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(3, 'ANNOUNCEMENT', 'Announcement to callee', 'Объявление для вызываемого')
-;
-INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(4, 'RETRYDIAL', 'RetryDial Announcement', 'Анонс удержания вызова')
-;
-INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(5, 'MOH', 'Music on hold', 'Музыка вместо гудков')
-;
-INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(6, 'FAX', 'Fax on Demand', 'Факс по запросу')
-;
-INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(7, 'ANNOUNCEMENT_CALLER', 'Announcement to caller', 'Объявление для звонящего')
-;
-INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(30, 'NEW', 'New user message','Новое сообщение')
-;
-INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(40, 'OLD', 'Old user message', 'Старое сообщение')
-;
-INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION, RU_DESCRIPTION)
-VALUES(50, 'TRASH', 'User trash','Корзина')
-;
+INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(1, 'NAME', 'User name');
+INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(2, 'GREET', 'User greeting');
+INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(3, 'ANNOUNCEMENT', 'Announcement to callee');
+INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(4, 'RETRYDIAL', 'RetryDial Announcement');
+INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(5, 'MOH', 'Music on hold');
+INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(6, 'FAX', 'Fax on Demand');
+INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(7, 'ANNOUNCEMENT_CALLER', 'Announcement to caller');
+INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(30, 'NEW', 'New user message');
+INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(40, 'OLD', 'Old user message');
+INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(50, 'TRASH', 'User trash');
 -- DTMF PATTERN
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 0, 'none','none','не использовать' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 1,'time','time hh*mm','время чч*мм' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 2,'date','date dd*mm*yyyy','дата дд*мм*гггг' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 3,'datetime','date time dd*mm*yyyy*hh*mm','дата время дд*мм*гггг*чч*мм' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 4,'phone','phone ( 11 digits )','телефон ( 11 символов )' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 5,'ip','ip addr (127*0*0*1)','ip адрес (127*0*0*1)' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 6,'card','card number (any)','номер карты (любой)' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 7,'card-0','MasterCard number','Номер MasterCard' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 8,'card-1','Visa number','Номер Visa' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 9,'card-2','enRoute number','Номер enRoute' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 10,'card-3','Discover number','Номер Discover' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 11,'card-4','Deners Club/Carte Blanche number','Номер Deners Club/Carte Blanche' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 12,'card-5','American Express number','Номер American Express' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 13,'card-6','Japan Credit Bureau number','Номер Japan Credit Bureau' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 14,'boolean','Boolean','Логический' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 15,'currency','Currency','Деньги' )
-;
-insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 16,'extension','Extension / id (1*1,2,etc)','Внутренний номер / его id (1*1,2,и тд)' )
-;
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 0, 'none','none');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 1,'time','time hh*mm');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 2,'date','date dd*mm*yyyy');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 3,'datetime','date time dd*mm*yyyy*hh*mm');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 4,'phone','phone ( 11 digits )');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 5,'ip','ip addr (127*0*0*1)');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 6,'card','card number (any)');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 7,'card-0','MasterCard number');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 8,'card-1','Visa number');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 9,'card-2','enRoute number');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 10,'card-3','Discover number');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 11,'card-4','Deners Club/Carte Blanche number');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 12,'card-5','American Express number');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 13,'card-6','Japan Credit Bureau number');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 14,'boolean','Boolean');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 15,'currency','Currency');
+insert into VPBX_DTMF_PATTERN(ID,DTMF_PATTERN,DESCRIPTION) VALUES( 16,'extension','Extension / id (1*1,2,etc)');
 -- SAY PATTERN
-insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 0, 'char','characters','символы' )
-;
-insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 1, 'number','number','число' )
-;
-insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 2, 'percent','percent','проценты' )
-;
-insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 3, 'time','time','время' )
-;
-insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 4, 'date1','date 1','дата 1' )
-;
-insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 5, 'date2','date 2','дата 2' )
-;
-insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 6, 'duration','duration (s:m:h)','продолжительность (с:ч:м)' )
-;
-insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 7, 'money','money (rub,usd,eur)','деньги (rub,usd,eur)' )
-;
-insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 8, 'degree','degree (C,F,K)','градусы (C,F,K)' )
-;
-insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 9, 'datetime1','datetime 1','дата-время 1' )
-;
-insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 10, 'datetime2','datetime 2','дата-время 2' )
-;
-insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION,RU_DESCRIPTION)
-VALUES( 11, 'phone','phone','номер телефона' )
-;
+insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 0, 'char','characters');
+insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 1, 'number','number');
+insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 2, 'percent','percent');
+insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 3, 'time','time');
+insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 4, 'date1','date 1');
+insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 5, 'date2','date 2');
+insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 6, 'duration','duration (s:m:h)');
+insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 7, 'money','money (rub,usd,eur)');
+insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 8, 'degree','degree (C,F,K)');
+insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 9, 'datetime1','datetime 1');
+insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 10, 'datetime2','datetime 2');
+insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 11, 'phone','phone');
 -- Time Zones
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(0, 'GMT', 'Default', 'По умолчанию' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(1, 'Africa/Abidjan', 'Africa/Abidjan', 'Africa/Abidjan' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(2, 'Africa/Accra', 'Africa/Accra', 'Africa/Accra' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(3, 'Africa/Addis_Ababa', 'Africa/Addis_Ababa', 'Africa/Addis_Ababa' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(4, 'Africa/Algiers', 'Africa/Algiers', 'Africa/Algiers' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(5, 'Africa/Asmara', 'Africa/Asmara', 'Africa/Asmara' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(6, 'Africa/Asmera', 'Africa/Asmera', 'Africa/Asmera' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(7, 'Africa/Bamako', 'Africa/Bamako', 'Africa/Bamako' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(8, 'Africa/Bangui', 'Africa/Bangui', 'Africa/Bangui' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(9, 'Africa/Banjul', 'Africa/Banjul', 'Africa/Banjul' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(10, 'Africa/Bissau', 'Africa/Bissau', 'Africa/Bissau' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(11, 'Africa/Blantyre', 'Africa/Blantyre', 'Africa/Blantyre' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(12, 'Africa/Brazzaville', 'Africa/Brazzaville', 'Africa/Brazzaville' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(13, 'Africa/Bujumbura', 'Africa/Bujumbura', 'Africa/Bujumbura' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(14, 'Africa/Cairo', 'Africa/Cairo', 'Africa/Cairo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(15, 'Africa/Casablanca', 'Africa/Casablanca', 'Africa/Casablanca' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(16, 'Africa/Ceuta', 'Africa/Ceuta', 'Africa/Ceuta' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(17, 'Africa/Conakry', 'Africa/Conakry', 'Africa/Conakry' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(18, 'Africa/Dakar', 'Africa/Dakar', 'Africa/Dakar' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(19, 'Africa/Dar_es_Salaam', 'Africa/Dar_es_Salaam', 'Africa/Dar_es_Salaam' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(20, 'Africa/Djibouti', 'Africa/Djibouti', 'Africa/Djibouti' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(21, 'Africa/Douala', 'Africa/Douala', 'Africa/Douala' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(22, 'Africa/El_Aaiun', 'Africa/El_Aaiun', 'Africa/El_Aaiun' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(23, 'Africa/Freetown', 'Africa/Freetown', 'Africa/Freetown' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(24, 'Africa/Gaborone', 'Africa/Gaborone', 'Africa/Gaborone' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(25, 'Africa/Harare', 'Africa/Harare', 'Africa/Harare' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(26, 'Africa/Johannesburg', 'Africa/Johannesburg', 'Africa/Johannesburg' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(27, 'Africa/Kampala', 'Africa/Kampala', 'Africa/Kampala' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(28, 'Africa/Khartoum', 'Africa/Khartoum', 'Africa/Khartoum' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(29, 'Africa/Kigali', 'Africa/Kigali', 'Africa/Kigali' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(30, 'Africa/Kinshasa', 'Africa/Kinshasa', 'Africa/Kinshasa' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(31, 'Africa/Lagos', 'Africa/Lagos', 'Africa/Lagos' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(32, 'Africa/Libreville', 'Africa/Libreville', 'Africa/Libreville' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(33, 'Africa/Lome', 'Africa/Lome', 'Africa/Lome' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(34, 'Africa/Luanda', 'Africa/Luanda', 'Africa/Luanda' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(35, 'Africa/Lubumbashi', 'Africa/Lubumbashi', 'Africa/Lubumbashi' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(36, 'Africa/Lusaka', 'Africa/Lusaka', 'Africa/Lusaka' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(37, 'Africa/Malabo', 'Africa/Malabo', 'Africa/Malabo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(38, 'Africa/Maputo', 'Africa/Maputo', 'Africa/Maputo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(39, 'Africa/Maseru', 'Africa/Maseru', 'Africa/Maseru' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(40, 'Africa/Mbabane', 'Africa/Mbabane', 'Africa/Mbabane' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(41, 'Africa/Mogadishu', 'Africa/Mogadishu', 'Africa/Mogadishu' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(42, 'Africa/Monrovia', 'Africa/Monrovia', 'Africa/Monrovia' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(43, 'Africa/Nairobi', 'Africa/Nairobi', 'Africa/Nairobi' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(44, 'Africa/Ndjamena', 'Africa/Ndjamena', 'Africa/Ndjamena' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(45, 'Africa/Niamey', 'Africa/Niamey', 'Africa/Niamey' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(46, 'Africa/Nouakchott', 'Africa/Nouakchott', 'Africa/Nouakchott' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(47, 'Africa/Ouagadougou', 'Africa/Ouagadougou', 'Africa/Ouagadougou' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(48, 'Africa/Porto-Novo', 'Africa/Porto-Novo', 'Africa/Porto-Novo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(49, 'Africa/Sao_Tome', 'Africa/Sao_Tome', 'Africa/Sao_Tome' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(50, 'Africa/Timbuktu', 'Africa/Timbuktu', 'Africa/Timbuktu' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(51, 'Africa/Tripoli', 'Africa/Tripoli', 'Africa/Tripoli' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(52, 'Africa/Tunis', 'Africa/Tunis', 'Africa/Tunis' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(53, 'Africa/Windhoek', 'Africa/Windhoek', 'Africa/Windhoek' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(54, 'America/Adak', 'America/Adak', 'America/Adak' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(55, 'America/Anchorage', 'America/Anchorage', 'America/Anchorage' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(56, 'America/Anguilla', 'America/Anguilla', 'America/Anguilla' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(57, 'America/Antigua', 'America/Antigua', 'America/Antigua' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(58, 'America/Araguaina', 'America/Araguaina', 'America/Araguaina' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(59, 'America/Argentina/Buenos_Aires', 'America/Argentina/Buenos_Aires', 'America/Argentina/Buenos_Aires' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(60, 'America/Argentina/Catamarca', 'America/Argentina/Catamarca', 'America/Argentina/Catamarca' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(61, 'America/Argentina/ComodRivadavia', 'America/Argentina/ComodRivadavia', 'America/Argentina/ComodRivadavia' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(62, 'America/Argentina/Cordoba', 'America/Argentina/Cordoba', 'America/Argentina/Cordoba' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(63, 'America/Argentina/Jujuy', 'America/Argentina/Jujuy', 'America/Argentina/Jujuy' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(64, 'America/Argentina/La_Rioja', 'America/Argentina/La_Rioja', 'America/Argentina/La_Rioja' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(65, 'America/Argentina/Mendoza', 'America/Argentina/Mendoza', 'America/Argentina/Mendoza' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(66, 'America/Argentina/Rio_Gallegos', 'America/Argentina/Rio_Gallegos', 'America/Argentina/Rio_Gallegos' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(67, 'America/Argentina/Salta', 'America/Argentina/Salta', 'America/Argentina/Salta' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(68, 'America/Argentina/San_Juan', 'America/Argentina/San_Juan', 'America/Argentina/San_Juan' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(69, 'America/Argentina/San_Luis', 'America/Argentina/San_Luis', 'America/Argentina/San_Luis' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(70, 'America/Argentina/Tucuman', 'America/Argentina/Tucuman', 'America/Argentina/Tucuman' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(71, 'America/Argentina/Ushuaia', 'America/Argentina/Ushuaia', 'America/Argentina/Ushuaia' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(72, 'America/Aruba', 'America/Aruba', 'America/Aruba' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(73, 'America/Asuncion', 'America/Asuncion', 'America/Asuncion' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(74, 'America/Atikokan', 'America/Atikokan', 'America/Atikokan' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(75, 'America/Atka', 'America/Atka', 'America/Atka' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(76, 'America/Bahia', 'America/Bahia', 'America/Bahia' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(77, 'America/Barbados', 'America/Barbados', 'America/Barbados' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(78, 'America/Belem', 'America/Belem', 'America/Belem' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(79, 'America/Belize', 'America/Belize', 'America/Belize' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(80, 'America/Blanc-Sablon', 'America/Blanc-Sablon', 'America/Blanc-Sablon' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(81, 'America/Boa_Vista', 'America/Boa_Vista', 'America/Boa_Vista' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(82, 'America/Bogota', 'America/Bogota', 'America/Bogota' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(83, 'America/Boise', 'America/Boise', 'America/Boise' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(84, 'America/Buenos_Aires', 'America/Buenos_Aires', 'America/Buenos_Aires' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(85, 'America/Cambridge_Bay', 'America/Cambridge_Bay', 'America/Cambridge_Bay' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(86, 'America/Campo_Grande', 'America/Campo_Grande', 'America/Campo_Grande' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(87, 'America/Cancun', 'America/Cancun', 'America/Cancun' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(88, 'America/Caracas', 'America/Caracas', 'America/Caracas' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(89, 'America/Catamarca', 'America/Catamarca', 'America/Catamarca' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(90, 'America/Cayenne', 'America/Cayenne', 'America/Cayenne' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(91, 'America/Cayman', 'America/Cayman', 'America/Cayman' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(92, 'America/Chicago', 'America/Chicago', 'America/Chicago' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(93, 'America/Chihuahua', 'America/Chihuahua', 'America/Chihuahua' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(94, 'America/Coral_Harbour', 'America/Coral_Harbour', 'America/Coral_Harbour' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(95, 'America/Cordoba', 'America/Cordoba', 'America/Cordoba' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(96, 'America/Costa_Rica', 'America/Costa_Rica', 'America/Costa_Rica' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(97, 'America/Cuiaba', 'America/Cuiaba', 'America/Cuiaba' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(98, 'America/Curacao', 'America/Curacao', 'America/Curacao' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(99, 'America/Danmarkshavn', 'America/Danmarkshavn', 'America/Danmarkshavn' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(100, 'America/Dawson', 'America/Dawson', 'America/Dawson' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(101, 'America/Dawson_Creek', 'America/Dawson_Creek', 'America/Dawson_Creek' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(102, 'America/Denver', 'America/Denver', 'America/Denver' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(103, 'America/Detroit', 'America/Detroit', 'America/Detroit' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(104, 'America/Dominica', 'America/Dominica', 'America/Dominica' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(105, 'America/Edmonton', 'America/Edmonton', 'America/Edmonton' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(106, 'America/Eirunepe', 'America/Eirunepe', 'America/Eirunepe' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(107, 'America/El_Salvador', 'America/El_Salvador', 'America/El_Salvador' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(108, 'America/Ensenada', 'America/Ensenada', 'America/Ensenada' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(109, 'America/Fortaleza', 'America/Fortaleza', 'America/Fortaleza' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(110, 'America/Fort_Wayne', 'America/Fort_Wayne', 'America/Fort_Wayne' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(111, 'America/Glace_Bay', 'America/Glace_Bay', 'America/Glace_Bay' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(112, 'America/Godthab', 'America/Godthab', 'America/Godthab' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(113, 'America/Goose_Bay', 'America/Goose_Bay', 'America/Goose_Bay' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(114, 'America/Grand_Turk', 'America/Grand_Turk', 'America/Grand_Turk' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(115, 'America/Grenada', 'America/Grenada', 'America/Grenada' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(116, 'America/Guadeloupe', 'America/Guadeloupe', 'America/Guadeloupe' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(117, 'America/Guatemala', 'America/Guatemala', 'America/Guatemala' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(118, 'America/Guayaquil', 'America/Guayaquil', 'America/Guayaquil' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(119, 'America/Guyana', 'America/Guyana', 'America/Guyana' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(120, 'America/Halifax', 'America/Halifax', 'America/Halifax' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(121, 'America/Havana', 'America/Havana', 'America/Havana' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(122, 'America/Hermosillo', 'America/Hermosillo', 'America/Hermosillo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(123, 'America/Indiana/Indianapolis', 'America/Indiana/Indianapolis', 'America/Indiana/Indianapolis' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(124, 'America/Indiana/Knox', 'America/Indiana/Knox', 'America/Indiana/Knox' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(125, 'America/Indiana/Marengo', 'America/Indiana/Marengo', 'America/Indiana/Marengo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(126, 'America/Indiana/Petersburg', 'America/Indiana/Petersburg', 'America/Indiana/Petersburg' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(127, 'America/Indianapolis', 'America/Indianapolis', 'America/Indianapolis' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(128, 'America/Indiana/Tell_City', 'America/Indiana/Tell_City', 'America/Indiana/Tell_City' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(129, 'America/Indiana/Vevay', 'America/Indiana/Vevay', 'America/Indiana/Vevay' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(130, 'America/Indiana/Vincennes', 'America/Indiana/Vincennes', 'America/Indiana/Vincennes' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(131, 'America/Indiana/Winamac', 'America/Indiana/Winamac', 'America/Indiana/Winamac' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(132, 'America/Inuvik', 'America/Inuvik', 'America/Inuvik' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(133, 'America/Iqaluit', 'America/Iqaluit', 'America/Iqaluit' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(134, 'America/Jamaica', 'America/Jamaica', 'America/Jamaica' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(135, 'America/Jujuy', 'America/Jujuy', 'America/Jujuy' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(136, 'America/Juneau', 'America/Juneau', 'America/Juneau' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(137, 'America/Kentucky/Louisville', 'America/Kentucky/Louisville', 'America/Kentucky/Louisville' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(138, 'America/Kentucky/Monticello', 'America/Kentucky/Monticello', 'America/Kentucky/Monticello' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(139, 'America/Knox_IN', 'America/Knox_IN', 'America/Knox_IN' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(140, 'America/La_Paz', 'America/La_Paz', 'America/La_Paz' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(141, 'America/Lima', 'America/Lima', 'America/Lima' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(142, 'America/Los_Angeles', 'America/Los_Angeles', 'America/Los_Angeles' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(143, 'America/Louisville', 'America/Louisville', 'America/Louisville' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(144, 'America/Maceio', 'America/Maceio', 'America/Maceio' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(145, 'America/Managua', 'America/Managua', 'America/Managua' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(146, 'America/Manaus', 'America/Manaus', 'America/Manaus' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(147, 'America/Marigot', 'America/Marigot', 'America/Marigot' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(148, 'America/Martinique', 'America/Martinique', 'America/Martinique' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(149, 'America/Mazatlan', 'America/Mazatlan', 'America/Mazatlan' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(150, 'America/Mendoza', 'America/Mendoza', 'America/Mendoza' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(151, 'America/Menominee', 'America/Menominee', 'America/Menominee' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(152, 'America/Merida', 'America/Merida', 'America/Merida' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(153, 'America/Mexico_City', 'America/Mexico_City', 'America/Mexico_City' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(154, 'America/Miquelon', 'America/Miquelon', 'America/Miquelon' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(155, 'America/Moncton', 'America/Moncton', 'America/Moncton' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(156, 'America/Monterrey', 'America/Monterrey', 'America/Monterrey' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(157, 'America/Montevideo', 'America/Montevideo', 'America/Montevideo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(158, 'America/Montreal', 'America/Montreal', 'America/Montreal' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(159, 'America/Montserrat', 'America/Montserrat', 'America/Montserrat' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(160, 'America/Nassau', 'America/Nassau', 'America/Nassau' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(161, 'America/New_York', 'America/New_York', 'America/New_York' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(162, 'America/Nipigon', 'America/Nipigon', 'America/Nipigon' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(163, 'America/Nome', 'America/Nome', 'America/Nome' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(164, 'America/Noronha', 'America/Noronha', 'America/Noronha' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(165, 'America/North_Dakota/Center', 'America/North_Dakota/Center', 'America/North_Dakota/Center' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(166, 'America/North_Dakota/New_Salem', 'America/North_Dakota/New_Salem', 'America/North_Dakota/New_Salem' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(167, 'America/Panama', 'America/Panama', 'America/Panama' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(168, 'America/Pangnirtung', 'America/Pangnirtung', 'America/Pangnirtung' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(169, 'America/Paramaribo', 'America/Paramaribo', 'America/Paramaribo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(170, 'America/Phoenix', 'America/Phoenix', 'America/Phoenix' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(171, 'America/Port-au-Prince', 'America/Port-au-Prince', 'America/Port-au-Prince' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(172, 'America/Porto_Acre', 'America/Porto_Acre', 'America/Porto_Acre' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(173, 'America/Port_of_Spain', 'America/Port_of_Spain', 'America/Port_of_Spain' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(174, 'America/Porto_Velho', 'America/Porto_Velho', 'America/Porto_Velho' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(175, 'America/Puerto_Rico', 'America/Puerto_Rico', 'America/Puerto_Rico' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(176, 'America/Rainy_River', 'America/Rainy_River', 'America/Rainy_River' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(177, 'America/Rankin_Inlet', 'America/Rankin_Inlet', 'America/Rankin_Inlet' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(178, 'America/Recife', 'America/Recife', 'America/Recife' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(179, 'America/Regina', 'America/Regina', 'America/Regina' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(180, 'America/Resolute', 'America/Resolute', 'America/Resolute' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(181, 'America/Rio_Branco', 'America/Rio_Branco', 'America/Rio_Branco' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(182, 'America/Rosario', 'America/Rosario', 'America/Rosario' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(183, 'America/Santarem', 'America/Santarem', 'America/Santarem' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(184, 'America/Santiago', 'America/Santiago', 'America/Santiago' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(185, 'America/Santo_Domingo', 'America/Santo_Domingo', 'America/Santo_Domingo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(186, 'America/Sao_Paulo', 'America/Sao_Paulo', 'America/Sao_Paulo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(187, 'America/Scoresbysund', 'America/Scoresbysund', 'America/Scoresbysund' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(188, 'America/Shiprock', 'America/Shiprock', 'America/Shiprock' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(189, 'America/St_Barthelemy', 'America/St_Barthelemy', 'America/St_Barthelemy' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(190, 'America/St_Johns', 'America/St_Johns', 'America/St_Johns' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(191, 'America/St_Kitts', 'America/St_Kitts', 'America/St_Kitts' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(192, 'America/St_Lucia', 'America/St_Lucia', 'America/St_Lucia' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(193, 'America/St_Thomas', 'America/St_Thomas', 'America/St_Thomas' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(194, 'America/St_Vincent', 'America/St_Vincent', 'America/St_Vincent' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(195, 'America/Swift_Current', 'America/Swift_Current', 'America/Swift_Current' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(196, 'America/Tegucigalpa', 'America/Tegucigalpa', 'America/Tegucigalpa' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(197, 'America/Thule', 'America/Thule', 'America/Thule' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(198, 'America/Thunder_Bay', 'America/Thunder_Bay', 'America/Thunder_Bay' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(199, 'America/Tijuana', 'America/Tijuana', 'America/Tijuana' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(200, 'America/Toronto', 'America/Toronto', 'America/Toronto' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(201, 'America/Tortola', 'America/Tortola', 'America/Tortola' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(202, 'America/Vancouver', 'America/Vancouver', 'America/Vancouver' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(203, 'America/Virgin', 'America/Virgin', 'America/Virgin' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(204, 'America/Whitehorse', 'America/Whitehorse', 'America/Whitehorse' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(205, 'America/Winnipeg', 'America/Winnipeg', 'America/Winnipeg' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(206, 'America/Yakutat', 'America/Yakutat', 'America/Yakutat' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(207, 'America/Yellowknife', 'America/Yellowknife', 'America/Yellowknife' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(208, 'Antarctica/Casey', 'Antarctica/Casey', 'Antarctica/Casey' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(209, 'Antarctica/Davis', 'Antarctica/Davis', 'Antarctica/Davis' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(210, 'Antarctica/DumontDUrville', 'Antarctica/DumontDUrville', 'Antarctica/DumontDUrville' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(211, 'Antarctica/Mawson', 'Antarctica/Mawson', 'Antarctica/Mawson' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(212, 'Antarctica/McMurdo', 'Antarctica/McMurdo', 'Antarctica/McMurdo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(213, 'Antarctica/Palmer', 'Antarctica/Palmer', 'Antarctica/Palmer' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(214, 'Antarctica/Rothera', 'Antarctica/Rothera', 'Antarctica/Rothera' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(215, 'Antarctica/South_Pole', 'Antarctica/South_Pole', 'Antarctica/South_Pole' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(216, 'Antarctica/Syowa', 'Antarctica/Syowa', 'Antarctica/Syowa' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(217, 'Antarctica/Vostok', 'Antarctica/Vostok', 'Antarctica/Vostok' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(218, 'Arctic/Longyearbyen', 'Arctic/Longyearbyen', 'Arctic/Longyearbyen' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(219, 'Asia/Aden', 'Asia/Aden', 'Asia/Aden' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(220, 'Asia/Almaty', 'Asia/Almaty', 'Asia/Almaty' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(221, 'Asia/Amman', 'Asia/Amman', 'Asia/Amman' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(222, 'Asia/Anadyr', 'Asia/Anadyr', 'Asia/Anadyr' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(223, 'Asia/Aqtau', 'Asia/Aqtau', 'Asia/Aqtau' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(224, 'Asia/Aqtobe', 'Asia/Aqtobe', 'Asia/Aqtobe' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(225, 'Asia/Ashgabat', 'Asia/Ashgabat', 'Asia/Ashgabat' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(226, 'Asia/Ashkhabad', 'Asia/Ashkhabad', 'Asia/Ashkhabad' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(227, 'Asia/Baghdad', 'Asia/Baghdad', 'Asia/Baghdad' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(228, 'Asia/Bahrain', 'Asia/Bahrain', 'Asia/Bahrain' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(229, 'Asia/Baku', 'Asia/Baku', 'Asia/Baku' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(230, 'Asia/Bangkok', 'Asia/Bangkok', 'Asia/Bangkok' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(231, 'Asia/Beirut', 'Asia/Beirut', 'Asia/Beirut' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(232, 'Asia/Bishkek', 'Asia/Bishkek', 'Asia/Bishkek' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(233, 'Asia/Brunei', 'Asia/Brunei', 'Asia/Brunei' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(234, 'Asia/Calcutta', 'Asia/Calcutta', 'Asia/Calcutta' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(235, 'Asia/Choibalsan', 'Asia/Choibalsan', 'Asia/Choibalsan' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(236, 'Asia/Chongqing', 'Asia/Chongqing', 'Asia/Chongqing' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(237, 'Asia/Chungking', 'Asia/Chungking', 'Asia/Chungking' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(238, 'Asia/Colombo', 'Asia/Colombo', 'Asia/Colombo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(239, 'Asia/Dacca', 'Asia/Dacca', 'Asia/Dacca' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(240, 'Asia/Damascus', 'Asia/Damascus', 'Asia/Damascus' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(241, 'Asia/Dhaka', 'Asia/Dhaka', 'Asia/Dhaka' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(242, 'Asia/Dili', 'Asia/Dili', 'Asia/Dili' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(243, 'Asia/Dubai', 'Asia/Dubai', 'Asia/Dubai' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(244, 'Asia/Dushanbe', 'Asia/Dushanbe', 'Asia/Dushanbe' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(245, 'Asia/Gaza', 'Asia/Gaza', 'Asia/Gaza' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(246, 'Asia/Harbin', 'Asia/Harbin', 'Asia/Harbin' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(247, 'Asia/Ho_Chi_Minh', 'Asia/Ho_Chi_Minh', 'Asia/Ho_Chi_Minh' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(248, 'Asia/Hong_Kong', 'Asia/Hong_Kong', 'Asia/Hong_Kong' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(249, 'Asia/Hovd', 'Asia/Hovd', 'Asia/Hovd' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(250, 'Asia/Irkutsk', 'Asia/Irkutsk', 'Asia/Irkutsk' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(251, 'Asia/Istanbul', 'Asia/Istanbul', 'Asia/Istanbul' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(252, 'Asia/Jakarta', 'Asia/Jakarta', 'Asia/Jakarta' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(253, 'Asia/Jayapura', 'Asia/Jayapura', 'Asia/Jayapura' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(254, 'Asia/Jerusalem', 'Asia/Jerusalem', 'Asia/Jerusalem' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(255, 'Asia/Kabul', 'Asia/Kabul', 'Asia/Kabul' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(256, 'Asia/Kamchatka', 'Asia/Kamchatka', 'Asia/Kamchatka' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(257, 'Asia/Karachi', 'Asia/Karachi', 'Asia/Karachi' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(258, 'Asia/Kashgar', 'Asia/Kashgar', 'Asia/Kashgar' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(259, 'Asia/Katmandu', 'Asia/Katmandu', 'Asia/Katmandu' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(260, 'Asia/Kolkata', 'Asia/Kolkata', 'Asia/Kolkata' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(261, 'Asia/Krasnoyarsk', 'Asia/Krasnoyarsk', 'Asia/Krasnoyarsk' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(262, 'Asia/Kuala_Lumpur', 'Asia/Kuala_Lumpur', 'Asia/Kuala_Lumpur' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(263, 'Asia/Kuching', 'Asia/Kuching', 'Asia/Kuching' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(264, 'Asia/Kuwait', 'Asia/Kuwait', 'Asia/Kuwait' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(265, 'Asia/Macao', 'Asia/Macao', 'Asia/Macao' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(266, 'Asia/Macau', 'Asia/Macau', 'Asia/Macau' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(267, 'Asia/Magadan', 'Asia/Magadan', 'Asia/Magadan' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(268, 'Asia/Makassar', 'Asia/Makassar', 'Asia/Makassar' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(269, 'Asia/Manila', 'Asia/Manila', 'Asia/Manila' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(270, 'Asia/Muscat', 'Asia/Muscat', 'Asia/Muscat' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(271, 'Asia/Nicosia', 'Asia/Nicosia', 'Asia/Nicosia' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(272, 'Asia/Novosibirsk', 'Asia/Novosibirsk', 'Asia/Novosibirsk' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(273, 'Asia/Omsk', 'Asia/Omsk', 'Asia/Omsk' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(274, 'Asia/Oral', 'Asia/Oral', 'Asia/Oral' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(275, 'Asia/Phnom_Penh', 'Asia/Phnom_Penh', 'Asia/Phnom_Penh' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(276, 'Asia/Pontianak', 'Asia/Pontianak', 'Asia/Pontianak' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(277, 'Asia/Pyongyang', 'Asia/Pyongyang', 'Asia/Pyongyang' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(278, 'Asia/Qatar', 'Asia/Qatar', 'Asia/Qatar' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(279, 'Asia/Qyzylorda', 'Asia/Qyzylorda', 'Asia/Qyzylorda' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(280, 'Asia/Rangoon', 'Asia/Rangoon', 'Asia/Rangoon' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(281, 'Asia/Riyadh', 'Asia/Riyadh', 'Asia/Riyadh' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(282, 'Asia/Riyadh87', 'Asia/Riyadh87', 'Asia/Riyadh87' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(283, 'Asia/Riyadh88', 'Asia/Riyadh88', 'Asia/Riyadh88' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(284, 'Asia/Riyadh89', 'Asia/Riyadh89', 'Asia/Riyadh89' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(285, 'Asia/Saigon', 'Asia/Saigon', 'Asia/Saigon' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(286, 'Asia/Sakhalin', 'Asia/Sakhalin', 'Asia/Sakhalin' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(287, 'Asia/Samarkand', 'Asia/Samarkand', 'Asia/Samarkand' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(288, 'Asia/Seoul', 'Asia/Seoul', 'Asia/Seoul' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(289, 'Asia/Shanghai', 'Asia/Shanghai', 'Asia/Shanghai' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(290, 'Asia/Singapore', 'Asia/Singapore', 'Asia/Singapore' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(291, 'Asia/Taipei', 'Asia/Taipei', 'Asia/Taipei' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(292, 'Asia/Tashkent', 'Asia/Tashkent', 'Asia/Tashkent' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(293, 'Asia/Tbilisi', 'Asia/Tbilisi', 'Asia/Tbilisi' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(294, 'Asia/Tehran', 'Asia/Tehran', 'Asia/Tehran' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(295, 'Asia/Tel_Aviv', 'Asia/Tel_Aviv', 'Asia/Tel_Aviv' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(296, 'Asia/Thimbu', 'Asia/Thimbu', 'Asia/Thimbu' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(297, 'Asia/Thimphu', 'Asia/Thimphu', 'Asia/Thimphu' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(298, 'Asia/Tokyo', 'Asia/Tokyo', 'Asia/Tokyo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(299, 'Asia/Ujung_Pandang', 'Asia/Ujung_Pandang', 'Asia/Ujung_Pandang' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(300, 'Asia/Ulaanbaatar', 'Asia/Ulaanbaatar', 'Asia/Ulaanbaatar' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(301, 'Asia/Ulan_Bator', 'Asia/Ulan_Bator', 'Asia/Ulan_Bator' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(302, 'Asia/Urumqi', 'Asia/Urumqi', 'Asia/Urumqi' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(303, 'Asia/Vientiane', 'Asia/Vientiane', 'Asia/Vientiane' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(304, 'Asia/Vladivostok', 'Asia/Vladivostok', 'Asia/Vladivostok' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(305, 'Asia/Yakutsk', 'Asia/Yakutsk', 'Asia/Yakutsk' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(306, 'Asia/Yekaterinburg', 'Asia/Yekaterinburg', 'Asia/Yekaterinburg' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(307, 'Asia/Yerevan', 'Asia/Yerevan', 'Asia/Yerevan' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(308, 'Atlantic/Azores', 'Atlantic/Azores', 'Atlantic/Azores' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(309, 'Atlantic/Bermuda', 'Atlantic/Bermuda', 'Atlantic/Bermuda' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(310, 'Atlantic/Canary', 'Atlantic/Canary', 'Atlantic/Canary' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(311, 'Atlantic/Cape_Verde', 'Atlantic/Cape_Verde', 'Atlantic/Cape_Verde' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(312, 'Atlantic/Faeroe', 'Atlantic/Faeroe', 'Atlantic/Faeroe' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(313, 'Atlantic/Faroe', 'Atlantic/Faroe', 'Atlantic/Faroe' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(314, 'Atlantic/Jan_Mayen', 'Atlantic/Jan_Mayen', 'Atlantic/Jan_Mayen' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(315, 'Atlantic/Madeira', 'Atlantic/Madeira', 'Atlantic/Madeira' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(316, 'Atlantic/Reykjavik', 'Atlantic/Reykjavik', 'Atlantic/Reykjavik' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(317, 'Atlantic/South_Georgia', 'Atlantic/South_Georgia', 'Atlantic/South_Georgia' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(318, 'Atlantic/Stanley', 'Atlantic/Stanley', 'Atlantic/Stanley' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(319, 'Atlantic/St_Helena', 'Atlantic/St_Helena', 'Atlantic/St_Helena' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(320, 'Australia/ACT', 'Australia/ACT', 'Australia/ACT' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(321, 'Australia/Adelaide', 'Australia/Adelaide', 'Australia/Adelaide' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(322, 'Australia/Brisbane', 'Australia/Brisbane', 'Australia/Brisbane' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(323, 'Australia/Broken_Hill', 'Australia/Broken_Hill', 'Australia/Broken_Hill' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(324, 'Australia/Canberra', 'Australia/Canberra', 'Australia/Canberra' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(325, 'Australia/Currie', 'Australia/Currie', 'Australia/Currie' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(326, 'Australia/Darwin', 'Australia/Darwin', 'Australia/Darwin' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(327, 'Australia/Eucla', 'Australia/Eucla', 'Australia/Eucla' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(328, 'Australia/Hobart', 'Australia/Hobart', 'Australia/Hobart' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(329, 'Australia/LHI', 'Australia/LHI', 'Australia/LHI' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(330, 'Australia/Lindeman', 'Australia/Lindeman', 'Australia/Lindeman' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(331, 'Australia/Lord_Howe', 'Australia/Lord_Howe', 'Australia/Lord_Howe' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(332, 'Australia/Melbourne', 'Australia/Melbourne', 'Australia/Melbourne' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(333, 'Australia/North', 'Australia/North', 'Australia/North' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(334, 'Australia/NSW', 'Australia/NSW', 'Australia/NSW' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(335, 'Australia/Perth', 'Australia/Perth', 'Australia/Perth' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(336, 'Australia/Queensland', 'Australia/Queensland', 'Australia/Queensland' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(337, 'Australia/South', 'Australia/South', 'Australia/South' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(338, 'Australia/Sydney', 'Australia/Sydney', 'Australia/Sydney' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(339, 'Australia/Tasmania', 'Australia/Tasmania', 'Australia/Tasmania' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(340, 'Australia/Victoria', 'Australia/Victoria', 'Australia/Victoria' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(341, 'Australia/West', 'Australia/West', 'Australia/West' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(342, 'Australia/Yancowinna', 'Australia/Yancowinna', 'Australia/Yancowinna' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(343, 'Brazil/Acre', 'Brazil/Acre', 'Brazil/Acre' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(344, 'Brazil/DeNoronha', 'Brazil/DeNoronha', 'Brazil/DeNoronha' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(345, 'Brazil/East', 'Brazil/East', 'Brazil/East' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(346, 'Brazil/West', 'Brazil/West', 'Brazil/West' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(347, 'Canada/Atlantic', 'Canada/Atlantic', 'Canada/Atlantic' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(348, 'Canada/Central', 'Canada/Central', 'Canada/Central' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(349, 'Canada/Eastern', 'Canada/Eastern', 'Canada/Eastern' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(350, 'Canada/East-Saskatchewan', 'Canada/East-Saskatchewan', 'Canada/East-Saskatchewan' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(351, 'Canada/Mountain', 'Canada/Mountain', 'Canada/Mountain' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(352, 'Canada/Newfoundland', 'Canada/Newfoundland', 'Canada/Newfoundland' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(353, 'Canada/Pacific', 'Canada/Pacific', 'Canada/Pacific' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(354, 'Canada/Saskatchewan', 'Canada/Saskatchewan', 'Canada/Saskatchewan' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(355, 'Canada/Yukon', 'Canada/Yukon', 'Canada/Yukon' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(356, 'CET', 'CET', 'CET' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(357, 'Chile/Continental', 'Chile/Continental', 'Chile/Continental' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(358, 'Chile/EasterIsland', 'Chile/EasterIsland', 'Chile/EasterIsland' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(359, 'CST6CDT', 'CST6CDT', 'CST6CDT' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(360, 'Cuba', 'Cuba', 'Cuba' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(361, 'EET', 'EET', 'EET' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(362, 'Egypt', 'Egypt', 'Egypt' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(363, 'Eire', 'Eire', 'Eire' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(364, 'EST', 'EST', 'EST' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(365, 'EST5EDT', 'EST5EDT', 'EST5EDT' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(366, 'Etc/GMT', 'Etc/GMT', 'Etc/GMT' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(367, 'Etc/GMT0', 'Etc/GMT0', 'Etc/GMT0' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(368, 'Etc/GMT-0', 'Etc/GMT-0', 'Etc/GMT-0' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(369, 'Etc/GMT+0', 'Etc/GMT+0', 'Etc/GMT+0' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(370, 'Etc/GMT-1', 'Etc/GMT-1', 'Etc/GMT-1' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(371, 'Etc/GMT+1', 'Etc/GMT+1', 'Etc/GMT+1' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(372, 'Etc/GMT-10', 'Etc/GMT-10', 'Etc/GMT-10' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(373, 'Etc/GMT+10', 'Etc/GMT+10', 'Etc/GMT+10' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(374, 'Etc/GMT-11', 'Etc/GMT-11', 'Etc/GMT-11' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(375, 'Etc/GMT+11', 'Etc/GMT+11', 'Etc/GMT+11' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(376, 'Etc/GMT-12', 'Etc/GMT-12', 'Etc/GMT-12' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(377, 'Etc/GMT+12', 'Etc/GMT+12', 'Etc/GMT+12' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(378, 'Etc/GMT-13', 'Etc/GMT-13', 'Etc/GMT-13' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(379, 'Etc/GMT-14', 'Etc/GMT-14', 'Etc/GMT-14' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(380, 'Etc/GMT-2', 'Etc/GMT-2', 'Etc/GMT-2' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(381, 'Etc/GMT+2', 'Etc/GMT+2', 'Etc/GMT+2' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(382, 'Etc/GMT-3', 'Etc/GMT-3', 'Etc/GMT-3' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(383, 'Etc/GMT+3', 'Etc/GMT+3', 'Etc/GMT+3' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(384, 'Etc/GMT-4', 'Etc/GMT-4', 'Etc/GMT-4' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(385, 'Etc/GMT+4', 'Etc/GMT+4', 'Etc/GMT+4' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(386, 'Etc/GMT-5', 'Etc/GMT-5', 'Etc/GMT-5' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(387, 'Etc/GMT+5', 'Etc/GMT+5', 'Etc/GMT+5' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(388, 'Etc/GMT-6', 'Etc/GMT-6', 'Etc/GMT-6' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(389, 'Etc/GMT+6', 'Etc/GMT+6', 'Etc/GMT+6' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(390, 'Etc/GMT-7', 'Etc/GMT-7', 'Etc/GMT-7' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(391, 'Etc/GMT+7', 'Etc/GMT+7', 'Etc/GMT+7' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(392, 'Etc/GMT-8', 'Etc/GMT-8', 'Etc/GMT-8' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(393, 'Etc/GMT+8', 'Etc/GMT+8', 'Etc/GMT+8' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(394, 'Etc/GMT-9', 'Etc/GMT-9', 'Etc/GMT-9' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(395, 'Etc/GMT+9', 'Etc/GMT+9', 'Etc/GMT+9' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(396, 'Etc/Greenwich', 'Etc/Greenwich', 'Etc/Greenwich' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(397, 'Etc/UCT', 'Etc/UCT', 'Etc/UCT' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(398, 'Etc/Universal', 'Etc/Universal', 'Etc/Universal' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(399, 'Etc/UTC', 'Etc/UTC', 'Etc/UTC' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(400, 'Etc/Zulu', 'Etc/Zulu', 'Etc/Zulu' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(401, 'Europe/Amsterdam', 'Europe/Amsterdam', 'Europe/Amsterdam' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(402, 'Europe/Andorra', 'Europe/Andorra', 'Europe/Andorra' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(403, 'Europe/Athens', 'Europe/Athens', 'Europe/Athens' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(404, 'Europe/Belfast', 'Europe/Belfast', 'Europe/Belfast' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(405, 'Europe/Belgrade', 'Europe/Belgrade', 'Europe/Belgrade' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(406, 'Europe/Berlin', 'Europe/Berlin', 'Europe/Berlin' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(407, 'Europe/Bratislava', 'Europe/Bratislava', 'Europe/Bratislava' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(408, 'Europe/Brussels', 'Europe/Brussels', 'Europe/Brussels' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(409, 'Europe/Bucharest', 'Europe/Bucharest', 'Europe/Bucharest' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(410, 'Europe/Budapest', 'Europe/Budapest', 'Europe/Budapest' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(411, 'Europe/Chisinau', 'Europe/Chisinau', 'Europe/Chisinau' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(412, 'Europe/Copenhagen', 'Europe/Copenhagen', 'Europe/Copenhagen' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(413, 'Europe/Dublin', 'Europe/Dublin', 'Europe/Dublin' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(414, 'Europe/Gibraltar', 'Europe/Gibraltar', 'Europe/Gibraltar' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(415, 'Europe/Guernsey', 'Europe/Guernsey', 'Europe/Guernsey' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(416, 'Europe/Helsinki', 'Europe/Helsinki', 'Europe/Helsinki' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(417, 'Europe/Isle_of_Man', 'Europe/Isle_of_Man', 'Europe/Isle_of_Man' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(418, 'Europe/Istanbul', 'Europe/Istanbul', 'Europe/Istanbul' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(419, 'Europe/Jersey', 'Europe/Jersey', 'Europe/Jersey' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(420, 'Europe/Kaliningrad', 'Europe/Kaliningrad', 'Europe/Kaliningrad' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(421, 'Europe/Kiev', 'Europe/Kiev', 'Europe/Kiev' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(422, 'Europe/Lisbon', 'Europe/Lisbon', 'Europe/Lisbon' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(423, 'Europe/Ljubljana', 'Europe/Ljubljana', 'Europe/Ljubljana' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(424, 'Europe/London', 'Europe/London', 'Europe/London' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(425, 'Europe/Luxembourg', 'Europe/Luxembourg', 'Europe/Luxembourg' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(426, 'Europe/Madrid', 'Europe/Madrid', 'Europe/Madrid' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(427, 'Europe/Malta', 'Europe/Malta', 'Europe/Malta' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(428, 'Europe/Mariehamn', 'Europe/Mariehamn', 'Europe/Mariehamn' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(429, 'Europe/Minsk', 'Europe/Minsk', 'Europe/Minsk' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(430, 'Europe/Monaco', 'Europe/Monaco', 'Europe/Monaco' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(431, 'Europe/Moscow', 'Europe/Moscow', 'Europe/Moscow' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(432, 'Europe/Nicosia', 'Europe/Nicosia', 'Europe/Nicosia' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(433, 'Europe/Oslo', 'Europe/Oslo', 'Europe/Oslo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(434, 'Europe/Paris', 'Europe/Paris', 'Europe/Paris' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(435, 'Europe/Podgorica', 'Europe/Podgorica', 'Europe/Podgorica' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(436, 'Europe/Prague', 'Europe/Prague', 'Europe/Prague' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(437, 'Europe/Riga', 'Europe/Riga', 'Europe/Riga' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(438, 'Europe/Rome', 'Europe/Rome', 'Europe/Rome' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(439, 'Europe/Samara', 'Europe/Samara', 'Europe/Samara' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(440, 'Europe/San_Marino', 'Europe/San_Marino', 'Europe/San_Marino' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(441, 'Europe/Sarajevo', 'Europe/Sarajevo', 'Europe/Sarajevo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(442, 'Europe/Simferopol', 'Europe/Simferopol', 'Europe/Simferopol' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(443, 'Europe/Skopje', 'Europe/Skopje', 'Europe/Skopje' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(444, 'Europe/Sofia', 'Europe/Sofia', 'Europe/Sofia' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(445, 'Europe/Stockholm', 'Europe/Stockholm', 'Europe/Stockholm' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(446, 'Europe/Tallinn', 'Europe/Tallinn', 'Europe/Tallinn' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(447, 'Europe/Tirane', 'Europe/Tirane', 'Europe/Tirane' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(448, 'Europe/Tiraspol', 'Europe/Tiraspol', 'Europe/Tiraspol' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(449, 'Europe/Uzhgorod', 'Europe/Uzhgorod', 'Europe/Uzhgorod' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(450, 'Europe/Vaduz', 'Europe/Vaduz', 'Europe/Vaduz' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(451, 'Europe/Vatican', 'Europe/Vatican', 'Europe/Vatican' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(452, 'Europe/Vienna', 'Europe/Vienna', 'Europe/Vienna' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(453, 'Europe/Vilnius', 'Europe/Vilnius', 'Europe/Vilnius' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(454, 'Europe/Volgograd', 'Europe/Volgograd', 'Europe/Volgograd' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(455, 'Europe/Warsaw', 'Europe/Warsaw', 'Europe/Warsaw' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(456, 'Europe/Zagreb', 'Europe/Zagreb', 'Europe/Zagreb' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(457, 'Europe/Zaporozhye', 'Europe/Zaporozhye', 'Europe/Zaporozhye' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(458, 'Europe/Zurich', 'Europe/Zurich', 'Europe/Zurich' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(459, 'Factory', 'Factory', 'Factory' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(460, 'GB', 'GB', 'GB' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(461, 'GB-Eire', 'GB-Eire', 'GB-Eire' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(462, 'GMT', 'GMT', 'GMT' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(463, 'GMT0', 'GMT0', 'GMT0' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(464, 'GMT-0', 'GMT-0', 'GMT-0' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(465, 'GMT+0', 'GMT+0', 'GMT+0' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(466, 'Greenwich', 'Greenwich', 'Greenwich' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(467, 'Hongkong', 'Hongkong', 'Hongkong' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(468, 'HST', 'HST', 'HST' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(469, 'Iceland', 'Iceland', 'Iceland' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(470, 'Indian/Antananarivo', 'Indian/Antananarivo', 'Indian/Antananarivo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(471, 'Indian/Chagos', 'Indian/Chagos', 'Indian/Chagos' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(472, 'Indian/Christmas', 'Indian/Christmas', 'Indian/Christmas' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(473, 'Indian/Cocos', 'Indian/Cocos', 'Indian/Cocos' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(474, 'Indian/Comoro', 'Indian/Comoro', 'Indian/Comoro' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(475, 'Indian/Kerguelen', 'Indian/Kerguelen', 'Indian/Kerguelen' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(476, 'Indian/Mahe', 'Indian/Mahe', 'Indian/Mahe' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(477, 'Indian/Maldives', 'Indian/Maldives', 'Indian/Maldives' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(478, 'Indian/Mauritius', 'Indian/Mauritius', 'Indian/Mauritius' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(479, 'Indian/Mayotte', 'Indian/Mayotte', 'Indian/Mayotte' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(480, 'Indian/Reunion', 'Indian/Reunion', 'Indian/Reunion' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(481, 'Iran', 'Iran', 'Iran' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(482, 'Israel', 'Israel', 'Israel' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(483, 'Jamaica', 'Jamaica', 'Jamaica' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(484, 'Japan', 'Japan', 'Japan' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(485, 'Kwajalein', 'Kwajalein', 'Kwajalein' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(486, 'Libya', 'Libya', 'Libya' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(487, 'MET', 'MET', 'MET' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(488, 'Mexico/BajaNorte', 'Mexico/BajaNorte', 'Mexico/BajaNorte' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(489, 'Mexico/BajaSur', 'Mexico/BajaSur', 'Mexico/BajaSur' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(490, 'Mexico/General', 'Mexico/General', 'Mexico/General' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(491, 'Mideast/Riyadh87', 'Mideast/Riyadh87', 'Mideast/Riyadh87' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(492, 'Mideast/Riyadh88', 'Mideast/Riyadh88', 'Mideast/Riyadh88' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(493, 'Mideast/Riyadh89', 'Mideast/Riyadh89', 'Mideast/Riyadh89' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(494, 'MST', 'MST', 'MST' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(495, 'MST7MDT', 'MST7MDT', 'MST7MDT' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(496, 'Navajo', 'Navajo', 'Navajo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(497, 'NZ', 'NZ', 'NZ' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(498, 'NZ-CHAT', 'NZ-CHAT', 'NZ-CHAT' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(499, 'Pacific/Apia', 'Pacific/Apia', 'Pacific/Apia' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(500, 'Pacific/Auckland', 'Pacific/Auckland', 'Pacific/Auckland' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(501, 'Pacific/Chatham', 'Pacific/Chatham', 'Pacific/Chatham' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(502, 'Pacific/Easter', 'Pacific/Easter', 'Pacific/Easter' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(503, 'Pacific/Efate', 'Pacific/Efate', 'Pacific/Efate' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(504, 'Pacific/Enderbury', 'Pacific/Enderbury', 'Pacific/Enderbury' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(505, 'Pacific/Fakaofo', 'Pacific/Fakaofo', 'Pacific/Fakaofo' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(506, 'Pacific/Fiji', 'Pacific/Fiji', 'Pacific/Fiji' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(507, 'Pacific/Funafuti', 'Pacific/Funafuti', 'Pacific/Funafuti' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(508, 'Pacific/Galapagos', 'Pacific/Galapagos', 'Pacific/Galapagos' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(509, 'Pacific/Gambier', 'Pacific/Gambier', 'Pacific/Gambier' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(510, 'Pacific/Guadalcanal', 'Pacific/Guadalcanal', 'Pacific/Guadalcanal' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(511, 'Pacific/Guam', 'Pacific/Guam', 'Pacific/Guam' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(512, 'Pacific/Honolulu', 'Pacific/Honolulu', 'Pacific/Honolulu' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(513, 'Pacific/Johnston', 'Pacific/Johnston', 'Pacific/Johnston' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(514, 'Pacific/Kiritimati', 'Pacific/Kiritimati', 'Pacific/Kiritimati' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(515, 'Pacific/Kosrae', 'Pacific/Kosrae', 'Pacific/Kosrae' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(516, 'Pacific/Kwajalein', 'Pacific/Kwajalein', 'Pacific/Kwajalein' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(517, 'Pacific/Majuro', 'Pacific/Majuro', 'Pacific/Majuro' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(518, 'Pacific/Marquesas', 'Pacific/Marquesas', 'Pacific/Marquesas' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(519, 'Pacific/Midway', 'Pacific/Midway', 'Pacific/Midway' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(520, 'Pacific/Nauru', 'Pacific/Nauru', 'Pacific/Nauru' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(521, 'Pacific/Niue', 'Pacific/Niue', 'Pacific/Niue' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(522, 'Pacific/Norfolk', 'Pacific/Norfolk', 'Pacific/Norfolk' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(523, 'Pacific/Noumea', 'Pacific/Noumea', 'Pacific/Noumea' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(524, 'Pacific/Pago_Pago', 'Pacific/Pago_Pago', 'Pacific/Pago_Pago' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(525, 'Pacific/Palau', 'Pacific/Palau', 'Pacific/Palau' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(526, 'Pacific/Pitcairn', 'Pacific/Pitcairn', 'Pacific/Pitcairn' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(527, 'Pacific/Ponape', 'Pacific/Ponape', 'Pacific/Ponape' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(528, 'Pacific/Port_Moresby', 'Pacific/Port_Moresby', 'Pacific/Port_Moresby' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(529, 'Pacific/Rarotonga', 'Pacific/Rarotonga', 'Pacific/Rarotonga' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(530, 'Pacific/Saipan', 'Pacific/Saipan', 'Pacific/Saipan' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(531, 'Pacific/Samoa', 'Pacific/Samoa', 'Pacific/Samoa' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(532, 'Pacific/Tahiti', 'Pacific/Tahiti', 'Pacific/Tahiti' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(533, 'Pacific/Tarawa', 'Pacific/Tarawa', 'Pacific/Tarawa' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(534, 'Pacific/Tongatapu', 'Pacific/Tongatapu', 'Pacific/Tongatapu' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(535, 'Pacific/Truk', 'Pacific/Truk', 'Pacific/Truk' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(536, 'Pacific/Wake', 'Pacific/Wake', 'Pacific/Wake' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(537, 'Pacific/Wallis', 'Pacific/Wallis', 'Pacific/Wallis' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(538, 'Pacific/Yap', 'Pacific/Yap', 'Pacific/Yap' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(539, 'Poland', 'Poland', 'Poland' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(540, 'Portugal', 'Portugal', 'Portugal' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(541, 'PRC', 'PRC', 'PRC' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(542, 'PST8PDT', 'PST8PDT', 'PST8PDT' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(543, 'ROC', 'ROC', 'ROC' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(544, 'ROK', 'ROK', 'ROK' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(545, 'Singapore', 'Singapore', 'Singapore' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(546, 'Turkey', 'Turkey', 'Turkey' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(547, 'UCT', 'UCT', 'UCT' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(548, 'Universal', 'Universal', 'Universal' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(549, 'US/Alaska', 'US/Alaska', 'US/Alaska' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(550, 'US/Aleutian', 'US/Aleutian', 'US/Aleutian' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(551, 'US/Arizona', 'US/Arizona', 'US/Arizona' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(552, 'US/Central', 'US/Central', 'US/Central' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(553, 'US/Eastern', 'US/Eastern', 'US/Eastern' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(554, 'US/East-Indiana', 'US/East-Indiana', 'US/East-Indiana' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(555, 'US/Hawaii', 'US/Hawaii', 'US/Hawaii' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(556, 'US/Indiana-Starke', 'US/Indiana-Starke', 'US/Indiana-Starke' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(557, 'US/Michigan', 'US/Michigan', 'US/Michigan' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(558, 'US/Mountain', 'US/Mountain', 'US/Mountain' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(559, 'US/Pacific', 'US/Pacific', 'US/Pacific' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(560, 'US/Samoa', 'US/Samoa', 'US/Samoa' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(561, 'UTC', 'UTC', 'UTC' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(562, 'WET', 'WET', 'WET' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(563, 'W-SU', 'W-SU', 'W-SU' );
-INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION,RU_DESCRIPTION) VALUES(564, 'Zulu', 'Zulu', 'Zulu' );
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(0, 'GMT', 'Default');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(1, 'Africa/Abidjan', 'Africa/Abidjan');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(2, 'Africa/Accra', 'Africa/Accra');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(3, 'Africa/Addis_Ababa', 'Africa/Addis_Ababa');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(4, 'Africa/Algiers', 'Africa/Algiers');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(5, 'Africa/Asmara', 'Africa/Asmara');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(6, 'Africa/Asmera', 'Africa/Asmera');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(7, 'Africa/Bamako', 'Africa/Bamako');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(8, 'Africa/Bangui', 'Africa/Bangui');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(9, 'Africa/Banjul', 'Africa/Banjul');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(10, 'Africa/Bissau', 'Africa/Bissau');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(11, 'Africa/Blantyre', 'Africa/Blantyre');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(12, 'Africa/Brazzaville', 'Africa/Brazzaville');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(13, 'Africa/Bujumbura', 'Africa/Bujumbura');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(14, 'Africa/Cairo', 'Africa/Cairo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(15, 'Africa/Casablanca', 'Africa/Casablanca');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(16, 'Africa/Ceuta', 'Africa/Ceuta');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(17, 'Africa/Conakry', 'Africa/Conakry');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(18, 'Africa/Dakar', 'Africa/Dakar');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(19, 'Africa/Dar_es_Salaam', 'Africa/Dar_es_Salaam');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(20, 'Africa/Djibouti', 'Africa/Djibouti');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(21, 'Africa/Douala', 'Africa/Douala');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(22, 'Africa/El_Aaiun', 'Africa/El_Aaiun');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(23, 'Africa/Freetown', 'Africa/Freetown');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(24, 'Africa/Gaborone', 'Africa/Gaborone');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(25, 'Africa/Harare', 'Africa/Harare');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(26, 'Africa/Johannesburg', 'Africa/Johannesburg');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(27, 'Africa/Kampala', 'Africa/Kampala');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(28, 'Africa/Khartoum', 'Africa/Khartoum');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(29, 'Africa/Kigali', 'Africa/Kigali');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(30, 'Africa/Kinshasa', 'Africa/Kinshasa');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(31, 'Africa/Lagos', 'Africa/Lagos');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(32, 'Africa/Libreville', 'Africa/Libreville');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(33, 'Africa/Lome', 'Africa/Lome');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(34, 'Africa/Luanda', 'Africa/Luanda');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(35, 'Africa/Lubumbashi', 'Africa/Lubumbashi');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(36, 'Africa/Lusaka', 'Africa/Lusaka');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(37, 'Africa/Malabo', 'Africa/Malabo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(38, 'Africa/Maputo', 'Africa/Maputo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(39, 'Africa/Maseru', 'Africa/Maseru');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(40, 'Africa/Mbabane', 'Africa/Mbabane');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(41, 'Africa/Mogadishu', 'Africa/Mogadishu');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(42, 'Africa/Monrovia', 'Africa/Monrovia');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(43, 'Africa/Nairobi', 'Africa/Nairobi');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(44, 'Africa/Ndjamena', 'Africa/Ndjamena');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(45, 'Africa/Niamey', 'Africa/Niamey');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(46, 'Africa/Nouakchott', 'Africa/Nouakchott');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(47, 'Africa/Ouagadougou', 'Africa/Ouagadougou');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(48, 'Africa/Porto-Novo', 'Africa/Porto-Novo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(49, 'Africa/Sao_Tome', 'Africa/Sao_Tome');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(50, 'Africa/Timbuktu', 'Africa/Timbuktu');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(51, 'Africa/Tripoli', 'Africa/Tripoli');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(52, 'Africa/Tunis', 'Africa/Tunis');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(53, 'Africa/Windhoek', 'Africa/Windhoek');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(54, 'America/Adak', 'America/Adak');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(55, 'America/Anchorage', 'America/Anchorage');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(56, 'America/Anguilla', 'America/Anguilla');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(57, 'America/Antigua', 'America/Antigua');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(58, 'America/Araguaina', 'America/Araguaina');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(59, 'America/Argentina/Buenos_Aires', 'America/Argentina/Buenos_Aires');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(60, 'America/Argentina/Catamarca', 'America/Argentina/Catamarca');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(61, 'America/Argentina/ComodRivadavia', 'America/Argentina/ComodRivadavia');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(62, 'America/Argentina/Cordoba', 'America/Argentina/Cordoba');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(63, 'America/Argentina/Jujuy', 'America/Argentina/Jujuy');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(64, 'America/Argentina/La_Rioja', 'America/Argentina/La_Rioja');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(65, 'America/Argentina/Mendoza', 'America/Argentina/Mendoza');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(66, 'America/Argentina/Rio_Gallegos', 'America/Argentina/Rio_Gallegos');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(67, 'America/Argentina/Salta', 'America/Argentina/Salta');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(68, 'America/Argentina/San_Juan', 'America/Argentina/San_Juan');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(69, 'America/Argentina/San_Luis', 'America/Argentina/San_Luis');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(70, 'America/Argentina/Tucuman', 'America/Argentina/Tucuman');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(71, 'America/Argentina/Ushuaia', 'America/Argentina/Ushuaia');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(72, 'America/Aruba', 'America/Aruba');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(73, 'America/Asuncion', 'America/Asuncion');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(74, 'America/Atikokan', 'America/Atikokan');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(75, 'America/Atka', 'America/Atka');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(76, 'America/Bahia', 'America/Bahia');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(77, 'America/Barbados', 'America/Barbados');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(78, 'America/Belem', 'America/Belem');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(79, 'America/Belize', 'America/Belize');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(80, 'America/Blanc-Sablon', 'America/Blanc-Sablon');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(81, 'America/Boa_Vista', 'America/Boa_Vista');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(82, 'America/Bogota', 'America/Bogota');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(83, 'America/Boise', 'America/Boise');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(84, 'America/Buenos_Aires', 'America/Buenos_Aires');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(85, 'America/Cambridge_Bay', 'America/Cambridge_Bay');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(86, 'America/Campo_Grande', 'America/Campo_Grande');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(87, 'America/Cancun', 'America/Cancun');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(88, 'America/Caracas', 'America/Caracas');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(89, 'America/Catamarca', 'America/Catamarca');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(90, 'America/Cayenne', 'America/Cayenne');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(91, 'America/Cayman', 'America/Cayman');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(92, 'America/Chicago', 'America/Chicago');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(93, 'America/Chihuahua', 'America/Chihuahua');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(94, 'America/Coral_Harbour', 'America/Coral_Harbour');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(95, 'America/Cordoba', 'America/Cordoba');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(96, 'America/Costa_Rica', 'America/Costa_Rica');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(97, 'America/Cuiaba', 'America/Cuiaba');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(98, 'America/Curacao', 'America/Curacao');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(99, 'America/Danmarkshavn', 'America/Danmarkshavn');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(100, 'America/Dawson', 'America/Dawson');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(101, 'America/Dawson_Creek', 'America/Dawson_Creek');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(102, 'America/Denver', 'America/Denver');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(103, 'America/Detroit', 'America/Detroit');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(104, 'America/Dominica', 'America/Dominica');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(105, 'America/Edmonton', 'America/Edmonton');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(106, 'America/Eirunepe', 'America/Eirunepe');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(107, 'America/El_Salvador', 'America/El_Salvador');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(108, 'America/Ensenada', 'America/Ensenada');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(109, 'America/Fortaleza', 'America/Fortaleza');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(110, 'America/Fort_Wayne', 'America/Fort_Wayne');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(111, 'America/Glace_Bay', 'America/Glace_Bay');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(112, 'America/Godthab', 'America/Godthab');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(113, 'America/Goose_Bay', 'America/Goose_Bay');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(114, 'America/Grand_Turk', 'America/Grand_Turk');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(115, 'America/Grenada', 'America/Grenada');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(116, 'America/Guadeloupe', 'America/Guadeloupe');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(117, 'America/Guatemala', 'America/Guatemala');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(118, 'America/Guayaquil', 'America/Guayaquil');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(119, 'America/Guyana', 'America/Guyana');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(120, 'America/Halifax', 'America/Halifax');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(121, 'America/Havana', 'America/Havana');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(122, 'America/Hermosillo', 'America/Hermosillo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(123, 'America/Indiana/Indianapolis', 'America/Indiana/Indianapolis');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(124, 'America/Indiana/Knox', 'America/Indiana/Knox');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(125, 'America/Indiana/Marengo', 'America/Indiana/Marengo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(126, 'America/Indiana/Petersburg', 'America/Indiana/Petersburg');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(127, 'America/Indianapolis', 'America/Indianapolis');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(128, 'America/Indiana/Tell_City', 'America/Indiana/Tell_City');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(129, 'America/Indiana/Vevay', 'America/Indiana/Vevay');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(130, 'America/Indiana/Vincennes', 'America/Indiana/Vincennes');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(131, 'America/Indiana/Winamac', 'America/Indiana/Winamac');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(132, 'America/Inuvik', 'America/Inuvik');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(133, 'America/Iqaluit', 'America/Iqaluit');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(134, 'America/Jamaica', 'America/Jamaica');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(135, 'America/Jujuy', 'America/Jujuy');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(136, 'America/Juneau', 'America/Juneau');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(137, 'America/Kentucky/Louisville', 'America/Kentucky/Louisville');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(138, 'America/Kentucky/Monticello', 'America/Kentucky/Monticello');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(139, 'America/Knox_IN', 'America/Knox_IN');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(140, 'America/La_Paz', 'America/La_Paz');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(141, 'America/Lima', 'America/Lima');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(142, 'America/Los_Angeles', 'America/Los_Angeles');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(143, 'America/Louisville', 'America/Louisville');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(144, 'America/Maceio', 'America/Maceio');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(145, 'America/Managua', 'America/Managua');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(146, 'America/Manaus', 'America/Manaus');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(147, 'America/Marigot', 'America/Marigot');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(148, 'America/Martinique', 'America/Martinique');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(149, 'America/Mazatlan', 'America/Mazatlan');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(150, 'America/Mendoza', 'America/Mendoza');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(151, 'America/Menominee', 'America/Menominee');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(152, 'America/Merida', 'America/Merida');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(153, 'America/Mexico_City', 'America/Mexico_City');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(154, 'America/Miquelon', 'America/Miquelon');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(155, 'America/Moncton', 'America/Moncton');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(156, 'America/Monterrey', 'America/Monterrey');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(157, 'America/Montevideo', 'America/Montevideo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(158, 'America/Montreal', 'America/Montreal');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(159, 'America/Montserrat', 'America/Montserrat');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(160, 'America/Nassau', 'America/Nassau');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(161, 'America/New_York', 'America/New_York');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(162, 'America/Nipigon', 'America/Nipigon');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(163, 'America/Nome', 'America/Nome');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(164, 'America/Noronha', 'America/Noronha');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(165, 'America/North_Dakota/Center', 'America/North_Dakota/Center');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(166, 'America/North_Dakota/New_Salem', 'America/North_Dakota/New_Salem');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(167, 'America/Panama', 'America/Panama');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(168, 'America/Pangnirtung', 'America/Pangnirtung');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(169, 'America/Paramaribo', 'America/Paramaribo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(170, 'America/Phoenix', 'America/Phoenix');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(171, 'America/Port-au-Prince', 'America/Port-au-Prince');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(172, 'America/Porto_Acre', 'America/Porto_Acre');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(173, 'America/Port_of_Spain', 'America/Port_of_Spain');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(174, 'America/Porto_Velho', 'America/Porto_Velho');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(175, 'America/Puerto_Rico', 'America/Puerto_Rico');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(176, 'America/Rainy_River', 'America/Rainy_River');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(177, 'America/Rankin_Inlet', 'America/Rankin_Inlet');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(178, 'America/Recife', 'America/Recife');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(179, 'America/Regina', 'America/Regina');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(180, 'America/Resolute', 'America/Resolute');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(181, 'America/Rio_Branco', 'America/Rio_Branco');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(182, 'America/Rosario', 'America/Rosario');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(183, 'America/Santarem', 'America/Santarem');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(184, 'America/Santiago', 'America/Santiago');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(185, 'America/Santo_Domingo', 'America/Santo_Domingo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(186, 'America/Sao_Paulo', 'America/Sao_Paulo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(187, 'America/Scoresbysund', 'America/Scoresbysund');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(188, 'America/Shiprock', 'America/Shiprock');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(189, 'America/St_Barthelemy', 'America/St_Barthelemy');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(190, 'America/St_Johns', 'America/St_Johns');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(191, 'America/St_Kitts', 'America/St_Kitts');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(192, 'America/St_Lucia', 'America/St_Lucia');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(193, 'America/St_Thomas', 'America/St_Thomas');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(194, 'America/St_Vincent', 'America/St_Vincent');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(195, 'America/Swift_Current', 'America/Swift_Current');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(196, 'America/Tegucigalpa', 'America/Tegucigalpa');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(197, 'America/Thule', 'America/Thule');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(198, 'America/Thunder_Bay', 'America/Thunder_Bay');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(199, 'America/Tijuana', 'America/Tijuana');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(200, 'America/Toronto', 'America/Toronto');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(201, 'America/Tortola', 'America/Tortola');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(202, 'America/Vancouver', 'America/Vancouver');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(203, 'America/Virgin', 'America/Virgin');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(204, 'America/Whitehorse', 'America/Whitehorse');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(205, 'America/Winnipeg', 'America/Winnipeg');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(206, 'America/Yakutat', 'America/Yakutat');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(207, 'America/Yellowknife', 'America/Yellowknife');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(208, 'Antarctica/Casey', 'Antarctica/Casey');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(209, 'Antarctica/Davis', 'Antarctica/Davis');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(210, 'Antarctica/DumontDUrville', 'Antarctica/DumontDUrville');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(211, 'Antarctica/Mawson', 'Antarctica/Mawson');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(212, 'Antarctica/McMurdo', 'Antarctica/McMurdo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(213, 'Antarctica/Palmer', 'Antarctica/Palmer');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(214, 'Antarctica/Rothera', 'Antarctica/Rothera');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(215, 'Antarctica/South_Pole', 'Antarctica/South_Pole');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(216, 'Antarctica/Syowa', 'Antarctica/Syowa');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(217, 'Antarctica/Vostok', 'Antarctica/Vostok');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(218, 'Arctic/Longyearbyen', 'Arctic/Longyearbyen');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(219, 'Asia/Aden', 'Asia/Aden');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(220, 'Asia/Almaty', 'Asia/Almaty');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(221, 'Asia/Amman', 'Asia/Amman');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(222, 'Asia/Anadyr', 'Asia/Anadyr');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(223, 'Asia/Aqtau', 'Asia/Aqtau');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(224, 'Asia/Aqtobe', 'Asia/Aqtobe');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(225, 'Asia/Ashgabat', 'Asia/Ashgabat');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(226, 'Asia/Ashkhabad', 'Asia/Ashkhabad');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(227, 'Asia/Baghdad', 'Asia/Baghdad');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(228, 'Asia/Bahrain', 'Asia/Bahrain');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(229, 'Asia/Baku', 'Asia/Baku');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(230, 'Asia/Bangkok', 'Asia/Bangkok');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(231, 'Asia/Beirut', 'Asia/Beirut');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(232, 'Asia/Bishkek', 'Asia/Bishkek');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(233, 'Asia/Brunei', 'Asia/Brunei');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(234, 'Asia/Calcutta', 'Asia/Calcutta');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(235, 'Asia/Choibalsan', 'Asia/Choibalsan');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(236, 'Asia/Chongqing', 'Asia/Chongqing');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(237, 'Asia/Chungking', 'Asia/Chungking');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(238, 'Asia/Colombo', 'Asia/Colombo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(239, 'Asia/Dacca', 'Asia/Dacca');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(240, 'Asia/Damascus', 'Asia/Damascus');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(241, 'Asia/Dhaka', 'Asia/Dhaka');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(242, 'Asia/Dili', 'Asia/Dili');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(243, 'Asia/Dubai', 'Asia/Dubai');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(244, 'Asia/Dushanbe', 'Asia/Dushanbe');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(245, 'Asia/Gaza', 'Asia/Gaza');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(246, 'Asia/Harbin', 'Asia/Harbin');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(247, 'Asia/Ho_Chi_Minh', 'Asia/Ho_Chi_Minh');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(248, 'Asia/Hong_Kong', 'Asia/Hong_Kong');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(249, 'Asia/Hovd', 'Asia/Hovd');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(250, 'Asia/Irkutsk', 'Asia/Irkutsk');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(251, 'Asia/Istanbul', 'Asia/Istanbul');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(252, 'Asia/Jakarta', 'Asia/Jakarta');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(253, 'Asia/Jayapura', 'Asia/Jayapura');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(254, 'Asia/Jerusalem', 'Asia/Jerusalem');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(255, 'Asia/Kabul', 'Asia/Kabul');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(256, 'Asia/Kamchatka', 'Asia/Kamchatka');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(257, 'Asia/Karachi', 'Asia/Karachi');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(258, 'Asia/Kashgar', 'Asia/Kashgar');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(259, 'Asia/Katmandu', 'Asia/Katmandu');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(260, 'Asia/Kolkata', 'Asia/Kolkata');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(261, 'Asia/Krasnoyarsk', 'Asia/Krasnoyarsk');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(262, 'Asia/Kuala_Lumpur', 'Asia/Kuala_Lumpur');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(263, 'Asia/Kuching', 'Asia/Kuching');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(264, 'Asia/Kuwait', 'Asia/Kuwait');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(265, 'Asia/Macao', 'Asia/Macao');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(266, 'Asia/Macau', 'Asia/Macau');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(267, 'Asia/Magadan', 'Asia/Magadan');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(268, 'Asia/Makassar', 'Asia/Makassar');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(269, 'Asia/Manila', 'Asia/Manila');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(270, 'Asia/Muscat', 'Asia/Muscat');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(271, 'Asia/Nicosia', 'Asia/Nicosia');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(272, 'Asia/Novosibirsk', 'Asia/Novosibirsk');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(273, 'Asia/Omsk', 'Asia/Omsk');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(274, 'Asia/Oral', 'Asia/Oral');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(275, 'Asia/Phnom_Penh', 'Asia/Phnom_Penh');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(276, 'Asia/Pontianak', 'Asia/Pontianak');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(277, 'Asia/Pyongyang', 'Asia/Pyongyang');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(278, 'Asia/Qatar', 'Asia/Qatar');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(279, 'Asia/Qyzylorda', 'Asia/Qyzylorda');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(280, 'Asia/Rangoon', 'Asia/Rangoon');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(281, 'Asia/Riyadh', 'Asia/Riyadh');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(282, 'Asia/Riyadh87', 'Asia/Riyadh87');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(283, 'Asia/Riyadh88', 'Asia/Riyadh88');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(284, 'Asia/Riyadh89', 'Asia/Riyadh89');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(285, 'Asia/Saigon', 'Asia/Saigon');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(286, 'Asia/Sakhalin', 'Asia/Sakhalin');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(287, 'Asia/Samarkand', 'Asia/Samarkand');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(288, 'Asia/Seoul', 'Asia/Seoul');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(289, 'Asia/Shanghai', 'Asia/Shanghai');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(290, 'Asia/Singapore', 'Asia/Singapore');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(291, 'Asia/Taipei', 'Asia/Taipei');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(292, 'Asia/Tashkent', 'Asia/Tashkent');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(293, 'Asia/Tbilisi', 'Asia/Tbilisi');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(294, 'Asia/Tehran', 'Asia/Tehran');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(295, 'Asia/Tel_Aviv', 'Asia/Tel_Aviv');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(296, 'Asia/Thimbu', 'Asia/Thimbu');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(297, 'Asia/Thimphu', 'Asia/Thimphu');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(298, 'Asia/Tokyo', 'Asia/Tokyo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(299, 'Asia/Ujung_Pandang', 'Asia/Ujung_Pandang');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(300, 'Asia/Ulaanbaatar', 'Asia/Ulaanbaatar');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(301, 'Asia/Ulan_Bator', 'Asia/Ulan_Bator');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(302, 'Asia/Urumqi', 'Asia/Urumqi');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(303, 'Asia/Vientiane', 'Asia/Vientiane');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(304, 'Asia/Vladivostok', 'Asia/Vladivostok');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(305, 'Asia/Yakutsk', 'Asia/Yakutsk');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(306, 'Asia/Yekaterinburg', 'Asia/Yekaterinburg');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(307, 'Asia/Yerevan', 'Asia/Yerevan');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(308, 'Atlantic/Azores', 'Atlantic/Azores');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(309, 'Atlantic/Bermuda', 'Atlantic/Bermuda');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(310, 'Atlantic/Canary', 'Atlantic/Canary');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(311, 'Atlantic/Cape_Verde', 'Atlantic/Cape_Verde');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(312, 'Atlantic/Faeroe', 'Atlantic/Faeroe');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(313, 'Atlantic/Faroe', 'Atlantic/Faroe');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(314, 'Atlantic/Jan_Mayen', 'Atlantic/Jan_Mayen');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(315, 'Atlantic/Madeira', 'Atlantic/Madeira');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(316, 'Atlantic/Reykjavik', 'Atlantic/Reykjavik');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(317, 'Atlantic/South_Georgia', 'Atlantic/South_Georgia');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(318, 'Atlantic/Stanley', 'Atlantic/Stanley');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(319, 'Atlantic/St_Helena', 'Atlantic/St_Helena');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(320, 'Australia/ACT', 'Australia/ACT');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(321, 'Australia/Adelaide', 'Australia/Adelaide');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(322, 'Australia/Brisbane', 'Australia/Brisbane');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(323, 'Australia/Broken_Hill', 'Australia/Broken_Hill');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(324, 'Australia/Canberra', 'Australia/Canberra');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(325, 'Australia/Currie', 'Australia/Currie');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(326, 'Australia/Darwin', 'Australia/Darwin');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(327, 'Australia/Eucla', 'Australia/Eucla');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(328, 'Australia/Hobart', 'Australia/Hobart');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(329, 'Australia/LHI', 'Australia/LHI');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(330, 'Australia/Lindeman', 'Australia/Lindeman');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(331, 'Australia/Lord_Howe', 'Australia/Lord_Howe');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(332, 'Australia/Melbourne', 'Australia/Melbourne');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(333, 'Australia/North', 'Australia/North');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(334, 'Australia/NSW', 'Australia/NSW');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(335, 'Australia/Perth', 'Australia/Perth');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(336, 'Australia/Queensland', 'Australia/Queensland');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(337, 'Australia/South', 'Australia/South');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(338, 'Australia/Sydney', 'Australia/Sydney');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(339, 'Australia/Tasmania', 'Australia/Tasmania');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(340, 'Australia/Victoria', 'Australia/Victoria');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(341, 'Australia/West', 'Australia/West');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(342, 'Australia/Yancowinna', 'Australia/Yancowinna');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(343, 'Brazil/Acre', 'Brazil/Acre');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(344, 'Brazil/DeNoronha', 'Brazil/DeNoronha');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(345, 'Brazil/East', 'Brazil/East');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(346, 'Brazil/West', 'Brazil/West');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(347, 'Canada/Atlantic', 'Canada/Atlantic');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(348, 'Canada/Central', 'Canada/Central');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(349, 'Canada/Eastern', 'Canada/Eastern');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(350, 'Canada/East-Saskatchewan', 'Canada/East-Saskatchewan');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(351, 'Canada/Mountain', 'Canada/Mountain');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(352, 'Canada/Newfoundland', 'Canada/Newfoundland');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(353, 'Canada/Pacific', 'Canada/Pacific');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(354, 'Canada/Saskatchewan', 'Canada/Saskatchewan');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(355, 'Canada/Yukon', 'Canada/Yukon');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(356, 'CET', 'CET');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(357, 'Chile/Continental', 'Chile/Continental');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(358, 'Chile/EasterIsland', 'Chile/EasterIsland');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(359, 'CST6CDT', 'CST6CDT');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(360, 'Cuba', 'Cuba');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(361, 'EET', 'EET');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(362, 'Egypt', 'Egypt');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(363, 'Eire', 'Eire');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(364, 'EST', 'EST');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(365, 'EST5EDT', 'EST5EDT');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(366, 'Etc/GMT', 'Etc/GMT');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(367, 'Etc/GMT0', 'Etc/GMT0');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(368, 'Etc/GMT-0', 'Etc/GMT-0');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(369, 'Etc/GMT+0', 'Etc/GMT+0');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(370, 'Etc/GMT-1', 'Etc/GMT-1');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(371, 'Etc/GMT+1', 'Etc/GMT+1');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(372, 'Etc/GMT-10', 'Etc/GMT-10');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(373, 'Etc/GMT+10', 'Etc/GMT+10');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(374, 'Etc/GMT-11', 'Etc/GMT-11');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(375, 'Etc/GMT+11', 'Etc/GMT+11');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(376, 'Etc/GMT-12', 'Etc/GMT-12');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(377, 'Etc/GMT+12', 'Etc/GMT+12');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(378, 'Etc/GMT-13', 'Etc/GMT-13');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(379, 'Etc/GMT-14', 'Etc/GMT-14');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(380, 'Etc/GMT-2', 'Etc/GMT-2');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(381, 'Etc/GMT+2', 'Etc/GMT+2');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(382, 'Etc/GMT-3', 'Etc/GMT-3');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(383, 'Etc/GMT+3', 'Etc/GMT+3');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(384, 'Etc/GMT-4', 'Etc/GMT-4');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(385, 'Etc/GMT+4', 'Etc/GMT+4');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(386, 'Etc/GMT-5', 'Etc/GMT-5');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(387, 'Etc/GMT+5', 'Etc/GMT+5');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(388, 'Etc/GMT-6', 'Etc/GMT-6');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(389, 'Etc/GMT+6', 'Etc/GMT+6');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(390, 'Etc/GMT-7', 'Etc/GMT-7');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(391, 'Etc/GMT+7', 'Etc/GMT+7');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(392, 'Etc/GMT-8', 'Etc/GMT-8');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(393, 'Etc/GMT+8', 'Etc/GMT+8');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(394, 'Etc/GMT-9', 'Etc/GMT-9');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(395, 'Etc/GMT+9', 'Etc/GMT+9');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(396, 'Etc/Greenwich', 'Etc/Greenwich');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(397, 'Etc/UCT', 'Etc/UCT');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(398, 'Etc/Universal', 'Etc/Universal');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(399, 'Etc/UTC', 'Etc/UTC');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(400, 'Etc/Zulu', 'Etc/Zulu');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(401, 'Europe/Amsterdam', 'Europe/Amsterdam');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(402, 'Europe/Andorra', 'Europe/Andorra');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(403, 'Europe/Athens', 'Europe/Athens');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(404, 'Europe/Belfast', 'Europe/Belfast');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(405, 'Europe/Belgrade', 'Europe/Belgrade');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(406, 'Europe/Berlin', 'Europe/Berlin');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(407, 'Europe/Bratislava', 'Europe/Bratislava');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(408, 'Europe/Brussels', 'Europe/Brussels');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(409, 'Europe/Bucharest', 'Europe/Bucharest');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(410, 'Europe/Budapest', 'Europe/Budapest');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(411, 'Europe/Chisinau', 'Europe/Chisinau');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(412, 'Europe/Copenhagen', 'Europe/Copenhagen');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(413, 'Europe/Dublin', 'Europe/Dublin');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(414, 'Europe/Gibraltar', 'Europe/Gibraltar');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(415, 'Europe/Guernsey', 'Europe/Guernsey');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(416, 'Europe/Helsinki', 'Europe/Helsinki');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(417, 'Europe/Isle_of_Man', 'Europe/Isle_of_Man');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(418, 'Europe/Istanbul', 'Europe/Istanbul');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(419, 'Europe/Jersey', 'Europe/Jersey');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(420, 'Europe/Kaliningrad', 'Europe/Kaliningrad');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(421, 'Europe/Kiev', 'Europe/Kiev');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(422, 'Europe/Lisbon', 'Europe/Lisbon');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(423, 'Europe/Ljubljana', 'Europe/Ljubljana');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(424, 'Europe/London', 'Europe/London');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(425, 'Europe/Luxembourg', 'Europe/Luxembourg');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(426, 'Europe/Madrid', 'Europe/Madrid');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(427, 'Europe/Malta', 'Europe/Malta');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(428, 'Europe/Mariehamn', 'Europe/Mariehamn');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(429, 'Europe/Minsk', 'Europe/Minsk');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(430, 'Europe/Monaco', 'Europe/Monaco');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(431, 'Europe/Moscow', 'Europe/Moscow');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(432, 'Europe/Nicosia', 'Europe/Nicosia');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(433, 'Europe/Oslo', 'Europe/Oslo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(434, 'Europe/Paris', 'Europe/Paris');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(435, 'Europe/Podgorica', 'Europe/Podgorica');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(436, 'Europe/Prague', 'Europe/Prague');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(437, 'Europe/Riga', 'Europe/Riga');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(438, 'Europe/Rome', 'Europe/Rome');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(439, 'Europe/Samara', 'Europe/Samara');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(440, 'Europe/San_Marino', 'Europe/San_Marino');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(441, 'Europe/Sarajevo', 'Europe/Sarajevo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(442, 'Europe/Simferopol', 'Europe/Simferopol');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(443, 'Europe/Skopje', 'Europe/Skopje');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(444, 'Europe/Sofia', 'Europe/Sofia');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(445, 'Europe/Stockholm', 'Europe/Stockholm');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(446, 'Europe/Tallinn', 'Europe/Tallinn');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(447, 'Europe/Tirane', 'Europe/Tirane');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(448, 'Europe/Tiraspol', 'Europe/Tiraspol');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(449, 'Europe/Uzhgorod', 'Europe/Uzhgorod');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(450, 'Europe/Vaduz', 'Europe/Vaduz');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(451, 'Europe/Vatican', 'Europe/Vatican');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(452, 'Europe/Vienna', 'Europe/Vienna');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(453, 'Europe/Vilnius', 'Europe/Vilnius');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(454, 'Europe/Volgograd', 'Europe/Volgograd');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(455, 'Europe/Warsaw', 'Europe/Warsaw');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(456, 'Europe/Zagreb', 'Europe/Zagreb');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(457, 'Europe/Zaporozhye', 'Europe/Zaporozhye');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(458, 'Europe/Zurich', 'Europe/Zurich');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(459, 'Factory', 'Factory');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(460, 'GB', 'GB');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(461, 'GB-Eire', 'GB-Eire');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(462, 'GMT', 'GMT');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(463, 'GMT0', 'GMT0');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(464, 'GMT-0', 'GMT-0');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(465, 'GMT+0', 'GMT+0');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(466, 'Greenwich', 'Greenwich');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(467, 'Hongkong', 'Hongkong');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(468, 'HST', 'HST');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(469, 'Iceland', 'Iceland');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(470, 'Indian/Antananarivo', 'Indian/Antananarivo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(471, 'Indian/Chagos', 'Indian/Chagos');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(472, 'Indian/Christmas', 'Indian/Christmas');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(473, 'Indian/Cocos', 'Indian/Cocos');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(474, 'Indian/Comoro', 'Indian/Comoro');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(475, 'Indian/Kerguelen', 'Indian/Kerguelen');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(476, 'Indian/Mahe', 'Indian/Mahe');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(477, 'Indian/Maldives', 'Indian/Maldives');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(478, 'Indian/Mauritius', 'Indian/Mauritius');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(479, 'Indian/Mayotte', 'Indian/Mayotte');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(480, 'Indian/Reunion', 'Indian/Reunion');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(481, 'Iran', 'Iran');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(482, 'Israel', 'Israel');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(483, 'Jamaica', 'Jamaica');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(484, 'Japan', 'Japan');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(485, 'Kwajalein', 'Kwajalein');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(486, 'Libya', 'Libya');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(487, 'MET', 'MET');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(488, 'Mexico/BajaNorte', 'Mexico/BajaNorte');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(489, 'Mexico/BajaSur', 'Mexico/BajaSur');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(490, 'Mexico/General', 'Mexico/General');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(491, 'Mideast/Riyadh87', 'Mideast/Riyadh87');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(492, 'Mideast/Riyadh88', 'Mideast/Riyadh88');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(493, 'Mideast/Riyadh89', 'Mideast/Riyadh89');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(494, 'MST', 'MST');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(495, 'MST7MDT', 'MST7MDT');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(496, 'Navajo', 'Navajo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(497, 'NZ', 'NZ');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(498, 'NZ-CHAT', 'NZ-CHAT');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(499, 'Pacific/Apia', 'Pacific/Apia');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(500, 'Pacific/Auckland', 'Pacific/Auckland');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(501, 'Pacific/Chatham', 'Pacific/Chatham');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(502, 'Pacific/Easter', 'Pacific/Easter');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(503, 'Pacific/Efate', 'Pacific/Efate');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(504, 'Pacific/Enderbury', 'Pacific/Enderbury');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(505, 'Pacific/Fakaofo', 'Pacific/Fakaofo');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(506, 'Pacific/Fiji', 'Pacific/Fiji');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(507, 'Pacific/Funafuti', 'Pacific/Funafuti');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(508, 'Pacific/Galapagos', 'Pacific/Galapagos');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(509, 'Pacific/Gambier', 'Pacific/Gambier');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(510, 'Pacific/Guadalcanal', 'Pacific/Guadalcanal');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(511, 'Pacific/Guam', 'Pacific/Guam');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(512, 'Pacific/Honolulu', 'Pacific/Honolulu');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(513, 'Pacific/Johnston', 'Pacific/Johnston');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(514, 'Pacific/Kiritimati', 'Pacific/Kiritimati');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(515, 'Pacific/Kosrae', 'Pacific/Kosrae');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(516, 'Pacific/Kwajalein', 'Pacific/Kwajalein');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(517, 'Pacific/Majuro', 'Pacific/Majuro');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(518, 'Pacific/Marquesas', 'Pacific/Marquesas');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(519, 'Pacific/Midway', 'Pacific/Midway');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(520, 'Pacific/Nauru', 'Pacific/Nauru');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(521, 'Pacific/Niue', 'Pacific/Niue');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(522, 'Pacific/Norfolk', 'Pacific/Norfolk');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(523, 'Pacific/Noumea', 'Pacific/Noumea');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(524, 'Pacific/Pago_Pago', 'Pacific/Pago_Pago');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(525, 'Pacific/Palau', 'Pacific/Palau');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(526, 'Pacific/Pitcairn', 'Pacific/Pitcairn');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(527, 'Pacific/Ponape', 'Pacific/Ponape');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(528, 'Pacific/Port_Moresby', 'Pacific/Port_Moresby');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(529, 'Pacific/Rarotonga', 'Pacific/Rarotonga');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(530, 'Pacific/Saipan', 'Pacific/Saipan');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(531, 'Pacific/Samoa', 'Pacific/Samoa');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(532, 'Pacific/Tahiti', 'Pacific/Tahiti');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(533, 'Pacific/Tarawa', 'Pacific/Tarawa');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(534, 'Pacific/Tongatapu', 'Pacific/Tongatapu');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(535, 'Pacific/Truk', 'Pacific/Truk');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(536, 'Pacific/Wake', 'Pacific/Wake');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(537, 'Pacific/Wallis', 'Pacific/Wallis');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(538, 'Pacific/Yap', 'Pacific/Yap');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(539, 'Poland', 'Poland');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(540, 'Portugal', 'Portugal');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(541, 'PRC', 'PRC');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(542, 'PST8PDT', 'PST8PDT');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(543, 'ROC', 'ROC');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(544, 'ROK', 'ROK');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(545, 'Singapore', 'Singapore');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(546, 'Turkey', 'Turkey');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(547, 'UCT', 'UCT');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(548, 'Universal', 'Universal');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(549, 'US/Alaska', 'US/Alaska');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(550, 'US/Aleutian', 'US/Aleutian');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(551, 'US/Arizona', 'US/Arizona');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(552, 'US/Central', 'US/Central');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(553, 'US/Eastern', 'US/Eastern');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(554, 'US/East-Indiana', 'US/East-Indiana');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(555, 'US/Hawaii', 'US/Hawaii');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(556, 'US/Indiana-Starke', 'US/Indiana-Starke');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(557, 'US/Michigan', 'US/Michigan');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(558, 'US/Mountain', 'US/Mountain');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(559, 'US/Pacific', 'US/Pacific');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(560, 'US/Samoa', 'US/Samoa');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(561, 'UTC', 'UTC');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(562, 'WET', 'WET');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(563, 'W-SU', 'W-SU');
+INSERT INTO VPBX_TZ(ID,TZ_NAME,DESCRIPTION) VALUES(564, 'Zulu', 'Zulu');
 
-INSERT INTO VPBX_CURRENCY(CUR_ID,DESCRIPTION,RU_DESCRIPTION,CONVERSION_RATE) VALUES(1, 'Rur', 'Rur', 1 );
-INSERT INTO VPBX_CURRENCY(CUR_ID,DESCRIPTION,RU_DESCRIPTION,CONVERSION_RATE) VALUES(2, 'Usd', 'Usd', 32 );
-INSERT INTO VPBX_CURRENCY(CUR_ID,DESCRIPTION,RU_DESCRIPTION,CONVERSION_RATE) VALUES(3, 'Eur', 'Eur', 46 );
+INSERT INTO VPBX_CURRENCY(CUR_ID,DESCRIPTION,CONVERSION_RATE) VALUES(1, 'Rur', 1 );
+INSERT INTO VPBX_CURRENCY(CUR_ID,DESCRIPTION,CONVERSION_RATE) VALUES(2, 'Usd', 32 );
+INSERT INTO VPBX_CURRENCY(CUR_ID,DESCRIPTION,CONVERSION_RATE) VALUES(3, 'Eur', 46 );
 
 INSERT INTO VPBX_TARIFF(ID,NAME,MONTHLY_PRICE,DAILY_PRICE,MINUTE_PRICE,CALL_PRICE) VALUES(1,'Free',0,0,0,0);
 
-INSERT INTO VPBX_DATE_FORMAT(ID,DATE_FORMAT_STR,DESCRIPTION,RU_DESCRIPTION) VALUES(1,'%Y/%m/%d %H:%M:%S', '2009/09/23 16:07:32', '2009/09/23 16:07:32' );
-INSERT INTO VPBX_DATE_FORMAT(ID,DATE_FORMAT_STR,DESCRIPTION,RU_DESCRIPTION) VALUES(2,'%d/%m/%Y %H:%M:%S', '23/09/2009 16:07:32', '23/09/2009 16:07:32' );
-INSERT INTO VPBX_DATE_FORMAT(ID,DATE_FORMAT_STR,DESCRIPTION,RU_DESCRIPTION) VALUES(3,'%m/%d/%Y %H:%M:%S', '09/23/2009 16:07:32', '09/23/2009 16:07:32' );
-INSERT INTO VPBX_DATE_FORMAT(ID,DATE_FORMAT_STR,DESCRIPTION,RU_DESCRIPTION) VALUES(4,'%m/%d/%Y %r', '09/23/2009 04:07:32 PM', '09/23/2009 04:07:32 PM' );
-INSERT INTO VPBX_DATE_FORMAT(ID,DATE_FORMAT_STR,DESCRIPTION,RU_DESCRIPTION) VALUES(5,'%d/%m/%y %H:%M', '23/09/09 16:07', '23/09/09 16:07' );
-INSERT INTO VPBX_DATE_FORMAT(ID,DATE_FORMAT_STR,DESCRIPTION,RU_DESCRIPTION) VALUES(6,'%a, %d %b %Y %H:%M:%S %Z', 'Wed, 23 Sep 2009 16:07:32 MSD', 'Срд, 23 Сен 2009 16:07:32 MSD' );
+INSERT INTO VPBX_DATE_FORMAT(ID,DATE_FORMAT_STR,DESCRIPTION) VALUES(1,'%Y/%m/%d %H:%M:%S', '2009/09/23 16:07:32');
+INSERT INTO VPBX_DATE_FORMAT(ID,DATE_FORMAT_STR,DESCRIPTION) VALUES(2,'%d/%m/%Y %H:%M:%S', '23/09/2009 16:07:32');
+INSERT INTO VPBX_DATE_FORMAT(ID,DATE_FORMAT_STR,DESCRIPTION) VALUES(3,'%m/%d/%Y %H:%M:%S', '09/23/2009 16:07:32');
+INSERT INTO VPBX_DATE_FORMAT(ID,DATE_FORMAT_STR,DESCRIPTION) VALUES(4,'%m/%d/%Y %r', '09/23/2009 04:07:32 PM');
+INSERT INTO VPBX_DATE_FORMAT(ID,DATE_FORMAT_STR,DESCRIPTION) VALUES(5,'%d/%m/%y %H:%M', '23/09/09 16:07');
+INSERT INTO VPBX_DATE_FORMAT(ID,DATE_FORMAT_STR,DESCRIPTION) VALUES(6,'%a, %d %b %Y %H:%M:%S %Z', 'Wed, 23 Sep 2009 16:07:32 MSD');
 
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL) values('VirtualPBX DB version',1,unix_timestamp(),"select VERSION, FROM_UNIXTIME(TIME) 'LAST UPDATE' from VPBX_DB_INFO",240);
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL) values('Extensions type summary',1,unix_timestamp(),"select t.DESCRIPTION '=Type', count(*) 'Count=' from VPBX_VBOX_TYPE t, VPBX_VBOXES_CORE v where v.TYPE = t.ID group by t.DESCRIPTION",300);
@@ -2245,13 +2018,13 @@ UPDATE VPBX_ACCOUNTS set ID=0 where ACCESS_CODE='ANY0NE' and VOICENUMBER='ANY0NE
 
 insert into VPBX_SEQUENCES(SEC_NAME,SEC_VAL) values('ACCESS_CODE',10000);
 
-INSERT INTO VPBX_NOTIFY_TYPE(NOTIFY_ID,DESCRIPTION,RU_DESCRIPTION,NAME) VALUES(0, 'Not send', 'Не отправлять', 'none' );
-INSERT INTO VPBX_NOTIFY_TYPE(NOTIFY_ID,DESCRIPTION,RU_DESCRIPTION,NAME) VALUES(1, 'Email', 'Email', 'Email' );
-INSERT INTO VPBX_NOTIFY_TYPE(NOTIFY_ID,DESCRIPTION,RU_DESCRIPTION,NAME) VALUES(2, 'Twitter', 'Twiter', 'Twitter' );
+INSERT INTO VPBX_NOTIFY_TYPE(NOTIFY_ID,DESCRIPTION,NAME) VALUES(0, 'Not send', 'none' );
+INSERT INTO VPBX_NOTIFY_TYPE(NOTIFY_ID,DESCRIPTION,NAME) VALUES(1, 'Email', 'Email' );
+INSERT INTO VPBX_NOTIFY_TYPE(NOTIFY_ID,DESCRIPTION,NAME) VALUES(2, 'Twitter', 'Twitter' );
 
-insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,RU_DESCRIPTION) VALUES( 0, 'All','Все' );
-insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,RU_DESCRIPTION,CH_2,CH_3,CH_4,CH_5,CH_6,CH_7,CH_8,CH_9) VALUES( 1, 'English', 'Английский','abc','def','ghi','jkl','mno','pqrs','tuv','wxyz' );
-insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,RU_DESCRIPTION,CH_2,CH_3,CH_4,CH_5,CH_6,CH_7,CH_8,CH_9) VALUES( 2, 'Russian', 'Русский','абвгАБВГ','дежзДЕЖЗ','ийклИЙКЛ','мноМНО','прсПРС','туфхТУФХ','цчшщъЦЧШЩЪ','ыьэюяЫЬЭЮЯ' );
+insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION) VALUES( 0, 'All');
+insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,CH_2,CH_3,CH_4,CH_5,CH_6,CH_7,CH_8,CH_9) VALUES( 1, 'English', 'abc','def','ghi','jkl','mno','pqrs','tuv','wxyz' );
+insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,CH_2,CH_3,CH_4,CH_5,CH_6,CH_7,CH_8,CH_9) VALUES( 2, 'Russian', 'абвгАБВГ','дежзДЕЖЗ','ийклИЙКЛ','мноМНО','прсПРС','туфхТУФХ','цчшщъЦЧШЩЪ','ыьэюяЫЬЭЮЯ' );
 
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sbc.megafon.ru','Multiphon',"$_[0]->{'fromdomain'}='multifon.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='inband'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='ulaw'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.telphin.com','Telphin',"$_[0]->{'fromdomain'}='sip.telphin.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5068';");
