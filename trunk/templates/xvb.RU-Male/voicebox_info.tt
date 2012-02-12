@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.177 2012-02-02 20:10:57 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.178 2012-02-09 10:37:14 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -14,7 +14,7 @@
 		e_list['back'] = [ null, null, 'Вернуться к предыдущему' ];
 		e_list['repeat'] = [ null, null, 'Повторить текущий' ];
 		[% FOREACH vb = VB_LIST %]
-		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.RU_DESCRIPTION | html %]','[% vb.NAME | html %]'];
+		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | locale_msg %]','[% vb.NAME | html %]'];
 		[% END %]
 	</script>
 </head>
@@ -84,10 +84,10 @@
 						<select name="type" onchange="LoadingOn(); ChangeVbType(this.value,'[% VBOX_PREF.ID %]', '[% USER_CREDS.UNIQ %]')">
 						[% FOREACH vt = VB_TYPES %]
 							[% IF VBOX_PREF.TYPE eq vt.ID %]
-								<option value="[% vt.ID %]" selected>[% vt.RU_DESCRIPTION | html %]</option>
+								<option value="[% vt.ID %]" selected>[% vt.DESCRIPTION | locale_msg %]</option>
 							[% ELSE %]
 								[% IF vt.ID vb_allow '0' %]
-									<option value="[% vt.ID %]">[% vt.RU_DESCRIPTION | html %]</option>
+									<option value="[% vt.ID %]">[% vt.DESCRIPTION | locale_msg %]</option>
 								[% END %]
 							[% END %]
 						[% END %]
@@ -263,7 +263,7 @@
 				<tr>
 					<td>Тип номера:</td>
 					<td>
-						<input size='30' type='text' name='type_description' value='[% VBOX_PREF.RU_DESCRIPTION | html %]' readonly>
+						<input size='30' type='text' name='type_description' value='[% VBOX_PREF.DESCRIPTION | locale_msg %]' readonly>
 					</td>
 				</tr>
 				</form>
@@ -467,9 +467,9 @@
 						<select name="CID">
 						[% FOREACH ct = CID_TYPES %]
 							[% IF VBOX_PREF.CID eq ct.ID %]
-							<option value="[% ct.ID %]" selected>[% ct.RU_DESCRIPTION | html %]</option>
+							<option value="[% ct.ID %]" selected>[% ct.DESCRIPTION | locale_msg %]</option>
 							[% ELSE %]
-							<option value="[% ct.ID %]">[% ct.RU_DESCRIPTION | html %]</option>
+							<option value="[% ct.ID %]">[% ct.DESCRIPTION | locale_msg %]</option>
 							[% END %]
 						[% END %]
 						</select>
@@ -484,9 +484,9 @@
 						<select name="CID_ACTION">
 						[% FOREACH ca = CID_ACTIONS %]
 							[% IF VBOX_PREF.CID_ACTION eq ca.ID %]
-							<option value="[% ca.ID %]" selected>[% ca.RU_DESCRIPTION | html %]</option>
+							<option value="[% ca.ID %]" selected>[% ca.DESCRIPTION | locale_msg %]</option>
 							[% ELSE %]
-							<option value="[% ca.ID %]">[% ca.RU_DESCRIPTION | html %]</option>
+							<option value="[% ca.ID %]">[% ca.DESCRIPTION | locale_msg %]</option>
 							[% END %]
 						[% END %]
 						</select>
@@ -498,9 +498,9 @@
 						<select name='LANG_ID'>
 							[% FOREACH lang = LANG %]
 								[% IF VBOX_PREF.LANG_ID eq lang.ID %]
-									<option value="[% lang.ID | html %]" selected>[% lang.RU_DESCRIPTION | html %]</option>
+									<option value="[% lang.ID | html %]" selected>[% lang.DESCRIPTION | locale_msg %]</option>
 								[% ELSE %]
-									<option value="[% lang.ID | html %]">[% lang.RU_DESCRIPTION | html %]</option>
+									<option value="[% lang.ID | html %]">[% lang.DESCRIPTION | locale_msg %]</option>
 								[% END %]
 							[% END %]
 						</select>
@@ -556,9 +556,9 @@
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
 							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.RU_DESCRIPTION | html %]</option>
+							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | locale_msg %]</option>
 							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.RU_DESCRIPTION | html %]</option>
+							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | locale_msg %]</option>
 							[% END %]
 						[% END %]
 						</select>
@@ -655,9 +655,9 @@
 						<select name='MOH_ID'>
 							[% FOREACH moh = MOH %]
 								[% IF VBOX_PREF.MOH_ID eq moh.ID %]
-									<option value="[% moh.ID | html %]" selected>[% moh.RU_DESCRIPTION | html %]</option>
+									<option value="[% moh.ID | html %]" selected>[% moh.DESCRIPTION | locale_msg %]</option>
 								[% ELSE %]
-									<option value="[% moh.ID | html %]">[% moh.RU_DESCRIPTION | html %]</option>
+									<option value="[% moh.ID | html %]">[% moh.DESCRIPTION | locale_msg %]</option>
 								[% END %]
 							[% END %]
 						</select>
@@ -669,9 +669,9 @@
 						<select name="CALL_TYPE">
 						[% FOREACH ct = CALL_TYPES %]
 							[% IF VBOX_PREF.CALL_TYPE eq ct.ID %]
-								<option value="[% ct.ID %]" selected>[% ct.RU_DESCRIPTION | html %]</option>
+								<option value="[% ct.ID %]" selected>[% ct.DESCRIPTION | locale_msg %]</option>
 							[% ELSE %]
-								<option value="[% ct.ID %]">[% ct.RU_DESCRIPTION | html %]</option>
+								<option value="[% ct.ID %]">[% ct.DESCRIPTION | locale_msg %]</option>
 							[% END %]
 						[% END %]
 						</select> 
@@ -719,9 +719,9 @@
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
 							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.RU_DESCRIPTION | html %]</option>
+							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | locale_msg %]</option>
 							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.RU_DESCRIPTION | html %]</option>
+							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | locale_msg %]</option>
 							[% END %]
 						[% END %]
 						</select>
@@ -902,9 +902,9 @@
 						<select name="TIME_ZONE">
 						[% FOREACH t = TZ %]
 							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
-								<option value="[% t.ID | html %]" selected>[% t.RU_DESCRIPTION | html %]</option>
+								<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | locale_msg %]</option>
 							[% ELSE %]
-								<option value="[% t.ID | html %]">[% t.RU_DESCRIPTION | html %]</option>
+								<option value="[% t.ID | html %]">[% t.DESCRIPTION | locale_msg %]</option>
 							[% END %]
 						[% END %]
 						</select>
@@ -982,9 +982,9 @@
 						<select name='MOH_ID'>
 							[% FOREACH moh = MOH %]
 								[% IF VBOX_PREF.MOH_ID eq moh.ID %]
-									<option value="[% moh.ID | html %]" selected>[% moh.RU_DESCRIPTION | html %]</option>
+									<option value="[% moh.ID | html %]" selected>[% moh.DESCRIPTION | locale_msg %]</option>
 								[% ELSE %]
-									<option value="[% moh.ID | html %]">[% moh.RU_DESCRIPTION | html %]</option>
+									<option value="[% moh.ID | html %]">[% moh.DESCRIPTION | locale_msg %]</option>
 								[% END %]
 							[% END %]
 						</select>
@@ -1050,9 +1050,9 @@
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
 							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.RU_DESCRIPTION | html %]</option>
+							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | locale_msg %]</option>
 							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.RU_DESCRIPTION | html %]</option>
+							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | locale_msg %]</option>
 							[% END %]
 						[% END %]
 						</select>
@@ -1088,9 +1088,9 @@
 						<select name='DTMF_PATTERN_ID'>
 							[% FOREACH dtmf = DTMF_PATTERN %]
 								[% IF VBOX_PREF.DTMF_PATTERN_ID eq dtmf.ID %]
-									<option value="[% dtmf.ID | html %]" selected>[% dtmf.RU_DESCRIPTION | html %]</option>
+									<option value="[% dtmf.ID | html %]" selected>[% dtmf.DESCRIPTION | locale_msg %]</option>
 								[% ELSE %]
-									<option value="[% dtmf.ID | html %]">[% dtmf.RU_DESCRIPTION | html %]</option>
+									<option value="[% dtmf.ID | html %]">[% dtmf.DESCRIPTION | locale_msg %]</option>
 								[% END %]
 							[% END %]
 						</select>
@@ -1126,9 +1126,9 @@
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
 							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.RU_DESCRIPTION | html %]</option>
+							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | locale_msg %]</option>
 							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.RU_DESCRIPTION | html %]</option>
+							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | locale_msg %]</option>
 							[% END %]
 						[% END %]
 						</select>
@@ -1197,9 +1197,9 @@
 						<select name='MOH_ID'>
 							[% FOREACH moh = MOH %]
 								[% IF VBOX_PREF.MOH_ID eq moh.ID %]
-									<option value="[% moh.ID | html %]" selected>[% moh.RU_DESCRIPTION | html %]</option>
+									<option value="[% moh.ID | html %]" selected>[% moh.DESCRIPTION | locale_msg %]</option>
 								[% ELSE %]
-									<option value="[% moh.ID | html %]">[% moh.RU_DESCRIPTION | html %]</option>
+									<option value="[% moh.ID | html %]">[% moh.DESCRIPTION | locale_msg %]</option>
 								[% END %]
 							[% END %]
 						</select>
@@ -1261,9 +1261,9 @@
 						<select name='MOH_ID'>
 							[% FOREACH moh = MOH %]
 								[% IF VBOX_PREF.MOH_ID eq moh.ID %]
-									<option value="[% moh.ID | html %]" selected>[% moh.RU_DESCRIPTION | html %]</option>
+									<option value="[% moh.ID | html %]" selected>[% moh.DESCRIPTION | locale_msg %]</option>
 								[% ELSE %]
-									<option value="[% moh.ID | html %]">[% moh.RU_DESCRIPTION | html %]</option>
+									<option value="[% moh.ID | html %]">[% moh.DESCRIPTION | locale_msg %]</option>
 								[% END %]
 							[% END %]
 						</select>
@@ -1275,9 +1275,9 @@
 						<select name="CALL_TYPE">
 						[% FOREACH ct = CALL_TYPES %]
 							[% IF VBOX_PREF.CALL_TYPE eq ct.ID %]
-								<option value="[% ct.ID %]" selected>[% ct.RU_DESCRIPTION | html %]</option>
+								<option value="[% ct.ID %]" selected>[% ct.DESCRIPTION | locale_msg %]</option>
 							[% ELSE %]
-								<option value="[% ct.ID %]">[% ct.RU_DESCRIPTION | html %]</option>
+								<option value="[% ct.ID %]">[% ct.DESCRIPTION | locale_msg %]</option>
 							[% END %]
 						[% END %]
 						</select> 
@@ -1718,9 +1718,9 @@
 						<select name="TIME_ZONE">
 						[% FOREACH t = TZ %]
 							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
-								<option value="[% t.ID | html %]" selected>[% t.RU_DESCRIPTION | html %]</option>
+								<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | locale_msg %]</option>
 							[% ELSE %]
-								<option value="[% t.ID | html %]">[% t.RU_DESCRIPTION | html %]</option>
+								<option value="[% t.ID | html %]">[% t.DESCRIPTION | locale_msg %]</option>
 							[% END %]
 						[% END %]
 						</select>
@@ -1743,9 +1743,9 @@
 						<select name='DTMF_PATTERN_ID'>
 							[% FOREACH dtmf = DTMF_PATTERN %]
 								[% IF VBOX_PREF.DTMF_PATTERN_ID eq dtmf.ID %]
-									<option value="[% dtmf.ID | html %]" selected>[% dtmf.RU_DESCRIPTION | html %]</option>
+									<option value="[% dtmf.ID | html %]" selected>[% dtmf.DESCRIPTION | locale_msg %]</option>
 								[% ELSE %]
-									<option value="[% dtmf.ID | html %]">[% dtmf.RU_DESCRIPTION | html %]</option>
+									<option value="[% dtmf.ID | html %]">[% dtmf.DESCRIPTION | locale_msg %]</option>
 								[% END %]
 							[% END %]
 						</select>
@@ -1941,9 +1941,9 @@
 						<select name='SAY_PATTERN_ID'>
 							[% FOREACH say = SAY_PATTERN %]
 								[% IF VBOX_PREF.SAY_PATTERN_ID eq say.ID %]
-									<option value="[% say.ID | html %]" selected>[% say.RU_DESCRIPTION | html %]</option>
+									<option value="[% say.ID | html %]" selected>[% say.DESCRIPTION | locale_msg %]</option>
 								[% ELSE %]
-									<option value="[% say.ID | html %]">[% say.RU_DESCRIPTION | html %]</option>
+									<option value="[% say.ID | html %]">[% say.DESCRIPTION | locale_msg %]</option>
 								[% END %]
 							[% END %]
 						</select>

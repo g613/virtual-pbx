@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.62 2012-01-24 14:01:03 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.64 2012-02-09 10:37:14 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -157,10 +157,10 @@
 						<select name='LANG'>
 							[% FOREACH lang = LANG %]
 								[% IF USER_CREDS.LANG eq lang.ID %]
-									<option value="[% lang.ID | html %]" selected>[% lang.RU_DESCRIPTION | html %]</option>
+									<option value="[% lang.ID | html %]" selected>[% lang.DESCRIPTION | locale_msg %]</option>
 								[% ELSE %]
 									[% IF lang.ID %]
-									<option value="[% lang.ID | html %]">[% lang.RU_DESCRIPTION | html %]</option>
+									<option value="[% lang.ID | html %]">[% lang.DESCRIPTION | locale_msg %]</option>
 									[% END %]
 								[% END %]
 							[% END %]
@@ -203,9 +203,9 @@
 						<select name='DATE_FORMAT'>
 							[% FOREACH fm = DATE_FORMAT %]
 								[% IF USER_CREDS.DATE_FORMAT eq fm.ID %]
-									<option value="[% fm.ID %]" selected>[% fm.RU_DESCRIPTION | html %]</option>
+									<option value="[% fm.ID %]" selected>[% fm.DESCRIPTION | locale_msg %]</option>
 								[% ELSE %]
-									<option value="[% fm.ID %]">[% fm.RU_DESCRIPTION | html %]</option>
+									<option value="[% fm.ID %]">[% fm.DESCRIPTION | locale_msg %]</option>
 								[% END %]
 							[% END %]
 						</select>
@@ -414,7 +414,7 @@
 						[% FOREACH vt = VB_LIMITS %]
 						[% IF vt.ID vb_allow '0' %]
 							<tr class='addon_data'>
-								<td>&nbsp;&nbsp;*&nbsp;[% vt.RU_DESCRIPTION | html %]</td>
+								<td>&nbsp;&nbsp;*&nbsp;[% vt.DESCRIPTION | locale_msg %]</td>
 								<td align='right'>[% vt.L_CUR %]</td>
 								<td align='right'>[% vt.L_MAX %]</td>
 							</tr>
@@ -529,7 +529,7 @@
 					<td align='right'>[% USER_CREDS.MAX_RETRYDIAL_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td>длину музыки вместо звонка: </td>
+					<td>длину музыки вместо гудков: </td>
 					<td align='right'>[% USER_CREDS.MAX_MOH_DURATION | duration_str %]</td>
 				</tr>
 			</table>

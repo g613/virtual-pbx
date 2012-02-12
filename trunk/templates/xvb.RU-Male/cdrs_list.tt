@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.29 2011-10-05 07:30:43 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.30 2012-02-09 10:37:13 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -71,7 +71,7 @@
 				<td><a title='детализация звонка' href='?action=act_list&call_id=[% msg.CALL_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
 				<td>[% msg.CALLER_ID | html %]</td>
 				<td>[% msg.CDR_DURATION | duration_str %]</td>
-				<td align='right'>[% msg.COST %] ([% msg.RU_DESCRIPTION %])</td>
+				<td align='right'>[% msg.COST %] ([% msg.DESCRIPTION | locale_msg %])</td>
 				<td>[% msg.CALLED_ID | html %]</td>
 				<td>[% msg.CALL_TYPE | html %]</td>
 			</tr>

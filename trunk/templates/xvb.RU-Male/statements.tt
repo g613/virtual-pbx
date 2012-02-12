@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.16 2011-04-22 15:08:42 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.17 2012-02-09 10:37:14 gosha Exp $ -->
 <head>
 	<style>
 	body { 
@@ -70,7 +70,7 @@
 			<td>[% msg.CNT | html %]</td>
 			<td>[% msg.DURATION | duration_str %]</td>
 			[% IF msg.TYPE eq 'CALL' %]
-			<td>[% msg.USER_COST %] ([% msg.RU_DESCRIPTION %])</td>
+			<td>[% msg.USER_COST %] ([% msg.DESCRIPTION | locale_msg %])</td>
 			[% ELSE %]
 			<td>&nbsp;</td>
 			[% END %]
@@ -97,7 +97,7 @@
 				<td>[% msg.CDR_DATE | html %]</td>
 				<td colspan='2'>[% msg.CALLER_ID | html %]</td>
 				<td>[% msg.CDR_DURATION | duration_str %]</td>
-				<td>[% msg.COST %] ([% msg.RU_DESCRIPTION %])</td>
+				<td>[% msg.COST %] ([% msg.DESCRIPTION | locale_msg %])</td>
 			</tr>
 			[% END %]
 		[% END %]
