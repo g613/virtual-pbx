@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.21 2012-01-21 21:10:42 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.22 2012-02-09 11:08:06 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список внутренних номеров - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -74,7 +74,7 @@
 				<a class='vb_name' href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% vb.NAME | html %]</a>
 			</td>
 			<td align='left'>
-				[% vb.RU_DESCRIPTION | html %]
+				[% vb.DESCRIPTION | locale_msg %]
 			</td>
 			<td>
 				[% vb.WAITEXTENSION %]

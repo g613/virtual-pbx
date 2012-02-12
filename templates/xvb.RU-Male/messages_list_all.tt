@@ -75,7 +75,7 @@
 		<tr class='nocolor' id='d-tr-[% msg.FILE_NAME %]'>
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
 			<td>&nbsp;<a href='?action=vb_view&id=[% msg.ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
-			<td>[% msg.RU_DESCRIPTION | html %]</td>
+			<td>[% msg.DESCRIPTION | locale_msg %]</td>
 			<td align='center'>[% msg.MSG_DATE | html %]</td>
 			<td>[% msg.CALLERID | html %]</td>
 			[% IF msg.IS_VOICE %]
