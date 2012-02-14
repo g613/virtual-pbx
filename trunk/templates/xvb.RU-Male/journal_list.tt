@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.14 2011-02-28 10:41:59 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.16 2012-02-13 11:03:37 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Журнал операций - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -53,9 +53,9 @@
 	<table width='95%' class='list_data' id='d-tbl'>
 		<tr class='list_data'>
 			<th width='5%'>Номер</th>
-			<th width='10%'>Событие</th>
 			<th width='20%'>Дата</th>
-			<th width='15%'>IP адрес удаленной машины</th>
+			<th width='10%'>Событие</th>
+			<th width='15%'>IP адрес пользователя</th>
 			<th width='40%'>Данные</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
@@ -73,8 +73,8 @@
 				[% ELSE %]
 				<td>[% msg.EXT_NUMBER | html %]</td>
 				[% END %]
-				<td>[% msg.ACTION | html %]</td>
 				<td align='center'>[% msg.J_DATE | html %]</td>
+				<td>[% msg.ACTION | locale_msg %]</td>
 				<td align='center'>[% msg.CID | html %]</td>
 				<td>[% msg.DESCRIPTION | html %]</td>
 			</tr>
@@ -133,12 +133,23 @@
 				&nbsp;
 				Номер:
 				<input name='action' value='j_list' type='hidden'>
-				<input size='10' type='text' name='ext_num' value='[% J_EXT_NUM %]'>
+				<input size='6' type='text' name='ext_num' value='[% J_EXT_NUM %]'>
+				&nbsp;
+				<select name="action_type">
+					[% IF J_ACTION %]
+						<option value="[% J_ACTION %]" >[% J_ACTION | locale_msg %]</option>
+					[% END %]
+					<option value="" >Все события</option>
+				[% FOREACH at = ACTIONS %]
+					<option value="[% at %]">[% at | locale_msg %]</option>
+				[% END %]
+				</select>
 				&nbsp;
 				Данные:
-				<input size='20' type='text' name='data' value='[% J_DATA | html %]'>
+				<input size='18' type='text' name='data' value='[% J_DATA | html %]'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
+				&nbsp;
 				<input value='Поиск' type='submit'>
 				&nbsp;
 			</td>

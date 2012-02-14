@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.15 2011-02-28 10:41:56 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.17 2012-02-13 11:03:37 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Actions journal - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -54,8 +54,8 @@
 	<table width='95%' class='list_data' id='d-tbl'>
 		<tr class='list_data'>
 			<th width='5%'>Ext</th>
-			<th width='10%'>Action</th>
 			<th width='20%'>Date</th>
+			<th width='10%'>Action</th>
 			<th width='15%'>Remote IP</th>
 			<th width='40%'>Data</th>
 		</tr>
@@ -74,8 +74,8 @@
 				[% ELSE %]
 				<td>[% msg.EXT_NUMBER | html %]</td>
 				[% END %]
-				<td>[% msg.ACTION | html %]</td>
 				<td align='center'>[% msg.J_DATE | html %]</td>
+				<td>[% msg.ACTION | html %]</td>
 				<td align='center'>[% msg.CID | html %]</td>
 				<td>[% msg.DESCRIPTION | html %]</td>
 			</tr>
@@ -134,12 +134,21 @@
 				&nbsp;
 				<input name='action' value='j_list' type='hidden'>
 				Ext:
-				<input size='10' type='text' name='ext_num' value='[% J_EXT_NUM %]'>
+				<input size='6' type='text' name='ext_num' value='[% J_EXT_NUM %]'>
+				&nbsp;
+				Action:
+				<select name="action_type")">
+					<option value="" >all</option>
+				[% FOREACH at = ACTIONS %]
+					<option value="[% at %]">[% at %]</option>
+				[% END %]
+				</select>
 				&nbsp;
 				Data:
-				<input size='20' type='text' name='data' value='[% J_DATA | html %]'>
+				<input size='18' type='text' name='data' value='[% J_DATA | html %]'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
+				&nbsp;
 				<input value='Search' type='submit'>
 				&nbsp;&nbsp;
 			</td>

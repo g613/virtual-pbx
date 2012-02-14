@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.13 2011-08-23 10:59:44 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.15 2012-02-13 11:02:38 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -139,8 +139,8 @@
 				Type:
 				<select name="act_type")">
 					<option value="" >all</option>
-				[% FOREACH vt = VB_TYPES %]
-					<option value="[% vt.NAME %]">[% vt.DESCRIPTION | html %]</option>
+				[% FOREACH at = ACT_TYPES %]
+					<option value="[% at %]">[% at %]</option>
 				[% END %]
 				</select>
 				<input name='action' value='ext_stat' type='hidden'>
