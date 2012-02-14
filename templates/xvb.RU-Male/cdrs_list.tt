@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.30 2012-02-09 10:37:13 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.31 2012-02-11 20:57:34 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -73,7 +73,7 @@
 				<td>[% msg.CDR_DURATION | duration_str %]</td>
 				<td align='right'>[% msg.COST %] ([% msg.DESCRIPTION | locale_msg %])</td>
 				<td>[% msg.CALLED_ID | html %]</td>
-				<td>[% msg.CALL_TYPE | html %]</td>
+				<td>[% msg.CALL_TYPE | locale_msg %]</td>
 			</tr>
 		[% END %]
 
@@ -135,12 +135,13 @@
 				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				<select name="call_type">
 					<option value="" >тип звонка</option>
+					<option value="" >все звонки</option>
 					<option value="incoming">входящий</option>
 					<option value="local">локальный</option>
 					<option value="transit">транзит</option>
 					<option value="internal">внутрений</option>
-					<option value="callback">callback</option>
-					<option value="callblast">callblast</option>
+					<option value="callback">обратный</option>
+					<option value="callblast">информатор</option>
 					<option value="alarmclock">будильник</option>
 					<option value="service">сервисный</option>
 				</select>

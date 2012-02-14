@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.22 2012-02-09 11:08:06 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.23 2012-02-13 09:41:11 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список внутренних номеров - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -92,7 +92,11 @@
 				[% vb.GLOBAL %]
 			</td>
 			<td>
-				[% vb.NEXTEXTENSION | html %]
+				[% IF vb.NEXTEXTENSION regexp '^(back|repeat|hangup)$' %]
+					[% vb.NEXTEXTENSION | locale_msg %]
+				[% ELSE %]
+					[% vb.NEXTEXTENSION | html %]
+				[% END %]
 			</td>
 			<td align='left'>
 				[% vb.NOTIFYEMAIL | html %]

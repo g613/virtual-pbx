@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.28 2011-10-05 07:30:43 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.29 2012-02-11 20:57:34 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -136,6 +136,7 @@
 				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				<select name="call_type">
 					<option value="" >call type</option>
+					<option value="" >all calls</option>
 					<option value="incoming">incoming</option>
 					<option value="local">local</option>
 					<option value="transit">transit</option>

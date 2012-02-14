@@ -184,20 +184,6 @@
 						</td>
 					</tr>
 					<tr>
-						<td>Eanble Google Analytics: </td>
-						<td>
-						<select name="GR_ALLOW_GA">
-						[% IF GROUP.ALLOW_GA %]
-							<option value="1">yes</option>
-							<option value="0">no</option>
-						[% ELSE %]
-							<option value="0">no</option>
-							<option value="1">yes</option>
-						[% END %]
-						</select>
-						</td>
-					</tr>
-					<tr>
 						<td>Eanble WEB API: </td>
 						<td>
 						<select name="GR_ALLOW_API">
@@ -236,6 +222,26 @@
 							<option value="0">no</option>
 							<option value="1">yes</option>
 						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Eanble Google Analytics: </td>
+						<td>
+						<select name="GR_ALLOW_GA">
+						[% IF GROUP.ALLOW_GA eq "1" %]
+							<option value="1">mode 1</option>
+						[% ELSIF GROUP.ALLOW_GA eq "2" %]
+							<option value="2">mode 2</option>
+						[% ELSIF GROUP.ALLOW_GA eq "3" %]
+							<option value="3">mode 3</option>
+						[% ELSE %]
+							<option value="0">no</option>
+						[% END %]
+							<option value="0">no</option>
+							<option value="1">mode 1</option>
+							<option value="2">mode 2</option>
+							<option value="3">mode 3</option>
 						</select>
 						</td>
 					</tr>

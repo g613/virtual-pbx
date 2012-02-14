@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.16 2011-06-01 06:24:05 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.17 2012-02-11 20:57:34 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Детализация звонка - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -71,7 +71,7 @@
 				[% ELSE %]
 				<td>[% msg.EXT_NUMBER | html %]</td>
 				[% END %]
-				<td>[% msg.TYPE | html %]</td>
+				<td>[% msg.TYPE | locale_msg %]</td>
 				<td>
 					[% IF msg.EXT_ID %]
 					<a href='?action=cid_add&id=[% msg.EXT_ID %]&cid_list_type=1&cid_type=1&uniq=[% USER_CREDS.UNIQ %]&cid=[% msg.CALLER_ID | html %]&description=for call at [% msg.CDR_DATE | html %]' title='Добавить номер звонящего в черный список для номера [% msg.EXT_NUMBER | html %]'><img border='0' src='/xvb/images/vb_edit_black.png' alt='add' /></a>

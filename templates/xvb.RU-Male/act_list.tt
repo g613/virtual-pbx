@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.15 2012-02-09 10:37:13 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.18 2012-02-13 11:02:41 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Статистика номера - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -73,7 +73,7 @@
 			<td align='center'>[% msg.CDR_DATE | html %]</td>
 			<td align='center'>[% msg.CALLER_ID | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
-			<td>[% msg.TYPE | html %]</td>
+			<td>[% msg.TYPE | locale_msg %]</td>
 			<td align='left'>[% msg.DATA | html %]</td>
 		</tr>
 		[% END %]
@@ -139,8 +139,8 @@
 				Тип:
 				<select name="act_type")">
 					<option value="" >все</option>
-				[% FOREACH vt = VB_TYPES %]
-					<option value="[% vt.NAME %]">[% vt.DESCRIPTION | locale_msg %]</option>
+				[% FOREACH at = ACT_TYPES %]
+					<option value="[% at %]">[% at | locale_msg %]</option>
 				[% END %]
 				</select>
 				<input name='action' value='ext_stat' type='hidden'>
