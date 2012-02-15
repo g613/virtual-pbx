@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='green'>+ Обновить систему в vmware имидже</font> ( 14.02.2012 / build 5905 )
+
 <font color='green'>+ В журнал добавить поиск по типу события</font> ( 13.02.2012 / build 5905 )
 
 <font color='green'>+ Долокализовать полностью страничку с событиями журнала/ типом звонков в cdr/ back|hangup|repeat</font> ( 12.02.2012 / build 5901 )
