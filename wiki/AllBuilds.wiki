@@ -1,4 +1,9 @@
 ==All VMWare images :==
+
+  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/40769628001/VirtualPBX-1_5905.tar.bz2.html build 5905 ( 15.02.2012 ) ] ( improved localisation / improved web-templates )
+
+  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/37598940001/VirtualPBX-1_5737.tar.bz2.html build 5737 (14.01.2012) ] ( Call pickups / microsofttranslator support )
+
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/30493799001/VirtualPBX-1_5555.tar.bz2.html build 5555 (04.11.2011) ] ( Shared DIDs attributes )
 
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://www.easy-share.com/F4AC6334EC0711E09676002481FAD55A/VirtualPBX-1_5479.tar.bz2 build 5479 (30.09.2011) ]  / [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/26532162001/VirtualPBX-1_5479.tar.bz2.html yandex-disk-mirror] ( added extended statistics )
