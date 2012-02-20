@@ -1,0 +1,86 @@
+*** apps/app_chanspy.c-ORIG	2010-11-20 08:58:12.000000000 -0500
+--- apps/app_chanspy.c	2010-11-20 09:05:21.000000000 -0500
+***************
+*** 74,79 ****
+--- 74,80 ----
+  "    b             - Only spy on channels involved in a bridged call.\n"
+  "    g(grp)        - Match only channels where their SPYGROUP variable is set to\n"
+  "                    contain 'grp' in an optional : delimited list.\n"
++ "    h             - Hang up when the spied-on channel hangs up.\n"
+  "    q             - Don't play a beep when beginning to spy on a channel, or speak the\n"
+  "                    selected channel name.\n"
+  "    r[(basename)] - Record the session to the monitor spool directory. An\n"
+***************
+*** 114,119 ****
+--- 115,121 ----
+  "    b             - Only spy on channels involved in a bridged call.\n"
+  "    g(grp)        - Match only channels where their ${SPYGROUP} variable is set to\n"
+  "                    contain 'grp' in an optional : delimited list.\n"
++ "    h             - Hang up when the spied-on channel hangs up.\n"
+  "    q             - Don't play a beep when beginning to spy on a channel, or speak the\n"
+  "                    selected channel name.\n"
+  "    r[(basename)] - Record the session to the monitor spool directory. An\n"
+***************
+*** 145,150 ****
+--- 147,153 ----
+  	OPTION_READONLY  = (1 << 7),    /* Don't mix the two channels */
+  	OPTION_EXIT      = (1 << 8),    /* Exit to a valid single digit extension */
+  	OPTION_ENFORCED  = (1 << 9),    /* Enforced mode */
++ 	OPTION_HANGUP	 = (1 << 10),	/* Hang up when the spied-on channel hangs up. */
+  } chanspy_opt_flags;
+  
+  enum {
+***************
+*** 156,161 ****
+--- 159,165 ----
+  } chanspy_opt_args;
+  
+  AST_APP_OPTIONS(spy_opts, {
++ 	AST_APP_OPTION('h', OPTION_HANGUP),
+  	AST_APP_OPTION('q', OPTION_QUIET),
+  	AST_APP_OPTION('b', OPTION_BRIDGED),
+  	AST_APP_OPTION('w', OPTION_WHISPER),
+***************
+*** 557,562 ****
+--- 561,567 ----
+  	char *ptr;
+  	int num;
+  	int num_spyed_upon = 1;
++ 	int hungup = 0;
+  	struct chanspy_ds chanspy_ds = { 0, };
+  
+  	if (ast_test_flag(flags, OPTION_EXIT)) {
+***************
+*** 768,775 ****
+--- 773,788 ----
+  				}
+  
+  				peer = NULL;
++ 			} else if ( res == 0 && ast_test_flag(flags, OPTION_HANGUP)) {
++ 				hungup=1; //to break the outter loop
++ 				break;
+  			}
+  		}
++ 
++ 		if (hungup) {
++ 			break;
++ 		}
++ 
+  		if (res == -1 || ast_check_hangup(chan))
+  			break;
+  	}
+***************
+*** 782,787 ****
+--- 795,806 ----
+  	ast_mutex_lock(&chanspy_ds.lock);
+  	ast_mutex_unlock(&chanspy_ds.lock);
+  	ast_mutex_destroy(&chanspy_ds.lock);
++ 	
++ 	if (ast_test_flag(flags, OPTION_HANGUP)) {
++ 		if (option_verbose >= 2) {
++ 			ast_verbose(VERBOSE_PREFIX_3 "Hang up due to the spied-on channel hanging up.\n");
++ 		}
++ 	} 
+  
+  	return res;
+  }

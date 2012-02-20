@@ -1,0 +1,59 @@
+*** apps/app_mp3.c-orig	2011-06-17 09:00:16.000000000 -0400
+--- apps/app_mp3.c	2011-06-17 13:57:45.000000000 -0400
+***************
+*** 94,100 ****
+  	pthread_sigmask(SIG_UNBLOCK, &fullset, NULL);
+  
+  	dup2(fd, STDOUT_FILENO);
+! 	for (x=STDERR_FILENO + 1;x<256;x++) {
+  		close(x);
+  	}
+  	/* Execute mpg123, but buffer if it's a net connection */
+--- 94,100 ----
+  	pthread_sigmask(SIG_UNBLOCK, &fullset, NULL);
+  
+  	dup2(fd, STDOUT_FILENO);
+! 	for (x=STDERR_FILENO + 1;x<131070;x++) {
+  		close(x);
+  	}
+  	/* Execute mpg123, but buffer if it's a net connection */
+***************
+*** 231,241 ****
+  			}
+  		}
+  	}
+  	close(fds[0]);
+  	close(fds[1]);
+  	
+- 	if (pid > -1)
+- 		kill(pid, SIGKILL);
+  	if (!res && owriteformat)
+  		ast_set_write_format(chan, owriteformat);
+  	
+--- 231,256 ----
+  			}
+  		}
+  	}
++ 
++ 	if (pid > -1) {
++ 		kill(pid, SIGKILL);
++ 		int i;
++ 		for ( i=0; i<6; i++ )
++ 		{
++ 			if (waitpid(pid, NULL, WNOHANG) == 0)
++ 			{
++ 				usleep(500);
++ 			}
++ 			else
++ 			{
++ 				break;
++ 			}
++ 		}
++ 	}
++ 
+  	close(fds[0]);
+  	close(fds[1]);
+  	
+  	if (!res && owriteformat)
+  		ast_set_write_format(chan, owriteformat);
+  	

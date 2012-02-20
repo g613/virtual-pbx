@@ -1,0 +1,47 @@
+From f63034718f83e50978971fd85b7d1ee89a10935f Mon Sep 17 00:00:00 2001
+From: Malin Aldin <min@lundinova.se>
+Date: Thu, 28 Apr 2011 15:19:13 +0200
+Subject: [PATCH] Bugfix #18382: one-way-audio when chanspy activated
+
+app_chanspy flags were applied on an audiohook, were the flags meant
+something completely different. This resulted in unexpected behavior
+like one-way audio in the spied-on phonecall.
+
+Signed-off-by: Malin Aldin <min@lundinova.se>
+---
+ apps/app_chanspy.c |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/apps/app_chanspy.c b/apps/app_chanspy.c
+index 8c93094..daf2fb9 100644
+--- a/apps/app_chanspy.c
++++ b/apps/app_chanspy.c
+@@ -404,6 +404,7 @@ struct chanspy_translation_helper {
+ 	struct ast_audiohook bridge_whisper_audiohook;
+ 	int fd;
+ 	int volfactor;
++	struct ast_flags *flags;
+ };
+ 
+ struct spy_dtmf_options {
+@@ -435,7 +436,7 @@ static int spy_generate(struct ast_channel *chan, void *data, int len, int sampl
+ 		return -1;
+ 	}
+ 
+-	if (ast_test_flag(&csth->spy_audiohook, OPTION_READONLY)) {
++	if (ast_test_flag(csth->flags, OPTION_READONLY)) {
+ 		/* Option 'o' was set, so don't mix channel audio */
+ 		f = ast_audiohook_read_frame(&csth->spy_audiohook, samples, AST_AUDIOHOOK_DIRECTION_READ, AST_FORMAT_SLINEAR);
+ 	} else {
+@@ -536,7 +537,7 @@ static int channel_spy(struct ast_channel *chan, struct ast_autochan *spyee_auto
+ 			spyer_name, name);
+ 
+ 	memset(&csth, 0, sizeof(csth));
+-	ast_copy_flags(&csth.spy_audiohook, flags, AST_FLAGS_ALL);
++	csth.flags = flags;
+ 
+ 	ast_audiohook_init(&csth.spy_audiohook, AST_AUDIOHOOK_TYPE_SPY, "ChanSpy");
+ 
+-- 
+1.7.1
+

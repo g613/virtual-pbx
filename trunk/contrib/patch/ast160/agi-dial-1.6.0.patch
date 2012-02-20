@@ -1,0 +1,256 @@
+*** main/channel.c	2011-04-14 09:54:43.000000000 -0400
+--- main/channel.c.new	2011-04-14 10:00:44.000000000 -0400
+***************
+*** 2649,2669 ****
+  		if (chan->generator)
+  			ast_deactivate_generator(chan);
+  		goto done;
+! 	}
+  
+  #ifdef AST_DEVMODE
+! 	/* 
+! 	 * The ast_waitfor() code records which of the channel's file descriptors reported that
+! 	 * data is available.  In theory, ast_read() should only be called after ast_waitfor()
+! 	 * reports that a channel has data available for reading.  However, there still may be
+! 	 * some edge cases throughout the code where ast_read() is called improperly.  This can
+! 	 * potentially cause problems, so if this is a developer build, make a lot of noise if
+! 	 * this happens so that it can be addressed. 
+! 	 */
+! 	if (chan->fdno == -1) {
+! 		ast_log(LOG_ERROR, "ast_read() called with no recorded file descriptor.\n");
+! 	}
+  #endif
+  
+  	prestate = chan->_state;
+  
+--- 2649,2676 ----
+  		if (chan->generator)
+  			ast_deactivate_generator(chan);
+  		goto done;
+! 	} else {
+  
+  #ifdef AST_DEVMODE
+! 		/*
+! 		 * The ast_waitfor() code records which of the channel's file
+! 		 * descriptors reported that data is available.  In theory,
+! 		 * ast_read() should only be called after ast_waitfor() reports
+! 		 * that a channel has data available for reading.  However,
+! 		 * there still may be some edge cases throughout the code where
+! 		 * ast_read() is called improperly.  This can potentially cause
+! 		 * problems, so if this is a developer build, make a lot of
+! 		 * noise if this happens so that it can be addressed.
+! 		 *
+! 		 * One of the potential problems is blocking on a dead channel.
+! 		 */
+! 		if (chan->fdno == -1) {
+! 			ast_log(LOG_ERROR,
+! 				"ast_read() on chan '%s' called with no recorded file descriptor.\n",
+! 				chan->name);
+! 		}
+  #endif
++ 	}
+  
+  	prestate = chan->_state;
+  
+*** res/res_agi.c	2010-03-25 11:22:30.000000000 -0400
+--- res/res_agi.c.new	2011-04-14 09:54:43.000000000 -0400
+***************
+*** 361,367 ****
+  	return 0;
+  }
+  
+! static int agi_handle_command(struct ast_channel *chan, AGI *agi, char *buf, int dead);
+  static void setup_env(struct ast_channel *chan, char *request, int fd, int enhanced, int argc, char *argv[]);
+  static enum agi_result launch_asyncagi(struct ast_channel *chan, char *argv[], int *efd)
+  {
+--- 361,367 ----
+  	return 0;
+  }
+  
+! static enum agi_result agi_handle_command(struct ast_channel *chan, AGI *agi, char *buf, int dead);
+  static void setup_env(struct ast_channel *chan, char *request, int fd, int enhanced, int argc, char *argv[]);
+  static enum agi_result launch_asyncagi(struct ast_channel *chan, char *argv[], int *efd)
+  {
+***************
+*** 1312,1323 ****
+  		res = ast_set_read_format(chan, AST_FORMAT_SLINEAR);
+  		if (res < 0) {
+  			ast_log(LOG_WARNING, "Unable to set to linear mode, giving up\n");
+! 			return -1;
+  		}
+  		sildet = ast_dsp_new();
+  		if (!sildet) {
+  			ast_log(LOG_WARNING, "Unable to create silence detector :(\n");
+! 			return -1;
+  		}
+  		ast_dsp_set_threshold(sildet, 256);
+  	}
+--- 1312,1325 ----
+  		res = ast_set_read_format(chan, AST_FORMAT_SLINEAR);
+  		if (res < 0) {
+  			ast_log(LOG_WARNING, "Unable to set to linear mode, giving up\n");
+! 			ast_agi_send(agi->fd, chan, "200 result=%d\n", res);
+! 			return RESULT_FAILURE;
+  		}
+  		sildet = ast_dsp_new();
+  		if (!sildet) {
+  			ast_log(LOG_WARNING, "Unable to create silence detector :(\n");
+! 			ast_agi_send(agi->fd, chan, "200 result=-1\n");
+! 			return RESULT_FAILURE;
+  		}
+  		ast_dsp_set_threshold(sildet, 256);
+  	}
+***************
+*** 2600,2606 ****
+  	return 0;
+  }
+  
+! static int agi_handle_command(struct ast_channel *chan, AGI *agi, char *buf, int dead)
+  {
+  	char *argv[MAX_ARGS];
+  	int argc = MAX_ARGS, res;
+--- 2602,2608 ----
+  	return 0;
+  }
+  
+! static enum agi_result agi_handle_command(struct ast_channel *chan, AGI *agi, char *buf, int dead)
+  {
+  	char *argv[MAX_ARGS];
+  	int argc = MAX_ARGS, res;
+***************
+*** 2647,2655 ****
+  			ast_agi_send(agi->fd, chan, "520 End of proper usage.\n");
+  			break;
+  		case RESULT_FAILURE:
+! 			/* They've already given the failure.  We've been hung up on so handle this
+! 			   appropriately */
+! 			return -1;
+  		}
+  	} else if ((c = find_command(argv, 0))) {
+  		ast_agi_send(agi->fd, chan, "511 Command Not Permitted on a dead channel\n");
+--- 2649,2658 ----
+  			ast_agi_send(agi->fd, chan, "520 End of proper usage.\n");
+  			break;
+  		case RESULT_FAILURE:
+! 			/* The RESULT_FAILURE code is usually because the channel hungup. */
+! 			return AGI_RESULT_FAILURE;
+! 		default:
+! 			break;
+  		}
+  	} else if ((c = find_command(argv, 0))) {
+  		ast_agi_send(agi->fd, chan, "511 Command Not Permitted on a dead channel\n");
+***************
+*** 2670,2676 ****
+  				"ResultCode: 510\r\n"
+  				"Result: Invalid or unknown command\r\n", chan->name, command_id, ami_cmd);
+  	}
+! 	return 0;
+  }
+  static enum agi_result run_agi(struct ast_channel *chan, char *request, AGI *agi, int pid, int *status, int dead, int argc, char *argv[])
+  {
+--- 2673,2679 ----
+  				"ResultCode: 510\r\n"
+  				"Result: Invalid or unknown command\r\n", chan->name, command_id, ami_cmd);
+  	}
+! 	return AGI_RESULT_SUCCESS;
+  }
+  static enum agi_result run_agi(struct ast_channel *chan, char *request, AGI *agi, int pid, int *status, int dead, int argc, char *argv[])
+  {
+***************
+*** 2715,2730 ****
+  			}
+  		}
+  		ms = -1;
+! 		c = ast_waitfor_nandfds(&chan, dead ? 0 : 1, &agi->ctrl, 1, NULL, &outfd, &ms);
+  		if (c) {
+  			retry = AGI_NANDFS_RETRY;
+  			/* Idle the channel until we get a command */
+  			f = ast_read(c);
+  			if (!f) {
+  				ast_debug(1, "%s hungup\n", chan->name);
+- 				returnstatus = AGI_RESULT_HANGUP;
+  				needhup = 1;
+! 				continue;
+  			} else {
+  				/* If it's voice, write it to the audio pipe */
+  				if ((agi->audio > -1) && (f->frametype == AST_FRAME_VOICE)) {
+--- 2718,2744 ----
+  			}
+  		}
+  		ms = -1;
+! 		if (dead) {
+! 			c = ast_waitfor_nandfds(&chan, 0, &agi->ctrl, 1, NULL, &outfd, &ms);
+! 		} else if (!ast_check_hangup(chan)) {
+! 			c = ast_waitfor_nandfds(&chan, 1, &agi->ctrl, 1, NULL, &outfd, &ms);
+! 		} else {
+! 			/*
+! 			 * Read the channel control queue until it is dry so we can
+! 			 * switch to dead mode.
+! 			 */
+! 			c = chan;
+! 		}
+  		if (c) {
+  			retry = AGI_NANDFS_RETRY;
+  			/* Idle the channel until we get a command */
+  			f = ast_read(c);
+  			if (!f) {
+  				ast_debug(1, "%s hungup\n", chan->name);
+  				needhup = 1;
+! 				if (!returnstatus) {
+! 					returnstatus = AGI_RESULT_HANGUP;
+! 				}
+  			} else {
+  				/* If it's voice, write it to the audio pipe */
+  				if ((agi->audio > -1) && (f->frametype == AST_FRAME_VOICE)) {
+***************
+*** 2737,2742 ****
+--- 2751,2757 ----
+  		} else if (outfd > -1) {
+  			size_t len = sizeof(buf);
+  			size_t buflen = 0;
++ 			enum agi_result cmd_status;
+  
+  			retry = AGI_NANDFS_RETRY;
+  			buf[0] = '\0';
+***************
+*** 2759,2767 ****
+  
+  			if (!buf[0]) {
+  				/* Program terminated */
+- 				if (returnstatus) {
+- 					returnstatus = -1;
+- 				}
+  				ast_verb(3, "<%s>AGI Script %s completed, returning %d\n", chan->name, request, returnstatus);
+  				if (pid > 0)
+  					waitpid(pid, status, 0);
+--- 2774,2779 ----
+***************
+*** 2781,2791 ****
+  				buf[strlen(buf) - 1] = 0;
+  			if (agidebug)
+  				ast_verbose("<%s>AGI Rx << %s\n", chan->name, buf);
+! 			returnstatus |= agi_handle_command(chan, agi, buf, dead);
+! 			/* If the handle_command returns -1, we need to stop */
+! 			if (returnstatus < 0) {
+! 				needhup = 1;
+! 				continue;
+  			}
+  		} else {
+  			if (--retry <= 0) {
+--- 2793,2808 ----
+  				buf[strlen(buf) - 1] = 0;
+  			if (agidebug)
+  				ast_verbose("<%s>AGI Rx << %s\n", chan->name, buf);
+! 			cmd_status = agi_handle_command(chan, agi, buf, dead);
+! 			switch (cmd_status) {
+! 			case AGI_RESULT_FAILURE:
+! 				if (dead || !ast_check_hangup(chan)) {
+! 					/* The failure was not because of a hangup. */
+! 					returnstatus = AGI_RESULT_FAILURE;
+! 				}
+! 				break;
+! 			default:
+! 				break;
+  			}
+  		} else {
+  			if (--retry <= 0) {

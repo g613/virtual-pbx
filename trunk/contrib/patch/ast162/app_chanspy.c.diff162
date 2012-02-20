@@ -1,0 +1,90 @@
+*** apps/app_chanspy.c.orig	2011-05-23 10:46:17.000000000 -0400
+--- apps/app_chanspy.c	2012-02-20 12:45:53.000000000 -0500
+***************
+*** 147,152 ****
+--- 147,155 ----
+  						only monitor extensions whose name is in the <replaceable>ext</replaceable> : delimited 
+  						list.</para>
+  					</option>
++ 					<option name="E">
++ 						<para>Exit when the spied-on channel hangs up.</para>
++ 					</option>
+  				</optionlist>		
+  			</parameter>
+  		</syntax>
+***************
+*** 268,273 ****
+--- 271,279 ----
+  						only monitor extensions whose name is in the <replaceable>ext</replaceable> : delimited 
+  						list.</para>
+  					</option>
++ 					<option name="E">
++ 						<para>Exit when the spied-on channel hangs up.</para>
++ 					</option>
+  				</optionlist>	
+  			</parameter>
+  		</syntax>
+***************
+*** 308,313 ****
+--- 314,320 ----
+  	OPTION_BARGE             = (1 << 11),   /* Barge mode (whisper to both channels) */
+  	OPTION_NAME              = (1 << 12),   /* Say the name of the person on whom we will spy */
+  	OPTION_DTMF_SWITCH_MODES = (1 << 13),   /*Allow numeric DTMF to switch between chanspy modes */
++  	OPTION_HANGUP		 = (1 << 14),	/* Hang up when the spied-on channel hangs up. */
+  } chanspy_opt_flags;
+  
+  enum {
+***************
+*** 320,325 ****
+--- 327,333 ----
+  } chanspy_opt_args;
+  
+  AST_APP_OPTIONS(spy_opts, {
++ 	AST_APP_OPTION('E', OPTION_HANGUP),
+  	AST_APP_OPTION('q', OPTION_QUIET),
+  	AST_APP_OPTION('b', OPTION_BRIDGED),
+  	AST_APP_OPTION('B', OPTION_BARGE),
+***************
+*** 779,784 ****
+--- 787,793 ----
+  	char *ptr;
+  	int num;
+  	int num_spyed_upon = 1;
++ 	int hungup = 0;
+  	struct chanspy_ds chanspy_ds = { 0, };
+  
+  	if (ast_test_flag(flags, OPTION_EXIT)) {
+***************
+*** 1016,1023 ****
+--- 1025,1040 ----
+  				}
+  
+  				peer = NULL;
++ 			} else if ( res == 0 && ast_test_flag(flags, OPTION_HANGUP)) {
++ 				hungup=1; //to break the outter loop
++ 				break;
+  			}
+  		}
++ 
++ 		if (hungup) {
++ 			break;
++ 		}
++ 
+  		if (res == -1 || ast_check_hangup(chan))
+  			break;
+  	}
+***************
+*** 1030,1035 ****
+--- 1047,1058 ----
+  	ast_mutex_lock(&chanspy_ds.lock);
+  	ast_mutex_unlock(&chanspy_ds.lock);
+  	ast_mutex_destroy(&chanspy_ds.lock);
++ 	
++ 	if (ast_test_flag(flags, OPTION_HANGUP)) {
++ 		if (option_verbose >= 2) {
++ 			ast_verbose(VERBOSE_PREFIX_3 "Hang up due to the spied-on channel hanging up.\n");
++ 		}
++ 	} 
+  
+  	return res;
+  }
