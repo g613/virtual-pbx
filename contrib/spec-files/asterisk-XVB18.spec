@@ -1,6 +1,6 @@
 Summary: The Open Source PBX
 Name: asterisk
-Version: 1.8.4
+Version: 1.8.9.2
 Release: XVB
 License: GPLv2
 Group: Applications/Internet
@@ -13,6 +13,7 @@ Source1: asterisk_logrotate-1.2.txt
 Patch100: agi-dial-1.8.patch
 Patch101: chan_spy-18.patch
 Patch102: rc18.patch
+Patch103: app_mp3.c.patch18
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
@@ -40,9 +41,10 @@ to compile 3rd party modules.
 
 %prep
 %setup0 -q
-%patch100 -p0
-%patch101 -p1
+#%patch100 -p0
+#%patch101 -p1
 %patch102 -p0
+%patch103 -p0
 
 %configure 
 
@@ -75,7 +77,7 @@ mkdir -p %{buildroot}%{_localstatedir}/run/asterisk
 mkdir -p %{buildroot}%{_localstatedir}/log/asterisk/cdr-custom/
 mkdir -p %{buildroot}%{_localstatedir}/spool/asterisk/outgoing/
 
-rm %{buildroot}%{_datadir}/asterisk/sounds/.asterisk-*
+#rm %{buildroot}%{_datadir}/asterisk/sounds/.asterisk-*
 rm %{buildroot}%{_datadir}/asterisk/moh/.asterisk-*
 
 %clean
