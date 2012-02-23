@@ -1,0 +1,64 @@
+#!/bin/bash
+#
+# Init file for VirtualPBX FAGI adialplan helper
+#
+# Written by Igor Okunev
+#
+# chkconfig: - 80 12
+# description: fAGI dialplan helper
+#
+
+source /etc/rc.d/init.d/functions
+
+### Default variables
+CONFIG="/opt/VirtualPBX/etc/xvb-rc.cfg"
+
+RETVAL=0
+prog="safe_xvb_agi";
+desc="Virtual PBX Fagi utils"
+
+start() {
+	echo -n $"Starting $desc ($prog): "
+	daemon /opt/VirtualPBX/contrib/utils/$prog $CONFIG 
+	RETVAL=$?
+	echo
+	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/$prog
+	return $RETVAL
+}
+
+stop() {
+	echo -n $"Shutting down $desc ($prog): "
+	killproc $prog
+	RETVAL=$?
+	killall Fagi.pl &> /dev/null
+	echo
+	[ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/$prog
+	return $RETVAL
+}
+
+restart() {
+	stop
+	sleep 3
+	start
+}
+
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart)
+	restart
+	;;
+  status)
+	status $prog
+	RETVAL=$?
+	;;
+   *)
+	echo $"Usage: $0 {start|stop|restart|status}"
+	RETVAL=1
+esac
+
+exit $RETVAL

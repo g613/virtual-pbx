@@ -4,7 +4,7 @@ Name: virtual-pbx
 Summary: Voice Application Server / HostedIVR solution based on asterisk - Core files
 Version: 2
 Release: 1
-License: GPL
+License: EPL v1.0 / CC BY 3.0
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
 Packager: Igor Okunev <igor.okunev@gmail.com>
 Source0:  virtual-pbx-%{release}.tar.gz
@@ -19,7 +19,6 @@ Requires: ffmpeg
 Requires: lame
 Requires: mpg123
 Requires: libmad
-Requires: perl = 5.8.8
 Requires: perl(DBI)
 Requires: perl(DBD::mysql)
 Requires: perl(Digest::MD5)
@@ -126,6 +125,8 @@ Requires: mysql-connector-odbc
 Requires: unixODBC
 Requires: perl(Asterisk::AGI) >= 0.09
 Requires: perl(Time::HiRes)
+Requires: perl(Authen::Radius)
+Requires: freeradius
 
 %description voip
 Voice Application Server / HostedIVR solution based on asterisk - VOIP applications
@@ -138,12 +139,9 @@ Summary: Voice Application Server / HostedIVR solution based on asterisk - FastA
 Group:   System Environment/Services
 
 Requires: virtual-pbx-voip
-Requires: perl(Authen::Radius)
-Requires: freeradius
 
 %description voip-fagi
-Voice Application Server / HostedIVR solution based on asterisk - FastAGI utils
-
+dummy package, just remove it now.
 
 ####################################################
 #
@@ -246,16 +244,16 @@ mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin
 mv cgi-bin/VirtualPBX-UI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ui
 mv cgi-bin/VirtualPBX-AI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ai
 
+mv contrib/utils/podcast_get.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.hourly/xvb-1-podcast_get.pl
+mv contrib/utils/MemCached.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.hourly/xvb-0-MemCached.pl
 cp contrib/utils/db_backup.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.daily/xvb-0-db_backup.pl
-cp contrib/utils/MemCached.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.hourly/xvb-0-MemCached.pl
 mv contrib/utils/journals_clean.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.daily/xvb-1-journals_clean.pl
 mv contrib/utils/cdr_reports.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.daily/xvb-2-cdr_reports.pl
 mv contrib/utils/cdr_clean.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.daily/xvb-3-cdr_clean.pl
 mv contrib/utils/msg_clean.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.daily/xvb-4-msg_clean.pl
-mv contrib/utils/podcast_get.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.hourly/xvb-1-podcast_get.pl
 cp contrib/utils/billing_processor.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.daily/xvb-5-billing_processor_daily.pl
 mv contrib/utils/billing_processor.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.monthly/xvb-0-billing_processor_monthly.pl
-mv contrib/virtual-pbx.cron $RPM_BUILD_ROOT/%{_sysconfdir}/cron.d/
+mv contrib/virtual-pbx*.cron $RPM_BUILD_ROOT/%{_sysconfdir}/cron.d/
 
 mv contrib/utils/viewlogs.pl $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/
 date > $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/data/build-date
@@ -277,6 +275,7 @@ mv contrib/httpd.conf $RPM_BUILD_ROOT/%{_sysconfdir}/httpd/conf.d/xvb.conf
 mv contrib/logrotate.conf $RPM_BUILD_ROOT/%{_sysconfdir}/logrotate.d/xvb.conf
 mv contrib/BOM.txt $RPM_BUILD_ROOT/%CORE_DIR/etc/BOM-EN.txt
 mv contrib/BOM-*.txt $RPM_BUILD_ROOT/%CORE_DIR/etc/
+rm -f contrib/sudoers
 mv contrib $RPM_BUILD_ROOT/%CORE_DIR/
 
 mv 3rdparty $RPM_BUILD_ROOT/%CORE_DIR/
@@ -332,62 +331,24 @@ rm $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds/*.tgz
 ####################################################
 #
 %pre
-# stop services
-#service memcached stop || true
-
 
 ####################################################
 #
 %pre voip
-#service asterisk stop || true
-
-
-####################################################
-#
-%pre voip-fagi
-service xvb-fagi stop || true
-
 
 ####################################################
 #
 %pre web
-service httpd stop || true
 
 
 ####################################################
 #
 %post
-# update DB structure
-perl %CORE_DIR/contrib/utils/rpm/db_update.pl
+# updates
 perl %CORE_DIR/contrib/utils/rpm/cfg_update.pl
+perl %CORE_DIR/contrib/utils/rpm/sys_update.pl
 
-#
-mkdir -p /var/log/VirtualPBX/backup && chown -R asterisk.asterisk /var/log/VirtualPBX
-
-# auto start
-chkconfig mysqld on
 chkconfig memcached on
-
-# start services
-#service memcached start
-# CleanUP cache
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup tariffs
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup reports
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_TARIFF
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_CURRENCY
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_VBOX_TYPE
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_NODES
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_VBOXES_DIALOUT_TYPE
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_TZ
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_DTMF_PATTERN
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_LANG
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_VBOXES_RECORD_FTYPE
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_MOH
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_DATE_FORMAT
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_CID_TYPE
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_CID_ACTIONS
-perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATES
 
 ####################################################
 #
@@ -434,30 +395,12 @@ if [ -f %{_sysconfdir}/asterisk/features.conf ]; then
 		cat %CORE_DIR/contrib/asterisk/feautures.conf >> %{_sysconfdir}/asterisk/features.conf
 	fi
 fi
-# pickupchan
-if [ -f %{_sysconfdir}/asterisk/modules.conf ]; then
-	STR=`grep '^noload => app_pickupchan.so' %{_sysconfdir}/asterisk/modules.conf`
-	if [ "x$STR" != "x" ]; then
-		perl -i -p -e 's#^noload => app_pickupchan.so#;noload => app_pickupchan.so#' %{_sysconfdir}/asterisk/modules.conf
-	fi
-fi
-# execinclude
-if [ -f %{_sysconfdir}/asterisk/asterisk.conf ]; then
-	STR=`grep '^;execincludes' %{_sysconfdir}/asterisk/asterisk.conf`
-	if [ "x$STR" != "x" ]; then
-		perl -i -p -e 's#^;execincludes#execincludes#' %{_sysconfdir}/asterisk/asterisk.conf
-	fi
-fi
-if [ -f %{_sysconfdir}/asterisk/sip.conf ]; then
-	STR=`grep 'reg_uac.pl' %{_sysconfdir}/asterisk/sip.conf`
-	if [ "x$STR" = "x" ]; then
-		perl -i -p -e 's{^\[general\]}{[general]\n\n#exec %CORE_DIR/contrib/utils/reg_uac.pl\n\n}' %{_sysconfdir}/asterisk/sip.conf
-	fi
-fi
 
 touch /etc/asterisk/xvb/xvb-phone-service.conf || true
 
 chkconfig asterisk on
+chkconfig xvb-fagi on
+chkconfig xvb-perl-worker on
 
 STR=`service asterisk status | grep running`
 if [ "x$STR" = "x" ]; then
@@ -487,17 +430,7 @@ else
 	fi
 fi
 
-
-
-####################################################
-#
-%post voip-fagi
-# init auth cache
-perl %CORE_DIR/contrib/utils/MemCached.pl
-
-chkconfig xvb-fagi on
-service xvb-fagi start
-
+service xvb-fagi restart
 
 ####################################################
 #
@@ -512,8 +445,45 @@ if [ -f %CORE_DIR/web/js/xvb-custom.js ]; then
 fi
 
 chkconfig httpd on
-service httpd start
 
+service httpd restart
+
+
+####################################################
+#
+%post management
+#
+mkdir -p /var/log/VirtualPBX/backup && chown -R asterisk.asterisk /var/log/VirtualPBX
+
+# auto start DB
+chkconfig mysqld on
+
+# db update
+perl %CORE_DIR/contrib/utils/rpm/db_update.pl
+
+# init auth cache
+perl %{_sysconfdir}/cron.hourly/xvb-0-MemCached.pl
+
+# start services
+#service memcached start
+# CleanUP cache
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup tariffs
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup reports
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_TARIFF
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_CURRENCY
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_VBOX_TYPE
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_NODES
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_VBOXES_DIALOUT_TYPE
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_TZ
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_DTMF_PATTERN
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_LANG
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_VBOXES_RECORD_FTYPE
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_MOH
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_DATE_FORMAT
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_CID_TYPE
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_CID_ACTIONS
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATES
 
 ####################################################
 #
@@ -531,19 +501,13 @@ service httpd start
 %attr(755,asterisk,asterisk) %config(noreplace) %CORE_DIR/etc/xvb-rc.cfg
 %attr(440,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/*.conf
 %attr(755,root,root) %CORE_DIR/contrib/utils/backup_restore.pl
-%attr(755,root,root) %CORE_DIR/contrib/utils/callblast.pl
-%attr(755,root,root) %CORE_DIR/contrib/utils/queues_hourly_avg.pl
-%attr(755,root,root) %CORE_DIR/contrib/utils/db_backup.pl
-%attr(755,root,root) %CORE_DIR/contrib/utils/file2moh.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/mc_view.pl
-%attr(755,root,root) %CORE_DIR/contrib/utils/MemCached.pl
-%attr(755,root,root) %CORE_DIR/contrib/utils/node_stat.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/check_updates.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/icecast-db-init.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/google-voice-search.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/ices2
-%attr(755,root,root) %CORE_DIR/contrib/utils/nodes_admin/*
 %attr(755,root,root) %CORE_DIR/contrib/utils/rpm/*
+%attr(644,root,root) %CORE_DIR/contrib/utils/rpm/sys_update-data/*
 %CORE_DIR/lib/*
 %CORE_DIR/templates/*
 %CORE_DIR/doc/XVB.odt
@@ -554,7 +518,6 @@ service httpd start
 %CORE_DIR/contrib/icecast.xml
 %CORE_DIR/contrib/spec-files/*.gz
 %CORE_DIR/etc/BOM-*.txt
-%attr(775,asterisk,asterisk) %dir %CORE_DIR/db
 
 
 ####################################################
@@ -562,7 +525,8 @@ service httpd start
 %files voip
 %attr(440,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/xvb/*.conf
 %attr(755,root,root) %{_sysconfdir}/cron.hourly/xvb-1-podcast_get.pl
-%attr(644,root,root) %{_sysconfdir}/cron.d/virtual-pbx.cron
+%attr(755,root,root) %{_sysconfdir}/cron.daily/xvb-4-msg_clean.pl
+%attr(644,root,root) %{_sysconfdir}/cron.d/virtual-pbx-voip.cron
 %attr(755,asterisk,asterisk) %CORE_DIR/agi-bin/*.agi
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_perl_worker
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-perl-worker
@@ -572,38 +536,49 @@ service httpd start
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_reg_uac
 %attr(755,root,root) %CORE_DIR/contrib/utils/reg_uac.pl
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-reg_uac
+%attr(755,root,root) %CORE_DIR/contrib/utils/node_stat.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/callblast.pl
+%attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-fagi
+%attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_agi
+%attr(755,root,root) %CORE_DIR/contrib/utils/Fagi.pl
 %CORE_DIR/contrib/asterisk/feautures.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*
 %CORE_DIR/contrib/odbc/*
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/recordings
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/podcasts
-
+%attr(755,root,root) %CORE_DIR/contrib/utils/file2moh.pl
 
 ####################################################
 #
 %files voip-fagi
-%attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_agi
-%attr(755,root,root) %CORE_DIR/contrib/utils/Fagi.pl
-%attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-fagi
-%attr(755,root,root) %{_sysconfdir}/cron.hourly/xvb-0-MemCached.pl
 
 
 ####################################################
 #
 %files web
 %attr(644,root,root) %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
+%attr(644,root,root) %{_sysconfdir}/cron.d/virtual-pbx-web.cron
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/*
 %CORE_DIR/web/*
-%CORE_DIR/contrib/sudoers
 %CORE_DIR/contrib/nginx.conf
 
 
 ####################################################
 #
 %files management
-%attr(755,root,root) %{_sysconfdir}/cron.daily/*
+%attr(644,root,root) %{_sysconfdir}/cron.d/virtual-pbx.cron
+%attr(755,root,root) %{_sysconfdir}/cron.hourly/xvb-0-MemCached.pl
+%attr(755,root,root) %{_sysconfdir}/cron.daily/xvb-0-db_backup.pl
+%attr(755,root,root) %{_sysconfdir}/cron.daily/xvb-1-journals_clean.pl
+%attr(755,root,root) %{_sysconfdir}/cron.daily/xvb-2-cdr_reports.pl
+%attr(755,root,root) %{_sysconfdir}/cron.daily/xvb-3-cdr_clean.pl
+%attr(755,root,root) %{_sysconfdir}/cron.daily/xvb-5-billing_processor_daily.pl
 %attr(755,root,root) %{_sysconfdir}/cron.monthly/*
+%attr(755,root,root) %CORE_DIR/contrib/utils/nodes_admin/*
+%attr(755,root,root) %CORE_DIR/contrib/utils/queues_hourly_avg.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/db_backup.pl
+%attr(775,asterisk,asterisk) %dir %CORE_DIR/db
 
 
 ####################################################
