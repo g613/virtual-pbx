@@ -53,19 +53,11 @@
 			<form method='post' onSubmit='return checkChanges(this)'>
 			<tr>
 				<td>
-					Access code:
-				</td>
-				<td>
-					[% USER.ACCESS_CODE | html %]&nbsp;&nbsp;
-					<a title='view user profile' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %]&action=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='user profile' /></a>
-				</td>
-			</tr>
-			<tr>
-				<td>
 					User name:
 				</td>
 				<td>
-					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]
+					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]&nbsp;&nbsp;
+					<a title='view user profile' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %]&action=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='view user profile' /></a>
 				</td>
 			</tr>
 			<tr>
@@ -82,6 +74,23 @@
 				</td>
 				<td align='left'>
 					[% USER.LANG_NAME | html %]
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Access code:
+				</td>
+				<td>
+					[% USER.ACCESS_CODE | html %]&nbsp;&nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Pin code:
+				</td>
+				<td>
+					[% USER.PIN_CODE | html %]&nbsp;&nbsp;
+					<a title='exten 0' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %]&action=vb_view&ext_id=0'><img border='0'  src='/xvb/images/vb_edit.png' alt='exten 0' /></a>
 				</td>
 			</tr>
 			<tr>
