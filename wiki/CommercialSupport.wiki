@@ -31,3 +31,9 @@
 *Контактное имя*: Игорь Окунев
 
 *Email* : mailto:virtual-pbx@prv.mts-nn.ru
+
+<br /><br />
+
+<p align='left'>
+<font size="3px">`*` versions is newer than the 5900 currently has a soft limit of 20 simultaneous calls.</font>
+</p>
