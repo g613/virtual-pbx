@@ -19,6 +19,7 @@ Requires: ffmpeg
 Requires: lame
 Requires: mpg123
 Requires: libmad
+Requires: perl
 Requires: perl(DBI)
 Requires: perl(DBD::mysql)
 Requires: perl(Digest::MD5)
@@ -402,7 +403,7 @@ chkconfig asterisk on
 chkconfig xvb-fagi on
 chkconfig xvb-perl-worker on
 
-STR=`service asterisk status | grep running`
+STR=`LANG=C service asterisk status | grep running`
 if [ "x$STR" = "x" ]; then
 	service asterisk start;
 else
@@ -538,6 +539,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-reg_uac
 %attr(755,root,root) %CORE_DIR/contrib/utils/node_stat.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/callblast.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/xvb2astconf.pl
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-fagi
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_agi
 %attr(755,root,root) %CORE_DIR/contrib/utils/Fagi.pl
