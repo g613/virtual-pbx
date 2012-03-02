@@ -1010,6 +1010,7 @@ create	table VPBX_VBOXES_PODCAST
 	ID						INT(16)	    not null,
 	PODCAST_ANNOUNCEMENT	INT(1)		not null default 1,
 	PODCAST_URL				TEXT(512)	not null,
+	ONLY_LATEST				INT(1)		not null default 0,
 
 	unique(ID),
 
