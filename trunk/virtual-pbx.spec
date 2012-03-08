@@ -80,6 +80,7 @@ Virtual-pbx application include:
 	- FMC - Fixed Mobile Convergence
 	- google-chart for extended statistics for: DialOut, Queue, CallBlast, Polling
 	- WEB logon / logoff for the agents of the queue.
+	- Support Perl plugins.
 	- Several types of extensions:
 		Playback / Auto Attendant
 		VoiceMail
