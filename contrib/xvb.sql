@@ -306,6 +306,8 @@ create	table VPBX_GROUPS
 	MAX_CALL_DURATION			INT(10)	not null default 0,
 
 	PH_FEATURES					VARCHAR(255) not null default '*',
+	
+	HOOKS						VARCHAR(255) not null default '',
 
 	VBL_1 INT(10) not NULL default -1,
 	VBL_2 INT(10) not NULL default -1,
