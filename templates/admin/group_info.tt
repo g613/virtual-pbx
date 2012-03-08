@@ -48,7 +48,7 @@
 		<tr>
 			<td>Group Name: </td>
 			<td><input name='GR_GROUP_NAME' type='text' value="[% GROUP.GROUP_NAME | html %]"></td>
-			<td rowspan='38' valign='top'>
+			<td rowspan='39' valign='top'>
 				<table>
 					<tr>
 						<td colspan='2'><h4>Limits on the number of extensions:</h4></td>
@@ -384,6 +384,12 @@
 			<td>Phone features ( comma separated, * - for all ):</td>
 			<td>
 				<textarea rows='2' cols='22' name='GR_PH_FEATURES'>[% GROUP.PH_FEATURES | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>Hooks ( comma separated ):</td>
+			<td>
+				<textarea rows='2' cols='22' name='GR_HOOKS'>[% GROUP.HOOKS | html %]</textarea>
 			</td>
 		</tr>
 		<tr>
