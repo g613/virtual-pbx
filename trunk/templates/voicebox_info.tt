@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.227 2012-02-04 07:11:08 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.230 2012-03-06 08:56:41 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -265,11 +265,11 @@
 			<tr>
 				<td>Next Extension: </td>
 				<td>
+					<input size='15' type='text' name='NEXTEXTENSION' value='[% VBOX_PREF.NEXTEXTENSION | html %]'>
 					<script language="JavaScript">
-						exten_dropdown2('NEXTEXTENSION','[% VBOX_PREF.NEXTEXTENSION | html %]','<option selected value="[% VBOX_PREF.NEXTEXTENSION | html %]">[% VBOX_PREF.NEXTEXTENSION | html %] - Current setting</option>')
+						exten_dropdown2('NEXTEXTENSION','[% VBOX_PREF.NEXTEXTENSION | html %]','<option selected value="[% VBOX_PREF.NEXTEXTENSION | html %]">[% VBOX_PREF.NEXTEXTENSION | html %] - Current setting</option><option value="***">--------- raw editor ---------</option>');
 						exten_icon( '[% VBOX_PREF.NEXTEXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
 					</script>
-					<noscript><input size='12' type='text' name='NEXTEXTENSION' value='[% VBOX_PREF.NEXTEXTENSION | html %]'></noscript>
 				</td>
 			</tr>
 			<tr class='addon_info'>
@@ -514,11 +514,11 @@
 			<tr class='addon_info'>
 			<td>Goto if call fail: </td>
 				<td>
+					<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 					<script language="JavaScript">
-						exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+						exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option selected value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
 						exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
 					</script>
-					<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 				</td>
 			</tr>
 			<tr class='addon_info'>
@@ -778,11 +778,11 @@
 				<tr class='addon_info'>
 					<td>Goto if request fail: </td>
 					<td>
+						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option selected value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
 						</script>
-						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1050,6 +1050,16 @@
 					[% END %]
 					</td>
 				</tr>
+				<tr>
+					<td>Play only one latest podcast: </td>
+					<td>
+						[% IF VBOX_PREF.ONLY_LATEST %]
+							<input name="ONLY_LATEST" type="checkbox" checked>
+						[% ELSE %]
+							<input name="ONLY_LATEST" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '13' %]
@@ -1124,15 +1134,15 @@
 					<td>
 						<select name="ANNOUNCE_HOLDTIME">
 						[% IF VBOX_PREF.ANNOUNCE_HOLDTIME eq '2' %]
-							<option value="2">the average for last hour</option>
+							<option value="2" selected>the average for last hour</option>
 							<option value="0">none</option>
 							<option value="1">the average for all time</option>
 						[% ELSIF VBOX_PREF.ANNOUNCE_HOLDTIME eq '1' %]
-							<option value="1">the average for all time</option>
+							<option value="1" selected>the average for all time</option>
 							<option value="0">none</option>
 							<option value="2">the average for last hour</option>
 						[% ELSE %]
-							<option value="0">none</option>
+							<option value="0" selected>none</option>
 							<option value="1">the average for all time</option>
 							<option value="2">the average for last hour</option>
 						[% END %]
@@ -1182,11 +1192,11 @@
 				<tr class='addon_info'>
 					<td>Goto if queue fail: </td>
 					<td>
+						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option selected value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
 						</script>
-						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1252,11 +1262,11 @@
 				<tr class='addon_info'>
 					<td>Goto exten: </td>
 					<td>
+						<input size='15' type='text' name='CB_EXT' value='[% VBOX_PREF.CB_EXT | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'CB_EXT','[% VBOX_PREF.CB_EXT | html %]','<option value="">------------------------------</option>')
+							exten_dropdown2( 'CB_EXT','[% VBOX_PREF.CB_EXT | html %]','<option selected value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
 							exten_icon( '[% VBOX_PREF.CB_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
 						</script>
-						<noscript><input size='12' type='text' name='CB_EXT' value='[% VBOX_PREF.CB_EXT | html %]'></noscript>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1508,11 +1518,11 @@
 				<tr class='addon_info'>
 					<td>Goto if request fail: </td>
 					<td>
+						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option selected value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
 						</script>
-						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1616,21 +1626,21 @@
 				<tr>
 					<td>Go to if not busy: </td>
 					<td>
+						<input size='15' type='text' name='GOTO_IF_OK' value='[% VBOX_PREF.GOTO_IF_OK | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_OK','[% VBOX_PREF.GOTO_IF_OK | html %]','<option value="[% VBOX_PREF.GOTO_IF_OK | html %]">[% VBOX_PREF.GOTO_IF_OK | html %] - Current setting</option>')
+							exten_dropdown2( 'GOTO_IF_OK','[% VBOX_PREF.GOTO_IF_OK | html %]','<option selected value="[% VBOX_PREF.GOTO_IF_OK | html %]">[% VBOX_PREF.GOTO_IF_OK | html %] - Current setting</option><option value="***">--------- raw editor ---------</option>');
 							exten_icon( '[% VBOX_PREF.GOTO_IF_OK | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
 						</script>
-						<noscript><input size='12' type='text' name='GOTO_IF_OK' value='[% VBOX_PREF.GOTO_IF_OK | html %]'></noscript>
 					</td>
 				</tr>
 				<tr>
 					<td>Go to if busy: </td>
 					<td>
+						<input size='15' type='text' name='GOTO_IF_BUSY' value='[% VBOX_PREF.GOTO_IF_BUSY | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_OK','[% VBOX_PREF.GOTO_IF_BUSY | html %]','<option value="[% VBOX_PREF.GOTO_IF_BUSY | html %]">[% VBOX_PREF.GOTO_IF_BUSY | html %] - Current setting</option>')
+							exten_dropdown2( 'GOTO_IF_BUSY','[% VBOX_PREF.GOTO_IF_BUSY | html %]','<option selected value="[% VBOX_PREF.GOTO_IF_BUSY | html %]">[% VBOX_PREF.GOTO_IF_BUSY | html %] - Current setting</option><option value="***">--------- raw editor ---------</option>');
 							exten_icon( '[% VBOX_PREF.GOTO_IF_BUSY | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
 						</script>
-						<noscript><input size='12' type='text' name='GOTO_IF_BUSY' value='[% VBOX_PREF.GOTO_IF_BUSY | html %]'></noscript>
 					</td>
 				</tr>
 				[% END %]
@@ -1691,11 +1701,11 @@
 				<tr class='addon_info'>
 				<td>Goto if UNParking: </td>
 					<td>
+						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option selected value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
 						</script>
-						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
 				[% END %]
@@ -2725,7 +2735,7 @@
 							<td><input size='15' name='var_name' type='text'></td>
 							<td>
 								<select name="cond">
-									<option value="==">==</option>
+									<option value="==" selected>==</option>
 									<option value="!=">!=</option>
 									<option value="<">&lt;</option>
 									<option value=">">&gt;</option>

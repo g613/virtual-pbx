@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.44 2012-01-21 21:10:38 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.45 2012-03-06 08:56:41 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -174,7 +174,7 @@
 				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				&nbsp;
 				<select name="msg_type">
-					<option value="" >Message type</option>
+					<option value="" selected>Message type</option>
 					<option value="30:40">User messages</option>
 					<option value="1:2:3:4:5:6">System messages</option>
 					<option value="1">User name</option>
