@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.17 2012-02-13 11:03:37 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.19 2012-03-06 09:04:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Actions journal - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -136,9 +136,13 @@
 				Ext:
 				<input size='6' type='text' name='ext_num' value='[% J_EXT_NUM %]'>
 				&nbsp;
-				Action:
 				<select name="action_type")">
-					<option value="" >all</option>
+					[% IF J_ACTION %]
+						<option value="[% J_ACTION %]" selected>[% J_ACTION %]</option>
+						<option value="" >all</option>
+					[% ELSE %]
+						<option value="" selected>all</option>
+					[% END %]
 				[% FOREACH at = ACTIONS %]
 					<option value="[% at %]">[% at %]</option>
 				[% END %]

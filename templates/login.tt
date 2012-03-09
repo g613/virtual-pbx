@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: login.tt,v 1.18 2012-01-24 14:01:02 gosha Exp $ -->
+<!-- $Id: login.tt,v 1.19 2012-03-05 18:22:04 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - login</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -34,20 +34,23 @@
 	<table width='50%' class='half-width'>
 		<form method='post'>
 			<tr>
-				<td>Phone number: </td>
+				<td>Phone number&nbsp;</td>
 				<td><input name='phone' type='text'></td>
 			</tr>
 			<tr>
-				<td>Access code :</td>
+				<td>Access code&nbsp;</td>
 				<td><input name='ac' type='text'></td>
 			</tr>
 			<tr>
-				<td>Extension :</td>
+				<td>Extension*&nbsp;</td>
 				<td><input name='ext_id' type='text'></td>
 			</tr>
 			<tr>
-				<td>Pin code:</td>
+				<td>Pin code&nbsp;</td>
 				<td><input name='pw' type='password'></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td><td>* is an optional field.</td>
 			</tr>
 			<tr>
 				<td colspan='2'>&nbsp;</td>

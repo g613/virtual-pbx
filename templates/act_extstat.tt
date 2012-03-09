@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.9 2011-10-05 07:30:43 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.11 2012-03-06 09:54:06 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -161,7 +161,7 @@
 				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				<select name='chart_group_period'>
 				<script language='Javascript'>
-					document.write( "<option value='"+ group_by +"'>"+ period +"</option>" );
+					document.write( "<option selected value='"+ group_by +"'>"+ period +"</option>" );
 				</script>
 				<noscript>
 				<option value=''>group by</option>
@@ -521,12 +521,10 @@
 				Caller ID:
 				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				<select name='chart_group_period'>
-				<script language='Javascript'>
-					document.write( "<option value='"+ group_by +"'>"+ period +"</option>" );
+				<script language='JavaScript'>
+					document.write( "<option selected value='"+ group_by +"'>"+ period +"</option>" );
 				</script>
-				<noscript>
-				<option value=''>group by</option>
-				</noscript>
+				<noscript><option value=''>group by</option></noscript>
 				<option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='y'>year</option></select>
 				&nbsp;
 				<input name='action' value='extended_stat' type='hidden'>
