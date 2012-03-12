@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.18 2012-02-13 11:02:41 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.20 2012-03-06 08:56:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Статистика номера - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -138,7 +138,7 @@
 				&nbsp;
 				Тип:
 				<select name="act_type")">
-					<option value="" >все</option>
+					<option selected value="" >все</option>
 				[% FOREACH at = ACT_TYPES %]
 					<option value="[% at %]">[% at | locale_msg %]</option>
 				[% END %]
@@ -146,7 +146,7 @@
 				<input name='action' value='ext_stat' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
-				<input value='Поиск' type='submit'>
+				<input value='Найти' type='submit'>
 				<input name='need_excel' value='Excel' type='submit'>
 				&nbsp;&nbsp;
 			</td>

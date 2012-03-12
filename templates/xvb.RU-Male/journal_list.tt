@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.16 2012-02-13 11:03:37 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.18 2012-03-06 08:56:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Журнал операций - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -137,9 +137,11 @@
 				&nbsp;
 				<select name="action_type">
 					[% IF J_ACTION %]
-						<option value="[% J_ACTION %]" >[% J_ACTION | locale_msg %]</option>
+						<option value="[% J_ACTION %]" selected>[% J_ACTION | locale_msg %]</option>
+						<option value="" >Все события</option>
+					[% ELSE %]
+						<option value="" selected>Все события</option>
 					[% END %]
-					<option value="" >Все события</option>
 				[% FOREACH at = ACTIONS %]
 					<option value="[% at %]">[% at | locale_msg %]</option>
 				[% END %]
@@ -150,7 +152,7 @@
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				&nbsp;
-				<input value='Поиск' type='submit'>
+				<input value='Найти' type='submit'>
 				&nbsp;
 			</td>
 			</form>

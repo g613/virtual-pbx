@@ -173,7 +173,7 @@
 				&nbsp;
 				Номер звонящего:
 				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
-				<input value='Поиск' type='submit'>
+				<input value='Найти' type='submit'>
 				&nbsp;&nbsp;
 			</td>
 			</form>

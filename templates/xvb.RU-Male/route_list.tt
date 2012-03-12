@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.24 2011-09-02 11:51:18 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.25 2012-03-06 08:56:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -103,7 +103,7 @@
 			<td>
 				<select name="r_PEER_ID">
 				[% FOREACH p = PEERS %]
-					<option value="[% p.DATA_ID | html %]" selected>[% p.DESCRIPTION | html %]</option>
+					<option value="[% p.DATA_ID | html %]">[% p.DESCRIPTION | html %]</option>
 				[% END %]
 				</select>
 			</td>
