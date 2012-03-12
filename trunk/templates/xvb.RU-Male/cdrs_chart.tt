@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.14 2012-02-11 20:57:34 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.16 2012-03-06 08:56:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -115,7 +115,7 @@
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				<select name="call_type">
-					<option value="" >тип звонка</option>
+					<option selected value="" >тип звонка</option>
 					<option value="" >все звонки</option>
 					<option value="incoming">входящий</option>
 					<option value="local">локальный</option>
@@ -126,11 +126,11 @@
 					<option value="alarmclock">будильник</option>
 					<option value="service">сервисный</option>
 				</select>
-				<input value='Поиск' type='submit'>
+				<input value='Найти' type='submit'>
 				<input name='need_excel' value='Excel' type='submit'>
 				<script language='JavaScript'>
 					document.write("<input name='need_chart' value='Графики' type='submit'>");
-					document.write("<select name='chart_group_period'><option value='"+group_by+"'>"+period+"</option><option value='min'>минута</option><option value='h'>час</option><option value='hd'>час дня</option><option value='d'>день</option><option value='dw'>день недели</option><option value='dm'>день месяца</option><option value='w'>неделя</option><option value='m'>месяц</option><option value='y'>год</option></select>");
+					document.write("<select name='chart_group_period'><option selected value='"+group_by+"'>"+period+"</option><option value='min'>минута</option><option value='h'>час</option><option value='hd'>час дня</option><option value='d'>день</option><option value='dw'>день недели</option><option value='dm'>день месяца</option><option value='w'>неделя</option><option value='m'>месяц</option><option value='y'>год</option></select>");
 				</script>
 				&nbsp;
 			</td>

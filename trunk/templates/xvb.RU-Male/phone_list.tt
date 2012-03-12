@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.16 2012-01-20 11:26:46 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.17 2012-03-06 08:56:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -72,31 +72,31 @@
 			<td>
 				<select name="REC_MODE" class='in_t0'>
 				[% IF p.REC_MODE eq '1' %]
-					<option value="1">По запросу</option>
+					<option value="1" selected>По запросу</option>
 					<option value="0">Выключено</option>
 					<option value="2">Всегда</option>
 					<option value="3">Внутренние</option>
 					<option value="4">Внешние</option>
 				[% ELSIF p.REC_MODE eq '2' %]
-					<option value="2">Всегда</option>
+					<option value="2" selected>Всегда</option>
 					<option value="0">Выключено</option>
 					<option value="1">По запросу</option>
 					<option value="3">Внутренние</option>
 					<option value="4">Внешние</option>
 				[% ELSIF p.REC_MODE eq '3' %]
-					<option value="3">Внутренние</option>
+					<option value="3" selected>Внутренние</option>
 					<option value="0">Выключено</option>
 					<option value="1">По запросу</option>
 					<option value="2">Всегда</option>
 					<option value="4">Внешние</option>
 				[% ELSIF p.REC_MODE eq '4' %]
-					<option value="4">Внешние</option>
+					<option value="4" selected>Внешние</option>
 					<option value="0">Выключено</option>
 					<option value="1">По запросу</option>
 					<option value="2">Всегда</option>
 					<option value="3">Внутренние</option>
 				[% ELSE %]
-					<option value="0">Выключено</option>
+					<option value="0" selected>Выключено</option>
 					<option value="1">По запросу</option>
 					<option value="2">Всегда</option>
 					<option value="3">Внутренние</option>
@@ -130,7 +130,7 @@
 			<td><input size="10" name='secret' type='text'></td>
 			<td>
 				<select name="REC_MODE">
-					<option value="0">Выключено</option>
+					<option value="0" selected>Выключено</option>
 					<option value="1">По запросу</option>
 					<option value="2">Всегда</option>
 					<option value="3">Внутренние</option>

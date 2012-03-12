@@ -172,7 +172,7 @@
 				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				&nbsp;
 				<select name="msg_type">
-					<option value="" >Тип сообщения</option>
+					<option selected='selected' value="" >Тип сообщения</option>
 					<option value="30:40">Все пользовательские</option>
 					<option value="1:2:3:4:5:6">Все системные</option>
 					<option value="1">Имя пользователя</option>
@@ -187,7 +187,7 @@
 				&nbsp;
 				Номер звонящего:
 				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
-				<input value='Поиск' type='submit'>
+				<input value='Найти' type='submit'>
 				&nbsp;&nbsp;
 			</td>
 			</form>

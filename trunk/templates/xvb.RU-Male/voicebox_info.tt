@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.178 2012-02-09 10:37:14 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.181 2012-03-06 08:56:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -281,11 +281,11 @@
 							Номер на который следует перейти после после выполнения действий в текущем номере
 							</span></a></td>
 					<td>
+						<input size='15' type='text' name='NEXTEXTENSION' value='[% VBOX_PREF.NEXTEXTENSION | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2('NEXTEXTENSION','[% VBOX_PREF.NEXTEXTENSION | html %]','<option selected value="[% VBOX_PREF.NEXTEXTENSION | html %]">[% VBOX_PREF.NEXTEXTENSION | html %] - Текущее значение</option>')
+							exten_dropdown2('NEXTEXTENSION','[% VBOX_PREF.NEXTEXTENSION | html %]','<option selected value="[% VBOX_PREF.NEXTEXTENSION | html %]">[% VBOX_PREF.NEXTEXTENSION | html %] - Текущее значение</option><option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.NEXTEXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
-						<noscript><input size='12' type='text' name='NEXTEXTENSION' value='[% VBOX_PREF.NEXTEXTENSION | html %]'></noscript>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -617,11 +617,11 @@
 							Используется в случае если необходимо сделать какие либо действия, сложнее чем VoiceMail при неудачном звонке.
 						</span></a></td>
 					<td>
+						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
-						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -942,11 +942,11 @@
 							Перейти к данному внутреннему номеру в случае неудачного WEB запроса
 						</span></a></td>
 					<td>
+						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
-						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1244,6 +1244,20 @@
 					[% END %]
 					</td>
 				</tr>
+				<tr>
+					<td><a href='#' class='info'>Только последний подкаст: <span>
+						Если установить данный флаг то система воспроизведет пользователю только последний 
+						скачанный подкаст и перейдет к выполнению следующего внутреннего номера, не воспроизводя
+						системные сообщения.
+						</span></a></td>
+					<td>
+						[% IF VBOX_PREF.ONLY_LATEST %]
+							<input name="ONLY_LATEST" type="checkbox" checked>
+						[% ELSE %]
+							<input name="ONLY_LATEST" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '13' %]
@@ -1328,15 +1342,15 @@
 					<td>
 					<select name="ANNOUNCE_HOLDTIME">
 					[% IF VBOX_PREF.ANNOUNCE_HOLDTIME eq '2' %]
-						<option value="2">среднее за последний час</option>
+						<option value="2" selected>среднее за последний час</option>
 						<option value="0">нет</option>
 						<option value="1">среднее за все время</option>
 					[% ELSIF VBOX_PREF.ANNOUNCE_HOLDTIME eq '1' %]
-						<option value="1">среднее за все время</option>
+						<option value="1" selected>среднее за все время</option>
 						<option value="0">нет</option>
 						<option value="2">среднее за последний час</option>
 					[% ELSE %]
-						<option value="0">нет</option>
+						<option value="0" selected>нет</option>
 						<option value="1">среднее за все время</option>
 						<option value="2">среднее за последний час</option>
 					[% END %]
@@ -1395,11 +1409,11 @@
 							Внутренний номер на который будет осуществлен переход в случае неудачного звонка.
 						</span></a></td>
 					<td>
+						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="" selected>------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
-						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1495,11 +1509,11 @@
 							соединения, номер должен иметь установленный флаг 'Прямой доступ'
 							</span></a></td>
 					<td>
+						<input size='15' type='text' name='CB_EXT' value='[% VBOX_PREF.CB_EXT | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'CB_EXT','[% VBOX_PREF.CB_EXT | html %]','<option value="">------------------------------</option>')
+							exten_dropdown2( 'CB_EXT','[% VBOX_PREF.CB_EXT | html %]','<option value="" selected>------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.CB_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
-						<noscript><input size='12' type='text' name='CB_EXT' value='[% VBOX_PREF.CB_EXT | html %]'></noscript>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1785,11 +1799,11 @@
 							Перейти к данному внутреннему номеру в случае неудачного WEB запроса
 						</span></a></td>
 					<td>
+						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="" selected>------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
-						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1913,11 +1927,11 @@
 							Перейти к данному пункту IVR если в календаре нет событий на это время
 						</span></a></td>
 					<td>
+						<input size='15' type='text' name='GOTO_IF_OK' value='[% VBOX_PREF.GOTO_IF_OK | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_OK','[% VBOX_PREF.GOTO_IF_OK | html %]','<option value="[% VBOX_PREF.GOTO_IF_OK | html %]">[% VBOX_PREF.GOTO_IF_OK | html %] - Текущее значение</option>')
+							exten_dropdown2( 'GOTO_IF_OK','[% VBOX_PREF.GOTO_IF_OK | html %]','<option value="[% VBOX_PREF.GOTO_IF_OK | html %]" selected>[% VBOX_PREF.GOTO_IF_OK | html %] - Текущее значение</option><option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_OK | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
-						<noscript><input size='12' type='text' name='GOTO_IF_OK' value='[% VBOX_PREF.GOTO_IF_OK | html %]'></noscript>
 					</td>
 				</tr>
 				<tr>
@@ -1925,11 +1939,11 @@
 							Перейти к данному пункту IVR если в календаре на данное время назначены какие либо события ( флаг занят\свободен не учитывается )
 						</span></a></td>
 					<td>
+						<input size='15' type='text' name='GOTO_IF_BUSY' value='[% VBOX_PREF.GOTO_IF_BUSY | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_OK','[% VBOX_PREF.GOTO_IF_BUSY | html %]','<option value="[% VBOX_PREF.GOTO_IF_BUSY | html %]">[% VBOX_PREF.GOTO_IF_BUSY | html %] - Текущее значение</option>')
+							exten_dropdown2( 'GOTO_IF_BUSY','[% VBOX_PREF.GOTO_IF_BUSY | html %]','<option value="[% VBOX_PREF.GOTO_IF_BUSY | html %]" selected>[% VBOX_PREF.GOTO_IF_BUSY | html %] - Текущее значение</option><option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_BUSY | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
-						<noscript><input size='12' type='text' name='GOTO_IF_BUSY' value='[% VBOX_PREF.GOTO_IF_BUSY | html %]'></noscript>
 					</td>
 				</tr>
 				[% END %]
@@ -1993,11 +2007,11 @@
 							в случае неудачной парковки
 						</span></a></td>
 					<td>
+						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option>')
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="" selected>------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
-						<noscript><input size='12' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'></noscript>
 					</td>
 				</tr>
 				[% END %]
@@ -3040,7 +3054,7 @@
 							<td><input size='15' name='var_name' type='text'></td>
 							<td>
 								<select name="cond">
-									<option value="==">==</option>
+									<option value="==" selected>==</option>
 									<option value="!=">!=</option>
 									<option value="<">&lt;</option>
 									<option value=">">&gt;</option>

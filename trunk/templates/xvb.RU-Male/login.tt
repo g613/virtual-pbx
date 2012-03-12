@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: login.tt,v 1.3 2012-01-24 14:01:03 gosha Exp $ -->
+<!-- $Id: login.tt,v 1.4 2012-03-05 18:22:05 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - вход</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -34,20 +34,24 @@
 	<table width='50%' class='half-width'>
 		<form method='post'>
 			<tr>
-				<td>Номер телефона: </td>
+				<td>Номер телефона&nbsp;</td>
 				<td><input name='phone' type='text'></td>
 			</tr>
 			<tr>
-				<td>Код доступа: </td>
+				<td>Код доступа&nbsp;</td>
 				<td><input name='ac' type='text'></td>
 			</tr>
 			<tr>
-				<td>Внутренний номер: </td>
+				<td>Внутренний номер*&nbsp;</td>
 				<td><input name='ext_id' type='text'></td>
 			</tr>
 			<tr>
-				<td>Пин код: </td>
+				<td>Пин код&nbsp;</td>
 				<td><input name='pw' type='password'></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>* необязательное поле</td>
 			</tr>
 			<tr>
 				<td colspan='2'>&nbsp;</td>
