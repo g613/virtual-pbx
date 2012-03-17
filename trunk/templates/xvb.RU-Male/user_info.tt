@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.64 2012-02-09 10:37:14 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.65 2012-03-13 16:07:51 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -184,17 +184,8 @@
 				<tr>
 					<td>Часовой пояс:</td>
 					<td>
-						<select name='TIME_ZONE'>
-							[% FOREACH t = TZ %]
-								[% IF USER_CREDS.TIME_ZONE eq t.ID %]
-									<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | html %]</option>
-								[% ELSE %]
-									[% IF t.ID %]
-										<option value="[% t.ID | html %]">[% t.DESCRIPTION | html %]</option>
-									[% END %]
-								[% END %]
-							[% END %]
-						</select>
+						<input size='20' type='text' name='TZ_NAME' value='[% USER_CREDS.TZ_NAME | html %]'>
+						<script lang='JavaScript'>tz_dropdown('[% USER_CREDS.TZ_NAME %]', 'По гринвичу')</script>
 					</td>
 				</tr>
 				<tr>
