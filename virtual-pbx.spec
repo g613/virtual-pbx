@@ -159,6 +159,7 @@ Requires: perl(Apache::DBI)
 Requires: perl(XML::Simple)
 Requires: perl(XML::Parser)
 Requires: perl(JSON::XS)
+Requires: perl(CGI)
 
 %description web
 Voice Application Server / HostedIVR solution based on asterisk  - WEB interface

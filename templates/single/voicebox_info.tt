@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.30 2011-07-04 05:17:43 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.32 2012-03-13 18:21:44 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -660,16 +660,9 @@
 				[% IF VBOX_PREF.TYPE eq '15' %]
 				<tr class='addon_info'>
 					<td class='ext_pn'>Time Zone</td>
-					<td class='ext_pv'>
-						<select name="TIME_ZONE">
-						[% FOREACH t = TZ %]
-							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
-								<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | html %]</option>
-							[% ELSE %]
-								<option value="[% t.ID | html %]">[% t.DESCRIPTION | html %]</option>
-							[% END %]
-						[% END %]
-						</select>
+					<td>
+						<input size='20' type='text' name='TZ_NAME' value='[% VBOX_PREF.TZ_NAME | html %]'>
+						<script lang='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'Default')</script>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -800,16 +793,9 @@
 				</tr>
 				<tr class='addon_info'>
 					<td class='ext_pn'>Time Zone</td>
-					<td class='ext_pv'>
-						<select name="TIME_ZONE">
-						[% FOREACH t = TZ %]
-							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
-								<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | html %]</option>
-							[% ELSE %]
-								<option value="[% t.ID | html %]">[% t.DESCRIPTION | html %]</option>
-							[% END %]
-						[% END %]
-						</select>
+					<td>
+						<input size='20' type='text' name='TZ_NAME' value='[% VBOX_PREF.TZ_NAME | html %]'>
+						<script lang='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'Default')</script>
 					</td>
 				</tr>
 				[% END %]

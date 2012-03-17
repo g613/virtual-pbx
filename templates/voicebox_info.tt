@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.230 2012-03-06 08:56:41 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.232 2012-03-13 18:21:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -737,15 +737,8 @@
 				<tr class='addon_info'>
 					<td>Schedule Time Zone</td>
 					<td>
-						<select name="TIME_ZONE">
-						[% FOREACH t = TZ %]
-							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
-								<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | html %]</option>
-							[% ELSE %]
-								<option value="[% t.ID | html %]">[% t.DESCRIPTION | html %]</option>
-							[% END %]
-						[% END %]
-						</select>
+						<input size='20' type='text' name='TZ_NAME' value='[% VBOX_PREF.TZ_NAME | html %]'>
+						<script lang='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'Default')</script>
 					</td>
 				</tr>
 				[% END %]
@@ -1295,15 +1288,8 @@
 				<tr class='addon_info'>
 					<td>Time Zone</td>
 					<td>
-						<select name="TIME_ZONE">
-						[% FOREACH t = TZ %]
-							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
-								<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | html %]</option>
-							[% ELSE %]
-								<option value="[% t.ID | html %]">[% t.DESCRIPTION | html %]</option>
-							[% END %]
-						[% END %]
-						</select>
+						<input size='20' type='text' name='TZ_NAME' value='[% VBOX_PREF.TZ_NAME | html %]'>
+						<script lang='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'Default')</script>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1456,15 +1442,8 @@
 				<tr class='addon_info'>
 					<td>Time Zone</td>
 					<td>
-						<select name="TIME_ZONE">
-						[% FOREACH t = TZ %]
-							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
-								<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | html %]</option>
-							[% ELSE %]
-								<option value="[% t.ID | html %]">[% t.DESCRIPTION | html %]</option>
-							[% END %]
-						[% END %]
-						</select>
+						<input size='20' type='text' name='TZ_NAME' value='[% VBOX_PREF.TZ_NAME | html %]'>
+						<script lang='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'Default')</script>
 					</td>
 				</tr>
 				[% END %]

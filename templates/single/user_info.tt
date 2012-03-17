@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.13 2011-07-04 05:17:43 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.15 2012-03-13 16:07:51 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -140,18 +140,9 @@
 				</tr>
 				<tr>
 					<td class='ext_pn'>Time Zone:</td>
-					<td class='ext_pv'>
-						<select name='TIME_ZONE'>
-							[% FOREACH t = TZ %]
-								[% IF USER_CREDS.TIME_ZONE eq t.ID %]
-									<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | html %]</option>
-								[% ELSE %]
-									[% IF t.ID %]
-										<option value="[% t.ID | html %]">[% t.DESCRIPTION | html %]</option>
-									[% END %]
-								[% END %]
-							[% END %]
-						</select>
+					<td>
+						<input size='20' type='text' name='TZ_NAME' value='[% USER_CREDS.TZ_NAME | html %]'>
+						<script lang='JavaScript'>tz_dropdown('[% USER_CREDS.TZ_NAME %]', 'GMT')</script>
 					</td>
 				</tr>
 				<tr>
@@ -299,7 +290,7 @@
 				</tr>
 				[% END %]
 				<tr>
-					<td class='ext_pn'>Maximum Phones for Follow-Me & Queues: </td>
+					<td class='ext_pn'>Maximum Phones for Follow-Me & Queue: </td>
 					<td class='ext_pv'>[% USER_CREDS.MAX_EXT_PHONES | html %]</td>
 				</tr>
 				[% IF USER_CREDS.VBL_18 ne '0' %]

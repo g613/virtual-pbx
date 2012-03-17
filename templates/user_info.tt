@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.69 2012-01-30 18:35:57 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.70 2012-03-13 16:07:50 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -184,17 +184,8 @@ Prived: [% d.DID | html %]
 				<tr>
 					<td>Time Zone:</td>
 					<td>
-						<select name='TIME_ZONE'>
-							[% FOREACH t = TZ %]
-								[% IF USER_CREDS.TIME_ZONE eq t.ID %]
-									<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | html %]</option>
-								[% ELSE %]
-									[% IF t.ID %]
-										<option value="[% t.ID | html %]">[% t.DESCRIPTION | html %]</option>
-									[% END %]
-								[% END %]
-							[% END %]
-						</select>
+						<input size='20' type='text' name='TZ_NAME' value='[% USER_CREDS.TZ_NAME | html %]'>
+						<script lang='JavaScript'>tz_dropdown('[% USER_CREDS.TZ_NAME %]', 'GMT')</script>
 					</td>
 				</tr>
 				<tr>

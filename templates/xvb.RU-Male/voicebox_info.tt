@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.181 2012-03-06 08:56:43 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.183 2012-03-13 18:21:44 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -899,15 +899,8 @@
 				<tr class='addon_info'>
 					<td>Часовой пояс расписания</td>
 					<td>
-						<select name="TIME_ZONE">
-						[% FOREACH t = TZ %]
-							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
-								<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | locale_msg %]</option>
-							[% ELSE %]
-								<option value="[% t.ID | html %]">[% t.DESCRIPTION | locale_msg %]</option>
-							[% END %]
-						[% END %]
-						</select>
+						<input size='20' type='text' name='TZ_NAME' value='[% VBOX_PREF.TZ_NAME | html %]'>
+						<script lang='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'По умолчанию')</script>
 					</td>
 				</tr>
 				[% END %]
@@ -1546,15 +1539,8 @@
 				<tr class='addon_info'>
 					<td>Time Zone</td>
 					<td>
-						<select name="TIME_ZONE">
-						[% FOREACH t = TZ %]
-							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
-								<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | html %]</option>
-							[% ELSE %]
-								<option value="[% t.ID | html %]">[% t.DESCRIPTION | html %]</option>
-							[% END %]
-						[% END %]
-						</select>
+						<input size='20' type='text' name='TZ_NAME' value='[% VBOX_PREF.TZ_NAME | html %]'>
+						<script lang='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'По умолчанию')</script>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1729,15 +1715,8 @@
 				<tr class='addon_info'>
 					<td>Часовой пояс: </td>
 					<td>
-						<select name="TIME_ZONE">
-						[% FOREACH t = TZ %]
-							[% IF VBOX_PREF.TIME_ZONE eq t.ID %]
-								<option value="[% t.ID | html %]" selected>[% t.DESCRIPTION | locale_msg %]</option>
-							[% ELSE %]
-								<option value="[% t.ID | html %]">[% t.DESCRIPTION | locale_msg %]</option>
-							[% END %]
-						[% END %]
-						</select>
+						<input size='20' type='text' name='TZ_NAME' value='[% VBOX_PREF.TZ_NAME | html %]'>
+						<script lang='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'По умолчанию')</script>
 					</td>
 				</tr>
 				[% END %]
