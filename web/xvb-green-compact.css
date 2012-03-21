@@ -172,6 +172,12 @@ a.help:hover span{
 }
 /* End Helps */
 
+.display_none {
+	display: none;
+}
+
+.display_yes {}
+
 .addon_info {
 	display: none;
 }

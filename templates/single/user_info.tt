@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.15 2012-03-13 16:07:51 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.17 2012-03-17 10:02:57 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]

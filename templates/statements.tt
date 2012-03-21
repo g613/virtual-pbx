@@ -1,6 +1,7 @@
 <html>
-<!-- $Id: statements.tt,v 1.15 2011-04-22 15:08:42 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.17 2012-03-17 10:02:57 gosha Exp $ -->
 <head>
+	<BASE href="[% CGI_SERVER %]">
 	<style>
 	body { 
 		background: white;
@@ -14,6 +15,14 @@
 	}
 	.backlight {
 		background-color: #efefef;
+	}
+	table th, 
+	table td {
+		padding: 4px 4px 3px;
+	}
+	table { 
+		width: 100%;
+		padding: 0;
 	}
 	</style>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
