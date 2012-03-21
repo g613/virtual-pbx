@@ -1,6 +1,7 @@
 <html>
-<!-- $Id: new_message.tt,v 1.10 2012-01-09 14:24:48 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.13 2012-03-17 10:02:57 gosha Exp $ -->
 <head>
+	<BASE href="[% CGI_SERVER %]">
 	[% IF USER_CREDS.CSS_HREF eq '' %]
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
 	[% ELSE %]
@@ -21,7 +22,7 @@
 
 <p>
 Сообщаем Вам, что на Ваш ящик голосовой почты (<b>[% USER_CREDS.ACCESS_CODE | html %]</b>@<b>[% USER_CREDS.VOICENUMBER | html %]</b> # <b>[% _USER_VBOX.EXT_NUMBER | html %]</b>) получено новое сообщение
-от <b>[% callerid | html %]</b>, в <b>[% origdate | html %]</b>..
+от <b>[% callerid | html %]</b>, в <b>[% origdate | html %]</b>.
 </p>
 
 <p>
@@ -36,8 +37,8 @@
 </p>
 
 -- 
-Спасибо, 
-	Ваш VirtualPBX.
+<br>Спасибо,<br> 
+&nbsp;&nbsp;Ваш VirtualPBX.
 
 </body>
 </html>

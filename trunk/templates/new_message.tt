@@ -1,6 +1,7 @@
 <html>
-<!-- $Id: new_message.tt,v 1.17 2010-12-23 12:03:51 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.18 2012-03-17 10:02:57 gosha Exp $ -->
 <head>
+	<BASE href="[% CGI_SERVER %]">
 	[% IF USER_CREDS.CSS_HREF eq '' %]
 	<link rel="stylesheet" type="text/css" href="[% CGI_SERVER %]/xvb/xvb.css" />
 	[% ELSE %]

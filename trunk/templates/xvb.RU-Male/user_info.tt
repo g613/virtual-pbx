@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.65 2012-03-13 16:07:51 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.68 2012-03-17 10:17:48 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -109,9 +109,9 @@
 					<td>
 						<select name='skins' onchange='javascript:document.user_prefs.CSS_HREF.value=this.value'>
 							<option value='[% USER_CREDS.CSS_HREF | html %]' selected>Ссылка на таблицу стилей:</option>
-							<option value='/xvb/xvb-green.css'>Стиль - зеленая палитра</option>
+							<option value='/xvb/xvb-green.css'>Стиль зеленая палитра</option>
 							<option value='/xvb/xvb-green-compact.css'>Стиль зеленая палитра. Компактный.</option>
-							<option value='/xvb/xvb.css'>Стиль - по умолчанию</option>
+							<option value=''>Стиль по умолчанию</option>
 						</select>
 					</td>
 					<td>
