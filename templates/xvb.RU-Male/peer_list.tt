@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.25 2012-01-21 21:10:40 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.26 2012-03-19 19:32:19 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP шлюзы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -49,7 +49,7 @@
 	<p>
 	<table width='95%' class='list_data' id='d-tbl'>
 		<tr class='list_data'>
-			<th width='20%'>Прокси (*)</th>
+			<th width='15%'>Прокси (*)</th>
 			<th>Порт (*)</th>
 			<th>Домен</th>
 			<th>Пользователь</th>
@@ -60,6 +60,7 @@
 			[% IF USER_CREDS.CUSTOM_REGS %]
 			<th>Принимать звонки</th>
 			<th>на вн. номер</th>
+			<th width='1%'></th>
 			[% END %]
 			<th>Действия</th>
 		</tr>
@@ -108,6 +109,17 @@
 			</td>
 			<td>
 				<input class='in_t0' size="8" name='INC_EXT' type='text' value="[% p.INC_EXT | html %]">
+			</td>
+			<td align='center'>
+			[% IF p.REG_DATA %]
+				<img 
+				[% IF p.REG_DATA.state eq 'Registered' %]
+					src='/xvb/images/ball_green.png'
+				[% ELSE %]
+					src='/xvb/images/ball_red.png'
+				[% END %]
+				title='[% p.REG_DATA.state | html %]' alt='[% p.REG_DATA.state | html %]' />
+			[% END %]
 			</td>
 			[% END %]
 			<td align='left'>
@@ -179,6 +191,7 @@
 			<td>
 				<input size="8" name='INC_EXT' type='text'>
 			</td>
+			<td></td>
 			[% END %]
 			<td>
 				<input type='hidden' value='peer_add' name='action'>
