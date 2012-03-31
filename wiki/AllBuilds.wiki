@@ -2,7 +2,6 @@
 
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/44764867001.a475be986775503485720a018e04a3d0/VirtualPBX-1_6116.tar.bz2.html build 6116 (31.03.2012)] ( CentOS 5.8, added more reports, SIP-registration status, plugins-support, DIDs routing, many GUI improvements )
 
-
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/43762234001.a5c2e359deac5864b5ea26a81fe833f8/VirtualPBX-CentOS6-1_6057.tar.bz2.html build 6057 (15.03.2012)] ( with CentOS 6.2, asterisk 1.8.10, chan_dongle ) <font color='red'>!!! Experimental !!!</font>
 
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/40769628001/VirtualPBX-1_5905.tar.bz2.html build 5905 ( 15.02.2012 ) ] ( improved localisation / improved web-templates )
