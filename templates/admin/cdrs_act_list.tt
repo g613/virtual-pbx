@@ -1,0 +1,108 @@
+<html>
+<!-- $Id: cdrs_act_list.tt,v 1.2 2012-03-23 21:12:51 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - CDRs / Call Detail</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+	
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='center'><h2>CDRs / Call Detail</h2></td>
+			<td align='right' width='20%'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
+			</td>
+		</tr>
+	</table>
+	</p>
+	
+	<p>
+	<table width='98%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				[% INCLUDE main_menu.tt-inc %]
+			</td>
+		</tr>
+	</table>
+	</p>
+	<center>
+
+	<p>
+	<table width='95%' class='list_data' id='d-tbl'>
+		<tr class='list_data'>
+			<th>Start Date</th>
+			<th>Caller ID</th>
+			<th>Access Code</th>
+			<th>Duration</th>
+			<th>Extension</th>
+			<th>Type</th>
+			<th width='25%'>Data</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='7'>
+				<a title='previous page' href='?action=cdr_list&from=[% MSG_PREV %]&call_id=[% CDR_CALL_ID %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+		
+		[% FOREACH msg = CDR_LIST %]
+		<tr class='nocolor' align='center'>
+			<td align='center'>[% msg.CDR_DATE | html %]</td>
+			<td align='center'>[% msg.CALLER_ID | html %]</td>
+			<td align='center'>[% msg.ACCESS_CODE | html %]</td>
+			<td>[% msg.CDR_DURATION | duration_str %]</td>
+			<td>[% msg.EXT_NUMBER | html %]</td>
+			<td>[% msg.TYPE | html %]</td>
+			<td align='left'>[% msg.DATA | html %]</td>
+		</tr>
+		[% END %]
+		<tr>
+		[% IF MSG_NEXT ne '' %]
+			<td align='right' colspan='7'>
+				<a title='next page' href='?action=cdr_list&from=[% MSG_NEXT %]&call_id=[% CDR_CALL_ID %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+			</td>
+		[% ELSE %]
+			<td colspan='7'>&nbsp;</td>
+		[% END %]
+		</tr>
+	</table>
+	</p>
+
+	<script language='JavaScript'>
+		var download_file_url="";
+		var callback_cdr_url="$1<a title='cdr' href='?action=cdr_list&call_id=$2'>CALL</a>";
+		var js_date_str="[% JS_DATE_STR | html %]-DTMF history";
+		cdrfilters( 'd-tbl', 6 );
+		listcolorer( 'd-tbl' );
+	</script>
+
+	<p>	
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			<td width='100%'>&nbsp;</td>
+		</tr>
+	</table>
+	</p>
+	
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
+
