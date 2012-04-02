@@ -82,6 +82,9 @@
 				<b>Calls:</b> [% node.stat.calls %]<br>
 				[% IF node.stat.la_1-time %]
 					<b>la_1/5/10:</b> [% node.stat.la_1 %] / [% node.stat.la_5 %] / [% node.stat.la_10 %]<br>
+					<b>SysUptime:</b> [% node.stat.sys_uptime %]<br>
+					<b>AstUptime:</b> [% node.stat.ast_uptime %]<br>
+					<b>AstReload:</b> [% node.stat.ast_reload %]<br>
 					<b>Date:</b> [% node.stat.la_1-time | gmtime %]
 				[% END %]
 			</td>
