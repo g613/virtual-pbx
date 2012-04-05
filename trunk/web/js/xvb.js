@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.53 2012-03-15 17:41:08 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.55 2012-03-28 14:13:03 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -321,7 +321,8 @@ function ShowPlayer( file ) {
 	el.style.visibility='visible';
 	var div_id = document.getElementById('center');
 	var player_data = '';
-	if (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) {
+	var plugin = (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) ? navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin : 0;
+	if ( plugin ) {
 		// flash
 		player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td><object type="application/x-shockwave-flash" data="/xvb/js/flowplayer/ump3player_500x70.swf" height="70" width="470"><param name="wmode" VALUE="transparent" /><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="movie" value="/xvb/js/flowplayer/ump3player_500x70.swf" /><param name="FlashVars" value="way='+file+'&amp;swf=/xvb/js/flowplayer/ump3player_500x70.swf&amp;w=470&amp;h=70&amp;time_seconds=0&amp;autoplay=1&amp;q=&amp;skin=white&amp;volume=90&amp;comment=Voice messages" /></object></td></tr></table>';
 	} else {
@@ -345,7 +346,8 @@ function HidePlayer() {
 	var el=document.getElementById('shadow');
 	el.style.visibility='hidden';
 	var div_id = document.getElementById('center');
-	if (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) {
+	var plugin = (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) ? navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin : 0;
+	if ( plugin ) {
 	} else {
 		div_id.innerHTML = '<audio tabindex="0" autoplay="autoplay" controls="controls"></audio>';
 	}
@@ -561,14 +563,18 @@ function cdrfilters( element_id, col_num ) {
 				td_obj[col_num].innerHTML = new_str;
 			} else {
 				// FILE pattern
-				var new_str = data.replace(re, download_file_url);
-				if ( data != new_str ) {
-					td_obj[col_num].innerHTML = new_str;
+				if ( download_file_url.length > 0 ) {
+					var new_str = data.replace(re, download_file_url);
+					if ( data != new_str ) {
+						td_obj[col_num].innerHTML = new_str;
+					}
 				}
 				// CALLID pattern ( Callback / AlarmClock )
-				new_str = data.replace(re3, callback_cdr_url);
-				if ( data != new_str ) {
-					td_obj[col_num].innerHTML = new_str;
+				if ( callback_cdr_url.length > 0 ) {
+					new_str = data.replace(re3, callback_cdr_url);
+					if ( data != new_str ) {
+						td_obj[col_num].innerHTML = new_str;
+					}
 				}
 			}
 		}

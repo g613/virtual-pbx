@@ -536,6 +536,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_gearman_worker
 %attr(755,root,root) %CORE_DIR/contrib/utils/gearman-worker.pl
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-gearman-worker
+%attr(755,root,root) %CORE_DIR/contrib/utils/radiusgw.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_reg_uac
 %attr(755,root,root) %CORE_DIR/contrib/utils/reg_uac.pl
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-reg_uac
