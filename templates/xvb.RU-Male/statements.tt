@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.19 2012-03-17 10:02:57 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.20 2012-03-19 19:32:20 gosha Exp $ -->
 <head>
 	<BASE href="[% CGI_SERVER %]">
 	<style>
@@ -70,21 +70,20 @@
 	[% FOREACH msg = SUMMARY %]
 		[% IF msg.TYPE eq 'CALL' %]
 		<tr class='nocolor' align='center'>
-			<td>[% msg.CALL_TYPE | html %]</td>
+			<td>&nbsp;</td>
+			<td>звонок ([% msg.CALL_TYPE | locale_msg %])</td>
+			<td>[% msg.CNT | html %]</td>
+			<td>[% msg.DURATION | duration_str %]</td>
+			<td>[% msg.USER_COST %] ( [% msg.DESCRIPTION | locale_msg %])</td>
 		[% ELSE %]
 		<tr class='backlight' align='center'>
 			<td>[% msg.EXT_NUMBER | html %]</td>
-		[% END %]
-			<td>[% msg.TYPE | html %]</td>
+			<td>[% msg.TYPE | locale_msg %]</td>
 			<td>[% msg.CNT | html %]</td>
 			<td>[% msg.DURATION | duration_str %]</td>
-			[% IF msg.TYPE eq 'CALL' %]
-			<td>[% msg.USER_COST %] ([% msg.DESCRIPTION | locale_msg %])</td>
-			[% ELSE %]
 			<td>&nbsp;</td>
-			[% END %]
-		</tr>
 		[% END %]
+		</tr>
 	[% END %]
 	
 	[% IF CALLS scalar %]

@@ -275,6 +275,10 @@ html * #center {
 	color:green;
 }
 
+p.copyright {
+	font-size: 80%;
+}
+
 /* *************** */
 table th, 
 table td {
