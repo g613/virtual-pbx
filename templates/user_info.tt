@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.72 2012-03-17 10:02:57 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.73 2012-04-08 06:35:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -208,17 +208,29 @@ Prived: [% d.DID | html %]
 						<select name='STATEMENTS'>
 							[% IF USER_CREDS.STATEMENTS eq '0' %]
 								<option value="0" selected>disable</option>
-								<option value="2">summary only</option>
-								<option value="6">all</option>
 							[% ELSIF USER_CREDS.STATEMENTS eq '2' %]
-								<option value="0">disable</option>
-								<option value="2" selected>summary only</option>
-								<option value="6">all</option>
+								<option value="2" selected>activities summary</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '4' %]
+								<option value="4" selected>list of calls</option>
 							[% ELSIF USER_CREDS.STATEMENTS eq '6' %]
-								<option value="0">disable</option>
-								<option value="2">summary only</option>
-								<option value="6" selected>all</option>
+								<option value="6" selected>list of calls+activities</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '8' %]
+								<option value="8" selected>calls summary</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '10' %]
+								<option value="10" selected>calls+activities summary</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '12' %]
+								<option value="12" selected>calls (summary/list)</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '14' %]
+								<option value="14" selected>all</option>
 							[% END %]
+								<option value="0">disable</option>
+								<option value="2">activities summary</option>
+								<option value="4">list of calls</option>
+								<option value="6">list of calls+activities</option>
+								<option value="8">calls summary</option>
+								<option value="10">calls+activities summary</option>
+								<option value="12">calls (summary/list)</option>
+								<option value="14">all</option>
 						</select>
 					</td>
 				</tr>
