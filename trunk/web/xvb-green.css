@@ -137,7 +137,8 @@ a.info:hover span{
 	text-align:justify;
 	font-size:12px;
 	font-weight:normal;
-	padding:3px;
+	padding: 4px 4px 3px;
+	border-radius: 10px;
 	line-height:15px;
 }
 /* End Tips */
@@ -167,7 +168,8 @@ a.help:hover span{
 	text-align:justify;
 	font-size:14px;
 	font-weight:normal;
-	padding:3px;
+	padding: 4px 4px 3px;
+	border-radius: 10px;
 	line-height:15px;
 }
 /* End Helps */
@@ -262,7 +264,7 @@ a.success {
 	height: 100px; 
 	z-index: 99;
 	position: fixed; 
-	top: 50%; 
+	top: 40%; 
 	left: 50%; 
 	margin-left: -250px; 
 	margin-top: -50px; 
@@ -286,6 +288,10 @@ html * #center {
 
 p.copyright {
 	font-size: 80%;
+}
+
+table.statement { 
+	border: 1px solid black;
 }
 
 /* *************** */

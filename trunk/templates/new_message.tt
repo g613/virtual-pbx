@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: new_message.tt,v 1.18 2012-03-17 10:02:57 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.20 2012-04-08 12:56:13 gosha Exp $ -->
 <head>
 	<BASE href="[% CGI_SERVER %]">
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -27,13 +27,16 @@ from <b>[% callerid | html %]</b>, on <b>[% origdate | html %]</b>, so you might
 
 <p>
 [% IF FILE_LINK ne '' %]
+<a href="[% FILE_LINK %]">You can download the file here.</a>
+<!--
 [% IF is_voice %]
-<a href="[% FILE_LINK %]&media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]">
-[% ELSE %]
-<a href="[% FILE_LINK %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]">
+</p><p>
+<a href="https://twitter.com/intent/tweet?text=Check%20this%20out&url=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/msg_download/[% _USER_VBOX.ID | html %]/0/[% file_name | html %].mp3&amp;media=mp3&amp;uniq=[% USER_CREDS.ACCESS_CODE | html %]"><img src="/xvb/images/twitter22.png" alt="Share on twitter" title="Share on facebook" /></a>
+<a href="http://www.facebook.com/share.php?t=VirtualPBX&u=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/fbshare/[% _USER_VBOX.ID %]/0/[% file_name %]%3funiq=[% USER_CREDS.ACCESS_CODE | html %]&amp;date=[% origdate | html %]&amp;cid=[% callerid | html %]"><img src="/xvb/images/facebook22.png" alt="Share on facebook" title="Share on facebook" /></a>
+</p><p>
 [% END %]
-You can download the file here.</a>
 [% END %]
+-->
 </p>
 
 Thanks!

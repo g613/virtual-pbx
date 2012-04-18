@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.68 2012-03-17 10:17:48 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.69 2012-04-08 06:35:26 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -208,17 +208,29 @@
 						<select name='STATEMENTS'>
 							[% IF USER_CREDS.STATEMENTS eq '0' %]
 								<option value="0" selected>не требуется</option>
-								<option value="2">общая статистика</option>
-								<option value="6">полная статистика</option>
 							[% ELSIF USER_CREDS.STATEMENTS eq '2' %]
-								<option value="0">не требуется</option>
-								<option value="2" selected>общая статистика</option>
-								<option value="6">полная статистика</option>
+								<option value="2" selected>внутренняя активность</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '4' %]
+								<option value="4" selected>список звонков</option>
 							[% ELSIF USER_CREDS.STATEMENTS eq '6' %]
-								<option value="0">не требуется</option>
-								<option value="2">общая статистика</option>
-								<option value="6" selected>полная статистика</option>
+								<option value="6" selected>список звонков и активность</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '8' %]
+								<option value="8" selected>звонки обобщенная</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '10' %]
+								<option value="10" selected>звонки+активность обобщенная</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '12' %]
+								<option value="12" selected>звонки (список+обобщенная)</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '14' %]
+								<option value="14" selected>вся статистика</option>
 							[% END %]
+								<option value="0">не требуется</option>
+								<option value="2">внутренняя активность</option>
+								<option value="4">список звонков</option>
+								<option value="6">список звонков и активность</option>
+								<option value="8">звонки обобщенная</option>
+								<option value="10">звонки+активность обобщенная</option>
+								<option value="12">звонки (список+обобщенная)</option>
+								<option value="14">вся статистика</option>
 						</select>
 					</td>
 				</tr>
