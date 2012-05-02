@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.17 2012-02-11 20:57:34 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.18 2012-04-26 12:57:07 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Детализация звонка - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -50,7 +50,7 @@
 			<th>Длительность</th>
 			<th>Вн. номер</th>
 			<th>Тип действия</th>
-			<th>Действия</th>
+			<th>&nbsp;</th>
 			<th width='25%'>Данные</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]

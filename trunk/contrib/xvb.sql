@@ -581,6 +581,8 @@ create	table VPBX_VBOXES_PLAYBACK
 (
 	ID			INT(16)		    not null,
 
+	GREETING_TAGS	VARCHAR(255),
+
 	unique(ID),
 
     CONSTRAINT FK_VPBX_VBOXES_PLAYBACK FOREIGN KEY (ID) REFERENCES VPBX_VBOXES_CORE(ID) ON DELETE CASCADE
@@ -789,6 +791,7 @@ create	table VPBX_VBOXES_DIRECTORY
 	KEY_LEN			INT(4)			not null default 3,
 
 	DIR_LANG		INT(16)			not null default 0,
+	DIR_HELPEXT		VARCHAR(255),
 
 	unique(ID),
  

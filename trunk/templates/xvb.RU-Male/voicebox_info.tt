@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.183 2012-03-13 18:21:44 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.186 2012-04-24 11:28:34 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -105,6 +105,8 @@
 						<li><b>4</b> - назад на 30 секунд</li>
 						<li><b>6</b> - вперед на 30 секунд</li>
 						<li><b>5</b> - пауза</li>
+						<li><b>2</b>x - сделать временнУю метку на записе ( 0-9# ).</li>
+						<li><b>0</b>x - перейти к временнОй метки на записе.</li>
 					</ul>
 					</span></a>
 					[% END %]
@@ -535,6 +537,22 @@
 				[% END %]
 				<tr class='addon_info'><td colspan='2'>&nbsp;</td></tr>
 
+				[% IF VBOX_PREF.TYPE eq '1' %]
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>ВременнЫе метки:<span>
+						Пользователь может задать до 10 ( 0-9 ) предустановленных временных меток для перехода к определенным местам длинных записей.
+						Например: '10:00,1:2:33,99'<br>
+						при нажатии <b>0</b>0 - пользователь перейдет на 10 минут,<br>
+						при нажатии <b>0</b>1 - пользователь перейдет на 1 час 2 минуты 33 секунды,<br>
+						при нажатии <b>0</b>2 - пользователь перейдет на 1 минуту 39 секунд
+						</span></a>
+					</td>
+					<td>
+						<textarea rows='[% VBOX_PREF.GREETING_TAGS | textarea_rows %]' cols='35' name='GREETING_TAGS'>[% VBOX_PREF.GREETING_TAGS | html %]</textarea>
+					</td>
+				</tr>
+				[% END %]
+
 				[% IF VBOX_PREF.TYPE eq '2' %]
 				<tr class='addon_info'>
 					<td>Максимальная длина сообщения: </td>
@@ -867,6 +885,18 @@
 						</span></a></td>
 					<td>
 						<input size='2' type='text' name='KEY_LEN' value='[% VBOX_PREF.KEY_LEN | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Помощник: <span>
+							Перейти к данному внутреннему номеру в случае если пользователь ничего не ввел. В простейшем случае можно ввести номер секретаря или сделать звонок всем.
+						</span></a></td>
+					<td>
+						<input size='15' type='text' name='DIR_HELPEXT' value='[% VBOX_PREF.DIR_HELPEXT | html %]'>
+						<script language="JavaScript">
+							exten_dropdown2( 'DIR_HELPEXT','[% VBOX_PREF.DIR_HELPEXT | html %]','<option value="">------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
+							exten_icon( '[% VBOX_PREF.DIR_HELPEXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
+						</script>
 					</td>
 				</tr>
 				<tr class='addon_info'>

@@ -57,7 +57,7 @@
 				</td>
 				<td>
 					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]&nbsp;&nbsp;
-					<a title='view user profile' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %]&action=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='view user profile' /></a>
+					<a title='view user profile' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='view user profile' /></a>
 				</td>
 			</tr>
 			<tr>
@@ -89,8 +89,8 @@
 					Pin code:
 				</td>
 				<td>
-					[% USER.PIN_CODE | html %]&nbsp;&nbsp;
-					<a title='exten 0' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %]&action=vb_view&ext_id=0'><img border='0'  src='/xvb/images/vb_edit.png' alt='exten 0' /></a>
+					[% USER.PIN_CODE | html %][% USER.PIN_CODE2 %]&nbsp;&nbsp;
+					<a title='exten 0' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=vb_view&ext_id=0'><img border='0'  src='/xvb/images/vb_edit.png' alt='exten 0' /></a>
 				</td>
 			</tr>
 			<tr>

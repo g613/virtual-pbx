@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.18 2011-06-01 06:24:04 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.19 2012-04-26 12:57:05 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Call Detail - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -50,7 +50,7 @@
 			<th>Duration</th>
 			<th>Extension</th>
 			<th>Type</th>
-			<th>Actions</th>
+			<th>&nbsp;</th>
 			<th width='25%'>Data</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
@@ -74,7 +74,7 @@
 			<td>[% msg.TYPE | html %]</td>
 			<td>
 				[% IF msg.EXT_ID %]
-				<a href='?action=cid_add&id=[% msg.EXT_ID %]&cid_list_type=1&cid_type=1&cid=[% msg.CALLER_ID | html %]&description=for call at [% msg.CDR_DATE | html %]&uniq=[% USER_CREDS.UNIQ %]' title='add CID to black list'><img border='0' src='/xvb/images/vb_edit_black.png' alt='add' /></a>
+				<a href='?action=cid_add&id=[% msg.EXT_ID %]&cid_list_type=1&cid_type=1&cid=[% msg.CALLER_ID | html %]&description=for call at [% msg.CDR_DATE | html %]&uniq=[% USER_CREDS.UNIQ %]' title='add CID to black list for ext [% msg.EXT_NUMBER | html %]'><img border='0' src='/xvb/images/vb_edit_black.png' alt='add' /></a>
 				[% END %]
 			</td>
 			<td align='left'>[% msg.DATA | html %]</td>

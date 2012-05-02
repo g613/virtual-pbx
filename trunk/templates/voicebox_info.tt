@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.232 2012-03-13 18:21:43 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.235 2012-04-23 19:54:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -106,6 +106,8 @@
 					<li><b>4</b> - rew greeting ( -30 sec )</li>
 					<li><b>6</b> - ff greeting ( +30 sec )</li>
 					<li><b>5</b> - paused</li>
+					<li><b>2</b>x - remember the position</li>
+					<li><b>0</b>x - store the position</li>
 				</ul>
 				</span></a>
 				[% END %]
@@ -444,6 +446,15 @@
 			[% END %]
 			<tr class='addon_info'><td colspan='2'>&nbsp;</td></tr>
 			
+			[% IF VBOX_PREF.TYPE eq '1' %]
+			<tr class='addon_info'>
+				<td>Time tags: </td>
+				<td>
+					<textarea rows='[% VBOX_PREF.GREETING_TAGS | textarea_rows %]' cols='35' name='GREETING_TAGS'>[% VBOX_PREF.GREETING_TAGS | html %]</textarea>
+				</td>
+			</tr>
+			[% END %]
+
 			[% IF VBOX_PREF.TYPE eq '2' %]
 			<tr class='addon_info'>
 				<td>Max message duaration: </td>
@@ -715,6 +726,16 @@
 					<td>Number of characters: </td>
 					<td>
 						<input size='2' type='text' name='KEY_LEN' value='[% VBOX_PREF.KEY_LEN | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Help Extension: </td>
+					<td>
+						<input size='15' type='text' name='DIR_HELPEXT' value='[% VBOX_PREF.DIR_HELPEXT | html %]'>
+						<script language="JavaScript">
+							exten_dropdown2( 'DIR_HELPEXT','[% VBOX_PREF.DIR_HELPEXT | html %]','<option selected value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
+							exten_icon( '[% VBOX_PREF.DIR_HELPEXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+						</script>
 					</td>
 				</tr>
 				<tr class='addon_info'>
