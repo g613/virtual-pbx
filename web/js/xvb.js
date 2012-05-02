@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.55 2012-03-28 14:13:03 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.56 2012-04-23 19:34:46 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -658,17 +658,19 @@ function exten_dropdown2( select_name, extension, prefix ) {
 	
 	for ( ext_num in e_list ) {
 		/* by Ext Name */
-		document.write('<option value="'+ ext_num +'"');
-		if ( ext_num == extension ) {
-			document.write(' selected ');
+		if ( select_name == 'NEXTEXTENSION' || ( ext_num != 'hangup' && ext_num != 'back' && ext_num != 'repeat' ) ) {
+			document.write('<option value="'+ ext_num +'"');
+			if ( ext_num == extension ) {
+				document.write(' selected ');
+			}
+			document.write( '>' + ext_num + ' - ');
+			if ( e_list[ext_num][2].length > 0 ) {
+				document.write( e_list[ext_num][2] );
+			} else {
+				document.write( e_list[ext_num][1] );
+			}
+			document.write('</option>');
 		}
-		document.write( '>' + ext_num + ' - ');
-		if ( e_list[ext_num][2].length > 0 ) {
-			document.write( e_list[ext_num][2] );
-		} else {
-			document.write( e_list[ext_num][1] );
-		}
-		document.write('</option>');
 	}
 	document.write('</select>');
 	document.getElementsByName(select_name)[0].className = 'display_none';
