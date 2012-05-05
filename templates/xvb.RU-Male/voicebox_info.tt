@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.186 2012-04-24 11:28:34 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.187 2012-05-01 14:12:55 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1248,6 +1248,18 @@
 					</td>
 				</tr>
 				[% END %]
+				<tr>
+					<td><a href='#' class='info'>Запись разговора:  <span>
+							Автоматически включать запись всех разговоров.
+						</span></a></td>
+					<td>
+						[% IF VBOX_PREF.RECORD_CALL %]
+							<input name="RECORD_CALL" type="checkbox" checked>
+						[% ELSE %]
+							<input name="RECORD_CALL" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '12' %]
@@ -2180,6 +2192,27 @@
 						[% ELSE %]
 							<input name="RECORD_CALL" type="checkbox">
 						[% END %]
+					</td>
+				</tr>
+				[% END %]
+				
+				[% IF VBOX_PREF.TYPE eq '30' %]
+				<tr>
+					<td>Цифры: </td>
+					<td>
+						<input size='30' type='text' name='DIGITS' value='[% VBOX_PREF.DIGITS | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Пауза между цифрами (ms): </td>
+					<td>
+						<input size='10' type='text' name='TIMEOUT' value='[% VBOX_PREF.TIMEOUT | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Длительность цифры (ms): </td>
+					<td>
+						<input size='10' type='text' name='DURATION' value='[% VBOX_PREF.DURATION | html %]'>
 					</td>
 				</tr>
 				[% END %]
