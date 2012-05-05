@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.235 2012-04-23 19:54:25 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.236 2012-05-01 14:12:54 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1045,6 +1045,16 @@
 					</td>
 				</tr>
 				[% END %]
+				<tr class='addon_info'>
+					<td>Record calls: </td>
+					<td>
+						[% IF VBOX_PREF.RECORD_CALL %]
+							<input name="RECORD_CALL" type="checkbox" checked>
+						[% ELSE %]
+							<input name="RECORD_CALL" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '12' %]
@@ -1843,6 +1853,27 @@
 						[% ELSE %]
 							<input name="RECORD_CALL" type="checkbox">
 						[% END %]
+					</td>
+				</tr>
+				[% END %]
+				
+				[% IF VBOX_PREF.TYPE eq '30' %]
+				<tr>
+					<td>Digits: </td>
+					<td>
+						<input size='30' type='text' name='DIGITS' value='[% VBOX_PREF.DIGITS | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Interdigit timeout (ms): </td>
+					<td>
+						<input size='10' type='text' name='TIMEOUT' value='[% VBOX_PREF.TIMEOUT | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Digit duration (ms): </td>
+					<td>
+						<input size='10' type='text' name='DURATION' value='[% VBOX_PREF.DURATION | html %]'>
 					</td>
 				</tr>
 				[% END %]

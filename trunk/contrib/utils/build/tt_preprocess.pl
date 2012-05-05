@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 ########################################################################
 #
-# $Id: tt_preprocess.pl,v 1.14 2011-02-23 16:15:10 gosha Exp $
+# $Id: tt_preprocess.pl,v 1.17 2012-05-01 14:12:53 gosha Exp $
 #
 #    2010 Okunev Igor <igor[at]prv.mts-nn.ru>
 #
@@ -23,7 +23,7 @@ system "mkdir $dir";
 
 my @chunks = split /(\[\%[ \t]+(?:IF|END|FOREACH)[ \t][^%]*\%\])/, $data;
 
-foreach my $vb_type ( 1 .. 29 ) {
+foreach my $vb_type ( 1 .. 30 ) {
 	my $need_print = 1;
 	my $if_cnt = 0;
 	my $if_ind_bad;
