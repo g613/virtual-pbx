@@ -1,0 +1,105 @@
+*** main/features.c.orig	2012-05-08 17:02:59.000000000 -0400
+--- main/features.c	2012-05-09 02:24:32.000000000 -0400
+***************
+*** 3940,3956 ****
+  "	Allows the ability to bridge two channels via the dialplan.\n"
+  "The current channel is bridged to the specified 'channel'.\n"
+  "  Options:\n"
+! "    p - Play a courtesy tone to 'channel'.\n"
+  "This application sets the following channel variable upon completion:\n"
+  " BRIDGERESULT    The result of the bridge attempt as a text string, one of\n"
+  "           SUCCESS | FAILURE | LOOP | NONEXISTENT | INCOMPATIBLE\n";
+  
+  enum {
+! 	BRIDGE_OPT_PLAYTONE = (1 << 0),
+  };
+  
+  AST_APP_OPTIONS(bridge_exec_options, BEGIN_OPTIONS
+! 	AST_APP_OPTION('p', BRIDGE_OPT_PLAYTONE)
+  END_OPTIONS );
+  
+  /*!
+--- 3940,3965 ----
+  "	Allows the ability to bridge two channels via the dialplan.\n"
+  "The current channel is bridged to the specified 'channel'.\n"
+  "  Options:\n"
+! "    p    - Play a courtesy tone to 'channel'.\n"
+! "    S(x) - Hangup channel after x seconds.\n" 
+  "This application sets the following channel variable upon completion:\n"
+  " BRIDGERESULT    The result of the bridge attempt as a text string, one of\n"
+  "           SUCCESS | FAILURE | LOOP | NONEXISTENT | INCOMPATIBLE\n";
+  
+  enum {
+! 	BRIDGE_OPT_PLAYTONE		= (1 << 0),
+! 	BRIDGE_OPT_DURATION_STOP 	=   (1 << 1),
+! };
+! 
+! enum {
+! 	OPT_ARG_DURATION_STOP,
+! 	/* note: this entry _MUST_ be the last one in the enum */
+! 	OPT_ARG_ARRAY_SIZE,
+  };
+  
+  AST_APP_OPTIONS(bridge_exec_options, BEGIN_OPTIONS
+! 	AST_APP_OPTION('p', BRIDGE_OPT_PLAYTONE),
+! 	AST_APP_OPTION_ARG('S', BRIDGE_OPT_DURATION_STOP, OPT_ARG_DURATION_STOP),
+  END_OPTIONS );
+  
+  /*!
+***************
+*** 3968,3973 ****
+--- 3977,3984 ----
+  	char *tmp_data  = NULL;
+  	struct ast_flags opts = { 0, };
+  	struct ast_bridge_config bconfig = { { 0, }, };
++ 	unsigned int calldurationlimit = 0;
++ 	char *opt_args[OPT_ARG_ARRAY_SIZE];
+  
+  	AST_DECLARE_APP_ARGS(args,
+  		AST_APP_ARG(dest_chan);
+***************
+*** 3982,3988 ****
+  	tmp_data = ast_strdupa(data);
+  	AST_STANDARD_APP_ARGS(args, tmp_data);
+  	if (!ast_strlen_zero(args.options))
+! 		ast_app_parse_options(bridge_exec_options, &opts, NULL, args.options);
+  
+  	/* avoid bridge with ourselves */
+  	if (!strcmp(chan->name, args.dest_chan)) {
+--- 3993,3999 ----
+  	tmp_data = ast_strdupa(data);
+  	AST_STANDARD_APP_ARGS(args, tmp_data);
+  	if (!ast_strlen_zero(args.options))
+! 		ast_app_parse_options(bridge_exec_options, &opts, opt_args, args.options);
+  
+  	/* avoid bridge with ourselves */
+  	if (!strcmp(chan->name, args.dest_chan)) {
+***************
+*** 4056,4062 ****
+  				ast_log(LOG_WARNING, "Failed to play courtesy tone on %s\n", final_dest_chan->name);
+  		}
+  	}
+! 	
+  	/* do the bridge */
+  	ast_bridge_call(chan, final_dest_chan, &bconfig);
+  
+--- 4067,4085 ----
+  				ast_log(LOG_WARNING, "Failed to play courtesy tone on %s\n", final_dest_chan->name);
+  		}
+  	}
+! 
+! 	if (ast_test_flag(&opts, BRIDGE_OPT_DURATION_STOP) && !ast_strlen_zero(opt_args[OPT_ARG_DURATION_STOP])) {
+! 		calldurationlimit = atoi(opt_args[OPT_ARG_DURATION_STOP]);
+! 		if (!calldurationlimit) {
+! 			ast_log(LOG_WARNING, "Bridge does not accept S(%s), hanging up.\n", opt_args[OPT_ARG_DURATION_STOP]);
+! 		} else {
+! 			ast_verb(3, "Setting call duration limit to %d seconds.\n", calldurationlimit);
+! 		}
+! 		if (calldurationlimit > 0) {
+! 			final_dest_chan->whentohangup = time(NULL) + calldurationlimit;
+! 		}
+! 	}
+! 
+  	/* do the bridge */
+  	ast_bridge_call(chan, final_dest_chan, &bconfig);
+  
