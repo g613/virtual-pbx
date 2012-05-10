@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.236 2012-05-01 14:12:54 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.237 2012-05-03 12:46:48 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1210,6 +1210,16 @@
 							<input name="JOINEMPTY" type="checkbox" checked>
 						[% ELSE %]
 							<input name="JOINEMPTY" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Remember the agent: </td>
+					<td>
+						[% IF VBOX_PREF.REMEMBER_AGENT %]
+							<input name="REMEMBER_AGENT" type="checkbox" checked>
+						[% ELSE %]
+							<input name="REMEMBER_AGENT" type="checkbox">
 						[% END %]
 					</td>
 				</tr>

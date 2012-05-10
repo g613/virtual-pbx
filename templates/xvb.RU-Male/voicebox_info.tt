@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.187 2012-05-01 14:12:55 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.188 2012-05-03 12:46:49 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1423,6 +1423,21 @@
 							<input name="JOINEMPTY" type="checkbox" checked>
 						[% ELSE %]
 							<input name="JOINEMPTY" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Запомнить агента:<span>
+							Запомнить последнего агента с кем общался клиент и при следующем звонке
+							попытаться соединить с клиента сначала с этим агентом, если агент не отвечает
+							то далее будет применена установленная стратегия вызова. Данные об агенте хранятся
+							примерно 30 дней.
+						</span></a></td>
+					<td>
+						[% IF VBOX_PREF.REMEMBER_AGENT %]
+							<input name="REMEMBER_AGENT" type="checkbox" checked>
+						[% ELSE %]
+							<input name="REMEMBER_AGENT" type="checkbox">
 						[% END %]
 					</td>
 				</tr>
