@@ -1,7 +1,7 @@
 Summary: The Open Source PBX
 Name: asterisk
 Version: 1.6.0.28
-Release: XVB.6
+Release: XVB.7
 License: GPLv2
 Group: Applications/Internet
 URL: http://www.asterisk.org/
@@ -16,6 +16,7 @@ Patch101: app_mp3.c.patch
 #Patch102: format_wav.c.patch
 Patch103: format_wav16.c.patch
 Patch104: app_chanspy.c.diff
+Patch105: features.c-bridgeapp.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-root-%(%{__id_u} -n)
 
 %define buildsubdir %{name}-%{version}
@@ -47,6 +48,7 @@ to compile 3rd party modules.
 #%patch102 -p0
 %patch103 -p0
 %patch104 -p0
+%patch105 -p0
 
 %configure
 
