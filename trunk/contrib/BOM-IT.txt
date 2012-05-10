@@ -79,6 +79,7 @@ directory-nomatch : "Nessuna voce di directory corrispondono alla tua ricerca".
 directory-nomore : ". Non ci sono voci più compatibili nella directory"
 dtmfrx-intro : "Si prega di cifre inserite Premere # quando finire."
 dtmfrx-saved : "Il vostro contributo DTMF è stato salvato."
+dtmftx-intro : "."
 schedule-intro : "."
 gc-schedule-intro : "."
 disa-intro : "Si prega di digitare il numero telefonico seguito dal #."
