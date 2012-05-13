@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='green'>+ Лимиты на длительность исходящго звонка для маршрутов ( alarmclock / callback/ callblast /dialout /queue / phones / fmc )</font>
+<font color='green'>+ Лимиты на длительность исходящго звонка для маршрутов ( alarmclock / callback/ callblast /dialout /queue / phones / fmc )</font> ( 12.05.12 / build 6247  )
 
 <font color='green'>+ Для очередей добавить возможнойсть клиенту повторно позвонившему соединиться автоматически с агентом с которым общался первый раз.</font> ( 06.05.2012 / build 6220 )
 
