@@ -53,6 +53,7 @@
 			<th>Pattern</th>
 			<th>Out number</th>
 			<th>Permissions</th>
+			<th>Time Limits</th>
 			<th>Route Name</th>
 			<th>Peer</th>
 			<th>Actions</th>
@@ -65,6 +66,7 @@
 			<td><input class='in_t0' size="20" name='r_PATTERN' type='text' value="[% r.PATTERN | html %]"></td>
 			<td><input class='in_t0' size="25" name='r_SUBSTR' type='text' value="[% r.SUBSTR | html %]"></td>
 			<td><input class='in_t0' size="25" name='r_EXT_NUMBER' type='text' value="[% r.EXT_NUMBER | html %]"></td>
+			<td><input class='in_t0' size="6" name='r_TLIMIT' type='text' value="[% r.TLIMIT | html %]"></td>
 			<td><input class='in_t0' size="20" name='r_DESCRIPTION' type='text' value="[% r.DESCRIPTION | html %]"></td>
 			<td>
 				<select name="r_PEER_ID" class='in_t0'>
@@ -99,6 +101,7 @@
 			<td><input size="20" name='r_PATTERN' type='text'></td>
 			<td><input size="25" name='r_SUBSTR' type='text'></td>
 			<td><input size="25" name='r_EXT_NUMBER' type='text'></td>
+			<td><input size="6" name='r_TLIMIT' type='text'></td>
 			<td><input size="20" name='r_DESCRIPTION' type='text'></td>
 			<td>
 				<select name="r_PEER_ID">
@@ -115,7 +118,7 @@
 			</td>
 			</form>
 		</tr>
-		<tr><td colspan='7'>&nbsp;</td></tr>
+		<tr><td colspan='8'>&nbsp;</td></tr>
 	</table>
 	</p>
 
