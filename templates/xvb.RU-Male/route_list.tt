@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.25 2012-03-06 08:56:43 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.26 2012-05-09 08:35:31 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -53,6 +53,7 @@
 			<th>Шаблон номера</th>
 			<th>Преобразование</th>
 			<th>Доступ</th>
+			<th>Длительность</th>
 			<th>Имя маршрута</th>
 			<th>Шлюз</th>
 			<th>Действия</th>
@@ -65,6 +66,7 @@
 			<td><input class='in_t0' size="20" name='r_PATTERN' type='text' value="[% r.PATTERN | html %]"></td>
 			<td><input class='in_t0' size="25" name='r_SUBSTR' type='text' value="[% r.SUBSTR | html %]"></td>
 			<td><input class='in_t0' size="25" name='r_EXT_NUMBER' type='text' value="[% r.EXT_NUMBER | html %]"></td>
+			<td><input class='in_t0' size="6" name='r_TLIMIT' type='text' value="[% r.TLIMIT | html %]"></td>
 			<td><input class='in_t0' size="20" name='r_DESCRIPTION' type='text' value="[% r.DESCRIPTION | html %]"></td>
 			<td>
 				<select class='in_t0' name="r_PEER_ID">
@@ -99,6 +101,7 @@
 			<td><input size="20" name='r_PATTERN' type='text'></td>
 			<td><input size="25" name='r_SUBSTR' type='text'></td>
 			<td><input size="25" name='r_EXT_NUMBER' type='text'></td>
+			<td><input size="6" name='r_TLIMIT' type='text'></td>
 			<td><input size="20" name='r_DESCRIPTION' type='text'></td>
 			<td>
 				<select name="r_PEER_ID">
@@ -115,7 +118,7 @@
 			</td>
 			</form>
 		</tr>
-		<tr><td colspan='7'>&nbsp;</td></tr>
+		<tr><td colspan='8'>&nbsp;</td></tr>
 	</table>
 	</p>
 

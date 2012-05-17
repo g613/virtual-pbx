@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.20 2012-03-06 08:56:42 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.21 2012-05-03 13:35:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Статистика номера - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -68,6 +68,19 @@
 		</tr>
 		[% END %]
 		
+		[% IF USER_CREDS.ROOT eq '0' %]
+		[% FOREACH msg = CDR_LIST %]
+		<tr class='nocolor' align='center'>
+			<td align='center'>
+				<a title='информация о звонке' href="?action=act_list&call_id=[% msg.CALL_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]">[% msg.CDR_DATE | html %]</a>
+			</td>
+			<td align='center'>[% msg.CALLER_ID | html %]</td>
+			<td>[% msg.CDR_DURATION | duration_str %]</td>
+			<td>[% msg.TYPE | html %]</td>
+			<td align='left'>[% msg.DATA | html %]</td>
+		</tr>
+		[% END %]
+		[% ELSE %]
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
 			<td align='center'>[% msg.CDR_DATE | html %]</td>
@@ -76,6 +89,7 @@
 			<td>[% msg.TYPE | locale_msg %]</td>
 			<td align='left'>[% msg.DATA | html %]</td>
 		</tr>
+		[% END %]
 		[% END %]
 		<tr>
 		[% IF MSG_NEXT ne '' %]
