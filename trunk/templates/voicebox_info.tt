@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.237 2012-05-03 12:46:48 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.239 2012-05-19 06:36:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1033,6 +1033,29 @@
 						<input size='30' name="PHONE_PATTERN" value="[% VBOX_PREF.PHONE_PATTERN | html %]" type="text">
 					</td>
 				</tr>
+				<tr class='addon_info'>
+					<td>Max digits: </td>
+					<td>
+						<input size='10' name="MAX_DIGITS" value="[% VBOX_PREF.MAX_DIGITS | html %]" type="text">
+						( -1 for unlimit )
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Static phone: </td>
+					<td>
+						<input size='30' name="PHONE_NUMBER" value="[% VBOX_PREF.PHONE_NUMBER | html %]" type="text">
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Record calls: </td>
+					<td>
+						[% IF VBOX_PREF.RECORD_CALL %]
+							<input name="RECORD_CALL" type="checkbox" checked>
+						[% ELSE %]
+							<input name="RECORD_CALL" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
 				[% IF ASTERISK_VERSION ne '18' %]
 				<tr class='addon_info'>
 					<td>Spy mode:</td>
@@ -1045,16 +1068,6 @@
 					</td>
 				</tr>
 				[% END %]
-				<tr class='addon_info'>
-					<td>Record calls: </td>
-					<td>
-						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
-						[% END %]
-					</td>
-				</tr>
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '12' %]

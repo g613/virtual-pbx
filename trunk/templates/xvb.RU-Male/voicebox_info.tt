@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.188 2012-05-03 12:46:49 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.190 2012-05-19 06:36:44 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1236,18 +1236,22 @@
 						<input size='30' name="PHONE_PATTERN" value="[% VBOX_PREF.PHONE_PATTERN | html %]" type="text">
 					</td>
 				</tr>
-				[% IF ASTERISK_VERSION ne '18' %]
 				<tr class='addon_info'>
-					<td>Режим 'шпиона':</td>
+					<td>Максимальное количество цифр: </td>
 					<td>
-						[% IF VBOX_PREF.SPY_MODE %]
-							<input name="SPY_MODE" type="checkbox" checked>
-						[% ELSE %]
-							<input name="SPY_MODE" type="checkbox">
-						[% END %]
+						<input size='10' name="MAX_DIGITS" value="[% VBOX_PREF.MAX_DIGITS | html %]" type="text">
+						( -1 без ограничения )
 					</td>
 				</tr>
-				[% END %]
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Статический номер: <span>
+							Номер или пользовательская переменная из которой берется номер телефона для звонка. Если не определено то запрашивает пользователя ввести номер ( Классическое поведение DISA ).
+							Например: 2%VAR:DID:-3% - 2 и последние 3 цифры DID на который позвонили.
+						</span></a></td>
+					<td>
+						<input size='30' name="PHONE_NUMBER" value="[% VBOX_PREF.PHONE_NUMBER | html %]" type="text">
+					</td>
+				</tr>
 				<tr>
 					<td><a href='#' class='info'>Запись разговора:  <span>
 							Автоматически включать запись всех разговоров.
@@ -1260,6 +1264,18 @@
 						[% END %]
 					</td>
 				</tr>
+				[% IF ASTERISK_VERSION ne '18' %]
+				<tr class='addon_info'>
+					<td>Режим 'шпиона':</td>
+					<td>
+						[% IF VBOX_PREF.SPY_MODE %]
+							<input name="SPY_MODE" type="checkbox" checked>
+						[% ELSE %]
+							<input name="SPY_MODE" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				[% END %]
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '12' %]
