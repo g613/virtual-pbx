@@ -1,5 +1,6 @@
 #labels Featured
 = ToDo list =
+<font color='red'>- Возврат звонка после неудачного blind трансфера</font>
 
 <font color='green'>+ Показать в гуе статус регистрации телефонов</font> ( 21.05.12 / build 6295 )
 
