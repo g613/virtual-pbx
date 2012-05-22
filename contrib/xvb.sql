@@ -1020,6 +1020,8 @@ create	table VPBX_VBOXES_DISA
 	SPY_MODE 		INT(16) 		not null default 0,
 	RECORD_CALL		INT(1)			default 0,
 	PHONE_PATTERN	VARCHAR(255),	
+	PHONE_NUMBER	VARCHAR(255),	
+	MAX_DIGITS		INT(10)			not null default -1,
 
 	unique(ID),
 

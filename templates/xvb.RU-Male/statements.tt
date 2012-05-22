@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.22 2012-04-10 15:28:08 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.23 2012-05-20 10:16:05 gosha Exp $ -->
 <head>
 	<BASE href="[% CGI_SERVER %]">
 	<style>
@@ -125,7 +125,7 @@
 		</table>
 		[% END %]
 	</p>
-	<br><br>-- <br>   Спасибо !
+	<br><br>-- <br>
 </body>
 </html>
 	

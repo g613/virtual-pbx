@@ -82,7 +82,7 @@ Virtual-pbx application include:
 	- WEB logon / logoff for the agents of the queue.
 	- Support Perl plugins.
 	- Several types of extensions:
-		Playback / Auto Attendant
+		Playback ( with time tags feature ) / Auto Attendant
 		VoiceMail
 		DialOut with Find-Me feautures.
 		Company Directory
@@ -110,6 +110,7 @@ Virtual-pbx application include:
 		Call Parking
 		GoogleCalendar - Events: reads events via TTS + confirmation / cancellation of events.
 		Paging / Intercom
+		Play DTMF Tones
 
 ####################################################
 #

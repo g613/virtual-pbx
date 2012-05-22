@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.56 2012-04-23 19:34:46 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.57 2012-05-18 21:05:44 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -392,6 +392,8 @@ function graphit(g,gwidth){
 	total = new Array();
 	graphimage = '/xvb/images/poll.gif';
 
+	max_avg = 0;
+
 	for (i=1;i<g.length;i++) {
 			for (i2=1;i2<g[i].length;i2++) {
 				if ( i == 1 ) {
@@ -400,7 +402,13 @@ function graphit(g,gwidth){
 					total[i2] += g[i][i2];
 				}
 			}
+			if ( g[i][3] > max_avg ) {
+				max_avg = g[i][3];
+			}
 	}
+
+	total[3] = total[2] / total[1];
+	max_avg = max_avg/total[3];
 
 	coll_width = parseInt(90/total.length-1);
 
@@ -419,7 +427,11 @@ function graphit(g,gwidth){
 			} else {
 				calpercentage = 0;
 			}
-			calwidth=Math.round(gwidth*(calpercentage/100));
+			if( i2 == 3 ) {
+				calwidth=Math.round(gwidth*(calpercentage/(100*max_avg)));
+			} else {
+				calwidth=Math.round(gwidth*(calpercentage/100));
+			}
 			output+='<td align="right">&nbsp;&nbsp;'+
 				Math.round(parseFloat(g[i][i2]) * Math.pow(10, 2)) / Math.pow(10, 2)
 			+'&nbsp;&nbsp;</td><td><img src="'+graphimage+'" width="'+calwidth+'" height="10"> '+calpercentage+'%</td>';
