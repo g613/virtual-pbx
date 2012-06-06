@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.21 2012-05-03 13:35:40 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.22 2012-05-28 05:44:15 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Статистика номера - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -76,7 +76,7 @@
 			</td>
 			<td align='center'>[% msg.CALLER_ID | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
-			<td>[% msg.TYPE | html %]</td>
+			<td>[% msg.TYPE | locale_msg %]</td>
 			<td align='left'>[% msg.DATA | html %]</td>
 		</tr>
 		[% END %]
