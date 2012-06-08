@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.69 2012-04-08 06:35:26 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.71 2012-06-05 18:33:11 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -335,7 +335,7 @@
 
 			<td valign='top'>
 			<table class='user_data'>
-				[% IF USE_BILLING %]
+				[% IF USE_BILLING > 0 %]
 				<tr>
 					<td colspan='3'>
 						<table width='100%' class='addon_data'>
@@ -512,11 +512,11 @@
 					<td align='right'>[% USER_CREDS.MAX_MESSAGE_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td>длину имени польователя: </td>
+					<td>длину имени пользователя: </td>
 					<td align='right'>[% USER_CREDS.MAX_NAME_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td>длину привествия пользователя: </td>
+					<td>длину приветствия пользователя: </td>
 					<td align='right'>[% USER_CREDS.MAX_GREET_DURATION | duration_str %]</td>
 				</tr>
 				<tr>

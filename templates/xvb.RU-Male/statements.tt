@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.23 2012-05-20 10:16:05 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.24 2012-06-04 13:58:04 gosha Exp $ -->
 <head>
 	<BASE href="[% CGI_SERVER %]">
 	<style>
@@ -64,6 +64,8 @@
 		[% IF SUMMARY_CALLS scalar %]
 		<h3>Обобщенный отчет по звонкам:</h3>
 		<table width='100%' class='statement' border='1'>
+			[% IF USE_BILLING %]
+			
 			<tr class='list_data'>
 				<th>Тип звонка</th>
 				<th>Количество</th>
@@ -79,6 +81,23 @@
 				<td>[% msg.USER_COST %]</td>
 				<td>[% msg.DESCRIPTION | locale_msg %]</td>
 			</tr>
+			[% END %]
+
+			[% ELSE %]
+			
+			<tr class='list_data'>
+				<th>Тип звонка</th>
+				<th>Количество</th>
+				<th>Длительность</th>
+			</tr>
+			[% FOREACH msg = SUMMARY_CALLS %]
+			<tr class='nocolor' align='center'>
+				<td>[% msg.CALL_TYPE | locale_msg %]</td>
+				<td>[% msg.CNT | html %]</td>
+				<td>[% msg.DURATION | duration_str %]</td>
+			</tr>
+			[% END %]
+
 			[% END %]
 		</table>
 		[% END %]
@@ -106,6 +125,8 @@
 		[% IF CALLS scalar %]
 		<h3>Отчет по звонкам:</h3>
 		<table width='100%' class='statement' border='1'>
+			[% IF USE_BILLING %]
+
 			<tr class='list_data'>
 				<th>Дата и время звонка</th>
 				<th>Номер звонящего</th>
@@ -121,6 +142,25 @@
 				<td>[% msg.CALL_TYPE | locale_msg %]</td>
 				<td>[% msg.COST %] ([% msg.DESCRIPTION | locale_msg %])</td>
 			</tr>
+			[% END %]
+
+			[% ELSE %]
+
+			<tr class='list_data'>
+				<th>Дата и время звонка</th>
+				<th>Номер звонящего</th>
+				<th>Длительность</th>
+				<th>Тип</th>
+			</tr>
+			[% FOREACH msg = CALLS %]
+			<tr class='nocolor' align='center'>
+				<td>[% msg.CDR_DATE | html %]</td>
+				<td>[% msg.CALLER_ID | html %]</td>
+				<td>[% msg.CDR_DURATION | duration_str %]</td>
+				<td>[% msg.CALL_TYPE | locale_msg %]</td>
+			</tr>
+			[% END %]
+
 			[% END %]
 		</table>
 		[% END %]

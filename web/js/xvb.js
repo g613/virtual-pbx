@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.57 2012-05-18 21:05:44 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.58 2012-06-04 13:58:05 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -395,7 +395,7 @@ function graphit(g,gwidth){
 	max_avg = 0;
 
 	for (i=1;i<g.length;i++) {
-			for (i2=1;i2<g[i].length;i2++) {
+			for (i2=1;i2<g[0].length;i2++) {
 				if ( i == 1 ) {
 					total[i2] = g[i][i2];
 				} else {
@@ -421,7 +421,7 @@ function graphit(g,gwidth){
 
 	for (i=1;i<g.length;i++){
 		output+='<tr class="nocolor"><td align="right"><b>'+g[i][0]+'</b>&nbsp;</td>';
-		for (i2=1;i2<g[i].length;i2++) {
+		for (i2=1;i2<g[0].length;i2++) {
 			if ( total[i2] > 0 ) {
 				calpercentage=Math.round(parseFloat(g[i][i2]*100/total[i2]) * Math.pow(10, 2)) / Math.pow(10, 2)
 			} else {
@@ -515,7 +515,9 @@ function setShadowAttr() {
 
 /* cdr filters */
 function cdrfilters( element_id, col_num ) {
-	/* fiters */
+	/* fiters 
+	var re = /FILE=(\d+):(\w+\.(wav|ul|al|ulaw|alaw|g722|gsm|wav16))/g;
+	*/
 	var re = /FILE=(\d+):(\w+\.\w+)/g;
 	var re2 = /(^|, )DTMF=([^,]*)/;
 	var re3 = /(^|, )CALLID=([^,]*)/g;

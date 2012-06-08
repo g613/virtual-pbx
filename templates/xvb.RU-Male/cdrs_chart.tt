@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.16 2012-03-06 08:56:43 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.17 2012-06-04 13:58:04 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -59,7 +59,11 @@
 	[% IF CDR_LIST scalar %]
 	<script language='JavaScript'>
 		var graphx=new Array();
+		[% IF USE_BILLING %]
 		graphx[0] = [ period, 'Звонки', 'Минуты', 'Минуты в среднем', 'Стоимость' ];
+		[% ELSE %]
+		graphx[0] = [ period, 'Звонки', 'Минуты', 'Минуты в среднем' ];
+		[% END %]
 		var ind = 1;
 		[% FOREACH msg = CDR_LIST %]
 			graphx[ind] = [ '[% msg.PERIOD | locale_msg %]', [% msg.CNT | html %], [% msg.DURATION %], [% msg.AVG %], [% msg.USER_COST %] ];
