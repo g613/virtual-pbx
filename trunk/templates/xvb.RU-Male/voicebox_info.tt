@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.190 2012-05-19 06:36:44 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.192 2012-06-09 12:43:18 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -2274,12 +2274,16 @@
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%' class='stat_data' id='addon-data'>
 							<tr class='list_addon_data'>
-								<th>Номер телефона</th>
-								<th>Всего звонков</th>
-								<th>Успешных</th>
-								<th>Длина</th>
-								<th>Ср. длина</th>
-								<th>Ср. время до ответа</th>
+								<th rowspan='2'>Номер телефона</th>
+								<th colspan='2'>Звонки</th>
+								<th colspan='2'>Длительность</th>
+								<th rowspan='2'>Среднее время<br> до ответа</th>
+							</tr>
+							<tr class='list_addon_data'>
+								<th>всего</th>
+								<th>успешные</th>
+								<th>всего</th>
+								<th>средняя</th>
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							[% IF param.NUMBER eq '===' %]
@@ -2377,7 +2381,7 @@
 								<th>Дата создания</th>
 								<th>Дата скачивания</th>
 								<th>Размер подкаста</th>
-								<th>Длина</th>
+								<th>Длительность</th>
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							<tr align='center' class='nocolor'>
@@ -2411,12 +2415,16 @@
 						<td colspan='2' align='center'>
 						<table width='100%' class='stat_data' id='addon-data'>
 							<tr class='list_addon_data'>
-								<th><a href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='динамические агенты'>Номер телефона</a></th>
-								<th>Всего звонков</th>
-								<th>Успешных</th>
-								<th>Длина</th>
-								<th>Ср. длина</th>
-								<th>Ср. время до ответа</th>
+								<th rowspan='2'><a href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='динамические агенты'>Номер телефона</a></th>
+								<th colspan='2'>Звонки</th>
+								<th colspan='2'>Длительность</th>
+								<th rowspan='2'>Среднее время<br> до ответа</th>
+							</tr>
+							<tr class='list_addon_data'>
+								<th>всего</th>
+								<th>успешные</th>
+								<th>всего</th>
+								<th>средняя</th>
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							[% IF param.NUMBER eq '===' %]

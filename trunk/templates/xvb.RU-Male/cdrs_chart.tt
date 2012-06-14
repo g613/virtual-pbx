@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.17 2012-06-04 13:58:04 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.18 2012-06-08 06:55:47 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -112,10 +112,13 @@
 				</script>
 				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
 				<button type="button">...</button>
-				&nbsp;
-				Звонящий:
 				<input name='action' value='cdr_list' type='hidden'>
-				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				&nbsp;
+				Кто:
+				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]' placeholder='звонил'>
+				&nbsp;
+				Кому:
+				<input size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]' placeholder='звонил'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				<select name="call_type">

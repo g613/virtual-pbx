@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.71 2012-06-05 18:33:11 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.72 2012-06-08 12:37:35 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -508,31 +508,31 @@
 					<td align='right'>[% USER_CREDS.MAX_DOWNLOAD_SIZE | fsize %]</td>
 				</tr>
 				<tr>
-					<td>длину голосового сообщения: </td>
+					<td>длительность голосового сообщения: </td>
 					<td align='right'>[% USER_CREDS.MAX_MESSAGE_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td>длину имени пользователя: </td>
+					<td>длительность имени пользователя: </td>
 					<td align='right'>[% USER_CREDS.MAX_NAME_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td>длину приветствия пользователя: </td>
+					<td>длительность приветствия пользователя: </td>
 					<td align='right'>[% USER_CREDS.MAX_GREET_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td>длину объявления для вызываемого: </td>
+					<td>длительность объявления для вызываемого: </td>
 					<td align='right'>[% USER_CREDS.MAX_ANNOUNCEMENT_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td>длину объявления для звонящего: </td>
+					<td>длительность объявления для звонящего: </td>
 					<td align='right'>[% USER_CREDS.MAX_ANNOUNCEMENT_CALLER_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td>длину анонса удержания вызова: </td>
+					<td>длительность анонса удержания вызова: </td>
 					<td align='right'>[% USER_CREDS.MAX_RETRYDIAL_DURATION | duration_str %]</td>
 				</tr>
 				<tr>
-					<td>длину музыки вместо гудков: </td>
+					<td>длительность музыки вместо гудков: </td>
 					<td align='right'>[% USER_CREDS.MAX_MOH_DURATION | duration_str %]</td>
 				</tr>
 			</table>
