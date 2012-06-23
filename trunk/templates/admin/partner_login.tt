@@ -1,0 +1,70 @@
+<html>
+<!-- $Id: partner_login.tt,v 1.1 2012-06-14 18:48:17 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - login</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='center'><h2>Welcome to VirtualPBX</h2></td>
+			<td align='right' width='20%'>
+				&nbsp;
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%'class='bottom_hr'>
+		<tr>
+			<td>&nbsp;&nbsp;</td>
+		</tr>
+	</table>
+	</p>
+
+	<p align='center'>
+	<table width='50%' class='half-width'>
+		<form method='post'>
+			<tr>
+				<td>Login&nbsp;</td>
+				<td><input name='partner' type='text'></td>
+			</tr>
+			<tr>
+				<td>Password&nbsp;</td>
+				<td><input name='password' type='password'></td>
+			</tr>
+			<tr>
+				<td colspan='2'>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan='2' align='center'>
+					<input type='submit' value='&nbsp;&nbsp;&nbsp;LOGIN&nbsp;&nbsp;&nbsp;'>
+				</td>
+			</tr>
+		</form>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			<td>&nbsp;
+			[% IF ERROR_STR ne '' %]
+				<span class='error'>[% ERROR_STR | html %]</span>
+			[% END %]
+			</td>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>

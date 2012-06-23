@@ -1,0 +1,156 @@
+<html>
+<head>
+	<title>Virtual PBX - partners</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='center'><h2>Partners</h2></td>
+			<td align='right' width='20%'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				&nbsp;
+			</td>
+			</form>
+		</tr>
+	</table>
+	</p>
+	
+	<p>
+	<table width='95%' class='list_data' id='list-data'>
+		<tr class='list_data'>
+				<th>Partner login</th>
+				<th>Password</th>
+				<th>Group</th>
+				<th>Description</th>
+				<th>Actions</th>
+			</tr>
+			
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='10'>
+				<a title='previous page' href='?action=partner_list&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH p = PARTNERS %]
+		<tr align='center' class='nocolor' id='d-tr-[% p.ID %]'>
+			<form method='post'>
+			<td align='right'>
+				<input class='in_t0' size='20' name='P_NAME' type='text' value='[% p.NAME | html %]'></td>
+			</td>
+			<td align='right'>
+				<input class='in_t0' size='20' name='P_PASSWORD' type='text' value='[% p.PASSWORD | html %]'></td>
+			</td>
+			<td>
+				<select class='in_t0' name="P_GROUP_ID">
+				[% FOREACH gr = GROUPS %]
+					[% IF gr.GROUP_ID eq p.GROUP_ID %]
+						<option value="[% gr.GROUP_ID | html %]" selected>[% gr.GROUP_NAME | html %]</option>
+					[% ELSE %]
+						<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+					[% END %]
+				[% END %]
+				</select>
+			</td>
+			<td align='right'>
+				<input class='in_t0' size='30' name='P_DESCRIPTION' type='text' value='[% p.DESCRIPTION | html %]'></td>
+			</td>
+			<td>
+				<input type='hidden' value='[% p.ID %]' name='partner_id'>
+				<input type='hidden' value='[% p.ID %]' name='data_id'>
+				<input type='hidden' value='partner_update' name='action'>
+				<input type='hidden' value='[% MSG_FROM %]' name='from'>
+				<a title='delete partner account' href='?action=partner_del&partner_id=[% p.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>&nbsp;&nbsp;
+				<span class='in_t' id='in_t_id-[% p.ID %]'>
+				<script language='JavaScript'>
+					writeUpdateLinks( 'save changes' );
+				</script>
+				<noscript><input value='change' type='submit'></noscript>
+				</span>
+			</td>
+			</form>
+		</tr>
+		[% END %]
+
+		<form>
+		<tr align='center'>
+			<td align='right'>
+				<input size='20' name='P_NAME' type='text'></td>
+			</td>
+			<td align='right'>
+				<input size='20' name='P_PASSWORD' type='text'></td>
+			</td>
+			<td>
+				<select name="P_GROUP_ID">
+				[% FOREACH gr = GROUPS %]
+					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+				[% END %]
+				</select>
+			</td>
+			<td align='right'>
+				<input size='30' name='P_DESCRIPTION' type='text'></td>
+			</td>
+			<td align='center'>
+				<input value='Create new partner' type='submit'>
+				<input type='hidden' value='partner_add' name='action'>
+			</td>
+		</tr>
+		</form>
+
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='10'>
+				<a title='next page' href='?action=partner_list&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+			</td>
+		</tr>
+		[% END %]
+	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
+	</p>
+	
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			[% INCLUDE main_menu2.tt-inc %]
+		</tr>
+	</table>
+	</p>
+	
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
+			

@@ -1,0 +1,273 @@
+<html>
+<head>
+	<title>Virtual PBX - users</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='center'><h2>User info</h2></td>
+			<td align='right' width='20%'>
+				[% INCLUDE version.tt %]
+			</td>
+		</tr>
+	</table>
+	</p>
+
+
+	<p>
+	<table width='95%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				<a href='?action=user_list&partner=[% PARTNER | html %]'>Users</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=user_del&user_id=[% USER.ID %]&single_user=1&partner=[% PARTNER | html %]' onclick="return DelConfirm('en')">Delete</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='right'>
+			<td width='15%'>
+				&nbsp;
+			</td>
+		</tr>
+	</table>
+	</p>
+	
+	<p>
+	<table width='95%' class='list_data'>
+		<tr class='list_data'>
+		</tr>
+		<tr>
+			<td width='50%' valign='top'>
+			<table width='100%'>
+			<form method='post' onSubmit='return checkChanges(this)'>
+			<tr>
+				<td>
+					User name:
+				</td>
+				<td>
+					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]&nbsp;&nbsp;
+					<a title='view user profile' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='view user profile' /></a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Email:
+				</td>
+				<td>
+					[% USER.EMAIL | html %]
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Language:
+				</td>
+				<td align='left'>
+					[% USER.LANG_NAME | html %]
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Access code:
+				</td>
+				<td>
+					[% USER.ACCESS_CODE | html %]&nbsp;&nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Pin code:
+				</td>
+				<td>
+					[% USER.PIN_CODE | html %][% USER.PIN_CODE2 %]&nbsp;&nbsp;
+					<a title='exten 0' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=vb_view&ext_id=0'><img border='0'  src='/xvb/images/vb_edit.png' alt='exten 0' /></a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Phone number: 
+				</td>
+				<td>
+					<input size='15' name='US_VOICENUMBER' type='text' value="[% USER.VOICENUMBER | html %]">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Status:
+				</td>
+				<td>
+					<select name="US_STATUS">
+					[% IF USER.STATUS %]
+						<option value="1">active</option>
+						<option value="0">locked</option>
+					[% ELSE %]
+						<option value="0">locked</option>
+						<option value="1">active</option>
+					[% END %]
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Read only:
+				</td>
+				<td>
+					<select name="US_DEMO_MODE">
+					[% IF USER.DEMO_MODE %]
+						<option value="1">yes</option>
+						<option value="0">no</option>
+					[% ELSE %]
+						<option value="0">no</option>
+						<option value="1">yes</option>
+					[% END %]
+					</select>
+				</td>
+			</tr>
+			<tr><td colspan='2'>&nbsp;</td></tr>
+			<tr>
+				<td colspan='2' align='center'>
+					<input type='hidden' value='[% USER.ID %]' name='user_id'>
+					<input type='hidden' value='user_update' name='action'>
+					<input type='hidden' value='[% PARTNER | html %]' name='partner'>
+					<input value='change' type='submit'>
+				</td>
+			</tr>
+			</form>
+			</table>
+			</td>
+			<td valign='top'>
+				<table width='95%'>
+				[% IF USE_BILLING %]
+				<tr>
+					<td>
+						<table width='100%' class='addon_data'>
+							<tr>
+								<td><b>Tariff:</b></td>
+								<td colspan='7'><b>[% TARIFF.NAME | html %]</b> ( currency  [% TARIFF.DESCRIPTION %] )</td>
+							</tr>
+							<tr class='list_data' align='center'>
+								<th rowspan='2'>Monthly</th>
+								<th rowspan='2'>Daily</th>
+								<th colspan='2'>IVR</th>
+								[% IF USER_CREDS.VBL_14 ne '0' %]
+									<th colspan='2'>CallBack</th>
+								[% END %]
+								[% IF USER_CREDS.VBL_18 ne '0' %]
+									<th colspan='2'>CallBlast</th>
+								[% END %]
+							</tr>
+							<tr class='list_data' align='center'>
+								<th>Minute</th>
+								<th>Call</th>
+								<th>Minute</th>
+								<th>Call</th>
+								<th>Minute</th>
+								<th>Call</th>
+							</tr>
+							<tr class='addon_data' align='right'>
+								<td>[% TARIFF.MONTHLY_PRICE %]</td>
+								<td>[% TARIFF.DAILY_PRICE %]</td>
+								<td>[% TARIFF.MINUTE_PRICE %]</td>
+								<td>[% TARIFF.CALL_PRICE %]</td>
+								<td>[% TARIFF.MINUTE_PRICE_CB %]</td>
+								<td>[% TARIFF.CALL_PRICE_CB %]</td>
+								<td>[% TARIFF.MINUTE_PRICE_CBL %]</td>
+								<td>[% TARIFF.CALL_PRICE_CBL %]</td>
+							</tr>
+							<tr>
+								<td colspan='8'>
+									Balance:
+								</td>
+							</tr>
+							<tr class='addon_data'>
+								<td colspan='4'>
+									&nbsp;
+									&nbsp;
+									&nbsp;
+									<b>[% USER.USER_BALANCE %]</b> [% TARIFF.DESCRIPTION %]
+								</td>
+								<td colspan='4' align='right'>
+									<form method='post'>
+									<input size='5' type='text' name='balance'>
+									<input type='hidden' value='[% USER.ID %]' name='user_id'>
+									<input type='hidden' value='[% USER.CURRENCY_ID %]' name='cur_id'>
+									<input type='hidden' value='balance_update' name='action'>
+									<input type='hidden' value='[% PARTNER | html %]' name='partner'>
+									<input value='+/-' type='submit'>
+									</form>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				[% END %]
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<td>
+						<table width='100%'>
+							<tr>
+								<td valign='top' width='20%'><h4>Assigned DIDs:</h4></td>
+								<td valign='top' width='60%'>
+								[% FOREACH d = DIDS %]
+									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&partner=[% PARTNER | html %]' onclick="return DelConfirm('en')">[% d.DID | html %]</a>&nbsp;;&nbsp;
+								[% END %]
+								</td>
+								<td valign='top' width='20%' align='center' nowrap='nowrap'>
+								<form>
+									<input size='11' type='text' name='did'>
+									<input type='hidden' name='pn' value='[% USER.VOICENUMBER | html %]'>
+									<input type='hidden' name='ac' value='[% USER.ACCESS_CODE | html %]'>
+									<input value='add DID' type='submit'>
+									<input type='hidden' value='did_add' name='action'>
+									<input type='hidden' value='[% PARTNER | html %]' name='partner'>
+								</form>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	</p>
+	
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			<td width='50%'>
+				<a class='headers' href='?action=user_del&user_id=[% USER.ID %]&single_user=1&partner=[% PARTNER | html %]' onclick="return DelConfirm('en')">Delete</a>
+			</td>
+			<td width='50%'>
+				<a class='headers' href='?action=user_list&partner=[% PARTNER | html %]'>Users</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
+			
