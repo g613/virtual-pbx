@@ -36,6 +36,7 @@
 		<tr align='left'>
 			<td>
 				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
 			<form method="post">
 			<td align='right'>

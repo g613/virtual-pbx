@@ -165,6 +165,16 @@ Requires: perl(CGI)
 %description web
 Voice Application Server / HostedIVR solution based on asterisk  - WEB interface
 
+####################################################
+#
+%package web-extra
+Summary: Voice Application Server / HostedIVR solution based on asterisk - WEB interface
+Group:   System Environment/Services
+
+Requires: virtual-pbx-web
+
+%description web-extra
+Voice Application Server / HostedIVR solution based on asterisk  - WEB interface
 
 ####################################################
 #
@@ -247,6 +257,7 @@ mv web $RPM_BUILD_ROOT/%CORE_DIR/
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin
 mv cgi-bin/VirtualPBX-UI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ui
 mv cgi-bin/VirtualPBX-AI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ai
+mv cgi-bin/VirtualPBX-PI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/pi
 
 mv contrib/utils/podcast_get.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.hourly/xvb-1-podcast_get.pl
 mv contrib/utils/MemCached.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.hourly/xvb-0-MemCached.pl
@@ -273,6 +284,7 @@ mv contrib/fagi.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-fagi
 mv contrib/reg_uac.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-reg_uac
 mv contrib/perl-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-perl-worker
 mv contrib/gearman-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-gearman-worker
+mv contrib/callblast.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-callblast
 mv sounds/*.tgz $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds/
 mv contrib/asterisk/extensions.conf $RPM_BUILD_ROOT/%{_sysconfdir}/asterisk/xvb/xvb.conf
 mv contrib/httpd.conf $RPM_BUILD_ROOT/%{_sysconfdir}/httpd/conf.d/xvb.conf
@@ -405,6 +417,7 @@ touch /etc/asterisk/xvb/xvb-phone-service.conf || true
 chkconfig asterisk on
 chkconfig xvb-fagi on
 chkconfig xvb-perl-worker on
+chkconfig xvb-callblast on
 
 STR=`LANG=C service asterisk status | grep running`
 if [ "x$STR" = "x" ]; then
@@ -434,6 +447,7 @@ else
 	fi
 fi
 
+service xvb-callblast restart || true
 service xvb-fagi restart
 
 ####################################################
@@ -441,6 +455,8 @@ service xvb-fagi restart
 %post web
 # apache password
 touch %CORE_DIR/web/.htpasswd
+# custom admin menu
+touch %CORE_DIR/templates/admin/main_menu.tt-inc-custom || true
 # download spool init
 mkdir -p /tmp/xvb-download && chmod 777 /tmp/xvb-download 
 
@@ -547,6 +563,8 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-fagi
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_agi
 %attr(755,root,root) %CORE_DIR/contrib/utils/Fagi.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_callblast
+%attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-callblast
 %CORE_DIR/contrib/asterisk/feautures.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*
@@ -565,10 +583,15 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %files web
 %attr(644,root,root) %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
 %attr(644,root,root) %{_sysconfdir}/cron.d/virtual-pbx-web.cron
-%attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/*
+%attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/ai
+%attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/ui
 %CORE_DIR/web/*
 %CORE_DIR/contrib/nginx.conf
 
+####################################################
+#
+%files web-extra
+%attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/pi
 
 ####################################################
 #
