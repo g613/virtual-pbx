@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.58 2012-06-04 13:58:05 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.59 2012-06-24 06:10:29 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -1150,7 +1150,11 @@ function tz_dropdown( tz_name, def_desc ) {
 );
 
 	document.write('<select onchange=\'document.getElementsByName("TZ_NAME")[0].value = this.value\' name="TZ_NAME-DD">');
-	
+
+	if ( tz_name == '' ) {
+		document.getElementsByName("TZ_NAME")[0].value = tz_name = 'Default';
+	}
+
 	for (var i = 0; i < tz_list.length; i++) {
 		document.write('<option value="'+ tz_list[i] +'"');
 		if ( tz_list[i] == tz_name ) {

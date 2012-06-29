@@ -1,0 +1,31 @@
+#!/bin/bash
+#
+# $Id: safe_xvb_callblast,v 1.1 2012-06-15 19:45:05 gosha Exp $
+#
+# vim:textwidth=80:tabstop=4:shiftwidth=4:smartindent:autoindent
+
+RC_CONFIG=${1-"/opt/VirtualPBX/etc/xvb-rc.cfg"}
+. ${RC_CONFIG}
+
+# Check if is already running.
+PROC=`ps ax | grep '[Cc]allblast.pl'`
+if [ "x$PROC" != "x" ]; then
+	echo "callblast is already running." 
+	exit 1
+fi
+
+#
+# Don't die if stdout/stderr can't be written to
+#
+trap '' PIPE
+
+run_xvb()
+{
+	cd /tmp
+	while :; do 
+		sudo -u asterisk /opt/VirtualPBX/contrib/utils/callblast.pl
+		sleep $CALLBLAST_DELAY
+	done
+}
+
+run_xvb 2>>/var/log/VirtualPBX/XVB.stderr 1>&2 &
