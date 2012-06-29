@@ -1,0 +1,63 @@
+#!/bin/bash
+#
+# Init file for VirtualPBX-callblast
+#
+# Written by Igor Okunev
+#
+# chkconfig: - 82 11
+# description: VirtualPBX callblast
+#
+
+source /etc/rc.d/init.d/functions
+
+### Default variables
+CONFIG="/opt/VirtualPBX/etc/xvb-rc.cfg"
+
+RETVAL=0
+prog="safe_xvb_callblast";
+desc="Virtual PBX callblast"
+
+start() {
+	echo -n $"Starting $desc ($prog): "
+	daemon /opt/VirtualPBX/contrib/utils/$prog $CONFIG 2>> /var/log/VirtualPBX/XVB.stderr
+	RETVAL=$?
+	echo
+	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/$prog
+	return $RETVAL
+}
+
+stop() {
+	echo -n $"Shutting down $desc ($prog): "
+	killproc $prog
+	RETVAL=$?
+	echo
+	[ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/$prog
+	return $RETVAL
+}
+
+restart() {
+	stop
+	sleep 3
+	start
+}
+
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart)
+	restart
+	;;
+  status)
+	status $prog
+	RETVAL=$?
+	;;
+   *)
+	echo $"Usage: $0 {start|stop|restart|status}"
+	RETVAL=1
+esac
+
+exit $RETVAL
