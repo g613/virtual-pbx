@@ -1,0 +1,48 @@
+*** channels/chan_sip.c-orig	2012-07-04 07:34:35.000000000 -0400
+--- channels/chan_sip.c	2012-07-04 07:41:31.000000000 -0400
+***************
+*** 18155,18164 ****
+  		}
+  		if (res < 0) { /* Something failed in authentication */
+  			if (res == AUTH_FAKE_AUTH) {
+! 				ast_log(LOG_NOTICE, "Sending fake auth rejection for user %s\n", get_header(req, "From"));
+  				transmit_fake_auth_response(p, SIP_INVITE, req, XMIT_RELIABLE);
+  			} else {
+! 				ast_log(LOG_NOTICE, "Failed to authenticate user %s\n", get_header(req, "From"));
+  				transmit_response_reliable(p, "403 Forbidden", req);
+  			}
+  			p->invitestate = INV_COMPLETED;	
+--- 18155,18164 ----
+  		}
+  		if (res < 0) { /* Something failed in authentication */
+  			if (res == AUTH_FAKE_AUTH) {
+! 				ast_log(LOG_NOTICE, "Sending fake auth rejection for user %s [IP: %s]\n", get_header(req, "From"), ast_inet_ntoa(sin->sin_addr));
+  				transmit_fake_auth_response(p, SIP_INVITE, req, XMIT_RELIABLE);
+  			} else {
+! 				ast_log(LOG_NOTICE, "Failed to authenticate user %s [IP: %s]\n", get_header(req, "From"), ast_inet_ntoa(sin->sin_addr));
+  				transmit_response_reliable(p, "403 Forbidden", req);
+  			}
+  			p->invitestate = INV_COMPLETED;	
+***************
+*** 19347,19356 ****
+  		return 0;
+  	if (res < 0) {
+  		if (res == AUTH_FAKE_AUTH) {
+! 			ast_log(LOG_NOTICE, "Sending fake auth rejection for user %s\n", get_header(req, "From"));
+  			transmit_fake_auth_response(p, SIP_SUBSCRIBE, req, XMIT_UNRELIABLE);
+  		} else {
+! 			ast_log(LOG_NOTICE, "Failed to authenticate user %s for SUBSCRIBE\n", get_header(req, "From"));
+  			transmit_response_reliable(p, "403 Forbidden", req);
+  		}
+  		p->needdestroy = 1;
+--- 19347,19356 ----
+  		return 0;
+  	if (res < 0) {
+  		if (res == AUTH_FAKE_AUTH) {
+! 			ast_log(LOG_NOTICE, "Sending fake auth rejection for user %s [IP: %s]\n", get_header(req, "From"), ast_inet_ntoa(sin->sin_addr));
+  			transmit_fake_auth_response(p, SIP_SUBSCRIBE, req, XMIT_UNRELIABLE);
+  		} else {
+! 			ast_log(LOG_NOTICE, "Failed to authenticate user %s [IP: %s] for SUBSCRIBE\n", get_header(req, "From"), ast_inet_ntoa(sin->sin_addr));
+  			transmit_response_reliable(p, "403 Forbidden", req);
+  		}
+  		p->needdestroy = 1;

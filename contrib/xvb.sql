@@ -258,7 +258,7 @@ create	table VPBX_GROUPS
 	ALLOW_EXTSTAT				INT(1) default 0,
 	ADVANCED_CALLBLAST			INT(1) default 0,
 
-	MAX_EXT_MSGS				INT(10) default 100,
+	MAX_SIZE_MSGS				INT(16) default 0,
 	MAX_ALL_MSGS				INT(10) default 1000,
 	MAX_EXTENSIONS				INT(10) default 100,
 	MAX_EXT_CIDS				INT(10) default 200,
@@ -532,6 +532,7 @@ create table VPBX_SIPPEERS (
 	REC_EXT			VARCHAR(255)	not null default '0',
 
 	NEED_REG		INT(1)			not null default 0,
+	REG_EXPIRE		INT(6)			not null default 0,
 	INC_EXT			VARCHAR(255)	not null default '0',
 	PICKUP_GROUPS	VARCHAR(255)	not null default '',
 	PEER_TYPE		INT(1)			not null default 0,

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.72 2012-06-08 12:37:35 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.74 2012-07-02 20:45:59 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -428,12 +428,12 @@
 					</td>
 				</tr>
 				<tr>
-					<td>количество сообщений для одного номера: </td>
-					<td align='right'>[% USER_CREDS.MAX_EXT_MSGS %]</td>
+					<td>количество сообщений: </td>
+					<td align='right'>[% FILES_CNT %] / [% USER_CREDS.MAX_ALL_MSGS %]</td>
 				</tr>
 				<tr>
-					<td>количество сообщений: </td>
-					<td align='right'>[% USER_CREDS.MAX_ALL_MSGS %]</td>
+					<td>размер всех сообшений: </td>
+					<td align='right'>[% FILES_SIZE | fsize %] / [% USER_CREDS.MAX_SIZE_MSGS | fsize %]</td>
 				</tr>
 				<tr>
 					<td>количество CID фильтров используемых за раз: </td>
