@@ -1,5 +1,7 @@
 ==All VMWare images :==
 
+ * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/57007181001.7dca7f1c1a3f7666e7cedc05f5e31387/VirtualPBX-1_6565.tar.bz2.html build 6565 ( 19.07.2012 )] ( PhoneBook, storage-limits, partner interface, some improvements. )
+
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/50459488001.e70b26d46dd68fdab63cf565ff3ef835/VirtualPBX-1_6309.tar.bz2.html build 6309 ( 25.05.2012 )] ( SIP-phones status, call-limits, failover routes, more improvements for queues, playback, disa, directory extensions. )
 
   * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/44779114001.a475be986775503485720a018e04a3d0/VirtualPBX-1_6116.tar.bz2.html build 6116 (31.03.2012)] ( CentOS 5.8, added more reports, SIP-registration status, plugins-support, DIDs routing, many GUI improvements )
