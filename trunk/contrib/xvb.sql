@@ -272,6 +272,7 @@ create	table VPBX_GROUPS
 	MAX_SCHEDULE_ITEMS			INT(10) default 10,
 	MAX_CALLBLAST_ITEMS			INT(10) default 30,
 	MAX_GOTOIF_ITEMS			INT(10) default 10,
+	MAX_PBOOK_ITEMS				INT(10) default 200,
 
 	MAX_EXT_PHONES				INT(4) default 20,
 	MAX_CB_PHONES				INT(4) default 3,
