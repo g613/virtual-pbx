@@ -585,7 +585,11 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %attr(644,root,root) %{_sysconfdir}/cron.d/virtual-pbx-web.cron
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/ai
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/ui
-%CORE_DIR/web/*
+%CORE_DIR/web/*.css
+%CORE_DIR/web/*.pdf
+%CORE_DIR/web/css/*
+%CORE_DIR/web/images/*
+%CORE_DIR/web/js/*
 %CORE_DIR/contrib/nginx.conf
 
 ####################################################

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters_core.tt,v 1.22 2012-06-04 05:58:06 gosha Exp $ -->
+<!-- $Id: cidfilters_core.tt,v 1.23 2012-07-16 21:14:50 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID filters - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -27,7 +27,7 @@
 			[% IF CID_LIST_TYPE eq '1' %]
 				Black list	
 			[% ELSE %]
-				White list / Address book
+				White list
 			[% END %]
 			</h2></td>
 			<td align='right' width='20%'><a href=?action=logout>logout</a></td>

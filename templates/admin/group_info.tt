@@ -277,6 +277,10 @@
 			<td><input name='GR_MAX_EXT_CIDS' type='text' value="[% GROUP.MAX_EXT_CIDS | html %]"></td>
 		</tr>
 		<tr>
+			<td>Maximum Number of Phone Book items: </td>
+			<td><input name='GR_MAX_EXT_PBOOK_ITEMS' type='text' value="[% GROUP.MAX_PBOOK_ITEMS | html %]"></td>
+		</tr>
+		<tr>
 			<td>Maximum Number of Routes: </td>
 			<td><input name='GR_MAX_ROUTES' type='text' value="[% GROUP.MAX_ROUTES | html %]"></td>
 		</tr>
