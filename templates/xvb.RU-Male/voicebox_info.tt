@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.192 2012-06-09 12:43:18 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.193 2012-07-31 11:11:11 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1250,6 +1250,13 @@
 						</span></a></td>
 					<td>
 						<input size='30' name="PHONE_NUMBER" value="[% VBOX_PREF.PHONE_NUMBER | html %]" type="text">
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Таймаут соединения (сек): </td>
+					<td>
+						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
+						( 1 звонок равен примерно 4 секундам )
 					</td>
 				</tr>
 				<tr>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.239 2012-05-19 06:36:43 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.240 2012-07-31 11:11:10 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1044,6 +1044,13 @@
 					<td>Static phone: </td>
 					<td>
 						<input size='30' name="PHONE_NUMBER" value="[% VBOX_PREF.PHONE_NUMBER | html %]" type="text">
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Ring timeout (sec): </td>
+					<td>
+						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
+						( 1 ring approximately equals 4 seconds )
 					</td>
 				</tr>
 				<tr class='addon_info'>
