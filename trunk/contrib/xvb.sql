@@ -1052,6 +1052,7 @@ create	table VPBX_VBOXES_DISA
 	PHONE_PATTERN	VARCHAR(255),	
 	PHONE_NUMBER	VARCHAR(255),	
 	MAX_DIGITS		INT(10)			not null default -1,
+	RING_TIMEOUT	INT(3)			default 30,
 
 	unique(ID),
 

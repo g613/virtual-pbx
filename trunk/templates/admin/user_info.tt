@@ -150,6 +150,14 @@
 					</select>
 				</td>
 			</tr>
+			<tr>
+				<td>
+					Calls on IVR:
+				</td>
+				<td>
+					[% USER.CUR_CALLS %]
+				</td>
+			</tr>
 			<tr><td colspan='2'>&nbsp;</td></tr>
 			<tr>
 				<td colspan='2' align='center'>
