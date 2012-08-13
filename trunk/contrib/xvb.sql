@@ -488,6 +488,9 @@ create table VPBX_SIPPEERS (
 
 	name VARCHAR(100) NOT NULL,
 
+	deny varchar(95) DEFAULT NULL,
+	permit varchar(95) DEFAULT NULL,
+
 	host VARCHAR(255) NOT NULL DEFAULT '',
 	port VARCHAR(5) NOT NULL DEFAULT '5060',
 	username VARCHAR(80) NOT NULL DEFAULT '',
