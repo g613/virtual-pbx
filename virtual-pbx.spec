@@ -273,11 +273,14 @@ mv contrib/virtual-pbx*.cron $RPM_BUILD_ROOT/%{_sysconfdir}/cron.d/
 mv contrib/utils/viewlogs.pl $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/
 date > $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/data/build-date
 
-cp contrib/XVB.pdf $RPM_BUILD_ROOT/%CORE_DIR/web/
-cp contrib/XVB-AI.pdf $RPM_BUILD_ROOT/%CORE_DIR/web/
-mv contrib/XVB.pdf $RPM_BUILD_ROOT/%CORE_DIR/doc/
+#cp contrib/XVB-EN.pdf $RPM_BUILD_ROOT/%CORE_DIR/web/
+#cp contrib/XVB.pdf $RPM_BUILD_ROOT/%CORE_DIR/web/
+#cp contrib/XVB-AI.pdf $RPM_BUILD_ROOT/%CORE_DIR/web/
+mv contrib/XVB-EN.pdf $RPM_BUILD_ROOT/%CORE_DIR/web/
+mv contrib/XVB-EN.odt $RPM_BUILD_ROOT/%CORE_DIR/doc/
+mv contrib/XVB.pdf $RPM_BUILD_ROOT/%CORE_DIR/web/
 mv contrib/XVB.odt $RPM_BUILD_ROOT/%CORE_DIR/doc/
-mv contrib/XVB-AI.pdf $RPM_BUILD_ROOT/%CORE_DIR/doc/
+mv contrib/XVB-AI.pdf $RPM_BUILD_ROOT/%CORE_DIR/web/
 mv contrib/XVB-AI.odt $RPM_BUILD_ROOT/%CORE_DIR/doc/
 
 mv contrib/fagi.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-fagi
@@ -530,10 +533,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %attr(644,root,root) %CORE_DIR/contrib/utils/rpm/sys_update-data/*
 %CORE_DIR/lib/*
 %CORE_DIR/templates/*
-%CORE_DIR/doc/XVB.odt
-%CORE_DIR/doc/XVB.pdf
-%CORE_DIR/doc/XVB-AI.odt
-%CORE_DIR/doc/XVB-AI.pdf
+%CORE_DIR/doc/*.odt
 %CORE_DIR/contrib/xvb.sql
 %CORE_DIR/contrib/icecast.xml
 %CORE_DIR/contrib/spec-files/*.gz
