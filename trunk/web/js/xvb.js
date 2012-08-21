@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.59 2012-06-24 06:10:29 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.60 2012-08-13 14:25:55 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -497,7 +497,9 @@ function setShadowAttr() {
 				var result = re.test(s) ? 1 : 0;
 				if ( result == 0 ) {
 					all_el[i].onclick = function() { return LoadingOn() };
-				} 
+				} else {
+					all_el[i].onclick = function() { this.blur(); return true };
+				}
 			}
 		} else if ( all_el[i].tagName == 'FORM' ) {
 			/* form */
@@ -507,7 +509,7 @@ function setShadowAttr() {
 		} else if ( all_el[i].tagName == 'INPUT' && all_el[i].type == 'submit' ) {
 			/* submit */
 			if ( all_el[i].name != '' && all_el[i].onclick == null ) {
-				all_el[i].onclick = function() { this.form.onsubmit=false; this.form.submit };
+				all_el[i].onclick = function() { this.blur(); this.form.onsubmit=false; this.form.submit };
 			}
 		}
 	}

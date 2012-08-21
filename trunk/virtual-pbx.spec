@@ -232,9 +232,6 @@ mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/httpd/conf.d
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/asterisk/xvb
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/logrotate.d
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/cron.d
-mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/cron.daily
-mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/cron.hourly
-mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/cron.monthly
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/doc
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/db
@@ -259,23 +256,13 @@ mv cgi-bin/VirtualPBX-UI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ui
 mv cgi-bin/VirtualPBX-AI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ai
 mv cgi-bin/VirtualPBX-PI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/pi
 
-mv contrib/utils/podcast_get.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.hourly/xvb-1-podcast_get.pl
-mv contrib/utils/MemCached.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.hourly/xvb-0-MemCached.pl
-cp contrib/utils/db_backup.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.daily/xvb-0-db_backup.pl
-mv contrib/utils/journals_clean.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.daily/xvb-1-journals_clean.pl
-mv contrib/utils/cdr_reports.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.daily/xvb-2-cdr_reports.pl
-mv contrib/utils/cdr_clean.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.daily/xvb-3-cdr_clean.pl
-mv contrib/utils/msg_clean.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.daily/xvb-4-msg_clean.pl
-cp contrib/utils/billing_processor.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.daily/xvb-5-billing_processor_daily.pl
-mv contrib/utils/billing_processor.pl $RPM_BUILD_ROOT/%{_sysconfdir}/cron.monthly/xvb-0-billing_processor_monthly.pl
+cp contrib/utils/billing_processor.pl contrib/utils/billing_processor_daily.pl
+mv contrib/utils/billing_processor.pl contrib/utils/billing_processor_monthly.pl
 mv contrib/virtual-pbx*.cron $RPM_BUILD_ROOT/%{_sysconfdir}/cron.d/
 
 mv contrib/utils/viewlogs.pl $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/
 date > $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/data/build-date
 
-#cp contrib/XVB-EN.pdf $RPM_BUILD_ROOT/%CORE_DIR/web/
-#cp contrib/XVB.pdf $RPM_BUILD_ROOT/%CORE_DIR/web/
-#cp contrib/XVB-AI.pdf $RPM_BUILD_ROOT/%CORE_DIR/web/
 mv contrib/XVB-EN.pdf $RPM_BUILD_ROOT/%CORE_DIR/web/
 mv contrib/XVB-EN.odt $RPM_BUILD_ROOT/%CORE_DIR/doc/
 mv contrib/XVB.pdf $RPM_BUILD_ROOT/%CORE_DIR/web/
@@ -485,7 +472,7 @@ chkconfig mysqld on
 perl %CORE_DIR/contrib/utils/rpm/db_update.pl
 
 # init auth cache
-perl %{_sysconfdir}/cron.hourly/xvb-0-MemCached.pl
+perl %CORE_DIR/contrib/utils/MemCached.pl
 
 # start services
 #service memcached start
@@ -544,8 +531,6 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 #
 %files voip
 %attr(440,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/xvb/*.conf
-%attr(755,root,root) %{_sysconfdir}/cron.hourly/xvb-1-podcast_get.pl
-%attr(755,root,root) %{_sysconfdir}/cron.daily/xvb-4-msg_clean.pl
 %attr(644,root,root) %{_sysconfdir}/cron.d/virtual-pbx-voip.cron
 %attr(755,asterisk,asterisk) %CORE_DIR/agi-bin/*.agi
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_perl_worker
@@ -565,6 +550,8 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %attr(755,root,root) %CORE_DIR/contrib/utils/Fagi.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_callblast
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-callblast
+%attr(755,root,root) %CORE_DIR/contrib/utils/podcast_get.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/msg_clean.pl
 %CORE_DIR/contrib/asterisk/feautures.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*
@@ -601,14 +588,14 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 #
 %files management
 %attr(644,root,root) %{_sysconfdir}/cron.d/virtual-pbx.cron
-%attr(755,root,root) %{_sysconfdir}/cron.hourly/xvb-0-MemCached.pl
-%attr(755,root,root) %{_sysconfdir}/cron.daily/xvb-0-db_backup.pl
-%attr(755,root,root) %{_sysconfdir}/cron.daily/xvb-1-journals_clean.pl
-%attr(755,root,root) %{_sysconfdir}/cron.daily/xvb-2-cdr_reports.pl
-%attr(755,root,root) %{_sysconfdir}/cron.daily/xvb-3-cdr_clean.pl
-%attr(755,root,root) %{_sysconfdir}/cron.daily/xvb-5-billing_processor_daily.pl
-%attr(755,root,root) %{_sysconfdir}/cron.monthly/*
 %attr(755,root,root) %CORE_DIR/contrib/utils/nodes_admin/*
+%attr(755,root,root) %CORE_DIR/contrib/utils/MemCached.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/db_backup.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/journals_clean.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/cdr_reports.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/cdr_clean.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/billing_processor_daily.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/billing_processor_monthly.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/queues_hourly_avg.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/db_backup.pl
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/db

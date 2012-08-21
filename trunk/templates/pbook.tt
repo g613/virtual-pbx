@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.7 2012-07-31 11:11:10 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.9 2012-08-14 15:09:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Phone book - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -107,7 +107,7 @@
 			<td colspan='3'>&nbsp;</td>
 		</tr>
 		<tr id='csv-import'>
-			<td align='right' colspan='2'>
+			<td align='left' colspan='2'>
 				<form method="post" action="[% CGI_URL %]" onSubmit='return true'>
 					<input type='hidden' name='action' value='pbook_list'>
 					<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
@@ -120,7 +120,7 @@
 						<option value="cisco">Cisco config</option>
 						<option value="snom">Snom config</option>
 					</select>
-					<input type='submit' value='&nbsp;download&nbsp;'>
+					<input name='submit' type='submit' value='&nbsp;download&nbsp;'>
 				</form>
 			</td>
 			<td colspan='4' align='right'>
