@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.6 2012-07-18 10:41:47 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.7 2012-08-13 14:25:55 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Телефонная книга - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -121,7 +121,7 @@
 						<option value="cisco">Cisco конфигурация</option>
 						<option value="snom">Snom конфигурация</option>
 					</select>
-					<input type='submit' value='&nbsp;скачать&nbsp;'>
+					<input name='submit' type='submit' value='&nbsp;скачать&nbsp;'>
 				</form>
 			</td>
 			<td colspan='4' align='right'>
