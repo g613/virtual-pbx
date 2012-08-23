@@ -3,7 +3,7 @@
 
 <font color='red'>-Поддержка пользовательских переменных в поле email адреса для оповерщения</font>
 
-<fonr color='red'>-HOLD звонка для аналоговых линий</font>
+<font color='red'>-HOLD звонка для аналоговых линий</font>
 
 <font color='green'>+ Таймаут вызова для DISA</font> (02.08.12 / build 6584 )
 
