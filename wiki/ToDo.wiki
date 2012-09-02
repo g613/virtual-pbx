@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='green'>+Поддержка пользовательских переменных в поле email адреса для оповерщения</font> ( 02.09.12 / build 6640 )
+<font color='green'>+ Поддержка пользовательских переменных в поле email адреса для оповерщения</font> ( 02.09.12 / build 6640 )
 
 <font color='green'>+ HOLD звонка для аналоговых линий</font> ( 31.08.12 / build 6630 )
 
