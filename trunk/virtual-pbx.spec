@@ -137,17 +137,6 @@ Voice Application Server / HostedIVR solution based on asterisk - VOIP applicati
 
 ####################################################
 #
-%package voip-fagi
-Summary: Voice Application Server / HostedIVR solution based on asterisk - FastAGI utils
-Group:   System Environment/Services
-
-Requires: virtual-pbx-voip
-
-%description voip-fagi
-dummy package, just remove it now.
-
-####################################################
-#
 %package web
 Summary: Voice Application Server / HostedIVR solution based on asterisk - WEB interface
 Group:   System Environment/Services
@@ -165,16 +154,6 @@ Requires: perl(CGI)
 %description web
 Voice Application Server / HostedIVR solution based on asterisk  - WEB interface
 
-####################################################
-#
-%package web-extra
-Summary: Voice Application Server / HostedIVR solution based on asterisk - WEB interface
-Group:   System Environment/Services
-
-Requires: virtual-pbx-web
-
-%description web-extra
-Voice Application Server / HostedIVR solution based on asterisk  - WEB interface
 
 ####################################################
 #
@@ -562,27 +541,18 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 
 ####################################################
 #
-%files voip-fagi
-
-
-####################################################
-#
 %files web
 %attr(644,root,root) %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
 %attr(644,root,root) %{_sysconfdir}/cron.d/virtual-pbx-web.cron
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/ai
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/ui
+%attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/pi
 %CORE_DIR/web/*.css
 %CORE_DIR/web/*.pdf
 %CORE_DIR/web/css/*
 %CORE_DIR/web/images/*
 %CORE_DIR/web/js/*
 %CORE_DIR/contrib/nginx.conf
-
-####################################################
-#
-%files web-extra
-%attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/pi
 
 ####################################################
 #
