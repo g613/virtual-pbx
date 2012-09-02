@@ -4,6 +4,8 @@
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=user_list'>Users</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='ai?action=partner_list'>Partners</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=did_list'>Private DIDs</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=did_attr_list'>DIDs attr</a>

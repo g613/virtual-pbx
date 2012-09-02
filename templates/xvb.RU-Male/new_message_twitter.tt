@@ -1,1 +1,1 @@
-[% IF FILE_LINK ne '' %]Новое сообщение для  [% USER_CREDS.ACCESS_CODE | html %]@[% USER_CREDS.VOICENUMBER | html %] # [% _USER_VBOX.EXT_NUMBER | html %] от [% callerid | html %], получено [% origdate | html %][% END %]
+[% IF FILE_LINK ne '' %]Новое сообщение для  [% CALLED_ID | html %] # [% _USER_VBOX.EXT_NUMBER | html %] от [% callerid | html %], получено [% origdate | html %][% END %]
