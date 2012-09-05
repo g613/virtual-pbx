@@ -1,7 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Привязка телефонов к IP</font>
+<font color='red'>- Перенстилогирование статуса агента из журнала в активность</font>
+
+<font color='green'>+ Привязка телефонов к IP</font> ( 05.09.12 / build 6650 )
 
 <font color='green'>+ Поддержка пользовательских переменных в поле email адреса для оповерщения</font> ( 02.09.12 / build 6640 )
 
