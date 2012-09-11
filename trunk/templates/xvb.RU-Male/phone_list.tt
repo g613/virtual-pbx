@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.21 2012-05-20 10:17:35 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.22 2012-09-04 13:27:10 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -53,10 +53,11 @@
 	<table width='95%' class='list_data' id='d-tbl'>
 		<tr class='list_data'>
 			<th>Логин</th>
+			<th>Пароль</th>
+			<th>&nbsp;</th>
 			<th>&nbsp;</th>
 			<th>Телефон</th>
-			<th>Имя</th>
-			<th>Пароль</th>
+			<th>Имя пользователя</th>
 			<th>Запись</th>
 			<th>Сохранить запись в</th>
 			<th>Группы перехвата</th>
@@ -67,6 +68,14 @@
 		<tr align='center' class='nocolor' id='d-tr-[% p.DATA_ID %]'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 			<td align='left'><input size="32" type='hidden' name='name' value="[% p.name %]">[% p.name %]</td>
+			<td><input class='in_t0' size="12" name='secret' type='text' value="[% p.secret | html %]"></td>
+			<td align='center'>
+				[% IF p.deny %]
+					<input class='in_t0' name='trusted_ip' type='checkbox' title='Доступ только с IP адреса: [% p.permit | html %]' checked />
+				[% ELSIF p.ipaddr ne "" %]
+					<input class='in_t0' name='trusted_ip' type='checkbox' title='Ограничить доступ только с текущего IP адреса: [% p.ipaddr | html %]' />
+				[% END %]
+			</td>
 			<td align='center'>
 				<img 
 				[% IF p.REG_STATUS eq 'Registered' %]
@@ -80,7 +89,6 @@
 			</td>
 			<td><input class='in_t0' size="10" name='callerid' type='text' value="[% p.callerid | html %]"></td>
 			<td><input class='in_t0' size="18" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"></td>
-			<td><input class='in_t0' size="12" name='secret' type='text' value="[% p.secret | html %]"></td>
 			<td>
 				<select name="REC_MODE" class='in_t0'>
 				[% IF p.REC_MODE eq '1' %]
@@ -138,9 +146,10 @@
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
 			<td><input size="10" name='callerid' type='text'></td>
 			<td><input size="18" name='DESCRIPTION' type='text'></td>
-			<td>&nbsp;</td>
 			<td>
 				<select name="REC_MODE">
 					<option value="0" selected>Выключено</option>
