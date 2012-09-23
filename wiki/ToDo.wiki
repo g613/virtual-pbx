@@ -1,7 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- В графики звонков пользователя добавить группировку по CID/DID/CALLTYPE</font> 
+<font color='green'>+ Поддержка трпнсфера для DISA /Directory </font> ( 22.09.12 build 6675 ) 
+
+<font color='green'>+ В графики звонков пользователя добавить группировку по CID/DID/CALLTYPE</font> ( 20.09.12 build 6670 ) 
 
 <font color='green'>+ Автодозвон до последнего вызываемого абонента</font> ( 08.09.12 / build 6657 )
 
