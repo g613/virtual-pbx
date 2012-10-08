@@ -1,0 +1,73 @@
+diff -cr asterisk-1.6.2.24/apps/app_dial.c asterisk-1.6.2.24-pdd/apps/app_dial.c
+*** asterisk-1.6.2.24/apps/app_dial.c	2011-05-18 16:02:06.000000000 -0400
+--- asterisk-1.6.2.24-pdd/apps/app_dial.c	2012-09-27 09:26:16.598277454 -0400
+***************
+*** 832,837 ****
+--- 832,842 ----
+  	struct ast_channel *peer = NULL;
+  	/* single is set if only one destination is enabled */
+  	int single = outgoing && !outgoing->next && !ast_test_flag64(outgoing, OPT_MUSICBACK | OPT_RINGBACK);
++ 	
++ 	int pdd_set = 0;
++ 	char buf[80];
++ 	time_t pddend;
++ 
+  #ifdef HAVE_EPOLL
+  	struct chanlist *epollo;
+  #endif
+***************
+*** 953,958 ****
+--- 958,968 ----
+  							ast_channel_early_bridge(in, peer);
+  					}
+  					/* If call has been answered, then the eventual hangup is likely to be normal hangup */
++ 					if (!pdd_set) {
++ 						time(&pddend);
++ 						snprintf(buf, sizeof(buf), "%ld", (long) pddend - c->cdr->start.tv_sec);
++ 						pbx_builtin_setvar_helper(in, "PDDSEC", buf);
++ 					}
+  					in->hangupcause = AST_CAUSE_NORMAL_CLEARING;
+  					c->hangupcause = AST_CAUSE_NORMAL_CLEARING;
+  					break;
+***************
+*** 981,986 ****
+--- 991,1001 ----
+  						ast_indicate(in, AST_CONTROL_RINGING);
+  						pa->sentringing++;
+  					}
++ 					if (!pdd_set) {
++ 						time(&pddend);
++ 						snprintf(buf, sizeof(buf), "%ld", (long) pddend - c->cdr->start.tv_sec);
++ 						pbx_builtin_setvar_helper(in, "PDDSEC", buf);
++ 					}
+  					break;
+  				case AST_CONTROL_PROGRESS:
+  					ast_verb(3, "%s is making progress passing it to %s\n", c->name, in->name);
+***************
+*** 991,996 ****
+--- 1006,1016 ----
+  						if (single || (!single && !pa->sentringing)) {
+  							ast_indicate(in, AST_CONTROL_PROGRESS);
+  						}
++ 					if (!pdd_set) {
++ 						time(&pddend);
++ 						snprintf(buf, sizeof(buf), "%ld", (long) pddend - c->cdr->start.tv_sec);
++ 						pbx_builtin_setvar_helper(in, "PDDSEC", buf);
++ 					}
+  					break;
+  				case AST_CONTROL_VIDUPDATE:
+  					ast_verb(3, "%s requested a video update, passing it to %s\n", c->name, in->name);
+***************
+*** 1006,1011 ****
+--- 1026,1036 ----
+  						ast_channel_early_bridge(in, c);
+  					if (!ast_test_flag64(outgoing, OPT_RINGBACK))
+  						ast_indicate(in, AST_CONTROL_PROCEEDING);
++ 					if (!pdd_set) {
++ 						time(&pddend);
++ 						snprintf(buf, sizeof(buf), "%ld", (long) pddend - c->cdr->start.tv_sec);
++ 						pbx_builtin_setvar_helper(in, "PDDSEC", buf);
++ 					}
+  					break;
+  				case AST_CONTROL_HOLD:
+  					ast_verb(3, "Call on %s placed on hold\n", c->name);
