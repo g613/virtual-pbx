@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.35 2012-06-08 06:55:47 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.36 2012-09-19 19:48:02 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -189,7 +189,7 @@
 				<input name='need_excel' value='Excel' type='submit'>
 				<script language='JavaScript'>
 					document.write("<input name='need_chart' value='Графики' type='submit'>");
-					document.write("<select name='chart_group_period'><option selected value=''>группировать по</option><option value='min'>минута</option><option value='h'>час</option><option value='hd'>час дня</option><option value='d'>день</option><option value='dw'>день недели</option><option value='dw'>день месяца</option><option value='w'>неделя</option><option value='m'>месяц</option></select>");
+					document.write("<select name='chart_group_period'><option selected value=''>группировать по</option><option value='min'>минута</option><option value='h'>час</option><option value='hd'>час дня</option><option value='d'>день</option><option value='dw'>день недели</option><option value='dw'>день месяца</option><option value='w'>неделя</option><option value='m'>месяц</option><option value='y'>год</option><option value='did'>номер назначения</option><option value='cid'>номер звонящего</option><option value='ct'>тип звонка</option></select>");
 				</script>
 				&nbsp;
 			</td>
