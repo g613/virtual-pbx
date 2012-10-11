@@ -1,9 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Установка CID для исходящей связи ( только для телефонов )</font>
+<font color='green'>+ Установка CID для исходящей связи ( только для телефонов )</font> ( 11.09.12 / build 6707 )
 
-<font color='green'>+ Поддержка трпнсфера для DISA /Directory </font> ( 22.09.12 build 6675 ) 
+<font color='green'>+ Поддержка трпнсфера для DISA /Directory </font> ( 22.09.12 / build 6675 ) 
 
 <font color='green'>+ В графики звонков пользователя добавить группировку по CID/DID/CALLTYPE</font> ( 20.09.12 build 6670 ) 
 
