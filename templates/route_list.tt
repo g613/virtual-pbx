@@ -55,6 +55,7 @@
 			<th>Permissions</th>
 			<th>Time Limits</th>
 			<th>Route Name</th>
+			<th>CallerID</th>
 			<th>Peer</th>
 			<th>Actions</th>
 		</tr>
@@ -68,6 +69,7 @@
 			<td><input class='in_t0' size="25" name='r_EXT_NUMBER' type='text' value="[% r.EXT_NUMBER | html %]"></td>
 			<td><input class='in_t0' size="6" name='r_TLIMIT' type='text' value="[% r.TLIMIT | html %]"></td>
 			<td><input class='in_t0' size="20" name='r_DESCRIPTION' type='text' value="[% r.DESCRIPTION | html %]"></td>
+			<td><input class='in_t0' size="12" name='r_DEFCID' type='text' value="[% r.DEFCID | html %]"></td>
 			<td>
 				<select name="r_PEER_ID" class='in_t0'>
 				[% FOREACH p = PEERS %]
@@ -103,6 +105,7 @@
 			<td><input size="25" name='r_EXT_NUMBER' type='text'></td>
 			<td><input size="6" name='r_TLIMIT' type='text'></td>
 			<td><input size="20" name='r_DESCRIPTION' type='text'></td>
+			<td><input size="12" name='r_DEFCID' type='text'></td>
 			<td>
 				<select name="r_PEER_ID">
 				[% FOREACH p = PEERS %]
@@ -118,7 +121,7 @@
 			</td>
 			</form>
 		</tr>
-		<tr><td colspan='8'>&nbsp;</td></tr>
+		<tr><td colspan='9'>&nbsp;</td></tr>
 	</table>
 	</p>
 

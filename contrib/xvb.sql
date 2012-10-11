@@ -541,6 +541,8 @@ create table VPBX_SIPPEERS (
 	PICKUP_GROUPS	VARCHAR(255)	not null default '',
 	PEER_TYPE		INT(1)			not null default 0,
 
+	DEFCID			VARCHAR(20) default '',
+
 	unique(name),
     CONSTRAINT FK_VPBX_SIPPPERS_SUBSCR FOREIGN KEY (SUBSCR_ID) REFERENCES VPBX_ACCOUNTS(ID) ON DELETE CASCADE,
 
@@ -559,6 +561,7 @@ create table VPBX_ROUTES (
     DESCRIPTION     VARCHAR(100),
 	EXT_NUMBER		VARCHAR(255),
 	TLIMIT			INT(6) default 0,
+	DEFCID			VARCHAR(20) default '',
 	
     CONSTRAINT FK_VPBX_ROUTES_SUBSCR FOREIGN KEY (SUBSCR_ID) REFERENCES VPBX_ACCOUNTS(ID) ON DELETE CASCADE,
     CONSTRAINT FK_VPBX_ROUTES_PEER FOREIGN KEY (PEER_ID) REFERENCES VPBX_SIPPEERS(DATA_ID) ON DELETE CASCADE,
@@ -2092,7 +2095,7 @@ insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,CH_2,CH_3,CH_4,CH_5,CH_6,CH_7,CH_
 insert into VPBX_DIRECTORY_LANG(ID,DESCRIPTION,CH_2,CH_3,CH_4,CH_5,CH_6,CH_7,CH_8,CH_9) VALUES( 2, 'Russian', 'абвгАБВГ','дежзДЕЖЗ','ийклИЙКЛ','мноМНО','прсПРС','туфхТУФХ','цчшщъЦЧШЩЪ','ыьэюяЫЬЭЮЯ' );
 
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sbc.megafon.ru','Multiphon',"$_[0]->{'fromdomain'}='multifon.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='inband'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='ulaw'; $_[0]->{'port'}='5060';");
-insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.telphin.com','Telphin',"$_[0]->{'fromdomain'}='sip.telphin.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5068';");
+insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('voice.telphin.com','Telphin',"$_[0]->{'fromdomain'}='voice.telphin.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5068';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sipnet.ru','Sipnet',"$_[0]->{'fromdomain'}='sipnet.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.skype.com','Skype Connect',"$_[0]->{'fromdomain'}='sip.skype.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='port,invite'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'port'}='5060';");
 

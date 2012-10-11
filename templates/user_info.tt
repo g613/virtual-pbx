@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.77 2012-07-16 21:14:50 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.78 2012-10-05 15:34:45 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -82,7 +82,7 @@
 					<textarea readonly cols='30'>Public: [% USER_CREDS.VOICENUMBER | html %] # [% USER_CREDS.ACCESS_CODE %]
 [% FOREACH d = DID %]
 &nbsp;
-Prived: [% d.DID | html %]
+Private: [% d.DID | html %]
 [% END %]</textarea>
 					</td>
 				</tr>

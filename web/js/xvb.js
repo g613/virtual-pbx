@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.60 2012-08-13 14:25:55 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.62 2012-10-07 14:46:48 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -726,12 +726,12 @@ function peers_list_init(obj,mode) {
 function peers_unhide( id ) {
 	var mode = id.host.disabled;
 
-	id.host.disabled = id.port.disabled = id.domain.disabled = id.dtmfmode.disabled = id.proto.disabled = 0;
+	id.host.disabled = id.port.disabled = id.domain.disabled = id.dtmfmode.disabled = id.proto.disabled = id.fromuser.disabled = 0;
 
 	var rc = checkChanges( id );
 
 	if ( rc == false ) {
-		id.host.disabled = id.port.disabled = id.domain.disabled = id.dtmfmode.disabled = id.proto.disabled = mode;
+		id.host.disabled = id.port.disabled = id.domain.disabled = id.dtmfmode.disabled = id.proto.disabled = id.fromuser.disabled = mode;
 	} else {
 		id.tmpl.disabled = 'disabled';
 	}
@@ -741,7 +741,7 @@ function peers_hide( id ) {
 
 	id.domain.value = id.port.value = id.domain.value = '';
 
-	id.host.disabled = id.port.disabled = id.domain.disabled = id.dtmfmode.disabled = id.proto.disabled = 0;
+	id.host.disabled = id.port.disabled = id.domain.disabled = id.dtmfmode.disabled = id.proto.disabled = id.fromuser.disabled = 0;
 
 	if ( id.tmpl.value == '.' ) {
 		mode = 0;
@@ -754,7 +754,7 @@ function peers_hide( id ) {
 		id.username.focus();
 		id.DESCRIPTION.value=id.tmpl.options[ id.tmpl.selectedIndex ].text;
 	}
-	id.host.disabled = id.port.disabled = id.domain.disabled = id.dtmfmode.disabled = id.proto.disabled = mode;
+	id.host.disabled = id.port.disabled = id.domain.disabled = id.dtmfmode.disabled = id.proto.disabled = id.fromuser.disabled = mode;
 }
 
 /* Extended stst */
@@ -1004,6 +1004,15 @@ function getTimePeriod(lang,period) {
 		} else if ( period == '%Y-%m-%d %H:%i' ) {
 			period = 'минута';
 			group_by = 'min';
+		} else if ( period == 'CALLED_ID' ) {
+			period = 'номер назначения';
+			group_by = 'did';
+		} else if ( period == 'CALLER_ID' ) {
+			period = 'номер звонящего';
+			group_by = 'cid';
+		} else if ( period == 'CALL_TYPE' ) {
+			period = 'тип звонка';
+			group_by = 'ct';
 		} else {
 			period = 'группировать по';
 		}
@@ -1035,6 +1044,15 @@ function getTimePeriod(lang,period) {
 		} else if ( period == '%Y-%m-%d %H:%i' ) {
 			period = 'minute';
 			group_by = 'min';
+		} else if ( period == 'CALLED_ID' ) {
+			period = 'DID';
+			group_by = 'did';
+		} else if ( period == 'CALLER_ID' ) {
+			period = 'callerID';
+			group_by = 'cid';
+		} else if ( period == 'CALL_TYPE' ) {
+			period = 'call type';
+			group_by = 'ct';
 		} else {
 			period = 'group by';
 		}
