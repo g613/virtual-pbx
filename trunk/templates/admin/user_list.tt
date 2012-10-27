@@ -41,10 +41,8 @@
 			</td>
 			<form method='post'>
 			<td align='right'>
-			Phone number:
-			<input size='11' name='f_vn' type='text' value='[% F_VN | html %]'>
-			Access code:
-			<input size='7' name='f_ac' type='text'  value='[% F_AC | html %]'>
+			<input size='11' name='f_vn' type='text' placeholder='Shared DID' value='[% F_VN | html %]'>
+			<input size='10' name='f_ac' type='text' placeholder='Access code' value='[% F_AC | html %]'>
 			<select name="f_group">
 				<option value="">any group</option>
 			[% FOREACH gr = GROUPS %]
@@ -66,7 +64,7 @@
 	<p>
 	<table width='95%' class='list_data' id='list-data'>
 		<tr class='list_data'>
-				<th>Phone number</th>
+				<th>Shared DID</th>
 				<th>Access code</th>
 				<th>User name</th>
 				<th>Language</th>
@@ -151,7 +149,7 @@
 		<tr align='left'>
 			<td>
 				&nbsp;
-				Phone number: 
+				Shared DID: 
 				<input size='11' type='text' name='phone'>
 				&nbsp;
 				Group: 

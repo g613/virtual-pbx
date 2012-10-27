@@ -40,8 +40,7 @@
 			</td>
 			<form method="post">
 			<td align='right'>
-				Report name: 
-				<input size='20' name='name' type='text' value='[% SEARCH_NAME %]'>
+				<input size='20' name='name' type='text' placeholder='Report name' value='[% SEARCH_NAME %]'>
 				<input type='hidden' value='report_list' name='action'>
 				<input value='Search' type='submit'>
 				&nbsp;&nbsp;

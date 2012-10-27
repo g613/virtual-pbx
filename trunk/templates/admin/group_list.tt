@@ -40,8 +40,7 @@
 			</td>
 			<form method='post'>
 			<td align='right'>
-			Group name:
-			<input size='11' name='f_group' type='text' value='[% F_GROUP | html %]'>
+			<input size='14' name='f_group' type='text' placeholder='Group name' 'value='[% F_GROUP | html %]'>
 			<input type='hidden' value='group_list' name='action'>
 			<input value='search' type='submit'>
 			</td>

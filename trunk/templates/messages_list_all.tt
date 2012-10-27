@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.45 2012-03-06 08:56:41 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.46 2012-10-21 18:45:03 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -40,6 +40,8 @@
 			<td>
 		[% IF USER_CREDS.ROOT eq '0' %]
 				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=msg_cleanup&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to delete all messages?')">Delete messages</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 		[% END %]
 				<a href='?action=get_rss_all&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Rss</a>

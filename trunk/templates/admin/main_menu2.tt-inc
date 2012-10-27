@@ -19,4 +19,12 @@
 			<td>
 				<a class='headers' href='?action=report_list'>Reports</a>
 			</td>
-
+			<td>
+				<a class='headers' href='?action=cdr_list'>CDRs</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=phone_list'>SIP phones</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=peer_list'>SIP peers</a>
+			</td>
