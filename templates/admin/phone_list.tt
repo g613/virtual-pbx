@@ -1,0 +1,125 @@
+<html>
+<!-- $Id: phone_list.tt,v 1.1 2012-10-13 20:24:03 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - SIP Phones</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='center'><h2>SIP Phones</h2></td>
+			<td align='right' width='20%'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='98%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<form method='post'>
+			<td align='right'>
+			<input size='6' name='phone' type='text' placeholder='Phone' value='[% PHONE | html %]'>
+			<input size='10' name='ip' type='text' placeholder='Reg IP' value='[% IP | html %]'>
+			<input size='11' name='authname' type='text' placeholder='Auth name' value='[% AUTHNAME | html %]'>
+			<input type='hidden' value='phone_list' name='action'>
+			<input value='search' type='submit'>
+			</td>
+			</form>
+		</tr>
+	</table>
+	</p>
+	<center>
+	
+	<p>
+	<table width='95%' class='list_data' id='d-tbl'>
+		<tr class='list_data'>
+			<th>Access code</th>
+			<th>Auth name</th>
+			<th>Password</th>
+			<th>Reg IP</th>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+			<th>Phone</th>
+			<th>User name</th>
+			<th>CallerID</th>
+		</tr>
+		
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='9'>
+				<a title='previous page' href='?action=phone_list&ip=[% IP | html %]&from=[% MSG_PREV %]&phone=[% PHONE | html %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+		
+		[% FOREACH p = SIPDEV %]
+		<tr align='left' class='nocolor'>
+			<td><a title='edit user settings' href='?ac=[% p.ACCESS_CODE %]&action=user_info'>[% p.ACCESS_CODE %]</a></td>
+			<td>[% p.name %]</td>
+			<td>[% p.secret | html %]</td>
+			<td>[% p.ipaddr | html %]</td>
+			<td align='center'>
+				[% IF p.deny %]
+					<input type='checkbox' title='Access only for: [% p.permit | html %]' checked />
+				[% END %]
+			</td>
+			<td align='center'>
+				<img 
+				[% IF p.REG_STATUS eq 'Registered' %]
+					src='/xvb/images/ball_green.png'
+				[% ELSIF  p.REG_STATUS eq 'Unregistered'  %]
+					src='/xvb/images/ball_red.png'
+				[% ELSE %]
+					src=''
+				[% END %]
+				title='[% p.REG_STATUS %], Expired date: [% p.REG_EXPIRED | html %], IP: [% p.ipaddr | html %], UA: [% p.useragent | html %]' alt='[% p.REG_STATUS %]' />
+			</td>
+			<td>[% p.callerid | html %]</td>
+			<td>[% p.DESCRIPTION | html %]</td>
+			<td>[% p.DEFCID | html %]</td>
+		</tr>
+		[% END %]
+	
+		<tr>
+		[% IF MSG_NEXT ne '' %]
+			<td align='right' colspan='9'>
+				<a title='previous page' href='?action=phone_list&ip=[% IP | html %]&from=[% MSG_NEXT %]&phone=[% PHONE | html %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+			</td>
+		[% ELSE %]
+			<td colspan='9'>&nbsp;</td>
+		[% END %]
+		</tr>
+	</table>
+	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			[% INCLUDE main_menu2.tt-inc %]
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

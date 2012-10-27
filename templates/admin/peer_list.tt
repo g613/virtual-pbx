@@ -1,0 +1,132 @@
+<html>
+<!-- $Id: peer_list.tt,v 1.1 2012-10-13 20:24:03 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - SIP Peers</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='center'><h2>SIP Peers</h2></td>
+			<td align='right' width='20%'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='98%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<form method='post'>
+			<td align='right'>
+			<input size='15' name='host' type='text' placeholder='Proxy' value='[% HOST | html %]'>
+			<input size='11' name='authname' type='text' placeholder='Peer ID' value='[% AUTHNAME | html %]'>
+			<input type='hidden' value='peer_list' name='action'>
+			<input value='search' type='submit'>
+			</td>
+			</form>
+		</tr>
+	</table>
+	</p>
+	<center>
+	
+	<p>
+	<table width='95%' class='list_data' id='d-tbl'>
+		<tr class='list_data'>
+			<th>Access code</th>
+			<th>Peer ID</th>
+			<th>Proto</th>
+			<th>Proxy</th>
+			<th>Port</th>
+			<th>Domain</th>
+			<th>User</th>
+			<th>Password</th>
+			<th>CallerID</th>
+			<th>DTMF mode</th>
+			<th>Need regs</th>
+			<th>&nbsp;</th>
+		</tr>
+		
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='12'>
+				<a title='previous page' href='?action=peer_list&host=[% HOST | html %]&from=[% MSG_PREV %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+		
+		[% FOREACH p = SIPDEV %]
+		<tr align='left' class='nocolor'>
+			<td><a title='edit user settings' href='?ac=[% p.ACCESS_CODE %]&action=user_info'>[% p.ACCESS_CODE %]</a></td>
+			<td>[% p.name %]</td>
+			<td>[% p.transport | html %]</td>
+			<td><span title='[% p.DESCRIPTION | html %]'>[% p.host | html %]</span></td>
+			<td>[% p.port | html %]</td>
+			<td>[% p.fromdomain | html %]</td>
+			<td>[% p.username | html %]</td>
+			<td>[% p.secret | html %]</td>
+			<td>[% p.fromuser | html %]</td>
+			<td>[% p.dtmfmode | html %]</td>
+			<td>
+			[% IF p.NEED_REG eq '1' %]
+				yes
+			[% ELSE %]
+				no
+			[% END %]
+			</td>
+			<td>
+			[% IF p.REG_DATA %]
+				<img 
+				[% IF p.REG_DATA.state eq 'Registered' %]
+					src='/xvb/images/ball_green.png'
+				[% ELSE %]
+					src='/xvb/images/ball_red.png'
+				[% END %]
+				title='[% p.REG_DATA.state | html %]' alt='[% p.REG_DATA.state | html %]' />
+			[% END %]
+			</td>
+		</tr>
+		[% END %]
+	
+		<tr>
+		[% IF MSG_NEXT ne '' %]
+			<td align='right' colspan='12'>
+				<a title='previous page' href='?action=peer_list&host=[% HOST | html %]&from=[% MSG_NEXT %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+			</td>
+		[% ELSE %]
+			<td colspan='12'>&nbsp;</td>
+		[% END %]
+		</tr>
+	</table>
+	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			[% INCLUDE main_menu2.tt-inc %]
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

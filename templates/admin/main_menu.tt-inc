@@ -10,11 +10,15 @@
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=did_attr_list'>DIDs attr</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=cdr_list'>CDRs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=report_list'>SQL-Reports</a>
 			[% IF USE_BILLING %]
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=tariff_list'>Tariffs</a>
 			[% END %]
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=cdr_list'>CDRs</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=phone_list'>SIP phones</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=peer_list'>SIP peers</a>
 

@@ -95,7 +95,7 @@
 			</tr>
 			<tr>
 				<td>
-					Phone number: 
+					Shared DID: 
 				</td>
 				<td>
 					<input size='15' name='US_VOICENUMBER' type='text' value="[% USER.VOICENUMBER | html %]">

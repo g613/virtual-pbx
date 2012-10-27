@@ -40,10 +40,8 @@
 			</td>
 			<form method='post'>
 			<td align='right'>
-			DID:
-			<input size='11' name='f_vn' type='text' value='[% F_VN | html %]'>
-			Access code:
-			<input size='10' name='f_ac' type='text' value='[% F_AC | html %]'>
+			<input size='11' name='f_vn' type='text' placeholder='DID' value='[% F_VN | html %]'>
+			<input size='10' name='f_ac' type='text' placeholder='Access code' value='[% F_AC | html %]'>
 			<input type='hidden' value='did_list' name='action'>
 			<input value='search' type='submit'>
 			</td>
