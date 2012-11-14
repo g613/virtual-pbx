@@ -208,7 +208,7 @@ create	table VPBX_CID_ACTIONS
 create table VPBX_SEQUENCES
 (
 	SEC_NAME		CHAR(50)		not null,
-	SEC_VAL			INT(1)			UNSIGNED NOT NULL,
+	SEC_VAL			INT(16)			UNSIGNED NOT NULL,
 
     CONSTRAINT PK_VPBX_SEQ PRIMARY KEY (SEC_NAME)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -527,6 +527,7 @@ create table VPBX_SIPPEERS (
 	`session-expires`	int(5) unsigned DEFAULT '1800',
 	`session-minse`		int(5) unsigned DEFAULT '90',
 	`session-refresher`	enum('uac','uas') DEFAULT 'uas', 
+ 	callbackextension	varchar(100) DEFAULT NULL, 
 
 	callerid		VARCHAR(80) 	NOT NULL DEFAULT '',
     SUBSCR_ID		INT(16)			not null,
@@ -674,6 +675,8 @@ create	table VPBX_VBOXES_DIALOUT
 	CALL_NUMBER		TEXT(1024)	not null,
 	RECORD_IF_FAIL	INT(1)			default 1,
 	RECORD_CALL		INT(1)			default 0,
+	KEEP_MSG		INT(1)			default 1,
+	SEND_ATTACH		INT(1)			default 0,
 	CALL_TYPE		INT(2)			default 1,
 	CONFIRM_CALL	INT(1)			default 0,
 	SCREENING_MODE	INT(1)			default 0,
@@ -730,6 +733,8 @@ create	table VPBX_VBOXES_QUEUES
 	GOTO_IF_FAIL		VARCHAR(255),
 	MOH_ID				INT(16)			not null default 0,
 	RECORD_CALL			INT(1)			default 0,
+	KEEP_MSG			INT(1)			default 1,
+	SEND_ATTACH			INT(1)			default 0,
 	WAIT_BUSY_ONLY		INT(1)			default 1,
 	TRANSFER_PREF		VARCHAR(255),
 	CALLERID_PREF		VARCHAR(255),
@@ -936,6 +941,8 @@ create	table VPBX_VBOXES_INTERCOM
 	ALERT_INFO		VARCHAR(50),
 	CALL_INFO		VARCHAR(255),
 	RECORD_CALL		INT(1)			default 0,
+	KEEP_MSG		INT(1)			default 1,
+	SEND_ATTACH		INT(1)			default 0,
 
 	unique(ID),
 
@@ -1055,6 +1062,8 @@ create	table VPBX_VBOXES_DISA
 	MOH_ID			INT(16)			not null default 0,
 	SPY_MODE 		INT(16) 		not null default 0,
 	RECORD_CALL		INT(1)			default 0,
+	KEEP_MSG		INT(1)			default 1,
+	SEND_ATTACH		INT(1)			default 0,
 	PHONE_PATTERN	VARCHAR(255),	
 	PHONE_NUMBER	VARCHAR(255),	
 	MAX_DIGITS		INT(10)			not null default -1,
@@ -2085,6 +2094,7 @@ INSERT INTO VPBX_ACCOUNTS(ID,GROUP_ID,VOICENUMBER,ACCESS_CODE,STATUS) values(0,1
 UPDATE VPBX_ACCOUNTS set ID=0 where ACCESS_CODE='ANY0NE' and VOICENUMBER='ANY0NE';
 
 insert into VPBX_SEQUENCES(SEC_NAME,SEC_VAL) values('ACCESS_CODE',10000);
+insert into VPBX_SEQUENCES(SEC_NAME,SEC_VAL) values('PHONEID',unix_timestamp());
 
 INSERT INTO VPBX_NOTIFY_TYPE(NOTIFY_ID,DESCRIPTION,NAME) VALUES(0, 'Not send', 'none' );
 INSERT INTO VPBX_NOTIFY_TYPE(NOTIFY_ID,DESCRIPTION,NAME) VALUES(1, 'Email', 'Email' );

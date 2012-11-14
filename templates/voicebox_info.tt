@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.240 2012-07-31 11:11:10 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.241 2012-11-11 14:38:22 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -572,20 +572,6 @@
 					</select> 
 				</td>
 			</tr>
-			<tr>
-				<td>Send notify to: </td>
-				<td>
-					<select name="SENDNOTIFYEMAIL">
-					[% FOREACH ca = NOTIFY_TYPES %]
-						[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-						<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
-						[% ELSE %]
-						<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
-						[% END %]
-					[% END %]
-					</select>
-				</td>
-			</tr>
 				<tr class='addon_info'>
 					<td>Send DTMF (0-9#*w): </td>
 					<td>
@@ -654,6 +640,39 @@
 						[% ELSE %]
 							<input name="RECORD_CALL" type="checkbox">
 						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Send attachment: </td>
+					<td>
+					[% IF VBOX_PREF.SEND_ATTACH %]
+						<input name="SEND_ATTACH" type="checkbox" checked>
+					[% ELSE %]
+						<input name="SEND_ATTACH" type="checkbox">
+					[% END %]
+				</td>
+				<tr class='addon_info'>
+					<td>Keep message on the server: </td>
+					<td>
+					[% IF VBOX_PREF.KEEP_MSG %]
+						<input name="KEEP_MSG" type="checkbox" checked>
+					[% ELSE %]
+						<input name="KEEP_MSG" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				<tr>
+					<td>Send notify to: </td>
+					<td>
+						<select name="SENDNOTIFYEMAIL">
+						[% FOREACH ca = NOTIFY_TYPES %]
+							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
+							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
+							[% ELSE %]
+							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+						</select>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1053,6 +1072,20 @@
 						( 1 ring approximately equals 4 seconds )
 					</td>
 				</tr>
+				<tr>
+					<td>Send notify to: </td>
+					<td>
+						<select name="SENDNOTIFYEMAIL">
+						[% FOREACH ca = NOTIFY_TYPES %]
+							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
+							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
+							[% ELSE %]
+							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+						</select>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Record calls: </td>
 					<td>
@@ -1061,6 +1094,25 @@
 						[% ELSE %]
 							<input name="RECORD_CALL" type="checkbox">
 						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Send attachment: </td>
+					<td>
+					[% IF VBOX_PREF.SEND_ATTACH %]
+						<input name="SEND_ATTACH" type="checkbox" checked>
+					[% ELSE %]
+						<input name="SEND_ATTACH" type="checkbox">
+					[% END %]
+				</td>
+				<tr class='addon_info'>
+					<td>Keep message on the server: </td>
+					<td>
+					[% IF VBOX_PREF.KEEP_MSG %]
+						<input name="KEEP_MSG" type="checkbox" checked>
+					[% ELSE %]
+						<input name="KEEP_MSG" type="checkbox">
+					[% END %]
 					</td>
 				</tr>
 				[% IF ASTERISK_VERSION ne '18' %]
@@ -1203,6 +1255,20 @@
 					[% END %]
 					</td>
 				</tr>
+				<tr>
+					<td>Send notify to: </td>
+					<td>
+						<select name="SENDNOTIFYEMAIL">
+						[% FOREACH ca = NOTIFY_TYPES %]
+							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
+							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
+							[% ELSE %]
+							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+						</select>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Record calls: </td>
 					<td>
@@ -1211,6 +1277,25 @@
 						[% ELSE %]
 							<input name="RECORD_CALL" type="checkbox">
 						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Send attachment: </td>
+					<td>
+					[% IF VBOX_PREF.SEND_ATTACH %]
+						<input name="SEND_ATTACH" type="checkbox" checked>
+					[% ELSE %]
+						<input name="SEND_ATTACH" type="checkbox">
+					[% END %]
+				</td>
+				<tr class='addon_info'>
+					<td>Keep message on the server: </td>
+					<td>
+					[% IF VBOX_PREF.KEEP_MSG %]
+						<input name="KEEP_MSG" type="checkbox" checked>
+					[% ELSE %]
+						<input name="KEEP_MSG" type="checkbox">
+					[% END %]
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1883,6 +1968,39 @@
 						[% ELSE %]
 							<input name="RECORD_CALL" type="checkbox">
 						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Send attachment: </td>
+					<td>
+					[% IF VBOX_PREF.SEND_ATTACH %]
+						<input name="SEND_ATTACH" type="checkbox" checked>
+					[% ELSE %]
+						<input name="SEND_ATTACH" type="checkbox">
+					[% END %]
+				</td>
+				<tr class='addon_info'>
+					<td>Keep message on the server: </td>
+					<td>
+					[% IF VBOX_PREF.KEEP_MSG %]
+						<input name="KEEP_MSG" type="checkbox" checked>
+					[% ELSE %]
+						<input name="KEEP_MSG" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				<tr>
+					<td>Send notify to: </td>
+					<td>
+						<select name="SENDNOTIFYEMAIL">
+						[% FOREACH ca = NOTIFY_TYPES %]
+							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
+							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
+							[% ELSE %]
+							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+						</select>
 					</td>
 				</tr>
 				[% END %]
