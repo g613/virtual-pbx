@@ -1,6 +1,10 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- Устновка числовых логинов для телефона ( из админ интерфейса )</font>
+
+<font color='green'>+ Шаблон для YouMagic MTT</font> ( 15.10.12 /  build 6792 )
+
 <font color='green'>+ Запись разговов с автоматической отправкой на email без хранения копий на сервере</font> ( 14.10.12 /  build 6789 )
 
 <font color='green'>+ Кнопка удалить _все_ сообщения ( для всех ящиков )</font> ( 27.10.12 / build 6753 )
