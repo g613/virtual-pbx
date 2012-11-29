@@ -38,7 +38,7 @@
 				[% INCLUDE main_menu.tt-inc %]
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
-			<form method='post'>
+			<form method='get'>
 			<td align='right'>
 			<input size='11' name='f_vn' type='text' placeholder='DID' value='[% F_VN | html %]'>
 			<input type='hidden' value='did_attr_list' name='action'>
