@@ -12,7 +12,6 @@ Group:    System Environment/Services
 BuildArch: noarch
 
 Requires: mysql
-Requires: mysql-server
 Requires: memcached
 Requires: sox >= 14.3.2
 Requires: ffmpeg
@@ -20,6 +19,7 @@ Requires: lame
 Requires: mpg123
 Requires: libmad
 Requires: perl
+Requires: perl-MailTools
 Requires: perl(DBI)
 Requires: perl(DBD::mysql)
 Requires: perl(Digest::MD5)
@@ -162,6 +162,7 @@ Summary: Voice Application Server / HostedIVR solution based on asterisk - Manag
 Group:   System Environment/Services
 
 Requires: virtual-pbx = %{version}-%{release}
+Requires: mysql-server
 %description management
 Voice Application Server / HostedIVR solution based on asterisk  - Management utilites
 
@@ -329,6 +330,13 @@ rm $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds/*.tgz
 ####################################################
 #
 %post
+#
+mkdir -p /var/log/VirtualPBX/backup
+touch /var/log/VirtualPBX/XVB.log
+touch /var/log/VirtualPBX/XVB.stderr
+touch /var/log/VirtualPBX/XVB.cdr
+chown -R asterisk.asterisk /var/log/VirtualPBX || true
+
 # updates
 perl %CORE_DIR/contrib/utils/rpm/cfg_update.pl
 perl %CORE_DIR/contrib/utils/rpm/sys_update.pl
@@ -441,8 +449,6 @@ service httpd restart
 ####################################################
 #
 %post management
-#
-mkdir -p /var/log/VirtualPBX/backup && chown -R asterisk.asterisk /var/log/VirtualPBX
 
 # auto start DB
 chkconfig mysqld on

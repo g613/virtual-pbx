@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.1 2012-10-13 20:24:03 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.3 2012-11-15 14:59:08 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -34,7 +34,7 @@
 				[% INCLUDE main_menu.tt-inc %]
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
-			<form method='post'>
+			<form method='get'>
 			<td align='right'>
 			<input size='6' name='phone' type='text' placeholder='Phone' value='[% PHONE | html %]'>
 			<input size='10' name='ip' type='text' placeholder='Reg IP' value='[% IP | html %]'>
@@ -52,6 +52,7 @@
 	<table width='95%' class='list_data' id='d-tbl'>
 		<tr class='list_data'>
 			<th>Access code</th>
+			<th>&nbsp;</th>
 			<th>Auth name</th>
 			<th>Password</th>
 			<th>Reg IP</th>
@@ -73,6 +74,9 @@
 		[% FOREACH p = SIPDEV %]
 		<tr align='left' class='nocolor'>
 			<td><a title='edit user settings' href='?ac=[% p.ACCESS_CODE %]&action=user_info'>[% p.ACCESS_CODE %]</a></td>
+			<td>
+				<a title='change auth name' href='?action=auth_name_reset&id=[% p.name | html %]&ac=[% p.ACCESS_CODE | html %]'><img border='0'  src='/xvb/images/msg_status.png' alt='new auth name' /></a>
+			</td>
 			<td>[% p.name %]</td>
 			<td>[% p.secret | html %]</td>
 			<td>[% p.ipaddr | html %]</td>
@@ -100,11 +104,11 @@
 	
 		<tr>
 		[% IF MSG_NEXT ne '' %]
-			<td align='right' colspan='9'>
+			<td align='right' colspan='10'>
 				<a title='previous page' href='?action=phone_list&ip=[% IP | html %]&from=[% MSG_NEXT %]&phone=[% PHONE | html %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
 			</td>
 		[% ELSE %]
-			<td colspan='9'>&nbsp;</td>
+			<td colspan='10'>&nbsp;</td>
 		[% END %]
 		</tr>
 	</table>
