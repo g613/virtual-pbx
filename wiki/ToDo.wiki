@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- Возможность авторизации только по access-code ( для VoIP )</font>
+
 <font color='green'>+ Установка числовых логинов для телефона ( из админ интерфейса )</font> ( 24.11.12 / build 6818  )
 
 <font color='green'>+ Шаблон для YouMagic MTT</font> ( 15.11.12 /  build 6792 )
