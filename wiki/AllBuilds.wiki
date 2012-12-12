@@ -1,5 +1,7 @@
 ==All VMWare images :==
 
+ * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/64112535001.5aee33a132c451fc5af92042c41b78f3/VirtualPBX-1_6830.tar.bz2.html build 6830 ( 29.11.2012)] ( Added transfer feature for DISA/Directory, custom CallerID for outbound calls, support digits only phone logins, more imrovements. )
+
  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/60809232001.ee874bc57a8df172ab75a5cf6f5d9037/VirtualPBX-1_6658.tar.bz2.html build 6658 ( 10.09.2012 )] ( IP-protection, some improvements. )
 
  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/57007181001.7dca7f1c1a3f7666e7cedc05f5e31387/VirtualPBX-1_6565.tar.bz2.html build 6565 ( 19.07.2012 )] ( PhoneBook, storage-limits, partner interface, some improvements. )
