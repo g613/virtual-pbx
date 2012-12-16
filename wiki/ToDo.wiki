@@ -1,7 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Возможность авторизации только по access-code ( для VoIP )</font>
+<font color='red'>- Click2Call API</font>
+
+<font color='green'>+Возможность авторизации только по access-code ( для VoIP )</font> ( 12.12.12 / build 6830 )
 
 <font color='green'>+ Установка числовых логинов для телефона ( из админ интерфейса )</font> ( 24.11.12 / build 6818  )
 
