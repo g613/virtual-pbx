@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Click2Call API</font>
+<font color='green'>+ Click2call script & API </font> ( 21.12.12 / build 6885 )
 
 <font color='green'>+Возможность авторизации только по access-code ( для VoIP )</font> ( 12.12.12 / build 6830 )
 
