@@ -390,6 +390,10 @@ if [ -f %{_sysconfdir}/asterisk/features.conf ]; then
 fi
 
 touch /etc/asterisk/xvb/xvb-phone-service.conf || true
+touch /etc/asterisk/xvb/xvb-phone-filters.conf || true
+if [ ! -f /etc/asterisk/xvb/xvb-post-agi.conf ]; then
+	echo -e 'exten => _X.,1000(post_agi),Hangup' >> /etc/asterisk/xvb/xvb-post-agi.conf
+fi
 
 chkconfig asterisk on
 chkconfig xvb-fagi on
@@ -537,6 +541,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-callblast
 %attr(755,root,root) %CORE_DIR/contrib/utils/podcast_get.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/msg_clean.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/click2call.pl
 %CORE_DIR/contrib/asterisk/feautures.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*

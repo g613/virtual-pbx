@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.18 2012-09-19 19:47:59 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.19 2012-12-16 15:57:18 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -131,6 +131,9 @@
 					<option value="internal">internal</option>
 					<option value="callback">callback</option>
 					<option value="callblast">callblast</option>
+					<option value="click2call">click2call</option>
+					<option value="alarmclock">alarmclock</option>
+					<option value="service">service</option>
 				</select>
 				<input value='Search' type='submit'>
 				<input name='need_excel' value='Excel' type='submit'>

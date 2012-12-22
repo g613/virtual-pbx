@@ -48,7 +48,7 @@
 		<tr>
 			<td>Group Name: </td>
 			<td><input name='GR_GROUP_NAME' type='text' value="[% GROUP.GROUP_NAME | html %]"></td>
-			<td rowspan='39' valign='top'>
+			<td rowspan='40' valign='top'>
 				<table>
 					<tr>
 						<td colspan='2'><h4>Limits on the number of extensions:</h4></td>
@@ -327,6 +327,10 @@
 		<tr>
 			<td>Maximum Number of GoogleCallendar events: </td>
 			<td><input name='GR_MAX_GC_EVENTS' type='text' value="[% GROUP.MAX_GC_EVENTS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Maximum Number of Click2Call links: </td>
+			<td><input name='GR_MAX_C2C_ITEMS' type='text' value="[% GROUP.MAX_C2C_ITEMS | html %]"></td>
 		</tr>
 		<tr>
 			<td>Maximum email-attachment size ( byte ): </td>
