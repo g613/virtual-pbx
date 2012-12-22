@@ -19,6 +19,11 @@
 			<td>
 				<a class='headers' href='?action=report_list'>Reports</a>
 			</td>
+			[% IF USE_BILLING %]
+			<td>
+				<a class='headers' href='?action=tariff_list'>Tariffs</a>
+			</td>
+			[% END %]
 			<td>
 				<a class='headers' href='?action=cdr_list'>CDRs</a>
 			</td>
