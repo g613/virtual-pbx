@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Поддержка внутренним биллингом тарификации отдельных типов VB</font>
+<font color='green'>+ Поддержка внутренним биллингом тарификации отдельных типов VB</font> ( 30.12.12 / build 6918 )
 
 <font color='green'>+ Click2call script & API </font> ( 21.12.12 / build 6885 )
 
