@@ -45,49 +45,29 @@
 	<p>
 	<table width='98%' class='list_data' id='list-data'>
 		<tr class='list_data'>
-			<th rowspan='3'>Id</th>
-			<th rowspan='3'>Name</th>
-			<th colspan='8'>Prices</th>
-			<th rowspan='3'>Currency</th>
-			<th rowspan='3'>Actions</th>
+			<th>Id</th>
+			<th>Name</th>
+			<th>Monthly</th>
+			<th>Daily</th>
+			<th>Currency</th>
+			<th>&nbsp;</th>
 		</tr>
-		<tr class='list_data'>
-			<th rowspan='2'>Monthly</th>
-			<th rowspan='2'>Daily</th>
-			<th colspan='2'>IVR</th>
-			<th colspan='2'>CallBlast</th>
-			<th colspan='2'>CallBack</th>
-		</tr>
-		<tr class='list_data'>
-			<th>Minute</th>
-			<th>Call</th>
-			<th>Minute</th>
-			<th>Call</th>
-			<th>Minute</th>
-			<th>Call</th>
 		</tr>
 			
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='11'>
+			<td align='left' colspan='6'>
 				<a title='previous page' href='?action=tariff_list&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
 
 		[% FOREACH t = TARIFFS %]
-		<tr align='center' class='nocolor' id='d-tr-[% t.ID %]'>
-			<form method='post'>
+		<tr align='center' class='nocolor'>
 			<td>[% t.ID | html %]</td>
-			<td><input class='in_t0' size='25' name='T_NAME' type='text' value='[% t.NAME | html %]'></td>
-			<td><input class='in_t0' size='5' name='T_MONTHLY_PRICE' type='text' value='[% t.MONTHLY_PRICE | html %]'></td>
-			<td><input class='in_t0' size='5' name='T_DAILY_PRICE' type='text' value='[% t.DAILY_PRICE | html %]'></td>
-			<td><input class='in_t0' size='5' name='T_MINUTE_PRICE' type='text' value='[% t.MINUTE_PRICE | html %]'></td>
-			<td><input class='in_t0' size='5' name='T_CALL_PRICE' type='text' value='[% t.CALL_PRICE | html %]'></td>
-			<td><input class='in_t0' size='5' name='T_MINUTE_PRICE_CBL' type='text' value='[% t.MINUTE_PRICE_CBL | html %]'></td>
-			<td><input class='in_t0' size='5' name='T_CALL_PRICE_CBL' type='text' value='[% t.CALL_PRICE_CBL | html %]'></td>
-			<td><input class='in_t0' size='5' name='T_MINUTE_PRICE_CB' type='text' value='[% t.MINUTE_PRICE_CB | html %]'></td>
-			<td><input class='in_t0' size='5' name='T_CALL_PRICE_CB' type='text' value='[% t.CALL_PRICE_CB | html %]'></td>
+			<td align='left'><a href='?action=tariff_info&tariff_id=[% t.ID %]'>[% t.NAME | html %]</a></td>
+			<td>[% t.MONTHLY_PRICE | html %]</td>
+			<td>[% t.DAILY_PRICE | html %]</td>
 			<td>
 				<select class='in_t0' name='T_CURRENCY_ID'>
 					[% FOREACH c = CURRENCY %]
@@ -100,17 +80,7 @@
 				</select>
 			</td>
 			<td>
-				<input type='hidden' value='[% t.ID %]' name='tariff_id'>
-				<input type='hidden' value='[% t.ID %]' name='data_id'>
-				<input type='hidden' value='tariff_update' name='action'>
-				<input type='hidden' value='[% MSG_FROM %]' name='from'>
 				<a title='delete tariff' href='?action=tariff_del&tariff_id=[% t.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
-				<span class='in_t' id='in_t_id-[% t.ID %]'>
-				<script language='JavaScript'>
-					writeUpdateLinks( 'save changes' );
-				</script>
-				<noscript><input value='change' type='submit'></noscript>
-				</span>
 			</td>
 			</form>
 		</tr>
@@ -118,15 +88,9 @@
 		<form>
 		<tr align='center'>
 			<td><input size='3' name='T_ID' type='text'></td>
-			<td><input size='25' name='T_NAME' type='text'></td>
+			<td align='left'><input size='25' name='T_NAME' type='text'></td>
 			<td><input size='5' name='T_MONTHLY_PRICE' type='text'></td>
 			<td><input size='5' name='T_DAILY_PRICE' type='text'></td>
-			<td><input size='5' name='T_MINUTE_PRICE' type='text'></td>
-			<td><input size='5' name='T_CALL_PRICE' type='text'></td>
-			<td><input size='5' name='T_MINUTE_PRICE_CBL' type='text'></td>
-			<td><input size='5' name='T_CALL_PRICE_CBL' type='text'></td>
-			<td><input size='5' name='T_MINUTE_PRICE_CB' type='text'></td>
-			<td><input size='5' name='T_CALL_PRICE_CB' type='text'></td>
 			<td>
 				<select name='T_CURRENCY_ID'>
 				[% FOREACH c = CURRENCY %]
@@ -142,7 +106,7 @@
 		</form>
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right' colspan='11'>
+			<td align='right' colspan='6'>
 				<a title='next page' href='?action=tariff_list&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
 		</tr>

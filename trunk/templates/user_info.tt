@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.78 2012-10-05 15:34:45 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.79 2012-12-24 14:45:54 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -342,55 +342,23 @@ Private: [% d.DID | html %]
 				<tr>
 					<td colspan='3'>
 						<table width='100%' class='addon_data'>
-							<tr><td colspan='8'><h4>Billing:</h4></td></tr>
 							<tr>
-								<td>Tariff:</td>
-								<td colspan='7'><b>[% TARIFF.NAME | html %]</b> ( currency  [% TARIFF.DESCRIPTION %] )</td>
-							</tr>
-							<tr class='list_addon_data' align='center'>
-								<th rowspan='2'>Monthly</th>
-								<th rowspan='2'>Daily</th>
-								<th colspan='2'>IVR</th>
-								[% IF USER_CREDS.VBL_14 ne '0' %]
-									<th colspan='2'>CallBack</th>
-								[% END %]
-								[% IF USER_CREDS.VBL_18 ne '0' %]
-									<th colspan='2'>CallBlast</th>
-								[% END %]
-							</tr>
-							<tr class='list_addon_data' align='center'>
-								<th>Minute</th>
-								<th>Call</th>
-								[% IF USER_CREDS.VBL_14 ne '0' %]
-									<th>Minute</th>
-									<th>Call</th>
-								[% END %]
-								[% IF USER_CREDS.VBL_18 ne '0' %]
-									<th>Minute</th>
-									<th>Call</th>
-								[% END %]
-							</tr>
-							<tr class='addon_data' align='right'>
-								<td>[% TARIFF.MONTHLY_PRICE %]</td>
-								<td>[% TARIFF.DAILY_PRICE %]</td>
-								<td>[% TARIFF.MINUTE_PRICE %]</td>
-								<td>[% TARIFF.CALL_PRICE %]</td>
-								[% IF USER_CREDS.VBL_14 ne '0' %]
-									<td>[% TARIFF.MINUTE_PRICE_CB %]</td>
-									<td>[% TARIFF.CALL_PRICE_CB %]</td>
-								[% END %]
-								[% IF USER_CREDS.VBL_18 ne '0' %]
-									<td>[% TARIFF.MINUTE_PRICE_CBL %]</td>
-									<td>[% TARIFF.CALL_PRICE_CBL %]</td>
-								[% END %]
+								<td><b>Tariff:</b></td>
 							</tr>
 							<tr>
-								<td colspan='8'>
-									Balance:
+								<td>
+									&nbsp;
+									&nbsp;
+									&nbsp;
+									<b>[% TARIFF.NAME | html %]</b> ( currency  [% TARIFF.DESCRIPTION %] )
 								</td>
 							</tr>
-							<tr class='addon_data'>
-								<td colspan='8'>
+							<tr><td></td></tr>
+							<tr>
+								<td><b>Balance:</b></td>
+							</tr>
+							<tr>
+								<td>
 									&nbsp;
 									&nbsp;
 									&nbsp;
@@ -407,29 +375,6 @@ Private: [% d.DID | html %]
 				<tr>
 					<td colspan='3'><h4>Limits:</h4></td>
 				</tr>
-				<tr>
-					<td>Maximum extensions (<a href='#' onclick='ShowEl("vb_limits"); return false'>detail</a>) :</td>
-					<td align='right'>[% USER_CREDS.MAX_EXTENSIONS %]</td>
-					<td rowspan='22' id='vb_limits' class='addon_info'>
-						<table width='100%'>
-							<tr class='list_addon_data' align='center'>
-								<th>Extension type</th>
-								<th>Cur</th>
-								<th>Max</th>
-							</tr>
-						[% FOREACH vt = VB_LIMITS %]
-						[% IF vt.ID vb_allow '0' %]
-							<tr class='addon_data'>
-								<td>&nbsp;&nbsp;*&nbsp;[% vt.DESCRIPTION | html %]</td>
-								<td align='right'>[% vt.L_CUR %]</td>
-								<td align='right'>[% vt.L_MAX %]</td>
-							</tr>
-						[% END %]
-						[% END %]
-							<tr><td colspan='3' align='right'>-1 - unlimit</td></tr>
-						</table>
-					</td>
-				</tr>	
 				<tr>
 					<td>Maximum all messages: </td>
 					<td align='right'>[% FILES_CNT %] / [% USER_CREDS.MAX_ALL_MSGS %]</td>
@@ -542,6 +487,31 @@ Private: [% d.DID | html %]
 					<td>Maximum music on hold duration: </td>
 					<td align='right'>[% USER_CREDS.MAX_MOH_DURATION | duration_str %]</td>
 				</tr>
+				<tr>
+					<td>Maximum extensions (<a href='#' onclick='ShowEl("vb_limits"); return false'>detail</a>) :</td>
+					<td align='right'>[% USER_CREDS.MAX_EXTENSIONS %]</td>
+				</tr>
+				<tr>
+					<td colspan='2' id='vb_limits' class='addon_info'>
+						<table width='100%'>
+							<tr class='list_addon_data' align='center'>
+								<th>Extension type</th>
+								<th>Cur</th>
+								<th>Max</th>
+							</tr>
+						[% FOREACH vt = VB_LIMITS %]
+						[% IF vt.ID vb_allow '0' %]
+							<tr class='addon_data'>
+								<td>&nbsp;&nbsp;*&nbsp;[% vt.DESCRIPTION | html %]</td>
+								<td align='right'>[% vt.L_CUR %]</td>
+								<td align='right'>[% vt.L_MAX %]</td>
+							</tr>
+						[% END %]
+						[% END %]
+							<tr><td colspan='3' align='right'>-1 - unlimit</td></tr>
+						</table>
+					</td>
+				</tr>	
 			</table>
 			</td>
 		</tr>
