@@ -1,0 +1,330 @@
+<html>
+<head>
+	<title>Virtual PBX - tariff info</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='center'><h2>Tariff '[% NAME | html %]'</h2></td>
+			<td align='right' width='20%'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='98%' class='bottom_hr'>
+		<tr align='center'>
+			[% INCLUDE main_menu2.tt-inc %]
+		</tr>
+	</table>
+	</p>
+
+	<p align='center'>
+	<table width='98%' id='list-data'>
+		<form metdod='post'>
+		<tr class='nocolor'>
+			<td>Id</td>
+			<td align='left' colspan='2'>[% ID | html %]</td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Name</td>
+			<td align='left' colspan='2'><input class='in_t0'  size='25' name='T_NAME' type='text' value='[% NAME | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Currency</td>
+			<td align='left' colspan='2'>
+				<select class='in_t0'name='T_CURRENCY_ID'>
+					[% FOREACH c = CURRENCY %]
+						[% IF CURRENCY_ID eq c.CUR_ID %]
+							<option value="[% c.CUR_ID | html %]" selected>[% c.DESCRIPTION | html %]</option>
+						[% ELSE %]
+							<option value="[% c.CUR_ID | html %]">[% c.DESCRIPTION | html %]</option>
+						[% END %]
+					[% END %]
+				</select>
+			</td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Monthly rate</td>
+			<td align='left' colspan='2'><input class='in_t0' name='T_MONTHLY_PRICE' type='text' value='[% MONTHLY_PRICE | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Daily rate</td>
+			<td align='left' colspan='2'><input class='in_t0' name='T_DAILY_PRICE' type='text' value='[% DAILY_PRICE | html %]'></td>
+		</tr>
+		<tr>
+			<td colspan='3'>&nbsp;</td>
+		</tr>
+		<tr>
+			<th>Call type</th>
+			<th>Call rate</th>
+			<th>Minute rate</th>
+		</tr>
+		<tr class='nocolor'>
+			<td>INCOMING</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_INCOMING' type='text' value='[% CALL_PRICE_INCOMING | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_INCOMING' type='text' value='[% MINUTE_PRICE_INCOMING | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>LOCAL</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_LOCAL' type='text' value='[% CALL_PRICE_LOCAL | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_LOCAL' type='text' value='[% MINUTE_PRICE_LOCAL | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>TRANSIT</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_TRANSIT' type='text' value='[% CALL_PRICE_TRANSIT | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_TRANSIT' type='text' value='[% MINUTE_PRICE_TRANSIT | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>INTERNAL</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_INTERNAL' type='text' value='[% CALL_PRICE_INTERNAL | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_INTERNAL' type='text' value='[% MINUTE_PRICE_INTERNAL | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>CALLBACK</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_CALLBACK' type='text' value='[% CALL_PRICE_CALLBACK | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_CALLBACK' type='text' value='[% MINUTE_PRICE_CALLBACK | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>CALLBLAST</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_CALLBLAST' type='text' value='[% CALL_PRICE_CALLBLAST | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_CALLBLAST' type='text' value='[% MINUTE_PRICE_CALLBLAST | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>CLICK2CALL</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_CLICK2CALL' type='text' value='[% CALL_PRICE_CLICK2CALL | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_CLICK2CALL' type='text' value='[% MINUTE_PRICE_CLICK2CALL | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>ALARMCLOCK</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_ALARMCLOCK' type='text' value='[% CALL_PRICE_ALARMCLOCK | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_ALARMCLOCK' type='text' value='[% MINUTE_PRICE_ALARMCLOCK | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>SERVICE</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_SERVICE' type='text' value='[% CALL_PRICE_SERVICE | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_SERVICE' type='text' value='[% MINUTE_PRICE_SERVICE | html %]'></td>
+		</tr>
+		<tr>
+			<td colspan='3'>&nbsp;</td>
+		</tr>
+		<tr>
+			<th>Event type</th>
+			<th>Event rate</th>
+			<th>Minute rate</th>
+		</tr>
+		<tr class='nocolor'>
+			<td>LISTEN</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_LISTEN' type='text' value='[% CALL_PRICE_E_LISTEN | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_LISTEN' type='text' value='[% MINUTE_PRICE_E_LISTEN | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>DOWNLOAD</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_DOWNLOAD' type='text' value='[% CALL_PRICE_E_DOWNLOAD | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DOWNLOAD' type='text' value='[% MINUTE_PRICE_E_DOWNLOAD | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>TRANSFER</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_TRANSFER' type='text' value='[% CALL_PRICE_E_TRANSFER | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_TRANSFER' type='text' value='[% MINUTE_PRICE_E_TRANSFER | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>PICKUP</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_PICKUP' type='text' value='[% CALL_PRICE_E_PICKUP | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_PICKUP' type='text' value='[% MINUTE_PRICE_E_PICKUP | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>PLAYBACK</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_PLAYBACK' type='text' value='[% CALL_PRICE_E_PLAYBACK | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_PLAYBACK' type='text' value='[% MINUTE_PRICE_E_PLAYBACK | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>RECORDVMMESSAGES</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_RECORDVMMESSAGES' type='text' value='[% CALL_PRICE_E_RECORDVMMESSAGES | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_RECORDVMMESSAGES' type='text' value='[% MINUTE_PRICE_E_RECORDVMMESSAGES | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>DBVAR</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_DBVAR' type='text' value='[% CALL_PRICE_E_DBVAR | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DBVAR' type='text' value='[% MINUTE_PRICE_E_DBVAR | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>FAXRX</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_FAXRX' type='text' value='[% CALL_PRICE_E_FAXRX | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_FAXRX' type='text' value='[% MINUTE_PRICE_E_FAXRX | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>USERVAR</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_USERVAR' type='text' value='[% CALL_PRICE_E_USERVAR | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_USERVAR' type='text' value='[% MINUTE_PRICE_E_USERVAR | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>ROBOTEXT</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_ROBOTEXT' type='text' value='[% CALL_PRICE_E_ROBOTEXT | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_ROBOTEXT' type='text' value='[% MINUTE_PRICE_E_ROBOTEXT | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>WEBREQUEST</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_WEBREQUEST' type='text' value='[% CALL_PRICE_E_WEBREQUEST | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_WEBREQUEST' type='text' value='[% MINUTE_PRICE_E_WEBREQUEST | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>INTERCOM</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_INTERCOM' type='text' value='[% CALL_PRICE_E_INTERCOM | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_INTERCOM' type='text' value='[% MINUTE_PRICE_E_INTERCOM | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>RECORD</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_RECORD' type='text' value='[% CALL_PRICE_E_RECORD | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_RECORD' type='text' value='[% MINUTE_PRICE_E_RECORD | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>DIALOUT</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_DIALOUT' type='text' value='[% CALL_PRICE_E_DIALOUT | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DIALOUT' type='text' value='[% MINUTE_PRICE_E_DIALOUT | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>PODCAST</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_PODCAST' type='text' value='[% CALL_PRICE_E_PODCAST | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_PODCAST' type='text' value='[% MINUTE_PRICE_E_PODCAST | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>PARKING</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_PARKING' type='text' value='[% CALL_PRICE_E_PARKING | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_PARKING' type='text' value='[% MINUTE_PRICE_E_PARKING | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>VOTING</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_VOTING' type='text' value='[% CALL_PRICE_E_VOTING | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_VOTING' type='text' value='[% MINUTE_PRICE_E_VOTING | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>WEBVAR</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_WEBVAR' type='text' value='[% CALL_PRICE_E_WEBVAR | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_WEBVAR' type='text' value='[% MINUTE_PRICE_E_WEBVAR | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>FAXTX</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_FAXTX' type='text' value='[% CALL_PRICE_E_FAXTX | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_FAXTX' type='text' value='[% MINUTE_PRICE_E_FAXTX | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>STREAMING</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_STREAMING' type='text' value='[% CALL_PRICE_E_STREAMING | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_STREAMING' type='text' value='[% MINUTE_PRICE_E_STREAMING | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>BBS</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_BBS' type='text' value='[% CALL_PRICE_E_BBS | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_BBS' type='text' value='[% MINUTE_PRICE_E_BBS | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>CONFERENCE</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_CONFERENCE' type='text' value='[% CALL_PRICE_E_CONFERENCE | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_CONFERENCE' type='text' value='[% MINUTE_PRICE_E_CONFERENCE | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>GOOGLECALENDAREXPLORER</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_GOOGLECALENDAREXPLORER' type='text' value='[% CALL_PRICE_E_GOOGLECALENDAREXPLORER | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_GOOGLECALENDAREXPLORER' type='text' value='[% MINUTE_PRICE_E_GOOGLECALENDAREXPLORER | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>DATETIME</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_DATETIME' type='text' value='[% CALL_PRICE_E_DATETIME | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DATETIME' type='text' value='[% MINUTE_PRICE_E_DATETIME | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>DISA</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_DISA' type='text' value='[% CALL_PRICE_E_DISA | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DISA' type='text' value='[% MINUTE_PRICE_E_DISA | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>QUEUE</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_QUEUE' type='text' value='[% CALL_PRICE_E_QUEUE | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_QUEUE' type='text' value='[% MINUTE_PRICE_E_QUEUE | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>DTMFRX</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_DTMFRX' type='text' value='[% CALL_PRICE_E_DTMFRX | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DTMFRX' type='text' value='[% MINUTE_PRICE_E_DTMFRX | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>DTMFTX</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_DTMFTX' type='text' value='[% CALL_PRICE_E_DTMFTX | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DTMFTX' type='text' value='[% MINUTE_PRICE_E_DTMFTX | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td colspan='3'>&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan='3' align='center'>
+			<input type='hidden' value='[% ID %]' name='tariff_id'>
+			<input type='hidden' value='[% ID %]' name='data_id'>
+			<input type='hidden' value='tariff_update' name='action'>
+			<input value='&nbsp;&nbsp;change&nbsp;&nbsp;' type='submit'>
+			</td>
+		</tr>
+		</form>
+	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
+	</p>
+
+	<p>
+	<table width='98%' class='bottom_hr'>
+		<tr align='center'>
+			[% INCLUDE main_menu2.tt-inc %]
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
