@@ -1,7 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- WEB  авторизацияпо логину вида AC@phone + Пин</font>
+<font color='red'>- Админ репорты по использованию системы</font>
+
+<font color='green'>+ WEB  авторизацияпо логину вида ac@phone + Пин</font> ( 04.01.13 / build 6930 )
 
 <font color='green'>+ Поддержка внутренним биллингом тарификации отдельных типов VB</font> ( 30.12.12 / build 6918 )
 
