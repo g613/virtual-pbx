@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Админ репорты по использованию системы</font>
+<font color='green'>+ Админ репорты по использованию системы</font> ( 12.01.13 / build 6990 )
 
 <font color='green'>+ WEB  авторизацияпо логину вида ac@phone + Пин</font> ( 04.01.13 / build 6930 )
 
