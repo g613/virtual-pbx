@@ -134,30 +134,6 @@
 			<th>Minute rate</th>
 		</tr>
 		<tr class='nocolor'>
-			<td>LISTEN</td>
-			<td><input class='in_t0' name='T_CALL_PRICE_E_LISTEN' type='text' value='[% CALL_PRICE_E_LISTEN | html %]'></td>
-			<td><input class='in_t0' name='T_MINUTE_PRICE_E_LISTEN' type='text' value='[% MINUTE_PRICE_E_LISTEN | html %]'></td>
-		</tr>
-		
-		<tr class='nocolor'>
-			<td>DOWNLOAD</td>
-			<td><input class='in_t0' name='T_CALL_PRICE_E_DOWNLOAD' type='text' value='[% CALL_PRICE_E_DOWNLOAD | html %]'></td>
-			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DOWNLOAD' type='text' value='[% MINUTE_PRICE_E_DOWNLOAD | html %]'></td>
-		</tr>
-		
-		<tr class='nocolor'>
-			<td>TRANSFER</td>
-			<td><input class='in_t0' name='T_CALL_PRICE_E_TRANSFER' type='text' value='[% CALL_PRICE_E_TRANSFER | html %]'></td>
-			<td><input class='in_t0' name='T_MINUTE_PRICE_E_TRANSFER' type='text' value='[% MINUTE_PRICE_E_TRANSFER | html %]'></td>
-		</tr>
-		
-		<tr class='nocolor'>
-			<td>PICKUP</td>
-			<td><input class='in_t0' name='T_CALL_PRICE_E_PICKUP' type='text' value='[% CALL_PRICE_E_PICKUP | html %]'></td>
-			<td><input class='in_t0' name='T_MINUTE_PRICE_E_PICKUP' type='text' value='[% MINUTE_PRICE_E_PICKUP | html %]'></td>
-		</tr>
-		
-		<tr class='nocolor'>
 			<td>PLAYBACK</td>
 			<td><input class='in_t0' name='T_CALL_PRICE_E_PLAYBACK' type='text' value='[% CALL_PRICE_E_PLAYBACK | html %]'></td>
 			<td><input class='in_t0' name='T_MINUTE_PRICE_E_PLAYBACK' type='text' value='[% MINUTE_PRICE_E_PLAYBACK | html %]'></td>
@@ -221,12 +197,6 @@
 			<td>PODCAST</td>
 			<td><input class='in_t0' name='T_CALL_PRICE_E_PODCAST' type='text' value='[% CALL_PRICE_E_PODCAST | html %]'></td>
 			<td><input class='in_t0' name='T_MINUTE_PRICE_E_PODCAST' type='text' value='[% MINUTE_PRICE_E_PODCAST | html %]'></td>
-		</tr>
-		
-		<tr class='nocolor'>
-			<td>PARKING</td>
-			<td><input class='in_t0' name='T_CALL_PRICE_E_PARKING' type='text' value='[% CALL_PRICE_E_PARKING | html %]'></td>
-			<td><input class='in_t0' name='T_MINUTE_PRICE_E_PARKING' type='text' value='[% MINUTE_PRICE_E_PARKING | html %]'></td>
 		</tr>
 		
 		<tr class='nocolor'>

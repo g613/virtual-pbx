@@ -39,24 +39,6 @@
 				[% INCLUDE main_menu.tt-inc %]
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
-			<form method='post'>
-			<td align='right'>
-			<input size='11' name='f_vn' type='text' placeholder='Shared DID' value='[% F_VN | html %]'>
-			<input size='10' name='f_ac' type='text' placeholder='Access code' value='[% F_AC | html %]'>
-			<select name="f_group">
-				<option value="">any group</option>
-			[% FOREACH gr = GROUPS %]
-				[% IF gr.GROUP_ID eq F_GROUP %]
-					<option value="[% gr.GROUP_ID | html %]" selected>[% gr.GROUP_NAME | html %]</option>
-				[% ELSE %]
-					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
-				[% END %]
-			[% END %]
-			</select>
-			<input type='hidden' value='user_list' name='action'>
-			<input value='search' type='submit'>
-			</td>
-			</form>
 		</tr>
 	</table>
 	</p>
@@ -79,10 +61,42 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='10'>
-				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
+		
+		<tr align='center' class='nocolor'>
+			<form method='post'>
+			<td align='right'>
+				<input size='11' name='f_vn' type='text' value='[% F_VN | html %]'>
+			</td>
+			<td>
+				<input size='10' name='f_ac' type='text' value='[% F_AC | html %]'>
+			</td>
+			<td align='left'>
+				<input size='20' name='f_uname' type='text' value='[% F_UNAME | html %]'>
+			</td>
+			<td></td>
+			<td>
+			<select name="f_group">
+				<option value="">any group</option>
+			[% FOREACH gr = GROUPS %]
+				[% IF gr.GROUP_ID eq F_GROUP %]
+					<option value="[% gr.GROUP_ID | html %]" selected>[% gr.GROUP_NAME | html %]</option>
+				[% ELSE %]
+					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+				[% END %]
+			[% END %]
+			</select>
+			</td>
+			<td colspan='4'></td>
+			<td>
+				<input type='hidden' value='user_list' name='action'>
+				<input value='search' type='submit'>
+			</td>
+			</form>
+		</tr>
 
 		[% FOREACH us = USERS %]
 		<tr align='center' class='nocolor'>
@@ -135,7 +149,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='10'>
-				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
 		</tr>
 		[% END %]
