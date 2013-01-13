@@ -117,11 +117,6 @@ create table VPBX_TARIFF (
 	CALL_PRICE_ALARMCLOCK	FLOAT default 0,
 	CALL_PRICE_SERVICE		FLOAT default 0,
 
-	MINUTE_PRICE_E_LISTEN		FLOAT default 0,
-	MINUTE_PRICE_E_DOWNLOAD		FLOAT default 0,
-	MINUTE_PRICE_E_CALLBLAST	FLOAT default 0,
-	MINUTE_PRICE_E_TRANSFER		FLOAT default 0,
-	MINUTE_PRICE_E_PICKUP		FLOAT default 0,
 	MINUTE_PRICE_E_PLAYBACK		FLOAT default 0,
 	MINUTE_PRICE_E_RECORDVMMESSAGES		FLOAT default 0,
 	MINUTE_PRICE_E_DBVAR		FLOAT default 0,
@@ -133,10 +128,8 @@ create table VPBX_TARIFF (
 	MINUTE_PRICE_E_RECORD		FLOAT default 0,
 	MINUTE_PRICE_E_DIALOUT		FLOAT default 0,
 	MINUTE_PRICE_E_PODCAST		FLOAT default 0,
-	MINUTE_PRICE_E_PARKING		FLOAT default 0,
 	MINUTE_PRICE_E_VOTING		FLOAT default 0,
 	MINUTE_PRICE_E_WEBVAR		FLOAT default 0,
-	MINUTE_PRICE_E_CALLBACK		FLOAT default 0,
 	MINUTE_PRICE_E_FAXTX		FLOAT default 0,
 	MINUTE_PRICE_E_STREAMING	FLOAT default 0,
 	MINUTE_PRICE_E_ALARMCLOCK	FLOAT default 0,
@@ -148,13 +141,7 @@ create table VPBX_TARIFF (
 	MINUTE_PRICE_E_QUEUE		FLOAT default 0,
 	MINUTE_PRICE_E_DTMFRX		FLOAT default 0,
 	MINUTE_PRICE_E_DTMFTX		FLOAT default 0,
-	MINUTE_PRICE_E_CLICK2CALL	FLOAT default 0,
 	
-	CALL_PRICE_E_LISTEN		FLOAT default 0,
-	CALL_PRICE_E_DOWNLOAD		FLOAT default 0,
-	CALL_PRICE_E_CALLBLAST		FLOAT default 0,
-	CALL_PRICE_E_TRANSFER		FLOAT default 0,
-	CALL_PRICE_E_PICKUP		FLOAT default 0,
 	CALL_PRICE_E_PLAYBACK		FLOAT default 0,
 	CALL_PRICE_E_RECORDVMMESSAGES		FLOAT default 0,
 	CALL_PRICE_E_DBVAR		FLOAT default 0,
@@ -166,7 +153,6 @@ create table VPBX_TARIFF (
 	CALL_PRICE_E_RECORD		FLOAT default 0,
 	CALL_PRICE_E_DIALOUT		FLOAT default 0,
 	CALL_PRICE_E_PODCAST		FLOAT default 0,
-	CALL_PRICE_E_PARKING		FLOAT default 0,
 	CALL_PRICE_E_VOTING		FLOAT default 0,
 	CALL_PRICE_E_WEBVAR		FLOAT default 0,
 	CALL_PRICE_E_CALLBACK		FLOAT default 0,
@@ -181,7 +167,6 @@ create table VPBX_TARIFF (
 	CALL_PRICE_E_QUEUE		FLOAT default 0,
 	CALL_PRICE_E_DTMFRX		FLOAT default 0,
 	CALL_PRICE_E_DTMFTX		FLOAT default 0,
-	CALL_PRICE_E_CLICK2CALL		FLOAT default 0,
 
 	CURRENCY_ID			INT(16)	not null default 1,
 
@@ -350,7 +335,7 @@ create	table VPBX_GROUPS
 	MAX_CALLBLAST_ITEMS			INT(10) default 30,
 	MAX_GOTOIF_ITEMS			INT(10) default 10,
 	MAX_PBOOK_ITEMS				INT(10) default 200,
-	MAX_C2C_ITEMS				INT(5) default 1,
+	MAX_C2C_ITEMS				INT(5) default 0,
 
 	MAX_EXT_PHONES				INT(4) default 20,
 	MAX_CB_PHONES				INT(4) default 3,
@@ -2177,6 +2162,8 @@ INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_S
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('Top 10 users (previous day)',1,unix_timestamp(),"select a.ACCESS_CODE, count(*) as Calls, round((sum(c.STOP_TIMESTAMP-c.START_TIMESTAMP))/60,1) 'Minutes=', round((sum(c.STOP_TIMESTAMP-c.START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from VPBX_CDRS c,  VPBX_ACCOUNTS a where a.ID = c.SUBSCR_ID and c.START_TIMESTAMP > [% DATE_START %] and c.START_TIMESTAMP < [% DATE_STOP %] group by a.ACCESS_CODE order by Calls desc limit 10", 3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('Activities (previous day)',1,unix_timestamp(), "select TYPE Activities, count(*) as Count, round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=', round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from VPBX_CDRS_ACTIVITY where START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] group by TYPE order by Count desc",3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('DID statistic (previous day)',1,unix_timestamp(), "select SUBSTRING_INDEX( c.CALLED_ID , '*', 1 ) AS DID, count(*) as Calls, round((sum(c.STOP_TIMESTAMP-c.START_TIMESTAMP))/60,1) 'Minutes=', round((sum(c.STOP_TIMESTAMP-c.START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from VPBX_CDRS c where c.CALL_TYPE = 'incoming' and c.START_TIMESTAMP > [% DATE_START %] and c.START_TIMESTAMP < [% DATE_STOP %] group by SUBSTRING_INDEX( c.CALLED_ID, '*', 1 ) order by Calls desc",3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
+INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL) values('DB summary',1,unix_timestamp(),"select TABLE_NAME as '=TABLE',TABLE_ROWS as 'ROWS=',AVG_ROW_LENGTH as 'AVG ROW LENGTH=',round((DATA_LENGTH/1024/1024),2) as 'DATA LENGTH (MB)=' ,round((INDEX_LENGTH/1024/1024),2)  'INDEX LENGTH (MB)=',AUTO_INCREMENT as 'AUTO INCREMENT=' from information_schema.TABLES where TABLE_SCHEMA='xvb'",300);
+INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL) values('System summary',1,unix_timestamp(),"select 'Accounts (all)' as '=param', count(*) as 'value=' from VPBX_ACCOUNTS union select 'Accounts ( with active status )', count(*) from VPBX_ACCOUNTS where STATUS=1 union select 'Extensions', count(*) from VPBX_VBOXES_CORE union select 'Messages cnt', count(*) from VPBX_VBOXES_RECORD_FILES union select 'Messages size (MB)', CONCAT(round(sum(FILE_SIZE)/1024/1024,2),' ') from VPBX_VBOXES_RECORD_FILES union select 'Phones (all)', count(*) from VPBX_SIPPEERS where PEER_TYPE=0 union select 'Phones (online)', count(*) from VPBX_SIPPEERS where PEER_TYPE=0 and unix_timestamp() < regseconds union select 'SIP Peers (all)', count(*) from VPBX_SIPPEERS where PEER_TYPE=1 union select 'SIP Peers (with registration)', count(*) from VPBX_SIPPEERS where PEER_TYPE=1 and NEED_REG=1 union select 'DIDs cnt', count(*) from VPBX_DIDS union select 'Shared DIDs cnt', count(DISTINCT VOICENUMBER) from VPBX_ACCOUNTS union select 'Balalnce (units)', round(sum(BALANCE),2) from VPBX_BALANCE union select 'CDR cnt', count(*) from VPBX_CDRS union select 'Activity records', count(*) from VPBX_CDRS_ACTIVITY union select 'Uniq Caller ID (incoming)', count(DISTINCT CALLER_ID) from VPBX_CDRS where CALL_TYPE='incoming' union select 'Uniq Called ID (transit)', count(DISTINCT CALLED_ID) from VPBX_CDRS where CALL_TYPE='transit' union select 'Journal records', count(*) from VPBX_JOURNAL union SELECT 'Data Base Size (MB)', round((sum( data_length + index_length ) / 1024 / 1024),2) FROM information_schema.TABLES where table_schema ='xvb' union SELECT 'Data Base Free space (MB)', round((sum(data_free) / 1024 / 1024),2) FROM information_schema.TABLES where table_schema ='xvb'",300);
 
 INSERT INTO VPBX_NODES (NODE_ID,NODE_IP,DOWNLOAD_IP,NODE_DESC) values('DEFAULT_NODE','127.0.0.1','127.0.0.1','Default node');
 INSERT INTO VPBX_GROUPS (GROUP_ID,GROUP_NAME,SERVER_ID,CUSTOM_ROUTE,CUSTOM_FILES) values(1,'default','DEFAULT_NODE',1,1);
