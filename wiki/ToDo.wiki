@@ -1,7 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Поддержка json для WEBVariables</font>
+<font color='green'>+ Новые шаблоны с ощим меню ( только RU )</font> ( 09.02.2013 / build 7060 )
+
+<font color='green'>+ Поддержка json для WEBVariables</font> ( 03.02.2013 / build 7007 )
 
 <font color='green'>+ Админ репорты по использованию системы</font> ( 12.01.13 / build 6990 )
 
