@@ -1,0 +1,171 @@
+<html>
+<!-- $Id: statements.tt,v 1.1 2013-02-02 19:17:51 gosha Exp $ -->
+<head>
+	<BASE href="[% CGI_SERVER %]">
+	<style>
+	body { 
+		background: white;
+		color:#454545;
+		font-family:Tahoma,Arial,San-Serif;
+	}
+	tr.list_data {
+		background-color: #9eb9ff;
+		margin: 0px;
+		padding: 4px;
+	}
+	.backlight {
+		background-color: #efefef;
+	}
+	table th, 
+	table td {
+		padding: 4px 4px 3px;
+	}
+	table { 
+		width: 100%;
+		padding: 0;
+	}
+	table.statement { 
+		border: 1px solid black;
+	}
+	</style>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="[% CGI_SERVER %]/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+</head>
+
+<body>
+	<p align='left'>
+	<table width='100%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			[% IF USER_CREDS.LOGO_HREF eq '' %]
+				<img border='0' src='[% CGI_SERVER %]/xvb/images/logo-small.png' alt='Virtual PBX' />
+			[% ELSE %]
+				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+			[% END %]
+			</td>
+			<td>
+				<h4>Спасибо за то, что используете VirtualPBX. Удачного дня !</h4>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+		<h3>Информация об отчете:</h3>
+		<ul>
+			<li>Телефонный номер: [% USER_CREDS.VOICENUMBER | html %]</li>
+			<li>Код доступа: [% USER_CREDS.ACCESS_CODE | html %]</li>
+			<li>Отчетный период: [% REPORT_DATE | html %]</li>
+		</ul>
+
+		[% IF SUMMARY_CALLS scalar %]
+		<h3>Обобщенный отчет по звонкам:</h3>
+		<table width='100%' class='statement' border='1'>
+			[% IF USE_BILLING %]
+			
+			<tr class='list_data'>
+				<th>Тип звонка</th>
+				<th>Количество</th>
+				<th>Длительность</th>
+				<th>Цена</th>
+				<th>Валюта</th>
+			</tr>
+			[% FOREACH msg = SUMMARY_CALLS %]
+			<tr class='nocolor' align='center'>
+				<td>[% msg.CALL_TYPE | locale_msg %]</td>
+				<td>[% msg.CNT | html %]</td>
+				<td>[% msg.DURATION | duration_str %]</td>
+				<td>[% msg.USER_COST %]</td>
+				<td>[% msg.DESCRIPTION | locale_msg %]</td>
+			</tr>
+			[% END %]
+
+			[% ELSE %]
+			
+			<tr class='list_data'>
+				<th>Тип звонка</th>
+				<th>Количество</th>
+				<th>Длительность</th>
+			</tr>
+			[% FOREACH msg = SUMMARY_CALLS %]
+			<tr class='nocolor' align='center'>
+				<td>[% msg.CALL_TYPE | locale_msg %]</td>
+				<td>[% msg.CNT | html %]</td>
+				<td>[% msg.DURATION | duration_str %]</td>
+			</tr>
+			[% END %]
+
+			[% END %]
+		</table>
+		[% END %]
+
+		[% IF SUMMARY scalar %]
+		<h3>Обобщенный отчет активности:</h3>
+		<table width='100%' class='statement' border='1'>
+			<tr class='list_data'>
+				<th>Внутренний номер</th>
+				<th>Активность</th>
+				<th>Количество</th>
+				<th>Длительность</th>
+			</tr>
+			[% FOREACH msg = SUMMARY %]
+			<tr class='nocolor' align='center'>
+				<td>[% msg.EXT_NUMBER | html %]</td>
+				<td>[% msg.TYPE | locale_msg %]</td>
+				<td>[% msg.CNT | html %]</td>
+				<td>[% msg.DURATION | duration_str %]</td>
+			</tr>
+			[% END %]
+		</table>
+		[% END %]
+
+		[% IF CALLS scalar %]
+		<h3>Отчет по звонкам:</h3>
+		<table width='100%' class='statement' border='1'>
+			[% IF USE_BILLING %]
+
+			<tr class='list_data'>
+				<th>Дата и время звонка</th>
+				<th>Номер звонящего</th>
+				<th>Длительность</th>
+				<th>Тип</th>
+				<th>Цена</th>
+			</tr>
+			[% FOREACH msg = CALLS %]
+			<tr class='nocolor' align='center'>
+				<td>[% msg.CDR_DATE | html %]</td>
+				<td>[% msg.CALLER_ID | html %]</td>
+				<td>[% msg.CDR_DURATION | duration_str %]</td>
+				<td>[% msg.CALL_TYPE | locale_msg %]</td>
+				<td>[% msg.COST %] ([% msg.DESCRIPTION | locale_msg %])</td>
+			</tr>
+			[% END %]
+
+			[% ELSE %]
+
+			<tr class='list_data'>
+				<th>Дата и время звонка</th>
+				<th>Номер звонящего</th>
+				<th>Длительность</th>
+				<th>Тип</th>
+			</tr>
+			[% FOREACH msg = CALLS %]
+			<tr class='nocolor' align='center'>
+				<td>[% msg.CDR_DATE | html %]</td>
+				<td>[% msg.CALLER_ID | html %]</td>
+				<td>[% msg.CDR_DURATION | duration_str %]</td>
+				<td>[% msg.CALL_TYPE | locale_msg %]</td>
+			</tr>
+			[% END %]
+
+			[% END %]
+		</table>
+		[% END %]
+	</p>
+	<br><br>-- <br>
+</body>
+</html>
+	

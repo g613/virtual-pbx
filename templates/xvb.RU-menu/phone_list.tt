@@ -1,0 +1,158 @@
+<html>
+<!-- $Id: phone_list.tt,v 1.1 2013-02-02 19:17:50 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='100%' class='logo'>
+		<tr>
+			<td align='center' width='90%'><h2>SIP Телефоны</h2></td>
+			<td align='right'>
+				<a title='в формате excel' href='?action=phone_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;&nbsp;
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='100%' class='list_data' id='d-tbl'>
+		<tr class='list_data'>
+			<th>Логин</th>
+			<th>Пароль</th>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+			<th>Телефон</th>
+			<th>Имя пользователя</th>
+			<th>Исходящий АОН</th>
+			<th>Запись</th>
+			<th>Сохранить запись в</th>
+			<th>Группы перехвата</th>
+			<th>Действия</th>
+		</tr>
+		
+		[% FOREACH p = PHONES %]
+		<tr align='center' class='nocolor' id='d-tr-[% p.DATA_ID %]'>
+			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+			<td align='left'><input type='hidden' name='name' value="[% p.name %]">[% p.name %]</td>
+			<td><input class='in_t0' size="12" name='secret' type='text' value="[% p.secret | html %]"></td>
+			<td align='center'>
+				[% IF p.deny %]
+					<input class='in_t0' name='trusted_ip' type='checkbox' title='Доступ только с IP адреса: [% p.permit | html %]' checked />
+				[% ELSIF p.ipaddr ne "" %]
+					<input class='in_t0' name='trusted_ip' type='checkbox' title='Ограничить доступ только с текущего IP адреса: [% p.ipaddr | html %]' />
+				[% END %]
+			</td>
+			<td align='center'>
+				<img 
+				[% IF p.REG_STATUS eq 'Registered' %]
+					src='/xvb/images/ball_green.png'
+				[% ELSIF  p.REG_STATUS eq 'Unregistered'  %]
+					src='/xvb/images/ball_red.png'
+				[% ELSE %]
+					src=''
+				[% END %]
+				title='[% p.REG_STATUS %], Окончание регистрации: [% p.REG_EXPIRED | html %], IP: [% p.ipaddr | html %], UA: [% p.useragent | html %]' alt='[% p.REG_STATUS %]' />
+			</td>
+			<td><input class='in_t0' size="10" name='callerid' type='text' value="[% p.callerid | html %]"></td>
+			<td><input class='in_t0' size="16" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"></td>
+			<td><input class='in_t0' size="12" name='DEFCID' type='text' value="[% p.DEFCID | html %]"></td>
+			<td>
+				<select name="REC_MODE" class='in_t0'>
+				[% IF p.REC_MODE eq '1' %]
+					<option value="1" selected>По запросу</option>
+					<option value="0">Выключено</option>
+					<option value="2">Всегда</option>
+					<option value="3">Внутренние</option>
+					<option value="4">Внешние</option>
+				[% ELSIF p.REC_MODE eq '2' %]
+					<option value="2" selected>Всегда</option>
+					<option value="0">Выключено</option>
+					<option value="1">По запросу</option>
+					<option value="3">Внутренние</option>
+					<option value="4">Внешние</option>
+				[% ELSIF p.REC_MODE eq '3' %]
+					<option value="3" selected>Внутренние</option>
+					<option value="0">Выключено</option>
+					<option value="1">По запросу</option>
+					<option value="2">Всегда</option>
+					<option value="4">Внешние</option>
+				[% ELSIF p.REC_MODE eq '4' %]
+					<option value="4" selected>Внешние</option>
+					<option value="0">Выключено</option>
+					<option value="1">По запросу</option>
+					<option value="2">Всегда</option>
+					<option value="3">Внутренние</option>
+				[% ELSE %]
+					<option value="0" selected>Выключено</option>
+					<option value="1">По запросу</option>
+					<option value="2">Всегда</option>
+					<option value="3">Внутренние</option>
+					<option value="4">Внешние</option>
+				[% END %]
+				</select>
+			</td>
+			<td><input class='in_t0' size="10" name='REC_EXT' type='text' value="[% p.REC_EXT | html %]"></td>
+			<td><input class='in_t0' size="10" name='PICKUP_GROUPS' type='text' value="[% p.PICKUP_GROUPS | html %]"></td>
+			<td align='left'>
+				<input type='hidden' value='[% p.DATA_ID %]' name='data_id'>
+				<input type='hidden' value='phone_update' name='action'>
+				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<a title='удалить телефон' href='?action=phone_del&data_id=[% p.DATA_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% p.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>&nbsp;
+				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
+				<script language='JavaScript'>
+					writeUpdateLinks( 'сохранить изменения' );
+				</script>
+				<noscript><input value='change' type='submit'></noscript>
+				</span>
+			</td>
+			</form>
+		</tr>
+		[% END %]
+		<tr><td></td></tr>
+		<tr align='center' class='list_data'>
+			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td><input size="10" name='callerid' type='text'></td>
+			<td><input size="16" name='DESCRIPTION' type='text'></td>
+			<td><input size="12" name='DEFCID' type='text'></td>
+			<td>
+				<select name="REC_MODE">
+					<option value="0" selected>Выключено</option>
+					<option value="1">По запросу</option>
+					<option value="2">Всегда</option>
+					<option value="3">Внутренние</option>
+					<option value="4">Внешние</option>
+				</select>
+			</td>
+			<td><input size="10" name='REC_EXT' type='text'></td>
+			<td><input size="10" name='PICKUP_GROUPS' type='text'></td>
+			<td>
+				<input type='hidden' value='phone_add' name='action'>
+				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<input value='&nbsp;&nbsp;добавить&nbsp;&nbsp;' type='submit'>
+			</td>
+			</form>
+		</tr>
+	</table>
+	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

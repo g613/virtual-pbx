@@ -1,0 +1,12 @@
+<html>
+<!-- $Id: start.tt,v 1.1 2013-02-02 19:17:48 gosha Exp $ -->
+<head>
+	[% IF SACTION %]
+    <META HTTP-EQUIV="refresh" CONTENT="0; URL=?action=[% SACTION %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]"> 
+	[% ELSE %]
+    <META HTTP-EQUIV="refresh" CONTENT="0; URL=?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]"> 
+	[% END %]
+</head>
+<body></body>
+</html>
+

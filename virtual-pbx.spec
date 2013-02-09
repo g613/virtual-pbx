@@ -293,6 +293,8 @@ cd $RPM_BUILD_ROOT/%CORE_DIR/templates
 find -name '*.tt' -exec perl ../contrib/utils/build/html_clean.pl {} ';'
 find -name '*.bak' -exec rm -f {} ';'
 ln -s xvb.RU-Male xvb.RU-Female
+ln -s . xvb.RU-menu/xvb.RU-Male
+ln -s . xvb.RU-menu/xvb.RU-Female
 ln -s . default
 ln -s . xvb.EN-Male
 ln -s . xvb.EN-Female
@@ -520,7 +522,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 #
 %files voip
 %attr(440,asterisk,asterisk) %config(noreplace) %{_sysconfdir}/asterisk/xvb/*.conf
-%attr(644,root,root) %{_sysconfdir}/cron.d/virtual-pbx-voip.cron
+%attr(644,root,root) %config(noreplace) %{_sysconfdir}/cron.d/virtual-pbx-voip.cron
 %attr(755,asterisk,asterisk) %CORE_DIR/agi-bin/*.agi
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_perl_worker
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-perl-worker
@@ -554,7 +556,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 #
 %files web
 %attr(644,root,root) %config(noreplace) %{_sysconfdir}/httpd/conf.d/*.conf
-%attr(644,root,root) %{_sysconfdir}/cron.d/virtual-pbx-web.cron
+%attr(644,root,root) %config(noreplace) %{_sysconfdir}/cron.d/virtual-pbx-web.cron
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/ai
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/ui
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/pi
@@ -568,7 +570,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 ####################################################
 #
 %files management
-%attr(644,root,root) %{_sysconfdir}/cron.d/virtual-pbx.cron
+%attr(644,root,root) %config(noreplace) %{_sysconfdir}/cron.d/virtual-pbx.cron
 %attr(755,root,root) %CORE_DIR/contrib/utils/nodes_admin/*
 %attr(755,root,root) %CORE_DIR/contrib/utils/MemCached.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/db_backup.pl

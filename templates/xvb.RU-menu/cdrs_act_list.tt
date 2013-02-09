@@ -1,0 +1,88 @@
+<html>
+<!-- $Id: cdrs_act_list.tt,v 1.1 2013-02-02 19:17:48 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Детализация звонка - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='100%' class='logo'>
+		<tr>
+			<td align='center'><h2>Детализация звонка</h2></td>
+		</tr>
+	</table>
+	</p>
+	
+	<p>
+	<table width='100%' class='list_data' id='d-tbl'>
+		<tr class='list_data'>
+			<th>Время действия</th>
+			<th>Номер звонящего</th>
+			<th>Длительность</th>
+			<th>Вн. номер</th>
+			<th>Тип действия</th>
+			<th>&nbsp;</th>
+			<th width='25%'>Данные</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='7'>
+				<a title='предыдущая страница' href='?action=act_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&call_id=[% CDR_CALL_ID | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+		
+		[% FOREACH msg = CDR_LIST %]
+			<tr class='nocolor' align='center'>
+				<td align='center'>[% msg.CDR_DATE | html %]</td>
+				<td align='center'>[% msg.CALLER_ID | html %]</td>
+				<td>[% msg.CDR_DURATION | duration_str %]</td>
+				[% IF msg.EXT_ID %]
+				<td>&nbsp;<a href='?action=vb_view&id=[% msg.EXT_ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
+				[% ELSE %]
+				<td>[% msg.EXT_NUMBER | html %]</td>
+				[% END %]
+				<td>[% msg.TYPE | locale_msg %]</td>
+				<td>
+					[% IF msg.EXT_ID %]
+					<a href='?action=cid_add&id=[% msg.EXT_ID %]&cid_list_type=1&cid_type=1&uniq=[% USER_CREDS.UNIQ %]&cid=[% msg.CALLER_ID | html %]&description=for call at [% msg.CDR_DATE | html %]' title='Добавить номер звонящего в черный список для номера [% msg.EXT_NUMBER | html %]'><img border='0' src='/xvb/images/vb_edit_black.png' alt='add' /></a>
+					[% END %]
+				</td>
+				<td align='left'>[% msg.DATA | html %]</td>
+			</tr>
+		[% END %]
+		<tr>
+		[% IF MSG_NEXT ne '' %]
+			<td align='right' colspan='7'>
+				<a title='следующая страница' href='?action=act_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&call_id=[% CDR_CALL_ID | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+			</td>
+		[% ELSE %]
+			<td colspan='7'>&nbsp;</td>
+		[% END %]
+		</tr>
+		<tr class='list_data'>
+			<td colspan='7'>&nbsp;</td>
+		</tr>
+	</table>
+	</p>
+	
+	<script language='JavaScript'>
+		var download_file_url="<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/$1/0/$2.[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'>FILE</a>";
+		var callback_cdr_url="$1<a title='Информация о звонке' href='?action=act_list&call_id=$2&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>CALL</a>";
+		var js_date_str="[% JS_DATE_STR | html %]-История нажатий DTMF";
+		cdrfilters( 'd-tbl', 6 );
+		listcolorer( 'd-tbl' );
+	</script>
+
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

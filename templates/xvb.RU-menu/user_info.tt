@@ -1,0 +1,483 @@
+<html>
+<!-- $Id: user_info.tt,v 1.1 2013-02-02 19:17:51 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='100%' class='logo'>
+		<tr>
+			<td align='center'><h2>Профиль пользователя AC# <b>[% USER_CREDS.ACCESS_CODE | html %]</h2></td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='100%'>
+		<tr class='list_data'>
+			<td colspan='2'>&nbsp;</td>
+		</tr>
+		<tr>
+			<td valign='top'>
+			<table class='user_data'>
+				<tr>
+					<td colspan='2'><h4>Основные настройки:</h4></td>
+				</tr>
+				<tr>
+					<td>Входящие номера:</td>
+					<td>
+					<textarea readonly cols='30'>Публичный: [% USER_CREDS.VOICENUMBER | html %] # [% USER_CREDS.ACCESS_CODE %]
+[% FOREACH d = DID %]
+&nbsp;
+Частный: [% d.DID | html %]
+[% END %]</textarea>
+					</td>
+				</tr>
+				<form method="post" action="[% CGI_URL %]" name='user_prefs' onSubmit='return xmlhttpPost(this,0)'>
+				<tr>
+					<td>Фамилия:</td>
+					<td>
+						<input size='30' type='text' name='LAST_NAME' value='[% USER_CREDS.LAST_NAME | html %]'>
+					</td>
+				</tr>
+				<tr>
+					<td>Имя:</td>
+					<td>
+						<input size='30' type='text' name='FIRST_NAME' value='[% USER_CREDS.FIRST_NAME | html %]'>
+						<input type='hidden' name='action' value='user_update'>
+						<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+					</td>
+				</tr>
+				<tr>
+					<td>Email:</td>
+					<td>
+						<input size='30' type='text' name='EMAIL' value='[% USER_CREDS.EMAIL | html %]'>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<select name='skins' onchange='javascript:document.user_prefs.CSS_HREF.value=this.value'>
+							<option value='[% USER_CREDS.CSS_HREF | html %]' selected>Ссылка на таблицу стилей:</option>
+							<option value='/xvb/xvb-green.css'>Стиль зеленая палитра</option>
+							<option value='/xvb/xvb-green-compact.css'>Стиль зеленая палитра. Компактный.</option>
+							<option value=''>Стиль по умолчанию</option>
+						</select>
+					</td>
+					<td>
+						<input size='30' type='text' name='CSS_HREF' value='[% USER_CREDS.CSS_HREF | html %]'>
+					</td>
+				</tr>
+				<tr>
+					<td>Ссылка на логотип:</td>
+					<td>
+						<input size='30' type='text' name='LOGO_HREF' value='[% USER_CREDS.LOGO_HREF | html %]'>
+					</td>
+				</tr>
+				[% IF USER_CREDS.ALLOW_GA %]
+				<tr>
+					<td>Google Analytics ID:</td>
+					<td>
+						<input size='30' type='text' name='GA_ACCOUNT' value='[% USER_CREDS.GA_ACCOUNT | html %]'>
+					</td>
+				</tr>
+				[% END %]
+				<tr>
+					<td>Сообщений на странице:</td>
+					<td>
+						<input size='10' type='text' name='MSG_IN_PAGE' value='[% USER_CREDS.MSG_IN_PAGE | html %]'>
+					</td>
+				</tr>
+				<tr>
+					<td>Время хранения записей (дней):</td>
+					<td>
+						<input size='10' type='text' name='MSG_STORE_PERIOD' value='[% USER_CREDS.MSG_STORE_PERIOD | html %]'>
+						( 0 - не удалять )
+					</td>
+				</tr>
+				<tr>
+					<td>IVR: тайм-аут между нажатиями (сек):</td>
+					<td>
+						<input size='10' type='text' name='I_DIGIT_TIMEOUT' value='[% USER_CREDS.I_DIGIT_TIMEOUT | html %]'>
+					</td>
+				</tr>
+				<tr>
+					<td>Язык интерфейса и голос по умолчанию:</td>
+					<td>
+						<select name='LANG'>
+							[% FOREACH lang = LANG %]
+								[% IF USER_CREDS.LANG eq lang.ID %]
+									<option value="[% lang.ID | html %]" selected>[% lang.DESCRIPTION | locale_msg %]</option>
+								[% ELSE %]
+									[% IF lang.ID %]
+									<option value="[% lang.ID | html %]">[% lang.DESCRIPTION | locale_msg %]</option>
+									[% END %]
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Формат звуковых файлов:</td>
+					<td>
+						<select name='SOUND_FORMAT'>
+							[% FOREACH fm = SOUND_F %]
+								[% IF USER_CREDS.SOUND_FORMAT eq fm %]
+									<option value="[% fm | html %]" selected>[% fm | html %]</option>
+								[% ELSE %]
+									<option value="[% fm | html %]">[% fm | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Часовой пояс:</td>
+					<td>
+						<input size='20' type='text' name='TZ_NAME' value='[% USER_CREDS.TZ_NAME | html %]'>
+						<script lang='JavaScript'>tz_dropdown('[% USER_CREDS.TZ_NAME %]', 'не определено')</script>
+					</td>
+				</tr>
+				<tr>
+					<td>Формат даты и времени:</td>
+					<td>
+						<select name='DATE_FORMAT'>
+							[% FOREACH fm = DATE_FORMAT %]
+								[% IF USER_CREDS.DATE_FORMAT eq fm.ID %]
+									<option value="[% fm.ID %]" selected>[% fm.DESCRIPTION | locale_msg %]</option>
+								[% ELSE %]
+									<option value="[% fm.ID %]">[% fm.DESCRIPTION | locale_msg %]</option>
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Ежедневная статистика:</td>
+					<td>
+						<select name='STATEMENTS'>
+							[% IF USER_CREDS.STATEMENTS eq '0' %]
+								<option value="0" selected>не требуется</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '2' %]
+								<option value="2" selected>внутренняя активность</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '4' %]
+								<option value="4" selected>список звонков</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '6' %]
+								<option value="6" selected>список звонков и активность</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '8' %]
+								<option value="8" selected>звонки обобщенная</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '10' %]
+								<option value="10" selected>звонки+активность обобщенная</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '12' %]
+								<option value="12" selected>звонки (список+обобщенная)</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '14' %]
+								<option value="14" selected>вся статистика</option>
+							[% END %]
+								<option value="0">не требуется</option>
+								<option value="2">внутренняя активность</option>
+								<option value="4">список звонков</option>
+								<option value="6">список звонков и активность</option>
+								<option value="8">звонки обобщенная</option>
+								<option value="10">звонки+активность обобщенная</option>
+								<option value="12">звонки (список+обобщенная)</option>
+								<option value="14">вся статистика</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan='2' align='center'>
+						<input type='submit' value='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;изменить&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'>
+					</td>
+				</tr>
+				</form>
+				<tr>
+					<td colspan='2'>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan='2'><h4>Музыка вместо гудков:</h4></td>
+				</tr>
+				<tr>
+					<td colspan='2'>
+						<table width='90%' class='addon_data' id='d-tbl'>
+							[% IF CUSTOM_MOH ne '' %]
+							<tr id='d-tr'>
+								<td>Текущая музыка вместо гудков</td>
+								<td align='center' nowrap='nowrap'>
+									<a title='прослушать' 
+										onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/0/[% CUSTOM_MOH %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+										href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+									&nbsp;<a title='скачать файл' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/0/[% CUSTOM_MOH %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+									&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% CUSTOM_MOH %]&type=1&id=[% ROOT_EXT_ID %]' onclick="return xmlhttpDel(this,'ru','d-tr')" title='удалить файл'><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								</td>
+							</tr>
+							[% END %]
+							<tr>
+							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+								<td>
+									<input type='file' name='msg'>
+									<input type='hidden' name="type" value='5'>
+									<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+									<input type='hidden' name='action' value='msg_upload'>
+									<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+								</td>
+								<td align='center'>
+									<input type='submit' value='Загрузить новую'>
+								</td>
+							</form>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan='2'>
+					<table class='user_data'>
+						<tr>
+							<td colspan='2'><h4>Резервное копирование:</h4></td>
+						</tr>
+						<tr>
+							<form enctype="multipart/form-data" method="post" action="[% CGI_URL %]">
+							<td>
+								Сохранить звуковые файлы: <input type='checkbox' name='full_backup'>
+								<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+								<input type='hidden' name='action' value='backup'>
+							</td>
+							<td align='center'>
+								<input name='submit' type='submit' value='Сохранить конфигурацию'>
+							</td>
+							</form>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<form enctype="multipart/form-data" method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<td>
+								<a href='#' class='info'>Добавить<span>при включении данного флага старые данные не удаляются</span></a>: <input type='checkbox' name='merge'>
+								<input type='file' name='config_file'>
+								<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+								<input type='hidden' name='action' value='restore'>
+							</td>
+							<td align='center'>
+								<input type='submit' value='Загрузить конфигурацию'>
+							</td>
+							</form>
+						</tr>
+					</table>
+					</td>
+				</tr>
+			</table>
+			</td>
+
+			<td valign='top'>
+			<table class='user_data'>
+				[% IF USE_BILLING > 0 %]
+				<tr>
+					<td colspan='3'>
+						<table width='100%' class='addon_data'>
+							<tr>
+								<td>
+									<b>Тариф:</b>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									&nbsp;
+									&nbsp;
+									&nbsp;
+									<b>[% TARIFF.NAME | html %]</b> ( валюта  [% TARIFF.DESCRIPTION %] )
+								</td>
+							</tr>
+							<tr><td></td></tr>
+							<tr>
+								<td>
+									<b>Баланс:</b>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									&nbsp;
+									&nbsp;
+									&nbsp;
+									<b>[% TARIFF.USER_BALANCE | bill_float %]</b> [% TARIFF.DESCRIPTION %] ( на [% CACHE_TIME | html %] )
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				[% END %]
+				<tr>
+					<td colspan='3'>&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan='3'><h4>Ограничения на:</h4></td>
+				</tr>
+				<tr>
+					<td>количество сообщений: </td>
+					<td align='right'>[% FILES_CNT %] / [% USER_CREDS.MAX_ALL_MSGS %]</td>
+				</tr>
+				<tr>
+					<td>размер всех сообшений: </td>
+					<td align='right'>[% FILES_SIZE | fsize %] / [% USER_CREDS.MAX_SIZE_MSGS | fsize %]</td>
+				</tr>
+				<tr>
+					<td>размер телефонной книги: </td>
+					<td align='right'>[% USER_CREDS.MAX_PBOOK_ITEMS %]</td>
+				</tr>
+				<tr>
+					<td>количество CID фильтров используемых за раз: </td>
+					<td align='right'>[% USER_CREDS.MAX_EXT_CIDS %]</td>
+				</tr>
+				[% IF USER_CREDS.ALLOW_PHONES %]
+				<tr>
+					<td>количество телефонов: </td>
+					<td align='right'>[% USER_CREDS.MAX_PHONES %]</td>
+				</tr>
+				[% END %]
+				[% IF USER_CREDS.CUSTOM_ROUTE %]
+				<tr>
+					<td>количество SIP шлюзов: </td>
+					<td align='right'>[% USER_CREDS.MAX_PEERS %]</td>
+				</tr>
+				<tr>
+					<td>количество маршрутов: </td>
+					<td align='right'>[% USER_CREDS.MAX_ROUTES %]</td>
+				</tr>
+				[% END %]
+				[% IF USER_CREDS.ALLOW_MACROS %]
+				<tr>
+					<td>количество макросов: </td>
+					<td align='right'>[% USER_CREDS.MAX_MACROS %]</td>
+				</tr>
+				[% END %]
+				[% IF USER_CREDS.VBL_4 ne '0' %]
+				<tr>
+					<td>количество пунктов 'Списка сотрудников': </td>
+					<td align='right'>[% USER_CREDS.MAX_DIRECTORY_ITEMS %]</td>
+				</tr>
+				[% END %]
+				[% IF USER_CREDS.VBL_5 ne '0' %]
+				<tr>
+					<td>количество пунктов 'Расписания': </td>
+					<td align='right'>[% USER_CREDS.MAX_SCHEDULE_ITEMS %]</td>
+				</tr>
+				[% END %]
+				<tr>
+					<td>количество `исходящих телефонов`: </td>
+					<td align='right'>[% USER_CREDS.MAX_EXT_PHONES | html %]</td>
+				</tr>
+				[% IF USER_CREDS.VBL_18 ne '0' %]
+				<tr>
+					<td>количество пунктов 'Автоинформатор': </td>
+					<td align='right'>[% USER_CREDS.MAX_CALLBLAST_ITEMS %]</td>
+				</tr>
+				<tr>
+					<td>количество телефонов в строке 'Авто и-р': </td>
+					<td align='right'>[% USER_CREDS.MAX_CB_PHONES | html %]</td>
+				</tr>
+				[% END %]
+				[% IF USER_CREDS.VBL_21 ne '0' %]
+				<tr>
+					<td>количество пунктов `условного перехода`: </td>
+					<td align='right'>[% USER_CREDS.MAX_GOTOIF_ITEMS %]</td>
+				</tr>
+				[% END %]
+				<tr>
+					<td>Количество Click2Call ссылок: </td>
+					<td align='right'>[% USER_CREDS.MAX_C2C_ITEMS %]</td>
+				</tr>
+				[% IF USER_CREDS.TTS_GREETING %]
+				<tr>
+					<td>длину строки TTS: </td>
+					<td align='right'>[% USER_CREDS.MAX_TTS_LENGTH | fsize %]</td>
+				</tr>
+				[% END %]
+				<tr>
+					<td>размер почтового сообщения: </td>
+					<td align='right'>[% USER_CREDS.MAX_ATTACH_SIZE | fsize %]</td>
+				</tr>
+				<tr>
+					<td>размер файла для TTS: </td>
+					<td align='right'>[% USER_CREDS.MAX_DOWNLOAD_SIZE | fsize %]</td>
+				</tr>
+				<tr>
+					<td>длительность голосового сообщения: </td>
+					<td align='right'>[% USER_CREDS.MAX_MESSAGE_DURATION | duration_str %]</td>
+				</tr>
+				<tr>
+					<td>длительность имени пользователя: </td>
+					<td align='right'>[% USER_CREDS.MAX_NAME_DURATION | duration_str %]</td>
+				</tr>
+				<tr>
+					<td>длительность приветствия пользователя: </td>
+					<td align='right'>[% USER_CREDS.MAX_GREET_DURATION | duration_str %]</td>
+				</tr>
+				<tr>
+					<td>длительность объявления для вызываемого: </td>
+					<td align='right'>[% USER_CREDS.MAX_ANNOUNCEMENT_DURATION | duration_str %]</td>
+				</tr>
+				<tr>
+					<td>длительность объявления для звонящего: </td>
+					<td align='right'>[% USER_CREDS.MAX_ANNOUNCEMENT_CALLER_DURATION | duration_str %]</td>
+				</tr>
+				<tr>
+					<td>длительность анонса удержания вызова: </td>
+					<td align='right'>[% USER_CREDS.MAX_RETRYDIAL_DURATION | duration_str %]</td>
+				</tr>
+				<tr>
+					<td>длительность музыки вместо гудков: </td>
+					<td align='right'>[% USER_CREDS.MAX_MOH_DURATION | duration_str %]</td>
+				</tr>
+				<tr>
+					<td>количество внутренних номеров (<a href='#' onclick='ShowEl("vb_limits"); return false'>подробно</a>) : </td>
+					<td align='right'>[% USER_CREDS.MAX_EXTENSIONS %]</td>
+				</tr>
+				<tr>
+					<td colspan='2' id='vb_limits' class='addon_info'>
+						<table width='100%'>
+							<tr class='list_addon_data' align='center'>
+								<th>Тип номера</th>
+								<th>Тек</th>
+								<th>Макс</th>
+							</tr>
+						[% FOREACH vt = VB_LIMITS %]
+						[% IF vt.ID vb_allow '0' %]
+							<tr class='addon_data'>
+								<td>&nbsp;&nbsp;*&nbsp;[% vt.DESCRIPTION | locale_msg %]</td>
+								<td align='right'>[% vt.L_CUR %]</td>
+								<td align='right'>[% vt.L_MAX %]</td>
+							</tr>
+						[% END %]
+						[% END %]
+							<tr><td colspan='3' align='right'>-1 - без ограничения</td></tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+		<tr class='list_data'>
+			<td colspan='2'>&nbsp;</td>
+		</tr>
+	</table>
+	</p>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
