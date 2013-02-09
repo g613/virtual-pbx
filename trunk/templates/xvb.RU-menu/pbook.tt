@@ -1,0 +1,129 @@
+<html>
+<!-- $Id: pbook.tt,v 1.1 2013-02-02 19:17:50 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Телефонная книга - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='100%' class='logo'>
+		<tr>
+			<td width='100%' align='center'><h2>Телефонная книга</h2></td>
+			<td align='right' nowrap='nowrap'>
+				<a title='в формате excel' href='?action=pbook_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]&format=excel&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
+				&nbsp;
+				&nbsp;
+				<a href='?action=pbook_del&id=[% ROOT_EXT_ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все данные'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>
+				&nbsp;
+			</td>
+		</tr>
+		</tr>
+	</table>
+	</p>
+		
+	<p>
+	<table width='100%' class='list_data' id='d-tbl'>
+		<tr class='list_data'>
+			<th>Имя</th>
+			<th>Фамилия</th>
+			<th>Телефон</th>
+			<th>Быстрый набор</th>
+			<th>Коментарий</th>
+			<th>Действия</th>
+		</tr>
+
+		[% FOREACH param = PBOOK_LIST %]
+		<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+			<input type='hidden' name='action' value='pbook_update'>
+			<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+			<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
+			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+
+			<td><input class='in_t0' size='18' name='fn' type='text' value='[% param.FIRST_NAME | html %]'></td>
+			<td><input class='in_t0' size='18' name='ln' type='text' value='[% param.LAST_NAME | html %]'></td>
+			<td><input class='in_t0' size='20' name='ph' type='text' value='[% param.PHONE | html %]'></td>
+			<td><input class='in_t0' size='8' name='shortcut' type='text' value='[% param.SHORTCUT | html %]'></td>
+			<td><input class='in_t0' size='25' name='description' type='text' value='[% param.DESCRIPTION | html %]'></td>
+	
+			<td align='left' nowrap='nowrap'>
+				<a href='?action=pbook_del&id=[% ROOT_EXT_ID %]&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить элемент'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+				<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+					<script language='JavaScript'>
+						writeUpdateLinks( 'сохранить изменения' );
+					</script>
+					<noscript><input value='изменить' type='submit'></noscript>
+				</span>
+			</td>
+		</form>
+		</tr>
+		[% END %]
+		<tr align='center' id='submit_row'>
+		<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+			<input type='hidden' name='action' value='pbook_add'>
+			<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+			
+			<td><input size='18' name='fn' type='text'></td>
+			<td><input size='18' name='ln' type='text'></td>
+			<td><input size='20' name='ph' type='text'></td>
+			<td><input size='8' name='shortcut' type='text'></td>
+			<td><input size='25' name='description' type='text'></td>
+			
+			<td align='center'>
+				<input type='submit' value='добавить'>
+			</td>
+		</form>
+		</tr>
+		<tr>
+			<td colspan='3'>&nbsp;</td>
+		</tr>
+	</table>
+	</p>
+	<p>
+	<table width='100%' class='bottom_hr'>
+		<tr id='csv-import'>
+			<td align='left' colspan='2'>
+				<form method="post" action="[% CGI_URL %]" onSubmit='return true'>
+					<input type='hidden' name='action' value='pbook_list'>
+					<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+					<select name='format'>
+						<option value="polycom">Polycom конфигурация</option>
+						<option value="dlink">Dlink конфигурация</option>
+						<option value="grandstream">Grandstream конфигурация</option>
+						<option value="yearlink">Yearlink конфигурация</option>
+						<option value="cisco">Cisco конфигурация</option>
+						<option value="snom">Snom конфигурация</option>
+					</select>
+					<input name='submit' type='submit' value='&nbsp;скачать&nbsp;'>
+				</form>
+			</td>
+			<td colspan='4' align='right'>
+				<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+					<input type='file' name='config_file'>
+					<input type='hidden' name='section' value='PBOOK'>
+					<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
+					<input type='hidden' name='action' value='restore'>
+					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+					<input name='is_excel' type='submit' value='Импорт из CSV'>
+				</form>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
+	

@@ -1,0 +1,534 @@
+<html>
+<!-- $Id: act_extstat.tt,v 1.1 2013-02-02 19:17:48 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
+
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	
+	<script language="javascript">
+
+		js_data = [% JS_DATA %];
+
+		[% IF VBOX_PREF.TYPE eq '3' %]
+		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
+		google.setOnLoadCallback(drawAllChart);
+		function drawAllChart() {
+			ExtStatdrawChart1('STATUS','Все звонки / статус звонка',['Статус','Количество']);
+			ExtStatdrawChart1('CAUSE','Все звонки / код разъединения',['Код разъединения','Количество']);
+			ExtStatdrawChart1('DURATION','Отвеченные звонки / продолжительность (минуты)',['Продолжительность','Количество']);
+			ExtStatdrawChart1('PN','Отвеченные звонки / телефоны',['Телефонный номер','Количество']);
+			ExtStatdrawChart2('TERM',['NOANSWER'],'NOANSWER','Не отвеченные звонки / кто завершил',['Кто завершил','Количество']);
+			ExtStatdrawChart2('TERM',['ANSWER'],'ANSWER','Отвеченные звонки / кто завершил',['Кто завершил','Количество']);
+			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Не отвеченные звонки/ время ожидания (сек)',['Время ожидания','Количество']);
+			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Отвеченные звонки / время ожидания (сек)',['Время ожидания','Количество']);
+		}
+		[% END %]
+		[% IF VBOX_PREF.TYPE eq '10' %]
+		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
+		google.setOnLoadCallback(drawAllChart);
+		function drawAllChart() {
+			ExtStatdrawChart1('SUMMARY','Общий отчет',['Вариант ответа','Количество']);
+		}
+		[% END %]
+		[% IF VBOX_PREF.TYPE eq '13' %]
+		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
+		google.setOnLoadCallback(drawAllChart);
+		function drawAllChart() {
+			ExtStatdrawChart1('STATUS','Все звонки / статус звонка',['Статус','Количество']);
+			ExtStatdrawChart1('CAUSE','Все звонки / код разъединения',['Код разъединения','Количество']);
+			ExtStatdrawChart1('DURATION','Отвеченные звонки / продолжительность (минуты)',['Продолжительность','Количество']);
+			ExtStatdrawChart1('PN','Отвеченные звонки / агенты',['Агент','Количество']);
+			ExtStatdrawChart1('Q_NUM_OUT','Не отвеченные звонки / позиция в очереди на момент выхода',['Позиция','Количество']);
+			ExtStatdrawChart2('Q_NUM',['NOANSWER'],'NOANSWER','Не отвеченные звонки / позиция в очереди на момент входа',['Позиция','Количество']);
+			ExtStatdrawChart2('Q_NUM',['ANSWER'],'ANSWER','Отвеченные звонки / позиция в очереди на момент входа',['Позиция','Количество']);
+			ExtStatdrawChart2('Q_NUM',['ANSWER','NOANSWER'],'ALL','Все звонки / позиция в очереди на момент входа',['Позиция','Количество']);
+			ExtStatdrawChart2('TERM',['NOANSWER'],'NOANSWER','Не отвеченные звонки / кто завершил',['Кто завершил','Количество']);
+			ExtStatdrawChart2('TERM',['ANSWER'],'ANSWER','Отвеченные звонки / кто завершил',['Кто завершил','Количество']);
+			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Не отвеченные звонки/ время ожидания (сек)',['Время ожидания','Количество']);
+			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Отвеченные звонки / время ожидания (сек)',['Время ожидания','Количество']);
+		}
+		[% END %]
+		[% IF VBOX_PREF.TYPE eq '18' %]
+		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
+		google.setOnLoadCallback(drawAllChart);
+		function drawAllChart() {
+			ExtStatdrawChart1('ALL_STATUS','Все звонки / статус звонка',['Статус','Количество']);
+			ExtStatdrawChart1('STATUS','Все звонки / успешные или нет',['Статус','Количество']);
+			ExtStatdrawChart1('ATTEMPT','Все звонки / попытка звонка',['Номер попытки','Количество']);
+			ExtStatdrawChart1('GOOD_ATTEMPT','Удачные звонки / попытка звонка',['Номер попытки','Количество']);
+		}
+		[% END %]
+		[% IF VBOX_PREF.TYPE eq '27' %]
+		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
+		google.setOnLoadCallback(drawAllChart);
+		function drawAllChart() {
+			ExtStatdrawChart1('STATUS','Все звонки / статус звонка',['Статус','Количество']);
+			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Не отвеченные звонки/ время ожидания (сек)',['Время ожидания','Количество']);
+			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Отвеченные звонки / время ожидания (сек)',['Время ожидания','Количество']);
+		}
+		[% END %]
+		var time_period = getTimePeriod( 'ru','[% CDR_PERIOD %]' );
+		var period = time_period.period;
+		var group_by = time_period.group_by;
+	</script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='100%' class='logo'>
+		<tr>
+			<td align='center'><h2>Внутренний номер #[% VBOX_PREF.EXT_NUMBER | html %] расширенная статистика</h2><h3>( [% CDR_HEADER %] 
+			<script language='JavaScript'>
+				document.write( ', период группировки: ' + period );
+			</script>
+			)</h3></td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='100%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Просмотреть сообщения</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Параметры номера</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Статистика</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+	<p>
+	<table width='100%' class='bottom_hr'>
+		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+		<tr align='right'>
+			<td width='100%'>
+				С даты:
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<button type="button">...</button>
+				&nbsp;
+				По дату:
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<button type="button">...</button>
+				&nbsp;
+				Звонящий:
+				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				<select name='chart_group_period'>
+				<script language='Javascript'>
+					document.write( "<option selected value='"+ group_by +"'>"+ period +"</option>" );
+				</script>
+				<noscript><option value=''>выберите</option></noscript>
+				<option value='min'>минута</option><option value='h'>час</option><option value='hd'>час дня</option><option value='d'>день</option><option value='dw'>день недели</option><option value='dm'>день месяца</option><option value='w'>неделя</option><option value='m'>месяц</option><option value='y'>год</option></select>
+				&nbsp;
+				<input name='action' value='extended_stat' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
+				<input value='Найти' type='submit'>
+				&nbsp;&nbsp;
+			</td>
+		</tr>
+		</form>
+	</table>
+	</p>
+
+	<p>
+	[% IF VBOX_PREF.TYPE eq '3' %]
+	<table width='100%' border='0' align='center'>
+		<tr><td colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_STATUS"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_STATUS_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2' align='center'><br><h4>Время ожидания ответа на звонок</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_RING_TIME_ANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_RING_TIME_ANSWER_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2'><br><br></td></tr>
+		<tr>
+			<td>
+				<div id="chart_RING_TIME_NOANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_RING_TIME_NOANSWER_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>Распределение звонков по телефонам</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_PN"></div>
+			</td>
+			<td>
+				<div id="chart_PN_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>Завершение звонков</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_TERM_NOANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_TERM_NOANSWER_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2'><br><br></td></tr>
+		<tr>
+			<td>
+				<div id="chart_TERM_ANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_TERM_ANSWER_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2' align='center'><br><h4>Продолжительность звонков</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_DURATION"></div>
+			</td>
+			<td>
+				<div id="chart_DURATION_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>Техническая информация</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_CAUSE"></div>
+			</td>
+			<td>
+				<div id="chart_CAUSE_PRC"></div>
+			</td>
+		</tr>
+	</table>
+	[% END %]
+	[% IF VBOX_PREF.TYPE eq '10' %]
+	<table width='100%' border='0' align='center'>
+		<tr><td colspan='2' align='center'><h5>[% VBOX_PREF.GREETING | html %]</h5></td></tr>
+		<tr><td colspan='2' align='center'><br><h4>Общий отчет</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_SUMMARY"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_SUMMARY_PRC"></div>
+			</td>
+		</tr>
+	</table>
+	[% END %]
+	[% IF VBOX_PREF.TYPE eq '13' %]
+	<table width='100%' border='0' align='center'>
+		<tr><td colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_STATUS"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_STATUS_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2' align='center'><br><h4>Время ожидания ответа на звонок</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_RING_TIME_ANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_RING_TIME_ANSWER_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2'><br><br></td></tr>
+		<tr>
+			<td>
+				<div id="chart_RING_TIME_NOANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_RING_TIME_NOANSWER_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>Распределение звонков по агентам</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_PN"></div>
+			</td>
+			<td>
+				<div id="chart_PN_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>Положение в очереди</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_Q_NUM_OUT"></div>
+			</td>
+			<td>
+				<div id="chart_Q_NUM_OUT_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2'><br><br></td></tr>
+		<tr>
+			<td>
+				<div id="chart_Q_NUM_ALL"></div>
+			</td>
+			<td>
+				<div id="chart_Q_NUM_ALL_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2'><br><br></td></tr>
+		<tr>
+			<td>
+				<div id="chart_Q_NUM_NOANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_Q_NUM_NOANSWER_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2'><br><br></td></tr>
+		<tr>
+			<td>
+				<div id="chart_Q_NUM_ANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_Q_NUM_ANSWER_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>Завершение звонков</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_TERM_NOANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_TERM_NOANSWER_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2'><br><br></td></tr>
+		<tr>
+			<td>
+				<div id="chart_TERM_ANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_TERM_ANSWER_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2' align='center'><br><h4>Продолжительность звонков</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_DURATION"></div>
+			</td>
+			<td>
+				<div id="chart_DURATION_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>Техническая информация</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_CAUSE"></div>
+			</td>
+			<td>
+				<div id="chart_CAUSE_PRC"></div>
+			</td>
+		</tr>
+	</table>
+	[% END %]
+	[% IF VBOX_PREF.TYPE eq '18' %]
+	<table width='100%' border='0' align='center'>
+		<tr><td colspan='2' align='center'><br><h4>Все звонки / статус</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_ALL_STATUS"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_ALL_STATUS_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2' align='center'><br><h4>Все звонки / удачные или нет</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_STATUS"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_STATUS_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>Все звонки / попытка звонка</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_ATTEMPT"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_ATTEMPT_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>Успешные звонки / попытка звонка</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_GOOD_ATTEMPT"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_GOOD_ATTEMPT_PRC"></div>
+			</td>
+		</tr>
+	</table>
+	[% END %]
+	[% IF VBOX_PREF.TYPE eq '27' %]
+	<table width='100%' border='0' align='center'>
+		<tr><td colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_STATUS"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_STATUS_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2' align='center'><br><h4>Время ожидания на парковке</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_RING_TIME_ANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_RING_TIME_ANSWER_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2'><br><br></td></tr>
+		<tr>
+			<td>
+				<div id="chart_RING_TIME_NOANSWER"></div>
+			</td>
+			<td>
+				<div id="chart_RING_TIME_NOANSWER_PRC"></div>
+			</td>
+		</tr>
+	</table>
+	[% END %]
+	</p>
+
+	<p>
+	<table width='100%' class='bottom_hr'>
+		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+		<tr align='right'>
+			<td width='100%'>
+				С даты:
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<button type="button">...</button>
+				&nbsp;
+				По дату:
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<button type="button">...</button>
+				&nbsp;
+				Звонящий:
+				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				<select name='chart_group_period'>
+				<script language='Javascript'>
+					document.write( "<option selected value='"+ group_by +"'>"+ period +"</option>" );
+				</script>
+				<noscript>
+				<option value=''>группировать по</option>
+				</noscript>
+				<option value='min'>минута</option><option value='h'>час</option><option value='hd'>час дня</option><option value='d'>день</option><option value='dw'>день недели</option><option value='dm'>день месяца</option><option value='w'>неделя</option><option value='m'>месяц</option><option value='y'>год</option></select>
+				&nbsp;
+				<input name='action' value='extended_stat' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
+				<input value='Поиск' type='submit'>
+				&nbsp;&nbsp;
+			</td>
+		</tr>
+		</form>
+	</table>
+	</p>
+	
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
+

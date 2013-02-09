@@ -1,0 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>VirtualPBX - голосовые сообщения</title>
+	<meta http-equiv="pragma" content="no-cache" />
+	<!-- FACEBOOK META TAGS -->
+	<meta name="medium" content="audio" />
+	<meta name="audio_type" content="audio/mpeg" />
+	<link rel="audio_src" href="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% EXT_ID %]/0/[% MSG %].mp3?type=listen;media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %]"/>
+	<meta name="audio_artist" content="[% USER_CREDS.VOICENUMBER %] # [% USER_CREDS.ACCESS_CODE %] / [% CALLERID | html %]" />
+	<meta name="audio_title" content="Сообщение для [% USER_CREDS.ACCESS_CODE | html %]@[% USER_CREDS.VOICENUMBER | html %] # [% EXT_NUMBER | html %] от [% CALLERID | html %], полученно [% DATE | html %]." />
+	<script language="javascript">window.location="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% EXT_ID %]/0/[% MSG %].mp3?type=listen;media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %]"</script>
+</head>
+<body>
+</body>

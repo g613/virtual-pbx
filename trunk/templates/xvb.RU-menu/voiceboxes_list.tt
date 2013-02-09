@@ -1,0 +1,114 @@
+<html>
+<!-- $Id: voiceboxes_list.tt,v 1.1 2013-02-02 19:17:51 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Список внутренних номеров - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<center>
+	<p>
+	<table width='100%' class='logo'>
+		<tr>
+			<td align='center'><h2>Список внутренних номеров</h2></td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='100%' class='list_data' id='d-tbl'>
+		<tr class='list_data'>
+			<th rowspan='2'>Номер</th>
+			<th rowspan='2'>Имя</th>
+			<th rowspan='2'>Тип</th>
+			<th colspan='5'>Опции</th>
+			<th rowspan='2'>Перейти к</th>
+			<th rowspan='2'>Получатель оповещения</th>
+			<th rowspan='2'>Действия</th>
+		</tr>
+		<tr class='list_data'>
+			<th>Ж</th>
+			<th>С</th>
+			<th>П</th>
+			<th>З</th>
+			<th>Г</th>
+		</tr>
+		[% FOREACH vb = VB_LIST %]
+		<tr class='nocolor' id='d-tr-[% vb.ID %]' align='center'>
+			<td align='left'>
+				&nbsp;[% vb.EXT_NUMBER | html %]
+			</td>
+			<td align='left'>
+				<a class='vb_name' href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% vb.NAME | html %]</a>
+			</td>
+			<td align='left'>
+				[% vb.DESCRIPTION | locale_msg %]
+			</td>
+			<td>
+				[% vb.WAITEXTENSION %]
+			</td>
+			<td>
+				[% vb.HIDDEN %]
+			</td>
+			<td>
+				[% vb.DIRECT %]
+			</td>
+			<td>
+				[% vb.PROTECT %]
+			</td>
+			<td>
+				[% vb.GLOBAL %]
+			</td>
+			<td>
+				[% IF vb.NEXTEXTENSION regexp '^(back|repeat|hangup)$' %]
+					[% vb.NEXTEXTENSION | locale_msg %]
+				[% ELSE %]
+					[% vb.NEXTEXTENSION | html %]
+				[% END %]
+			</td>
+			<td align='left'>
+				[% vb.NOTIFYEMAIL | html %]
+			</td>
+			<td nowrap="nowrap">
+				<a href='?action=msg_list&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='просмотр сообщений'><img border='0' src='/xvb/images/msg_list.png' alt='msgs' /></a>&nbsp;
+				<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='редактировать внутренний номер'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>&nbsp;
+				<a href='?action=vb_del&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% vb.ID %]')" title='удалить внутренний номер'><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>
+			</td>
+		</tr>
+		[% END %]
+		<tr><td colspan='10'>&nbsp;</td></tr>
+	</table>
+	</p>
+
+	<script language='JavaScript'>listcolorer('d-tbl');ext_list_build('d-tbl');</script>
+
+	<p>	
+	<table width='100%' class='bottom_hr'>
+		<tr align='left'>
+			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+			<td colspan='10'>
+				&nbsp;
+				[% IF USER_CREDS.ROOT eq '0' %]
+				<input size='6' type='text' name='new_ext'>
+				&nbsp;
+				<input value='Добавить номер' type='submit'>
+				<input name='action' value='vb_add' type='hidden'>
+				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='go' value='list' type='hidden'>
+				[% END %]
+			</td>
+			</form>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

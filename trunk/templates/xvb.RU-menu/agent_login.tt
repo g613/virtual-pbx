@@ -1,0 +1,102 @@
+<html>
+<!-- $Id: agent_login.tt,v 1.1 2013-02-02 19:17:48 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - динамические агенты очереди</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='100%' class='logo'>
+		<tr>
+			<td align='center'><h2>Динамические агенты очереди</h2></td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='100%'class='bottom_hr'>
+		<tr>
+			<td>&nbsp;&nbsp;</td>
+		</tr>
+	</table>
+	</p>
+
+	<p align='center'>
+	<table width='50%' class='half-width'>
+		<form method='post'>
+			<tr>
+				<td>Код доступа :</td>
+				<td><input name='uniq' type='text' value='[% USER_CREDS.ACCESS_CODE %]' size='30'></td>
+			</tr>
+			<tr>
+				<td>Идентификатор очереди :</td>
+				<td><input name='id' type='text' value='[% ROOT_EXT_ID %]' size='30'></td>
+			</tr>
+			<tr>
+				<td>Агент :</td>
+				<td><input name='agent' type='text' value='[% AGENT | html %]' size='30'></td>
+			</tr>
+			<tr>
+				<td>Пароль:</td>
+				<td><input name='pswd' type='password' size='30'></td>
+			</tr>
+			<tr>
+				<td>Новый статус:</td>
+				<td>
+				<select name="status">
+					<option value="1">принимать звонки</option>
+					<option value="0">не принимать звонки</option>
+				</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Причина изменения:</td>
+				<td><input name='desc' type='text' size='30'></td>
+			</tr>
+			<tr>
+				<td>Текущий статус:</td>
+				<td>
+				[% IF STATUS eq '' %]
+					неизвестно
+				[% ELSIF STATUS eq '0' %]
+					не принимать звонки
+				[% ELSE %]
+					принимать звонки
+				[% END %]
+				</td>
+			</tr>
+			<tr>
+				<td colspan='2'>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan='2' align='center'>
+					<input name='action' type='hidden' value='agent_status'>
+					<input type='submit' value='&nbsp;&nbsp;&nbsp;Установить статус&nbsp;&nbsp;&nbsp;'>
+				</td>
+			</tr>
+		</form>
+	</table>
+	</p>
+
+	<p>
+	<table width='100%' class='bottom_hr'>
+		<tr align='center'>
+			<td>&nbsp;
+			[% IF ERROR_STR ne '' %]
+				<span class='error'>[% ERROR_STR | html %]</span>
+			[% END %]
+			</td>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>

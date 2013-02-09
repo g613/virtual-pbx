@@ -1,0 +1,129 @@
+<html>
+<!-- $Id: cdrs_chart.tt,v 1.1 2013-02-02 19:17:48 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
+
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-ru.min.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='100%' class='logo'>
+		<tr>
+			<td align='center'><h2>Графики</h2><h3>( [% CDR_HEADER %] )</h3></td>
+		</tr>
+	</table>
+	
+	<p>
+	<script language='JavaScript'>
+		var time_period = getTimePeriod( 'ru','[% CDR_PERIOD %]' );
+		var period = time_period.period;
+		var group_by = time_period.group_by;
+	</script>
+	[% IF CDR_LIST scalar %]
+	<script language='JavaScript'>
+		var graphx=new Array();
+		[% IF USE_BILLING %]
+		graphx[0] = [ period, 'Звонки', 'Минуты', 'Минуты в среднем', 'Стоимость' ];
+		[% ELSE %]
+		graphx[0] = [ period, 'Звонки', 'Минуты', 'Минуты в среднем' ];
+		[% END %]
+		var ind = 1;
+		[% FOREACH msg = CDR_LIST %]
+			graphx[ind] = [ '[% msg.PERIOD | locale_msg %]', [% msg.CNT | html %], [% msg.DURATION %], [% msg.AVG %], [% msg.USER_COST %] ];
+			ind = ind+1;
+		[% END %]
+		graphit(graphx,200)
+	</script>
+	[% ELSE %]
+		Нет данных
+	[% END %]
+	</p>
+
+	<p>	
+	<table width='100%' class='bottom_hr'>
+		<tr>
+			<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+			<td align='right'>
+				С даты:
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<button type="button">...</button>
+				&nbsp;
+				По дату:
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<button type="button">...</button>
+				<input name='action' value='cdr_list' type='hidden'>
+				&nbsp;
+				Кто:
+				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]' placeholder='звонил'>
+				&nbsp;
+				Кому:
+				<input size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]' placeholder='звонил'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
+				<select name="call_type">
+					<option selected value="" >тип звонка</option>
+					<option value="" >все звонки</option>
+					<option value="incoming">входящий</option>
+					<option value="local">локальный</option>
+					<option value="transit">транзит</option>
+					<option value="internal">внутрений</option>
+					<option value="callback">обратный</option>
+					<option value="callblast">информатор</option>
+					<option value="click2call">click2call</option>
+					<option value="alarmclock">будильник</option>
+					<option value="service">сервисный</option>
+				</select>
+				<input value='Найти' type='submit'>
+				<input name='need_excel' value='Excel' type='submit'>
+				<script language='JavaScript'>
+					document.write("<input name='need_chart' value='Графики' type='submit'>");
+					document.write("<select name='chart_group_period'><option selected value='"+group_by+"'>"+period+"</option><option value='min'>минута</option><option value='h'>час</option><option value='hd'>час дня</option><option value='d'>день</option><option value='dw'>день недели</option><option value='dm'>день месяца</option><option value='w'>неделя</option><option value='m'>месяц</option><option value='y'>год</option><option value='did'>номер назначения</option><option value='cid'>номер звонящего</option><option value='ct'>тип звонка</option></select>");
+				</script>
+				&nbsp;
+			</td>
+			</form>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
+	
