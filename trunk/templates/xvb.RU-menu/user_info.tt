@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.1 2013-02-02 19:17:51 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.4 2013-02-21 12:28:27 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -10,7 +10,7 @@
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 </head>
 
-<body onLoad="XVBInit()">
+<body onLoad="checkfr('id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]&saction=user_info');XVBInit()">
 	<center>
 	<p>
 	<table width='100%' class='logo'>
@@ -218,9 +218,9 @@
 								<td>Текущая музыка вместо гудков</td>
 								<td align='center' nowrap='nowrap'>
 									<a title='прослушать' 
-										onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/0/[% CUSTOM_MOH %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+										onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% CUSTOM_MOH %]?media=mp3;type=listen' )"
 										href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-									&nbsp;<a title='скачать файл' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/0/[% CUSTOM_MOH %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+									&nbsp;<a title='скачать файл' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% CUSTOM_MOH %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 									&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% CUSTOM_MOH %]&type=1&id=[% ROOT_EXT_ID %]' onclick="return xmlhttpDel(this,'ru','d-tr')" title='удалить файл'><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
 								</td>
 							</tr>
