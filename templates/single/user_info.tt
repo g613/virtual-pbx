@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.17 2012-03-17 10:02:57 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.19 2013-01-05 07:28:26 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -142,7 +142,7 @@
 					<td class='ext_pn'>Time Zone:</td>
 					<td>
 						<input size='20' type='text' name='TZ_NAME' value='[% USER_CREDS.TZ_NAME | html %]'>
-						<script lang='JavaScript'>tz_dropdown('[% USER_CREDS.TZ_NAME %]', 'GMT')</script>
+						<script lang='JavaScript'>tz_dropdown('[% USER_CREDS.TZ_NAME %]', 'unknown')</script>
 					</td>
 				</tr>
 				<tr>
@@ -270,8 +270,12 @@
 					<td colspan='2'><h4>Limits:</h4></td>
 				</tr>
 				<tr>
-					<td class='ext_pn'>Maximum messages in extetnsion: </td>
-					<td class='ext_pv'>[% USER_CREDS.MAX_EXT_MSGS %]</td>
+					<td>Maximum all messages: </td>
+					<td align='right'>[% USER_CREDS.MAX_ALL_MSGS %]</td>
+				</tr>
+				<tr>
+					<td>Maximum size of all messages: </td>
+					<td align='right'>[% USER_CREDS.MAX_SIZE_MSGS | fsize %]</td>
 				</tr>
 				<tr>
 					<td class='ext_pn'>Maximum number of CID filters: </td>

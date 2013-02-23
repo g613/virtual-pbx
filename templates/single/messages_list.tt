@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.6 2011-02-28 10:41:58 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.7 2013-02-20 15:41:09 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -97,9 +97,9 @@
 					<tr>
 					<td>
 				[% IF msg.IS_VOICE %]
-						<a title='download media' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+						<a title='download media' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% ELSE %]
-						<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+						<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% END %]
 					</td>
 
@@ -110,7 +110,7 @@
 				[% IF msg.IS_VOICE %]
 					<td>
 						<a title='play' 
-							onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+							onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
 							href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
 					</td>
 				[% END %]

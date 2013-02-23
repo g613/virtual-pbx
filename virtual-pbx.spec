@@ -507,6 +507,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %attr(755,root,root) %CORE_DIR/contrib/utils/icecast-db-init.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/google-voice-search.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/ices2
+%attr(755,root,root) %CORE_DIR/contrib/utils/MemCached.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/rpm/*
 %attr(644,root,root) %CORE_DIR/contrib/utils/rpm/sys_update-data/*
 %CORE_DIR/lib/*
@@ -572,7 +573,6 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %files management
 %attr(644,root,root) %config(noreplace) %{_sysconfdir}/cron.d/virtual-pbx.cron
 %attr(755,root,root) %CORE_DIR/contrib/utils/nodes_admin/*
-%attr(755,root,root) %CORE_DIR/contrib/utils/MemCached.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/db_backup.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/journals_clean.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/cdr_reports.pl

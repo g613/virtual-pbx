@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.64 2012-01-21 21:10:37 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.65 2013-02-20 15:41:08 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -87,15 +87,15 @@
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
 			<td nowrap='nowrap'>
 				[% IF msg.IS_VOICE %]
-					<a title='download media' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]&uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+					<a title='download media' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% ELSE %]
-					<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?uniq=[% USER_CREDS.ACCESS_CODE | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+					<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% END %]
 					<a title='delete message' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% msg.FILE_NAME %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 
 				[% IF msg.IS_VOICE %]
 					<a title='play' 
-						onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/0/[% msg.FILE_NAME %]?media=mp3;uniq=[% USER_CREDS.ACCESS_CODE | html %];type=listen' )"
+						onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
 						href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
 				[% END %]
 				[% IF msg.FILE_TYPE eq '30' %]

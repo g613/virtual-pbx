@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: new_message.tt,v 1.1 2013-02-02 19:17:50 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.2 2013-02-20 15:41:11 gosha Exp $ -->
 <head>
 	<BASE href="[% CGI_SERVER %]">
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -31,13 +31,13 @@
 <!-- /
 [% IF is_voice %]
 </p><p>
-<a href="https://twitter.com/intent/tweet?text=Вы%20должны%20это%20слышать&url=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/msg_download/[% _USER_VBOX.ID | html %]/0/[% file_name | html %].mp3&amp;media=mp3&amp;uniq=[% USER_CREDS.ACCESS_CODE | html %]"><img src="/xvb/images/twitter22.png" alt="Поделиться в twitter" title="Поделиться в twitter" /></a>
+<a href="https://twitter.com/intent/tweet?text=Вы%20должны%20это%20слышать&url=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/msg_download/[% _USER_VBOX.ID | html %]/[% USER_CREDS.ACCESS_CODE %]/[% file_name | html %].mp3%3fmedia=mp3"><img src="/xvb/images/twitter22.png" alt="Поделиться в twitter" title="Поделиться в twitter" /></a>
 &nbsp;
-<a href="http://www.facebook.com/share.php?t=VirtualPBX&u=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/fbshare/[% _USER_VBOX.ID %]/0/[% file_name %]%3funiq=[% USER_CREDS.ACCESS_CODE | html %]&amp;date=[% origdate | html %]&amp;cid=[% callerid | html %]"><img src="/xvb/images/facebook22.png" alt="Поделиться в facebook" title="Подилиться в facebook" /></a>
+<a href="http://www.facebook.com/share.php?t=VirtualPBX&u=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/fbshare/[% _USER_VBOX.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% file_name %]%3fdate=[% origdate | html %]&amp;cid=[% callerid | html %]"><img src="/xvb/images/facebook22.png" alt="Поделиться в facebook" title="Подилиться в facebook" /></a>
 &nbsp;
-<a href="http://connect.mail.ru/share?share_url=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/msg_download/[% _USER_VBOX.ID | html %]/0/[% file_name | html %].mp3&amp;media=mp3&amp;uniq=[% USER_CREDS.ACCESS_CODE | html %]"><img src="/xvb/images/mailru.png" alt="Поделиться в МойМир" title="Поделиться в МойМир" /></a>
+<a href="http://connect.mail.ru/share?share_url=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/msg_download/[% _USER_VBOX.ID | html %]/[% USER_CREDS.ACCESS_CODE %]/[% file_name | html %].mp3%3fmedia=mp3"><img src="/xvb/images/mailru.png" alt="Поделиться в МойМир" title="Поделиться в МойМир" /></a>
 &nbsp;
-<a href="http://vkontakte.ru/share.php?url=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/msg_download/[% _USER_VBOX.ID | html %]/0/[% file_name | html %].mp3&amp;media=mp3&amp;uniq=[% USER_CREDS.ACCESS_CODE | html %]"><img src="/xvb/images/vk.png" alt="Вконтакте" title="Вконтакте" /></a>
+<a href="http://vkontakte.ru/share.php?url=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/msg_download/[% _USER_VBOX.ID | html %]/[% USER_CREDS.ACCESS_CODE %]/[% file_name | html %].mp3%3fmedia=mp3"><img src="/xvb/images/vk.png" alt="Вконтакте" title="Вконтакте" /></a>
 </p><p>
 [% END %]
 / -->

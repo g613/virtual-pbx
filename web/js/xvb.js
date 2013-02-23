@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.62 2012-10-07 14:46:48 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.64 2013-02-21 12:28:27 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -1189,6 +1189,13 @@ function tz_dropdown( tz_name, def_desc ) {
 
 	document.write('</select>');
 	document.getElementsByName('TZ_NAME')[0].className = 'display_none';
+}
+
+function checkfr(newurl) {
+	if (window==window.top) {
+		var url = document.URL.split('?');
+		document.location.href=url[0]+'?action=start&'+newurl;
+	}
 }
 
 /* init */
