@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.82 2013-02-20 15:41:09 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.83 2013-03-07 15:40:01 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -10,7 +10,7 @@
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 </head>
 
-<body onLoad="XVBInit()">
+<body onLoad="breakout_of_frame();XVBInit()">
 	<center>
 	<p>
 	<table width='95%' class='logo'>

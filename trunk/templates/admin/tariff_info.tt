@@ -131,7 +131,7 @@
 		<tr>
 			<th>Event type</th>
 			<th>Event rate</th>
-			<th>Minute rate</th>
+			<th>Unit rate (sec by default)</th>
 		</tr>
 		<tr class='nocolor'>
 			<td>PLAYBACK</td>

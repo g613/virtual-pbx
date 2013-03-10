@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.64 2013-02-21 12:28:27 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.65 2013-03-07 15:40:02 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -1195,6 +1195,12 @@ function checkfr(newurl) {
 	if (window==window.top) {
 		var url = document.URL.split('?');
 		document.location.href=url[0]+'?action=start&'+newurl;
+	}
+}
+
+function breakout_of_frame() {
+	if (top.location != location) {
+		top.location.href = document.location.href ;
 	}
 }
 

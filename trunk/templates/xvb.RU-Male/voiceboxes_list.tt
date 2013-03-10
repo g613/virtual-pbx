@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.24 2012-03-05 19:36:01 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.25 2013-03-07 15:40:02 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список внутренних номеров - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -10,7 +10,7 @@
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 </head>
 
-<body onLoad="XVBInit()">
+<body onLoad="breakout_of_frame();XVBInit()">
 	<center>
 	<center>
 	<p>
