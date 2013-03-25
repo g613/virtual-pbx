@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.28 2012-10-13 20:24:03 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.29 2013-03-11 15:08:01 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -32,14 +32,14 @@
 	<table width='95%' class='top_hr'>
 		<tr align='left'>
 			<td>
-				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
+				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
+				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=peer_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>SIP шлюзы</a>
+				<a href='?action=peer_list&uniq=[% USER_CREDS.UNIQ %]'>SIP шлюзы</a>
 				[% IF USER_CREDS.ALLOW_PHONES %]
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=phone_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Телефоны</a>
+				<a href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>Телефоны</a>
 				[% END %]
 			</td>
 		</tr>
@@ -84,9 +84,8 @@
 			<td align='left'>
 				<input type='hidden' value='[% r.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='route_update' name='action'>
-				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='удалить маршрут' href='?action=route_del&data_id=[% r.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]&id=[% ROOT_EXT_ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% r.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>&nbsp;
+				<a title='удалить маршрут' href='?action=route_del&data_id=[% r.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% r.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>&nbsp;
 				<span class='in_t' id='in_t_id-[% r.DATA_ID %]'>
 				<script language='JavaScript'>
 					writeUpdateLinks( 'сохранить изменения' );
@@ -115,7 +114,6 @@
 			</td>
 			<td>
 				<input type='hidden' value='route_add' name='action'>
-				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<input value='добавить' type='submit'>
 			</td>
@@ -132,17 +130,17 @@
 		<tr align='center'>
 			[% IF USER_CREDS.ALLOW_PHONES %]
 			<td>
-				<a class='headers' href='?action=phone_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Телефоны</a>
+				<a class='headers' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>Телефоны</a>
 			</td>
 			[% END %]
 			<td>
-				<a class='headers' href='?action=peer_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>SIP шлюзы</a>
+				<a class='headers' href='?action=peer_list&uniq=[% USER_CREDS.UNIQ %]'>SIP шлюзы</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
+				<a class='headers' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
+				<a class='headers' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
 			</td>
 		</tr>
 	</table>

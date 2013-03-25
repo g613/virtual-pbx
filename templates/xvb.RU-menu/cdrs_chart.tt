@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.1 2013-02-02 19:17:48 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.2 2013-03-11 15:08:03 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -96,7 +96,6 @@
 				Кому:
 				<input size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]' placeholder='звонил'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				<select name="call_type">
 					<option selected value="" >тип звонка</option>
 					<option value="" >все звонки</option>

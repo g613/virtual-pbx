@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters.tt,v 1.23 2012-06-04 05:58:06 gosha Exp $ -->
+<!-- $Id: cidfilters.tt,v 1.24 2013-03-11 15:08:01 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID фильтры - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -40,7 +40,7 @@
 		<tr align='left'>
 			<td>
 		[% IF USER_CREDS.ROOT eq '0' %]
-				<a href='?action=cid_list&id=[% ROOT_EXT_ID %]&cid_list_type=[% CID_LIST_TYPE %]&cid_type=2&uniq=[% USER_CREDS.UNIQ %]'>Общий фильтр</a>
+				<a href='?action=cid_list&cid_list_type=[% CID_LIST_TYPE %]&cid_type=2&uniq=[% USER_CREDS.UNIQ %]'>Общий фильтр</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=user_info&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
 		[% END %]
@@ -120,7 +120,7 @@
 				<a class='headers' href='?action=user_info&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
 			</td>
 			<td width='35%'>
-				<a class='headers' href='?action=cid_list&id=[% ROOT_EXT_ID %]&cid_list_type=[% CID_LIST_TYPE %]&cid_type=2&uniq=[% USER_CREDS.UNIQ %]'>Общий фильтр</a>
+				<a class='headers' href='?action=cid_list&cid_list_type=[% CID_LIST_TYPE %]&cid_type=2&uniq=[% USER_CREDS.UNIQ %]'>Общий фильтр</a>
 			</td>
 			[% END %]
 		</tr>

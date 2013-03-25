@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.1 2012-12-27 06:00:10 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.3 2013-03-15 19:30:45 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -38,9 +38,9 @@
 	<table width='95%' class='top_hr'>
 		<tr align='left'>
 			<td>
-				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
+				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
+				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
 			</td>
 		</tr>
 	</table>
@@ -56,15 +56,14 @@
 		[% FOREACH c2c = C2C_LIST %]
 		<tr align='center' class='nocolor' id='d-tr-[% c2c.ID %]'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
-			<td>https://[% USER_CREDS.DOWNLOAD_IP %]/c2c?key=[% c2c.SECRET | html %]&ac=[% USER_CREDS.ACCESS_CODE %]&ph=XXX</td>
+			<td align='left'>https://[% USER_CREDS.DOWNLOAD_IP %]/c2c?key=[% c2c.SECRET | html %]&ac=[% USER_CREDS.ACCESS_CODE %]&ph=XXX</td>
 			<td><input class='in_t0' size="20" name='redir_to' type'text' value='[% c2c.EXTENSION | html %]'></td>
 			<td>
 				<input type='hidden' value='[% c2c.ID %]' name='data_id'>
 				<input type='hidden' value='[% c2c.SECRET %]' name='c2c_sec'>
 				<input type='hidden' value='c2c_update' name='action'>
-				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='удалить click2call ссылку' href='?action=c2c_del&data_id=[% c2c.ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% c2c.ID %]')"><img border='0' src='/xvb/images/vb_del.png' alt='удалить' /></a>
+				<a title='удалить click2call ссылку' href='?action=c2c_del&data_id=[% c2c.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% c2c.ID %]')"><img border='0' src='/xvb/images/vb_del.png' alt='удалить' /></a>
 				<span class='addon_info' id='in_t_id-[% c2c.ID %]'>
 				<script language='JavaScript'>
 					writeUpdateLinks( 'сохранить изменения' );
@@ -92,7 +91,6 @@
 			<td><input size="20" name='redir_to' type='text'></td>
 			<td colspan='2'>
 				<input type='hidden' value='c2c_add' name='action'>
-				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<input value='&nbsp;&nbsp;добавить&nbsp;&nbsp;' type='submit'>
 			</td>
@@ -107,10 +105,10 @@
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
 			<td>
-				<a class='headers' href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
+				<a class='headers' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
+				<a class='headers' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
 			</td>
 		</tr>
 	</table>

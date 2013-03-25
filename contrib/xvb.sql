@@ -585,7 +585,7 @@ create table VPBX_SIPPEERS (
 	dtmfmode  ENUM('rfc2833','info','shortinfo','inband','auto') not null DEFAULT 'auto',
 
 	context VARCHAR(50) NOT NULL DEFAULT 'xvb-phones',
-	setvar  VARCHAR(100) DEFAULT NULL,
+	setvar  VARCHAR(255) DEFAULT NULL,
 
 	defaultuser varchar(80) NOT NULL default '',
 	fullcontact varchar(80) NOT NULL DEFAULT '',

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.7 2012-08-13 14:25:55 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.8 2013-03-11 15:08:01 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Телефонная книга - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -32,17 +32,17 @@
 	<table width='95%' class='top_hr'>
 		<tr align='left'>
 			<td>
-				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
+				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список звонков</a>
+				<a href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>Список звонков</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
+				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
 			</td>
 			<td align='right'>
-				<a title='в формате excel' href='?action=pbook_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]&format=excel&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
+				<a title='в формате excel' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]&format=excel&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
 				&nbsp;
 				&nbsp;
-				<a href='?action=pbook_del&id=[% ROOT_EXT_ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все данные'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>
+				<a href='?action=pbook_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все данные'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>
 				&nbsp;
 			</td>
 		</tr>
@@ -65,7 +65,6 @@
 		<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
 		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 			<input type='hidden' name='action' value='pbook_update'>
-			<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 			<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
 			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 
@@ -76,7 +75,7 @@
 			<td><input class='in_t0' size='25' name='description' type='text' value='[% param.DESCRIPTION | html %]'></td>
 	
 			<td align='left' nowrap='nowrap'>
-				<a href='?action=pbook_del&id=[% ROOT_EXT_ID %]&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить элемент'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+				<a href='?action=pbook_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить элемент'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
 				<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
 					<script language='JavaScript'>
 						writeUpdateLinks( 'сохранить изменения' );
@@ -90,7 +89,6 @@
 		<tr align='center' id='submit_row'>
 		<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 			<input type='hidden' name='action' value='pbook_add'>
-			<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 			
 			<td><input size='18' name='fn' type='text'></td>
@@ -111,7 +109,6 @@
 			<td align='left' colspan='2'>
 				<form method="post" action="[% CGI_URL %]" onSubmit='return true'>
 					<input type='hidden' name='action' value='pbook_list'>
-					<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 					<select name='format'>
 						<option value="polycom">Polycom конфигурация</option>
@@ -128,7 +125,6 @@
 				<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 					<input type='file' name='config_file'>
 					<input type='hidden' name='section' value='PBOOK'>
-					<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 					<input type='hidden' name='action' value='restore'>
 					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 					<input name='is_excel' type='submit' value='Импорт из CSV'>
@@ -144,13 +140,13 @@
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
 			<td width='35%'>
-				<a class='headers' href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
+				<a class='headers' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
 			</td>
 			<td width='30%'>
-				<a class='headers' href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список звонков</a>
+				<a class='headers' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>Список звонков</a>
 			</td>
 			<td width='35%'>
-				<a class='headers' href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
+				<a class='headers' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
 			</td>
 		</tr>
 	</table>

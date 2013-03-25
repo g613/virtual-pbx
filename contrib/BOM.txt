@@ -355,3 +355,6 @@ euros : "euros"
 #
 cent : "cent"
 cents : "cents"
+#
+oos: "this number out of service now"
+

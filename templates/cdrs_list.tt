@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.34 2012-12-16 15:57:18 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.35 2013-03-11 15:07:57 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -39,11 +39,11 @@
 	<table width='95%' class='top_hr'>
 		<tr align='left'>
 			<td>
-				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=j_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
+				<a href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
 			</td>
 		</tr>
 	</table>
@@ -63,14 +63,14 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='6'>
-				<a title='previous page' href='?action=cdr_list&id=[% ROOT_EXT_ID %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=cdr_list&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
 
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
-			<td><a title='call detail' href='?action=act_list&call_id=[% msg.CALL_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
+			<td><a title='call detail' href='?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
 			<td>[% msg.CALLER_ID | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td align='right'>[% msg.COST %] ([% msg.DESCRIPTION %])</td>
@@ -82,7 +82,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='6'>
-				<a title='next page' href='?action=cdr_list&id=[% ROOT_EXT_ID %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+				<a title='next page' href='?action=cdr_list&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
 			</td>
 		[% ELSE %]
 			<td colspan='6'>&nbsp;</td>
@@ -99,14 +99,14 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='5'>
-				<a title='previous page' href='?action=cdr_list&id=[% ROOT_EXT_ID %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=cdr_list&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
 
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
-			<td><a title='call detail' href='?action=act_list&call_id=[% msg.CALL_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
+			<td><a title='call detail' href='?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
 			<td>[% msg.CALLER_ID | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td>[% msg.CALLED_ID | html %]</td>
@@ -117,7 +117,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='5'>
-				<a title='next page' href='?action=cdr_list&id=[% ROOT_EXT_ID %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+				<a title='next page' href='?action=cdr_list&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
 			</td>
 		[% ELSE %]
 			<td colspan='5'>&nbsp;</td>
@@ -174,7 +174,6 @@
 				Called:
 				<input size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				<select name="call_type">
 					<option value="" selected>call type</option>
 					<option value="" >all calls</option>

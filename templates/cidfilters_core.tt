@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters_core.tt,v 1.23 2012-07-16 21:14:50 gosha Exp $ -->
+<!-- $Id: cidfilters_core.tt,v 1.24 2013-03-11 15:07:58 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID filters - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -39,14 +39,14 @@
 	<table width='95%' class='top_hr'>
 		<tr align='left'>
 			<td>
-				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
+				<a href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
 			</td>
 			<td align='right'>
-				<a title='get excel table' href='?action=cid_list&id=[% ROOT_EXT_ID %]&cid_list_type=[% CID_LIST_TYPE %]&cid_type=2&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;
+				<a title='get excel table' href='?action=cid_list&cid_list_type=[% CID_LIST_TYPE %]&cid_type=2&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;
 			</td>
 		</tr>
 	</table>
@@ -64,7 +64,6 @@
 		<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
 		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 			<input type='hidden' name='action' value='cid_update'>
-			<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 			<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
 			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 
@@ -72,7 +71,7 @@
 			<td><input class='in_t0' size='60' name='description' type='text' value='[% param.DESCRIPTION | html %]'></td>
 	
 			<td align='left' nowrap='nowrap'>
-				<a href='?action=cid_del&id=[% ROOT_EXT_ID %]&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete CID item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>&nbsp;
+				<a href='?action=cid_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete CID item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>&nbsp;
 				<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
 					<script language='JavaScript'>
 						writeUpdateLinks( 'save changes' );
@@ -87,7 +86,6 @@
 		<!--<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpAdd(this,"d-tbl","submit_row","")'>-->
 		<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 			<input type='hidden' name='action' value='cid_add'>
-			<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 			<input type='hidden' name='cid_list_type' value='[% CID_LIST_TYPE %]'>
 			<input type='hidden' name='cid_type' value='2'>
@@ -112,13 +110,13 @@
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
 			<td width='35%'>
-				<a class='headers' href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+				<a class='headers' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
 			</td>
 			<td width='30%'>
-				<a class='headers' href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
+				<a class='headers' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
 			</td>
 			<td width='35%'>
-				<a class='headers' href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+				<a class='headers' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
 			</td>
 		</tr>
 	</table>

@@ -32,14 +32,14 @@
 	<table width='95%' class='top_hr'>
 		<tr align='left'>
 			<td>
-				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=peer_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>SIP Peers</a>
+				<a href='?action=peer_list&uniq=[% USER_CREDS.UNIQ %]'>SIP Peers</a>
 				[% IF USER_CREDS.ALLOW_PHONES %]
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=phone_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Phones</a>
+				<a href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>Phones</a>
 				[% END %]
 			</td>
 		</tr>
@@ -84,9 +84,8 @@
 			<td align='left'>
 				<input type='hidden' value='[% r.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='route_update' name='action'>
-				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='delete route' href='?action=route_del&data_id=[% r.DATA_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% r.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>&nbsp;
+				<a title='delete route' href='?action=route_del&data_id=[% r.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% r.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>&nbsp;
 				<span class='in_t' id='in_t_id-[% r.DATA_ID %]'>
 				<script language='JavaScript'>
 					writeUpdateLinks( 'save changes' );
@@ -115,7 +114,6 @@
 			</td>
 			<td>
 				<input type='hidden' value='route_add' name='action'>
-				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<input value='create' type='submit'>
 			</td>
@@ -132,17 +130,17 @@
 		<tr align='center'>
 			[% IF USER_CREDS.ALLOW_PHONES %]
 			<td>
-				<a class='headers'  href='?action=phone_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Phones</a>
+				<a class='headers'  href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>Phones</a>
 			</td>
 			[% END %]
 			<td>
-				<a class='headers' href='?action=peer_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>SIP Peers</a>
+				<a class='headers' href='?action=peer_list&uniq=[% USER_CREDS.UNIQ %]'>SIP Peers</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+				<a class='headers' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+				<a class='headers' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
 			</td>
 		</tr>
 	</table>

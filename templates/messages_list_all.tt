@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.47 2013-02-20 15:41:08 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.48 2013-03-11 15:07:58 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -39,9 +39,9 @@
 		<tr align='left'>
 			<td>
 		[% IF USER_CREDS.ROOT eq '0' %]
-				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
+				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=msg_cleanup&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to delete all messages?')">Delete messages</a>
+				<a href='?action=msg_cleanup&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to delete all messages?')">Delete messages</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 		[% END %]
 				<a href='?action=get_rss_all&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Rss</a>
@@ -173,7 +173,6 @@
 				<button type="button">...</button>
 				<input name='action' value='msg_list_all' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				&nbsp;
 				<select name="msg_type">
 					<option value="" selected>Message type</option>

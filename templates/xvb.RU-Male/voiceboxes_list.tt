@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.25 2013-03-07 15:40:02 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.26 2013-03-11 15:08:02 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список внутренних номеров - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -34,14 +34,14 @@
 		<tr align='left'>
 			<td>
 	[% IF USER_CREDS.ROOT eq '0' %]
-				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
+				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=j_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>События</a>
+				<a href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>События</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список звонков</a>
+				<a href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>Список звонков</a>
 	[% END %]
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=msg_list_all&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Все сообщения</a>
+				<a href='?action=msg_list_all&uniq=[% USER_CREDS.UNIQ %]'>Все сообщения</a>
 			</td>
 		</tr>
 	</table>
@@ -125,7 +125,6 @@
 				&nbsp;
 				<input value='Добавить номер' type='submit'>
 				<input name='action' value='vb_add' type='hidden'>
-				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='go' value='list' type='hidden'>
 				[% END %]
