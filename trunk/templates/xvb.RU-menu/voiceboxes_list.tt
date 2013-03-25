@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.3 2013-02-21 12:28:27 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.4 2013-03-11 15:08:04 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список внутренних номеров - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -10,7 +10,7 @@
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 </head>
 
-<body onLoad="checkfr('id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]&saction=vb_list');XVBInit()">
+<body onLoad="checkfr('uniq=[% USER_CREDS.UNIQ %]&saction=vb_list');XVBInit()">
 	<center>
 	<center>
 	<p>
@@ -99,7 +99,6 @@
 				&nbsp;
 				<input value='Добавить номер' type='submit'>
 				<input name='action' value='vb_add' type='hidden'>
-				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='go' value='list' type='hidden'>
 				[% END %]

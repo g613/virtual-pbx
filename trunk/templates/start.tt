@@ -1,10 +1,10 @@
 <html>
-<!-- $Id: start.tt,v 1.1 2013-02-02 19:17:47 gosha Exp $ -->
+<!-- $Id: start.tt,v 1.2 2013-03-11 15:07:59 gosha Exp $ -->
 <head>
 	[% IF SACTION %]
-    <META HTTP-EQUIV="refresh" CONTENT="0; URL=?action=[% SACTION %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]"> 
+    <META HTTP-EQUIV="refresh" CONTENT="0; URL=?action=[% SACTION %]&uniq=[% USER_CREDS.UNIQ %]"> 
 	[% ELSE %]
-    <META HTTP-EQUIV="refresh" CONTENT="0; URL=?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]"> 
+    <META HTTP-EQUIV="refresh" CONTENT="0; URL=?action=vb_list&uniq=[% USER_CREDS.UNIQ %]"> 
 	[% END %]
 </head>
 <body></body>

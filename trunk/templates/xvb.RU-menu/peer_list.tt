@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.1 2013-02-02 19:17:50 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.2 2013-03-11 15:08:03 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP шлюзы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -101,9 +101,8 @@
 			<td align='left'>
 				<input type='hidden' value='[% p.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='peer_update' name='action'>
-				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='удалить шлюз' href='?action=peer_del&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]&id=[% ROOT_EXT_ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% p.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>&nbsp;
+				<a title='удалить шлюз' href='?action=peer_del&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% p.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>&nbsp;
 				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
 				<script language='JavaScript'>
 					writeUpdateLinks( 'сохранить изменения' );
@@ -173,7 +172,6 @@
 			[% END %]
 			<td>
 				<input type='hidden' value='peer_add' name='action'>
-				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<input value='добавить' type='submit'>
 			</td>

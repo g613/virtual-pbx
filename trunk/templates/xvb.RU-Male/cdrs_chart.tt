@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.20 2012-12-16 15:57:18 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.21 2013-03-11 15:08:00 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -38,13 +38,13 @@
 	<table width='95%' class='top_hr'>
 		<tr align='left'>
 			<td>
-				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
+				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=j_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>События</a>
+				<a href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>События</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список звонков</a>
+				<a href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>Список звонков</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
+				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
 			</td>
 		</tr>
 	</table>
@@ -120,7 +120,6 @@
 				Кому:
 				<input size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]' placeholder='звонил'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				<select name="call_type">
 					<option selected value="" >тип звонка</option>
 					<option value="" >все звонки</option>

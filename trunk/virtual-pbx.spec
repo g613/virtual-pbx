@@ -507,6 +507,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %attr(755,root,root) %CORE_DIR/contrib/utils/icecast-db-init.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/google-voice-search.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/ices2
+%attr(755,root,root) %CORE_DIR/contrib/utils/modtest.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/MemCached.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/rpm/*
 %attr(644,root,root) %CORE_DIR/contrib/utils/rpm/sys_update-data/*

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: macros_list.tt,v 1.9 2012-08-08 10:44:32 gosha Exp $ -->
+<!-- $Id: macros_list.tt,v 1.10 2013-03-11 15:08:01 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Макросы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -32,9 +32,9 @@
 	<table width='95%' class='top_hr'>
 		<tr align='left'>
 			<td>
-				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
+				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
+				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
 			</td>
 		</tr>
 	</table>
@@ -60,9 +60,8 @@
 			<td>
 				<input type='hidden' value='[% m.ID %]' name='data_id'>
 				<input type='hidden' value='macros_update' name='action'>
-				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='удалить макрос' href='?action=macros_del&data_id=[% m.ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% m.ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>
+				<a title='удалить макрос' href='?action=macros_del&data_id=[% m.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% m.ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>
 				<span class='addon_info' id='in_t_id-[% m.ID %]'>
 				<script language='JavaScript'>
 					writeUpdateLinks( 'сохранить изменения' );
@@ -80,7 +79,6 @@
 			<td><input size="35" name='DATA' type='text'></td>
 			<td>
 				<input type='hidden' value='macros_add' name='action'>
-				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<input value='&nbsp;&nbsp;добавить&nbsp;&nbsp;' type='submit'>
 			</td>
@@ -96,10 +94,10 @@
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
 			<td>
-				<a class='headers' href='?action=vb_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
+				<a class='headers' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Список номеров</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
+				<a class='headers' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
 			</td>
 		</tr>
 	</table>
