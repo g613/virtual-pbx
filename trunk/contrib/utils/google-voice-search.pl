@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 ########################################################################
 #
-# $Id: google-voice-search.pl,v 1.1 2011-04-13 06:06:39 gosha Exp $
+# $Id: google-voice-search.pl,v 1.2 2013-03-30 19:29:27 gosha Exp $
 #
-# Copyright (c) 2011 Okunev Igor <igor[at]prv.mts-nn.ru>
+# Copyright (c) 2011 - 2013 Okunev Igor <igor[at]prv.mts-nn.ru>
 #
 ########################################################################
 
@@ -37,9 +37,9 @@ unless ( $file =~ /\.flac$/i ) {
 }
 
 my $file_info = `file $file`;
-
-if ( $file_info =~ /FLAC audio.*\s(\d+)\s*kHz/ ) {
-	$file_info = $1.'000';
+ 
+if ( $file_info =~ /FLAC audio.*\s([\d.]+)\s*kHz/ ) {
+	$file_info = $1 * 1000;
 } else {
 	unlink $file if $use_converter;
 	die "Incorrect FLAC file: $file_info\n";
