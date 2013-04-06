@@ -2190,6 +2190,8 @@ insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('voip.mtt.ru','YouMag
 
 insert into VPBX_DIDS_ATTR(DID,LANG_ID) VALUES( '613', 0 );
 
+insert into VPBX_SIPPEERS(DATA_ID,name,context,SUBSCR_ID,DESCRIPTION,PEER_TYPE) values(-1,'%SYSTEM%','default',0,'system',1);
+
 -- OPENSER REGISTRAR
 create or replace view subscriber  ( id, username, domain, password, email_address, ha1, ha1b, rpid )
 	as
