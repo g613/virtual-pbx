@@ -73,7 +73,7 @@
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td align='right'>[% msg.COST %] ([% msg.DESCRIPTION %])</td>
 			<td>[% msg.CALLED_ID | html %]</td>
-			<td>[% msg.ACCESS_CODE | html %]</td>
+			<td><a title='edit user settings' href='?ac=[% msg.ACCESS_CODE %]&action=user_info'>[% msg.ACCESS_CODE %]</a></td>
 			<td>[% msg.CALL_TYPE | html %]</td>
 		</tr>
 		[% END %]
