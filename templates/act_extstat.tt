@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.11 2012-03-06 09:54:06 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.13 2013-05-05 18:17:03 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -77,6 +77,16 @@
 			ExtStatdrawChart1('STATUS','All calls / disposition',['Status','Count']);
 			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Unanswered calls / wait time (sec)',['Wait time','Count']);
 			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Answered calls / wait time (sec)',['Wait time','Count']);
+		}
+		[% END %]
+		[% IF VBOX_PREF.TYPE eq '31' %]
+		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
+		google.setOnLoadCallback(drawAllChart);
+		function drawAllChart() {
+			ExtStatdrawChart1('ALL_STATUS','All calls / status',['Status','Count']);
+			ExtStatdrawChart1('STATUS','All calls / success or failed',['Status','Count']);
+			ExtStatdrawChart1('GOOD_ATTEMPT','Successful calls / call attempt',['Attempt','Count']);
+			ExtStatdrawChart1('DURATION','Answered calls / duration (minutes)',['Duration','Count']);
 		}
 		[% END %]
 		var time_period = getTimePeriod( 'en','[% CDR_PERIOD %]' );
@@ -163,9 +173,6 @@
 				<script language='Javascript'>
 					document.write( "<option selected value='"+ group_by +"'>"+ period +"</option>" );
 				</script>
-				<noscript>
-				<option value=''>group by</option>
-				</noscript>
 				<option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='y'>year</option></select>
 				&nbsp;
 				<input name='action' value='extended_stat' type='hidden'>
@@ -479,62 +486,55 @@
 		</tr>
 	</table>
 	[% END %]
+	[% IF VBOX_PREF.TYPE eq '31' %]
+	<table width='95%' border='0' align='center'>
+		<tr><td colspan='2' align='center'><br><h4>All calls / status</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_ALL_STATUS"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_ALL_STATUS_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2' align='center'><br><h4>All calls / success or failed</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_STATUS"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_STATUS_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td colspan='2' align='center'><br><h4>Successful calls / call attempt</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_GOOD_ATTEMPT"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_GOOD_ATTEMPT_PRC"></div>
+			</td>
+		</tr>
+		<tr><td colspan='2' align='center'><br><h4>Call duration</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_DURATION"></div>
+			</td>
+			<td>
+				<div id="chart_DURATION_PRC"></div>
+			</td>
+		</tr>
+	</table>
+	[% END %]
 	</p>
 
 	<p>
-	<table width='95%' class='bottom_hr'>
-		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-		<tr align='right'>
-			<td width='100%'>
-				From date:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<button type="button">...</button>
-				&nbsp;
-				To date:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<button type="button">...</button>
-				&nbsp;
-				Caller ID:
-				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
-				<select name='chart_group_period'>
-				<script language='JavaScript'>
-					document.write( "<option selected value='"+ group_by +"'>"+ period +"</option>" );
-				</script>
-				<noscript><option value=''>group by</option></noscript>
-				<option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='y'>year</option></select>
-				&nbsp;
-				<input name='action' value='extended_stat' type='hidden'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
-				<input value='Search' type='submit'>
-				&nbsp;&nbsp;
-			</td>
+	<table width='95%'>
+		<tr class='list_data'>
+			<td>&nbsp;</td>
 		</tr>
-		</form>
 	</table>
 	</p>
 	

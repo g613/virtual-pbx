@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.243 2013-03-11 15:07:59 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.247 2013-05-08 11:59:39 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -686,7 +686,7 @@
 					<td>RetryDial interval (sec): </td>
 					<td>
 						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
-						( 0-120, 0 - disable )
+						( 0-120 )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -2026,6 +2026,111 @@
 				</tr>
 				[% END %]
 
+				[% IF VBOX_PREF.TYPE eq '31' %]
+				<tr class='addon_info'>
+					<td>Ring timeout (sec): </td>
+					<td>
+						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
+						( 1 ring approximately equals 4 seconds )
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Music on hold:</td>
+					<td>
+						<select name='MOH_ID'>
+							[% FOREACH moh = MOH %]
+								[% IF VBOX_PREF.MOH_ID eq moh.ID %]
+									<option value="[% moh.ID | html %]" selected>[% moh.DESCRIPTION | html %]</option>
+								[% ELSE %]
+									<option value="[% moh.ID | html %]">[% moh.DESCRIPTION | html %]</option>
+								[% END %]
+							[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Confirm calls: </td>
+					<td>
+						[% IF VBOX_PREF.CONFIRM_CALL %]
+							<input name="CONFIRM_CALL" type="checkbox" checked>
+						[% ELSE %]
+							<input name="CONFIRM_CALL" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Say calledid: </td>
+					<td>
+						[% IF VBOX_PREF.SAY_CALLEDID %]
+							<input name="SAY_CALLEDID" type="checkbox" checked>
+						[% ELSE %]
+							<input name="SAY_CALLEDID" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr>
+					<td>Record calls: </td>
+					<td>
+						[% IF VBOX_PREF.RECORD_CALL %]
+							<input name="RECORD_CALL" type="checkbox" checked>
+						[% ELSE %]
+							<input name="RECORD_CALL" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Send attachment: </td>
+					<td>
+					[% IF VBOX_PREF.SEND_ATTACH %]
+						<input name="SEND_ATTACH" type="checkbox" checked>
+					[% ELSE %]
+						<input name="SEND_ATTACH" type="checkbox">
+					[% END %]
+				</td>
+				<tr class='addon_info'>
+					<td>Keep message on the server: </td>
+					<td>
+					[% IF VBOX_PREF.KEEP_MSG %]
+						<input name="KEEP_MSG" type="checkbox" checked>
+					[% ELSE %]
+						<input name="KEEP_MSG" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Send notify to: </td>
+					<td>
+						<select name="SENDNOTIFYEMAIL">
+						[% FOREACH ca = NOTIFY_TYPES %]
+							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
+							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
+							[% ELSE %]
+							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
+							[% END %]
+						[% END %]
+						</select>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>RetryDial interval (minutes): </td>
+					<td>
+						<input size='4' type='text' name='RETRYDIAL_INTERVAL' value='[% VBOX_PREF.RETRYDIAL_INTERVAL | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>RetryDial loops: </td>
+					<td>
+						<input size='4' type='text' name='RETRYDIAL_LOOPS' value='[% VBOX_PREF.RETRYDIAL_LOOPS | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>URL</td>
+					<td>
+						<input size='30' type='text' name='URL' value='[% VBOX_PREF.URL | html %]'>
+					</td>
+				</tr>
+				[% END %]
+
 				<tr><td colspan='2'>&nbsp;</td></tr>
 				<tr>
 					<td align='center'>
@@ -2297,6 +2402,59 @@
 								<td>[% param.HOLD_TIME | duration_str | html %]</td>
 							</tr>
 							[% END %]
+						</table>
+						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='2'>&nbsp;</td>
+					</tr>
+					[% END %]
+					[% END %]
+					
+					[% IF VBOX_PREF.TYPE eq '31' %]
+					[% IF BLAST_STAT %]
+					<tr>
+						<td align='left'><h4>MultiDialout statistics:</h4></td>
+					</tr>
+					<tr>
+						<td colspan='2' align='center' width='100%'>
+						<table width='100%' class='stat_data' id='addon-data'>
+							<tr class='list_addon_data'>
+								<th>Call Status</th>
+								<th>Count</th>
+								<th>Percent</th>
+							</tr>
+							<tr align='right' class='nocolor'>
+								<td>Success</td>
+								<td>[% BLAST_STAT.success | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.success_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right' class='nocolor'>
+								<td>Failed</td>
+								<td>[% BLAST_STAT.failed | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.failed_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right' class='nocolor'>
+								<td>Wait redial</td>
+								<td>[% BLAST_STAT.failedwait | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.failedwait_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right' class='nocolor'>
+								<td>Wait</td>
+								<td>[% BLAST_STAT.wait | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.wait_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right' class='nocolor'>
+								<td>Expired</td>
+								<td>[% BLAST_STAT.expired | html %]&nbsp;</td>
+								<td>[% BLAST_STAT.expired_prc | bill_float | html %] %&nbsp;</td>
+							</tr>
+							<tr align='right' class='resume'>
+								<td>All records</td>
+								<td>[% BLAST_STAT.all | html %]&nbsp;</td>
+								<td>100.00 %&nbsp;</td>
+							</tr>
 						</table>
 						<script language='JavaScript'>listcolorer( 'addon-data' );</script>
 						</td>
@@ -2933,6 +3091,115 @@
 						</tr>
 					</table>
 					<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+				</td>
+			</tr>
+			[% END %]
+
+			[% IF VBOX_PREF.TYPE eq '31' %]
+			<tr>
+				<td colspan='2' align='left'><h4>MultiDailout data ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ) :</h4></td>
+				<td align='right'>
+					<a title='get excel table' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
+					&nbsp;&nbsp;&nbsp;
+					<a href='?action=multidialout_reset&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='Reset status to wait for ALL multidialout items'><img border='0' src='/xvb/images/msg_status.png' alt='reset all items' /></a>
+					&nbsp;&nbsp;&nbsp;
+					<a href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL multidialout items'><img border='0' src='/xvb/images/msg_delete.png' alt='del all items' /></a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan='3' align='center'>
+				<table width='100%' class='addon_data' id='d-tbl'>
+					<tr class='list_addon_data'>
+						<th>Handle time</th>
+						<th>Name</th>
+						<th>Phone Number(s)</th>
+						<th>User vars</th>
+						<th>Status</th>
+						<th>Duration</th>
+						<th>Attempt</th>
+						<th>Actions</th>
+					</tr>
+					[% IF MSG_PREV ne '' %]
+					<tr>
+						<td align='left' colspan='8'>
+							<a title='previous page' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+						</td>
+					</tr>
+					[% END %]
+					[% FOREACH param = VB_DATA %]
+					<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
+						<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+						<input type='hidden' name='action' value='multidialout_update'>
+						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+						<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
+						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+						<td>
+							[% param.PROCESS_DATE | html %]
+						</td>
+						<td><input class='in_t0' size='20' type='text' name='name' value='[% param.NAME | html %]'></td>
+						<td><input class='in_t0' size='33' type='text' name='pn' value='[% param.PHONE_NUMBER | html %]'></td>
+						<td><input class='in_t0' size='25' type='text' name='uv' value='[% param.USER_VARS | html %]'></td>
+						<td align='left'>
+							[% IF param.CALL_STATUS contain 'success' %]
+								<a class='success' href='?action=act_list&call_id=[% param.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
+							[% ELSIF param.CALL_STATUS eq 'wait' %]
+								wait	
+							[% ELSIF param.CALL_STATUS %]
+								<a class='error' href='?action=act_list&call_id=[% param.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
+							[% ELSE %]
+								unknown
+							[% END %]
+						</td>
+						<td>[% param.DURATION | duration_str | html %]</td>
+						<td>[% param.ATTEMPT %]</td>
+						<td align='left' nowrap='nowrap'>
+							<a href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>&nbsp;
+							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+								<script language='JavaScript'>
+									writeUpdateLinks( 'save changes' );
+								</script>
+								<noscript><input value='change' type='submit'></noscript>
+							</span>
+						</td>
+						</form>
+					</tr>
+					[% END %]
+					[% IF MSG_NEXT ne '' %]
+					<tr>
+						<td align='right' colspan='8'>
+							<a title='next page' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+						</td>
+					</tr>
+					[% END %]
+					<tr align='center'>
+						<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+						<input type='hidden' name='action' value='multidialout_add'>
+						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+						<td>&nbsp;</td>
+						<td><input type='text' name='name' value='' size='20'></td>
+						<td><input size='33' type='text' name='pn' value=''></td>
+						<td><input size='25' type='text' name='uv' value=''></td>
+						<td colspan='4' align='center'>
+							<input type='submit' value=' add multidialout item '>
+						</td>
+						</form>
+					</tr>
+					<tr><td colspan='8'>&nbsp;</td></tr>
+					<tr id='csv-import'>
+						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+						<td colspan='3'>&nbsp;</td>
+						<td colspan='5' align='right'>
+							<input type='file' name='config_file'>
+							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='action' value='ext_restore'>
+							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+							<input name='is_excel' type='submit' value='Append data from CSV'>
+						</td>
+						</form>
+					</tr>
+				</table>
+				<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 				</td>
 			</tr>
 			[% END %]

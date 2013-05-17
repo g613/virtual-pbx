@@ -79,7 +79,8 @@
 			<td>[% gr.SUB_SOUND_DIR | html %]</td>
 			<td>[% gr.SUB_TEMPLATE_DIR | html %]</td>
 			<td>
-				<a href='?action=group_del&group_id=[% gr.GROUP_ID %]&from=[% MSG_FROM %]&f_group=[% F_GROUP | html %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+				<a title='clone group' href='?action=clone&tname=GROUP&id=[% gr.GROUP_ID %]&fname=GROUP_NAME&fid=GROUP_ID&newaction=group_info%26group_id'><img border='0'  src='/xvb/images/clone.png' alt='clone' /></a>&nbsp;&nbsp;
+				<a title='delete group' href='?action=group_del&group_id=[% gr.GROUP_ID %]&from=[% MSG_FROM %]&f_group=[% F_GROUP | html %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
 			</form>
 		</tr>

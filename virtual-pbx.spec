@@ -111,6 +111,7 @@ Virtual-pbx application include:
 		GoogleCalendar - Events: reads events via TTS + confirmation / cancellation of events.
 		Paging / Intercom
 		Play DTMF Tones
+		MultiDialout
 
 ####################################################
 #
@@ -506,6 +507,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %attr(755,root,root) %CORE_DIR/contrib/utils/check_updates.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/icecast-db-init.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/google-voice-search.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/dashboard.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/ices2
 %attr(755,root,root) %CORE_DIR/contrib/utils/modtest.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/MemCached.pl

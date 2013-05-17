@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.1 2013-02-02 19:17:48 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.3 2013-05-05 18:17:04 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -14,7 +14,7 @@
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
-	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-ru.min.js"></script>
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	
 	<script language="javascript">
@@ -79,6 +79,16 @@
 			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Отвеченные звонки / время ожидания (сек)',['Время ожидания','Количество']);
 		}
 		[% END %]
+		[% IF VBOX_PREF.TYPE eq '31' %]
+		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
+		google.setOnLoadCallback(drawAllChart);
+		function drawAllChart() {
+			ExtStatdrawChart1('ALL_STATUS','Все звонки / статус звонка',['Статус','Количество']);
+			ExtStatdrawChart1('STATUS','Все звонки / успешные или нет',['Статус','Количество']);
+			ExtStatdrawChart1('DURATION','Отвеченные звонки / продолжительность (минуты)',['Продолжительность','Количество']);
+			ExtStatdrawChart1('GOOD_ATTEMPT','Удачные звонки / попытка звонка',['Номер попытки','Количество']);
+		}
+		[% END %]
 		var time_period = getTimePeriod( 'ru','[% CDR_PERIOD %]' );
 		var period = time_period.period;
 		var group_by = time_period.group_by;
@@ -91,7 +101,7 @@
 	<table width='100%' class='logo'>
 		<tr>
 			<td align='center'><h2>Внутренний номер #[% VBOX_PREF.EXT_NUMBER | html %] расширенная статистика</h2><h3>( [% CDR_HEADER %] 
-			<script language='JavaScript'>
+			<script language='javascript'>
 				document.write( ', период группировки: ' + period );
 			</script>
 			)</h3></td>
@@ -155,7 +165,6 @@
 				<script language='Javascript'>
 					document.write( "<option selected value='"+ group_by +"'>"+ period +"</option>" );
 				</script>
-				<noscript><option value=''>выберите</option></noscript>
 				<option value='min'>минута</option><option value='h'>час</option><option value='hd'>час дня</option><option value='d'>день</option><option value='dw'>день недели</option><option value='dm'>день месяца</option><option value='w'>неделя</option><option value='m'>месяц</option><option value='y'>год</option></select>
 				&nbsp;
 				<input name='action' value='extended_stat' type='hidden'>
@@ -466,64 +475,54 @@
 		</tr>
 	</table>
 	[% END %]
+	[% IF VBOX_PREF.TYPE eq '31' %]
+	<table width='100%' border='0' align='center'>
+		<tr><td colspan='2' align='center'><br><h4>Все звонки / статус</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_ALL_STATUS"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_ALL_STATUS_PRC"></div>
+			</td>
+		</tr>
+		
+		<tr><td colspan='2' align='center'><br><h4>Все звонки / удачные или нет</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_STATUS"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_STATUS_PRC"></div>
+			</td>
+		</tr>
+		<tr><td colspan='2' align='center'><br><h4>Успешные звонки / попытка звонка</h4></td></tr>
+		<tr>
+			<td width='60%'>
+				<div id="chart_GOOD_ATTEMPT"></div>
+			</td>
+			<td width='40%'>
+				<div id="chart_GOOD_ATTEMPT_PRC"></div>
+			</td>
+		</tr>
+		<tr><td colspan='2' align='center'><br><h4>Продолжительность звонков</h4></td></tr>
+		<tr>
+			<td>
+				<div id="chart_DURATION"></div>
+			</td>
+			<td>
+				<div id="chart_DURATION_PRC"></div>
+			</td>
+		</tr>
+	</table>
+	[% END %]
 	</p>
 
 	<p>
-	<table width='100%' class='bottom_hr'>
-		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-		<tr align='right'>
-			<td width='100%'>
-				С даты:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<button type="button">...</button>
-				&nbsp;
-				По дату:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<button type="button">...</button>
-				&nbsp;
-				Звонящий:
-				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
-				<select name='chart_group_period'>
-				<script language='Javascript'>
-					document.write( "<option selected value='"+ group_by +"'>"+ period +"</option>" );
-				</script>
-				<noscript>
-				<option value=''>группировать по</option>
-				</noscript>
-				<option value='min'>минута</option><option value='h'>час</option><option value='hd'>час дня</option><option value='d'>день</option><option value='dw'>день недели</option><option value='dm'>день месяца</option><option value='w'>неделя</option><option value='m'>месяц</option><option value='y'>год</option></select>
-				&nbsp;
-				<input name='action' value='extended_stat' type='hidden'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
-				<input value='Поиск' type='submit'>
-				&nbsp;&nbsp;
-			</td>
+	<table width='95%'>
+		<tr class='list_data'>
+			<td>&nbsp;</td>
 		</tr>
-		</form>
 	</table>
 	</p>
 	

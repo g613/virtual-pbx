@@ -80,7 +80,8 @@
 				</select>
 			</td>
 			<td>
-				<a title='delete tariff' href='?action=tariff_del&tariff_id=[% t.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+				<a title='clone tariff' href='?action=clone&noauto=1&tname=TARIFF&id=[% t.ID %]&fname=NAME&fid=ID&newaction=tariff_info%26tariff_id'><img border='0' src='/xvb/images/clone.png' alt='clone' /></a>&nbsp;&nbsp;
+				<a title='delete tariff' href='?action=tariff_del&tariff_id=[% t.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0' src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
 			</form>
 		</tr>

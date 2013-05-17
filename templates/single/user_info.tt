@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.19 2013-01-05 07:28:26 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.21 2013-04-23 14:14:03 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -32,16 +32,16 @@
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
 			<td>
-				<a class='headers' href='?action=j_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
+				<a class='headers' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
+				<a class='headers' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
 			</td>
 			<td align='center'>
-				<a class='headers' href='?action=vb_view&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX</a>
+				<a class='headers' href='?action=vb_view&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX</a>
 			</td>
 			<td align='center'>
-				<a class='headers' href='?action=msg_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Messages</a>
+				<a class='headers' href='?action=msg_list&uniq=[% USER_CREDS.UNIQ %]'>Messages</a>
 			</td>
 		</tr>
 	</table>
@@ -61,7 +61,6 @@
 					<td class='ext_pv'>
 						<input size='30' type='text' name='FIRST_NAME' value='[% USER_CREDS.FIRST_NAME | html %]'>
 						<input type='hidden' name='action' value='user_update'>
-						<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 					</td>
 				</tr>
@@ -182,8 +181,8 @@
 				<tr>
 					<td class='ext_pn'>Common filters:</td>
 					<td class='ext_pv'>
-						<a href='?action=cid_list&id=[% ROOT_EXT_ID %]&cid_list_type=2&cid_type=2&uniq=[% USER_CREDS.UNIQ %]' title='edit CID white list'>White list</a> / 
-						<a href='?action=cid_list&id=[% ROOT_EXT_ID %]&cid_list_type=1&cid_type=2&uniq=[% USER_CREDS.UNIQ %]' title='edit CID black list'>Black list</a>
+						<a href='?action=cid_list&cid_list_type=2&cid_type=2&uniq=[% USER_CREDS.UNIQ %]' title='edit CID white list'>White list</a> / 
+						<a href='?action=cid_list&cid_list_type=1&cid_type=2&uniq=[% USER_CREDS.UNIQ %]' title='edit CID black list'>Black list</a>
 					</td>
 				</tr>
 				<tr>
@@ -356,10 +355,9 @@
 					<td colspan='2'><h4>Backup options:</h4></td>
 				</tr>
 				<tr>
-					<form method="post" action="[% CGI_URL %]">
+					<form method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
 					<td>
 						Media backup: <input type='checkbox' name='full_backup'>
-						<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 						<input type='hidden' name='action' value='backup'>
 					</td>
@@ -376,7 +374,6 @@
 					<td>
 						Merge: <input type='checkbox' name='merge'>
 						<input type='file' name='config_file'>
-						<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 						<input type='hidden' name='action' value='restore'>
 					</td>
@@ -395,16 +392,16 @@
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
 			<td>
-				<a class='headers' href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
+				<a class='headers' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=j_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
+				<a class='headers' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=vb_view&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX</a>
+				<a class='headers' href='?action=vb_view&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=msg_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Messages</a>
+				<a class='headers' href='?action=msg_list&uniq=[% USER_CREDS.UNIQ %]'>Messages</a>
 			</td>
 		</tr>
 	</table>

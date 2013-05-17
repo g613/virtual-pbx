@@ -127,6 +127,7 @@ create table VPBX_TARIFF (
 	MINUTE_PRICE_E_INTERCOM		FLOAT default 0,
 	MINUTE_PRICE_E_RECORD		FLOAT default 0,
 	MINUTE_PRICE_E_DIALOUT		FLOAT default 0,
+	MINUTE_PRICE_E_MULTIDIALOUT	FLOAT default 0,
 	MINUTE_PRICE_E_PODCAST		FLOAT default 0,
 	MINUTE_PRICE_E_VOTING		FLOAT default 0,
 	MINUTE_PRICE_E_WEBVAR		FLOAT default 0,
@@ -143,29 +144,30 @@ create table VPBX_TARIFF (
 	
 	CALL_PRICE_E_PLAYBACK		FLOAT default 0,
 	CALL_PRICE_E_RECORDVMMESSAGES		FLOAT default 0,
-	CALL_PRICE_E_DBVAR		FLOAT default 0,
-	CALL_PRICE_E_FAXRX		FLOAT default 0,
+	CALL_PRICE_E_DBVAR			FLOAT default 0,
+	CALL_PRICE_E_FAXRX			FLOAT default 0,
 	CALL_PRICE_E_USERVAR		FLOAT default 0,
 	CALL_PRICE_E_ROBOTEXT		FLOAT default 0,
 	CALL_PRICE_E_WEBREQUEST		FLOAT default 0,
 	CALL_PRICE_E_INTERCOM		FLOAT default 0,
-	CALL_PRICE_E_RECORD		FLOAT default 0,
+	CALL_PRICE_E_RECORD			FLOAT default 0,
 	CALL_PRICE_E_DIALOUT		FLOAT default 0,
+	CALL_PRICE_E_MULTIDIALOUT	FLOAT default 0,
 	CALL_PRICE_E_PODCAST		FLOAT default 0,
-	CALL_PRICE_E_VOTING		FLOAT default 0,
-	CALL_PRICE_E_WEBVAR		FLOAT default 0,
+	CALL_PRICE_E_VOTING			FLOAT default 0,
+	CALL_PRICE_E_WEBVAR			FLOAT default 0,
 	CALL_PRICE_E_CALLBACK		FLOAT default 0,
-	CALL_PRICE_E_FAXTX		FLOAT default 0,
+	CALL_PRICE_E_FAXTX			FLOAT default 0,
 	CALL_PRICE_E_STREAMING		FLOAT default 0,
 	CALL_PRICE_E_ALARMCLOCK		FLOAT default 0,
-	CALL_PRICE_E_BBS		FLOAT default 0,
+	CALL_PRICE_E_BBS			FLOAT default 0,
 	CALL_PRICE_E_CONFERENCE		FLOAT default 0,
 	CALL_PRICE_E_GOOGLECALENDAREXPLORER		FLOAT default 0,
 	CALL_PRICE_E_DATETIME		FLOAT default 0,
-	CALL_PRICE_E_DISA		FLOAT default 0,
-	CALL_PRICE_E_QUEUE		FLOAT default 0,
-	CALL_PRICE_E_DTMFRX		FLOAT default 0,
-	CALL_PRICE_E_DTMFTX		FLOAT default 0,
+	CALL_PRICE_E_DISA			FLOAT default 0,
+	CALL_PRICE_E_QUEUE			FLOAT default 0,
+	CALL_PRICE_E_DTMFRX			FLOAT default 0,
+	CALL_PRICE_E_DTMFTX			FLOAT default 0,
 
 	CURRENCY_ID			INT(16)	not null default 1,
 
@@ -402,6 +404,7 @@ create	table VPBX_GROUPS
 	VBL_28 INT(10) not NULL default -1,
 	VBL_29 INT(10) not NULL default -1,
 	VBL_30 INT(10) not NULL default -1,
+	VBL_31 INT(10) not NULL default -1,
 
     unique (GROUP_NAME),
     CONSTRAINT FK_VPBX_PREF_LANG FOREIGN KEY (PREF_LANG) REFERENCES VPBX_LANG(ID) ON UPDATE CASCADE,
@@ -1345,6 +1348,54 @@ create	table VPBX_VBOXES_PARKING
     CONSTRAINT FK_VPBX_VBOXES_PARKING_MOH FOREIGN KEY (MOH_ID) REFERENCES VPBX_MOH(ID) ON UPDATE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+create	table VPBX_VBOXES_MULTIDIALOUT
+(
+	ID				INT(16)		    not null,
+
+	MOH_ID				INT(16)		not null default 0,
+	RING_TIMEOUT		INT(3)		default 30,
+	RETRYDIAL_INTERVAL	INT(3)		default 0,
+	RETRYDIAL_LOOPS		INT(3)		default 0,
+	SAY_CALLEDID		INT(1)		default 0,
+	CONFIRM_CALL		INT(1)		default 0,
+	RECORD_CALL			INT(1)		default 0,
+	KEEP_MSG			INT(1)		default 1,
+	SEND_ATTACH			INT(1)		default 0,
+	URL					TEXT(1024),
+
+	unique(ID),
+    CONSTRAINT FK_VPBX_VBOXES_MULTIDIALOUT_MOH FOREIGN KEY (MOH_ID) REFERENCES VPBX_MOH(ID) ON UPDATE CASCADE,
+    CONSTRAINT FK_VPBX_VBOXES_MULTIDIALOUT FOREIGN KEY (ID) REFERENCES VPBX_VBOXES_CORE(ID) ON DELETE CASCADE
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+create	table VPBX_VBOXES_MULTIDIALOUT_DATA
+(
+	ID			        INT(16)		 not null,
+
+	DATA_ID				INT(16)		 not null AUTO_INCREMENT,
+	NAME                VARCHAR(255) not null,
+    PHONE_NUMBER		VARCHAR(255) not null,
+	USER_VARS			VARCHAR(255),
+
+	CREATE_TIMESTAMP	INT(16) not null,
+	PROCESS_TIMESTAMP	INT(16) not null default 0,
+
+	CALL_STATUS			CHAR(20) not null default 'wait',
+	ATTEMPT				INT(4) not null default 0,
+
+	CALL_ID				VARCHAR(32),
+	DURATION			INT(16) not null default 0,
+
+	unique(DATA_ID),
+	unique(ID,PHONE_NUMBER),
+
+	INDEX I_CB_DATA_PROCESS_T (PROCESS_TIMESTAMP),
+	INDEX I_CB_DATA_CREATE_T (CREATE_TIMESTAMP),
+	INDEX I_CB_DATA_STATUS (CALL_STATUS),
+
+	CONSTRAINT FK_VPBX_VBOXES_MULTIDIALOUT_DATA FOREIGN KEY (ID) REFERENCES VPBX_VBOXES_CORE(ID) ON DELETE CASCADE
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
 create	table VPBX_CDRS
 (
 	SERVER_ID			VARCHAR(100) not null,
@@ -1496,6 +1547,7 @@ INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(27, 'Parking', 'Call pa
 INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(28, 'GoogleCalendarExplorer', 'Google Calendar - Events');
 INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(29, 'Intercom', 'Paging / Intercom');
 INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(30, 'DtmfTX', 'Play DTMF Tones');
+INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(31, 'MultiDialout', 'MultiDialout');
 -- Ring strategi
 INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(1, 'ring all', 'ring all');
 INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(2, 'hunt', 'hunt');
@@ -2156,7 +2208,7 @@ INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_S
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('Unknown calls',1,unix_timestamp(),"select date_format(FROM_UNIXTIME(START_TIMESTAMP),'%Y-%m-%d') Date, SERVER_ID NODE, count(*) 'Calls=', round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=', round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from VPBX_CDRS where SUBSCR_ID = 0 and START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] group by date_format(FROM_UNIXTIME(START_TIMESTAMP),'%Y-%m-%d'), SERVER_ID", 3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('Call type summary (previous day)',1,unix_timestamp(),"select CALL_TYPE '=Call Type', count(*) 'Calls=', round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=', round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from VPBX_CDRS where START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] group by CALL_TYPE order by CALL_TYPE", 3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('Phone call direction (previous day)',1,unix_timestamp(),"select  'phone' GW,  count(*) 'Calls=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from  VPBX_CDRS  where   CALL_TYPE = 'internal' and  START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] group by  GW UNION select  'peer' GW,  count(*) 'Calls=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from  VPBX_CDRS  where   CALL_TYPE = 'transit' and  START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] and  DATA not like '%, GW=system%' group by  GW UNION select  'system' GW,  count(*) 'Calls=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from  VPBX_CDRS  where   CALL_TYPE = 'transit' and  START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] and  DATA like '%, GW=system%' group by  GW", 3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
-INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('IVR outgoing call direction (previous day)',1,unix_timestamp(),"select  'phone' GW,  count(*) 'Calls=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from  VPBX_CDRS_ACTIVITY where   TYPE in ( 'Dialout', 'DISA', 'Transfer', 'Queue' ) and  START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] and  DATA like '%, GW=phone, %' group by  GW UNION select  'peer' GW,  count(*) 'Calls=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from  VPBX_CDRS_ACTIVITY where   TYPE in ( 'Dialout', 'DISA', 'Transfer', 'Queue' ) and  START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] and  DATA like '%, GW=%' and   DATA not like '%, GW=direct, %' and DATA not like '%, GW=phone, %' and  DATA not like '%, GW=system, %' group by  GW UNION select  'direct' GW,  count(*) 'Calls=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from  VPBX_CDRS_ACTIVITY where   TYPE in ( 'Dialout', 'DISA', 'Transfer', 'Queue' ) and  START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] and  DATA like '%, GW=direct, %' group by  GW UNION select  'system' GW,  count(*) 'Calls=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from  VPBX_CDRS_ACTIVITY  where   TYPE in ( 'Dialout', 'DISA', 'Transfer', 'Queue' ) and  START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] and  DATA like '%, GW=system, %' group by  GW", 3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
+INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('IVR outgoing call direction (previous day)',1,unix_timestamp(),"select  'phone' GW,  count(*) 'Calls=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from  VPBX_CDRS_ACTIVITY where   TYPE in ( 'MultiDialout', 'Dialout', 'DISA', 'Transfer', 'Queue' ) and  START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] and  DATA like '%, GW=phone, %' group by  GW UNION select  'peer' GW,  count(*) 'Calls=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from  VPBX_CDRS_ACTIVITY where   TYPE in ( 'MultiDialout', 'Dialout', 'DISA', 'Transfer', 'Queue' ) and  START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] and  DATA like '%, GW=%' and   DATA not like '%, GW=direct, %' and DATA not like '%, GW=phone, %' and  DATA not like '%, GW=system, %' group by  GW UNION select  'direct' GW,  count(*) 'Calls=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from  VPBX_CDRS_ACTIVITY where   TYPE in ( 'MultiDialout', 'Dialout', 'DISA', 'Transfer', 'Queue' ) and  START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] and  DATA like '%, GW=direct, %' group by  GW UNION select  'system' GW,  count(*) 'Calls=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=',  round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from  VPBX_CDRS_ACTIVITY  where   TYPE in ( 'MultiDialout', 'Dialout', 'DISA', 'Transfer', 'Queue' ) and  START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] and  DATA like '%, GW=system, %' group by  GW", 3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('Known calls',1,unix_timestamp(),"select date_format(FROM_UNIXTIME(START_TIMESTAMP),'%Y-%m-%d') Date, SERVER_ID NODE, count(*) 'Calls=', round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=', round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from VPBX_CDRS where SUBSCR_ID != 0 and START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] group by date_format(FROM_UNIXTIME(START_TIMESTAMP),'%Y-%m-%d'), SERVER_ID", 3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('Top 10 users (previous day)',1,unix_timestamp(),"select a.ACCESS_CODE, count(*) as Calls, round((sum(c.STOP_TIMESTAMP-c.START_TIMESTAMP))/60,1) 'Minutes=', round((sum(c.STOP_TIMESTAMP-c.START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from VPBX_CDRS c,  VPBX_ACCOUNTS a where a.ID = c.SUBSCR_ID and c.START_TIMESTAMP > [% DATE_START %] and c.START_TIMESTAMP < [% DATE_STOP %] group by a.ACCESS_CODE order by Calls desc limit 10", 3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('Activities (previous day)',1,unix_timestamp(), "select TYPE Activities, count(*) as Count, round((sum(STOP_TIMESTAMP-START_TIMESTAMP))/60,1) 'Minutes=', round((sum(STOP_TIMESTAMP-START_TIMESTAMP)/count(*))/60,1) 'Minutes AVG=' from VPBX_CDRS_ACTIVITY where START_TIMESTAMP > [% DATE_START %] and START_TIMESTAMP < [% DATE_STOP %] group by TYPE order by Count desc",3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
