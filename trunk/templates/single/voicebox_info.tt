@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.32 2012-03-13 18:21:44 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.33 2013-03-11 15:08:00 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -33,20 +33,20 @@
 		<tr align='center'>
 			[% IF USER_CREDS.ROOT eq '0' %]
 			<td>
-				<a class='headers' href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
+				<a class='headers' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
 			</td>
 			[% END %]
 			<td>
-				<a class='headers' href='?action=msg_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
+				<a class='headers' href='?action=msg_list&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=msg_delete&clear_ext=1&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all messages?')">Clear extension</a>
+				<a class='headers' href='?action=msg_delete&clear_ext=1&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all messages?')">Clear extension</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
+				<a class='headers' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=j_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
+				<a class='headers' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
 			</td>
 		</tr>
 	</table>
@@ -65,7 +65,6 @@
 				<td class='ext_pn'>Type:</td>
 				<td class='ext_pv'>
 					<input type='hidden' name='action' value='vb_change_type'>
-					<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 					<select name="type" onchange="javascript:ChangeVbType(this.value,'[% ROOT_EXT_ID %]','[% USER_CREDS.UNIQ %]')">
 					[% FOREACH vt = VB_TYPES %]
@@ -954,7 +953,7 @@
 						[% IF param.NUMBER eq '===' %]
 						<tr align='center'>
 							<td align='center'>
-								<a href='?action=callout_clean&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm( 'Are you sure you want to reset statistics ?' )" title='reset call statistics'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+								<a href='?action=callout_clean&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm( 'Are you sure you want to reset statistics ?' )" title='reset call statistics'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
 							</td>
 						[% ELSE %]
 						<tr align='center' class='addon_data'>
@@ -995,7 +994,7 @@
 						[% IF param.DIGIT eq '===' %]
 						<tr align='center'>
 							<td align='center'>
-								<a href='?action=voting_clean&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm( 'Are you sure you want to reset statistics ?' )" title='reset voting results'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+								<a href='?action=voting_clean&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm( 'Are you sure you want to reset statistics ?' )" title='reset voting results'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
 							</td>
 						[% ELSE %]
 						<tr align='center' class='addon_data'>
@@ -1060,7 +1059,7 @@
 						[% IF param.NUMBER eq '===' %]
 						<tr align='center'>
 							<td align='center'>
-								<a href='?action=callout_clean&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm( 'Are you sure you want to reset statistics ?' )" title='reset call statistics'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+								<a href='?action=callout_clean&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm( 'Are you sure you want to reset statistics ?' )" title='reset call statistics'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
 							</td>
 						[% ELSE %]
 						<tr align='center' class='addon_data'>
@@ -1160,7 +1159,7 @@
 							[% IF param.PROCESS_TIMESTAMP < param.START_TIMESTAMP %]
 								wait
 							[% ELSIF param.CALL_STATUS contain 'success' %]
-								<a class='success' href='?action=act_list&call_id=[% param.CALL_ID %]&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
+								<a class='success' href='?action=act_list&call_id=[% param.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
 							[% ELSIF param.CALL_STATUS %]
 								<span class='error'>[% param.CALL_STATUS | html %]</span>
 							[% ELSE %]
@@ -1220,19 +1219,19 @@
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
 			<td>
-				<a class='headers' href='?action=j_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
+				<a class='headers' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
+				<a class='headers' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=msg_delete&clear_ext=1&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all messages?')">Clear extension</a>
+				<a class='headers' href='?action=msg_delete&clear_ext=1&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all messages?')">Clear extension</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=msg_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
+				<a class='headers' href='?action=msg_list&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
+				<a class='headers' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
 			</td>
 		</tr>
 	</table>

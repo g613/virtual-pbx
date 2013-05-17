@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.6 2010-08-26 20:22:03 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.7 2013-03-11 15:08:00 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -38,13 +38,13 @@
 	<table width='95%' class='top_hr'>
 		<tr align='left'>
 			<td>
-				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=j_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
+				<a href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_view&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX info</a>
+				<a href='?action=vb_view&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX info</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=msg_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Messages</a>
+				<a href='?action=msg_list&uniq=[% USER_CREDS.UNIQ %]'>Messages</a>
 			</td>
 		</tr>
 	</table>
@@ -109,7 +109,6 @@
 				<input name='action' value='cdr_list' type='hidden'>
 				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				<select name="call_type">
 					<option value="" >call type</option>
 					<option value="incoming">incoming</option>

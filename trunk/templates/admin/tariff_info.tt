@@ -270,6 +270,12 @@
 			<td><input class='in_t0' name='T_CALL_PRICE_E_DTMFTX' type='text' value='[% CALL_PRICE_E_DTMFTX | html %]'></td>
 			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DTMFTX' type='text' value='[% MINUTE_PRICE_E_DTMFTX | html %]'></td>
 		</tr>
+		<tr class='nocolor'>
+			<td>MULTIDIALOUT</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_MULTIDIALOUT' type='text' value='[% CALL_PRICE_E_MULTIDIALOUT | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_MULTIDIALOUT' type='text' value='[% MINUTE_PRICE_E_MULTIDIALOUT | html %]'></td>
+		</tr>
+		
 		
 		<tr class='nocolor'>
 			<td colspan='3'>&nbsp;</td>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.3 2011-02-28 10:41:58 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.4 2013-03-11 15:08:00 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Call Detail - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -31,13 +31,13 @@
 	<table width='95%' class='top_hr'>
 		<tr align='left'>
 			<td>
-				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
+				<a href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_view&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX info</a>
+				<a href='?action=vb_view&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX info</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=msg_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Messages</a>
+				<a href='?action=msg_list&uniq=[% USER_CREDS.UNIQ %]'>Messages</a>
 			</td>
 		</tr>
 	</table>
@@ -56,7 +56,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='6'>
-				<a title='previous page' href='?action=act_list&id=[% ROOT_EXT_ID %]&from=[% MSG_PREV %]&call_id=[% CDR_CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=act_list&from=[% MSG_PREV %]&call_id=[% CDR_CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -78,7 +78,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='6'>
-				<a title='next page' href='?action=act_list&id=[% ROOT_EXT_ID %]&from=[% MSG_NEXT %]&call_id=[% CDR_CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+				<a title='next page' href='?action=act_list&from=[% MSG_NEXT %]&call_id=[% CDR_CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
 			</td>
 		[% ELSE %]
 			<td colspan='6'>&nbsp;</td>
@@ -93,10 +93,10 @@
 	<table width='95%' class='bottom_hr'>
 		<tr align='center'>
 			<td>
-				<a class='headers' href='?action=j_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
+				<a class='headers' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=cdr_list&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
+				<a class='headers' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
 			</td>
 			<td>
 				<a class='headers' href='?action=msg_delete&clear_ext=1&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all messages?')">Clear extension</a>

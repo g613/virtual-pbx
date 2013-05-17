@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.7 2013-02-20 15:41:09 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.8 2013-03-11 15:08:00 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -39,15 +39,15 @@
 	<table width='95%' class='top_hr'>
 		<tr align='left'>
 			<td>
-				<a href='?action=user_info&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=msg_delete&clear_ext=1&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all messages?')">Clear VoiceBOX</a>
+				<a href='?action=msg_delete&clear_ext=1&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all messages?')">Clear VoiceBOX</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=get_itunes&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Itunes</a>
+				<a href='?action=get_itunes&uniq=[% USER_CREDS.UNIQ %]'>Itunes</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=get_rss&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>Rss</a>
+				<a href='?action=get_rss&uniq=[% USER_CREDS.UNIQ %]'>Rss</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_view&id=[% ROOT_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX info</a>
+				<a href='?action=vb_view&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX info</a>
 			</td>
 		</tr>
 	</table>
@@ -68,7 +68,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='7'>
-				<a title='previous page' href='?action=msg_list&id=[% ROOT_EXT_ID %]&from=[% MSG_PREV %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=msg_list&from=[% MSG_PREV %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -143,7 +143,6 @@
 		<tr class='noclolor'>
 			<td colspan='6' align='right'>
 				<input type='file' name='msg'>
-				<input type='hidden' name='id' value='[% ROOT_EXT_ID %]'>
 				<input type='hidden' name='action' value='msg_upload'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<input type='hidden' name='go' value='vb'>
@@ -172,7 +171,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='7'>
-				<a title='next page' href='?action=msg_list&id=[% ROOT_EXT_ID %]&from=[% MSG_NEXT %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='next page' href='?action=msg_list&from=[% MSG_NEXT %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
 		[% ELSE %]
 			<td align='left' colspan='7'>
@@ -223,7 +222,6 @@
 				<button type="button">...</button>
 				<input name='action' value='msg_list' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='id' value='[% ROOT_EXT_ID %]' type='hidden'>
 				&nbsp;
 				Caller ID:
 				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
