@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.247 2013-05-08 11:59:39 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.249 2013-05-30 15:58:08 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1017,6 +1017,12 @@
 					<td>
 						<input size='10' name="ALLOW_DIGITS" value="[% VBOX_PREF.ALLOW_DIGITS | html %]" type="text">
 						( comma separated )
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Auto input:</td>
+					<td>
+						<input size='10' name="VAR_NAME" value="[% VBOX_PREF.VAR_NAME | html %]" type="text">
 					</td>
 				</tr>
 				<tr class='addon_info'>

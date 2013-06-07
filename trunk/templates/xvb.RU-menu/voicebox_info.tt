@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.7 2013-05-08 11:59:40 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.9 2013-05-30 15:58:09 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1212,6 +1212,14 @@
 					<td>
 						<input size='10' name="ALLOW_DIGITS" value="[% VBOX_PREF.ALLOW_DIGITS | html %]" type="text">
 						( разделенные запятой )
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Авто ввод:<span>
+						Имя переменной, или просто статическая строка, из которой будет взят автоматический результат голосования, например голосование на основе номера назначения. Необязательный параметр.
+						</span></a></td>
+					<td>
+						<input size='10' name="VAR_NAME" value="[% VBOX_PREF.VAR_NAME | html %]" type="text">
 					</td>
 				</tr>
 				<tr class='addon_info'>

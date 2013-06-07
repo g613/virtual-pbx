@@ -1115,6 +1115,7 @@ create	table VPBX_VBOXES_VOTING
 
 	ALLOW_DIGITS		VARCHAR(255)	not null,
 	UNIQ_CIDS			INT(1)			not null default 1,
+	VAR_NAME            VARCHAR(255),
 	
 	unique(ID),
 
