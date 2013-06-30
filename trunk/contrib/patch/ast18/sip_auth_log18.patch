@@ -1,0 +1,30 @@
+*** channels/chan_sip.c.orig	2013-03-27 23:50:19.000000000 +0400
+--- channels/chan_sip.c	2013-06-21 04:59:37.242473059 +0400
+***************
+*** 15168,15173 ****
+--- 15168,15175 ----
+  		[K_LAST] = { NULL, NULL}
+  	};
+  
++ 	ast_log(LOG_NOTICE, "Failed to authenticate  [ IP: %s ] : '%s'\n", ast_sockaddr_stringify(&p->recv), get_header(&p->initreq, "From"));
++ 
+  	authtoken = get_header(req, reqheader);
+  	if (req->ignore && !ast_strlen_zero(p->randdata) && ast_strlen_zero(authtoken)) {
+  		/* This is a retransmitted invite/register/etc, don't reconstruct authentication
+***************
+*** 23274,23280 ****
+  			goto request_invite_cleanup;
+  		}
+  		if (res < 0) { /* Something failed in authentication */
+! 			ast_log(LOG_NOTICE, "Failed to authenticate device %s\n", get_header(req, "From"));
+  			transmit_response_reliable(p, "403 Forbidden", req);
+  			p->invitestate = INV_COMPLETED;
+  			sip_scheddestroy(p, DEFAULT_TRANS_TIMEOUT);
+--- 23276,23282 ----
+  			goto request_invite_cleanup;
+  		}
+  		if (res < 0) { /* Something failed in authentication */
+! 			ast_log(LOG_NOTICE, "Failed to authenticate device [ IP: %s ] : '%s'\n", ast_sockaddr_stringify(&p->recv), get_header(req, "From"));
+  			transmit_response_reliable(p, "403 Forbidden", req);
+  			p->invitestate = INV_COMPLETED;
+  			sip_scheddestroy(p, DEFAULT_TRANS_TIMEOUT);
