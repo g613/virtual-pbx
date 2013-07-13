@@ -1,8 +1,8 @@
 ==All VMWare images :==
 
- * [ http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://virtual-pbx.ru/downloads/VirtualPBX-CentOS6-1_7490.tar.bz2 build 7490 ( 12.07.2013 ) ] CentOS6, asterisk 18
+ * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://virtual-pbx.ru/downloads/VirtualPBX-CentOS6-1_7490.tar.bz2 build 7490 ( 12.07.2013 )] CentOS6, asterisk 18
 
- * [ http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://virtual-pbx.ru/downloads/VirtualPBX-1_7421.tar.bz2 build 7421 ( 17.05.2013 ) ] Multidialout
+ * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://virtual-pbx.ru/downloads/VirtualPBX-1_7421.tar.bz2 build 7421 ( 17.05.2013 )] Multidialout
 
  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://narod.ru/disk/64112535001.5aee33a132c451fc5af92042c41b78f3/VirtualPBX-1_6830.tar.bz2.html build 6830 ( 29.11.2012)] ( Added transfer feature for DISA/Directory, custom CallerID for outbound calls, support digits only phone logins, more imrovements. )
 
