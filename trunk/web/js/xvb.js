@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.65 2013-03-07 15:40:02 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.66 2013-07-07 19:50:01 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -605,6 +605,39 @@ function dtmf_history_win( data ) {
 	placementy=200;
 	WinPop=window.open("","dtmf_history_win","width=300,height=300,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
 	WinPop.document.write('<html>\n<head><title>DTMF History</title>\n</head>\n<body>'+data+'</body></html>');
+	WinPop.document.close();
+}
+
+/* click2call_win */
+function click2call_win( server, key, ac, lang ) {
+	var ScreenWidth=window.screen.width;
+	placementx=ScreenWidth/2-220;
+	placementy=200;
+	WinPop=window.open("","click2call","width=450,height=200,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
+	WinPop.document.write('<html>\n<head><title>Click2Call - XVB VirtualPBX</title>\n</head>\n<body><center><form method="post" action="'+server+'/c2c"><input type="hidden" value="'+key+'" name="key"><input type="hidden" value="'+ac+'" name="ac">');
+	if ( lang == 'ru' ) {
+		WinPop.document.write('<h2>Заказ звонка</h2><input type="text" size="25" name="ph" placeholder="введите Ваш номер телефона"><br/><br/><input value="заказать звонок" type="submit">');
+	} else {
+		WinPop.document.write('<h2>Order a Call</h2><input type="text" size="25" name="ph" placeholder="enter your phone here"><br/><br/><input value="order a call" type="submit">');
+	}
+	WinPop.document.write('</form></body></html>');
+	WinPop.document.close();
+}
+
+/* click2call code */
+function click2call_code( server, key, ac, lang ) {
+	var ScreenWidth=window.screen.width;
+	placementx=ScreenWidth/2-220;
+	placementy=200;
+	WinPop=window.open("","click2callCode","width=500,height=300,toolbar=no, location=no,directories=no,status=no,scrollbars=yes, menubar=no,resizable=yes,left="+placementx+",top="+placementy);
+
+	WinPop.document.write('<html><title>Click2Call - code</title><body><p><small>&lt;script language="JavaScript"&gt;function click2call_win(){var ScreenWidth=window.screen.width; placementx=ScreenWidth/2-220; placementy=200;WinPop=window.open("","click2call","width=450,height=200, toolbar=no,location=no,directories=no,status=no, scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy); WinPop.document.write(\'&lt;html&gt;&lt;head&gt;&lt;title&gt;Click2Call - XVB VirtualPBX&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;center&gt;&lt;form method="post" action="'+server+'/c2c"&gt;&lt;input type="hidden" value="'+key+'" name="key"&gt;&lt;input type="hidden" value="'+ac+'" name="ac"&gt;\');');
+	if ( lang == 'ru' ) {
+		WinPop.document.write('WinPop.document.write(\'&lt;h2&gt;Заказ звонка&lt;/h2&gt;&lt;input type="text" size="25" name="ph" placeholder="введите Ваш номер телефона"&gt;&lt;br/&gt;&lt;br/&gt;&lt;input value="заказать звонок" type="submit"&gt;\');');
+	} else {
+		WinPop.document.write('WinPop.document.write(\'&lt;h2&gt;Order a Call&lt;/h2&gt;&lt;input type="text" size="25" name="ph" placeholder="enter your phone here"&gt;&lt;br/&gt;&lt;br/&gt;&lt;input value="order a call" type="submit"&gt;\');');
+	}
+	WinPop.document.write('WinPop.document.write(\'&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;\');WinPop.document.close();}&lt;/script&gt;&lt;a title="click2call" href="#" onclick="click2call_win()"&gt;&lt;img border="0" src="https://virtual-pbx.googlecode.com/files/callme.gif" alt="callme" /&gt;&lt;/a&gt;</small></p></body></html>');
 	WinPop.document.close();
 }
 

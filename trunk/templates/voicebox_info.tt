@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.249 2013-05-30 15:58:08 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.250 2013-07-15 14:36:12 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1681,6 +1681,12 @@
 					<td>
 						<input size='8' name="MAX_MSG_DURATION" value="[% VBOX_PREF.MAX_MSG_DURATION | html %]" type="text">
 						( in sec, -1 - for unlimit  )
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Max silence: </td>
+					<td>
+						<input size='8' name="MAX_SILENCE" value="[% VBOX_PREF.MAX_SILENCE | html %]" type="text">
 					</td>
 				</tr>
 				[% END %]

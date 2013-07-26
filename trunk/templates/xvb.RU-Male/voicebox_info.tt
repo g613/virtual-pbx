@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.203 2013-05-30 15:58:08 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.206 2013-07-15 15:03:02 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -986,7 +986,7 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td><a href='#' class='info'>Перейти к: <span>
+					<td><a href='#' class='info'>Если ошибка перейти к: <span>
 							Перейти к данному внутреннему номеру в случае неудачного WEB запроса
 						</span></a></td>
 					<td>
@@ -1967,7 +1967,7 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td><a href='#' class='info'>Перейти к: <span>
+					<td><a href='#' class='info'>Если ошибка перейти к: <span>
 							Перейти к данному внутреннему номеру в случае неудачного WEB запроса
 						</span></a></td>
 					<td>
@@ -2010,6 +2010,14 @@
 					<td>
 						<input size='8' name="MAX_MSG_DURATION" value="[% VBOX_PREF.MAX_MSG_DURATION | html %]" type="text">
 						( в секундах, -1 - системное ограничение  )
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Ждать тишины: <span>
+							Ожидать тишины в XX секунда после чего прервать запись сообщения.
+						</span></a></td>
+					<td>
+						<input size='8' name="MAX_SILENCE" value="[% VBOX_PREF.MAX_SILENCE | html %]" type="text">
 					</td>
 				</tr>
 				[% END %]

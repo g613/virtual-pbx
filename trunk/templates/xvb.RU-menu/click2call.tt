@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.4 2013-04-21 19:10:09 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.5 2013-07-07 19:50:01 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -31,7 +31,7 @@
 		<tr class='list_data'>
 			<th>Ссылка</th>
 			<th>Внутренний номер</th>
-			<th colspan='2'>Действия</th>
+			<th>Действия</th>
 		</tr>
 		[% FOREACH c2c = C2C_LIST %]
 		<tr align='center' class='nocolor' id='d-tr-[% c2c.ID %]'>
@@ -43,7 +43,9 @@
 				<input type='hidden' value='[% c2c.SECRET %]' name='c2c_sec'>
 				<input type='hidden' value='c2c_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='удалить click2call ссылку' href='?action=c2c_del&data_id=[% c2c.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% c2c.ID %]')"><img border='0' src='/xvb/images/vb_del.png' alt='удалить' /></a>
+				<a title='удалить click2call ссылку' href='?action=c2c_del&data_id=[% c2c.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% c2c.ID %]')"><img border='0' src='/xvb/images/vb_del.png' alt='удалить' /></a>&nbsp;&nbsp;
+				<a title='Click2Call код' href='#' onclick="click2call_code('https://[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru')"><img border='0' src='/xvb/images/run.png' alt='Click2Call код' /></a>&nbsp;&nbsp;
+				<a title='Click2Call' href='#' onclick="click2call_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru')"><img border='0' src='/xvb/images/phone.png' alt='Тестовый заказ звонка' /></a>
 				<span class='addon_info' id='in_t_id-[% c2c.ID %]'>
 				<script language='JavaScript'>
 					writeUpdateLinks( 'сохранить изменения' );
@@ -52,14 +54,6 @@
 				</span>
 			</td>
 			</form>
-			<td>
-			<form method="get" action="https://[% USER_CREDS.DOWNLOAD_IP %]/c2c">
-				<input type='hidden' value='[% c2c.SECRET %]' name='key'>
-				<input type='hidden' value='[% USER_CREDS.ACCESS_CODE %]' name='ac'>
-				<input type='text' size='10' name='ph'>
-				<input value='проверить' type='submit'></noscript>
-			</form>
-			</td>
 		</tr>
 		[% END %]
 		<tr><td></td></tr>
@@ -67,7 +61,7 @@
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
 			<td></td>
 			<td><input size="11" name='redir_to' type='text'></td>
-			<td colspan='2'>
+			<td>
 				<input type='hidden' value='c2c_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<input value='&nbsp;&nbsp;добавить&nbsp;&nbsp;' type='submit'>
