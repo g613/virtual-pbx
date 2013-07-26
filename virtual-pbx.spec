@@ -2,7 +2,7 @@
 %define ASTERISK_VARLIB_HOME %{_datadir}/asterisk
 Name: virtual-pbx
 Summary: Voice Application Server / HostedIVR solution based on asterisk - Core files
-Version: 2
+Version: 3
 Release: 1
 License: EPL v1.0 / CC BY 3.0
 BuildRoot: %{_tmppath}/%{name}-%{version}-build

@@ -305,8 +305,8 @@ create	table VPBX_GROUPS
 
 	GROUP_NAME					VARCHAR(100),
 
-	CONFERENCE_CONTEXT			VARCHAR(255) default 'default',
-	DIALOUT_CONTEXT				VARCHAR(255) default 'default',
+	CONFERENCE_CONTEXT			VARCHAR(255) default 'xvb-conf-def',
+	DIALOUT_CONTEXT				VARCHAR(255) default 'xvb-dialout-def',
 	
 	DIALOUT_DIRECT				INT(1) default 1,
 	CUSTOM_ROUTE				INT(1) default 1,
@@ -316,10 +316,10 @@ create	table VPBX_GROUPS
 	ALLOW_MACROS				INT(1) default 1,
 	ALLOW_PHONES				INT(1) default 1,
 	ALLOW_GA					INT(1) default 0,
-	ALLOW_API					INT(1) default 0,
-	ALLOW_ICECAST				INT(1) default 0,
+	ALLOW_API					INT(1) default 1,
+	ALLOW_ICECAST				INT(1) default 1,
 	ALLOW_EXTSTAT				INT(1) default 1,
-	ADVANCED_CALLBLAST			INT(1) default 0,
+	ADVANCED_CALLBLAST			INT(1) default 1,
 
 	MAX_SIZE_MSGS				INT(16) default 0,
 	MAX_ALL_MSGS				INT(10) default 1000,
@@ -332,11 +332,11 @@ create	table VPBX_GROUPS
 	MAX_MACROS					INT(10) default 100,
 	MAX_TTS_LENGTH				INT(10) default 300,
 	MAX_DIRECTORY_ITEMS			INT(10) default 150,
-	MAX_SCHEDULE_ITEMS			INT(10) default 10,
+	MAX_SCHEDULE_ITEMS			INT(10) default 20,
 	MAX_CALLBLAST_ITEMS			INT(10) default 30,
-	MAX_GOTOIF_ITEMS			INT(10) default 10,
+	MAX_GOTOIF_ITEMS			INT(10) default 20,
 	MAX_PBOOK_ITEMS				INT(10) default 200,
-	MAX_C2C_ITEMS				INT(5) default 0,
+	MAX_C2C_ITEMS				INT(5) default 5,
 
 	MAX_EXT_PHONES				INT(4) default 20,
 	MAX_CB_PHONES				INT(4) default 3,
@@ -1266,6 +1266,7 @@ create	table VPBX_VBOXES_WEBVAR
 	NEED_PARAMS			INT(1) not null default 0,
 	MAX_MSG_DURATION	INT(10) not null default -1,
 	NEED_VOICE			INT(1) not null default 0,
+	MAX_SILENCE			INT(3) not null default 0,
 
 	unique(ID),
 
