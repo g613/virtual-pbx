@@ -1,9 +1,11 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- трансфер с консультацией</font>
+<font color='red'>- настраиваемый вид логина для sip телефонов</font>
 
-<font color='red'>-fail2ban фильтр для Unknown звонков</font>
+<font color='green'>+ fail2ban фильтр для Unknown звонков</font> ( 30.08.2013 / build 7570 )
+
+<font color='green'>+ трансфер с консультацией</font> ( 24.08.2013 / build 7562 )
 
 <font color='green'>+ Добавить авто режим для голосования (результат из переменной)</font> ( 02.06.2013 / build 7447 )
 
