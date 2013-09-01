@@ -552,6 +552,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*
 %CORE_DIR/contrib/odbc/*
+%CORE_DIR/contrib/fail2ban/*
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/recordings
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/podcasts
 %attr(755,root,root) %CORE_DIR/contrib/utils/file2moh.pl

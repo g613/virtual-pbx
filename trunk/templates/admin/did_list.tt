@@ -78,7 +78,7 @@
 				<a href='?action=user_info&ac=[% did.ACCESS_CODE | html %]'>[% did.ACCESS_CODE | html %]</a>
 			</td>
 			<td>
-				<a title='delete DID' href='?action=did_del&did_id=[% did.ID %]&user_id=[% did.SUBSCR_ID | html %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+				<a title='delete DID' href='?action=did_del&did_id=[% did.ID %]&user_id=[% did.SUBSCR_ID | html %]&from=[% MSG_FROM %]&did=[% did.DID | html %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
 		</tr>
 		[% END %]

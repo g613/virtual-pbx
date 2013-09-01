@@ -179,6 +179,7 @@ vm-select-msg-actions4 : ". Per modificare un secondo tentativo, comporre il mes
 vm-select-msg-actions5 : ". Per cambiare l'annuncio al chiamante premere 1, Per cancellare il tuo annuncio al chiamante premere 2, per ascoltare l'annuncio corrente chiamante premere 3, per tornare al menu Gestione stampa #"
 #
 pbx-transfer : ".. Transfer Inserisci il numero di telefono seguito dal #"
+pbx-invalid : "Call failed."
 #
 digits/0 : "zero"
 digits/10 : "dieci"

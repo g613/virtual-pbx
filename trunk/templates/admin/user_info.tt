@@ -225,7 +225,7 @@
 								<td valign='top' width='20%'><h4>Assigned DIDs:</h4></td>
 								<td valign='top' width='60%'>
 								[% FOREACH d = DIDS %]
-									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]' onclick="return DelConfirm('en')">[% d.DID | html %]</a>&nbsp;;&nbsp;
+									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&did=[% did.DID | html %]' onclick="return DelConfirm('en')">[% d.DID | html %]</a>&nbsp;;&nbsp;
 								[% END %]
 								</td>
 								<td valign='top' width='20%' align='center' nowrap='nowrap'>
