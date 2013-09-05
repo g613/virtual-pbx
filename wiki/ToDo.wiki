@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- настраиваемый вид логина для sip телефонов</font>
+<font color='green'>+ настраиваемый вид логина для sip телефонов</font> ( 02.09.2013 / build 7577 )
 
 <font color='green'>+ fail2ban фильтр для Unknown звонков</font> ( 30.08.2013 / build 7570 )
 
