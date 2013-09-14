@@ -1,5 +1,6 @@
 <html>
-<!-- $Id: new_message.tt,v 1.2 2013-02-20 15:41:11 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.3 2013-09-10 14:35:04 gosha Exp $ -->
+<!--SUBJECT:У Вас новое сообщение в ящике #[% _USER_VBOX.EXT_NUMBER | html %] от [% callerid | html %]:SUBJECT-->
 <head>
 	<BASE href="[% CGI_SERVER %]">
 	[% IF USER_CREDS.CSS_HREF eq '' %]
