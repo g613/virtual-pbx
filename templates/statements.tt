@@ -1,5 +1,6 @@
 <html>
-<!-- $Id: statements.tt,v 1.21 2012-06-04 13:58:03 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.22 2013-09-16 19:36:34 gosha Exp $ -->
+<!--SUBJECT:VirtualPBX daily statement:SUBJECT-->
 <head>
 	<BASE href="[% CGI_SERVER %]">
 	<style>
