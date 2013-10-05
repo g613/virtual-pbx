@@ -1,5 +1,6 @@
 #labels Featured
 = ToDo list =
+<font color='red'>-Hungup hook. like h exten</font>
 
 <font color='green'>+ настраиваемый вид логина для sip телефонов</font> ( 02.09.2013 / build 7577 )
 
