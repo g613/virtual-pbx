@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.250 2013-07-15 14:36:12 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.251 2013-10-05 18:19:41 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -791,6 +791,7 @@
 							<option selected value="[% VBOX_PREF.TTS_METHOD %]">[% VBOX_PREF.TTS_METHOD %]</option>
 							<option value="GET">GET</option>
 							<option value="POST">POST</option>
+							<option value="HEAD">HEAD</option>
 							<option value="PUT">PUT</option>
 							<option value="DELETE">DELETE</option>
 						</select>
