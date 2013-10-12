@@ -548,6 +548,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %attr(755,root,root) %CORE_DIR/contrib/utils/podcast_get.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/msg_clean.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/click2call.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/sys_status.sh
 %CORE_DIR/contrib/asterisk/feautures.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*
