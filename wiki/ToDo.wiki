@@ -1,6 +1,9 @@
 #labels Featured
 = ToDo list =
-<font color='red'>- Возможность идентификации фходящих по sip-домену</font>
+
+<font color='red'>- Пре-идентификация для AGI ( не спрашивать AC для несвоих номеров )</font>
+
+<font color='green'>+ Возможность идентификации фходящих по sip-домену</font> ( 07.11.2013 / build 7694 )
 
 <font color='green'>+ Hangup hook. Псевдо екстен h с типом WebRequest</font> ( 12.10.2013 / build 7638 )
 
