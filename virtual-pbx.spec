@@ -264,6 +264,7 @@ mv contrib/BOM.txt $RPM_BUILD_ROOT/%CORE_DIR/etc/BOM-EN.txt
 mv contrib/BOM-*.txt $RPM_BUILD_ROOT/%CORE_DIR/etc/
 rm -f contrib/sudoers
 mv contrib $RPM_BUILD_ROOT/%CORE_DIR/
+cp $RPM_BUILD_ROOT/%CORE_DIR/contrib/utils/build/tts-gen/common.pl $RPM_BUILD_ROOT/%CORE_DIR/contrib/utils/tts-gen.pl
 
 mv 3rdparty $RPM_BUILD_ROOT/%CORE_DIR/
 
@@ -294,8 +295,8 @@ cd $RPM_BUILD_ROOT/%CORE_DIR/templates
 find -name '*.tt' -exec perl ../contrib/utils/build/html_clean.pl {} ';'
 find -name '*.bak' -exec rm -f {} ';'
 ln -s xvb.RU-Male xvb.RU-Female
-ln -s . xvb.RU-menu/xvb.RU-Male
-ln -s . xvb.RU-menu/xvb.RU-Female
+ln -s . xvb.RU-legacy/xvb.RU-Male
+ln -s . xvb.RU-legacy/xvb.RU-Female
 ln -s . default
 ln -s . xvb.EN-Male
 ln -s . xvb.EN-Female
@@ -486,6 +487,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_DATE_FORMAT
 perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_CID_TYPE
 perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_CID_ACTIONS
 perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATES
+perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 
 ####################################################
 #
@@ -548,7 +550,9 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %attr(755,root,root) %CORE_DIR/contrib/utils/podcast_get.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/msg_clean.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/click2call.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/webhelper.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/sys_status.sh
+%attr(755,root,root) %CORE_DIR/contrib/utils/tts-gen.pl
 %CORE_DIR/contrib/asterisk/feautures.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*
@@ -571,6 +575,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 %CORE_DIR/web/css/*
 %CORE_DIR/web/images/*
 %CORE_DIR/web/js/*
+%CORE_DIR/web/ump3player.swf
 %CORE_DIR/contrib/nginx.conf
 
 ####################################################

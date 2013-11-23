@@ -225,7 +225,7 @@
 								<td valign='top' width='20%'><h4>Assigned DIDs:</h4></td>
 								<td valign='top' width='60%'>
 								[% FOREACH d = DIDS %]
-									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&did=[% did.DID | html %]' onclick="return DelConfirm('en')">[% d.DID | html %]</a>&nbsp;;&nbsp;
+									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&did=[% d.DID | html %]' onclick="return DelConfirm('en')">[% d.DID | html %]</a>&nbsp;;&nbsp;
 								[% END %]
 								</td>
 								<td valign='top' width='20%' align='center' nowrap='nowrap'>
@@ -235,6 +235,30 @@
 									<input type='hidden' name='ac' value='[% USER.ACCESS_CODE | html %]'>
 									<input value='add DID' type='submit'>
 									<input type='hidden' value='did_add' name='action'>
+								</form>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<td>
+						<table width='100%'>
+							<tr>
+								<td valign='top' width='20%'><h4>SIP domains:</h4></td>
+								<td valign='top' width='60%'>
+								[% FOREACH d = DOMAINS %]
+									<a title='delete SIPDomain' href='?action=did_del_sipdomain&domain_id=[% d.ID %]&user_id=[% USER.ID | html %]&domain=[% d.DOMAIN | html %]' onclick="return DelConfirm('en')">[% d.DOMAIN | html %]</a>&nbsp;;&nbsp;
+								[% END %]
+								</td>
+								<td valign='top' width='20%' align='center' nowrap='nowrap'>
+								<form>
+									<input size='20' type='text' name='domain'>
+									<input type='hidden' name='pn' value='[% USER.VOICENUMBER | html %]'>
+									<input type='hidden' name='ac' value='[% USER.ACCESS_CODE | html %]'>
+									<input value='add SIPDomain' type='submit'>
+									<input type='hidden' value='did_add_sipdomain' name='action'>
 								</form>
 								</td>
 							</tr>

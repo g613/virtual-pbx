@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.207 2013-10-05 18:19:42 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.208 2013-10-26 18:59:22 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1024,8 +1024,8 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td><a href='#' class='info'>Музыка вместо гудков: <span>
-							Позволяет звонящему абоненту слушать музыку вместо гудков во время вызова внутреннего абонента.
+					<td><a href='#' class='info'>Музыка ожидания: <span>
+							Позволяет звонящему абоненту слушать музыку во время запроса данных.
 						</span></a></td>
 					<td>
 						<select name='MOH_ID'>

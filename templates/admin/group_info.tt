@@ -440,6 +440,7 @@
 						[% END %]
 					[% END %]
 				</select>
+				<a title='tarif info' href='?action=tariff_info&tariff_id=[% GROUP.TARIFF_ID %]'><img border='0'  src='/xvb/images/vb_edit.png' alt='tarif info' /></a>
 			</td>
 		</tr>
 		<tr>

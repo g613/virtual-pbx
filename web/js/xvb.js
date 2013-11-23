@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.66 2013-07-07 19:50:01 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.68 2013-11-13 15:38:40 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -321,21 +321,31 @@ function ShowPlayer( file ) {
 	el.style.visibility='visible';
 	var div_id = document.getElementById('center');
 	var player_data = '';
-	var plugin = (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) ? navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin : 0;
-	if ( plugin ) {
-		// flash
-		player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td><object type="application/x-shockwave-flash" data="/xvb/js/flowplayer/ump3player_500x70.swf" height="70" width="470"><param name="wmode" VALUE="transparent" /><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="movie" value="/xvb/js/flowplayer/ump3player_500x70.swf" /><param name="FlashVars" value="way='+file+'&amp;swf=/xvb/js/flowplayer/ump3player_500x70.swf&amp;w=470&amp;h=70&amp;time_seconds=0&amp;autoplay=1&amp;q=&amp;skin=white&amp;volume=90&amp;comment=Voice messages" /></object></td></tr></table>';
-	} else {
+	
+	var audio  = document.createElement("audio");
+	var canPlayMP3 = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/mpeg") !== "");
+	var canPlayWAV = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/x-wav") !== "");
+
+	if ( canPlayMP3 || canPlayWAV ) {
 		// html5: fixme - codec support
 		var wav_file = '';
-		if (navigator.userAgent.indexOf("Firefox")!=-1) {
+		if (canPlayWAV) {
 			wav_file = file.replace("wav?media=mp3;","wav?");
 			wav_file = wav_file.replace("=mp3","=wav");
 		} else {
 			wav_file = file;
 		}
 		player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+	} else {
+		var plugin = (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) ? navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin : 0;
+		if ( plugin ) {
+			// flash
+			player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td><object type="application/x-shockwave-flash" data="/xvb/ump3player.swf" height="70" width="470"><param name="wmode" VALUE="transparent" /><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="movie" value="/xvb/ump3player.swf" /><param name="FlashVars" value="way='+file+'&amp;swf=/xvb/ump3player.swf&amp;w=470&amp;h=70&amp;time_seconds=0&amp;autoplay=1&amp;q=&amp;skin=white&amp;volume=90&amp;comment=Voice messages" /></object></td></tr></table>';
+		} else {
+			player_data = 'Your browser not supported';
+		}
 	}
+
 	div_id.innerHTML = player_data;
 	div_id.style.display = 'block';
 
@@ -346,9 +356,12 @@ function HidePlayer() {
 	var el=document.getElementById('shadow');
 	el.style.visibility='hidden';
 	var div_id = document.getElementById('center');
-	var plugin = (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) ? navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin : 0;
-	if ( plugin ) {
-	} else {
+	
+	var audio  = document.createElement("audio");
+	var canPlayMP3 = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/mpeg") !== "");
+	var canPlayWAV = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/x-wav") !== "");
+
+	if ( canPlayMP3 || canPlayWAV ) {
 		div_id.innerHTML = '<audio tabindex="0" autoplay="autoplay" controls="controls"></audio>';
 	}
 	div_id.style.display = 'none';
@@ -616,9 +629,9 @@ function click2call_win( server, key, ac, lang ) {
 	WinPop=window.open("","click2call","width=450,height=200,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
 	WinPop.document.write('<html>\n<head><title>Click2Call - XVB VirtualPBX</title>\n</head>\n<body><center><form method="post" action="'+server+'/c2c"><input type="hidden" value="'+key+'" name="key"><input type="hidden" value="'+ac+'" name="ac">');
 	if ( lang == 'ru' ) {
-		WinPop.document.write('<h2>Заказ звонка</h2><input type="text" size="25" name="ph" placeholder="введите Ваш номер телефона"><br/><br/><input value="заказать звонок" type="submit">');
+		WinPop.document.write('<h2>Заказ звонка</h2><input type="text" size="25" name="ph" placeholder="введите Ваш номер телефона"><br/><br/><input value="заказать звонок" type="submit"><input type="hidden" name="message" value="<center>Запрос обработан. Ожидайте звонка.</center>">');
 	} else {
-		WinPop.document.write('<h2>Order a Call</h2><input type="text" size="25" name="ph" placeholder="enter your phone here"><br/><br/><input value="order a call" type="submit">');
+		WinPop.document.write('<h2>Order a Call</h2><input type="text" size="25" name="ph" placeholder="enter your phone here"><br/><br/><input value="order a call" type="submit"><input type="hidden" name="message" value="<center>Please wait a call.</center>">');
 	}
 	WinPop.document.write('</form></body></html>');
 	WinPop.document.close();
@@ -633,9 +646,9 @@ function click2call_code( server, key, ac, lang ) {
 
 	WinPop.document.write('<html><title>Click2Call - code</title><body><p><small>&lt;script language="JavaScript"&gt;function click2call_win(){var ScreenWidth=window.screen.width; placementx=ScreenWidth/2-220; placementy=200;WinPop=window.open("","click2call","width=450,height=200, toolbar=no,location=no,directories=no,status=no, scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy); WinPop.document.write(\'&lt;html&gt;&lt;head&gt;&lt;title&gt;Click2Call - XVB VirtualPBX&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;center&gt;&lt;form method="post" action="'+server+'/c2c"&gt;&lt;input type="hidden" value="'+key+'" name="key"&gt;&lt;input type="hidden" value="'+ac+'" name="ac"&gt;\');');
 	if ( lang == 'ru' ) {
-		WinPop.document.write('WinPop.document.write(\'&lt;h2&gt;Заказ звонка&lt;/h2&gt;&lt;input type="text" size="25" name="ph" placeholder="введите Ваш номер телефона"&gt;&lt;br/&gt;&lt;br/&gt;&lt;input value="заказать звонок" type="submit"&gt;\');');
+		WinPop.document.write('WinPop.document.write(\'&lt;h2&gt;Заказ звонка&lt;/h2&gt;&lt;input type="text" size="25" name="ph" placeholder="введите Ваш номер телефона"&gt;&lt;br/&gt;&lt;br/&gt;&lt;input value="заказать звонок" type="submit"&gt;&lt;input type="hidden" name="message" value="&lt;center&gt;Запрос обработан. Ожидайте звонка.&lt;/center&gt;"&gt;\');');
 	} else {
-		WinPop.document.write('WinPop.document.write(\'&lt;h2&gt;Order a Call&lt;/h2&gt;&lt;input type="text" size="25" name="ph" placeholder="enter your phone here"&gt;&lt;br/&gt;&lt;br/&gt;&lt;input value="order a call" type="submit"&gt;\');');
+		WinPop.document.write('WinPop.document.write(\'&lt;h2&gt;Order a Call&lt;/h2&gt;&lt;input type="text" size="25" name="ph" placeholder="enter your phone here"&gt;&lt;br/&gt;&lt;br/&gt;&lt;input value="order a call" type="submit"&gt;&lt;input type="hidden" name="message" value="&lt;center&gt;Please wait a call.&lt;/center&gt;"&gt;\');');
 	}
 	WinPop.document.write('WinPop.document.write(\'&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;\');WinPop.document.close();}&lt;/script&gt;&lt;a title="click2call" href="#" onclick="click2call_win()"&gt;&lt;img border="0" src="https://virtual-pbx.googlecode.com/files/callme.gif" alt="callme" /&gt;&lt;/a&gt;</small></p></body></html>');
 	WinPop.document.close();
