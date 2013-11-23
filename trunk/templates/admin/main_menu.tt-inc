@@ -6,6 +6,8 @@
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='ai?action=partner_list'>Partners</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=did_list_sipdomain'>SIP-Domains</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=did_list'>Private DIDs</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=did_attr_list'>DIDs attr</a>

@@ -11,6 +11,9 @@
 				<a class='headers' href='ai?action=partner_list'>Partners</a>
 			</td>
 			<td>
+				<a class='headers' href='?action=did_list_sipdomain'>SIP-Domains</a>
+			</td>
+			<td>
 				<a class='headers' href='?action=did_list'>Private DIDs</a>
 			</td>
 			<td>
