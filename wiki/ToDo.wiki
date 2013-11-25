@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- Поддержка переменных в GotoID в поле внутренний номер</font>
+
 <font color='green'>+ Пре-идентификация для AGI ( не спрашивать AC для несвоих номеров )</font> ( 17.11.2013 / build 7721 )
 
 <font color='green'>+ Возможность идентификации фходящих по sip-домену</font> ( 07.11.2013 / build 7694 )
