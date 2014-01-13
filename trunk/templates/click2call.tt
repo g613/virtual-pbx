@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.6 2013-10-05 07:53:28 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.10 2014-01-07 10:45:46 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -14,6 +14,12 @@
 	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
 	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
+	<script language="JavaScript">
+		var e_list = [];
+		[% FOREACH vb = VB_LIST %]
+		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | html %]','[% vb.NAME | html %]'];
+		[% END %]
+	</script>
 </head>
 
 <body onLoad="XVBInit()">
@@ -51,13 +57,20 @@
 		<tr class='list_data'>
 			<th>Link</th>
 			<th>Extension</th>
+			<th>Max calls</th>
 			<th>Actions</th>
 		</tr>
 		[% FOREACH c2c = C2C_LIST %]
 		<tr align='center' class='nocolor' id='d-tr-[% c2c.ID %]'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 			<td align='left'>https://[% USER_CREDS.DOWNLOAD_IP %]/c2c?key=[% c2c.SECRET | html %]&ac=[% USER_CREDS.ACCESS_CODE %]&ph=<b>&lt;phone number&gt;</b></td>
-			<td><input class='in_t0' size="20" name='redir_to' type'text' value='[% c2c.EXTENSION | html %]'></td>
+			<td>
+				<input class='in_t0' size="16" name='redir_to' type'text' value='[% c2c.EXTENSION | html %]'>
+				<script language="JavaScript">
+					exten_icon( '[% c2c.EXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+				</script>
+			</td>
+			<td><input class='in_t0' size="5" name='call_limit' type'text' value='[% c2c.CALL_LIMIT | html %]'></td>
 			<td>
 				<input type='hidden' value='[% c2c.ID %]' name='data_id'>
 				<input type='hidden' value='[% c2c.SECRET %]' name='c2c_sec'>
@@ -65,7 +78,10 @@
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<a title='delete click2call link' href='?action=c2c_del&data_id=[% c2c.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% c2c.ID %]')"><img border='0' src='/xvb/images/vb_del.png' alt='del' /></a>&nbsp;&nbsp;
 				<a title='Click2Call code' href='#' onclick="click2call_code('https://[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','en')"><img border='0' src='/xvb/images/run.png' alt='Click2Call code' /></a>&nbsp;&nbsp;
-				<a title='Click2Call' href='#' onclick="click2call_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','en')"><img border='0' src='/xvb/images/phone.png' alt='test Click2Call' /></a>
+				<a title='Click2Call' href='#' onclick="click2call_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','en')"><img border='0' src='/xvb/images/phone.png' alt='test Click2Call' /></a>&nbsp;&nbsp;
+				<script language='JavaScript'>
+					stat_icon( '[% c2c.EXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'Click2Call', 'statistics' );
+				</script>
 				<span class='addon_info' id='in_t_id-[% c2c.ID %]'>
 				<script language='JavaScript'>
 					writeUpdateLinks( 'save changes' );
@@ -82,7 +98,8 @@
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
 			<td></td>
-			<td><input size="20" name='redir_to' type='text'></td>
+			<td><input size="16" name='redir_to' type='text'></td>
+			<td><input size="5" name='call_limit' type'text'></td>
 			<td>
 				<input type='hidden' value='c2c_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
