@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color="red">- Расписание работы маршрутов</font>
+
 <font color='green'>+ Добавить возможность задания максимального количества звонков для click2call</font> ( 07.01.2014 / build 7777 )
 
 <font color='green'>+ Добавить sysstatus для ai интерфейса</font> ( 21.12.2013 / build 7735 )
