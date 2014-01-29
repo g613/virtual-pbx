@@ -37,8 +37,8 @@ Requires: perl(Gearman::Worker)
 Requires: perl(Authen::SASL)
 
 %description
-The virtual-pbx application is intended for processing incoming/outgoing calls and rapid organization IVR menu.
-also provides an isolated environment (numbered plan, routing calls, institute phones and so forth. )
+The XVB virtual pbx application is intended for processing incoming/outgoing calls and rapid organization 
+IVR menu. also provides an isolated environment (numbered plan, routing calls, institute phones and so forth.)
 for multiple users.
 
 Virtual-pbx application include:
@@ -272,7 +272,7 @@ mv 3rdparty $RPM_BUILD_ROOT/%CORE_DIR/
 # clean CVS tree
 #
 cd $RPM_BUILD_ROOT/
-find -name CVS -type d | xargs rm -rf
+find . -name CVS -type d | xargs rm -rf
 cd - > /dev/null
 
 #
@@ -292,8 +292,8 @@ find $RPM_BUILD_ROOT/%CORE_DIR/templates -name 'act_extstat.tt' -type f |
 
 export XVB_VERSION=%{release}
 cd $RPM_BUILD_ROOT/%CORE_DIR/templates
-find -name '*.tt' -exec perl ../contrib/utils/build/html_clean.pl {} ';'
-find -name '*.bak' -exec rm -f {} ';'
+find . -name '*.tt' -exec perl ../contrib/utils/build/html_clean.pl {} ';'
+find . -name '*.bak' -exec rm -f {} ';'
 ln -s xvb.RU-Male xvb.RU-Female
 ln -s . xvb.RU-legacy/xvb.RU-Male
 ln -s . xvb.RU-legacy/xvb.RU-Female
@@ -315,7 +315,7 @@ rm -f $RPM_BUILD_ROOT/%CORE_DIR/contrib/Diagram.dia
 # Unpack sounds
 #
 cd $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds
-find -name '*.tgz' -exec tar -xzvf {} ';'
+find . -name '*.tgz' -exec tar -xzvf {} ';'
 rm $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds/*.tgz
 
 ####################################################
@@ -506,6 +506,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 %attr(440,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/*.conf
 %attr(755,root,root) %CORE_DIR/contrib/utils/backup_restore.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/mc_view.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/user_counters.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/check_updates.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/icecast-db-init.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/google-voice-search.pl
@@ -553,6 +554,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 %attr(755,root,root) %CORE_DIR/contrib/utils/webhelper.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/sys_status.sh
 %attr(755,root,root) %CORE_DIR/contrib/utils/tts-gen.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/node_diag.pl
 %CORE_DIR/contrib/asterisk/feautures.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.2 2013-03-11 15:08:03 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.5 2014-01-29 19:34:04 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -8,6 +8,12 @@
 	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
 	[% END %]
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script language="JavaScript">
+		var e_list = [];
+		[% FOREACH vb = VB_LIST %]
+		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | locale_msg %]','[% vb.NAME | html %]'];
+		[% END %]
+	</script>
 </head>
 
 <body onLoad="XVBInit()">
@@ -30,6 +36,7 @@
 			<th>Длительность</th>
 			<th>Имя маршрута</th>
 			<th>Исходящий АОН</th>
+			<th>Расписание</th>
 			<th>Шлюз</th>
 			<th>Действия</th>
 		</tr>
@@ -40,10 +47,16 @@
 			<td><input class='in_t0' size="6" name='r_PRIORITY' type'text' value='[% r.PRIORITY | html %]'></td>
 			<td><input class='in_t0' size="15" name='r_PATTERN' type='text' value="[% r.PATTERN | html %]"></td>
 			<td><input class='in_t0' size="18" name='r_SUBSTR' type='text' value="[% r.SUBSTR | html %]"></td>
-			<td><input class='in_t0' size="18" name='r_EXT_NUMBER' type='text' value="[% r.EXT_NUMBER | html %]"></td>
+			<td><input class='in_t0' size="14" name='r_EXT_NUMBER' type='text' value="[% r.EXT_NUMBER | html %]"></td>
 			<td><input class='in_t0' size="6" name='r_TLIMIT' type='text' value="[% r.TLIMIT | html %]"></td>
-			<td><input class='in_t0' size="16" name='r_DESCRIPTION' type='text' value="[% r.DESCRIPTION | html %]"></td>
+			<td><input class='in_t0' size="13" name='r_DESCRIPTION' type='text' value="[% r.DESCRIPTION | html %]"></td>
 			<td><input class='in_t0' size="12" name='r_DEFCID' type='text' value="[% r.DEFCID | html %]"></td>
+			<td align='left'>
+				<input class='in_t0' size="9" name='r_SCHEDULE_EXT' type='text' value="[% r.SCHEDULE_EXT | html %]">
+				<script language="JavaScript">
+					exten_icon( '[% r.SCHEDULE_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
+				</script>
+			</td>
 			<td>
 				<select class='in_t0' name="r_PEER_ID">
 				[% FOREACH p = PEERS %]
@@ -76,10 +89,11 @@
 			<td><input size="6" name='r_PRIORITY' type'text'></td>
 			<td><input size="15" name='r_PATTERN' type='text'></td>
 			<td><input size="18" name='r_SUBSTR' type='text'></td>
-			<td><input size="18" name='r_EXT_NUMBER' type='text'></td>
+			<td><input size="14" name='r_EXT_NUMBER' type='text'></td>
 			<td><input size="6" name='r_TLIMIT' type='text'></td>
-			<td><input size="16" name='r_DESCRIPTION' type='text'></td>
+			<td><input size="13" name='r_DESCRIPTION' type='text'></td>
 			<td><input size="12" name='r_DEFCID' type='text'></td>
+			<td align='left'><input size="10" name='r_SCHEDULE_EXT' type='text'></td>
 			<td>
 				<select name="r_PEER_ID">
 				[% FOREACH p = PEERS %]
