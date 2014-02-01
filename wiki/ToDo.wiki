@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color="red">- Новый формат для tts кеша</font>
+
 <font color="green">+ Расписание работы маршрутов</font> ( 29.01.2014 / build 7818 )
 
 <font color='green'>+ Добавить возможность задания максимального количества звонков для click2call</font> ( 07.01.2014 / build 7777 )
