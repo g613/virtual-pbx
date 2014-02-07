@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.3 2013-03-11 15:08:03 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.4 2014-02-05 11:40:16 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Детализация звонка - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -41,15 +41,18 @@
 		
 		[% FOREACH msg = CDR_LIST %]
 			<tr class='nocolor' align='center'>
-				<td align='center'>[% msg.CDR_DATE | html %]</td>
-				<td align='center'>[% msg.CALLER_ID | html %]</td>
+				<td>[% msg.CDR_DATE | html %]</td>
+				<td>[% msg.CALLER_ID | html %]</td>
 				<td>[% msg.CDR_DURATION | duration_str %]</td>
+				<td align='left'>
+				&nbsp;
 				[% IF msg.EXT_ID %]
-				<td>&nbsp;<a href='?action=vb_view&id=[% msg.EXT_ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
+				<a href='?action=vb_view&id=[% msg.EXT_ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a>
 				[% ELSE %]
-				<td>[% msg.EXT_NUMBER | html %]</td>
+				[% msg.EXT_NUMBER | html %]
 				[% END %]
-				<td>[% msg.TYPE | locale_msg %]</td>
+				</td>
+				<td align='left'>[% msg.TYPE | locale_msg %]</td>
 				<td>
 					[% IF msg.EXT_ID %]
 					<a href='?action=cid_add&id=[% msg.EXT_ID %]&cid_list_type=1&cid_type=1&uniq=[% USER_CREDS.UNIQ %]&cid=[% msg.CALLER_ID | html %]&description=for call at [% msg.CDR_DATE | html %]' title='Добавить номер звонящего в черный список для номера [% msg.EXT_NUMBER | html %]'><img border='0' src='/xvb/images/vb_edit_black.png' alt='add' /></a>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.5 2014-01-29 19:34:04 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.6 2014-02-05 11:40:16 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -51,7 +51,7 @@
 			<td><input class='in_t0' size="6" name='r_TLIMIT' type='text' value="[% r.TLIMIT | html %]"></td>
 			<td><input class='in_t0' size="13" name='r_DESCRIPTION' type='text' value="[% r.DESCRIPTION | html %]"></td>
 			<td><input class='in_t0' size="12" name='r_DEFCID' type='text' value="[% r.DEFCID | html %]"></td>
-			<td align='left'>
+			<td align='left' nowrap='nowrap'>
 				<input class='in_t0' size="9" name='r_SCHEDULE_EXT' type='text' value="[% r.SCHEDULE_EXT | html %]">
 				<script language="JavaScript">
 					exten_icon( '[% r.SCHEDULE_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );

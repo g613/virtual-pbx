@@ -77,7 +77,7 @@
 			<td><input class='in_t0' size="6" name='r_TLIMIT' type='text' value="[% r.TLIMIT | html %]"></td>
 			<td><input class='in_t0' size="20" name='r_DESCRIPTION' type='text' value="[% r.DESCRIPTION | html %]"></td>
 			<td><input class='in_t0' size="12" name='r_DEFCID' type='text' value="[% r.DEFCID | html %]"></td>
-			<td align='left'>
+			<td align='left' nowrap='nowrap'>
 				<input class='in_t0' size="9" name='r_SCHEDULE_EXT' type='text' value="[% r.SCHEDULE_EXT | html %]">
 				<script language="JavaScript">
 					exten_icon( '[% r.SCHEDULE_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'extension info' );

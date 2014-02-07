@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.19 2013-03-11 15:07:57 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.20 2014-02-05 11:40:15 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -83,10 +83,10 @@
 		[% ELSE %]
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
-			<td align='center'>[% msg.CDR_DATE | html %]</td>
-			<td align='center'>[% msg.CALLER_ID | html %]</td>
+			<td>[% msg.CDR_DATE | html %]</td>
+			<td>[% msg.CALLER_ID | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
-			<td>[% msg.TYPE | html %]</td>
+			<td align='left'>[% msg.TYPE | html %]</td>
 			<td align='left'>[% msg.DATA | html %]</td>
 		</tr>
 		[% END %]
