@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.10 2014-01-07 10:45:46 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.11 2014-02-05 07:35:09 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -64,7 +64,7 @@
 		<tr align='center' class='nocolor' id='d-tr-[% c2c.ID %]'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 			<td align='left'>https://[% USER_CREDS.DOWNLOAD_IP %]/c2c?key=[% c2c.SECRET | html %]&ac=[% USER_CREDS.ACCESS_CODE %]&ph=<b>&lt;phone number&gt;</b></td>
-			<td>
+			<td align='left' nowrap='nowrap'>
 				<input class='in_t0' size="16" name='redir_to' type'text' value='[% c2c.EXTENSION | html %]'>
 				<script language="JavaScript">
 					exten_icon( '[% c2c.EXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
@@ -98,7 +98,7 @@
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
 			<td></td>
-			<td><input size="16" name='redir_to' type='text'></td>
+			<td align='left'><input size="16" name='redir_to' type='text'></td>
 			<td><input size="5" name='call_limit' type'text'></td>
 			<td>
 				<input type='hidden' value='c2c_add' name='action'>

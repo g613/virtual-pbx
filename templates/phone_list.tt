@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.28 2014-01-29 19:34:02 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.29 2014-02-05 07:35:09 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -132,7 +132,7 @@
 				[% END %]
 				</select>
 			</td>
-			<td align='left'>
+			<td align='left' nowrap='nowrap'>
 				<input class='in_t0' size="9" name='REC_EXT' type='text' value="[% p.REC_EXT | html %]">
 				<script language="JavaScript">
 					exten_icon( '[% p.REC_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'extension info' );

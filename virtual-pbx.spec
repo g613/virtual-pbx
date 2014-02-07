@@ -217,6 +217,7 @@ mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/doc
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/db
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/recordings
+mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/tts
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/podcasts
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/data
 
@@ -555,12 +556,14 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 %attr(755,root,root) %CORE_DIR/contrib/utils/sys_status.sh
 %attr(755,root,root) %CORE_DIR/contrib/utils/tts-gen.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/node_diag.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/tts_clean.pl
 %CORE_DIR/contrib/asterisk/feautures.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*
 %CORE_DIR/contrib/odbc/*
 %CORE_DIR/contrib/fail2ban/*
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/recordings
+%attr(775,asterisk,asterisk) %dir %CORE_DIR/tts
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/podcasts
 %attr(755,root,root) %CORE_DIR/contrib/utils/file2moh.pl
 
