@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.251 2013-10-05 18:19:41 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.253 2014/02/21 19:56:24 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -471,7 +471,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Send notify to: </td>
+				<td>Send new message notify to: </td>
 				<td>
 					<select name="SENDNOTIFYEMAIL">
 					[% FOREACH ca = NOTIFY_TYPES %]
@@ -662,7 +662,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Send notify to: </td>
+					<td>Send new message notify to: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
@@ -900,7 +900,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Send notify to: </td>
+					<td>Send new message notify to: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
@@ -969,7 +969,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Send notify to: </td>
+					<td>Send new message notify to: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
@@ -1080,7 +1080,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Send notify to: </td>
+					<td>Send new message notify to: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
@@ -1263,7 +1263,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Send notify to: </td>
+					<td>Send new message notify to: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
@@ -2003,7 +2003,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Send notify to: </td>
+					<td>Send new message notify to: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
@@ -2111,7 +2111,7 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td>Send notify to: </td>
+					<td>Send new message notify to: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]

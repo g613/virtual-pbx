@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.2 2013-02-20 15:41:11 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.3 2014/02/14 04:04:34 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 

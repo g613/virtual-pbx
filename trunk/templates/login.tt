@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: login.tt,v 1.20 2013-02-02 19:17:47 gosha Exp $ -->
+<!-- $Id: login.tt,v 1.21 2014/02/14 04:04:33 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - login</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
