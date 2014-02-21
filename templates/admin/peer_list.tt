@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.1 2012-10-13 20:24:03 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.2 2014/02/14 04:04:34 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]

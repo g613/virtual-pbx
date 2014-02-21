@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: rss.tt,v 1.20 2013-02-21 12:28:26 gosha Exp $ -->
+<!-- $Id: rss.tt,v 1.21 2014/02/14 04:04:33 gosha Exp $ -->
 <rss version="0.91">
 <channel>
 	<title>VirtualPBX RSS feed  Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>

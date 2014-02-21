@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.14 2013-10-26 18:59:21 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.16 2014/02/21 19:56:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -572,7 +572,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Отправить оповещение: </td>
+					<td>Уведомить о новом сообщении: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
@@ -804,7 +804,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Отправить оповещение: </td>
+					<td>Уведомить о новом сообщении: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
@@ -1082,7 +1082,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Отправить оповещение: </td>
+					<td>Уведомить о новом сообщении: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
@@ -1159,7 +1159,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Отправить оповещение: </td>
+					<td>Уведомить о новом сообщении: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
@@ -1285,7 +1285,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Отправить оповещение: </td>
+					<td>Уведомить о новом сообщении: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
@@ -1486,7 +1486,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Отправить оповещение: </td>
+					<td>Уведомить о новом сообщении: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
@@ -2367,7 +2367,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Отправить оповещение: </td>
+					<td>Уведомить о новом сообщении: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
@@ -2484,7 +2484,7 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td>Отправить оповещение: </td>
+					<td>Уведомить о новом сообщении: </td>
 					<td>
 						<select name="SENDNOTIFYEMAIL">
 						[% FOREACH ca = NOTIFY_TYPES %]
