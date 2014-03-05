@@ -1,6 +1,10 @@
 #labels Featured
 = ToDo list =
 
+<font color="green">+ время последней регистрации телефона хранить</font> ( 03.03.2014/ build 7950 )
+
+<font color="green">+ добавить псевдо переменную LAST_DIAL_STATUS</font> ( 02.03.2014 / build 7948 )
+
 <font color="green">+ Новый формат для tts кеша</font> ( 02.02.2014 / build 7860 )
 
 <font color="green">+ Расписание работы маршрутов</font> ( 29.01.2014 / build 7818 )
