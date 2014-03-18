@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- удаление/просмотр/загрузка кастомных системных звуковых файлов не только из .tgz бекапа</font>
+
 <font color="green">+ время последней регистрации телефона хранить</font> ( 03.03.2014/ build 7950 )
 
 <font color="green">+ добавить псевдо переменную LAST_DIAL_STATUS</font> ( 02.03.2014 / build 7948 )
