@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.4 2014/02/14 04:04:34 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.5 2014/03/03 19:37:37 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -94,7 +94,7 @@
 				[% ELSE %]
 					src=''
 				[% END %]
-				title='[% p.REG_STATUS %], Expired date: [% p.REG_EXPIRED | html %], IP: [% p.ipaddr | html %], UA: [% p.useragent | html %]' alt='[% p.REG_STATUS %]' />
+				title='[% p.REG_STATUS %], Reg date: [% p.REG_DATE | html %], Expired date: [% p.REG_EXPIRED | html %], IP: [% p.ipaddr | html %], UA: [% p.useragent | html %]' alt='[% p.REG_STATUS %]' />
 			</td>
 			<td>[% p.callerid | html %]</td>
 			<td>[% p.DESCRIPTION | html %]</td>

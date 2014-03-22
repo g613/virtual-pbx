@@ -606,7 +606,7 @@ create table VPBX_SIPPEERS (
 	defaultuser varchar(80) NOT NULL default '',
 	fullcontact varchar(80) NOT NULL DEFAULT '',
 	regserver varchar(100) default NULL,
-	useragent varchar(20) default NULL,
+	useragent varchar(60) default NULL,
 
 	videosupport		enum('yes','no','always') DEFAULT 'yes',
 	nat					varchar(5) DEFAULT NULL,
@@ -630,6 +630,7 @@ create table VPBX_SIPPEERS (
 
 	NEED_REG		INT(1)			not null default 0,
 	REG_EXPIRE		INT(6)			not null default 0,
+	REG_TIME		INT(11)			NOT NULL default 0,
 	INC_EXT			VARCHAR(255)	not null default '0',
 	PICKUP_GROUPS	VARCHAR(255)	not null default '',
 	PEER_TYPE		INT(1)			not null default 0,
@@ -642,6 +643,21 @@ create table VPBX_SIPPEERS (
 	PRIMARY KEY (DATA_ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+CREATE OR replace view VPBX_SIPPEERS_PHONES 
+	as
+select
+	*
+from
+	VPBX_SIPPEERS
+where PEER_TYPE = 0;
+
+CREATE OR replace view VPBX_SIPPEERS_PEERS
+	as
+select
+	*
+from
+	VPBX_SIPPEERS
+where PEER_TYPE = 1;
 
 create table VPBX_ROUTES (
 	DATA_ID			INT(16) NOT NULL AUTO_INCREMENT,
@@ -2240,7 +2256,7 @@ INSERT INTO VPBX_GROUPS (GROUP_ID,GROUP_NAME,SERVER_ID,CUSTOM_ROUTE,CUSTOM_FILES
 INSERT INTO VPBX_ACCOUNTS(ID,GROUP_ID,VOICENUMBER,ACCESS_CODE,STATUS) values(0,1,'ANY0NE','ANY0NE',0);
 UPDATE VPBX_ACCOUNTS set ID=0 where ACCESS_CODE='ANY0NE' and VOICENUMBER='ANY0NE';
 
-insert into VPBX_SEQUENCES(SEC_NAME,SEC_VAL) values('ACCESS_CODE',10000);
+insert into VPBX_SEQUENCES(SEC_NAME,SEC_VAL) values('ACCESS_CODE',10000+(ROUND(RAND()*1000)));
 insert into VPBX_SEQUENCES(SEC_NAME,SEC_VAL) values('PHONEID',unix_timestamp());
 
 INSERT INTO VPBX_NOTIFY_TYPE(NOTIFY_ID,DESCRIPTION,NAME) VALUES(0, 'Not send', 'none' );
@@ -2262,8 +2278,16 @@ insert into VPBX_DIDS_ATTR(DID,LANG_ID) VALUES( '613', 0 );
 
 insert into VPBX_SIPPEERS(DATA_ID,name,context,SUBSCR_ID,DESCRIPTION,PEER_TYPE) values(-1,'%SYSTEM%','default',0,'system',1);
 
--- OPENSER REGISTRAR
-create or replace view subscriber  ( id, username, domain, password, email_address, ha1, ha1b, rpid )
+
+-- KAMAILIO
+CREATE TABLE version (
+    table_name VARCHAR(32) NOT NULL,
+    table_version INT UNSIGNED DEFAULT 0 NOT NULL,
+    CONSTRAINT table_name_idx UNIQUE (table_name)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+INSERT INTO version (table_name, table_version) values( 'subscriber', 6 );
+CREATE OR replace view subscriber  ( id, username, domain, password, email_address, ha1, ha1b, rpid )
 	as
 select
 	DATA_ID, 
@@ -2276,14 +2300,203 @@ select
 	NULL
 from
 	VPBX_SIPPEERS
-where type='friend';
+where type='friend' and PEER_TYPE = 0;
 
-create table version (
-		table_name      VARCHAR(255),
-		table_version   int(10)
+INSERT INTO version (table_name, table_version) values( 'location', 6 );
+CREATE TABLE location (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    ruid VARCHAR(64) DEFAULT '' NOT NULL,
+    username VARCHAR(64) DEFAULT '' NOT NULL,
+    domain VARCHAR(64) DEFAULT NULL,
+    contact VARCHAR(255) DEFAULT '' NOT NULL,
+    received VARCHAR(128) DEFAULT NULL,
+    path VARCHAR(512) DEFAULT NULL,
+    expires DATETIME DEFAULT '2030-05-28 21:32:15' NOT NULL,
+    q FLOAT(10,2) DEFAULT 1.0 NOT NULL,
+    callid VARCHAR(255) DEFAULT 'Default-Call-ID' NOT NULL,
+    cseq INT(11) DEFAULT 1 NOT NULL,
+    last_modified DATETIME DEFAULT '1900-01-01 00:00:01' NOT NULL,
+    flags INT(11) DEFAULT 0 NOT NULL,
+    cflags INT(11) DEFAULT 0 NOT NULL,
+    user_agent VARCHAR(255) DEFAULT '' NOT NULL,
+    socket VARCHAR(64) DEFAULT NULL,
+    methods INT(11) DEFAULT NULL,
+    instance VARCHAR(255) DEFAULT NULL,
+    reg_id INT(11) DEFAULT 0 NOT NULL,
+    CONSTRAINT ruid_idx UNIQUE (ruid)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-insert into version values( 'subscriber', 6 );
+CREATE INDEX account_contact_idx ON location (username, domain, contact);
+CREATE INDEX expires_idx ON location (expires);
+
+INSERT INTO version (table_name, table_version) values ('location_attrs',1);
+CREATE TABLE location_attrs (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    ruid VARCHAR(64) DEFAULT '' NOT NULL,
+    username VARCHAR(64) DEFAULT '' NOT NULL,
+    domain VARCHAR(64) DEFAULT NULL,
+    aname VARCHAR(64) DEFAULT '' NOT NULL,
+    atype INT(11) DEFAULT 0 NOT NULL,
+    avalue VARCHAR(255) DEFAULT '' NOT NULL,
+    last_modified DATETIME DEFAULT '1900-01-01 00:00:01' NOT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE INDEX account_record_idx ON location_attrs (username, domain, ruid);
+CREATE INDEX last_modified_idx ON location_attrs (last_modified);
+
+INSERT INTO version (table_name, table_version) values ('presentity','3');
+CREATE TABLE presentity (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    username VARCHAR(64) NOT NULL,
+    domain VARCHAR(64) NOT NULL,
+    event VARCHAR(64) NOT NULL,
+    etag VARCHAR(64) NOT NULL,
+    expires INT(11) NOT NULL,
+    received_time INT(11) NOT NULL,
+    body BLOB NOT NULL,
+    sender VARCHAR(128) NOT NULL,
+    CONSTRAINT presentity_idx UNIQUE (username, domain, event, etag)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE INDEX presentity_expires ON presentity (expires);
+CREATE INDEX account_idx ON presentity (username, domain, event);
+
+INSERT INTO version (table_name, table_version) values ('active_watchers','11');
+CREATE TABLE active_watchers (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    presentity_uri VARCHAR(128) NOT NULL,
+    watcher_username VARCHAR(64) NOT NULL,
+    watcher_domain VARCHAR(64) NOT NULL,
+    to_user VARCHAR(64) NOT NULL,
+    to_domain VARCHAR(64) NOT NULL,
+    event VARCHAR(64) DEFAULT 'presence' NOT NULL,
+    event_id VARCHAR(64),
+    to_tag VARCHAR(64) NOT NULL,
+    from_tag VARCHAR(64) NOT NULL,
+    callid VARCHAR(255) NOT NULL,
+    local_cseq INT(11) NOT NULL,
+    remote_cseq INT(11) NOT NULL,
+    contact VARCHAR(128) NOT NULL,
+    record_route TEXT,
+    expires INT(11) NOT NULL,
+    status INT(11) DEFAULT 2 NOT NULL,
+    reason VARCHAR(64) NOT NULL,
+    version INT(11) DEFAULT 0 NOT NULL,
+    socket_info VARCHAR(64) NOT NULL,
+    local_contact VARCHAR(128) NOT NULL,
+    from_user VARCHAR(64) NOT NULL,
+    from_domain VARCHAR(64) NOT NULL,
+    updated INT(11) NOT NULL,
+    updated_winfo INT(11) NOT NULL,
+    CONSTRAINT active_watchers_idx UNIQUE (callid, to_tag, from_tag)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE INDEX active_watchers_expires ON active_watchers (expires);
+CREATE INDEX active_watchers_pres ON active_watchers (presentity_uri, event);
+CREATE INDEX updated_idx ON active_watchers (updated);
+CREATE INDEX updated_winfo_idx ON active_watchers (updated_winfo, presentity_uri);
+
+INSERT INTO version (table_name, table_version) values ('watchers','3');
+CREATE TABLE watchers (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    presentity_uri VARCHAR(128) NOT NULL,
+    watcher_username VARCHAR(64) NOT NULL,
+    watcher_domain VARCHAR(64) NOT NULL,
+    event VARCHAR(64) DEFAULT 'presence' NOT NULL,
+    status INT(11) NOT NULL,
+    reason VARCHAR(64),
+    inserted_time INT(11) NOT NULL,
+    CONSTRAINT watcher_idx UNIQUE (presentity_uri, watcher_username, watcher_domain, event)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+INSERT INTO version (table_name, table_version) values ('xcap','4');
+CREATE TABLE xcap (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    username VARCHAR(64) NOT NULL,
+    domain VARCHAR(64) NOT NULL,
+    doc MEDIUMBLOB NOT NULL,
+    doc_type INT(11) NOT NULL,
+    etag VARCHAR(64) NOT NULL,
+    source INT(11) NOT NULL,
+    doc_uri VARCHAR(255) NOT NULL,
+    port INT(11) NOT NULL,
+    CONSTRAINT doc_uri_idx UNIQUE (doc_uri)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE INDEX account_doc_type_idx ON xcap (username, domain, doc_type);
+CREATE INDEX account_doc_type_uri_idx ON xcap (username, domain, doc_type, doc_uri);
+CREATE INDEX account_doc_uri_idx ON xcap (username, domain, doc_uri);
+
+INSERT INTO version (table_name, table_version) values ('pua','7');
+CREATE TABLE pua (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    pres_uri VARCHAR(128) NOT NULL,
+    pres_id VARCHAR(255) NOT NULL,
+    event INT(11) NOT NULL,
+    expires INT(11) NOT NULL,
+    desired_expires INT(11) NOT NULL,
+    flag INT(11) NOT NULL,
+    etag VARCHAR(64) NOT NULL,
+    tuple_id VARCHAR(64),
+    watcher_uri VARCHAR(128) NOT NULL,
+    call_id VARCHAR(255) NOT NULL,
+    to_tag VARCHAR(64) NOT NULL,
+    from_tag VARCHAR(64) NOT NULL,
+    cseq INT(11) NOT NULL,
+    record_route TEXT,
+    contact VARCHAR(128) NOT NULL,
+    remote_contact VARCHAR(128) NOT NULL,
+    version INT(11) NOT NULL,
+    extra_headers TEXT NOT NULL,
+    CONSTRAINT pua_idx UNIQUE (etag, tuple_id, call_id, from_tag)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE INDEX expires_idx ON pua (expires);
+CREATE INDEX dialog1_idx ON pua (pres_id, pres_uri);
+CREATE INDEX dialog2_idx ON pua (call_id, from_tag);
+CREATE INDEX record_idx ON pua (pres_id);
+
+-- phone last reg time /asterisk
+delimiter //
+CREATE trigger ins_reg_time BEFORE UPDATE ON VPBX_SIPPEERS 
+FOR EACH ROW
+BEGIN
+	IF NEW.regseconds is not null THEN
+		IF NEW.regseconds > 0 THEN
+			SET NEW.REG_TIME = UNIX_TIMESTAMP();
+		END IF;
+	END IF;
+END;
+//
+delimiter ;
+
+-- phone last reg time kamailio
+delimiter //
+CREATE trigger ins_reg_time_kam_upd AFTER UPDATE ON location
+FOR EACH ROW
+BEGIN
+	UPDATE VPBX_SIPPEERS 
+		SET 
+			VPBX_SIPPEERS.useragent = new.user_agent, 
+			VPBX_SIPPEERS.REG_TIME=UNIX_TIMESTAMP(), 
+			regseconds=UNIX_TIMESTAMP(NEW.expires) 
+		where VPBX_SIPPEERS.name=NEW.username; 
+END;
+//
+delimiter ;
+delimiter //
+CREATE trigger ins_reg_time_kam_ins AFTER INSERT ON location
+FOR EACH ROW
+BEGIN
+	UPDATE VPBX_SIPPEERS 
+		SET 
+			VPBX_SIPPEERS.useragent = new.user_agent, 
+			VPBX_SIPPEERS.REG_TIME=UNIX_TIMESTAMP(), 
+			regseconds=UNIX_TIMESTAMP(NEW.expires) 
+		where VPBX_SIPPEERS.name=NEW.username; 
+END;
+//
+delimiter ;
 
 -- grants
 

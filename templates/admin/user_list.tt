@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Virtual PBX - users</title>
+	<title>Virtual PBX - tenants</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 </head>
@@ -23,7 +23,7 @@
 			<td align='left' width='20%'>
 			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
-			<td align='center'><h2>Users</h2></td>
+			<td align='center'><h2>Tenants</h2></td>
 			<td align='right' width='20%'>
 				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
 				[% INCLUDE version.tt %]
@@ -61,7 +61,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='10'>
-				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -90,7 +90,14 @@
 			[% END %]
 			</select>
 			</td>
-			<td colspan='4'></td>
+			<td>
+			<select name="f_status">
+			   	<option value="" selected>Any</option>
+				<option value="1">Active</option>
+				<option value="0">Locked</option>
+			</select>
+			</td>
+			<td colspan='3'></td>
 			<td>
 				<input type='hidden' value='user_list' name='action'>
 				<input value='search' type='submit'>
@@ -104,7 +111,7 @@
 				[% us.VOICENUMBER | html %]
 			</td>
 			<td>
-				<a title='view user profile' href='ui?phone=[% us.VOICENUMBER %]&ac=[% us.ACCESS_CODE %]&pw=[% us.PIN_CODE %][% us.PIN_CODE2 %]&action=user_info'>[% us.ACCESS_CODE | html %]</a>
+				<a title='view tenant profile' href='ui?phone=[% us.VOICENUMBER %]&ac=[% us.ACCESS_CODE %]&pw=[% us.PIN_CODE %][% us.PIN_CODE2 %]&action=user_info'>[% us.ACCESS_CODE | html %]</a>
 			</td>
 			<td align='left'>
 				[% us.FIRST_NAME | html %] [% us.LAST_NAME | html %]
@@ -141,15 +148,15 @@
 			[% END %]
 			</td>
 			<td>
-				<a title='delete user' href='?action=user_del&user_id=[% us.ID %]&from=[% MSG_FROM %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>&nbsp;&nbsp;
-				<a title='edit user settings' href='?ac=[% us.ACCESS_CODE %]&action=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='user info' /></a>
+				<a title='delete tenant' href='?action=user_del&user_id=[% us.ID %]&from=[% MSG_FROM %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>&nbsp;&nbsp;
+				<a title='edit tenant settings' href='?ac=[% us.ACCESS_CODE %]&action=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='tenant info' /></a>
 			</td>
 		</tr>
 		[% END %]
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='10'>
-				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -173,7 +180,7 @@
 				[% END %]
 				</select>
 				&nbsp;
-				<input value='&nbsp;&nbsp;Create new account&nbsp;&nbsp;' type='submit'>
+				<input value='&nbsp;&nbsp;Add tenant&nbsp;&nbsp;' type='submit'>
 				<input type='hidden' value='user_add' name='action'>
 			</td>
 		</tr>

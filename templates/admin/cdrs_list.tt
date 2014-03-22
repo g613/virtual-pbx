@@ -141,6 +141,7 @@
 					<option value="internal">internal</option>
 					<option value="callback">callback</option>
 					<option value="callblast">callblast</option>
+					<option value="click2call">click2call</option>
 					<option value="alarmclock">alarmclock</option>
 					<option value="service">service</option>
 				</select>

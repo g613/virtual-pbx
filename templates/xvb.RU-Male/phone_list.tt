@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.5 2014-02-05 07:35:10 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.6 2014/03/03 19:37:37 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -66,7 +66,7 @@
 				[% ELSE %]
 					src=''
 				[% END %]
-				title='[% p.REG_STATUS %], Окончание регистрации: [% p.REG_EXPIRED | html %], IP: [% p.ipaddr | html %], UA: [% p.useragent | html %]' alt='[% p.REG_STATUS %]' />
+				title='[% p.REG_STATUS %], Дата регистрации: [% p.REG_TIME | html %] ( окончание: [% p.REG_EXPIRED | html %] ), IP: [% p.ipaddr | html %], UA: [% p.useragent | html %]' alt='[% p.REG_STATUS %]' />
 			</td>
 			<td><input class='in_t0' size="10" name='callerid' type='text' value="[% p.callerid | html %]"></td>
 			<td><input class='in_t0' size="16" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"></td>

@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Virtual PBX - users</title>
+	<title>Virtual PBX - tenant info</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 </head>
@@ -23,7 +23,7 @@
 			<td align='left' width='20%'>
 			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
-			<td align='center'><h2>User info</h2></td>
+			<td align='center'><h2>Tenant info</h2></td>
 			<td align='right' width='20%'>
 				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
 				[% INCLUDE version.tt %]
@@ -57,7 +57,7 @@
 				</td>
 				<td>
 					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]&nbsp;&nbsp;
-					<a title='view user profile' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='view user profile' /></a>
+					<a title='view tenant profile' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='view tenant profile' /></a>
 				</td>
 			</tr>
 			<tr>
