@@ -1,0 +1,69 @@
+<html>
+<!-- $Id: sysmedia_list.tt,v 1.4 2014/03/18 19:12:18 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - SysMedia - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='100%' class='logo'>
+		<tr>
+			<td align='center'><h2>Системные звуковые файлы</h2></td>
+		</tr>
+	</table>
+	</p>
+	<p>
+	<table width='100%' class='list_data' id='d-tbl'>
+		<tr class='list_data'>
+			<th></th>
+			<th>Имя файла</th>
+			<th>Текст по умолчанию</th>
+		</tr>
+		
+		[% FOREACH f = SYSMEDIA %]
+		<tr align='left' class='nocolor' id='d-tr-[% f.file %]'>
+			<td>
+				[% IF f.uploaded %]
+				<a title='удалить загруженное' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=sysmedia_del&uniq=[% USER_CREDS.UNIQ %]&file=[% f.file %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% f.file %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+				[% END %]
+			</td>
+			<td>[% f.file | html %]</td>
+			<td>[% f.desc | html %]</td>
+		</tr>
+		[% END %]
+		
+		<tr><td colspan='3'>&nbsp;</td></tr>
+		
+		<tr align='left'>
+			<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+			<td nowrap='nowrap' colspan='3'>
+				<input type='hidden' name='action' value='sysmedia_add'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<select name="name">
+				[% FOREACH f = SYSMEDIA %]
+					<option value="[% f.file | html %]">[% f.file | html %]</option>
+				[% END %]
+				</select> 
+				<input type='file' name='file'>
+				<input type='submit' value='загрузить'>
+			</td>
+			</form>
+		</tr>
+		
+		<tr class='list_data'>
+			<td colspan='3'>&nbsp;</td>
+		</tr>
+	</table>
+	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</html>

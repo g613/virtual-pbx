@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.4 2014/02/14 04:04:34 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.6 2014/03/22 18:14:33 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs / Call Detail</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -53,7 +53,7 @@
 			<th>Duration</th>
 			<th>Extension</th>
 			<th>Type</th>
-			<th width='25%'>Data</th>
+			<th width='25%'><a href="?action=call_log&call_id=[% CDR_CALL_ID | html %]&a=msg_download" target="_blank" title="call logs">Data</a></th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>

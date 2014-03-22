@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.87 2013-11-04 12:42:57 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.88 2014/03/17 15:40:45 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -340,6 +340,11 @@ SipDomain: [% d.DOMAIN | html %]
 					</td>
 					<td>&nbsp;</td>
 				</tr>
+				[% IF USER_CREDS.CUSTOM_FILES %]
+				<tr>
+					<td colspan='2' align='left'>&nbsp;<h4><a href="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=sysmedia_list&uniq=[% USER_CREDS.UNIQ %]">System media files</a></h4></td>
+				</tr>
+				[% END %]
 			</table>
 			</td>
 			

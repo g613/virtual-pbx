@@ -1,0 +1,98 @@
+<html>
+<!-- $Id: sysmedia_list.tt,v 1.3 2014/03/18 12:01:05 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - SysMedia - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+			[% IF USER_CREDS.LOGO_HREF eq '' %]
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			[% ELSE %]
+				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+			[% END %]
+			</td>
+			<td align='center'><h2>System media files</h2></td>
+			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='list_data' id='d-tbl'>
+		<tr class='list_data'>
+			<th></th>
+			<th>File name</th>
+			<th>Default text</th>
+		</tr>
+		
+		[% FOREACH f = SYSMEDIA %]
+		<tr align='left' class='nocolor' id='d-tr-[% f.file %]'>
+			<td>
+				[% IF f.uploaded %]
+				<a title='delete custom file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=sysmedia_del&uniq=[% USER_CREDS.UNIQ %]&file=[% f.file %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% f.file %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+				[% END %]
+			</td>
+			<td>[% f.file | html %]</td>
+			<td>[% f.desc | html %]</td>
+		</tr>
+		[% END %]
+		<tr><td colspan='3'>&nbsp;</td></tr>
+		
+		<tr align='left'>
+			<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+			<td nowrap='nowrap' colspan='3'>
+				<input type='hidden' name='action' value='sysmedia_add'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<select name="name">
+				[% FOREACH f = SYSMEDIA %]
+					<option value="[% f.file | html %]">[% f.file | html %]</option>
+				[% END %]
+				</select> 
+				<input type='file' name='file'>
+				<input type='submit' value='upload'>
+			</td>
+			</form>
+		</tr>
+	</table>
+	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+
+	<p>
+	<table width='95%' class='bottom_hr'>
+		<tr align='center'>
+			<td>
+				<a class='headers' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+			</td>
+			<td>
+				<a class='headers' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
+			</td>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</html>
