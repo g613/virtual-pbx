@@ -1,7 +1,13 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Регулярные выражения в shortcut'aх телефонной книги</font>
+<font color='red'>- VM для  sip телефонов</font>
+
+<font color='red'>- Call forward для  sip телефонов</font>
+
+<font color='red'>- DND для  sip телефонов</font>
+
+<font color='green'>+ Регулярные выражения в shortcut'aх телефонной книги</font> ( 10.04.2014 / build 8020 )
 
 <font color='green'>+ в админ интерфейсе в СДР сделать поиск звонка по логам</font> ( 22.03.2014 / build 8005 )
 
