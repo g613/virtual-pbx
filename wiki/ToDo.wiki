@@ -1,11 +1,13 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- VM для  sip телефонов</font>
+<font color='red'>- Опциональный Ringing перед ответом</font>
 
-<font color='red'>- Call forward для  sip телефонов</font>
+<font color='green'>- VM для  sip телефонов</font> ( 19.04.2014 / build 8060 )
 
-<font color='red'>- DND для  sip телефонов</font>
+<font color='green'>- Call forward для  sip телефонов</font> ( 19.04.2014 / build 8060 )
+
+<font color='green'>- DND для  sip телефонов</font> ( 19.04.2014 / build 8060 )
 
 <font color='green'>+ Регулярные выражения в shortcut'aх телефонной книги</font> ( 10.04.2014 / build 8020 )
 
