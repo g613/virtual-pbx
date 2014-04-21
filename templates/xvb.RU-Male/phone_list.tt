@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.6 2014/03/03 19:37:37 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.11 2014/04/15 13:29:41 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -32,13 +32,14 @@
 	<p>
 	<table width='100%' class='list_data' id='d-tbl'>
 		<tr class='list_data'>
+			<th>&nbsp;</th>
 			<th>Логин</th>
 			<th>Пароль</th>
-			<th>&nbsp;</th>
 			<th>&nbsp;</th>
 			<th>Телефон</th>
 			<th>Имя пользователя</th>
 			<th>Исходящий АОН</th>
+			<th>Email</th>
 			<th>Запись</th>
 			<th>Сохранить запись в</th>
 			<th>Группы перехвата</th>
@@ -48,6 +49,21 @@
 		[% FOREACH p = PHONES %]
 		<tr align='center' class='nocolor' id='d-tr-[% p.DATA_ID %]'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+			<td align='left' nowrap='nowrap'>
+				<img 
+				[% IF p.REG_STATUS eq 'Registered' %]
+					src='/xvb/images/ball_green.png'
+				[% ELSE %]
+					src='/xvb/images/ball_red.png'
+				[% END %]
+				title='[% p.REG_STATUS %], Дата регистрации: [% p.REG_TIME | html %] ( окончание: [% p.REG_EXPIRED | html %] ), IP: [% p.ipaddr | html %], UA: [% p.useragent | html %]' alt='[% p.REG_STATUS %]' />
+				[% IF p.DND %]
+					<img src='/xvb/images/dnd.png' title='DND включено [% p.DND | html %]' alt='DND включено [% p.DND | html %]' />
+				[% END %]
+				[% IF p.FWD_NUM %]
+					<img src='/xvb/images/fwd.png' title='Перенеаправление на : [% p.FWD_NUM | hmtml %]' alt='Перенаправление на : [% p.FWD_NUM | hmtml %]' />
+				[% END %]
+			</td>
 			<td align='left'><input type='hidden' name='name' value="[% p.name %]">[% p.name %]</td>
 			<td><input class='in_t0' size="12" name='secret' type='text' value="[% p.secret | html %]"></td>
 			<td align='center'>
@@ -57,20 +73,10 @@
 					<input class='in_t0' name='trusted_ip' type='checkbox' title='Ограничить доступ только с текущего IP адреса: [% p.ipaddr | html %]' />
 				[% END %]
 			</td>
-			<td align='center'>
-				<img 
-				[% IF p.REG_STATUS eq 'Registered' %]
-					src='/xvb/images/ball_green.png'
-				[% ELSIF  p.REG_STATUS eq 'Unregistered'  %]
-					src='/xvb/images/ball_red.png'
-				[% ELSE %]
-					src=''
-				[% END %]
-				title='[% p.REG_STATUS %], Дата регистрации: [% p.REG_TIME | html %] ( окончание: [% p.REG_EXPIRED | html %] ), IP: [% p.ipaddr | html %], UA: [% p.useragent | html %]' alt='[% p.REG_STATUS %]' />
-			</td>
 			<td><input class='in_t0' size="10" name='callerid' type='text' value="[% p.callerid | html %]"></td>
 			<td><input class='in_t0' size="16" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"></td>
 			<td><input class='in_t0' size="12" name='DEFCID' type='text' value="[% p.DEFCID | html %]"></td>
+			<td><input class='in_t0' size="15" name='EMAIL' type='text' value="[% p.EMAIL | html %]"></td>
 			<td>
 				<select name="REC_MODE" class='in_t0'>
 				[% IF p.REC_MODE eq '1' %]
@@ -138,6 +144,7 @@
 			<td><input size="10" name='callerid' type='text'></td>
 			<td><input size="16" name='DESCRIPTION' type='text'></td>
 			<td><input size="12" name='DEFCID' type='text'></td>
+			<td><input size="15" name='EMAIL' type='text'></td>
 			<td>
 				<select name="REC_MODE">
 					<option value="0" selected>Выключено</option>

@@ -626,7 +626,10 @@ create table VPBX_SIPPEERS (
     DESCRIPTION     VARCHAR(100)	not null,
 
 	REC_MODE		INT(1)			not null default 0,
+	DND				INT(11)			not null default 0,
 	REC_EXT			VARCHAR(255)	not null default '0',
+	EMAIL			VARCHAR(255)	default '',
+	FWD_NUM			VARCHAR(255)	default '',
 
 	NEED_REG		INT(1)			not null default 0,
 	REG_EXPIRE		INT(6)			not null default 0,
@@ -1178,6 +1181,7 @@ create	table VPBX_VBOXES_DISA
 	PHONE_NUMBER	VARCHAR(255),	
 	MAX_DIGITS		INT(10)			not null default -1,
 	RING_TIMEOUT	INT(3)			default 30,
+	PHONE_MODE		INT(1)			default 0,
 
 	unique(ID),
 

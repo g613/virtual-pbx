@@ -364,4 +364,6 @@ cent : "cent"
 cents : "cents"
 #
 oos: "this number out of service now"
+#
+saved : "Changes saved"
 
