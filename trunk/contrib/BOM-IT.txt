@@ -360,3 +360,5 @@ euros : "euro"
 #
 cent : "cent"
 cents : "centesimi"
+#
+saved : "Changes saved"

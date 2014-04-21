@@ -5,7 +5,7 @@
 				<a class='headers' href='?action=group_list'>Groups</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=user_list'>Users</a>
+				<a class='headers' href='?action=user_list'>Tenants</a>
 			</td>
 			<td>
 				<a class='headers' href='ai?action=partner_list'>Partners</a>

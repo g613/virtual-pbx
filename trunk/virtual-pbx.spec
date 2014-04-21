@@ -49,7 +49,6 @@ Virtual-pbx application include:
 	- Email/Twitter notifications.
 	- Multiple language voice prompts.
 	- Text To Speech ( TTS ) for multiple languages.
-	- Easy / Advanced configuration mode.
 	- Custom music on hold (MOH) for each user.
 	- Multiple language WEB interface with xml/json API support.
 	- Flexible customisation for system voice messages.
@@ -57,7 +56,6 @@ Virtual-pbx application include:
 	- User specified time zones support.
 	- Call transfer support ( blind transfer ).
 	- White / Black lists support for each IVR item.
-	- Journal configuration changes.
 	- CDR support.
 	- IVR logging.
 	- XML backup / restore configuration.
@@ -65,53 +63,15 @@ Virtual-pbx application include:
 	- Privated / Shared DIDs support.
 	- SQL reports.
 	- Management API.
-	- Google Calendar integration.
-	- Support Google Analytics for calls trekking.
 	- Radius accounting.
 	- Background music for Find-Me / Queue calls.
-	- Support HD codec ( g722 ).
+	- HD codec ( g722 ).
 	- Email/Web interface Branding.
 	- Recording outgoing calls ( auto / on demand ).
 	- Full DTMF history for each call.
-	- Support presettings for SIP providers.
 	- Support Multi-tenant asterisk with Kamailio as sip registrar server / load balancer.
-	- Easy to update.
-	- speedyAGI server.
 	- FMC - Fixed Mobile Convergence
-	- google-chart for extended statistics for: DialOut, Queue, CallBlast, Polling
-	- WEB logon / logoff for the agents of the queue.
-	- Support Perl plugins.
-	- Several types of extensions:
-		Playback ( with time tags feature ) / Auto Attendant
-		VoiceMail
-		DialOut with Find-Me feautures.
-		Company Directory
-		Schedule
-		WEB-Request
-		Chat-Room ( with WEB broadcasting via IceCast and call recording )
-		Fax2Email
-		DTMF2Email
-		Polling (Voting)
-		DISA
-		Podcast2Phone gate
-		ACD Queues
-		CallBack
-		DateTime
-		Fax on Demand
-		Bulletin board system
-		CallBlast ( Predictive Dialer )
-		WEB Variables
-		Stored DB variables
-		Goto If
-		Alarm Clock ( Telephone Reminder / Wake Up )
-		Google Calendar - Shedule: checks status busy / free.
-		RoboTEXT with support money, date, time, phonenumber, percent, degree formats
-		MP3 Streaming
-		Call Parking
-		GoogleCalendar - Events: reads events via TTS + confirmation / cancellation of events.
-		Paging / Intercom
-		Play DTMF Tones
-		MultiDialout
+	- Several types of extensions.
 
 ####################################################
 #

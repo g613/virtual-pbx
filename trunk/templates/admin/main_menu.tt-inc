@@ -2,7 +2,7 @@
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=group_list'>Groups</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=user_list'>Users</a>
+				<a href='?action=user_list'>Tenants</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='ai?action=partner_list'>Partners</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.253 2014/02/21 19:56:24 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.254 2014/04/14 11:26:29 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1093,6 +1093,18 @@
 						</select>
 					</td>
 				</tr>
+				[% IF USER_CREDS.ALLOW_PHONES %]
+				<tr class='addon_info'>
+					<td>Only local phones: </td>
+					<td>
+						[% IF VBOX_PREF.PHONE_MODE %]
+							<input name="PHONE_MODE" type="checkbox" checked>
+						[% ELSE %]
+							<input name="PHONE_MODE" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				[% END %]
 				<tr class='addon_info'>
 					<td>Record calls: </td>
 					<td>
