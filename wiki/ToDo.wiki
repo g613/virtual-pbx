@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Опциональный Ringing перед ответом</font>
+<font color='green'>+ Опциональный Ringing перед ответом</font> ( 20.04.2014 / build 8069 )
 
 <font color='green'>+ VM для  sip телефонов</font> ( 19.04.2014 / build 8060 )
 
