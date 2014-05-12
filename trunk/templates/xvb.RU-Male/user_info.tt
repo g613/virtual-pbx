@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.9 2014/03/17 15:40:46 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.11 2014/05/10 11:13:20 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -283,11 +283,14 @@ SIP-домен: [% d.DOMAIN | html %]
 					</table>
 					</td>
 				</tr>
-				[% IF USER_CREDS.CUSTOM_FILES %]
 				<tr>
-					<td colspan='2' align='left'>&nbsp;<h4><a href="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=sysmedia_list&uniq=[% USER_CREDS.UNIQ %]">Системные звуковые файлы</a></h4></td>
+					<td align='left' colspan='2'>
+					&nbsp;
+					[% IF USER_CREDS.CUSTOM_FILES %]
+						<h4><a href="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=sysmedia_list&uniq=[% USER_CREDS.UNIQ %]">Системные звуковые файлы</a></h4>
+					[% END %]
+					</td>
 				</tr>
-				[% END %]
 			</table>
 			</td>
 
