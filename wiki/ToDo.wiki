@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='green'>+ Сохранение invalid input для DISA</font> ( 10.05.2014 / build 8085 )
+
 <font color='green'>+ Опциональный Ringing перед ответом</font> ( 20.04.2014 / build 8069 )
 
 <font color='green'>+ VM для  sip телефонов</font> ( 19.04.2014 / build 8060 )
