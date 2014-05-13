@@ -1,5 +1,7 @@
 ==All VMWare images :==
 
+ * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://virtual-pbx.ru/downloads/VirtualPBX-1_7777.tar.bz2 build 7777 ( 13.01.2014 )] HangupHook, sysststus, sip-domains
+
  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://virtual-pbx.ru/downloads/VirtualPBX-CentOS6-1_7490.tar.bz2 build 7490 ( 12.07.2013 )] CentOS6, asterisk 18
 
  * [http://home.sinn.ru/~gosha/cgi-bin/download.cgi?http://virtual-pbx.ru/downloads/VirtualPBX-1_7421.tar.bz2 build 7421 ( 17.05.2013 )] Multidialout
