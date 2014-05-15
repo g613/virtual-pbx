@@ -1,6 +1,10 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- custom MOH при установке на HOLD</font>
+
+<font color='red'>- упростить страницу логина</font>
+
 <font color='green'>+ Сохранение invalid input для DISA</font> ( 10.05.2014 / build 8085 )
 
 <font color='green'>+ Опциональный Ringing перед ответом</font> ( 20.04.2014 / build 8069 )
