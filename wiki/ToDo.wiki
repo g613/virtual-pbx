@@ -1,9 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- custom MOH при установке на HOLD</font>
+<font color='green'>+ custom MOH при установке на HOLD</font>  ( 18.05.2014 / build 8104 )
 
-<font color='red'>- упростить страницу логина</font>
+<font color='green'>+ упростить страницу логина</font> ( 18.05.2014 / build 8104 )
 
 <font color='green'>+ Сохранение invalid input для DISA</font> ( 10.05.2014 / build 8085 )
 
