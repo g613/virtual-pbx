@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- добавление звонящего в black_list во время звонка</font>
+
 <font color='green'>+ custom MOH при установке на HOLD</font>  ( 18.05.2014 / build 8104 )
 
 <font color='green'>+ упростить страницу логина</font> ( 18.05.2014 / build 8104 )
