@@ -1,7 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- добавление звонящего в black_list во время звонка</font>
+<font color='red'>- Кастом опции для разных приложений приема факса ( f - для ReceiveFax в 1.8 )</font>
+
+<font color='green'>+ добавление звонящего в black_list во время звонка</font> (25.05.2014 / build 8120 )
 
 <font color='green'>+ custom MOH при установке на HOLD</font>  ( 18.05.2014 / build 8104 )
 
