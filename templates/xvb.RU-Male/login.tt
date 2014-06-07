@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: login.tt,v 1.2 2014/02/14 04:04:34 gosha Exp $ -->
+<!-- $Id: login.tt,v 1.4 2014/05/26 19:25:23 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - вход</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -32,29 +32,24 @@
 
 	<p align='center'>
 	<table width='50%' class='half-width'>
-		<form method='post'>
+		<form method='post' target='_top'>
 			<tr>
-				<td>Номер телефона&nbsp;</td>
+				<td>Логин&nbsp;</td>
 				<td><input name='phone' type='text'></td>
+				<td><i>( код-доступа@публичный-номер-телефона )</i></td>
 			</tr>
 			<tr>
-				<td>Код доступа&nbsp;</td>
-				<td><input name='ac' type='text'></td>
-			</tr>
-			<tr>
-				<td>Внутренний номер*&nbsp;</td>
-				<td><input name='ext_id' type='text'></td>
-			</tr>
-			<tr>
-				<td>Пин код&nbsp;</td>
+				<td>Пароль&nbsp;</td>
 				<td><input name='pw' type='password'></td>
+				<td><i>( пин-код от внутреннего номера )</i></td>
 			</tr>
 			<tr>
-				<td>&nbsp;</td>
-				<td>* необязательное поле</td>
+				<td>Внутренний номер&nbsp;</td>
+				<td><input name='ext_id' type='text' value='0'></td>
+				<td><i>( необязательное поле )</i></td>
 			</tr>
 			<tr>
-				<td colspan='2'>&nbsp;</td>
+				<td colspan='3'>&nbsp;</td>
 			</tr>
 			<tr>
 				<td colspan='2' align='center'>
@@ -62,6 +57,7 @@
 					<input name='action' type='hidden' value='start'>
 					<input type='submit' value='&nbsp;&nbsp;&nbsp;Войти&nbsp;&nbsp;&nbsp;'>
 				</td>
+				<td>&nbsp;</td>
 			</tr>
 		</form>
 	</table>
