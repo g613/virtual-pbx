@@ -1,9 +1,11 @@
 #labels Featured
 = ToDo list =
 
-<font color='green'>+ yandex tts )</font> ( 07.06.2014 / build 8145 )
+<font color='green'>+ yandex tts</font> ( 07.06.2014 / build 8145 )
 
-<font color='green'>+ Кастом опции для разных приложений приема факса ( f - для ReceiveFax в 1.8 )</font> ( 01.06.2014 / build 8130 )
+<font color='green'>+ оптимизация в agi протоколе</font> ( 03.06.2014 / build 8142 )
+
+<font color='green'>+ Кастом опции для разных приложений приема факса ( f - для `ReceiveFax` в 1.8 )</font> ( 01.06.2014 / build 8130 )
 
 <font color='green'>+ добавление звонящего в black_list во время звонка</font> (25.05.2014 / build 8120 )
 
