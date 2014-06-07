@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: menu.tt,v 1.8 2014/05/10 11:13:20 gosha Exp $ -->
+<!-- $Id: menu.tt,v 1.9 2014/06/01 18:31:02 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - main menu</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -33,8 +33,6 @@
 	[% IF USER_CREDS.ROOT eq '0' %]
 			<li><a class='amenu' target='xvb_data' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>Звонки</a></li>
 			<br/>
-			<li><a class='amenu' target='xvb_data' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Журнал операций</a></li>
-			<br/>
 			<li><a class='amenu' target='xvb_data' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]'>Телефонная книга</a></li>
 			<br/>
 			[% IF USER_CREDS.ALLOW_PHONES %]
@@ -56,6 +54,8 @@
 			<li><a class='amenu' target='xvb_data' href='?action=cid_list&cid_list_type=2&cid_type=2&uniq=[% USER_CREDS.UNIQ %]'>Белый список</a></li>
 			<br/>
 			<li><a class='amenu' target='xvb_data' href='?action=cid_list&cid_list_type=1&cid_type=2&uniq=[% USER_CREDS.UNIQ %]'>Черный список</a></li>
+			<br/>
+			<li><a class='amenu' target='xvb_data' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Журнал операций</a></li>
 			[% IF USER_CREDS.ALLOW_MACROS %]
 			<br/>
 			<li><a class='amenu' target='xvb_data' href='?action=macros_list&uniq=[% USER_CREDS.UNIQ %]'>Макросы</a></li>
