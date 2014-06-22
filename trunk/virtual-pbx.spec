@@ -176,9 +176,10 @@ mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/cron.d
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/doc
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/db
-mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/recordings
-mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/tts
-mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/podcasts
+mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/recordings
+mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/tts
+mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/podcasts
+mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/helperdb
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/data
 
 #start-devel
@@ -522,9 +523,10 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 %CORE_DIR/3rdparty/*
 %CORE_DIR/contrib/odbc/*
 %CORE_DIR/contrib/fail2ban/*
-%attr(775,asterisk,asterisk) %dir %CORE_DIR/recordings
-%attr(775,asterisk,asterisk) %dir %CORE_DIR/tts
-%attr(775,asterisk,asterisk) %dir %CORE_DIR/podcasts
+%attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/recordings
+%attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/tts
+%attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/podcasts
+%attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/helperdb
 %attr(755,root,root) %CORE_DIR/contrib/utils/file2moh.pl
 
 ####################################################

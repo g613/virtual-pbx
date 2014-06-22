@@ -501,6 +501,15 @@ create table VPBX_DIDS
     CONSTRAINT PK_VPBX_DIDS PRIMARY KEY (ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+delimiter //
+CREATE trigger clean_did AFTER DELETE ON VPBX_DIDS
+FOR EACH ROW
+BEGIN
+	update VPBX_SIPPEERS set INC_EXT = '0' where INC_EXT = concat('DID',OLD.DID) and SUBSCR_ID = OLD.SUBSCR_ID; 
+END;
+//
+delimiter ;
+
 create table VPBX_DIDS_SIPDOMAINS
 (
 	ID	            INT(16)		    not null AUTO_INCREMENT,
@@ -626,7 +635,7 @@ create table VPBX_SIPPEERS (
     DESCRIPTION     VARCHAR(100)	not null,
 
 	REC_MODE		INT(1)			not null default 0,
-	DND				INT(11)			not null default 0,
+	DND				INT(11)			default 0,
 	REC_EXT			VARCHAR(255)	not null default '0',
 	EMAIL			VARCHAR(255)	default '',
 	FWD_NUM			VARCHAR(255)	default '',
