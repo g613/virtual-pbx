@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- при создании арендатора добавить возможность выбрать предустановленный шаблон конфигурации</font>
+
 <font color='green'>+ yandex tts</font> ( 07.06.2014 / build 8145 )
 
 <font color='green'>+ оптимизация в agi протоколе</font> ( 03.06.2014 / build 8142 )
