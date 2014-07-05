@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: new_message.tt,v 1.6 2013-11-24 11:05:53 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.7 2014/07/04 13:47:02 gosha Exp $ -->
 <!--SUBJECT:У Вас новое сообщение в ящике #[% _USER_VBOX.EXT_NUMBER | html %] от [% callerid | html %]:SUBJECT-->
 <!--!EMAIL_FROM:'Виртуальная АТС' <sa1es@virtuаl-pbx.ru>:EMAIL_FROM-->
 <head>
@@ -29,7 +29,7 @@
 
 <p>
 [% IF FILE_LINK ne '' %]
-<a href="[% FILE_LINK %]">Вы можете скачать сообщение по этой ссылке.</a>
+<a href="[% FILE_LINK %]">Вы можете скачать файл по этой ссылке.</a>
 <!-- /
 [% IF is_voice %]
 </p><p>

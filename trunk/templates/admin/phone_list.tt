@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.5 2014/03/03 19:37:37 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.6 2014/06/28 19:02:07 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -75,7 +75,9 @@
 		<tr align='left' class='nocolor'>
 			<td><a title='edit user settings' href='?ac=[% p.ACCESS_CODE %]&action=user_info'>[% p.ACCESS_CODE %]</a></td>
 			<td>
+				[% IF ALLOW_RESET %]
 				<a title='change auth name' href='?action=auth_name_reset&id=[% p.name | html %]&ac=[% p.ACCESS_CODE | html %]'><img border='0'  src='/xvb/images/msg_status.png' alt='new auth name' /></a>
+				[% END %]
 			</td>
 			<td>[% p.name %]</td>
 			<td>[% p.secret | html %]</td>

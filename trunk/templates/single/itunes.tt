@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
-<!-- $Id: itunes.tt,v 1.6 2013-02-21 12:28:26 gosha Exp $ -->
+<!-- $Id: itunes.tt,v 1.7 2014/02/14 04:04:34 gosha Exp $ -->
 <channel>
 	<ttl>60</ttl>
 	<title>VirtualPBX Itunes  Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>

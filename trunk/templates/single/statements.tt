@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.10 2012-04-10 15:28:08 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.11 2014/02/14 04:04:34 gosha Exp $ -->
 <head>
 	<BASE href="[% CGI_SERVER %]">
 	<style>
