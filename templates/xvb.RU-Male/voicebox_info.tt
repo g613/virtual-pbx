@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.17 2014/04/14 11:26:29 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.18 2014/06/29 18:36:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -2019,6 +2019,14 @@
 						</span></a></td>
 					<td>
 						<input size='8' name="MAX_SILENCE" value="[% VBOX_PREF.MAX_SILENCE | html %]" type="text">
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Имя переменной по умолчанию: <span>
+							Если установлено, то весь ответ сервера помещается в эту переменную.
+						</span></a></td>
+					<td>
+						<input size='30' name="DEFAULT_VAR" value="[% VBOX_PREF.DEFAULT_VAR | html %]" type="text">
 					</td>
 				</tr>
 				[% END %]

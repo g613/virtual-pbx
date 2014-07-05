@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: new_message.tt,v 1.5 2012-03-17 10:02:57 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.6 2014/02/14 04:04:34 gosha Exp $ -->
 <head>
 	<BASE href="[% CGI_SERVER %]">
 	[% IF USER_CREDS.CSS_HREF eq '' %]

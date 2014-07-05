@@ -180,6 +180,15 @@
 				[% END %]
 				</select>
 				&nbsp;
+				[% IF TEMPLATES scalar %]
+				Template: 
+				<select name="conf_file">
+				[% FOREACH tmpl = TEMPLATES %]
+					<option value="[% tmpl.FILE | html %]">[% tmpl.DESC | html %]</option>
+				[% END %]
+				</select>
+				&nbsp;
+				[% END %]
 				<input value='&nbsp;&nbsp;Add tenant&nbsp;&nbsp;' type='submit'>
 				<input type='hidden' value='user_add' name='action'>
 			</td>
