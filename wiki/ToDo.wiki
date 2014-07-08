@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- номер назначения в сообщениях сохранить</font>
+
 <font color='green'>+ PDF в качестве дефолтного факс формта</font> ( 05.07.2014 / build 8191 )
 
 <font color='green'>+ Для webvar добавить возможность читать весь ответ в переменную</font> ( 02.07.2014 / build 8177 )
