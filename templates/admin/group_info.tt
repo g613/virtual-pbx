@@ -261,7 +261,7 @@
 			<td><input name='GR_MAX_CALLS_IN' type='text' value="[% GROUP.MAX_CALLS_IN | html %]"></td>
 		</tr>
 		<tr>
-			<td>Maximum size of all messages: </td>
+			<td>Maximum size of all messages ( bytes ): </td>
 			<td><input name='GR_MAX_SIZE_MSGS' type='text' value="[% GROUP.MAX_SIZE_MSGS | html %]"></td>
 		</tr>
 		<tr>
@@ -333,15 +333,15 @@
 			<td><input name='GR_MAX_C2C_ITEMS' type='text' value="[% GROUP.MAX_C2C_ITEMS | html %]"></td>
 		</tr>
 		<tr>
-			<td>Maximum email-attachment size ( byte ): </td>
+			<td>Maximum email-attachment size ( bytes ): </td>
 			<td><input name='GR_MAX_ATTACH_SIZE' type='text' value="[% GROUP.MAX_ATTACH_SIZE | html %]"></td>
 		</tr>
 		<tr>
-			<td>Maximum TTS download size ( byte ): </td>
+			<td>Maximum TTS download size ( bytes ): </td>
 			<td><input name='GR_MAX_DOWNLOAD_SIZE' type='text' value="[% GROUP.MAX_DOWNLOAD_SIZE | html %]"></td>
 		</tr>
 		<tr>
-			<td>Maximum TTS string size ( byte ): </td>
+			<td>Maximum TTS string size ( bytes ): </td>
 			<td><input name='GR_MAX_TTS_LENGTH' type='text' value="[% GROUP.MAX_TTS_LENGTH | html %]"></td>
 		</tr>
 		<tr>

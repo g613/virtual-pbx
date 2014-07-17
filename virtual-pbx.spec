@@ -13,7 +13,7 @@ BuildArch: noarch
 
 Requires: mysql
 Requires: memcached
-Requires: sox >= 14.3.2
+Requires: sox
 Requires: ffmpeg
 Requires: lame
 Requires: mpg123
@@ -474,6 +474,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 %attr(755,root,root) %CORE_DIR/contrib/utils/google-voice-search.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/dashboard.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/ices2
+%attr(755,root,root) %CORE_DIR/contrib/utils/xvb-ctl
 %attr(755,root,root) %CORE_DIR/contrib/utils/modtest.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/MemCached.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/rpm/*
