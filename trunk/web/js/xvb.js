@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.68 2013-11-13 15:38:40 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.71 2014/07/11 11:30:12 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -325,22 +325,24 @@ function ShowPlayer( file ) {
 	var audio  = document.createElement("audio");
 	var canPlayMP3 = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/mpeg") !== "");
 	var canPlayWAV = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/x-wav") !== "");
+	var canPlayOGG = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/ogg") !== "");
 
-	if ( canPlayMP3 || canPlayWAV ) {
-		// html5: fixme - codec support
-		var wav_file = '';
-		if (canPlayWAV) {
-			wav_file = file.replace("wav?media=mp3;","wav?");
-			wav_file = wav_file.replace("=mp3","=wav");
-		} else {
-			wav_file = file;
-		}
+	if ( canPlayOGG ) {
+		var wav_file = file.replace("wav?media=mp3;","ogg?");
+		wav_file = wav_file.replace("=mp3","=ogg");
+		player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+	} else if ( canPlayMP3 ) {
+		var wav_file = file;
 		player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
 	} else {
 		var plugin = (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) ? navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin : 0;
 		if ( plugin ) {
 			// flash
 			player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td><object type="application/x-shockwave-flash" data="/xvb/ump3player.swf" height="70" width="470"><param name="wmode" VALUE="transparent" /><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="movie" value="/xvb/ump3player.swf" /><param name="FlashVars" value="way='+file+'&amp;swf=/xvb/ump3player.swf&amp;w=470&amp;h=70&amp;time_seconds=0&amp;autoplay=1&amp;q=&amp;skin=white&amp;volume=90&amp;comment=Voice messages" /></object></td></tr></table>';
+		} else if ( canPlayWAV ) {
+			var wav_file = file.replace("wav?media=mp3;","wav?");
+			wav_file = wav_file.replace("=mp3","=wav");
+			player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
 		} else {
 			player_data = 'Your browser not supported';
 		}
@@ -360,8 +362,9 @@ function HidePlayer() {
 	var audio  = document.createElement("audio");
 	var canPlayMP3 = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/mpeg") !== "");
 	var canPlayWAV = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/x-wav") !== "");
+	var canPlayOGG = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/ogg") !== "");
 
-	if ( canPlayMP3 || canPlayWAV ) {
+	if ( canPlayMP3 || canPlayWAV || canPlayOGG ) {
 		div_id.innerHTML = '<audio tabindex="0" autoplay="autoplay" controls="controls"></audio>';
 	}
 	div_id.style.display = 'none';
@@ -750,6 +753,13 @@ function exten_icon( extension, uniq, title ) {
 	/* edit icon */
 	if ( e_list[extension] != null && e_list[extension][0] != null ) {
 		document.write("<a href='?action=vb_view&id="+ e_list[extension][0] +"&uniq="+ uniq +" ' title='"+ title +"'><img border='0' src='/xvb/images/vb_edit.png' alt='"+ title +"' /></a>&nbsp;");
+	}
+}
+/* vb stat icon */
+function stat_icon( extension, uniq, act_type, title ) {
+	/* edit icon */
+	if ( e_list[extension] != null && e_list[extension][0] != null ) {
+		document.write("<a href='?action=ext_stat&act_type="+ act_type +"&id="+ e_list[extension][0] +"&uniq="+ uniq +" ' title='"+ title +"'><img border='0' src='/xvb/images/information-button.png' alt='"+ title +"' /></a>&nbsp;&nbsp;");
 	}
 }
 /* peers tmpl functions */
