@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- динамические телефоны для DialOut/Queue</font>
+<font color='red'>- динамические телефоны для DialOut/Queue через переменные</font>
 
 <font color='green'>+ номер назначения в сообщениях сохранить</font> ( 17.07.2014 / build 8228 )
 
