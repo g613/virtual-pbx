@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- динамические телефоны для DialOut/Queue</font>
+
 <font color='green'>+ номер назначения в сообщениях сохранить</font> ( 17.07.2014 / build 8228 )
 
 <font color='green'>+ PDF в качестве дефолтного факс формта</font> ( 05.07.2014 / build 8191 )
