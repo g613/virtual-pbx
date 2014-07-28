@@ -1,7 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- динамические телефоны для DialOut/Queue через переменные</font>
+<font color='red'>- cid lookup через вешний url для пользователя</font>
+
+<font color='green'>+ динамические телефоны для DialOut/Queue через переменные</font> ( 26.07.2014 / build 8250 )
 
 <font color='green'>+ номер назначения в сообщениях сохранить</font> ( 17.07.2014 / build 8228 )
 
