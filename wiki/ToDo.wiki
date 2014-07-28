@@ -1,7 +1,10 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- cid lookup через вешний url для пользователя</font>
+<font color='red'>- Шоркаты из телефонной книги для трансфера через *9</font>
+
+<font color='green'>+ cid lookup через вешний url для пользователя</font>
+( 27.07.2014 / build 8268 )
 
 <font color='green'>+ динамические телефоны для DialOut/Queue через переменные</font> ( 26.07.2014 / build 8250 )
 
