@@ -1,6 +1,6 @@
 ########################################################################
 #
-# $Id: OnlineCalls.pm,v 1.3 2013-05-14 14:41:16 gosha Exp $
+# $Id: OnlineCalls.pm,v 1.4 2014/07/19 18:30:19 gosha Exp $
 #
 #	Copyright (c) Igor Okunev <igor[at]prv.mts-nn.ru>
 #
@@ -49,6 +49,7 @@ sub call_start {
 						user_id		=> $obj->{'_USER_CREDS'}->{'ACCESS_CODE'},
 						callerid	=> $obj->{'_CDR'}->{'CALLER_ID'},
 						calledid	=> $obj->{'_CDR'}->{'CALLED_ID'},
+						call_type	=> $obj->{'_CDR'}->{'CALL_TYPE'},
 						node		=> $obj->{'_CONF'}->{'common_server_id'} } );
 	}
 }

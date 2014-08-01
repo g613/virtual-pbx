@@ -1,10 +1,10 @@
 ########################################################################
 #
-# $Id: CIDNorm.pm,v 1.1 2012-10-20 19:02:07 gosha Exp $
+# $Id: CIDNorm.pm,v 1.2 2014/07/19 18:30:19 gosha Exp $
 #
 #	Copyright (c) Igor Okunev <igor[at]prv.mts-nn.ru>
 #
-#						2012
+#						2012 - 2014
 #
 ########################################################################
 package XVBHooks::CIDNorm;
@@ -24,7 +24,9 @@ use vars qw( %hooks );
 sub call_start {
 	my $obj = shift;
 
-	$obj->{'_AGI'}->set_variable( 'CALLERID(num)', $obj->{'_CDR'}->{'CALLER_ID'} );
+	if ( $obj->{'_CDR'}->{'CALL_TYPE'} ne 'transit' and $obj->{'_CDR'}->{'CALL_TYPE'} ne 'internal' ) {
+		$obj->{'_AGI'}->set_variable( 'CALLERID(num)', $obj->{'_CDR'}->{'CALLER_ID'} );
+	}
 }
 
 1;
