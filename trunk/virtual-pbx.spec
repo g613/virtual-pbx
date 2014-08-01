@@ -366,7 +366,7 @@ chkconfig xvb-fagi on
 chkconfig xvb-perl-worker on
 chkconfig xvb-callblast on
 
-STR=`LANG=C service asterisk status | grep running`
+STR=`LANG=C /etc/rc.d/init.d/asterisk status | grep running`
 if [ "x$STR" = "x" ]; then
 	service asterisk start;
 else
@@ -377,23 +377,20 @@ else
 	if [ "x$STR" = "x" ]; then
 		asterisk -rx 'moh reload';
 	fi
-	# perl-worker
-	STR=`ps ax | grep [V]irtualPBX-perl-worker`
-	if [ "x$STR" != "x" ]; then
-		service xvb-perl-worker restart || killall VirtualPBX.agi || true
-	fi
-	# gearman-worker
-	STR=`ps ax | grep [gG]earman-worker.pl`
-	if [ "x$STR" != "x" ]; then
-		service xvb-gearman-worker restart || killall gearman-worker.pl || true
-	fi
-	# reg uac
-	STR=`ps ax | grep [Rr]eg_uac.pl`
-	if [ "x$STR" != "x" ]; then
-		service xvb-reg_uac restart || killall reg_uac.pl || true
-	fi
 fi
 
+# gearman-worker
+STR=`ps ax | grep [gG]earman-worker.pl`
+if [ "x$STR" != "x" ]; then
+	service xvb-gearman-worker restart || killall gearman-worker.pl || true
+fi
+# reg uac
+STR=`ps ax | grep [Rr]eg_uac.pl`
+if [ "x$STR" != "x" ]; then
+	service xvb-reg_uac restart || killall reg_uac.pl || true
+fi
+
+service xvb-perl-worker restart || killall VirtualPBX.agi || true
 service xvb-callblast restart || true
 service xvb-fagi restart
 

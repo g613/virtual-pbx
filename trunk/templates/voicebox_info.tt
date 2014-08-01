@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.255 2014/06/29 18:36:17 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.256 2014/07/25 15:10:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1386,15 +1386,16 @@
 				<tr class='addon_info'>
 					<td>Phone URL
 						<select name='crm' onchange='javascript:document.vb_opt.Q_URL.value=this.value'>
-							<option selected value='[% VBOX_PREF.Q_URL | html %]'>Web URL</option>
-							<option value='http://www.anywho.com/qry/wp_rl?npa=% CID:1:3 %&telephone=% CID:4:10 %'>AnyWho</option>
-							<option value='http://www.google.com/search?rls=en&q=phonebook:% CID:1:10 %'>Google</option>
-							<option value='http://www.phonenumber.com/10004/search/ReversePhone?phone=% CID:1:10 %'>Phone Number</option>
-							<option value='http://www.switchboard.com/bin/cgirlookup.dll?SR=&MEM=1&TYPE=BOTH&PH=% CID:1:10 %&search.x=0&search.y=0&search=Search'>Switch board</option>
-							<option value='http://www.whitepages.com/search/ReversePhone?full_phone=% CID:1:10 %&localtime=survey'>White Pages</option>
-							<option value='https://REPLACEME/search/SearchResults?searchType=1&sen=003&setLast=1&sbstr=% CID:1:10 %'>Salesforce.com</option>
-							<option value='http://${ YOUR HOST ADDRESS }:8080/vtigercrm/index.php?phone_number=% CID:1:10 %'>vtiger CRM</option>
-							<option value='http://${ YOUR HOST ADDRESS }/index.php?query_string=%CID%&module=Home&advanced=true&action=UnifiedSearch&search_form=false&search_mod_Accounts=true&search_mod_Contacts=true&search_mod_Leads=true&search_mod_Project=true'>SugarCRM</option>
+							<option value='[% VBOX_PREF.Q_URL | html %]' selected>Web URL</option>
+							<option value='http://www.anywho.com/qry/wp_rl?npa=% VAR:CID:1:3 %&telephone=% VAR:CID:4:10 %'>AnyWho</option>
+							<option value='http://www.google.com/search?rls=en&q=phonebook:% VAR:CID:1:10 %'>Google</option>
+							<option value='http://www.phonenumber.com/10004/search/ReversePhone?phone=% VAR:CID:1:10 %'>Phone Number</option>
+							<option value='http://www.switchboard.com/bin/cgirlookup.dll?SR=&MEM=1&TYPE=BOTH&PH=% VAR:CID:1:10 %&search.x=0&search.y=0&search=Search'>Switch board</option>
+							<option value='http://www.whitepages.com/search/ReversePhone?full_phone=% VAR:CID:1:10 %&localtime=survey'>White Pages</option>
+							<option value='https://REPLACEME/search/SearchResults?searchType=1&sen=003&setLast=1&sbstr=% VAR:CID:1:10 %'>Salesforce.com</option>
+							<option value='http://${ YOUR HOST ADDRESS }:8080/vtigercrm/index.php?phone_number=% VAR:CID:1:10 %'>vtiger CRM</option>
+							<option value='http://${ YOUR HOST ADDRESS }/index.php?query_string=% VAR:CID %&module=Home&advanced=true&action=UnifiedSearch&search_form=false&search_mod_Accounts=true&search_mod_Contacts=true&search_mod_Leads=true&search_mod_Project=true'>SugarCRM</option>
+							<option value='https://${ YOUR_HOST }.amocrm.ru/private/acceptors/asterisk_new/?number=% VAR:CID %&USER_LOGIN=%{ YOUR_LOGIN }&USER_HASH=%{ YOUR_HASH_KEY }'>AmoCRM</option>
 						</select> :
 					</td>
 					<td>
