@@ -1,6 +1,10 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>-возможность ввода примечаний после каждого звонка для MultiDialout</font>
+
+<font color='red'>-добавить переменную с полным url последнего записанного файла</font>
+
 <font color='green'>+ Шоркаты из телефонной книги для трансфера через `*9`</font> ( 01/08/2014 / build 8277 )
 
 <font color='green'>+ cid lookup через вешний url для пользователя</font>
