@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>-CallerID имя для callblast ставить из имени в списке</font>
+
 <font color='red'>-возможность ввода примечаний после каждого звонка для MultiDialout</font>
 
 <font color='red'>-добавить переменную с полным url последнего записанного файла</font>
