@@ -1,13 +1,15 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>-CallerID имя для callblast ставить из имени в списке</font>
+<font color='red'>- поддержку pdf | png | jpg | txt для загружаемых файлов для факса</font>
 
-<font color='red'>-возможность ввода примечаний после каждого звонка для MultiDialout</font>
+<font color='green'>+ CallerID имя для callblast ставить из имени в списке</font> ( 09.08.2014 / build 8310 )
 
-<font color='red'>-добавить переменную с полным url последнего записанного файла</font>
+<font color='green'>+ возможность ввода примечаний после каждого звонка для MultiDialout</font> ( 08.0.0.2014 / build 8300 )
 
-<font color='green'>+ Шоркаты из телефонной книги для трансфера через `*9`</font> ( 01/08/2014 / build 8277 )
+<font color='green'>+ добавить переменную с полным url последнего записанного файла</font> ( 05/08/2014 / build 8282 )
+
+<font color='green'>+ Шоркаты из телефонной книги для трансфера через `*9`</font> ( 01.08.2014 / build 8277 )
 
 <font color='green'>+ cid lookup через вешний url для пользователя</font>
 ( 27.07.2014 / build 8268 )
