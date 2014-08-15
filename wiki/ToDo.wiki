@@ -1,7 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- поддержку pdf | png | jpg | txt для загружаемых файлов для факса</font>
+<font color='red'>- Отправка факсов через веб для ФаксПоЗапросу</font>
+
+<font color='green'>+ поддержку pdf | png | jpg | txt для загружаемых файлов для факса</font> ( 12.08.2014 / build 8316 )
 
 <font color='green'>+ CallerID имя для callblast ставить из имени в списке</font> ( 09.08.2014 / build 8310 )
 
