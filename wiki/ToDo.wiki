@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Отправка факсов через веб для ФаксПоЗапросу</font>
+<font color='green'>+ Отправка факсов через веб для ФаксПоЗапросу</font> ( 16.08.2014 / build 8338 )
 
 <font color='green'>+ поддержку pdf | png | jpg | txt для загружаемых файлов для факса</font> ( 12.08.2014 / build 8316 )
 
