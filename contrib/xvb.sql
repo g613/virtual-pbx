@@ -1411,6 +1411,7 @@ create	table VPBX_VBOXES_MULTIDIALOUT
 	RECORD_CALL			INT(1)		default 0,
 	KEEP_MSG			INT(1)		default 1,
 	SEND_ATTACH			INT(1)		default 0,
+	WAIT_NOTES			INT(1)		default 0,
 	URL					TEXT(1024),
 
 	unique(ID),
@@ -1435,6 +1436,8 @@ create	table VPBX_VBOXES_MULTIDIALOUT_DATA
 
 	CALL_ID				VARCHAR(32),
 	DURATION			INT(16) not null default 0,
+
+	CALL_NOTE			VARCHAR(255),
 
 	unique(DATA_ID),
 	unique(ID,PHONE_NUMBER),

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.6 2014-02-05 11:40:16 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.7 2014/08/15 13:12:47 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -22,6 +22,9 @@
 	<table width='100%' class='logo'>
 		<tr>
 			<td align='center'><h2>Маршруты</h2></td>
+			<td align='right'>
+				<a title='удалить все маршруты' href='?action=route_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все маршруты'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+			</td>
 		</tr>
 	</table>
 	</p>

@@ -48,6 +48,9 @@
 				<a href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>Phones</a>
 				[% END %]
 			</td>
+			<td align='right'>
+				<a title='delete all routes' href='?action=route_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete all records'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+			</td>
 		</tr>
 	</table>
 	</p>

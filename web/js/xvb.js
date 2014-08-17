@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.71 2014/07/11 11:30:12 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.73 2014/08/15 19:49:40 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -635,6 +635,22 @@ function click2call_win( server, key, ac, lang ) {
 		WinPop.document.write('<h2>Заказ звонка</h2><input type="text" size="25" name="ph" placeholder="введите Ваш номер телефона"><br/><br/><input value="заказать звонок" type="submit"><input type="hidden" name="message" value="<center>Запрос обработан. Ожидайте звонка.</center>">');
 	} else {
 		WinPop.document.write('<h2>Order a Call</h2><input type="text" size="25" name="ph" placeholder="enter your phone here"><br/><br/><input value="order a call" type="submit"><input type="hidden" name="message" value="<center>Please wait a call.</center>">');
+	}
+	WinPop.document.write('</form></body></html>');
+	WinPop.document.close();
+}
+
+/* webfax_win */
+function webfax_win( server, key, ac, lang, uniq ) {
+	var ScreenWidth=window.screen.width;
+	placementx=ScreenWidth/2-320;
+	placementy=200;
+	WinPop=window.open("","webfax","width=640,height=200,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
+	WinPop.document.write('<html>\n<head><title>WebFax - XVB VirtualPBX</title>\n</head>\n<body><center><form method="post" action="'+server+'/c2c"><input type="hidden" value="'+key+'" name="key"><input type="hidden" value="'+ac+'" name="ac">');
+	if ( lang == 'ru' ) {
+		WinPop.document.write('<h2>Отправка факса</h2><input type="text" size="25" name="ph" placeholder="введите номер факса"><br/><br/><input value="отправить факс" type="submit"><input type="hidden" name="message" value="<center>Запрос обработан. Ожидайте отправки факса.<br><a href=\''+server+'/ui?action=act_list&call_id=__CALLID__&uniq='+uniq+'\'>Для проверки статуса перейдите по этой ссылке</a></center>">');
+	} else {
+		WinPop.document.write('<h2>Send Fax</h2><input type="text" size="25" name="ph" placeholder="enter fax number here"><br/><br/><input value="send fax" type="submit"><input type="hidden" name="message" value="<center>Please wait. .<br><a href=\''+server+'/ui?action=act_list&call_id=__CALLID__&uniq='+uniq+'\'>Click here to check status</a></center>">');
 	}
 	WinPop.document.write('</form></body></html>');
 	WinPop.document.close();

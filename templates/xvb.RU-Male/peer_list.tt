@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.2 2013-03-11 15:08:03 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.3 2014/08/15 13:12:47 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP шлюзы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -16,6 +16,9 @@
 	<table width='100%' class='logo'>
 		<tr>
 			<td align='center'><h2>SIP шлюзы</h2></td>
+			<td align='right'>
+				<a title='удалить все шлюзы' href='?action=peer_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все шлюзы'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+			</td>
 		</tr>
 	</table>
 	</p>
