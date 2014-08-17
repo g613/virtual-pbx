@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.19 2014/07/25 15:10:21 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.24 2014/08/15 19:26:11 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -2475,6 +2475,18 @@
 						[% END %]
 					</td>
 				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Примечания оператора: <span>
+							При установленном флаге после разговора оператора спросят ввести цифры ( можно использовать для ручной маркировки статуса разговора ).
+						</span></a></td>
+					<td>
+						[% IF VBOX_PREF.WAIT_NOTES %]
+							<input name="WAIT_NOTES" type="checkbox" checked>
+						[% ELSE %]
+							<input name="WAIT_NOTES" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
 				<tr>
 					<td><a href='#' class='info'>Запись разговора:  <span>
 							Автоматически включать запись всех разговоров.
@@ -2998,6 +3010,9 @@
 					<tr class='nocolor' id='d-tr-s6'>
 						<td>Факс по запросу: </td>
 						<td align='right' nowrap='nowrap'>
+							[% IF VB_DATA.C2C_SECRET %]
+							<a title='Отправить Факс' href='#' onclick="webfax_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% VB_DATA.C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru','[% USER_CREDS.UNIQ %]')"><img border='0' src='/xvb/images/phone.png' alt='отправить факс' /></a>&nbsp;&nbsp;
+							[% END %]
 							<a title='скачать tiff' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.FAX_FILE %]'><img border='0' src='/xvb/images/msg_download_tif.png' alt='fax' /></a>
 							&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.FAX_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s6','d-tbl-s')" title='удалить факс'><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
@@ -3533,6 +3548,7 @@
 						<th>Статус</th>
 						<th>Длительность</th>
 						<th>Попытка</th>
+						<th>Примечание</th>
 						<th>Действия</th>
 					</tr>
 					[% IF MSG_PREV ne '' %]
@@ -3568,6 +3584,7 @@
 						</td>
 						<td>[% param.DURATION | duration_str | html %]</td>
 						<td>[% param.ATTEMPT %]</td>
+						<td>[% param.CALL_NOTE %]</td>
 						<td align='left' nowrap='nowrap'>
 							<a href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
 							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>

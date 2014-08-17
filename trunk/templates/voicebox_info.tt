@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.256 2014/07/25 15:10:21 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.261 2014/08/15 19:26:11 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -2100,6 +2100,16 @@
 						[% END %]
 					</td>
 				</tr>
+				<tr class='addon_info'>
+					<td>Wait call notes: </td>
+					<td>
+						[% IF VBOX_PREF.WAIT_NOTES %]
+							<input name="WAIT_NOTES" type="checkbox" checked>
+						[% ELSE %]
+							<input name="WAIT_NOTES" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
 				<tr>
 					<td>Record calls: </td>
 					<td>
@@ -2613,6 +2623,9 @@
 					<tr class='nocolor' id='d-tr-s6'>
 						<td>Fax on Demand: </td>
 						<td align='right' nowrap='nowrap'>
+							[% IF VB_DATA.C2C_SECRET %]
+							<a title='SendFax' href='#' onclick="webfax_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% VB_DATA.C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','en','[% USER_CREDS.UNIQ %]')"><img border='0' src='/xvb/images/phone.png' alt='Отправить факс' /></a>&nbsp;&nbsp;
+							[% END %]
 							<a title='download' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.FAX_FILE %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 							&nbsp;<a title='delete' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% VBOX_PREF.FAX_FILE %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-s6','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
@@ -3149,11 +3162,12 @@
 						<th>Status</th>
 						<th>Duration</th>
 						<th>Attempt</th>
+						<th>Notes</th>
 						<th>Actions</th>
 					</tr>
 					[% IF MSG_PREV ne '' %]
 					<tr>
-						<td align='left' colspan='8'>
+						<td align='left' colspan='9'>
 							<a title='previous page' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 						</td>
 					</tr>
@@ -3184,6 +3198,7 @@
 						</td>
 						<td>[% param.DURATION | duration_str | html %]</td>
 						<td>[% param.ATTEMPT %]</td>
+						<td>[% param.CALL_NOTE %]</td>
 						<td align='left' nowrap='nowrap'>
 							<a href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>&nbsp;
 							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
@@ -3198,7 +3213,7 @@
 					[% END %]
 					[% IF MSG_NEXT ne '' %]
 					<tr>
-						<td align='right' colspan='8'>
+						<td align='right' colspan='9'>
 							<a title='next page' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
 						</td>
 					</tr>
@@ -3217,11 +3232,11 @@
 						</td>
 						</form>
 					</tr>
-					<tr><td colspan='8'>&nbsp;</td></tr>
+					<tr><td colspan='9'>&nbsp;</td></tr>
 					<tr id='csv-import'>
 						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 						<td colspan='3'>&nbsp;</td>
-						<td colspan='5' align='right'>
+						<td colspan='6' align='right'>
 							<input type='file' name='config_file'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
