@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.261 2014/08/15 19:26:11 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.262 2014/08/18 07:03:07 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -11,12 +11,16 @@
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 	<script language="JavaScript">
 		var e_list = [];
-		e_list['hangup'] = [ null, null,'Exit from PBX' ];
-		e_list['back'] = [ null, null, 'GoTo previous ext' ];
-		e_list['repeat'] = [ null, null, 'Repeat current ext' ];
+		e_list['hangup'] = [ null, null,'Exit from PBX',-2];
+		e_list['back'] = [ null, null, 'GoTo previous ext',-1];
+		e_list['repeat'] = [ null, null, 'Repeat current ext',0];
 		[% FOREACH vb = VB_LIST %]
-		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | html %]','[% vb.NAME | html %]'];
+		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | html %]','[% vb.NAME | html %]',[% vb.VB_IND %]];
 		[% END %]
+		var e_menu = [];
+		for ( var m_num in e_list ) {
+			e_menu[2+e_list[m_num][3]] = m_num;
+		}
 	</script>
 </head>
 

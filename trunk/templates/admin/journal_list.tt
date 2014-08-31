@@ -1,0 +1,159 @@
+<html>
+<!-- $Id: journal_list.tt,v 1.1 2014/08/31 10:54:45 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Actions journal</title>
+
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
+
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	
+	<p>
+	<table width='95%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='center'><h2>Actions journal</h2></td>
+			<td align='right' width='20%'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>	
+	<table width='95%' class='top_hr'>
+		<tr align='left'>
+			<td>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	<p>
+	<table width='95%' class='list_data' id='d-tbl'>
+		<tr class='list_data'>
+			<th width='10%'>Access code</th>
+			<th width='5%'>Ext</th>
+			<th width='20%'>Date</th>
+			<th width='10%'>Action</th>
+			<th width='15%'>Remote IP</th>
+			<th width='40%'>Data</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='6'>
+				<a title='previous page' href='?action=j_list&from=[% MSG_PREV %]&ac=[% J_AC %]&ext_num=[% J_EXT_NUM %]&data=[% J_DATA | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH msg = J_LIST %]
+			<tr class='nocolor'>
+				<td><a title='edit user settings' href='?ac=[% p.ACCESS_CODE %]&action=user_info'>[% msg.ACCESS_CODE %]</a></td>
+				<td>[% msg.EXT_NUMBER | html %]</td>
+				<td align='center'>[% msg.J_DATE | html %]</td>
+				<td>[% msg.ACTION | html %]</td>
+				<td align='center'>[% msg.CID | html %]</td>
+				<td>[% msg.DESCRIPTION | html %]</td>
+			</tr>
+		[% END %]
+
+		<tr>
+		[% IF MSG_NEXT ne '' %]
+			<td align='right' colspan='6'>
+				<a title='next page' href='?action=j_list&from=[% MSG_NEXT %]&ac=[% J_AC %]&ext_num=[% J_EXT_NUM %]&data=[% J_DATA | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+			</td>
+		[% ELSE %]
+			<td colspan='6'>&nbsp;</td>
+		[% END %]
+		</tr>
+	</table>
+	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+
+	<p>	
+	<table width='95%' class='bottom_hr'>
+		<tr align='right'>
+			<form method="get" action="[% CGI_URL %]">
+			<td width='100%'>
+				From date:
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<button type="button">...</button>
+				&nbsp;
+				To date:
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<button type="button">...</button>
+				&nbsp;
+				<input name='action' value='j_list' type='hidden'>
+				<input size='12' placeholder='Access code' type='text' name='ac' value='[% J_AC %]'>
+				&nbsp;
+				<input size='12' placeholder='exten' type='text' name='ext_num' value='[% J_EXT_NUM %]'>
+				&nbsp;
+				<select name="action_type")">
+					[% IF J_ACTION %]
+						<option value="[% J_ACTION %]" selected>[% J_ACTION %]</option>
+						<option value="" >all</option>
+					[% ELSE %]
+						<option value="" selected>all</option>
+					[% END %]
+				[% FOREACH at = ACTIONS %]
+					<option value="[% at %]">[% at %]</option>
+				[% END %]
+				</select>
+				&nbsp;
+				<input size='18' placeholder='data' type='text' name='data' value='[% J_DATA | html %]'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				&nbsp;
+				<input value='Search' type='submit'>
+				&nbsp;&nbsp;
+			</td>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
+	

@@ -271,6 +271,7 @@ cd - > /dev/null
 # clean contrib/utils
 #
 rm -rf $RPM_BUILD_ROOT/%CORE_DIR/contrib/utils/build
+rm -rf $RPM_BUILD_ROOT/%CORE_DIR/contrib/utils/nonfree
 rm -f $RPM_BUILD_ROOT/%CORE_DIR/contrib/Diagram.dia
 
 #

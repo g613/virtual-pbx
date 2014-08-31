@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.73 2014/08/15 19:49:40 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.74 2014/08/18 07:03:29 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -721,7 +721,8 @@ function listcolorer( element_id ) {
 /* dropdown creaters */
 function exten_dropdown( prefix ) {
 	document.write(prefix);
-	for ( ext_num in e_list ) {
+	for( var i=0, l=e_menu.length; i<l; ++i ) {
+		var ext_num = e_menu[i];
 		/* by ID */
 		if ( e_list[ext_num][0] != null ) {
 			document.write('<option value="'+ e_list[ext_num][0] +'">' + ext_num + ' - ');
@@ -736,8 +737,8 @@ function exten_dropdown( prefix ) {
 }
 function exten_dropdown2( select_name, extension, prefix ) {
 	document.write('<select onchange=\'exten_dropdown2_hook(this.value,"'+ select_name +'")\' name="'+ select_name +'-DD">' + prefix);
-	
-	for ( ext_num in e_list ) {
+	for( var i=0, l=e_menu.length; i<l; ++i ) {
+		var ext_num = e_menu[i];
 		/* by Ext Name */
 		if ( select_name == 'NEXTEXTENSION' || ( ext_num != 'hangup' && ext_num != 'back' && ext_num != 'repeat' ) ) {
 			document.write('<option value="'+ ext_num +'"');
