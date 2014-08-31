@@ -20,6 +20,8 @@
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=cdr_list'>CDRs</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=j_list'>Journals</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=phone_list'>SIP phones</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=peer_list'>SIP peers</a>

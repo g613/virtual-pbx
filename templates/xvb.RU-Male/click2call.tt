@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.10 2014-02-05 07:35:10 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.11 2014/08/18 07:03:09 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.24 2014/08/15 19:26:11 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.25 2014/08/18 07:03:09 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -10,12 +10,16 @@
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 	<script language="JavaScript">
 		var e_list = [];
-		e_list['hangup'] = [ null, null,'Выход из PBX' ];
-		e_list['back'] = [ null, null, 'Вернуться к предыдущему' ];
-		e_list['repeat'] = [ null, null, 'Повторить текущий' ];
+		e_list['hangup'] = [ null, null,'Выход из PBX',-2 ];
+		e_list['back'] = [ null, null, 'Вернуться к предыдущему',-1 ];
+		e_list['repeat'] = [ null, null, 'Повторить текущий',0 ];
 		[% FOREACH vb = VB_LIST %]
-		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | locale_msg %]','[% vb.NAME | html %]'];
+		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | locale_msg %]','[% vb.NAME | html %]',[% vb.VB_IND %]];
 		[% END %]
+		var e_menu = [];
+		for ( var m_num in e_list ) {
+			e_menu[2+e_list[m_num][3]] = m_num;
+		}
 	</script>
 </head>
 
