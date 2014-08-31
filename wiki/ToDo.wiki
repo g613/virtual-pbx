@@ -1,6 +1,10 @@
 #labels Featured
 = ToDo list =
 
+<font color='green'>+ журнал в ai интерфейсе</font> ( 31.08.2014 / build 8378 )
+
+<font color='green'>+ vtiger / amoCRM коннекторы</font> ( 30.08.2014 / build 8370 )
+
 <font color='green'>+ Отправка факсов через веб для ФаксПоЗапросу</font> ( 16.08.2014 / build 8338 )
 
 <font color='green'>+ поддержку pdf | png | jpg | txt для загружаемых файлов для факса</font> ( 12.08.2014 / build 8316 )
