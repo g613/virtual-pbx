@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='green'>+ новый ui</font> ( 12.08.2014 / build 8555 )
+
 <font color='green'>+ журнал в ai интерфейсе</font> ( 31.08.2014 / build 8378 )
 
 <font color='green'>+ vtiger / amoCRM коннекторы</font> ( 30.08.2014 / build 8370 )
