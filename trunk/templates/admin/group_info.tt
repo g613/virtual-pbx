@@ -15,35 +15,36 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 
-	<center>
-	<p>
 	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
-			<td align='center'><h2>Group info '<b>[% GROUP.GROUP_NAME | html %]</b>'</h2></td>
-			<td align='right' width='20%'>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
 				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
 				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+	
+	<table width='100%'>
+		<tr>
+			<td width='90%' align='center'>
+				<h1>Group '<b>[% GROUP.GROUP_NAME | html %]</b>'</h1>
+			</td>
+			<td align='right'>
+				<a title='delete group' href='?action=group_del&group_id=[% GROUP.GROUP_ID %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
 		</tr>
 	</table>
-	</p>
-
+	
 	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			<td width='15%'>
-				<a class='headers' href='?action=group_del&group_id=[% GROUP.GROUP_ID %]' onclick="return DelConfirm('en')">Delete</a>
-			</td>
-			[% INCLUDE main_menu2.tt-inc %]
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='90%' class='group_info'>
+	<table width='90%'>
 		<form method='post'>
 		<tr>
 			<td>Group Name: </td>
@@ -451,21 +452,10 @@
 				<input type='hidden' value='[% GROUP.GROUP_ID %]' name='group_id'>
 				<input type='hidden' value='group_update' name='action'>
 				<input type='hidden' value='gr' name='go'>
-				<input value='&nbsp;&nbsp;change&nbsp;&nbsp;' type='submit'>
+				<input value='update group info' type='submit'>
 			</td>
 		</tr>
 		</form>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			[% INCLUDE main_menu2.tt-inc %]
-			<td width='15%'>
-				<a class='headers' href='?action=group_del&group_id=[% GROUP.GROUP_ID %]' onclick="return DelConfirm('en')">Delete</a>
-			</td>
-		</tr>
 	</table>
 	</p>
 	</center>

@@ -15,29 +15,33 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 
-	<center>
-	<p>
 	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
-			<td align='center'><h2>Tariff '[% NAME | html %]'</h2></td>
-			<td align='right' width='20%'>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
 				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
 				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+			
+	<table width='100%'>
+		<tr>
+			<td width='90%' align='center'>
+				<h1>Tariff '[% NAME | html %]'</h1>
+			</td>
+			<td align='right'>
+				<a title='delete tariff' href='?action=tariff_del&tariff_id=[% ID %]' onclick="return DelConfirm('en')"><img border='0' src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
 		</tr>
 	</table>
-	</p>
-
-	<p>
-	<table width='98%' class='bottom_hr'>
-		<tr align='center'>
-			[% INCLUDE main_menu2.tt-inc %]
-		</tr>
-	</table>
-	</p>
 
 	<p align='center'>
 	<table width='98%' id='list-data'>
@@ -276,16 +280,12 @@
 			<td><input class='in_t0' name='T_MINUTE_PRICE_E_MULTIDIALOUT' type='text' value='[% MINUTE_PRICE_E_MULTIDIALOUT | html %]'></td>
 		</tr>
 		
-		
-		<tr class='nocolor'>
-			<td colspan='3'>&nbsp;</td>
-		</tr>
 		<tr>
 			<td colspan='3' align='center'>
 			<input type='hidden' value='[% ID %]' name='tariff_id'>
 			<input type='hidden' value='[% ID %]' name='data_id'>
 			<input type='hidden' value='tariff_update' name='action'>
-			<input value='&nbsp;&nbsp;change&nbsp;&nbsp;' type='submit'>
+			<input value='update tariff data' type='submit'>
 			</td>
 		</tr>
 		</form>
@@ -293,13 +293,6 @@
 	<script language='JavaScript'>listcolorer( 'list-data' );</script>
 	</p>
 
-	<p>
-	<table width='98%' class='bottom_hr'>
-		<tr align='center'>
-			[% INCLUDE main_menu2.tt-inc %]
-		</tr>
-	</table>
-	</p>
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

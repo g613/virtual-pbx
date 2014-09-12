@@ -33,7 +33,7 @@
 
 
 	<p>
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
 			<td>
 				<a href='?action=user_list&partner=[% PARTNER | html %]'>Users</a>
@@ -45,18 +45,8 @@
 	</p>
 
 	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='right'>
-			<td width='15%'>
-				&nbsp;
-			</td>
-		</tr>
-	</table>
-	</p>
-	
-	<p>
-	<table width='95%' class='list_data'>
-		<tr class='list_data'>
+	<table width='95%'>
+		<tr>
 		</tr>
 		<tr>
 			<td width='50%' valign='top'>
@@ -161,48 +151,14 @@
 				[% IF USE_BILLING %]
 				<tr>
 					<td>
-						<table width='100%' class='addon_data'>
-							<tr>
-								<td><b>Tariff:</b></td>
-								<td colspan='7'><b>[% TARIFF.NAME | html %]</b> ( currency  [% TARIFF.DESCRIPTION %] )</td>
-							</tr>
-							<tr class='list_data' align='center'>
-								<th rowspan='2'>Monthly</th>
-								<th rowspan='2'>Daily</th>
-								<th colspan='2'>IVR</th>
-								[% IF USER_CREDS.VBL_14 ne '0' %]
-									<th colspan='2'>CallBack</th>
-								[% END %]
-								[% IF USER_CREDS.VBL_18 ne '0' %]
-									<th colspan='2'>CallBlast</th>
-								[% END %]
-							</tr>
-							<tr class='list_data' align='center'>
-								<th>Minute</th>
-								<th>Call</th>
-								<th>Minute</th>
-								<th>Call</th>
-								<th>Minute</th>
-								<th>Call</th>
-							</tr>
-							<tr class='addon_data' align='right'>
-								<td>[% TARIFF.MONTHLY_PRICE %]</td>
-								<td>[% TARIFF.DAILY_PRICE %]</td>
-								<td>[% TARIFF.MINUTE_PRICE %]</td>
-								<td>[% TARIFF.CALL_PRICE %]</td>
-								<td>[% TARIFF.MINUTE_PRICE_CB %]</td>
-								<td>[% TARIFF.CALL_PRICE_CB %]</td>
-								<td>[% TARIFF.MINUTE_PRICE_CBL %]</td>
-								<td>[% TARIFF.CALL_PRICE_CBL %]</td>
-							</tr>
+						<table width='100%'>
 							<tr>
 								<td colspan='8'>
-									Balance:
+									Balance ( <b>Tariff - <b>[% TARIFF.NAME | html %]</b> ):
 								</td>
 							</tr>
-							<tr class='addon_data'>
+							<tr>
 								<td colspan='4'>
-									&nbsp;
 									&nbsp;
 									&nbsp;
 									<b>[% USER.USER_BALANCE %]</b> [% TARIFF.DESCRIPTION %]
@@ -253,19 +209,6 @@
 	</table>
 	</p>
 	
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			<td width='50%'>
-				<a class='headers' href='?action=user_del&user_id=[% USER.ID %]&single_user=1&partner=[% PARTNER | html %]' onclick="return DelConfirm('en')">Delete</a>
-			</td>
-			<td width='50%'>
-				<a class='headers' href='?action=user_list&partner=[% PARTNER | html %]'>Users</a>
-			</td>
-		</tr>
-	</table>
-	</p>
-
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

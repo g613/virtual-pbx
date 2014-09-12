@@ -1,7 +1,7 @@
 <html>
-<!-- $Id: act_list.tt,v 1.20 2014-02-05 11:40:15 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.22 2014/09/12 10:55:07 gosha Exp $ -->
 <head>
-	<title>Virtual PBX - Extension stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	<title>Virtual PBX - Extension activity - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 
@@ -18,42 +18,81 @@
 </head>
 
 <body onLoad="XVBInit()">
-	<center>
-	<p>
-	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-			[% END %]
-			</td>
-			<td align='center'><h2>Extension #[% VBOX_PREF.EXT_NUMBER | html %] stats</h2></td>
-			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='top_hr'>
+	
+	<table width='95%'>
 		<tr align='left'>
 			<td>
 				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+				&nbsp;|&nbsp;
 				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extension detail</a>
 				[% IF EXTENDED_STAT %]
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=extended_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extended stats</a>
+				&nbsp;|&nbsp;
+				<a href='?action=extended_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extended statistics</a>
 				[% END %]
 			</td>
+	</table>
+
+	<center>
+			
+	<h1>Extension #[% VBOX_PREF.EXT_NUMBER | html %] activity</h1>
+
+	<table width='95%'>
+		<tr>
+			<td align='right'>
+				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<button type="button">...</button>
+				&nbsp;
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<button type="button">...</button>
+				&nbsp;
+				Caller ID:
+				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				&nbsp;
+				<select name="act_type")">
+					<option value=""  selected>all</option>
+				[% FOREACH at = ACT_TYPES %]
+					<option value="[% at %]">[% at %]</option>
+				[% END %]
+				</select>
+				<input name='action' value='ext_stat' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
+				<input value='Search' type='submit'>
+				<input name='need_excel' value='Excel' type='submit'>
+				</form>
+			<td>
 		</tr>
 	</table>
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%' id='d-tbl'>
+		<tr>
 			<th>Start Date</th>
 			<th>Caller ID</th>
 			<th>Duration</th>
@@ -109,65 +148,6 @@
 		cdrfilters( 'd-tbl', 4 );
 		listcolorer( 'd-tbl' );
 	</script>
-
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-		<tr align='right'>
-			<td width='100%'>
-				From date:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<button type="button">...</button>
-				&nbsp;
-				To date:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<button type="button">...</button>
-				&nbsp;
-				Caller ID:
-				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
-				&nbsp;
-				Type:
-				<select name="act_type")">
-					<option value=""  selected>all</option>
-				[% FOREACH at = ACT_TYPES %]
-					<option value="[% at %]">[% at %]</option>
-				[% END %]
-				</select>
-				<input name='action' value='ext_stat' type='hidden'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
-				<input value='Search' type='submit'>
-				<input name='need_excel' value='Excel' type='submit'>
-				&nbsp;&nbsp;
-			</td>
-		</tr>
-		</form>
-	</table>
-	</p>
 	
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.7 2014/08/15 13:12:47 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.9 2014/09/11 15:06:39 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -18,20 +18,19 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='100%' class='logo'>
+	
+	<table width='100%'>
 		<tr>
-			<td align='center'><h2>Маршруты</h2></td>
+			<td align='center'><h1>Маршруты</h1></td>
 			<td align='right'>
 				<a title='удалить все маршруты' href='?action=route_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все маршруты'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
 			</td>
 		</tr>
 	</table>
-	</p>
 
 	<p>
-	<table width='100%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='100%' id='d-tbl'>
+		<tr>
 			<th>Приоритет</th>
 			<th>Шаблон номера</th>
 			<th>Преобразование</th>
@@ -47,7 +46,7 @@
 		[% FOREACH r = ROUTES %]
 		<tr align='center' id='d-tr-[% r.DATA_ID %]' class='nocolor'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
-			<td><input class='in_t0' size="6" name='r_PRIORITY' type'text' value='[% r.PRIORITY | html %]'></td>
+			<td><input class='in_t0' size="6" name='r_PRIORITY' type='text' value='[% r.PRIORITY | html %]'></td>
 			<td><input class='in_t0' size="15" name='r_PATTERN' type='text' value="[% r.PATTERN | html %]"></td>
 			<td><input class='in_t0' size="18" name='r_SUBSTR' type='text' value="[% r.SUBSTR | html %]"></td>
 			<td><input class='in_t0' size="14" name='r_EXT_NUMBER' type='text' value="[% r.EXT_NUMBER | html %]"></td>
@@ -87,9 +86,9 @@
 		</tr>
 		[% END %]
 		<tr><td></td></tr>
-		<tr class='list_data' align='center'>
+		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
-			<td><input size="6" name='r_PRIORITY' type'text'></td>
+			<td><input size="6" name='r_PRIORITY' type='text'></td>
 			<td><input size="15" name='r_PATTERN' type='text'></td>
 			<td><input size="18" name='r_SUBSTR' type='text'></td>
 			<td><input size="14" name='r_EXT_NUMBER' type='text'></td>
@@ -111,7 +110,6 @@
 			</td>
 			</form>
 		</tr>
-		<tr><td colspan='8'>&nbsp;</td></tr>
 	</table>
 	</p>
 

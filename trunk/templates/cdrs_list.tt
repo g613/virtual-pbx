@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.35 2013-03-11 15:07:57 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.36 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -19,40 +19,78 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-			[% END %]
-			</td>
-			<td align='center'><h2>CDRs</h2></td>
-			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
-		</tr>
-	</table>
-	</p>
+			
+	<h1>CDRs</h1>
 
 	<p>
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
-			<td>
-				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+			<td align='right'>
+				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<button type="button">...</button>
+				&nbsp;
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<button type="button">...</button>
+				<input name='action' value='cdr_list' type='hidden'>
+				&nbsp;
+				<input placeholder='Caller' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				&nbsp;
+				<input placeholder='Called' size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<select name="call_type">
+					<option value="" selected>call type</option>
+					<option value="" >all calls</option>
+					<option value="incoming">incoming</option>
+					<option value="local">local</option>
+					<option value="transit">transit</option>
+					<option value="internal">internal</option>
+					<option value="callback">callback</option>
+					<option value="callblast">callblast</option>
+					<option value="click2call">click2call</option>
+					<option value="alarmclock">alarmclock</option>
+					<option value="service">service</option>
+				</select>
+				<input value='Search' type='submit'>
+				<input name='need_excel' value='Excel' type='submit'>
+				<script language='JavaScript'>
+					document.write("<select name='chart_group_period'><option selected value=''>group by</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='did'>DID</option><option value='cid'>CallerID</option><option value='ct'>call type</option></select>");
+					document.write("<input name='need_chart' value='Chart' type='submit'>");
+				</script>
+				</form>
 			</td>
 		</tr>
 	</table>
 	</p>
 		
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
+	<table width='95%' id='d-tbl'>
 		[% IF USE_BILLING %]
-		<tr class='list_data'>
+		<tr>
 			<th>Start Date</th>
 			<th>Caller ID</th>
 			<th>Duration</th>
@@ -89,7 +127,7 @@
 		[% END %]
 		</tr>
 		[% ELSE %]
-		<tr class='list_data'>
+		<tr>
 			<th>Start Date</th>
 			<th>Caller ID</th>
 			<th>Duration</th>
@@ -130,76 +168,6 @@
 	
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 	
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-		<tr align='right'>
-			<td width='100%'>
-				From date:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<button type="button">...</button>
-				&nbsp;
-				To date:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<button type="button">...</button>
-				<input name='action' value='cdr_list' type='hidden'>
-				&nbsp;
-				Caller:
-				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
-				&nbsp;
-				Called:
-				<input size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<select name="call_type">
-					<option value="" selected>call type</option>
-					<option value="" >all calls</option>
-					<option value="incoming">incoming</option>
-					<option value="local">local</option>
-					<option value="transit">transit</option>
-					<option value="internal">internal</option>
-					<option value="callback">callback</option>
-					<option value="callblast">callblast</option>
-					<option value="click2call">click2call</option>
-					<option value="alarmclock">alarmclock</option>
-					<option value="service">service</option>
-				</select>
-				<input value='Search' type='submit'>
-				<input name='need_excel' value='Excel' type='submit'>
-				<script language='JavaScript'>
-					document.write("<input name='need_chart' value='Chart' type='submit'>");
-					document.write("<select name='chart_group_period'><option selected value=''>group by</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='did'>DID</option><option value='cid'>CallerID</option><option value='ct'>call type</option></select>");
-				</script>
-				&nbsp;
-			</td>
-		</tr>
-		</form>
-	</table>
-	</p>
-
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 </html>

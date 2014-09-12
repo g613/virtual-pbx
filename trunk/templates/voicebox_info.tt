@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.262 2014/08/18 07:03:07 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.269 2014/09/12 10:55:07 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -25,61 +25,64 @@
 </head>
 
 <body onLoad="XVBInit()">
-	<center>
-	<p>
-	<table width='95%' class='logo'>
+	
+	<table width='95%'>
 		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
+			<td align='left'>
+			[% IF USER_CREDS.ROOT eq '0' %]
+				<a href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Clone</a>
+				&nbsp;|&nbsp;
+				<a href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')">Delete extension</a>
 			[% END %]
+				&nbsp;|&nbsp;
+				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
+				&nbsp;|&nbsp;
+				<a href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Activity</a>
+				[% IF EXTENDED_STAT %]
+				&nbsp;|&nbsp;
+				<a href='?action=extended_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extended statistics</a>
+				[% END %]
 			</td>
-			<td align='center'><h2>Extension# <b>[% VBOX_PREF.EXT_NUMBER | html %]</h2></td>
-			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
 		</tr>
 	</table>
-	</p>
 
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
+	<center>
+
+	<table width='100%'>
+		<tr>
+			<td align='center' width='75%'>
+				<h1>Extension# <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
+			</td>
+			<td align='right'>
 			[% IF USER_CREDS.ROOT eq '0' %]
-			<td>
-				<a class='headers' href='?action=user_info&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
+			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+				&nbsp;
+				<input name='action' value='vb_add' type='hidden'>
+				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input size='6' type='text' name='new_ext'>
+				&nbsp;
+				<input value='create new' type='submit'>
+			</form>
 			</td>
-			<td>
-				<a class='headers' href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Clone</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')">Delete extension</a>
-			</td>
-			[% END %]
-			<td>
-				<a class='headers' href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Stats</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=vb_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-			</td>
+		</tr>
+	</table>
+	
+	<table width='100%'>
+		<tr>
 			<td align='right'>
 				<select onchange="LoadingOn(); ChangeExten(this.value,'[% USER_CREDS.UNIQ %]')">
 					<script language="JavaScript">exten_dropdown('<option value="[% VBOX_PREF.ID | html %]">View extension</option>')</script>
 				</select>
-				&nbsp;
 			</td>
 		</tr>
 	</table>
-	</p>
 
 	<p>
-	<table class='vb_data' width='95%'>
+	<table width='100%'>
 	<tr>
 		<td width='53%' valign='top'>
-		<table class='ext_data' width='100%'>
+		<table width='100%'>
 			<form method="post" action="[% CGI_URL %]">
 			[% IF USER_CREDS.ROOT eq '0' %]
 			<tr>
@@ -296,7 +299,7 @@
 			<tr>
 				<td>Greeting: </td>
 				<td>
-					<textarea rows='[% VBOX_PREF.GREETING | textarea_rows %]' cols='35' name='GREETING'>[% VBOX_PREF.GREETING | html %]</textarea>
+					<textarea rows='[% VBOX_PREF.GREETING | textarea_rows %]' colls='30' name='GREETING'>[% VBOX_PREF.GREETING | html %]</textarea>
 				</td>
 			</tr>
 			[% END %]
@@ -454,7 +457,7 @@
 			<tr class='addon_info'>
 				<td>Time tags: </td>
 				<td>
-					<textarea rows='[% VBOX_PREF.GREETING_TAGS | textarea_rows %]' cols='35' name='GREETING_TAGS'>[% VBOX_PREF.GREETING_TAGS | html %]</textarea>
+					<textarea rows='[% VBOX_PREF.GREETING_TAGS | textarea_rows %]' colls='30' name='GREETING_TAGS'>[% VBOX_PREF.GREETING_TAGS | html %]</textarea>
 				</td>
 			</tr>
 			[% END %]
@@ -523,7 +526,7 @@
 			<tr>
 				<td>Find-Me list: </td>
 				<td>
-					<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+					<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' colls='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 				</td>
 			</tr>
 			<tr class='addon_info'>
@@ -539,13 +542,13 @@
 			<tr class='addon_info'>
 				<td>Seamless transferring list: </td>
 				<td>
-					<textarea rows='[% VBOX_PREF.FMC | textarea_rows %]' cols='35' name='FMC'>[% VBOX_PREF.FMC | html %]</textarea>
+					<textarea rows='[% VBOX_PREF.FMC | textarea_rows %]' colls='30' name='FMC'>[% VBOX_PREF.FMC | html %]</textarea>
 				</td>
 			</tr>
 			<tr class='addon_info'>
 				<td>GoTo if call status: </td>
 				<td>
-					<textarea rows='[% VBOX_PREF.GOTO_IF_CALL_STATUS | textarea_rows %]' cols='35' name='GOTO_IF_CALL_STATUS'>[% VBOX_PREF.GOTO_IF_CALL_STATUS | html %]</textarea>
+					<textarea rows='[% VBOX_PREF.GOTO_IF_CALL_STATUS | textarea_rows %]' colls='30' name='GOTO_IF_CALL_STATUS'>[% VBOX_PREF.GOTO_IF_CALL_STATUS | html %]</textarea>
 				</td>
 			</tr>
 			<tr class='addon_info'>
@@ -810,7 +813,7 @@
 				<tr>
 					<td>Post/Put params: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='35' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' colls='30' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -900,7 +903,7 @@
 				<tr>
 					<td>Fax Header: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='35' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' colls='30' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -969,7 +972,7 @@
 				<tr class='addon_info'>
 					<td>Other vars: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.OTHER_VARS | textarea_rows %]' cols='35' name='OTHER_VARS'>[% VBOX_PREF.OTHER_VARS | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.OTHER_VARS | textarea_rows %]' colls='30' name='OTHER_VARS'>[% VBOX_PREF.OTHER_VARS | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -1185,7 +1188,7 @@
 				<tr>
 					<td>Agents list: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' colls='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1498,7 +1501,7 @@
 				<tr>
 					<td>Fax Header: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='35' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' colls='30' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
 					</td>
 				</tr>
 				[% END %]
@@ -1954,7 +1957,7 @@
 				<tr>
 					<td>Phones: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' colls='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -2190,10 +2193,10 @@
 			</table>
 			</td>
 
-			<td width='1%' valign='top'>&nbsp;</td>
+			<td width='1%'>&nbsp;</td>
 
 			<td valign='top' width='46%' align='left'>
-				<table class='stat_data' width='100%' id='d-tbl-s'>
+				<table  width='100%' id='d-tbl-s'>
 					[% IF VBOX_PREF.TYPE eq '3' %]
 					[% IF VB_DATA %]
 					<tr>
@@ -2201,8 +2204,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='addon_data' id='addon-data'>
-							<tr class='list_addon_data'>
+						<table width='100%' id='addon-data'>
+							<tr>
 								<th>Phone number</th>
 								<th>All calls</th>
 								<th>Answered calls</th>
@@ -2265,8 +2268,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center'>
-						<table width='90%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+						<table width='90%'  id='addon-data'>
+							<tr>
 								<th>Variant</th>
 								<th>Count</th>
 								<th>Percent</th>
@@ -2300,8 +2303,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center'>
-						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data' align='center'>
+						<table width='100%'  id='addon-data'>
+							<tr align='center'>
 								<th colspan='2'>&nbsp;</th>
 								<th>Create time</th>
 								<th>Download time</th>
@@ -2338,9 +2341,9 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
-								<th><a href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='dynamic agents'>Phone number</a></th>
+						<table width='100%'  id='addon-data'>
+							<tr>
+								<th><a class='error' href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='dynamic agents'>Phone number</a></th>
 								<th>All calls</th>
 								<th>Answered calls</th>
 								<th>Duaration</th>
@@ -2382,8 +2385,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+						<table width='100%'  id='addon-data'>
+							<tr>
 								<th>Call Status</th>
 								<th>Count</th>
 								<th>Percent</th>
@@ -2435,8 +2438,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+						<table width='100%'  id='addon-data'>
+							<tr>
 								<th>Phone number</th>
 								<th>Parking slot</th>
 								<th>Hold time</th>
@@ -2465,8 +2468,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+						<table width='100%'  id='addon-data'>
+							<tr>
 								<th>Call Status</th>
 								<th>Count</th>
 								<th>Percent</th>
@@ -2639,7 +2642,7 @@
 					
 					<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 					<tr>
-						<td nowrap='nowrap'>
+						<td colspan='2' nowrap='nowrap'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='msg_upload'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
@@ -2665,7 +2668,9 @@
 							</select> 
 							<input type='file' name='msg'>
 						</td>
-						<td align='right'>
+					<tr>
+					<tr>
+						<td colspan='2' align='right'>
 							<input type='submit' value='upload'>
 						</td>
 					</tr>
@@ -2706,8 +2711,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center'>
-						<table width='90%' class='addon_data' id='d-tbl'>
-							<tr class='list_addon_data'>
+						<table width='90%' id='d-tbl'>
+							<tr>
 								<th>User Name</th>
 								<th>Extension Number</th>
 								<th>Actions</th>
@@ -2779,84 +2784,14 @@
 						</td>
 					</tr>
 					<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
-					[% END %]
-
-					[% IF VBOX_PREF.TYPE eq '18' %]
-					<tr>
-						<td colspan='2' align='left'>&nbsp;</td>
-					</tr>
-					<tr>
-						<td colspan='2' align='left'><h4>CallBlast Schedule:</h4></td>
-						<td align='right'>
-							<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL schedule items'><img border='0' src='/xvb/images/msg_delete.png' alt='del all items' /></a>
-						</td>
-					</tr>
-					<tr>
-					<td colspan='3' align='center'>
-						<table width='90%' class='addon_data' id='d-tbl-d1'>
-							<tr class='list_addon_data'>
-								<th>Priority</th>
-								<th>Time</th>
-								<th>Day Of Week</th>
-								<th>Day Of Month</th>
-								<th>Month</th>
-								<th>Year</th>
-								<th>Actions</th>
-							</tr>
-							[% FOREACH param = BLAST_SCHEDULE %]
-							<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-								<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
-								<input type='hidden' name='action' value='schedule_update'>
-								<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
-								<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
-								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-								<td><input class='in_t0' size='5'  name='priority' type='text' value='[% param.PRIORITY | html %]'></td>
-								<td><input class='in_t0' size='11' name='time_h'type='text' value='[% param.TIME_H | html %]'></td>
-								<td><input class='in_t0' size='5'  name='dayofweek' type='text' value='[% param.DAYOFWEEK | html %]'></td>
-								<td><input class='in_t0' size='5'  name='dayofmonth' type='text' value='[% param.DAYOFMONTH | html %]'></td>
-								<td><input class='in_t0' size='5'  name='month' type='text' value='[% param.MONTH | html %]'></td>
-								<td><input class='in_t0' size='5'  name='year' vtype='text' value='[% param.YEAR | html %]'></td>
-								<td align='left' nowrap='nowrap'>
-									<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]','d-tbl-d1')" title='delete schedule item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>&nbsp;
-									<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-										<script language='JavaScript'>
-											writeUpdateLinks( 'save changes' );
-										</script>
-										<noscript><input value='change' type='submit'></noscript>
-									</span>
-								</td>
-								</form>
-							</tr>
-							[% END %]
-						
-							<tr align='center'>
-								<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-								<input type='hidden' name='action' value='schedule_add'>
-								<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
-								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-								<input type='hidden' name='redirect_to' value='0'>
-								<input type='hidden' name='callerid' value='*'>
-								<td><input size='5' type='text'  name='priority' value='5'></td>
-								<td><input size='11' type='text' name='time_h' value='*'></td>
-								<td><input size='5' type='text'  name='dayofweek' value='*'></td>
-								<td><input size='5' type='text'  name='dayofmonth' value='*'></td>
-								<td><input size='5' type='text'  name='month' value='*'></td>
-								<td><input size='5' type='text'  name='year' value='*'></td>
-								<td align='center'>
-									<input type='submit' value='add'>
-								</td>
-								</form>
-							</tr>
-						</table>
-						<script language='JavaScript'>listcolorer( 'd-tbl-d1' );</script>
-					</td>
-					</tr>
-					[% END %]
-					
+					[% END %]	
 				</table>
 			</td>
 			</tr>
-			
+		
+		</table>
+
+		<table width='100%'>
 			[% IF VBOX_PREF.TYPE eq '5' %]
 			<tr><td colspan='3'>&nbsp;</td></tr>
 			<tr>
@@ -2867,8 +2802,8 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-					<table width='90%' class='addon_data' id='d-tbl'>
-						<tr class='list_addon_data'>
+					<table width='90%' id='d-tbl'>
+						<tr>
 							<th>Priority</th>
 							<th>CallerID</th>
 							<th>Time</th>
@@ -2935,6 +2870,74 @@
 
 			[% IF VBOX_PREF.TYPE eq '18' %]
 			<tr>
+				<td colspan='2' align='left'><h4>CallBlast Schedule:</h4></td>
+				<td align='right'>
+					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL schedule items'><img border='0' src='/xvb/images/msg_delete.png' alt='del all items' /></a>
+				</td>
+			</tr>
+			<tr>
+			<td colspan='3' align='center'>
+				<table width='90%' id='d-tbl-d1'>
+					<tr>
+						<th>Priority</th>
+						<th>Time</th>
+						<th>Day Of Week</th>
+						<th>Day Of Month</th>
+						<th>Month</th>
+						<th>Year</th>
+						<th>Actions</th>
+					</tr>
+					[% FOREACH param = BLAST_SCHEDULE %]
+					<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
+						<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+						<input type='hidden' name='action' value='schedule_update'>
+						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+						<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
+						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+						<td><input class='in_t0' size='5'  name='priority' type='text' value='[% param.PRIORITY | html %]'></td>
+						<td><input class='in_t0' size='11' name='time_h'type='text' value='[% param.TIME_H | html %]'></td>
+						<td><input class='in_t0' size='5'  name='dayofweek' type='text' value='[% param.DAYOFWEEK | html %]'></td>
+						<td><input class='in_t0' size='5'  name='dayofmonth' type='text' value='[% param.DAYOFMONTH | html %]'></td>
+						<td><input class='in_t0' size='5'  name='month' type='text' value='[% param.MONTH | html %]'></td>
+						<td><input class='in_t0' size='5'  name='year' vtype='text' value='[% param.YEAR | html %]'></td>
+						<td align='left' nowrap='nowrap'>
+							<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]','d-tbl-d1')" title='delete schedule item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>&nbsp;
+							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+								<script language='JavaScript'>
+									writeUpdateLinks( 'save changes' );
+								</script>
+								<noscript><input value='change' type='submit'></noscript>
+							</span>
+						</td>
+						</form>
+					</tr>
+					[% END %]
+						
+					<tr align='center'>
+						<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+						<input type='hidden' name='action' value='schedule_add'>
+						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+						<input type='hidden' name='redirect_to' value='0'>
+						<input type='hidden' name='callerid' value='*'>
+						<td><input size='5' type='text'  name='priority' value='5'></td>
+						<td><input size='11' type='text' name='time_h' value='*'></td>
+						<td><input size='5' type='text'  name='dayofweek' value='*'></td>
+						<td><input size='5' type='text'  name='dayofmonth' value='*'></td>
+						<td><input size='5' type='text'  name='month' value='*'></td>
+						<td><input size='5' type='text'  name='year' value='*'></td>
+						<td align='center'>
+							<input type='submit' value='add'>
+						</td>
+						</form>
+					</tr>
+				</table>
+				<script language='JavaScript'>listcolorer( 'd-tbl-d1' );</script>
+			</td>
+			</tr>
+			<tr><td colspan='3'>&nbsp;</td></tr>
+			
+			<tr>
 				<td colspan='2' align='left'><h4>CallBlast data ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ) :</h4></td>
 				<td align='right'>
 					<a title='get excel table' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
@@ -2944,8 +2947,8 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-				<table width='100%' class='addon_data' id='d-tbl'>
-					<tr class='list_addon_data'>
+				<table width='100%' id='d-tbl'>
+					<tr>
 						<th>Handle time</th>
 						<th>Name</th>
 						<th>Phone Number(s)</th>
@@ -3007,32 +3010,30 @@
 						</td>
 					</tr>
 					[% END %]
-					<tr align='center'>
-						<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-						<input type='hidden' name='action' value='callblast_add'>
-						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
-						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-						<td>&nbsp;</td>
-						<td><input type='text' name='name' value='' size='20'></td>
-						<td><input size='33' type='text' name='pn' value=''></td>
-						<td><input size='25' type='text' name='uv' value=''></td>
-						<td colspan='4' align='center'>
-							<input type='submit' value=' add callblast item '>
-						</td>
-						</form>
-					</tr>
-					<tr><td colspan='8'>&nbsp;</td></tr>
 					<tr id='csv-import'>
-						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
-						<td colspan='3'>&nbsp;</td>
-						<td colspan='5' align='right'>
+						<td colspan='4' align='left' nowrap='nowrap'>
+							<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<input type='hidden' name='action' value='callblast_add'>
+							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+							<input type='text' name='name' value='' size='20' placeholder='Name'>
+							&nbsp;
+							<input size='33' type='text' name='pn' value='' placeholder='Phone number'>
+							&nbsp;
+							<input size='25' type='text' name='uv' value='' placeholder='Variables'>
+							&nbsp;
+							<input type='submit' value='add'>
+							</form>
+						</td>
+						<td colspan='4' align='right' nowrap='nowrap'>
+							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 							<input type='file' name='config_file'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 							<input name='is_excel' type='submit' value='Append data from CSV'>
+							</form>
 						</td>
-						</form>
 					</tr>
 				</table>
 				<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
@@ -3050,8 +3051,8 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-					<table width='90%' class='addon_data' id='d-tbl'>
-						<tr class='list_addon_data'>
+					<table width='90%' id='d-tbl'>
+						<tr>
 							<th>Priority</th>
 							<th>Function</th>
 							<th>Variable</th>
@@ -3157,8 +3158,8 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-				<table width='100%' class='addon_data' id='d-tbl'>
-					<tr class='list_addon_data'>
+				<table width='100%' id='d-tbl'>
+					<tr>
 						<th>Handle time</th>
 						<th>Name</th>
 						<th>Phone Number(s)</th>
@@ -3222,32 +3223,30 @@
 						</td>
 					</tr>
 					[% END %]
-					<tr align='center'>
-						<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-						<input type='hidden' name='action' value='multidialout_add'>
-						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
-						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-						<td>&nbsp;</td>
-						<td><input type='text' name='name' value='' size='20'></td>
-						<td><input size='33' type='text' name='pn' value=''></td>
-						<td><input size='25' type='text' name='uv' value=''></td>
-						<td colspan='4' align='center'>
-							<input type='submit' value=' add multidialout item '>
-						</td>
-						</form>
-					</tr>
-					<tr><td colspan='9'>&nbsp;</td></tr>
 					<tr id='csv-import'>
-						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
-						<td colspan='3'>&nbsp;</td>
-						<td colspan='6' align='right'>
+						<td align='left' nowrap='nowrap' colspan='5'>
+							<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<input type='hidden' name='action' value='multidialout_add'>
+							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+							<input size='20' placeholder='Name' type='text' name='name' value=''>
+							&nbsp;
+							<input size='33' placeholder='Phone number' type='text' name='pn' value=''>
+							&nbsp;
+							<input size='25' placeholder='Variables' type='text' name='uv' value=''>
+							&nbsp;
+							<input type='submit' value='add'>
+							</form>
+						</td>
+						<td colspan='4' align='right'>
+							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 							<input type='file' name='config_file'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 							<input name='is_excel' type='submit' value='Append data from CSV'>
+							</form>
 						</td>
-						</form>
 					</tr>
 				</table>
 				<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
@@ -3257,39 +3256,6 @@
 
 		</table>
 		</p>
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			[% IF USER_CREDS.ROOT eq '0' %]
-			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-			<td align='left'>
-				&nbsp;
-				<input name='action' value='vb_add' type='hidden'>
-				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input size='6' type='text' name='new_ext'>
-				<input value='Create new' type='submit'>
-			</td>
-			</form>
-			<td>
-				<a class='headers' href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Clone</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')">Delete extension</a>
-			</td>
-			[% END %]
-			<td>
-				<a class='headers' href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Stats</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=vb_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-			</td>
-		</tr>
-	</table>
-	</p>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</center>
 	<script language='JavaScript'>MoreExtOptions(document.getElementById('xvb_view_mode_selector'),1,'all options','core options');</script>

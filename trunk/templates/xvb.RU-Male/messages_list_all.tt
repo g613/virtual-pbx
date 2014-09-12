@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.6 2014/07/09 11:40:18 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.7 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Все сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -17,19 +17,9 @@
 </head>
 
 <body onLoad="XVBInit()">
-	<center>
-	<p>
-	<table width='100%' class='logo'>
+	<table width='100%'>
 		<tr>
-			<td align='center'><h2>Все сообщения</h2></td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='100%' class='top_hr'>
-		<tr align='left'>
-			<td>
+			<td align='left'>
 		[% IF USER_CREDS.ROOT eq '0' %]
 				<a href='?action=msg_cleanup&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Вы действительно хотите удалить все сообщения?')">Удалить сообщения</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -40,12 +30,76 @@
 			</td>
 		</tr>
 	</table>
-	</p>
+
+	<center>
+			
+	<h1>Все сообщения</h1>
+
+	<table width='100%'>
+		<tr>
+			<td align='right'>
+				<form method="get" action="[% CGI_URL %]">
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='с даты'>
+				<button type="button">...</button>
+				&nbsp;
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='по дату'>
+				<button type="button">...</button>
+				<input name='action' value='msg_list_all' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				&nbsp;
+				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]' placeholder='кто звонил'>
+				&nbsp;
+				<input size='10' type='text' name='called_id' value='[% CALLED_ID | html %]' placeholder='кому звонил'>
+				&nbsp;
+				<select name="msg_type">
+					<option selected='selected' value="" >Тип сообщения</option>
+					<option value="30:40">Все пользовательские</option>
+					<option value="1:2:3:4:5:6">Все системные</option>
+					<option value="1">Имя пользователя</option>
+					<option value="2">Приветствие пользователя</option>
+					<option value="3">Анонс исходящего звонка</option>
+					<option value="4">Анонс удержания вызова</option>
+					<option value="5">Музыка вместо звонка</option>
+					<option value="6">Факс по запросу</option>
+					<option value="30">Новое сообщение</option>
+					<option value="40">Старое сообщение</option>
+				</select>
+				&nbsp;
+				<input value='Найти' type='submit'>
+				&nbsp;&nbsp;
+				</form>
+			</td>
+		</tr>
+	</table>
 
 	<p>
-	<table width='100%' class='list_data' id='d-tbl'>
+	<table width='100%' id='d-tbl'>
 		[% IF MSG_LIST scalar %]
-		<tr class='list_data'>
+		<tr>
 			<th>#</th>
 			<th>Номер</th>
 			<th>Дата</th>
@@ -104,19 +158,11 @@
 			<td align='right' colspan='9'>
 				<a title='следующая страница ([% MSG_NEXT %])' href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&called_id=[% CALLED_ID | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
-		[% ELSE %]
-			<td colspan='9'>&nbsp;</td>
 		[% END %]
 		</tr>
 		[% ELSE %]
-		<tr class='list_data'>
-			<td colspan='9'>&nbsp;</td>
-		</tr>
 		<tr>
 			<td colspan='9' align='center'><h4>Сообщений нет</h4></td>
-		</tr>
-		<tr>
-			<td colspan='9'>&nbsp</td>
 		</tr>
 		[% END %]
 	</table>
@@ -124,68 +170,6 @@
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
-	<p>
-	<table width='100%' class='bottom_hr'>
-		<tr align='right'>
-			<form method="get" action="[% CGI_URL %]">
-			<td width='100%'>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='с даты'>
-				<button type="button">...</button>
-				&nbsp;
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='по дату'>
-				<button type="button">...</button>
-				<input name='action' value='msg_list_all' type='hidden'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				&nbsp;
-				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]' placeholder='кто звонил'>
-				&nbsp;
-				<input size='10' type='text' name='called_id' value='[% CALLED_ID | html %]' placeholder='кому звонил'>
-				&nbsp;
-				<select name="msg_type">
-					<option selected='selected' value="" >Тип сообщения</option>
-					<option value="30:40">Все пользовательские</option>
-					<option value="1:2:3:4:5:6">Все системные</option>
-					<option value="1">Имя пользователя</option>
-					<option value="2">Приветствие пользователя</option>
-					<option value="3">Анонс исходящего звонка</option>
-					<option value="4">Анонс удержания вызова</option>
-					<option value="5">Музыка вместо звонка</option>
-					<option value="6">Факс по запросу</option>
-					<option value="30">Новое сообщение</option>
-					<option value="40">Старое сообщение</option>
-				</select>
-				&nbsp;
-				<input value='Найти' type='submit'>
-				&nbsp;&nbsp;
-			</td>
-			</form>
-		</tr>
-	</table>
-	</p>
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

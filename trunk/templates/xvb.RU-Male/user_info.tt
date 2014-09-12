@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.12 2014/07/25 15:10:21 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.15 2014/09/10 14:16:09 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -12,24 +12,16 @@
 
 <body onLoad="checkfr('uniq=[% USER_CREDS.UNIQ %]&saction=user_info');XVBInit()">
 	<center>
-	<p>
-	<table width='100%' class='logo'>
-		<tr>
-			<td align='center'><h2>Профиль пользователя AC# <b>[% USER_CREDS.ACCESS_CODE | html %]</h2></td>
-		</tr>
-	</table>
-	</p>
+			
+	<h1>Профиль пользователя AC# <b>[% USER_CREDS.ACCESS_CODE | html %]</h1>
 
 	<p>
 	<table width='100%'>
-		<tr class='list_data'>
-			<td colspan='2'>&nbsp;</td>
-		</tr>
 		<tr>
 			<td valign='top'>
 			<table class='user_data'>
 				<tr>
-					<td colspan='2'><h4>Основные настройки:</h4></td>
+					<td colspan='2'><h3>Основные настройки:</h3></td>
 				</tr>
 				<tr>
 					<td>Входящие номера:</td>
@@ -73,7 +65,6 @@ SIP-домен: [% d.DOMAIN | html %]
 						<select name='skins' onchange='javascript:document.user_prefs.CSS_HREF.value=this.value'>
 							<option value='[% USER_CREDS.CSS_HREF | html %]' selected>Ссылка на таблицу стилей:</option>
 							<option value='/xvb/xvb-green.css'>Стиль зеленая палитра</option>
-							<option value='/xvb/xvb-green-compact.css'>Стиль зеленая палитра. Компактный.</option>
 							<option value=''>Стиль по умолчанию</option>
 						</select>
 					</td>
@@ -221,11 +212,11 @@ SIP-домен: [% d.DOMAIN | html %]
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
-					<td colspan='2'><h4>Музыка вместо гудков:</h4></td>
+					<td colspan='2'><h3>Музыка вместо гудков:</h3></td>
 				</tr>
 				<tr>
 					<td colspan='2'>
-						<table width='90%' class='addon_data' id='d-tbl'>
+						<table width='90%' id='d-tbl'>
 							[% IF CUSTOM_MOH ne '' %]
 							<tr id='d-tr'>
 								<td>Текущая музыка вместо гудков</td>
@@ -258,7 +249,7 @@ SIP-домен: [% d.DOMAIN | html %]
 					<td colspan='2'>
 					<table class='user_data'>
 						<tr>
-							<td colspan='2'><h4>Резервное копирование:</h4></td>
+							<td colspan='2'><h3>Резервное копирование:</h3></td>
 						</tr>
 						<tr>
 							<form method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
@@ -295,7 +286,7 @@ SIP-домен: [% d.DOMAIN | html %]
 					<td align='left' colspan='2'>
 					&nbsp;
 					[% IF USER_CREDS.CUSTOM_FILES %]
-						<h4><a href="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=sysmedia_list&uniq=[% USER_CREDS.UNIQ %]">Системные звуковые файлы</a></h4>
+						<h3><a href="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=sysmedia_list&uniq=[% USER_CREDS.UNIQ %]">Системные звуковые файлы</a></h3>
 					[% END %]
 					</td>
 				</tr>
@@ -307,24 +298,10 @@ SIP-домен: [% d.DOMAIN | html %]
 				[% IF USE_BILLING > 0 %]
 				<tr>
 					<td colspan='3'>
-						<table width='100%' class='addon_data'>
+						<table width='100%'>
 							<tr>
 								<td>
-									<b>Тариф:</b>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									&nbsp;
-									&nbsp;
-									&nbsp;
-									<b>[% TARIFF.NAME | html %]</b> ( валюта  [% TARIFF.DESCRIPTION %] )
-								</td>
-							</tr>
-							<tr><td></td></tr>
-							<tr>
-								<td>
-									<b>Баланс:</b>
+									<h3>Баланс ( тариф - [% TARIFF.NAME | html %] ):</h3>
 								</td>
 							</tr>
 							<tr>
@@ -343,7 +320,7 @@ SIP-домен: [% d.DOMAIN | html %]
 					<td colspan='3'>&nbsp;</td>
 				</tr>
 				<tr>
-					<td colspan='3'><h4>Ограничения на:</h4></td>
+					<td colspan='3'><h3>Ограничения на:</h3></td>
 				</tr>
 				<tr>
 					<td>количество сообщений: </td>
@@ -468,14 +445,14 @@ SIP-домен: [% d.DOMAIN | html %]
 				<tr>
 					<td colspan='2' id='vb_limits' class='addon_info'>
 						<table width='100%'>
-							<tr class='list_addon_data' align='center'>
+							<tr align='center'>
 								<th>Тип номера</th>
 								<th>Тек</th>
 								<th>Макс</th>
 							</tr>
 						[% FOREACH vt = VB_LIMITS %]
 						[% IF vt.ID vb_allow '0' %]
-							<tr class='addon_data'>
+							<tr>
 								<td>&nbsp;&nbsp;*&nbsp;[% vt.DESCRIPTION | locale_msg %]</td>
 								<td align='right'>[% vt.L_CUR %]</td>
 								<td align='right'>[% vt.L_MAX %]</td>
@@ -488,9 +465,6 @@ SIP-домен: [% d.DOMAIN | html %]
 				</tr>
 			</table>
 			</td>
-		</tr>
-		<tr class='list_data'>
-			<td colspan='2'>&nbsp;</td>
 		</tr>
 	</table>
 	</p>

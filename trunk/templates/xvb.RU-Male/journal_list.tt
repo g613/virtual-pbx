@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.2 2013-03-11 15:08:03 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.3 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Журнал операций - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -19,61 +19,10 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='100%' class='logo'>
-		<tr>
-			<td align='center'><h2>Журнал операций</h2></td>
-		</tr>
-	</table>
-	</p>
+			
+	<h1>Журнал операций</h1>
 
-	<p>
-	<table width='100%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
-			<th width='5%'>Номер</th>
-			<th width='20%'>Дата</th>
-			<th width='10%'>Событие</th>
-			<th width='15%'>IP адрес пользователя</th>
-			<th width='40%'>Данные</th>
-		</tr>
-		[% IF MSG_PREV ne '' %]
-		<tr>
-			<td align='left' colspan='5'>
-				<a title='предыдущая страница' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&ext_num=[% J_EXT_NUM %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=[% J_DATA | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
-			</td>
-		</tr>
-		[% END %]
-
-		[% FOREACH msg = J_LIST %]
-			<tr class='nocolor'>
-				[% IF msg.EXT_ID %]
-				<td>&nbsp;<a href='?action=vb_view&id=[% msg.EXT_ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
-				[% ELSE %]
-				<td>[% msg.EXT_NUMBER | html %]</td>
-				[% END %]
-				<td align='center'>[% msg.J_DATE | html %]</td>
-				<td>[% msg.ACTION | locale_msg %]</td>
-				<td align='center'>[% msg.CID | html %]</td>
-				<td>[% msg.DESCRIPTION | html %]</td>
-			</tr>
-		[% END %]
-
-		<tr>
-		[% IF MSG_NEXT ne '' %]
-			<td align='right' colspan='5'>
-				<a title='следующая страница' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&ext_num=[% J_EXT_NUM %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=[% J_DATA | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
-			</td>
-		[% ELSE %]
-			<td colspan='5'>&nbsp;</td>
-		[% END %]
-		</tr>
-	</table>
-	</p>
-
-	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
-
-	<p>	
-	<table width='100%' class='bottom_hr'>
+	<table width='100%'>
 		<tr align='right'>
 			<form method="get" action="[% CGI_URL %]">
 			<td align='right' colspan='5'>
@@ -131,7 +80,50 @@
 			</form>
 		</tr>
 	</table>
+
+	<p>
+	<table width='100%' id='d-tbl'>
+		<tr>
+			<th width='5%'>Номер</th>
+			<th width='20%'>Дата</th>
+			<th width='10%'>Событие</th>
+			<th width='15%'>IP адрес пользователя</th>
+			<th width='40%'>Данные</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='5'>
+				<a title='предыдущая страница' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&ext_num=[% J_EXT_NUM %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=[% J_DATA | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH msg = J_LIST %]
+			<tr class='nocolor'>
+				[% IF msg.EXT_ID %]
+				<td>&nbsp;<a href='?action=vb_view&id=[% msg.EXT_ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
+				[% ELSE %]
+				<td>[% msg.EXT_NUMBER | html %]</td>
+				[% END %]
+				<td align='center'>[% msg.J_DATE | html %]</td>
+				<td>[% msg.ACTION | locale_msg %]</td>
+				<td align='center'>[% msg.CID | html %]</td>
+				<td>[% msg.DESCRIPTION | html %]</td>
+			</tr>
+		[% END %]
+
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='5'>
+				<a title='следующая страница' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&ext_num=[% J_EXT_NUM %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=[% J_DATA | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+	</table>
 	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

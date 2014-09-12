@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.11 2014/08/18 07:03:09 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.12 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -24,17 +24,12 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='100%' class='logo'>
-		<tr>
-			<td align='center'><h2>Click2Call ссылки</h2></td>
-		</tr>
-	</table>
-	</p>
+	
+	<h1>Click2Call ссылки</h1>
 
 	<p>
-	<table width='100%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='100%' id='d-tbl'>
+		<tr>
 			<th>Ссылка</th>
 			<th>Внутренний номер</th>
 			<th>MAX звонков</th>
@@ -45,13 +40,13 @@
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 			<td align='left'>https://[% USER_CREDS.DOWNLOAD_IP %]/c2c?key=[% c2c.SECRET | html %]&ac=[% USER_CREDS.ACCESS_CODE %]&ph=<b>&lt;номер телефона&gt;</b></td>
 			<td align='left' nowrap='nowrap'>
-				<input class='in_t0' size="11" name='redir_to' type'text' value='[% c2c.EXTENSION | html %]'>
+				<input class='in_t0' size="11" name='redir_to' type='text' value='[% c2c.EXTENSION | html %]'>
 				<script language="JavaScript">
 					exten_icon( '[% c2c.EXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 				</script>
 			</td>
-			<td><input class='in_t0' size="5" name='call_limit' type'text' value='[% c2c.CALL_LIMIT | html %]'></td>
-			<td>
+			<td><input class='in_t0' size="5" name='call_limit' type='text' value='[% c2c.CALL_LIMIT | html %]'></td>
+			<td align='left'>
 				<input type='hidden' value='[% c2c.ID %]' name='data_id'>
 				<input type='hidden' value='[% c2c.SECRET %]' name='c2c_sec'>
 				<input type='hidden' value='c2c_update' name='action'>
@@ -73,11 +68,11 @@
 		</tr>
 		[% END %]
 		<tr><td></td></tr>
-		<tr class='list_data' align='center'>
+		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
 			<td></td>
 			<td align='left'><input size="11" name='redir_to' type='text'></td>
-			<td><input size="5" name='call_limit' type'text'></td>
+			<td><input size="5" name='call_limit' type='text'></td>
 			<td>
 				<input type='hidden' value='c2c_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>

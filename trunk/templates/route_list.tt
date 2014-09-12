@@ -18,36 +18,12 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-			[% END %]
-			</td>
-			<td align='center'><h2>Routes</h2></td>
-			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
-		</tr>
-	</table>
-	</p>
+			
+	<h1>Routes</h1>
 
 	<p>
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
-			<td>
-				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=peer_list&uniq=[% USER_CREDS.UNIQ %]'>SIP Peers</a>
-				[% IF USER_CREDS.ALLOW_PHONES %]
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>Phones</a>
-				[% END %]
-			</td>
 			<td align='right'>
 				<a title='delete all routes' href='?action=route_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete all records'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
 			</td>
@@ -56,8 +32,8 @@
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%' id='d-tbl'>
+		<tr>
 			<th>Priority</th>
 			<th>Pattern</th>
 			<th>Out number</th>
@@ -73,12 +49,12 @@
 		[% FOREACH r = ROUTES %]
 		<tr align='center' class='nocolor' id='d-tr-[% r.DATA_ID %]'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
-			<td><input class='in_t0' size="6" name='r_PRIORITY' type'text' value='[% r.PRIORITY | html %]'></td>
-			<td><input class='in_t0' size="20" name='r_PATTERN' type='text' value="[% r.PATTERN | html %]"></td>
-			<td><input class='in_t0' size="25" name='r_SUBSTR' type='text' value="[% r.SUBSTR | html %]"></td>
-			<td><input class='in_t0' size="25" name='r_EXT_NUMBER' type='text' value="[% r.EXT_NUMBER | html %]"></td>
+			<td><input class='in_t0' size="6" name='r_PRIORITY' type='text' value='[% r.PRIORITY | html %]'></td>
+			<td><input class='in_t0' size="15" name='r_PATTERN' type='text' value="[% r.PATTERN | html %]"></td>
+			<td><input class='in_t0' size="18" name='r_SUBSTR' type='text' value="[% r.SUBSTR | html %]"></td>
+			<td><input class='in_t0' size="14" name='r_EXT_NUMBER' type='text' value="[% r.EXT_NUMBER | html %]"></td>
 			<td><input class='in_t0' size="6" name='r_TLIMIT' type='text' value="[% r.TLIMIT | html %]"></td>
-			<td><input class='in_t0' size="20" name='r_DESCRIPTION' type='text' value="[% r.DESCRIPTION | html %]"></td>
+			<td><input class='in_t0' size="13" name='r_DESCRIPTION' type='text' value="[% r.DESCRIPTION | html %]"></td>
 			<td><input class='in_t0' size="12" name='r_DEFCID' type='text' value="[% r.DEFCID | html %]"></td>
 			<td align='left' nowrap='nowrap'>
 				<input class='in_t0' size="9" name='r_SCHEDULE_EXT' type='text' value="[% r.SCHEDULE_EXT | html %]">
@@ -114,12 +90,12 @@
 		[% END %]
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
-			<td><input size="6" name='r_PRIORITY' type'text'></td>
-			<td><input size="20" name='r_PATTERN' type='text'></td>
-			<td><input size="25" name='r_SUBSTR' type='text'></td>
-			<td><input size="25" name='r_EXT_NUMBER' type='text'></td>
+			<td><input size="6" name='r_PRIORITY' type='text'></td>
+			<td><input size="15" name='r_PATTERN' type='text'></td>
+			<td><input size="18" name='r_SUBSTR' type='text'></td>
+			<td><input size="14" name='r_EXT_NUMBER' type='text'></td>
 			<td><input size="6" name='r_TLIMIT' type='text'></td>
-			<td><input size="20" name='r_DESCRIPTION' type='text'></td>
+			<td><input size="13" name='r_DESCRIPTION' type='text'></td>
 			<td><input size="12" name='r_DEFCID' type='text'></td>
 			<td align='left'><input size="10" name='r_SCHEDULE_EXT' type='text'></td>
 			<td>
@@ -132,36 +108,14 @@
 			<td>
 				<input type='hidden' value='route_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<input value='create' type='submit'>
+				<input value='add' type='submit'>
 			</td>
 			</form>
 		</tr>
-		<tr><td colspan='9'>&nbsp;</td></tr>
 	</table>
 	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
-
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			[% IF USER_CREDS.ALLOW_PHONES %]
-			<td>
-				<a class='headers'  href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>Phones</a>
-			</td>
-			[% END %]
-			<td>
-				<a class='headers' href='?action=peer_list&uniq=[% USER_CREDS.UNIQ %]'>SIP Peers</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
-			</td>
-		</tr>
-	</table>
-	</p>
 
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>

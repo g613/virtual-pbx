@@ -19,37 +19,86 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 	
-	<center>
-	<p>
+
 	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			</td>
-			<td align='center'><h2>CDRs</h2></td>
-			<td align='right' width='20%'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
-				[% INCLUDE version.tt %]
-			</td>
-		</tr>
-	</table>
-	</p>
-	
-	<p>
-	<table width='98%' class='top_hr'>
 		<tr align='left'>
-			<td>
+			<td width='10%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
+			<td>
 		</tr>
 	</table>
-	</p>
-
 	<center>
+	<h1>CDRs</h1>
+
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%'>
+		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+		<tr align='right'>
+			<td width='100%'>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<button type="button">...</button>
+				&nbsp;
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<button type="button">...</button>
+				<input name='action' value='cdr_list' type='hidden'>
+				<input size='10' type='text' placeholder='Caller ID' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				<input size='10' type='text' placeholder='Called ID' name='called_id' value='[% CDR_CALLED_ID | html %]'>
+				<input size='10' type='text' placeholder='Access Code' name='ac' value='[% CDR_AC | html %]'>
+				<select name="call_type">
+					<option value="" selected>call type</option>
+					<option value="" >all calls</option>
+					<option value="incoming">incoming</option>
+					<option value="local">local</option>
+					<option value="transit">transit</option>
+					<option value="internal">internal</option>
+					<option value="callback">callback</option>
+					<option value="callblast">callblast</option>
+					<option value="click2call">click2call</option>
+					<option value="alarmclock">alarmclock</option>
+					<option value="service">service</option>
+				</select>
+				&nbsp;
+				<input value='Search' type='submit'>
+			</td>
+		</tr>
+		</form>
+	</table>
+	</p>
+	<p>
+	<table width='95%' id='d-tbl'>
+		<tr>
 			<th>Start Date</th>
 			<th>Caller ID</th>
 			<th>Duration</th>
@@ -92,65 +141,6 @@
 	
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 	
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-		<tr align='right'>
-			<td width='100%'>
-				From date:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<button type="button">...</button>
-				&nbsp;
-				To date:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<button type="button">...</button>
-				<input name='action' value='cdr_list' type='hidden'>
-				<input size='10' type='text' placeholder='Caller ID' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
-				<input size='10' type='text' placeholder='Called ID' name='called_id' value='[% CDR_CALLED_ID | html %]'>
-				<input size='10' type='text' placeholder='Access Code' name='ac' value='[% CDR_AC | html %]'>
-				<select name="call_type">
-					<option value="" selected>call type</option>
-					<option value="" >all calls</option>
-					<option value="incoming">incoming</option>
-					<option value="local">local</option>
-					<option value="transit">transit</option>
-					<option value="internal">internal</option>
-					<option value="callback">callback</option>
-					<option value="callblast">callblast</option>
-					<option value="click2call">click2call</option>
-					<option value="alarmclock">alarmclock</option>
-					<option value="service">service</option>
-				</select>
-				<input value='Search' type='submit'>
-			</td>
-		</tr>
-		</form>
-	</table>
-	</p>
 
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>

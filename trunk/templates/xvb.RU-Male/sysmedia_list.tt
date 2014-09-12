@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: sysmedia_list.tt,v 1.4 2014/03/18 19:12:18 gosha Exp $ -->
+<!-- $Id: sysmedia_list.tt,v 1.5 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SysMedia - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -12,16 +12,12 @@
 
 <body onLoad="XVBInit()">
 	<center>
+	
+	<h1>Системные звуковые файлы</h1>
+	
 	<p>
-	<table width='100%' class='logo'>
+	<table width='100%' id='d-tbl'>
 		<tr>
-			<td align='center'><h2>Системные звуковые файлы</h2></td>
-		</tr>
-	</table>
-	</p>
-	<p>
-	<table width='100%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
 			<th></th>
 			<th>Имя файла</th>
 			<th>Текст по умолчанию</th>
@@ -55,10 +51,6 @@
 				<input type='submit' value='загрузить'>
 			</td>
 			</form>
-		</tr>
-		
-		<tr class='list_data'>
-			<td colspan='3'>&nbsp;</td>
 		</tr>
 	</table>
 	</p>

@@ -15,44 +15,47 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 
-	<center>
-	<p>
 	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			</td>
-			<td align='center'><h2>Reports</h2></td>
-			<td align='right' width='20%'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
-				[% INCLUDE version.tt %]
-			</td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='98%' class='top_hr'>
 		<tr align='left'>
-			<td>
+			<td width='10%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
-			<form method="post">
 			<td align='right'>
-				<input size='20' name='name' type='text' placeholder='Report name' value='[% SEARCH_NAME %]'>
-				<input type='hidden' value='report_list' name='action'>
-				<input value='Search' type='submit'>
-				&nbsp;&nbsp;
-			</td>
-			</form>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
+			<td>
 		</tr>
 	</table>
-	</p>
+	<center>
+	
+	<h1>SQL Reports</h1>
 
+	<table width='100%'>
+		<tr>
+			<td align='left' width='50%'>
+				<form method='post'>
+					<input type='hidden' name='action' value='report_run'>
+					<input placeholder='Report #' type='text' name='report_id' size='5'>
+					<input value='Run' type='submit'>
+				</form>
+			</td>
+			<td align='right'>
+				<form method="post">
+					<input size='20' name='name' type='text' placeholder='Report name' value='[% SEARCH_NAME %]'>
+					<input type='hidden' value='report_list' name='action'>
+					<input value='Search' type='submit'>
+				</form>
+			</td>
+		</tr>
+	</table>
+	
 	<p>
-	<table width='98%' class='list_data' id='list-data'>
-		<tr class='list_data'>
+	<table width='98%' id='list-data'>
+		<tr>
 			<th>&nbsp;N&nbsp;</th>
 			<th>Report name</th>
 			<th>Create date</th>
@@ -63,8 +66,8 @@
 			
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='3'>
-				<a title='previous page' href='?action=reports_list&name=[% SEARCH_NAME | html %]&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			<td align='left' colspan='6'>
+				<a title='previous page' href='?action=reports_list&name=[% SEARCH_NAME | html %]&from=[% MSG_PREV %]'><img border='0' src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -91,37 +94,23 @@
 		</tr>
 		[% END %]
 	
-		[% IF MSG_NEXT ne '' %]
 		<tr>
+			<td align='left' colspan='3'>
+				<form method="post">
+				&nbsp;
+				<input placeholder='Report name' size='20' name='R_NAME' type='text'>
+				<input type='hidden' value='report_add' name='action'>
+				<input value='create new report' type='submit'>
+				</form>
+			</td>
 			<td align='right' colspan='3'>
+				[% IF MSG_NEXT ne '' %]
 				<a title='next page' href='?action=report_list&name=[% SEARCH_NAME | html %]&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				[% END %]
 			</td>
 		</tr>
-		[% END %]
 	</table>
 	<script language='JavaScript'>listcolorer( 'list-data' );</script>
-	</p>
-
-	<p>
-	<table width='98%' class='bottom_hr'>
-		<tr>
-			<form method="post">
-			<td align='left'>
-				&nbsp;Report name : 
-				<input size='20' name='R_NAME' type='text'>
-				<input type='hidden' value='report_add' name='action'>
-				<input value='&nbsp;&nbsp;Create new report&nbsp;&nbsp;' type='submit'>
-			</td>
-			</form>
-			<form method='post'>
-			<td align='right' width='60%'>
-				Report # :
-				<input type='hidden' name='action' value='report_run'>
-				<input type='text' name='report_id' size='5'>
-				<input value='Run' type='submit'>
-			</td>
-			</form>
-	</table>
 	</p>
 
 	</center>

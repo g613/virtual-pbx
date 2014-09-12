@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.89 2014/07/25 15:10:21 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.91 2014/09/07 18:36:23 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -10,68 +10,10 @@
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 </head>
 
-<body onLoad="breakout_of_frame();XVBInit()">
+<body onLoad="checkfr('uniq=[% USER_CREDS.UNIQ %]&saction=user_info');XVBInit()">
 	<center>
-	<p>
-	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-			[% END %]
-			</td>
-			<td align='center'><h2>User info AC# <b>[% USER_CREDS.ACCESS_CODE | html %]</h2></td>
-			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			<td>
-				<a class='headers' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
-			</td>
-			<td align='center'>
-				<a class='headers' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=msg_list_all&uniq=[% USER_CREDS.UNIQ %]'>All messages</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]'>Phone book</a>
-			</td>
-			[% IF USER_CREDS.CUSTOM_ROUTE %]
-			<td align='center'>
-				<a class='headers' href='?action=peer_list&uniq=[% USER_CREDS.UNIQ %]'>SIP Peers</a>
-			</td>
-			<td align='center'>
-				<a class='headers' href='?action=route_list&uniq=[% USER_CREDS.UNIQ %]'>Routes</a>
-			</td>
-			[% END %]
-			[% IF USER_CREDS.ALLOW_PHONES %]
-			<td align='center'>
-				<a class='headers' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>Phones</a>
-			</td>
-			[% END %]
-			[% IF USER_CREDS.ALLOW_MACROS %]
-			<td>
-				<a class='headers' href='?action=macros_list&uniq=[% USER_CREDS.UNIQ %]'>Macros</a>
-			</td>
-			[% END %]
-			[% IF USER_CREDS.MAX_C2C_ITEMS %]
-			<td>
-				<a class='headers' href='?action=c2c_list&uniq=[% USER_CREDS.UNIQ %]'>Click2Call</a>
-			</td>
-			[% END %]
-		</tr>
-	</table>
-	</p>
+	
+	<h1>User info AC# <b>[% USER_CREDS.ACCESS_CODE | html %]</h1>
 
 	<p>
 	<table width='95%'>
@@ -123,7 +65,6 @@ SipDomain: [% d.DOMAIN | html %]
 						<select name='skins' onchange='javascript:document.user_prefs.CSS_HREF.value=this.value'>
 							<option selected value='[% USER_CREDS.CSS_HREF | html %]'>CSS href:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
 							<option value='/xvb/xvb-green.css'>CSS - green skin</option>
-							<option value='/xvb/xvb-green-compact.css'>CSS - green-compact skin</option>
 							<option value=''>CSS - default skin</option>
 						</select>
 					</td>
@@ -256,13 +197,6 @@ SipDomain: [% d.DOMAIN | html %]
 					</td>
 				</tr>
 				<tr>
-					<td>Common filters:</td>
-					<td>
-						<a href='?action=cid_list&cid_list_type=2&cid_type=2&uniq=[% USER_CREDS.UNIQ %]' title='edit CID white list'>White list</a> / 
-						<a href='?action=cid_list&cid_list_type=1&cid_type=2&uniq=[% USER_CREDS.UNIQ %]' title='edit CID black list'>Black list</a>
-					</td>
-				</tr>
-				<tr>
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
@@ -280,7 +214,7 @@ SipDomain: [% d.DOMAIN | html %]
 				</tr>
 				<tr>
 					<td colspan='2'>
-						<table width='90%' class='addon_data' id='d-tbl'>
+						<table width='90%' id='d-tbl'>
 							[% IF CUSTOM_MOH ne '' %]
 							<tr id='d-tr'>
 								<td>Custom music on hold file: </td>
@@ -361,7 +295,7 @@ SipDomain: [% d.DOMAIN | html %]
 				[% IF USE_BILLING > 0 %]
 				<tr>
 					<td colspan='3'>
-						<table width='100%' class='addon_data'>
+						<table width='100%'>
 							<tr>
 								<td><b>Tariff:</b></td>
 							</tr>
@@ -518,14 +452,14 @@ SipDomain: [% d.DOMAIN | html %]
 				<tr>
 					<td colspan='2' id='vb_limits' class='addon_info'>
 						<table width='100%'>
-							<tr class='list_addon_data' align='center'>
+							<tr align='center'>
 								<th>Extension type</th>
 								<th>Cur</th>
 								<th>Max</th>
 							</tr>
 						[% FOREACH vt = VB_LIMITS %]
 						[% IF vt.ID vb_allow '0' %]
-							<tr class='addon_data'>
+							<tr>
 								<td>&nbsp;&nbsp;*&nbsp;[% vt.DESCRIPTION | html %]</td>
 								<td align='right'>[% vt.L_CUR %]</td>
 								<td align='right'>[% vt.L_MAX %]</td>
@@ -542,45 +476,6 @@ SipDomain: [% d.DOMAIN | html %]
 	</table>
 	</p>
 
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			[% IF USER_CREDS.ALLOW_MACROS %]
-			<td>
-				<a class='headers' href='?action=macros_list&uniq=[% USER_CREDS.UNIQ %]'>Macros</a>
-			</td>
-			[% END %]
-			[% IF USER_CREDS.CUSTOM_ROUTE %]
-			<td align='center'>
-				<a class='headers' href='?action=route_list&uniq=[% USER_CREDS.UNIQ %]'>Routes</a>
-			</td>
-			<td align='center'>
-				<a class='headers' href='?action=peer_list&uniq=[% USER_CREDS.UNIQ %]'>SIP Peers</a>
-			</td>
-			[% END %]
-			[% IF USER_CREDS.ALLOW_PHONES %]
-			<td align='center'>
-				<a class='headers' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>Phones</a>
-			</td>
-			[% END %]
-			<td>
-				<a class='headers' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]'>Phone book</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=msg_list_all&uniq=[% USER_CREDS.UNIQ %]'>All messages</a>
-			</td>
-			<td align='center'>
-				<a class='headers' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
-			</td>
-		</tr>
-	</table>
-	</p>
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 </body>

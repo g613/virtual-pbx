@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.53 2013-03-11 15:07:59 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.55 2014/09/11 14:04:05 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extensions - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -10,45 +10,30 @@
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 </head>
 
-<body onLoad="breakout_of_frame();XVBInit()">
+<body onLoad="checkfr('uniq=[% USER_CREDS.UNIQ %]&saction=vb_list');XVBInit()">
 	<center>
-	<p>
-	<table width='95%' class='logo'>
+	
+	<table width='100%'>
 		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-			[% END %]
-			</td>
-			<td align='center'><h2>Extensions List</h2></td>
-			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='top_hr'>
-		<tr align='left'>
-			<td>
-	[% IF USER_CREDS.ROOT eq '0' %]
-				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-	[% END %]
-				<a href='?action=msg_list_all&uniq=[% USER_CREDS.UNIQ %]'>All messages</a>
+			<td align='center' width='75%'><h1>Extensions List</h1></td>
+			<td align='right' width='25%'>
+				&nbsp;
+				[% IF USER_CREDS.ROOT eq '0' %]
+				<input size='6' type='text' name='new_ext'>
+				&nbsp;
+				<input value='create new' type='submit'>
+				<input name='action' value='vb_add' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='go' value='list' type='hidden'>
+				[% END %]
 			</td>
 		</tr>
 	</table>
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%' id='d-tbl'>
+		<tr>
 				<th rowspan='2'>Extension</th>
 				<th rowspan='2'>Name</th>
 				<th rowspan='2'>Type</th>
@@ -57,7 +42,7 @@
 				<th rowspan='2'>Recipient notification</th>
 				<th rowspan='2'>Actions</th>
 		</tr>
-		<tr class='list_data'>
+		<tr>
 			<th>W</th>
 			<th>H</th>
 			<th>D</th>
@@ -103,31 +88,11 @@
 			</td>
 		</tr>
 		[% END %]
-		<tr><td colspan='10'>&nbsp;</td></tr>
 	</table>
 	</p>
 
 	<script language='JavaScript'>listcolorer('d-tbl');ext_list_build('d-tbl');</script>
 
-	<p>	
-	<table width='95%' class='bottom_hr'>
-		<tr align='left'>
-			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-			<td>
-				&nbsp;
-				[% IF USER_CREDS.ROOT eq '0' %]
-				<input size='6' type='text' name='new_ext'>
-				&nbsp;
-				<input value='create new' type='submit'>
-				<input name='action' value='vb_add' type='hidden'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='go' value='list' type='hidden'>
-				[% END %]
-			</td>
-			</form>
-		</tr>
-	</table>
-	</p>
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 </body>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.17 2013-05-05 18:17:04 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.18 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -118,7 +118,7 @@
 	</p>
 
 	<p>
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
 			<td>
 				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Просмотреть сообщения</a>
@@ -528,7 +528,7 @@
 
 	<p>
 	<table width='95%'>
-		<tr class='list_data'>
+		<tr>
 			<td>&nbsp;</td>
 		</tr>
 	</table>

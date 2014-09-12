@@ -16,36 +16,38 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 
-	<center>
-	<p>
 	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
-			<td align='center'><h2>Tenant info</h2></td>
-			<td align='right' width='20%'>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
 				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
 				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	
+	<center>
+	
+	<table width='100%'>
+		<tr>
+			<td width='90%' align='center'>
+				<h1>Tenant info</h1>
+			</td>
+			<td align='right'>
+				<a title='delete tennat' href='?action=user_del&user_id=[% USER.ID %]&single_user=1' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
 		</tr>
 	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			<td width='15%'>
-				<a class='headers' href='?action=user_del&user_id=[% USER.ID %]&single_user=1' onclick="return DelConfirm('en')">Delete</a>
-			</td>
-			[% INCLUDE main_menu2.tt-inc %]
-		</tr>
-	</table>
-	</p>
 	
 	<p>
-	<table width='95%' class='list_data'>
-		<tr class='list_data'>
+	<table width='95%'>
+		<tr>
 		</tr>
 		<tr>
 			<td width='50%' valign='top'>
@@ -57,7 +59,7 @@
 				</td>
 				<td>
 					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]&nbsp;&nbsp;
-					<a title='view tenant profile' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='view tenant profile' /></a>
+					<a title='view tenant profile' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=start&saction=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='view tenant profile' /></a>
 				</td>
 			</tr>
 			<tr>
@@ -176,7 +178,7 @@
 				<td colspan='2' align='center'>
 					<input type='hidden' value='[% USER.ID %]' name='user_id'>
 					<input type='hidden' value='user_update' name='action'>
-					<input value='change' type='submit'>
+					<input value='update tenant info' type='submit'>
 				</td>
 			</tr>
 			</form>
@@ -187,26 +189,23 @@
 				[% IF USE_BILLING %]
 				<tr>
 					<td>
-						<table width='100%' class='addon_data'>
+						<table width='100%'>
 							<tr>
-								<td><b>Tariff:</b></td>
-								<td colspan='7'><a href='?action=tariff_info&tariff_id=[% TARIFF.ID %]'><b>[% TARIFF.NAME | html %]</b></a> ( currency  [% TARIFF.DESCRIPTION %] )</td>
-							</tr>
-							<tr>
-								<td colspan='8'>
-									Balance:
+								<td>
+									<h4>Balance ( tariff: <a href='?action=tariff_info&tariff_id=[% TARIFF.ID %]'><b>[% TARIFF.NAME | html %]</b> ) :</h4>
 								</td>
 							</tr>
-							<tr class='addon_data'>
-								<td colspan='4'>
+							<tr>
+								<td>
 									&nbsp;
 									&nbsp;
 									&nbsp;
 									<b>[% USER.USER_BALANCE %]</b> [% TARIFF.DESCRIPTION %]
 								</td>
-								<td colspan='4' align='right'>
+								<td align='right'>
 									<form method='post'>
 									<input size='5' type='text' name='balance'>
+									&nbsp;
 									<input type='hidden' value='[% USER.ID %]' name='user_id'>
 									<input type='hidden' value='[% USER.CURRENCY_ID %]' name='cur_id'>
 									<input type='hidden' value='balance_update' name='action'>
@@ -223,8 +222,12 @@
 					<td>
 						<table width='100%'>
 							<tr>
-								<td valign='top' width='20%'><h4>Assigned DIDs:</h4></td>
-								<td valign='top' width='60%'>
+								<td><h4>Assigned DIDs:</h4></td>
+							</tr>
+							<tr>
+								<td>
+								&nbsp;
+								&nbsp;
 								[% FOREACH d = DIDS %]
 									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&did=[% d.DID | html %]' onclick="return DelConfirm('en')">[% d.DID | html %]</a>&nbsp;;&nbsp;
 								[% END %]
@@ -232,6 +235,7 @@
 								<td valign='top' width='20%' align='center' nowrap='nowrap'>
 								<form>
 									<input size='11' type='text' name='did'>
+									&nbsp;
 									<input type='hidden' name='pn' value='[% USER.VOICENUMBER | html %]'>
 									<input type='hidden' name='ac' value='[% USER.ACCESS_CODE | html %]'>
 									<input value='add DID' type='submit'>
@@ -247,8 +251,12 @@
 					<td>
 						<table width='100%'>
 							<tr>
-								<td valign='top' width='20%'><h4>SIP domains:</h4></td>
-								<td valign='top' width='60%'>
+								<td><h4>SIP domains:</h4></td>
+							</tr>
+							<tr>
+								<td>
+								&nbsp;
+								&nbsp;
 								[% FOREACH d = DOMAINS %]
 									<a title='delete SIPDomain' href='?action=did_del_sipdomain&domain_id=[% d.ID %]&user_id=[% USER.ID | html %]&domain=[% d.DOMAIN | html %]' onclick="return DelConfirm('en')">[% d.DOMAIN | html %]</a>&nbsp;;&nbsp;
 								[% END %]
@@ -256,6 +264,7 @@
 								<td valign='top' width='20%' align='center' nowrap='nowrap'>
 								<form>
 									<input size='20' type='text' name='domain'>
+									&nbsp;
 									<input type='hidden' name='pn' value='[% USER.VOICENUMBER | html %]'>
 									<input type='hidden' name='ac' value='[% USER.ACCESS_CODE | html %]'>
 									<input value='add SIPDomain' type='submit'>
@@ -272,17 +281,6 @@
 	</table>
 	</p>
 	
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			[% INCLUDE main_menu2.tt-inc %]
-			<td width='15%'>
-				<a class='headers' href='?action=user_del&user_id=[% USER.ID %]&single_user=1' onclick="return DelConfirm('en')">Delete</a>
-			</td>
-		</tr>
-	</table>
-	</p>
-
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

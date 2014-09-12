@@ -16,93 +16,81 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 
-	<center>
-	<p>
 	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			</td>
-			<td align='center'><h2>Tenants</h2></td>
-			<td align='right' width='20%'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
-				[% INCLUDE version.tt %]
-			</td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='top_hr'>
 		<tr align='left'>
-			<td>
+			<td width='10%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
+			<td>
 		</tr>
 	</table>
-	</p>
+
+	<center>
+	<h1>Tenants</h1>
 	
-	<p>
-	<table width='95%' class='list_data' id='list-data'>
-		<tr class='list_data'>
-				<th>Shared DID</th>
-				<th>Access code</th>
-				<th>User name</th>
-				<th>Language</th>
-				<th>Group</th>
-				<th>Status</th>
-				<th>R/O</th>
-				<th>Tariff</th>
-				<th>Balance</th>
-				<th>Actions</th>
-			</tr>
-			
-		[% IF MSG_PREV ne '' %]
+	<table width='100%'>
 		<tr>
-			<td align='left' colspan='10'>
-				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
-			</td>
-		</tr>
-		[% END %]
-		
-		<tr align='center' class='nocolor'>
 			<form method='post'>
 			<td align='right'>
-				<input size='11' name='f_vn' type='text' value='[% F_VN | html %]'>
-			</td>
-			<td>
-				<input size='10' name='f_ac' type='text' value='[% F_AC | html %]'>
-			</td>
-			<td align='left'>
-				<input size='20' name='f_uname' type='text' value='[% F_UNAME | html %]'>
-			</td>
-			<td></td>
-			<td>
-			<select name="f_group">
-				<option value="">any group</option>
-			[% FOREACH gr = GROUPS %]
-				[% IF gr.GROUP_ID eq F_GROUP %]
-					<option value="[% gr.GROUP_ID | html %]" selected>[% gr.GROUP_NAME | html %]</option>
-				[% ELSE %]
-					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
-				[% END %]
-			[% END %]
-			</select>
-			</td>
-			<td>
-			<select name="f_status">
-			   	<option value="" selected>Any</option>
-				<option value="1">Active</option>
-				<option value="0">Locked</option>
-			</select>
-			</td>
-			<td colspan='3'></td>
-			<td>
+				<input placeholder='shared DID' size='12' name='f_vn' type='text' value='[% F_VN | html %]'>
+				&nbsp;
+				<input placeholder='Access code' size='12' name='f_ac' type='text' value='[% F_AC | html %]'>
+				&nbsp;
+				<input placeholder='User name' size='25' name='f_uname' type='text' value='[% F_UNAME | html %]'>
+				&nbsp;
+				<select name="f_group">
+					<option value="">any group</option>
+					[% FOREACH gr = GROUPS %]
+						[% IF gr.GROUP_ID eq F_GROUP %]
+							<option value="[% gr.GROUP_ID | html %]" selected>[% gr.GROUP_NAME | html %]</option>
+						[% ELSE %]
+							<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+						[% END %]
+					[% END %]
+				</select>
+				&nbsp;
+				<select name="f_status">
+				   	<option value="" selected>Any</option>
+					<option value="1">Active</option>
+					<option value="0">Locked</option>
+				</select>
+				&nbsp;
 				<input type='hidden' value='user_list' name='action'>
+				&nbsp;
 				<input value='search' type='submit'>
 			</td>
 			</form>
+		</tr>
+	</table>
+
+	<p>
+	<table width='95%' id='list-data'>
+		<tr>
+			<th>Shared DID</th>
+			<th>Access code</th>
+			<th>User name</th>
+			<th>Language</th>
+			<th>Group</th>
+			<th>Status</th>
+			<th>R/O</th>
+			<th>Tariff</th>
+			<th>Balance</th>
+			<th>Actions</th>
+		</tr>
+			
+		<tr align='center' class='nocolor'>
+			<td align='left' colspan='10'>
+				[% IF MSG_PREV ne '' %]
+				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				[% END %]
+			</td>
 		</tr>
 
 		[% FOREACH us = USERS %]
@@ -111,7 +99,7 @@
 				[% us.VOICENUMBER | html %]
 			</td>
 			<td>
-				<a title='view tenant profile' href='ui?phone=[% us.VOICENUMBER %]&ac=[% us.ACCESS_CODE %]&pw=[% us.PIN_CODE %][% us.PIN_CODE2 %]&action=user_info'>[% us.ACCESS_CODE | html %]</a>
+				<a title='view tenant profile' href='ui?phone=[% us.VOICENUMBER %]&ac=[% us.ACCESS_CODE %]&pw=[% us.PIN_CODE %][% us.PIN_CODE2 %]&action=start&saction=user_info'>[% us.ACCESS_CODE | html %]</a>
 			</td>
 			<td align='left'>
 				[% us.FIRST_NAME | html %] [% us.LAST_NAME | html %]
@@ -155,23 +143,10 @@
 		[% END %]
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right' colspan='10'>
-				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+			<td align='right'>
+				<input size='12' placeholder='Shared DID' type='text' name='phone'>
 			</td>
-		</tr>
-		[% END %]
-	</table>
-	<script language='JavaScript'>listcolorer( 'list-data' );</script>
-	</p>
-	
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<form>
-		<tr align='left'>
-			<td>
-				&nbsp;
-				Shared DID: 
-				<input size='11' type='text' name='phone'>
+			<td colspan='8' align='left'>
 				&nbsp;
 				Group: 
 				<select name="group_id">
@@ -192,9 +167,13 @@
 				<input value='&nbsp;&nbsp;Add tenant&nbsp;&nbsp;' type='submit'>
 				<input type='hidden' value='user_add' name='action'>
 			</td>
+			<td align='right'>
+				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+			</td>
 		</tr>
-		</form>
+		[% END %]
 	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
 	</p>
 	
 	</center>

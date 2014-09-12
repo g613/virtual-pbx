@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.4 2013-03-11 15:08:00 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.5 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Call Detail - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -28,7 +28,7 @@
 	</p>
 
 	<p>	
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
 			<td>
 				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
@@ -44,8 +44,8 @@
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%' id='d-tbl'>
+		<tr>
 			<th>Start Date</th>
 			<th>Caller ID</th>
 			<th>Duration</th>

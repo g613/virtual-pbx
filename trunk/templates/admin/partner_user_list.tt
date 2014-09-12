@@ -32,14 +32,14 @@
 	</p>
 
 	<p>
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr>
-			<form method='post'>
 			<td align='right'>
-			Phone number:
-			<input size='11' name='f_vn' type='text' value='[% F_VN | html %]'>
-			Access code:
-			<input size='7' name='f_ac' type='text'  value='[% F_AC | html %]'>
+			<form method='post'>
+			<input placeholder='Phone number' size='15' name='f_vn' type='text' value='[% F_VN | html %]'>
+			&nbsp;
+			<input placeholder='Access code' size='10' name='f_ac' type='text'  value='[% F_AC | html %]'>
+			&nbsp;
 			<input type='hidden' value='user_list' name='action'>
 			<input type='hidden' value='[% PARTNER | html %]' name='partner'>
 			<input value='search' type='submit'>
@@ -50,8 +50,8 @@
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='list-data'>
-		<tr class='list_data'>
+	<table width='95%' id='list-data'>
+		<tr>
 				<th>Phone number</th>
 				<th>Access code</th>
 				<th>User name</th>
@@ -64,7 +64,7 @@
 			
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='10'>
+			<td align='left' colspan='8'>
 				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
@@ -114,7 +114,16 @@
 		[% END %]
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right' colspan='10'>
+			<form>
+			<td align='left' colspan='6'>
+				<input placeholder='Phone number' size='15' type='text' name='phone'>
+				&nbsp;
+				<input value='Create new account' type='submit'>
+				<input type='hidden' value='user_add' name='action'>
+				<input type='hidden' value='[% PARTNER | html %]' name='partner'>
+			</td>
+			</form>
+			<td align='right' colspan='2'>
 				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
 		</tr>
@@ -123,23 +132,6 @@
 	<script language='JavaScript'>listcolorer( 'list-data' );</script>
 	</p>
 	
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<form>
-		<tr align='left'>
-			<td>
-				&nbsp;
-				Phone number: 
-				<input size='11' type='text' name='phone'>
-				&nbsp;
-				<input value='&nbsp;&nbsp;Create new account&nbsp;&nbsp;' type='submit'>
-				<input type='hidden' value='user_add' name='action'>
-				<input type='hidden' value='[% PARTNER | html %]' name='partner'>
-			</td>
-		</tr>
-		</form>
-	</table>
-	</p>
 	
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>

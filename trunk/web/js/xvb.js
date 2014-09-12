@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.74 2014/08/18 07:03:29 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.78 2014/09/11 14:04:05 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -330,19 +330,19 @@ function ShowPlayer( file ) {
 	if ( canPlayOGG ) {
 		var wav_file = file.replace("wav?media=mp3;","ogg?");
 		wav_file = wav_file.replace("=mp3","=ogg");
-		player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
 	} else if ( canPlayMP3 ) {
 		var wav_file = file;
-		player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
 	} else {
 		var plugin = (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) ? navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin : 0;
 		if ( plugin ) {
 			// flash
-			player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td><object type="application/x-shockwave-flash" data="/xvb/ump3player.swf" height="70" width="470"><param name="wmode" VALUE="transparent" /><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="movie" value="/xvb/ump3player.swf" /><param name="FlashVars" value="way='+file+'&amp;swf=/xvb/ump3player.swf&amp;w=470&amp;h=70&amp;time_seconds=0&amp;autoplay=1&amp;q=&amp;skin=white&amp;volume=90&amp;comment=Voice messages" /></object></td></tr></table>';
+			player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td><object type="application/x-shockwave-flash" data="/xvb/ump3player.swf" height="70" width="470"><param name="wmode" VALUE="transparent" /><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="movie" value="/xvb/ump3player.swf" /><param name="FlashVars" value="way='+file+'&amp;swf=/xvb/ump3player.swf&amp;w=470&amp;h=70&amp;time_seconds=0&amp;autoplay=1&amp;q=&amp;skin=white&amp;volume=90&amp;comment=Voice messages" /></object></td></tr></table>';
 		} else if ( canPlayWAV ) {
 			var wav_file = file.replace("wav?media=mp3;","wav?");
 			wav_file = wav_file.replace("=mp3","=wav");
-			player_data = '<table width="100%" height="100%" class="addon_data" border=0 style="border: solid 1px;"><tr class="list_data"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+			player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
 		} else {
 			player_data = 'Your browser not supported';
 		}
@@ -428,7 +428,7 @@ function graphit(g,gwidth){
 
 	coll_width = parseInt(90/total.length-1);
 
-	output='<table width="95%" border="0" cellspacing="0" cellpadding="0" class="list_data"><tr class="list_data"><th width="10%">'+(g[0][0])+'</th>';
+	output='<table width="95%" border="0" cellspacing="0" cellpadding="0"><tr><th width="10%">'+(g[0][0])+'</th>';
 	for (i2=1;i2<g[0].length;i2++) {
 		//output+='<th colspan="2">'+ (g[0][i2]) +'</th>';
 		output+='<th colspan="2" width="'+coll_width+'%">'+g[0][i2]+'</th>';
@@ -629,14 +629,14 @@ function click2call_win( server, key, ac, lang ) {
 	var ScreenWidth=window.screen.width;
 	placementx=ScreenWidth/2-220;
 	placementy=200;
-	WinPop=window.open("","click2call","width=450,height=200,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
-	WinPop.document.write('<html>\n<head><title>Click2Call - XVB VirtualPBX</title>\n</head>\n<body><center><form method="post" action="'+server+'/c2c"><input type="hidden" value="'+key+'" name="key"><input type="hidden" value="'+ac+'" name="ac">');
+	WinPop=window.open("","click2call","width=450,height=240,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
+	WinPop.document.write('<html>\n<head><title>Click2Call - XVB VirtualPBX</title>\n<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" /></head>\n<body><center><form method="post" action="'+server+'/c2c"><input type="hidden" value="'+key+'" name="key"><input type="hidden" value="'+ac+'" name="ac">');
 	if ( lang == 'ru' ) {
-		WinPop.document.write('<h2>Заказ звонка</h2><input type="text" size="25" name="ph" placeholder="введите Ваш номер телефона"><br/><br/><input value="заказать звонок" type="submit"><input type="hidden" name="message" value="<center>Запрос обработан. Ожидайте звонка.</center>">');
+		WinPop.document.write('<h1>Заказ звонка</h1><input type="text" size="25" name="ph" placeholder="введите Ваш номер телефона"><br/><br/><input value="заказать звонок" type="submit"><input type="hidden" name="message" value="<center>Запрос обработан. Ожидайте звонка.</center>">');
 	} else {
-		WinPop.document.write('<h2>Order a Call</h2><input type="text" size="25" name="ph" placeholder="enter your phone here"><br/><br/><input value="order a call" type="submit"><input type="hidden" name="message" value="<center>Please wait a call.</center>">');
+		WinPop.document.write('<h1>Order a Call</h1><input type="text" size="25" name="ph" placeholder="enter your phone here"><br/><br/><input value="order a call" type="submit"><input type="hidden" name="message" value="<center>Please wait a call.</center>">');
 	}
-	WinPop.document.write('</form></body></html>');
+	WinPop.document.write('</form></center></body></html>');
 	WinPop.document.close();
 }
 
@@ -645,14 +645,14 @@ function webfax_win( server, key, ac, lang, uniq ) {
 	var ScreenWidth=window.screen.width;
 	placementx=ScreenWidth/2-320;
 	placementy=200;
-	WinPop=window.open("","webfax","width=640,height=200,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
-	WinPop.document.write('<html>\n<head><title>WebFax - XVB VirtualPBX</title>\n</head>\n<body><center><form method="post" action="'+server+'/c2c"><input type="hidden" value="'+key+'" name="key"><input type="hidden" value="'+ac+'" name="ac">');
+	WinPop=window.open("","webfax","width=640,height=240,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
+	WinPop.document.write('<html>\n<head><title>WebFax - XVB VirtualPBX</title>\n<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" /></head>\n<body><center><form method="post" action="'+server+'/c2c"><input type="hidden" value="'+key+'" name="key"><input type="hidden" value="'+ac+'" name="ac">');
 	if ( lang == 'ru' ) {
-		WinPop.document.write('<h2>Отправка факса</h2><input type="text" size="25" name="ph" placeholder="введите номер факса"><br/><br/><input value="отправить факс" type="submit"><input type="hidden" name="message" value="<center>Запрос обработан. Ожидайте отправки факса.<br><a href=\''+server+'/ui?action=act_list&call_id=__CALLID__&uniq='+uniq+'\'>Для проверки статуса перейдите по этой ссылке</a></center>">');
+		WinPop.document.write('<h1>Отправка факса</h1><input type="text" size="30" name="ph" placeholder="введите номер факса"><br/><br/><input value="отправить факс" type="submit"><input type="hidden" name="message" value="<center>Запрос обработан. Ожидайте отправки факса.<br><a href=\''+server+'/ui?action=act_list&call_id=__CALLID__&uniq='+uniq+'\'>Для проверки статуса перейдите по этой ссылке</a></center>">');
 	} else {
-		WinPop.document.write('<h2>Send Fax</h2><input type="text" size="25" name="ph" placeholder="enter fax number here"><br/><br/><input value="send fax" type="submit"><input type="hidden" name="message" value="<center>Please wait. .<br><a href=\''+server+'/ui?action=act_list&call_id=__CALLID__&uniq='+uniq+'\'>Click here to check status</a></center>">');
+		WinPop.document.write('<h1>Send Fax</h1><input type="text" size="30" name="ph" placeholder="enter fax number here"><br/><br/><input value="send fax" type="submit"><input type="hidden" name="message" value="<center>Please wait. .<br><a href=\''+server+'/ui?action=act_list&call_id=__CALLID__&uniq='+uniq+'\'>Click here to check status</a></center>">');
 	}
-	WinPop.document.write('</form></body></html>');
+	WinPop.document.write('</form></center></body></html>');
 	WinPop.document.close();
 }
 

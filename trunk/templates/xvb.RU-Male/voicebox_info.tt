@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.25 2014/08/18 07:03:09 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.33 2014/09/12 10:55:07 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -24,68 +24,33 @@
 </head>
 
 <body onLoad="XVBInit()">
-	<center>
-	<p>
-	<table width='100%' class='logo'>
-		<tr>
-			<td align='center'><h2>Внутренний номер # <b>[% VBOX_PREF.EXT_NUMBER | html %]</h2></td>
-		</tr>
-	</table>
-
-	<p>
-	<table width='100%' class='bottom_hr'>
-		<tr align='center'>
+	
+	<table width='100%'>
+		<tr valign='bottom'>
+			<td width='15%' align='left' nowrap='nowrap'>
 			[% IF USER_CREDS.ROOT eq '0' %]
-			<td>
-				<a class='headers' href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')">Удалить номер</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Клонировать</a>
-			</td>
+				<a href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')">Удалить</a>
+				&nbsp;|&nbsp;
+				<a href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Клонировать</a>
+				&nbsp;|&nbsp;
 			[% END %]
-			<td>
-				<a class='headers' href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Просмотреть сообщения</a>
+				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Сообщения</a>
+				&nbsp;|&nbsp;
+				<a href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Активность</a>
+				[% IF EXTENDED_STAT %]
+				&nbsp;|&nbsp;
+				<a href='?action=extended_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Расширенная статистика</a>
+				[% END %]
 			</td>
-			<td>
-				<a class='headers' href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Статистика</a>
-			</td>
-			<td align='right'>
-				<select onchange="LoadingOn(); ChangeExten(this.value,'[% USER_CREDS.UNIQ %]')">
-					<script language="JavaScript">exten_dropdown('<option value="[% VBOX_PREF.ID | html %]">Перейти к номеру</option>')</script>
-				</select>
-				&nbsp;
 			</td>
 		</tr>
 	</table>
-	</p>
 
-	<table class='vb_data' width='100%'>
-		<tr>
-			<td width='53%' valign='top'>
-			<table class='ext_data' width='100%'>
-				[% IF USER_CREDS.ROOT eq '0' %]
-				<form method="post" action="[% CGI_URL %]">
-				<tr>
-					<td>Тип номера:</td>
-					<td>
-						<input type='hidden' name='action' value='vb_change_type'>
-						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
-						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-						<select name="type" onchange="LoadingOn(); ChangeVbType(this.value,'[% VBOX_PREF.ID %]', '[% USER_CREDS.UNIQ %]')">
-						[% FOREACH vt = VB_TYPES %]
-							[% IF VBOX_PREF.TYPE eq vt.ID %]
-								<option value="[% vt.ID %]" selected>[% vt.DESCRIPTION | locale_msg %]</option>
-							[% ELSE %]
-								[% IF vt.ID vb_allow '0' %]
-									<option value="[% vt.ID %]">[% vt.DESCRIPTION | locale_msg %]</option>
-								[% END %]
-							[% END %]
-						[% END %]
-						</select>
-						&nbsp;&nbsp;
-						<noscript><input type='submit' value='&nbsp;изменить&nbsp;'></noscript>
-
-					&nbsp;
+	<center>
+	
+	<table width='100%'>
+		<tr valign='bottom'>
+			<td width='5%'>
 					[% IF VBOX_PREF.TYPE eq '1' %]
 					<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
 					<h4>Советы:</h4>
@@ -157,16 +122,17 @@
 							<li><b>X</b> - цифры 0-9</li>
 							<li><b>Z</b> - цифры 1-9</li>
 							<li><b>N</b> - цифры 2-9</li>
-							<li><b>[12-49]</b> -  цифры из диапазона (в данном примере, 1,2,3,4,9)</li>
+							<li><b>[12-49]</b> -  цифры из диапазона<br>(в данном примере, 1,2,3,4,9)</li>
 							<li><b>.</b> - любой один или более символов</li>
 							<li><b>!</b> - отрицание ( R#!712. - все кроме 712.)</li>
 							<li><b>*</b> - любое значение</li>
 						</ul>
-						<ul>Формат временных интервалов: начало_интервала-конец_интервала. Форматы:
+						<ul>Формат временных интервалов: 
+							начало_интервала-конец_интервала.<br>Форматы:
 							<li><b>время</b> - чч:мм-чч:мм</li>
-							<li><b>день недели</b> - день-день ( mon - понедельник, ... tue,wed,thu,fri,sat,... sun - воскресенье )</li>
+							<li><b>день недели</b> - день-день<br>( mon - понедельник, ... tue,wed,thu,<br>fri,sat,... sun - воскресенье )</li>
 							<li><b>день месяца</b> - день-день ( 1..31 )</li>
-							<li><b>месяц</b> - месяц-месяц ( jan - январь, feb,mar,apr,may,jun,jul,aug,sep,oct,nov,... dec - декабрь )</li>
+							<li><b>месяц</b> - месяц-месяц<br>( jan - январь, feb,mar,apr,may,jun,jul,aug,<br>sep,oct,nov,... dec - декабрь )</li>
 							<li><b>год</b> - год-год (например 2009-2009)
 							<li><b>*</b> - любое значение</li>
 						</ul>
@@ -232,6 +198,60 @@
 					</ul>
 					</span></a>
 					[% END %]
+			</td>
+			<td width='70%' align='center'>
+				<h1>Внутренний номер # <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
+			</td>
+			<td align='right'>
+			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+				&nbsp;
+				[% IF USER_CREDS.ROOT eq '0' %]
+				<input size='5' type='text' name='new_ext'>
+				&nbsp;
+				<input value='добавить' type='submit'>
+				<input name='action' value='vb_add' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='go' value='list' type='hidden'>
+				[% END %]
+			</form>
+		</tr>
+	</table>
+	
+	<table width='100%'>
+		<tr>
+			<td align='right'>
+				<select onchange="LoadingOn(); ChangeExten(this.value,'[% USER_CREDS.UNIQ %]')">
+					<script language="JavaScript">exten_dropdown('<option value="[% VBOX_PREF.ID | html %]">Перейти к номеру</option>')</script>
+				</select>
+			</td>
+		</tr>
+	</table>
+
+	<table width='100%'>
+		<tr>
+			<td width='59%' valign='top'>
+			<table width='100%'>
+				[% IF USER_CREDS.ROOT eq '0' %]
+				<form method="post" action="[% CGI_URL %]">
+				<tr>
+					<td>Тип номера:</td>
+					<td>
+						<input type='hidden' name='action' value='vb_change_type'>
+						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+						<select name="type" onchange="LoadingOn(); ChangeVbType(this.value,'[% VBOX_PREF.ID %]', '[% USER_CREDS.UNIQ %]')">
+						[% FOREACH vt = VB_TYPES %]
+							[% IF VBOX_PREF.TYPE eq vt.ID %]
+								<option value="[% vt.ID %]" selected>[% vt.DESCRIPTION | locale_msg %]</option>
+							[% ELSE %]
+								[% IF vt.ID vb_allow '0' %]
+									<option value="[% vt.ID %]">[% vt.DESCRIPTION | locale_msg %]</option>
+								[% END %]
+							[% END %]
+						[% END %]
+						</select>
+						&nbsp;&nbsp;
+						<noscript><input type='submit' value='&nbsp;изменить&nbsp;'></noscript>
 
 					</td>
 				</tr>
@@ -306,7 +326,7 @@
 				<tr>
 					<td>Приветствие: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.GREETING | textarea_rows %]' cols='35' name='GREETING'>[% VBOX_PREF.GREETING | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.GREETING | textarea_rows %]' colls='30' name='GREETING'>[% VBOX_PREF.GREETING | html %]</textarea>
 					</td>
 				</tr>
 				[% END %]
@@ -539,7 +559,7 @@
 						</span></a>
 					</td>
 					<td>
-						<textarea rows='[% VBOX_PREF.GREETING_TAGS | textarea_rows %]' cols='35' name='GREETING_TAGS'>[% VBOX_PREF.GREETING_TAGS | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.GREETING_TAGS | textarea_rows %]' colls='30' name='GREETING_TAGS'>[% VBOX_PREF.GREETING_TAGS | html %]</textarea>
 					</td>
 				</tr>
 				[% END %]
@@ -619,7 +639,7 @@
 							Алгоритм вызова будет зависеть от 'Алгоритма звонка'
 						</span></a></td>
 					<td>
-						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' colls='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -649,7 +669,7 @@
 							<i><b>!!! Не используйте данное поле если в Вашем списке номеров больше 1 телефона !!!</b></i>
 						</span></a></td>
 					<td>
-						<textarea rows='[% VBOX_PREF.GOTO_IF_CALL_STATUS | textarea_rows %]' cols='35' name='GOTO_IF_CALL_STATUS'>[% VBOX_PREF.GOTO_IF_CALL_STATUS | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.GOTO_IF_CALL_STATUS | textarea_rows %]' colls='30' name='GOTO_IF_CALL_STATUS'>[% VBOX_PREF.GOTO_IF_CALL_STATUS | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -657,7 +677,7 @@
 							Список номеров, через запятую, на которые возможен перевод звонка без разрыва соединения в одно касание ( кнопки 1 - 3 )
 						</span></a></td>
 					<td>
-						<textarea rows='[% VBOX_PREF.FMC | textarea_rows %]' cols='35' name='FMC'>[% VBOX_PREF.FMC | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.FMC | textarea_rows %]' colls='30' name='FMC'>[% VBOX_PREF.FMC | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -973,7 +993,7 @@
 				<tr>
 					<td>Параметры POST/PUT: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='35' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' colls='30' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1082,7 +1102,7 @@
 				<tr>
 					<td>Заголовок факса: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='35' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' colls='30' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -1159,7 +1179,7 @@
 							Переменная=Значение.
 						</span></a></td>
 					<td>
-						<textarea rows='[% VBOX_PREF.OTHER_VARS | textarea_rows %]' cols='35' name='OTHER_VARS'>[% VBOX_PREF.OTHER_VARS | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.OTHER_VARS | textarea_rows %]' colls='30' name='OTHER_VARS'>[% VBOX_PREF.OTHER_VARS | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -1402,7 +1422,7 @@
 							Список номеров которые обслуживают очередь. Алгоритм вызова будет зависеть от 'Алгоритма звонка'
 						</span></a></td>
 					<td>
-						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' colls='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1774,7 +1794,7 @@
 				<tr>
 					<td>Заголовок факса: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='35' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' colls='30' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
 					</td>
 				</tr>
 				[% END %]
@@ -2314,7 +2334,7 @@
 							Список номеров Пейджинга / интеркома.
 						</span></a></td>
 					<td>
-						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='35' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' colls='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -2566,7 +2586,7 @@
 				<tr><td colspan='2'>&nbsp;</td></tr>
 				<tr>
 					<td align='center'>
-						<a id='xvb_view_mode_selector' href='#' onclick="return MoreExtOptions(this,0,'все опции','стандартные опции')">&nbsp;</a>
+						<a id='xvb_view_mode_selector' href='#' onclick="return MoreExtOptions(this,0,'все опции','основные опции')">&nbsp;</a>
 					</td>
 					<td colspan='2' align='center'>
 						<input type='submit' value='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;изменить&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'>
@@ -2576,10 +2596,10 @@
 			</table>
 			</td>
 
-			<td width='1%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td width='1%'>&nbsp;</td>
 
-			<td valign='top' width='46%' align='left'>
-				<table class='addon_data' width='100%' id='d-tbl-s'>
+			<td valign='top' width='40%' align='left'>
+				<table width='100%' id='d-tbl-s'>
 					[% IF VBOX_PREF.TYPE eq '3' %]
 					[% IF VB_DATA %]
 					<tr>
@@ -2587,14 +2607,14 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+						<table width='100%'  id='addon-data'>
+							<tr>
 								<th rowspan='2'>Номер телефона</th>
 								<th colspan='2'>Звонки</th>
 								<th colspan='2'>Длительность</th>
 								<th rowspan='2'>Среднее время<br> до ответа</th>
 							</tr>
-							<tr class='list_addon_data'>
+							<tr>
 								<th>всего</th>
 								<th>успешные</th>
 								<th>всего</th>
@@ -2655,8 +2675,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center'>
-						<table width='90%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+						<table width='90%'  id='addon-data'>
+							<tr>
 								<th>Вариант ответа</th>
 								<th>Количество голосов</th>
 								<th>Процент голосов</th>
@@ -2690,8 +2710,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center'>
-						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data' align='center'>
+						<table width='100%'  id='addon-data'>
+							<tr align='center'>
 								<th colspan='2'>&nbsp;</th>
 								<th>Дата создания</th>
 								<th>Дата скачивания</th>
@@ -2728,14 +2748,14 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center'>
-						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
-								<th rowspan='2'><a href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='динамические агенты'>Номер телефона</a></th>
+						<table width='100%'  id='addon-data'>
+							<tr>
+								<th rowspan='2'><a class='error' href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='динамические агенты'>Номер телефона</a></th>
 								<th colspan='2'>Звонки</th>
 								<th colspan='2'>Длительность</th>
 								<th rowspan='2'>Среднее время<br> до ответа</th>
 							</tr>
-							<tr class='list_addon_data'>
+							<tr>
 								<th>всего</th>
 								<th>успешные</th>
 								<th>всего</th>
@@ -2776,8 +2796,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+						<table width='100%'  id='addon-data'>
+							<tr>
 								<th>Статус звонка</th>
 								<th>Количество звонков</th>
 								<th>Процент звонков</th>
@@ -2828,8 +2848,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+						<table width='100%'  id='addon-data'>
+							<tr>
 								<th>Номер звонящего</th>
 								<th>Парковочный слот</th>
 								<th>Время ожидания</th>
@@ -2858,8 +2878,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+						<table width='100%'  id='addon-data'>
+							<tr>
 								<th>Статус звонка</th>
 								<th>Количество звонков</th>
 								<th>Процент звонков</th>
@@ -3026,7 +3046,7 @@
 
 					<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 					<tr>
-						<td nowrap='nowrap'>
+						<td colspan='2' nowrap='nowrap' align='left'>
 						<select name="type">
 							<option value="1" selected>Имя пользователя</option>
 							<option value="2">Приветствие пользователя</option>
@@ -3052,7 +3072,9 @@
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 						<input type='hidden' name='go' value='vb'>
 						</td>
-						<td align='right'>
+					</tr>
+					<tr>
+						<td colspan='2' align='right'>
 						<input type='submit' value='загрузить'>
 						</td>
 					</tr>
@@ -3091,8 +3113,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center'>
-						<table width='90%' class='addon_data' id='d-tbl'>
-							<tr class='list_addon_data'>
+						<table width='90%' id='d-tbl'>
+							<tr>
 								<th>Имя и фамилия</th>
 								<th>Внутренний номер</th>
 								<th>Действия</th>
@@ -3166,77 +3188,6 @@
 					<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 					[% END %]
 	
-					[% IF VBOX_PREF.TYPE eq '18' %]
-					<tr>
-						<td colspan='2' align='left'>&nbsp;</td>
-					</tr>
-					<tr>
-						<td colspan='2' align='left'><h4>Расписание автонформатора:</h4></td>
-						<td align='right'>
-							<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')" title='удалить все расписание'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить все' /></a>
-						</td>
-					</tr>
-					<tr>
-					<td colspan='2' align='center'>
-						<table width='90%' class='addon_data' id='d-tbl-d1'>
-							<tr class='list_addon_data'>
-								<th>Приоритет</th>
-								<th>Время</th>
-								<th>День недели</th>
-								<th>День месяца</th>
-								<th>Месяц</th>
-								<th>Год</th>
-								<th>Действия</th>
-							</tr>
-							[% FOREACH param = BLAST_SCHEDULE %]
-							<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-								<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
-								<input type='hidden' name='action' value='schedule_update'>
-								<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
-								<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
-								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-								<td><input class='in_t0' size='5'  name='priority' type='text' value='[% param.PRIORITY | html %]'></td>
-								<td><input class='in_t0' size='11' name='time_h'type='text' value='[% param.TIME_H | html %]'></td>
-								<td><input class='in_t0' size='5'  name='dayofweek' type='text' value='[% param.DAYOFWEEK | html %]'></td>
-								<td><input class='in_t0' size='5'  name='dayofmonth' type='text' value='[% param.DAYOFMONTH | html %]'></td>
-								<td><input class='in_t0' size='5'  name='month' type='text' value='[% param.MONTH | html %]'></td>
-								<td><input class='in_t0' size='5'  name='year' vtype='text' value='[% param.YEAR | html %]'></td>
-								<td align='left' nowrap='nowrap'>
-									<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]','d-tbl-d1')" title='удалить пункт расписания'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
-									<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-										<script language='JavaScript'>
-											writeUpdateLinks( 'сохранить изменения' );
-										</script>
-										<noscript><input value='изменить' type='submit'></noscript>
-									</span>
-								</td>
-								</form>
-							</tr>
-							[% END %]
-						
-							<tr align='center'>
-								<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-								<input type='hidden' name='action' value='schedule_add'>
-								<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
-								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-								<input type='hidden' name='redirect_to' value='0'>
-								<input type='hidden' name='callerid' value='*'>
-								<td><input size='5' type='text'  name='priority' value='5'></td>
-								<td><input size='11' type='text' name='time_h' value='*'></td>
-								<td><input size='5' type='text'  name='dayofweek' value='*'></td>
-								<td><input size='5' type='text'  name='dayofmonth' value='*'></td>
-								<td><input size='5' type='text'  name='month' value='*'></td>
-								<td><input size='5' type='text'  name='year' value='*'></td>
-								<td align='center'>
-									<input type='submit' value='добавить'>
-								</td>
-								</form>
-							</tr>
-						</table>
-						<script language='JavaScript'>listcolorer( 'd-tbl-d1' );</script>
-					</td>
-					</tr>
-					[% END %]
 				</table>
 			</td>
 			</tr>
@@ -3251,8 +3202,8 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-					<table width='90%' class='addon_data' id='d-tbl'>
-						<tr class='list_addon_data'>
+					<table width='90%' id='d-tbl'>
+						<tr>
 							<th>Приоритет</th>
 							<th>Номер звонящего</th>
 							<th>Время</th>
@@ -3316,8 +3267,77 @@
 				</td>
 			</tr>
 			[% END %]
-			
+			</table>
+
+			<table width='100%'>
 			[% IF VBOX_PREF.TYPE eq '18' %]
+			<tr><td colspan='3'>&nbsp;</td></tr>
+			<tr>
+				<td colspan='2' align='left'><h4>Расписание автонформатора:</h4></td>
+				<td align='right'>
+					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')" title='удалить все расписание'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить все' /></a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan='3' align='left'>
+					<table id='d-tbl-d1'>
+						<tr>
+							<th>Приоритет</th>
+							<th>Время</th>
+							<th>День недели</th>
+							<th>День месяца</th>
+							<th>Месяц</th>
+							<th>Год</th>
+							<th>Действия</th>
+						</tr>
+						[% FOREACH param = BLAST_SCHEDULE %]
+						<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
+							<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+							<input type='hidden' name='action' value='schedule_update'>
+							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
+							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+							<td><input class='in_t0' size='5'  name='priority' type='text' value='[% param.PRIORITY | html %]'></td>
+							<td><input class='in_t0' size='11' name='time_h'type='text' value='[% param.TIME_H | html %]'></td>
+							<td><input class='in_t0' size='5'  name='dayofweek' type='text' value='[% param.DAYOFWEEK | html %]'></td>
+							<td><input class='in_t0' size='5'  name='dayofmonth' type='text' value='[% param.DAYOFMONTH | html %]'></td>
+							<td><input class='in_t0' size='5'  name='month' type='text' value='[% param.MONTH | html %]'></td>
+							<td><input class='in_t0' size='5'  name='year' vtype='text' value='[% param.YEAR | html %]'></td>
+							<td align='left' nowrap='nowrap'>
+								<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]','d-tbl-d1')" title='удалить пункт расписания'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+									<script language='JavaScript'>
+										writeUpdateLinks( 'сохранить изменения' );
+									</script>
+									<noscript><input value='изменить' type='submit'></noscript>
+								</span>
+							</td>
+							</form>
+						</tr>
+						[% END %]
+						
+						<tr align='center'>
+							<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<input type='hidden' name='action' value='schedule_add'>
+							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+							<input type='hidden' name='redirect_to' value='0'>
+							<input type='hidden' name='callerid' value='*'>
+							<td><input size='5' type='text'  name='priority' value='5'></td>
+							<td><input size='11' type='text' name='time_h' value='*'></td>
+							<td><input size='5' type='text'  name='dayofweek' value='*'></td>
+							<td><input size='5' type='text'  name='dayofmonth' value='*'></td>
+							<td><input size='5' type='text'  name='month' value='*'></td>
+							<td><input size='5' type='text'  name='year' value='*'></td>
+							<td align='center'>
+								<input type='submit' value='добавить'>
+							</td>
+							</form>
+						</tr>
+					</table>
+					<script language='JavaScript'>listcolorer( 'd-tbl-d1' );</script>
+				</td>
+			</tr>
 			<tr><td colspan='3'>&nbsp;</td></tr>
 			<tr>
 				<td colspan='2' align='left'><h4>Список 'Автоинформатор' ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ) :</h4></td>
@@ -3329,8 +3349,8 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-				<table width='100%' class='addon_data' id='d-tbl'>
-					<tr class='list_addon_data'>
+				<table width='100%' id='d-tbl'>
+					<tr>
 						<th>Время обработки</th>
 						<th>Имя</th>
 						<th>Номер(а) телефона</th>
@@ -3358,8 +3378,8 @@
 							[% param.PROCESS_DATE | html %]
 						</td>
 						<td><input class='in_t0' type='text' size='18' name='name' value='[% param.NAME | html %]'></td>
-						<td><input class='in_t0' type='text' size='28' name='pn' value='[% param.PHONE_NUMBER | html %]'></td>
-						<td><input class='in_t0' type='text' size='22' name='uv' value='[% param.USER_VARS | html %]'></td>
+						<td><input class='in_t0' type='text' size='25' name='pn' value='[% param.PHONE_NUMBER | html %]'></td>
+						<td><input class='in_t0' type='text' size='20' name='uv' value='[% param.USER_VARS | html %]'></td>
 						<td align='left'>
 							[% IF param.CALL_STATUS contain 'success' %]
 								<a class='success' href='?action=act_list&call_id=[% param.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
@@ -3392,32 +3412,30 @@
 						</td>
 					</tr>
 					[% END %]
-					<tr align='center'>
-						<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-						<input type='hidden' name='action' value='callblast_add'>
-						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
-						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-						<td>&nbsp;</td>
-						<td><input type='text' name='name' value='' size='18'></td>
-						<td><input size='28' type='text' name='pn' value=''></td>
-						<td><input size='22' type='text' name='uv' value=''></td>
-						<td colspan='4' align='center'>
-							<input type='submit' value=' добавить абонента '>
+					<tr id='csv-import'>
+						<td align='left' colspan='4' nowrap='nowrap'>
+							<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<input type='hidden' name='action' value='callblast_add'>
+							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+							<input type='text' name='name' value='' size='18' placeholder='Имя'>
+							&nbsp;
+							<input size='25' type='text' name='pn' value='' placeholder='Номер телефона'>
+							&nbsp;
+							<input size='20' type='text' name='uv' value='' placeholder='Переменные'>
+							&nbsp;
+							<input type='submit' value='добавить'>
+							</form>
 						</td>
-						</form>
-					</tr>
-					<tr><td colspan='8'>&nbsp;</td></tr>
-						<tr id='csv-import'>
-						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
-						<td colspan='3'>&nbsp;</td>
-						<td colspan='5' align='right'>
+						<td colspan='4' align='right' nowrap='nowrap'>
+							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 							<input type='file' name='config_file'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 							<input name='is_excel' type='submit' value='Добавить из CSV файла'>
+							</form>
 						</td>
-						</form>
 					</tr>
 					</table>
 					<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
@@ -3435,8 +3453,8 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-					<table width='90%' class='addon_data' id='d-tbl'>
-						<tr class='list_addon_data'>
+					<table width='90%' id='d-tbl'>
+						<tr>
 							<th>Приоритет</th>
 							<th>Функция</th>
 							<th>Переменная</th>
@@ -3543,8 +3561,8 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-				<table width='100%' class='addon_data' id='d-tbl'>
-					<tr class='list_addon_data'>
+				<table width='100%' id='d-tbl'>
+					<tr>
 						<th>Время обработки</th>
 						<th>Имя</th>
 						<th>Номер(а) телефона</th>
@@ -3573,8 +3591,8 @@
 							[% param.PROCESS_DATE | html %]
 						</td>
 						<td><input class='in_t0' type='text' size='20' name='name' value='[% param.NAME | html %]'></td>
-						<td><input class='in_t0' type='text' size='33' name='pn' value='[% param.PHONE_NUMBER | html %]'></td>
-						<td><input class='in_t0' type='text' size='25' name='uv' value='[% param.USER_VARS | html %]'></td>
+						<td><input class='in_t0' type='text' size='25' name='pn' value='[% param.PHONE_NUMBER | html %]'></td>
+						<td><input class='in_t0' type='text' size='20' name='uv' value='[% param.USER_VARS | html %]'></td>
 						<td align='left'>
 							[% IF param.CALL_STATUS contain 'success' %]
 								<a class='success' href='?action=act_list&call_id=[% param.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
@@ -3603,37 +3621,35 @@
 					[% END %]
 					[% IF MSG_NEXT ne '' %]
 					<tr>
-						<td align='right' colspan='8'>
+						<td align='right' colspan='9'>
 							<a title='следующая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
 						</td>
 					</tr>
 					[% END %]
-					<tr align='center'>
-						<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-						<input type='hidden' name='action' value='multidialout_add'>
-						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
-						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-						<td>&nbsp;</td>
-						<td><input type='text' name='name' value='' size='20'></td>
-						<td><input size='33' type='text' name='pn' value=''></td>
-						<td><input size='25' type='text' name='uv' value=''></td>
-						<td colspan='4' align='center'>
-							<input type='submit' value=' добавить абонента '>
+					<tr id='csv-import'>
+						<td align='left' nowrap='nowrap' colspan='5'>
+							<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<input type='hidden' name='action' value='multidialout_add'>
+							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+							<input type='text' name='name' value='' size='20' placeholder='Имя'>
+							&nbsp;
+							<input size='25' type='text' name='pn' value='' placeholder='Телефон'>
+							&nbsp;
+							<input size='20' type='text' name='uv' value='' placeholder='Переменные'>
+							&nbsp;
+							<input type='submit' value='добавить'>
+							</form>
 						</td>
-						</form>
-					</tr>
-					<tr><td colspan='8'>&nbsp;</td></tr>
-						<tr id='csv-import'>
-						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
-						<td colspan='3'>&nbsp;</td>
-						<td colspan='5' align='right'>
+						<td colspan='4' align='right'>
+							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 							<input type='file' name='config_file'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 							<input name='is_excel' type='submit' value='Добавить из CSV файла'>
+							</form>
 						</td>
-						</form>
 					</tr>
 					</table>
 					<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
@@ -3643,37 +3659,6 @@
 		</table>
 		</p>
 
-	<p>
-	<table width='100%' class='bottom_hr'>
-		<tr align='center'>
-			[% IF USER_CREDS.ROOT eq '0' %]
-			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-			<td align='left'>
-				&nbsp;
-				<input name='action' value='vb_add' type='hidden'>
-				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='go' value='edit' type='hidden'>
-				<input size='6' type='text' name='new_ext'>
-				<input value='Добавить номер' type='submit'>
-			</td>
-			</form>
-			<td>
-				<a class='headers' href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')">Удалить номер</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Клонировать</a>
-			</td>
-			[% END %]
-			<td>
-				<a class='headers' href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Просмотр сообщений</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Статистика</a>
-			</td>
-		</tr>
-	</table>
-	</p>
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	<script language='JavaScript'>MoreExtOptions(document.getElementById('xvb_view_mode_selector'),1,'все опции','основные опции');</script>

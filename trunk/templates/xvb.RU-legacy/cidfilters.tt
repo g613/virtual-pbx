@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters.tt,v 1.24 2013-03-11 15:08:01 gosha Exp $ -->
+<!-- $Id: cidfilters.tt,v 1.25 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID фильтры - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -36,7 +36,7 @@
 	</p>
 
 	<p>	
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
 			<td>
 		[% IF USER_CREDS.ROOT eq '0' %]
@@ -55,8 +55,8 @@
 	</p>
 		
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%' id='d-tbl'>
+		<tr>
 			<th>Номер звонящего</th>
 			<th>Описание</th>
 			<th>Действие</th>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.33 2013-03-11 15:08:00 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.35 2014/09/07 18:36:24 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -940,8 +940,8 @@
 				</tr>
 				<tr>
 					<td>
-					<table width='100%' class='addon_data'>
-						<tr class='list_addon_data'>
+					<table width='100%'>
+						<tr>
 							<th>Phone number</th>
 							<th>All calls</th>
 							<th>Answered calls</th>
@@ -956,7 +956,7 @@
 								<a href='?action=callout_clean&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm( 'Are you sure you want to reset statistics ?' )" title='reset call statistics'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
 							</td>
 						[% ELSE %]
-						<tr align='center' class='addon_data'>
+						<tr align='center'>
 							<td align='left'>[% param.NUMBER | html %]</td>
 						[% END %]
 							<td>[% param.ALL | html %]</td>
@@ -980,12 +980,12 @@
 				</tr>
 				<tr>
 					<td align='center'>
-					<table width='90%' class='addon_data'>
+					<table width='90%'>
 					<tr>
 						<td colspan='3'><pre>[% VBOX_PREF.GREETING | html %]</pre></td>
 					</tr>
-					<table width='90%' class='addon_data'>
-						<tr class='list_addon_data'>
+					<table width='90%'>
+						<tr>
 							<th>Variant</th>
 							<th>Count</th>
 							<th>Percent</th>
@@ -997,7 +997,7 @@
 								<a href='?action=voting_clean&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm( 'Are you sure you want to reset statistics ?' )" title='reset voting results'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
 							</td>
 						[% ELSE %]
-						<tr align='center' class='addon_data'>
+						<tr align='center'>
 							<td>[% param.DIGIT | html %]</td>
 						[% END %]
 							<td>[% param.COUNT | html %]</td>
@@ -1017,8 +1017,8 @@
 				</tr>
 				<tr>
 					<td align='center'>
-					<table width='100%' class='addon_data'>
-						<tr class='list_addon_data' align='center'>
+					<table width='100%'>
+						<tr align='center'>
 							<th>Create time</th>
 							<th>Download time</th>
 							<th>File size</th>
@@ -1046,8 +1046,8 @@
 				</tr>
 				<tr>
 					<td colspan='2' align='center' width='100%'>
-					<table width='100%' class='addon_data'>
-						<tr class='list_addon_data'>
+					<table width='100%'>
+						<tr>
 							<th>Phone number</th>
 							<th>All calls</th>
 							<th>Answered calls</th>
@@ -1062,7 +1062,7 @@
 								<a href='?action=callout_clean&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm( 'Are you sure you want to reset statistics ?' )" title='reset call statistics'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
 							</td>
 						[% ELSE %]
-						<tr align='center' class='addon_data'>
+						<tr align='center'>
 							<td align='left'>[% param.NUMBER | html %]</td>
 						[% END %]
 							<td>[% param.ALL | html %]</td>
@@ -1087,28 +1087,28 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
-						<table width='100%' class='addon_data'>
-							<tr class='list_addon_data'>
+						<table width='100%'>
+							<tr>
 								<th>Call Status</th>
 								<th>Count</th>
 								<th>Percent</th>
 							</tr>
-							<tr align='right' class='addon_data'>
+							<tr align='right'>
 								<td>Success</td>
 								<td>[% BLAST_STAT.success | html %]&nbsp;</td>
 								<td>[% BLAST_STAT.success_prc | bill_float | html %] %&nbsp;</td>
 							</tr>
-							<tr align='right' class='addon_data'>
+							<tr align='right'>
 								<td>Failed</td>
 								<td>[% BLAST_STAT.failed | html %]&nbsp;</td>
 								<td>[% BLAST_STAT.failed_prc | bill_float | html %] %&nbsp;</td>
 							</tr>
-							<tr align='right' class='addon_data'>
+							<tr align='right'>
 								<td>Wait redial</td>
 								<td>[% BLAST_STAT.failedwait | html %]&nbsp;</td>
 								<td>[% BLAST_STAT.failedwait_prc | bill_float | html %] %&nbsp;</td>
 							</tr>
-							<tr align='right' class='addon_data'>
+							<tr align='right'>
 								<td>Wait</td>
 								<td>[% BLAST_STAT.wait | html %]&nbsp;</td>
 								<td>[% BLAST_STAT.wait_prc | bill_float | html %] %&nbsp;</td>
@@ -1137,8 +1137,8 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-				<table width='90%' class='addon_data'>
-					<tr class='list_addon_data'>
+				<table width='90%'>
+					<tr>
 						<th>Name</th>
 						<th>Phone Number</th>
 						<th>Status</th>

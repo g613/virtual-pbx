@@ -15,51 +15,52 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 
-	<center>
-	<p>
 	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			</td>
-			<td align='center'><h2>SIP Domains</h2></td>
-			<td align='right' width='20%'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
-				[% INCLUDE version.tt %]
-			</td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='top_hr'>
 		<tr align='left'>
-			<td>
+			<td width='10%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
-			<form method='post'>
 			<td align='right'>
-			<input size='11' name='f_vn' type='text' placeholder='SIP Domain' value='[% F_VN | html %]'>
-			<input size='10' name='f_ac' type='text' placeholder='Access code' value='[% F_AC | html %]'>
-			<input type='hidden' value='did_list_sipdomain' name='action'>
-			<input value='search' type='submit'>
-			</td>
-			</form>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
+			<td>
 		</tr>
 	</table>
-	</p>
+	<center>
 		
+	<h1>SIP domains</h1>
+	
+	<table width='100%'>
+		<tr>
+			<td align='right'>
+				<form method='post'>
+					<input size='25' name='f_vn' type='text' placeholder='SIP Domain' value='[% F_VN | html %]'>
+					&nbsp;
+					<input size='10' name='f_ac' type='text' placeholder='Access code' value='[% F_AC | html %]'>
+					&nbsp;
+					<input type='hidden' value='did_list_sipdomain' name='action'>
+					<input value='search' type='submit'>
+				</form>
+			</td>
+		</tr>
+	</table>
+	
 	<p>
-	<table width='95%' class='list_data' id='list-data'>
-		<tr class='list_data'>
+	<table width='95%' id='list-data'>
+		<tr>
+			<th></th>
 			<th>SIP Domain</th>
 			<th colspan='3'>Assigned to</th>
 			<th>Actions</th>
+			<th></th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='5'>
+			<td align='left'>
 				<a title='previous page' href='?action=did_list_sipdomain&from=[% MSG_PREV %]&f_vn=[% F_VN | html %]&f_ac=[% F_AC | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
@@ -67,6 +68,7 @@
 		
 		[% FOREACH d = DOMAINS %]
 		<tr align='center' class='nocolor'>
+			<td></td>
 			<td align='right'>[% d.DOMAIN | html %]</td>
 			<td align='right'>
 				[% d.VOICENUMBER | html %]
@@ -80,43 +82,35 @@
 			<td>
 				<a title='delete SIP Domain' href='?action=did_del_sipdomain&domain_id=[% d.ID %]&user_id=[% d.SUBSCR_ID | html %]&from=[% MSG_FROM %]&domain=[% d.DOMAIN | html %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
+			<td></td>
 		</tr>
 		[% END %]
 		<form>
 		<tr align='center'>
-			<td align='right'><input size='25' type='text' name='domain'></td>
+			<td></td>
+			<td align='right'><input placeholder='SIP Domain' size='35' type='text' name='domain'></td>
 			<td align='right'>
-				<input size='15' type='text' name='pn'>
+				<input placeholder='Shared DID' size='15' type='text' name='pn'>
 			</td>
 			<td>
 				#
 			</td>
 			<td align='left'>
-				<input size='8' type='text' name='ac'></td>
+				<input placeholder='Access code' size='10' type='text' name='ac'></td>
 			<td>
-				<input value='&nbsp;&nbsp;&nbsp;&nbsp;ADD&nbsp;&nbsp;&nbsp;&nbsp;' type='submit'>
+				<input value='add sip domain' type='submit'>
 				<input type='hidden' value='did_add_sipdomain' name='action'>
+			</td>
+			<td align='right'>
+			[% IF MSG_NEXT ne '' %]
+				<a title='next page' href='?action=did_list_sipdomain&from=[% MSG_NEXT %]&f_vn=[% F_VN | html %]&f_ac=[% F_AC | html %]'><img border='0' src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+			[% END %]
 			</td>
 		</tr>
 		</form>
 
-		[% IF MSG_NEXT ne '' %]
-		<tr>
-			<td align='right' colspan='5'>
-				<a title='next page' href='?action=did_list_sipdomain&from=[% MSG_NEXT %]&f_vn=[% F_VN | html %]&f_ac=[% F_AC | html %]'><img border='0' src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
-			</td>
-		</tr>
-		[% END %]
 	</table>
 	<script language='JavaScript'>listcolorer( 'list-data' );</script>
-	</p>
-
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			[% INCLUDE main_menu2.tt-inc %]
-		</tr>
-	</table>
 	</p>
 
 	</center>

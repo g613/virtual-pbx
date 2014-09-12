@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.25 2013-09-16 19:36:34 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.26 2014/09/07 18:30:40 gosha Exp $ -->
 <!--SUBJECT:VirtualPBX - отчет за день:SUBJECT-->
 <head>
 	<BASE href="[% CGI_SERVER %]">
@@ -67,7 +67,7 @@
 		<table width='100%' class='statement' border='1'>
 			[% IF USE_BILLING %]
 			
-			<tr class='list_data'>
+			<tr>
 				<th>Тип звонка</th>
 				<th>Количество</th>
 				<th>Длительность</th>
@@ -86,7 +86,7 @@
 
 			[% ELSE %]
 			
-			<tr class='list_data'>
+			<tr>
 				<th>Тип звонка</th>
 				<th>Количество</th>
 				<th>Длительность</th>
@@ -106,7 +106,7 @@
 		[% IF SUMMARY scalar %]
 		<h3>Обобщенный отчет активности:</h3>
 		<table width='100%' class='statement' border='1'>
-			<tr class='list_data'>
+			<tr>
 				<th>Внутренний номер</th>
 				<th>Активность</th>
 				<th>Количество</th>
@@ -128,7 +128,7 @@
 		<table width='100%' class='statement' border='1'>
 			[% IF USE_BILLING %]
 
-			<tr class='list_data'>
+			<tr>
 				<th>Дата и время звонка</th>
 				<th>Номер звонящего</th>
 				<th>Длительность</th>
@@ -147,7 +147,7 @@
 
 			[% ELSE %]
 
-			<tr class='list_data'>
+			<tr>
 				<th>Дата и время звонка</th>
 				<th>Номер звонящего</th>
 				<th>Длительность</th>

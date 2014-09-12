@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.211 2014/04/14 11:26:29 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.214 2014/09/07 18:36:24 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -10,12 +10,16 @@
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 	<script language="JavaScript">
 		var e_list = [];
-		e_list['hangup'] = [ null, null,'Выход из PBX' ];
-		e_list['back'] = [ null, null, 'Вернуться к предыдущему' ];
-		e_list['repeat'] = [ null, null, 'Повторить текущий' ];
+		e_list['hangup'] = [ null, null,'Выход из PBX',-2 ];
+		e_list['back'] = [ null, null, 'Вернуться к предыдущему',-1 ];
+		e_list['repeat'] = [ null, null, 'Повторить текущий',0 ];
 		[% FOREACH vb = VB_LIST %]
-		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | locale_msg %]','[% vb.NAME | html %]'];
+		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | locale_msg %]','[% vb.NAME | html %]',[% vb.VB_IND %]];
 		[% END %]
+		var e_menu = [];
+		for ( var m_num in e_list ) {
+			e_menu[2+e_list[m_num][3]] = m_num;
+		}
 	</script>
 </head>
 
@@ -2569,7 +2573,7 @@
 			<td width='1%'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
 			<td valign='top' width='46%' align='left'>
-				<table class='addon_data' width='100%' id='d-tbl-s'>
+				<table width='100%' id='d-tbl-s'>
 					[% IF VBOX_PREF.TYPE eq '3' %]
 					[% IF VB_DATA %]
 					<tr>
@@ -2578,13 +2582,13 @@
 					<tr>
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+							<tr>
 								<th rowspan='2'>Номер телефона</th>
 								<th colspan='2'>Звонки</th>
 								<th colspan='2'>Длительность</th>
 								<th rowspan='2'>Среднее время<br> до ответа</th>
 							</tr>
-							<tr class='list_addon_data'>
+							<tr>
 								<th>всего</th>
 								<th>успешные</th>
 								<th>всего</th>
@@ -2646,7 +2650,7 @@
 					<tr>
 						<td colspan='2' align='center'>
 						<table width='90%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+							<tr>
 								<th>Вариант ответа</th>
 								<th>Количество голосов</th>
 								<th>Процент голосов</th>
@@ -2681,7 +2685,7 @@
 					<tr>
 						<td colspan='2' align='center'>
 						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data' align='center'>
+							<tr align='center'>
 								<th colspan='2'>&nbsp;</th>
 								<th>Дата создания</th>
 								<th>Дата скачивания</th>
@@ -2719,13 +2723,13 @@
 					<tr>
 						<td colspan='2' align='center'>
 						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+							<tr>
 								<th rowspan='2'><a href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='динамические агенты'>Номер телефона</a></th>
 								<th colspan='2'>Звонки</th>
 								<th colspan='2'>Длительность</th>
 								<th rowspan='2'>Среднее время<br> до ответа</th>
 							</tr>
-							<tr class='list_addon_data'>
+							<tr>
 								<th>всего</th>
 								<th>успешные</th>
 								<th>всего</th>
@@ -2767,7 +2771,7 @@
 					<tr>
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+							<tr>
 								<th>Статус звонка</th>
 								<th>Количество звонков</th>
 								<th>Процент звонков</th>
@@ -2819,7 +2823,7 @@
 					<tr>
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+							<tr>
 								<th>Номер звонящего</th>
 								<th>Парковочный слот</th>
 								<th>Время ожидания</th>
@@ -2849,7 +2853,7 @@
 					<tr>
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%' class='stat_data' id='addon-data'>
-							<tr class='list_addon_data'>
+							<tr>
 								<th>Статус звонка</th>
 								<th>Количество звонков</th>
 								<th>Процент звонков</th>
@@ -3078,8 +3082,8 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='center'>
-						<table width='90%' class='addon_data' id='d-tbl'>
-							<tr class='list_addon_data'>
+						<table width='90%' id='d-tbl'>
+							<tr>
 								<th>Имя и фамилия</th>
 								<th>Внутренний номер</th>
 								<th>Действия</th>
@@ -3165,8 +3169,8 @@
 					</tr>
 					<tr>
 					<td colspan='2' align='center'>
-						<table width='90%' class='addon_data' id='d-tbl-d1'>
-							<tr class='list_addon_data'>
+						<table width='90%' id='d-tbl-d1'>
+							<tr>
 								<th>Приоритет</th>
 								<th>Время</th>
 								<th>День недели</th>
@@ -3238,8 +3242,8 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-					<table width='90%' class='addon_data' id='d-tbl'>
-						<tr class='list_addon_data'>
+					<table width='90%' id='d-tbl'>
+						<tr>
 							<th>Приоритет</th>
 							<th>Номер звонящего</th>
 							<th>Время</th>
@@ -3316,8 +3320,8 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-				<table width='100%' class='addon_data' id='d-tbl'>
-					<tr class='list_addon_data'>
+				<table width='100%' id='d-tbl'>
+					<tr>
 						<th>Время обработки</th>
 						<th>Имя</th>
 						<th>Номер(а) телефона</th>
@@ -3422,8 +3426,8 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-					<table width='90%' class='addon_data' id='d-tbl'>
-						<tr class='list_addon_data'>
+					<table width='90%' id='d-tbl'>
+						<tr>
 							<th>Приоритет</th>
 							<th>Функция</th>
 							<th>Переменная</th>
@@ -3530,8 +3534,8 @@
 			</tr>
 			<tr>
 				<td colspan='3' align='center'>
-				<table width='100%' class='addon_data' id='d-tbl'>
-					<tr class='list_addon_data'>
+				<table width='100%' id='d-tbl'>
+					<tr>
 						<th>Время обработки</th>
 						<th>Имя</th>
 						<th>Номер(а) телефона</th>
