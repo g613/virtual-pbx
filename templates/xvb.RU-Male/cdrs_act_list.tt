@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.4 2014-02-05 11:40:16 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.5 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Детализация звонка - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -12,17 +12,12 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='100%' class='logo'>
-		<tr>
-			<td align='center'><h2>Детализация звонка</h2></td>
-		</tr>
-	</table>
-	</p>
+			
+	<h1>Детализация звонка</h1>
 	
 	<p>
-	<table width='100%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='100%' id='d-tbl'>
+		<tr>
 			<th>Время действия</th>
 			<th>Номер звонящего</th>
 			<th>Длительность</th>
@@ -61,18 +56,13 @@
 				<td align='left'>[% msg.DATA | html %]</td>
 			</tr>
 		[% END %]
-		<tr>
 		[% IF MSG_NEXT ne '' %]
+		<tr>
 			<td align='right' colspan='7'>
 				<a title='следующая страница' href='?action=act_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&call_id=[% CDR_CALL_ID | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
 			</td>
-		[% ELSE %]
-			<td colspan='7'>&nbsp;</td>
+		</tr>
 		[% END %]
-		</tr>
-		<tr class='list_data'>
-			<td colspan='7'>&nbsp;</td>
-		</tr>
 	</table>
 	</p>
 	

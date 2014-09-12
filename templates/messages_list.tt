@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.69 2014/07/09 11:40:18 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.71 2014/09/10 14:16:09 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -17,45 +17,75 @@
 </head>
 
 <body onLoad="XVBInit()">
-	<center>
-	<p>
-	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-			[% END %]
-			</td>
-			<td align='center'><h2>Messages for Extension Number# <b>[% VBOX_PREF.EXT_NUMBER | html %]</h2></td>
-			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
 			<td>
-				<a href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>All messages</a>
+				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extension detail</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=msg_delete&clear_ext=1&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to delete all messages?')">Clear extension</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=get_itunes&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Itunes</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=get_rss&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Rss</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extension detail</a>
+			</td>
+		</tr>
+	</table>
+
+	<center>
+			
+	<h1>Messages for Extension Number# <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
+
+	<p>
+	<table width='95%'>
+		<tr>
+			<td align='right'>
+				<form method="get" action="[% CGI_URL %]">
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<button type="button">...</button>
+				&nbsp;
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<button type="button">...</button>
+				<input name='action' value='msg_list' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
+				&nbsp;
+				<input placeholder='Caller' size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
+				<input placeholder='Called' size='10' type='text' name='called_id' value='[% CALLED_ID | html %]'>
+				<input value='Search' type='submit'>
+				</form>
 			</td>
 		</tr>
 	</table>
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
+	<table width='95%' id='d-tbl'>
 		[% IF MSG_LIST scalar %]
-		<tr class='list_data'>
+		<tr>
 			<th>#</th>
 			<th>Date</th>
 			<th>CallerID</th>
@@ -114,79 +144,20 @@
 			<td align='right' colspan='8'>
 				<a title='next page' href='?action=msg_list&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&called_id=[% CALLED_ID | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
-		[% ELSE %]
-			<td align='left' colspan='8'>
-				&nbsp;
-			</td>
 		[% END %]
 		</tr>
 		[% ELSE %]
-		<tr class='list_data'>
+		<tr>
 			<td colspan='8'>&nbsp;</td>
 		</tr>
 		<tr>
 			<td colspan='8' align='center'><h4>No messages</h4></td>
-		</tr>
-		<tr>
-			<td colspan='8'>&nbsp;</td>
 		</tr>
 		[% END %]
 	</table>
 	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
-
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='right'>
-			<form method="get" action="[% CGI_URL %]">
-			<td width='100%'>
-				From date:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<button type="button">...</button>
-				&nbsp;
-				To date:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<button type="button">...</button>
-				<input name='action' value='msg_list' type='hidden'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
-				&nbsp;
-				Caller ID:
-				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
-				Callerd ID:
-				<input size='10' type='text' name='called_id' value='[% CALLED_ID | html %]'>
-				<input value='Search' type='submit'>
-				&nbsp;&nbsp;
-			</td>
-			</form>
-		</tr>
-	</table>
-	</p>
 
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</center>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: new_message.tt,v 1.25 2013-09-10 14:35:04 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.26 2014/09/07 18:30:40 gosha Exp $ -->
 <!--SUBJECT:New message from: [% callerid | html %] in mailbox [% _USER_VBOX.EXT_NUMBER | html %]:SUBJECT-->
 <head>
 	<BASE href="[% CGI_SERVER %]">

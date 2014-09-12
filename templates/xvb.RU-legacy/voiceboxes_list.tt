@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.26 2013-03-11 15:08:02 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.27 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список внутренних номеров - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -11,7 +11,6 @@
 </head>
 
 <body onLoad="breakout_of_frame();XVBInit()">
-	<center>
 	<center>
 	<p>
 	<table width='95%' class='logo'>
@@ -30,7 +29,7 @@
 	</p>
 
 	<p>
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
 			<td>
 	[% IF USER_CREDS.ROOT eq '0' %]
@@ -48,8 +47,8 @@
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%' id='d-tbl'>
+		<tr>
 			<th rowspan='2'>Номер</th>
 			<th rowspan='2'>Имя</th>
 			<th rowspan='2'>Тип</th>
@@ -58,7 +57,7 @@
 			<th rowspan='2'>Получатель оповещения</th>
 			<th rowspan='2'>Действия</th>
 		</tr>
-		<tr class='list_data'>
+		<tr>
 			<th>Ж</th>
 			<th>С</th>
 			<th>П</th>

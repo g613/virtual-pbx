@@ -15,36 +15,28 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 
-	<center>
-	<p>
 	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			</td>
-			<td align='center'><h2>Tariffs</h2></td>
-			<td align='right' width='20%'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
-				[% INCLUDE version.tt %]
-			</td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='98%' class='top_hr'>
 		<tr align='left'>
-			<td>
+			<td width='10%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
+			<td>
 		</tr>
 	</table>
-	</p>
-
+	<center>
+	
+	<h1>Tariffs</h1>
+	
 	<p>
-	<table width='98%' class='list_data' id='list-data'>
-		<tr class='list_data'>
+	<table width='98%' id='list-data'>
+		<tr>
 			<th>Id</th>
 			<th>Name</th>
 			<th>Monthly</th>
@@ -86,43 +78,28 @@
 			</form>
 		</tr>
 		[% END %]
+		
 		<form>
-		<tr align='center'>
-			<td><input size='3' name='T_ID' type='text'></td>
-			<td align='left'><input size='25' name='T_NAME' type='text'></td>
-			<td><input size='5' name='T_MONTHLY_PRICE' type='text'></td>
-			<td><input size='5' name='T_DAILY_PRICE' type='text'></td>
-			<td>
-				<select name='T_CURRENCY_ID'>
-				[% FOREACH c = CURRENCY %]
-					<option value="[% c.CUR_ID | html %]">[% c.DESCRIPTION | html %]</option>
-				[% END %]
-				</select>
+		<tr>
+			<td colspan='3' align='left'>
+			<input placeholder='ID' size='3' name='T_ID' type='text'>
+			&nbsp;
+			<input placeholder='Tariff name' size='25' name='T_NAME' type='text'>
+			&nbsp;
+			<input type='hidden' value='tariff_add' name='action'>
+			<input value='add new tariff' type='submit'>
 			</td>
-			<td>
-				<input value='ADD' type='submit'>
-				<input type='hidden' value='tariff_add' name='action'>
+			<td align='right' colspan='3'>
+			[% IF MSG_NEXT ne '' %]
+				<a title='next page' href='?action=tariff_list&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+			[% END %]
 			</td>
 		</tr>
 		</form>
-		[% IF MSG_NEXT ne '' %]
-		<tr>
-			<td align='right' colspan='6'>
-				<a title='next page' href='?action=tariff_list&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
-			</td>
-		</tr>
-		[% END %]
 	</table>
 	<script language='JavaScript'>listcolorer( 'list-data' );</script>
 	</p>
 
-	<p>
-	<table width='98%' class='bottom_hr'>
-		<tr align='center'>
-			[% INCLUDE main_menu2.tt-inc %]
-		</tr>
-	</table>
-	</p>
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

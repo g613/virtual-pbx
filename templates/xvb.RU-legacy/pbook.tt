@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.9 2014/04/07 18:51:20 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.10 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Телефонная книга - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -29,7 +29,7 @@
 	</p>
 
 	<p>	
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
 			<td>
 				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
@@ -51,8 +51,8 @@
 	</p>
 		
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%' id='d-tbl'>
+		<tr>
 			<th>Имя</th>
 			<th>Фамилия</th>
 			<th>Телефон</th>

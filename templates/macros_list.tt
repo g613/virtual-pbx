@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: macros_list.tt,v 1.10 2013-03-11 15:07:58 gosha Exp $ -->
+<!-- $Id: macros_list.tt,v 1.11 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Macros - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -12,37 +12,12 @@
 
 <body onLoad="XVBInit()">
 	<center>
+			
+	<h1>Macros</h1>
+
 	<p>
-	<table width='95%' class='logo'>
+	<table width='95%' id='d-tbl'>
 		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-			[% END %]
-			</td>
-			<td align='center'><h2>Macros</h2></td>
-			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='top_hr'>
-		<tr align='left'>
-			<td>
-				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-			</td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
 			<th>Name</th>
 			<th>Description</th>
 			<th>Data</th>
@@ -52,8 +27,8 @@
 		[% FOREACH m = MACROS %]
 		<tr align='center' class='nocolor' id='d-tr-[% m.ID %]'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
-			<td><input class='in_t0' size="25" name='NAME' type'text' value='[% m.MACRO_NAME | html %]'></td>
-			<td><input class='in_t0' size="40" name='DESCRIPTION' type'text' value='[% m.DESCRIPTION | html %]'></td>
+			<td><input class='in_t0' size="25" name='NAME' type='text' value='[% m.MACRO_NAME | html %]'></td>
+			<td><input class='in_t0' size="40" name='DESCRIPTION' type='text' value='[% m.DESCRIPTION | html %]'></td>
 			<td>
 				<textarea class='in_t0' rows='[% m.DATA | textarea_rows %]' cols='35' name='DATA'>[% m.DATA | html %]</textarea>
 			</td>
@@ -74,7 +49,7 @@
 		[% END %]
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
-			<td><input size="25" name='NAME' type'text'></td>
+			<td><input size="25" name='NAME' type='text'></td>
 			<td><input size="40" name='DESCRIPTION' type='text'></td>
 			<td><input size="35" name='DATA' type='text'></td>
 			<td>
@@ -90,18 +65,6 @@
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			<td>
-				<a class='headers' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
-			</td>
-		</tr>
-	</table>
-	</p>
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 </html>

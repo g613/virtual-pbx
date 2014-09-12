@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.12 2014/08/18 07:03:07 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.13 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -24,37 +24,12 @@
 
 <body onLoad="XVBInit()">
 	<center>
+			
+	<h1>Click2Call links</h1>
+
 	<p>
-	<table width='95%' class='logo'>
+	<table width='95%' id='d-tbl'>
 		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-			[% END %]
-			</td>
-			<td align='center'><h2>Click2Call links</h2></td>
-			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='top_hr'>
-		<tr align='left'>
-			<td>
-				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-			</td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
 			<th>Link</th>
 			<th>Extension</th>
 			<th>Max calls</th>
@@ -65,13 +40,13 @@
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 			<td align='left'>https://[% USER_CREDS.DOWNLOAD_IP %]/c2c?key=[% c2c.SECRET | html %]&ac=[% USER_CREDS.ACCESS_CODE %]&ph=<b>&lt;phone number&gt;</b></td>
 			<td align='left' nowrap='nowrap'>
-				<input class='in_t0' size="16" name='redir_to' type'text' value='[% c2c.EXTENSION | html %]'>
+				<input class='in_t0' size="16" name='redir_to' type='text' value='[% c2c.EXTENSION | html %]'>
 				<script language="JavaScript">
 					exten_icon( '[% c2c.EXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
 				</script>
 			</td>
-			<td><input class='in_t0' size="5" name='call_limit' type'text' value='[% c2c.CALL_LIMIT | html %]'></td>
-			<td>
+			<td><input class='in_t0' size="5" name='call_limit' type='text' value='[% c2c.CALL_LIMIT | html %]'></td>
+			<td align='left'>
 				<input type='hidden' value='[% c2c.ID %]' name='data_id'>
 				<input type='hidden' value='[% c2c.SECRET %]' name='c2c_sec'>
 				<input type='hidden' value='c2c_update' name='action'>
@@ -92,14 +67,11 @@
 			</form>
 		</tr>
 		[% END %]
-		<tr>
-			<td colspan='3'>&nbsp;</td>
-		</tr>
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
 			<td></td>
 			<td align='left'><input size="16" name='redir_to' type='text'></td>
-			<td><input size="5" name='call_limit' type'text'></td>
+			<td><input size="5" name='call_limit' type='text'></td>
 			<td>
 				<input type='hidden' value='c2c_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
@@ -112,19 +84,6 @@
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 	
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			<td>
-				<a class='headers' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
-			</td>
-		</tr>
-	</table>
-	</p>
-
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 </body>

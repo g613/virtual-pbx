@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.3 2014/08/15 13:12:47 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.4 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP шлюзы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -12,20 +12,19 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='100%' class='logo'>
+	
+	<table width='100%'>
 		<tr>
-			<td align='center'><h2>SIP шлюзы</h2></td>
+			<td align='center'><h1>SIP шлюзы</h1></td>
 			<td align='right'>
 				<a title='удалить все шлюзы' href='?action=peer_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все шлюзы'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
 			</td>
 		</tr>
 	</table>
-	</p>
 
 	<p>
-	<table width='100%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='100%' id='d-tbl'>
+		<tr>
 			<th width='15%'>Прокси (*)</th>
 			<th>Порт (*)</th>
 			<th>Домен</th>
@@ -46,7 +45,7 @@
 		[% FOREACH p = PEERS %]
 		<tr align='center' class='nocolor' id='d-tr-[% p.DATA_ID %]'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
-			<td><input class='in_t0' size="17" name='host' type'text' value='[% p.host | html %]'></td>
+			<td><input class='in_t0' size="17" name='host' type='text' value='[% p.host | html %]'></td>
 			<td><input class='in_t0' size="5" name='port' type='text' value="[% p.port | html %]"></td>
 			<td><input class='in_t0' size="15" name='domain' type='text' value="[% p.fromdomain | html %]"></td>
 			<td><input class='in_t0' size="12" name='username' type='text' value="[% p.username | html %]"></td>
@@ -117,10 +116,10 @@
 		</tr>
 		[% END %]
 		<tr><td></td></tr>
-		<tr class='list_data' align='center'>
+		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return peers_unhide(this)'>
 			<td nowrap="nowrap">
-				<input size="17" name='host' type'text'>
+				<input size="17" name='host' type='text'>
 				<script language='JavaScript'>
 					var options_ind = 1;
 					var options_str = '<select name="tmpl" onFocus="peers_list_init(this,1)" onBlur="peers_list_init(this,2)" onChange="peers_hide(this.form)"><option value="."></option>';

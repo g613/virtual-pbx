@@ -16,50 +16,40 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 
-	<center>
-	<p>
 	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			</td>
-			<td align='center'><h2>Partners</h2></td>
-			<td align='right' width='20%'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
-				[% INCLUDE version.tt %]
-			</td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='top_hr'>
 		<tr align='left'>
-			<td>
+			<td width='10%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
 			<td align='right'>
-				&nbsp;
-			</td>
-			</form>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
+			<td>
 		</tr>
 	</table>
-	</p>
+	
+	<center>
+	
+	<h1>Partners</h1>
 	
 	<p>
-	<table width='95%' class='list_data' id='list-data'>
-		<tr class='list_data'>
+	<table width='95%' id='list-data'>
+		<tr>
 				<th>Partner login</th>
 				<th>Password</th>
 				<th>Group</th>
 				<th>Description</th>
 				<th>Actions</th>
+				<th></th>
 			</tr>
 			
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='10'>
+			<td align='left' colspan='6'>
 				<a title='previous page' href='?action=partner_list&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
@@ -102,6 +92,7 @@
 				</span>
 			</td>
 			</form>
+			<td></td>
 		</tr>
 		[% END %]
 
@@ -121,32 +112,22 @@
 				</select>
 			</td>
 			<td align='right'>
-				<input size='30' name='P_DESCRIPTION' type='text'></td>
+				<input size='40' name='P_DESCRIPTION' type='text'></td>
 			</td>
 			<td align='center'>
 				<input value='Create new partner' type='submit'>
 				<input type='hidden' value='partner_add' name='action'>
 			</td>
-		</tr>
-		</form>
-
 		[% IF MSG_NEXT ne '' %]
-		<tr>
 			<td align='right' colspan='10'>
 				<a title='next page' href='?action=partner_list&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
-		</tr>
 		[% END %]
+		</tr>
+		</form>
+
 	</table>
 	<script language='JavaScript'>listcolorer( 'list-data' );</script>
-	</p>
-	
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			[% INCLUDE main_menu2.tt-inc %]
-		</tr>
-	</table>
 	</p>
 	
 	</center>

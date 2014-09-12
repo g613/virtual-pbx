@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters.tt,v 1.2 2014/02/14 04:04:34 gosha Exp $ -->
+<!-- $Id: cidfilters.tt,v 1.3 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID фильтры - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -12,23 +12,17 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='100%' class='logo'>
-		<tr>
-			<td align='center'><h2>
-			[% IF CID_LIST_TYPE eq '1' %]
-				Черный список	
-			[% ELSE %]
-				Белый список
-			[% END %]
-			абонентов для внутреннего номера# [% VBOX_PREF.EXT_NUMBER | html %]
-			</h2></td>
-		</tr>
-	</table>
-	</p>
+	
+	<h1>
+	[% IF CID_LIST_TYPE eq '1' %]
+		Черный список	
+	[% ELSE %]
+		Белый список
+	[% END %]
+	абонентов для внутреннего номера# [% VBOX_PREF.EXT_NUMBER | html %]
+	</h1>
 
-	<p>	
-	<table width='100%' class='top_hr'>
+	<table width='100%'>
 		<tr align='left'>
 			<td>
 				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Параметры номера</a>
@@ -38,11 +32,10 @@
 			</td>
 		</tr>
 	</table>
-	</p>
 		
 	<p>
-	<table width='100%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='100%' id='d-tbl'>
+		<tr>
 			<th>Номер звонящего</th>
 			<th>Описание</th>
 			<th>Действие</th>
@@ -86,9 +79,6 @@
 				<input type='submit' value='добавить'>
 			</td>
 		</form>
-		</tr>
-		<tr>
-			<td colspan='3'>&nbsp;</td>
 		</tr>
 	</table>
 	</p>

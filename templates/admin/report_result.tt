@@ -21,36 +21,33 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 
-	<center>
-	<p>
 	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
-			<td align='center'><h2>Report result</h2><h4>[% REPORT_DATA.NAME | html %]</h4></td>
-			<td align='right' width='20%'>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
 				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
 				[% INCLUDE version.tt %]
-			</td>
+			<td>
 		</tr>
 	</table>
-	</p>
+	<center>
+	
+	<h1>[% REPORT_DATA.NAME | html %] - report result</h1>
 
 	<p>
-	<table width='98%' class='top_hr'>
+	<table width='98%'>
 		<tr>
-			<td align='left' width='40%'>
-				<a href='?action=report_list'>All reports</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=report_info&report_id=[% REPORT_DATA.ID %]'>Edit report</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=report_del&report_id=[% REPORT_DATA.ID %]'>Delete report</a>
-			</td>
-			<td align='right' width='60%'>
-				[% IF REPORT_DATA.DATE_START %]
+			<td align='right'>
 				<form method="get" action='?'>
-				From date:
+				<input name='action' value='report_run' type='hidden'>
+				<input name='report_id' value='[% REPORT_DATA.ID %]' type='hidden'>
+				[% IF REPORT_DATA.DATE_START %]
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -63,10 +60,9 @@
 						});
 				});
 				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
 				<button type="button">...</button>
 				&nbsp;
-				To date:
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#to_time").dynDateTime({
@@ -79,17 +75,20 @@
 						});
 				});
 				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
 				<button type="button">...</button>
 				&nbsp;
-				<input name='action' value='report_run' type='hidden'>
-				<input name='report_id' value='[% REPORT_DATA.ID %]' type='hidden'>
 				<input value='Run' type='submit'>
-				&nbsp;
-				<input name='need_excel' value='Excel' type='submit'>
-				</form>
+				[% ELSE %]
+				<a title='run report' href='?action=report_run&report_id=[% REPORT_DATA.ID %]'><img border='0' src='/xvb/images/run.png' alt='run' /></a>&nbsp;&nbsp;
 				[% END %]
 				&nbsp;
+				<a title='get excel table' href='?action=report_run&report_id=[% REPORT_DATA.ID %]&need_excel=1'><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;&nbsp;
+				&nbsp;
+				<a title='edit report' href='?action=report_info&report_id=[% REPORT_DATA.ID %]'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>&nbsp;&nbsp;
+				&nbsp;
+				<a title='delete report' href='?action=report_del&report_id=[% REPORT_DATA.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+				</form>
 			</td>
 		</tr>
 	</table>
@@ -98,7 +97,7 @@
 	<p>
 	<table width='98%' class='tablesorter' id='report_table'>
 		<thead>
-		<tr align='center' class='list_data'>
+		<tr align='center'>
 			[% FOREACH h = REPORT_HDR %]
 				<th>[% h.name | html %]</th>
 			[% END %]
@@ -126,21 +125,6 @@
 		); 
 	</script>
 
-	<p>
-	<table width='98%' class='bottom_hr'>
-		<tr align='center'>
-			<td>
-				<a class='headers' href='?action=report_del&report_id=[% REPORT_DATA.ID %]'>Delete report</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=report_info&report_id=[% REPORT_DATA.ID %]'>Edit report</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=report_list'>All reports</a>
-			</td>
-		</tr>
-	</table>
-	</p>
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

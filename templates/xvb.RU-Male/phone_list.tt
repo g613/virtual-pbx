@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.12 2014/08/15 13:12:47 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.14 2014/09/11 15:06:39 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -18,21 +18,20 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='100%' class='logo'>
+			
+	<table width='100%'>
 		<tr>
-			<td align='center' width='90%'><h2>SIP Телефоны</h2></td>
+			<td align='center'><h1>SIP телефоны</h1></td>
 			<td align='right'>
 				<a title='в формате excel' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;&nbsp;
 				<a title='удалить все телефоны' href='?action=phone_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все телефоны'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
 			</td>
 		</tr>
 	</table>
-	</p>
 
 	<p>
-	<table width='100%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='100%' id='d-tbl'>
+		<tr>
 			<th>&nbsp;</th>
 			<th>Логин</th>
 			<th>Пароль</th>
@@ -114,12 +113,12 @@
 				</select>
 			</td>
 			<td align='left' nowrap='nowrap'>
-				<input class='in_t0' size="9" name='REC_EXT' type='text' value="[% p.REC_EXT | html %]">
+				<input class='in_t0' size="8" name='REC_EXT' type='text' value="[% p.REC_EXT | html %]">
 				<script language="JavaScript">
 					exten_icon( '[% p.REC_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 				</script>
 			</td>
-			<td><input class='in_t0' size="10" name='PICKUP_GROUPS' type='text' value="[% p.PICKUP_GROUPS | html %]"></td>
+			<td><input class='in_t0' size="8" name='PICKUP_GROUPS' type='text' value="[% p.PICKUP_GROUPS | html %]"></td>
 			<td align='left'>
 				<input type='hidden' value='[% p.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='phone_update' name='action'>
@@ -136,7 +135,7 @@
 		</tr>
 		[% END %]
 		<tr><td></td></tr>
-		<tr align='center' class='list_data'>
+		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
@@ -155,12 +154,12 @@
 					<option value="4">Внешние</option>
 				</select>
 			</td>
-			<td align='left'><input size="10" name='REC_EXT' type='text'></td>
-			<td><input size="10" name='PICKUP_GROUPS' type='text'></td>
+			<td align='left'><input size="8" name='REC_EXT' type='text'></td>
+			<td><input size="8" name='PICKUP_GROUPS' type='text'></td>
 			<td>
 				<input type='hidden' value='phone_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<input value='&nbsp;&nbsp;добавить&nbsp;&nbsp;' type='submit'>
+				<input value='добавить' type='submit'>
 			</td>
 			</form>
 		</tr>

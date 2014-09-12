@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: login.tt,v 1.23 2014/05/26 19:25:22 gosha Exp $ -->
+<!-- $Id: login.tt,v 1.24 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - login</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -8,27 +8,18 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
+	
 	<table width='95%' class='logo'>
 		<tr>
 			<td align='left' width='20%'>
 				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
-			<td align='center'><h2>Welcome to VirtualPBX</h2></td>
+			<td align='center'><h1>Welcome to VirtualPBX</h1></td>
 			<td align='right' width='20%'>
 				<a href='/xvb/XVB.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
 			</td>
 		</tr>
 	</table>
-	</p>
-
-	<p>
-	<table width='95%'class='bottom_hr'>
-		<tr>
-			<td>&nbsp;&nbsp;</td>
-		</tr>
-	</table>
-	</p>
 
 	<p align='center'>
 	<table width='50%' class='half-width'>
@@ -64,7 +55,7 @@
 	</p>
 
 	<p>
-	<table width='95%' class='bottom_hr'>
+	<table width='95%'>
 		<tr align='center'>
 			<td>&nbsp;
 			[% IF ERROR_STR ne '' %]

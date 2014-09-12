@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.51 2014/07/09 11:40:18 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.52 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -17,47 +17,88 @@
 </head>
 
 <body onLoad="XVBInit()">
-	<center>
-	<p>
-	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-			[% END %]
-			</td>
-			<td align='center'><h2>All Messages for Extension Number# <b>[% USER_CREDS.ROOT | html %]</h2></td>
-			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
 			<td>
 		[% IF USER_CREDS.ROOT eq '0' %]
-				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User prefs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=msg_cleanup&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to delete all messages?')">Delete messages</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 		[% END %]
 				<a href='?action=get_rss_all&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Rss</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=get_itunes_all&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Itunes</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+			</td>
+		</tr>
+	</table>
+
+	<center>
+		
+	<h1>All Messages</h1>
+
+	<p>
+	<table width='95%'>
+		<tr>
+			<td align='right'>
+				<form method="get" action="[% CGI_URL %]">
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<button type="button">...</button>
+				&nbsp;
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<button type="button">...</button>
+				<input name='action' value='msg_list_all' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				&nbsp;
+				<select name="msg_type">
+					<option value="" selected>Message type</option>
+					<option value="30:40">User messages</option>
+					<option value="1:2:3:4:5:6">System messages</option>
+					<option value="1">User name</option>
+					<option value="2">User greeting</option>
+					<option value="3">Follow-Me Announcement</option>
+					<option value="4">RetryDial Announcement</option>
+					<option value="5">Music on hold</option>
+					<option value="6">Fax on Demand</option>
+					<option value="30">New user message</option>
+					<option value="40">Old user message</option>
+				</select>
+				&nbsp;
+				<input placeholder='Caller' size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
+				<input placeholder='Called' size='10' type='text' name='called_id' value='[% CALLED_ID | html %]'>
+				<input value='Search' type='submit'>
+				</form>
 			</td>
 		</tr>
 	</table>
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
+	<table width='95%' id='d-tbl'>
 		[% IF MSG_LIST scalar %]
-		<tr class='list_data'>
+		<tr>
 			<th>#</th>
 			<th>Ext</th>
 			<th>Date</th>
@@ -123,7 +164,7 @@
 		[% END %]
 		</tr>
 		[% ELSE %]
-		<tr class='list_data'>
+		<tr>
 			<td colspan='9'>&nbsp;</td>
 		</tr>
 		<tr>
@@ -138,70 +179,6 @@
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<form method="get" action="[% CGI_URL %]">
-		<tr align='right'>
-			<td width='100%'>
-				From date:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<button type="button">...</button>
-				&nbsp;
-				To date:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<button type="button">...</button>
-				<input name='action' value='msg_list_all' type='hidden'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				&nbsp;
-				<select name="msg_type">
-					<option value="" selected>Message type</option>
-					<option value="30:40">User messages</option>
-					<option value="1:2:3:4:5:6">System messages</option>
-					<option value="1">User name</option>
-					<option value="2">User greeting</option>
-					<option value="3">Follow-Me Announcement</option>
-					<option value="4">RetryDial Announcement</option>
-					<option value="5">Music on hold</option>
-					<option value="6">Fax on Demand</option>
-					<option value="30">New user message</option>
-					<option value="40">Old user message</option>
-				</select>
-				&nbsp;
-				Caller ID:
-				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
-				iCalled ID:
-				<input size='10' type='text' name='called_id' value='[% CALLED_ID | html %]'>
-				<input value='Search' type='submit'>
-				&nbsp;&nbsp;
-			</td>
-		</tr>
-		</form>
-	</table>
-	</p>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</center>
 </body>

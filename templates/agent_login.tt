@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: agent_login.tt,v 1.4 2014/02/14 04:04:33 gosha Exp $ -->
+<!-- $Id: agent_login.tt,v 1.5 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - dynamic agents </title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -12,31 +12,8 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-			[% END %]
-			</td>
-			<td align='center'><h2>Dynamic agents</h2></td>
-			<td align='right' width='20%'>
-				&nbsp;
-			</td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%'class='bottom_hr'>
-		<tr>
-			<td>&nbsp;&nbsp;</td>
-		</tr>
-	</table>
-	</p>
+			
+	<h1>Dynamic agents</h1>
 
 	<p align='center'>
 	<table width='50%' class='half-width'>
@@ -96,7 +73,7 @@
 	</p>
 
 	<p>
-	<table width='95%' class='bottom_hr'>
+	<table width='95%'>
 		<tr align='center'>
 			<td>&nbsp;
 			[% IF ERROR_STR ne '' %]

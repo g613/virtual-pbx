@@ -1,28 +1,28 @@
 				<a href='?action=node_list'>Nodes</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+				|
 				<a href='?action=group_list'>Groups</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+				|
 				<a href='?action=user_list'>Tenants</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+				|
 				<a href='ai?action=partner_list'>Partners</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+				|
 				<a href='?action=did_list_sipdomain'>SIP-Domains</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+				|
 				<a href='?action=did_list'>Private DIDs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+				|
 				<a href='?action=did_attr_list'>DIDs attr</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+				|
 				<a href='?action=report_list'>SQL-Reports</a>
 			[% IF USE_BILLING %]
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+				|
 				<a href='?action=tariff_list'>Tariffs</a>
 			[% END %]
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+				|
 				<a href='?action=cdr_list'>CDRs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+				|
 				<a href='?action=j_list'>Journals</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+				|
 				<a href='?action=phone_list'>SIP phones</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+				|
 				<a href='?action=peer_list'>SIP peers</a>
 

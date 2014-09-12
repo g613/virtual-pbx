@@ -15,35 +15,29 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 	
-	<center>
 	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			</td>
-			<td align='center'><h2>Nodes</h2></td>
-			<td align='right' width='20%'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
-				[% INCLUDE version.tt %]
-			</td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='95%' class='top_hr'>
 		<tr align='left'>
-			<td>
+			<td width='10%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
+			<td>
 		</tr>
 	</table>
-	</p>
-		
+
+	<center>
+	
+	<h1>Nodes</h1>
+	
 	<p>
-	<table width='95%' class='list_data' id='list-data'>
-		<tr class='list_data'>
+	<table width='95%' id='list-data'>
+		<tr>
 			<th>Id</th>
 			<th>Download IP</th>
 			<th>Asterisk IP</th>
@@ -110,18 +104,18 @@
 
 		<form>
 		<tr align='center'>
-			<td><input size='10' type='text' name='N_NODE_ID'></td>
+			<td><input size='15' type='text' name='N_NODE_ID'></td>
 			<td><input size='15' type='text' name='N_DOWNLOAD_IP'></td>
 			<td><input size='15' type='text' name='N_NODE_IP'></td>
 			<!--<td><input type='text' name='N_AMI_CREDS'></td>-->
 			<td><input size='15' type='text' name='N_NODE_DESC'></td>
 			<td><input size='12' type='text' name='N_NODE_LIMITS'></td>
 			<td><input size='20' type='text' name='N_NODE_STAT_URL'></td>
-			<td>&nbsp;</td>
-			<td>
-				<input value='ADD' type='submit'>
+			<td align='left'>
+				<input value='add new node' type='submit'>
 				<input type='hidden' value='node_add' name='action'>
 			</td>
+			<td>&nbsp;</td>
 		</tr>
 		</form>
 		[% IF MSG_NEXT ne '' %]
@@ -134,14 +128,6 @@
 	</table>
 	<script language='JavaScript'>listcolorer( 'list-data' );</script>
 	<p>
-
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			[% INCLUDE main_menu2.tt-inc %]
-		</tr>
-	</table>
-	</p>
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

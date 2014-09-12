@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: agent_login.tt,v 1.2 2014/02/14 04:04:34 gosha Exp $ -->
+<!-- $Id: agent_login.tt,v 1.3 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - динамические агенты очереди</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -12,21 +12,8 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='100%' class='logo'>
-		<tr>
-			<td align='center'><h2>Динамические агенты очереди</h2></td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='100%'class='bottom_hr'>
-		<tr>
-			<td>&nbsp;&nbsp;</td>
-		</tr>
-	</table>
-	</p>
+	
+	<h1>Динамические агенты очереди</h1>
 
 	<p align='center'>
 	<table width='50%' class='half-width'>
@@ -86,7 +73,7 @@
 	</p>
 
 	<p>
-	<table width='100%' class='bottom_hr'>
+	<table width='100%'>
 		<tr align='center'>
 			<td>&nbsp;
 			[% IF ERROR_STR ne '' %]

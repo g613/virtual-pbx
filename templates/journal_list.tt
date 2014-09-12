@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.20 2013-03-11 15:07:58 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.21 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Actions journal - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -20,39 +20,72 @@
 <body onLoad="XVBInit()">
 	<center>
 	
-	<p>
-	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-			[% END %]
-			</td>
-			<td align='center'><h2>Actions journal</h2></td>
-			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
-		</tr>
-	</table>
-	</p>
+	<h1>Actions journal</h1>
 
 	<p>	
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
-			<td>
-				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
+			<td align='right'>
+			<form method="get" action="[% CGI_URL %]">
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<button type="button">...</button>
+				&nbsp;
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<button type="button">...</button>
+				&nbsp;
+				<input name='action' value='j_list' type='hidden'>
+				<input placeholder='Exten' size='6' type='text' name='ext_num' value='[% J_EXT_NUM %]'>
+				&nbsp;
+				<select name="action_type")">
+					[% IF J_ACTION %]
+						<option value="[% J_ACTION %]" selected>[% J_ACTION %]</option>
+						<option value="" >all</option>
+					[% ELSE %]
+						<option value="" selected>all</option>
+					[% END %]
+				[% FOREACH at = ACTIONS %]
+					<option value="[% at %]">[% at %]</option>
+				[% END %]
+				</select>
+				&nbsp;
+				<input placeholder='Data' size='18' type='text' name='data' value='[% J_DATA | html %]'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				&nbsp;
+				<input value='Search' type='submit'>
+				&nbsp;&nbsp;
+				</fomr>
 			</td>
 		</tr>
 	</table>
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%' id='d-tbl'>
+		<tr>
 			<th width='5%'>Ext</th>
 			<th width='20%'>Date</th>
 			<th width='10%'>Action</th>
@@ -95,69 +128,6 @@
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
-	<p>	
-	<table width='95%' class='bottom_hr'>
-		<tr align='right'>
-			<form method="get" action="[% CGI_URL %]">
-			<td width='100%'>
-				From date:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<button type="button">...</button>
-				&nbsp;
-				To date:
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<button type="button">...</button>
-				&nbsp;
-				<input name='action' value='j_list' type='hidden'>
-				Ext:
-				<input size='6' type='text' name='ext_num' value='[% J_EXT_NUM %]'>
-				&nbsp;
-				<select name="action_type")">
-					[% IF J_ACTION %]
-						<option value="[% J_ACTION %]" selected>[% J_ACTION %]</option>
-						<option value="" >all</option>
-					[% ELSE %]
-						<option value="" selected>all</option>
-					[% END %]
-				[% FOREACH at = ACTIONS %]
-					<option value="[% at %]">[% at %]</option>
-				[% END %]
-				</select>
-				&nbsp;
-				Data:
-				<input size='18' type='text' name='data' value='[% J_DATA | html %]'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				&nbsp;
-				<input value='Search' type='submit'>
-				&nbsp;&nbsp;
-			</td>
-		</tr>
-	</table>
-	</p>
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 </body>

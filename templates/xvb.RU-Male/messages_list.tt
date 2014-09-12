@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.6 2014/07/09 11:40:18 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.7 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -17,35 +17,75 @@
 </head>
 
 <body onLoad="XVBInit()">
-	<center>
-	<p>
-	<table width='100%' class='logo'>
-		<tr>
-			<td align='center'><h2>Сообщения для внутреннего номера # <b>[% VBOX_PREF.EXT_NUMBER | html %]</h2></td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='100%' class='top_hr'>
+	<table width='100%'>
 		<tr align='left'>
 			<td>
+				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Параметры номера</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=msg_delete&clear_ext=1&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Вы действительно хотите удалить все сообщения?')">Удалить сообщения</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=get_itunes&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Подкасты</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=get_rss&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Rss</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Параметры номера</a>
 			</td>
 		</tr>
 	</table>
-	</p>
+
+	<center>
+	
+	<h1>Сообщения для внутреннего номера # <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
+
+	<table width='100%'>
+		<tr>
+			<form method="get" action="[% CGI_URL %]">
+			<td align='right'>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='с даты'>
+				<button type="button">...</button>
+				&nbsp;
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='по дату'>
+				<button type="button">...</button>
+				<input name='action' value='msg_list' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
+				&nbsp;
+				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]' placeholder='кто звонил'>
+				&nbsp;
+				<input size='10' type='text' name='called_id' value='[% CALLED_ID | html %]' placeholder='кому звонил'>
+				&nbsp;
+				<input value='Найти' type='submit'>
+				</td>
+			</form>
+		</tr>
+	</table>
 
 	<p>
-	<table width='100%' class='list_data' id='d-tbl'>
+	<table width='100%' id='d-tbl'>
 		[% IF MSG_LIST scalar %]
-		<tr class='list_data'>
+		<tr>
 			<th>#</th>
 			<th>Дата</th>
 			<th>Кто звонил</th>
@@ -99,24 +139,19 @@
 			<td>[% msg.DESCRIPTION | locale_msg %]</td>
 			</tr>
 			[% END %]
-			<tr>
 			[% IF MSG_NEXT ne '' %]
+			<tr>
 				<td align='right' colspan='8'>
 					<a title='следующая страница ([% MSG_NEXT %])' href='?action=msg_list&id=[% VBOX_PREF.ID %]&called_id=[% CALLED_ID | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 				</td>
-			[% ELSE %]
-				<td colspan='8'>&nbsp;</td>
-			[% END %]
 			</tr>
+			[% END %]
 			[% ELSE %]
-			<tr class='list_data'>
+			<tr>
 				<td colspan='8'>&nbsp;</td>
 			</tr>
 			<tr>
 				<td colspan='8' align='center'><h4>Сообщений нет</h4></td>
-			</tr>
-			<tr>
-				<td colspan='8'>&nbsp;</td>
 			</tr>
 			[% END %]
 	</table>
@@ -124,55 +159,6 @@
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
-	<p>
-	<table width='100%' class='bottom_hr'>
-		<tr align='right'>
-			<form method="get" action="[% CGI_URL %]">
-			<td width='100%'>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='с даты'>
-				<button type="button">...</button>
-				&nbsp;
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='по дату'>
-				<button type="button">...</button>
-				<input name='action' value='msg_list' type='hidden'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
-				&nbsp;
-				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]' placeholder='кто звонил'>
-				&nbsp;
-				<input size='10' type='text' name='called_id' value='[% CALLED_ID | html %]' placeholder='кому звонил'>
-				&nbsp;
-				<input value='Найти' type='submit'>
-				&nbsp;&nbsp;
-			</td>
-			</form>
-		</tr>
-	</table>
-	</p>
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.2 2014/02/14 04:04:34 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.3 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -11,45 +11,41 @@
 </head>
 
 <body onLoad="XVBInit()">
-	<center>
-	<p>
 	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
+		<tr align='left'>
+			<td width='10%'>
 				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
-			<td align='center'><h2>SIP Peers</h2></td>
-			<td align='right' width='20%'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
-				[% INCLUDE version.tt %]
-			</td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='98%' class='top_hr'>
-		<tr align='left'>
-			<td>
+			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
-			<form method='post'>
 			<td align='right'>
-			<input size='15' name='host' type='text' placeholder='Proxy' value='[% HOST | html %]'>
-			<input size='11' name='authname' type='text' placeholder='Peer ID' value='[% AUTHNAME | html %]'>
-			<input type='hidden' value='peer_list' name='action'>
-			<input value='search' type='submit'>
-			</td>
-			</form>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				[% INCLUDE version.tt %]
+			<td>
 		</tr>
 	</table>
-	</p>
 	<center>
 	
+	<h1>SIP peers</h1>
+
+	<table width='100%'>
+		<tr>
+			<td align='right'>
+				<form method='post'>
+					<input size='15' name='host' type='text' placeholder='Proxy' value='[% HOST | html %]'>
+					<input size='11' name='authname' type='text' placeholder='Peer ID' value='[% AUTHNAME | html %]'>
+					<input type='hidden' value='peer_list' name='action'>
+					<input value='search' type='submit'>
+				</form>
+			</td>
+		</tr>
+	</table>
+	
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%' id='d-tbl'>
+		<tr>
 			<th>Access code</th>
 			<th>Peer ID</th>
 			<th>Proto</th>
@@ -119,13 +115,6 @@
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			[% INCLUDE main_menu2.tt-inc %]
-		</tr>
-	</table>
-	</p>
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

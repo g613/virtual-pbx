@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.36 2014/08/15 13:12:47 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.38 2014/09/11 15:06:39 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -18,36 +18,12 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-			[% END %]
-			</td>
-			<td align='center'><h2>SIP Phones</h2></td>
-			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
-		</tr>
-	</table>
-	</p>
+
+	<h1>SIP Phones</h1>
 
 	<p>
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
-			<td>
-				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-				[% IF USER_CREDS.CUSTOM_ROUTE %]
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=peer_list&uniq=[% USER_CREDS.UNIQ %]'>SIP Peers</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=route_list&uniq=[% USER_CREDS.UNIQ %]'>Routes</a>
-				[% END %]
-			</td>
 			<td align='right'>
 				<a title='get excel table' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;&nbsp;
 				<a title='delete all phones' href='?action=phone_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete all records'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
@@ -57,8 +33,8 @@
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%' id='d-tbl'>
+		<tr>
 			<th>&nbsp;</th>
 			<th>Auth name</th>
 			<th>Password</th>
@@ -140,12 +116,12 @@
 				</select>
 			</td>
 			<td align='left' nowrap='nowrap'>
-				<input class='in_t0' size="9" name='REC_EXT' type='text' value="[% p.REC_EXT | html %]">
+				<input class='in_t0' size="8" name='REC_EXT' type='text' value="[% p.REC_EXT | html %]">
 				<script language="JavaScript">
 					exten_icon( '[% p.REC_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'extension info' );
 				</script>
 			</td>
-			<td><input class='in_t0' size="10" name='PICKUP_GROUPS' type='text' value="[% p.PICKUP_GROUPS | html %]"></td>
+			<td><input class='in_t0' size="8" name='PICKUP_GROUPS' type='text' value="[% p.PICKUP_GROUPS | html %]"></td>
 			<td align='left'>
 				<input type='hidden' value='[% p.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='phone_update' name='action'>
@@ -180,41 +156,20 @@
 					<option value="4">External</option>
 				</select>
 			</td>
-			<td align='left'><input size="10" name='REC_EXT' type='text'></td>
-			<td><input size="10" name='PICKUP_GROUPS' type='text'></td>
+			<td align='left'><input size="8" name='REC_EXT' type='text'></td>
+			<td><input size="8" name='PICKUP_GROUPS' type='text'></td>
 			<td>
 				<input type='hidden' value='phone_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<input value='&nbsp;&nbsp;create&nbsp;&nbsp;' type='submit'>
+				<input value='add' type='submit'>
 			</td>
 			</form>
 		</tr>
-		<tr><td colspan='4'>&nbsp;</td></tr>
 	</table>
 	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			[% IF USER_CREDS.CUSTOM_ROUTE %]
-			<td>
-				<a class='headers'  href='?action=route_list&uniq=[% USER_CREDS.UNIQ %]'>Routes</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=peer_list&uniq=[% USER_CREDS.UNIQ %]'>SIP Peers</a>
-			</td>
-			[% END %]
-			<td>
-				<a class='headers' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-			</td>
-			<td width='35%'>
-				<a class='headers' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
-			</td>
-		</tr>
-	</table>
-	</p>
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

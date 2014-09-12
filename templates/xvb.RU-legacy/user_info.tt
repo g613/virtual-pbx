@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.84 2013-11-04 12:42:57 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.86 2014/09/07 18:36:24 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -274,7 +274,7 @@ SIP-домен: [% d.DOMAIN | html %]
 				</tr>
 				<tr>
 					<td colspan='2'>
-						<table width='90%' class='addon_data' id='d-tbl'>
+						<table width='90%' id='d-tbl'>
 							[% IF CUSTOM_MOH ne '' %]
 							<tr id='d-tr'>
 								<td>Текущая музыка вместо гудков</td>
@@ -348,7 +348,7 @@ SIP-домен: [% d.DOMAIN | html %]
 				[% IF USE_BILLING > 0 %]
 				<tr>
 					<td colspan='3'>
-						<table width='100%' class='addon_data'>
+						<table width='100%'>
 							<tr>
 								<td>
 									<b>Тариф:</b>
@@ -509,14 +509,14 @@ SIP-домен: [% d.DOMAIN | html %]
 				<tr>
 					<td colspan='2' id='vb_limits' class='addon_info'>
 						<table width='100%'>
-							<tr class='list_addon_data' align='center'>
+							<tr align='center'>
 								<th>Тип номера</th>
 								<th>Тек</th>
 								<th>Макс</th>
 							</tr>
 						[% FOREACH vt = VB_LIMITS %]
 						[% IF vt.ID vb_allow '0' %]
-							<tr class='addon_data'>
+							<tr>
 								<td>&nbsp;&nbsp;*&nbsp;[% vt.DESCRIPTION | locale_msg %]</td>
 								<td align='right'>[% vt.L_CUR %]</td>
 								<td align='right'>[% vt.L_MAX %]</td>

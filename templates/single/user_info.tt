@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.21 2013-04-23 14:14:03 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.23 2014/09/07 18:36:24 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -202,13 +202,13 @@
 				[% IF USE_BILLING %]
 				<tr>
 					<td colspan='2'>
-						<table width='90%' class='addon_data'>
+						<table width='90%'>
 							<tr><td colspan='8'><h4>Billing:</h4></td></tr>
 							<tr>
 								<td class='ext_pn'>Tariff:</td>
 								<td colspan='7'><b>[% TARIFF.NAME | html %]</b> ( currency  [% TARIFF.DESCRIPTION %] )</td>
 							</tr>
-							<tr class='list_addon_data' align='center'>
+							<tr align='center'>
 								<th rowspan='2'>Monthly</th>
 								<th rowspan='2'>Daily</th>
 								<th colspan='2'>IVR</th>
@@ -219,7 +219,7 @@
 									<th colspan='2'>CallBlast</th>
 								[% END %]
 							</tr>
-							<tr class='list_addon_data' align='center'>
+							<tr align='center'>
 								<th>Minute</th>
 								<th>Call</th>
 								[% IF USER_CREDS.VBL_14 ne '0' %]
@@ -231,7 +231,7 @@
 									<th>Call</th>
 								[% END %]
 							</tr>
-							<tr class='addon_data' align='right'>
+							<tr align='right'>
 								<td>[% TARIFF.MONTHLY_PRICE %]</td>
 								<td>[% TARIFF.DAILY_PRICE %]</td>
 								<td>[% TARIFF.MINUTE_PRICE %]</td>
@@ -250,7 +250,7 @@
 									Balance:
 								</td>
 							</tr>
-							<tr class='addon_data'>
+							<tr>
 								<td colspan='8'>
 									&nbsp;
 									&nbsp;

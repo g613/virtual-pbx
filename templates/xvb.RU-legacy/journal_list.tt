@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.19 2013-03-11 15:08:01 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.20 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Журнал операций - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -36,7 +36,7 @@
 	</p>
 
 	<p>	
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
 			<td>
 				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
@@ -50,8 +50,8 @@
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%' id='d-tbl'>
+		<tr>
 			<th width='5%'>Номер</th>
 			<th width='20%'>Дата</th>
 			<th width='10%'>Событие</th>

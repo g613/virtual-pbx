@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.3 2013-05-05 18:17:04 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.5 2014/09/12 10:55:07 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -96,38 +96,28 @@
 </head>
 
 <body onLoad="XVBInit()">
-	<center>
-	<p>
-	<table width='100%' class='logo'>
+	<table width='100%'>
 		<tr>
-			<td align='center'><h2>Внутренний номер #[% VBOX_PREF.EXT_NUMBER | html %] расширенная статистика</h2><h3>( [% CDR_HEADER %] 
-			<script language='javascript'>
-				document.write( ', период группировки: ' + period );
-			</script>
-			)</h3></td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
-	<table width='100%' class='top_hr'>
-		<tr align='left'>
-			<td>
-				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Просмотреть сообщения</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+			<td align='left'>
 				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Параметры номера</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Статистика</a>
+				&nbsp;|&nbsp;
+				<a href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Активность</a>
 			</td>
 		</tr>
 	</table>
-	</p>
-	<p>
-	<table width='100%' class='bottom_hr'>
-		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-		<tr align='right'>
-			<td width='100%'>
-				С даты:
+
+	<center>
+			
+	<h1>Внутренний номер #[% VBOX_PREF.EXT_NUMBER | html %] расширенная статистика</h1><h3>( [% CDR_HEADER %] 
+			<script language='javascript'>
+				document.write( ', период группировки: ' + period );
+			</script>
+			)</h3>
+
+	<table width='100%'>
+		<tr>
+			<td align='right'>
+			<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -140,10 +130,9 @@
 						});
 				});
 				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<input placeholder='С даты' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
 				<button type="button">...</button>
 				&nbsp;
-				По дату:
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#to_time").dynDateTime({
@@ -156,11 +145,10 @@
 						});
 				});
 				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<input placeholder='По дату' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
 				<button type="button">...</button>
 				&nbsp;
-				Звонящий:
-				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				<input placeholder='Звонящий' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				<select name='chart_group_period'>
 				<script language='Javascript'>
 					document.write( "<option selected value='"+ group_by +"'>"+ period +"</option>" );
@@ -172,345 +160,344 @@
 				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
 				<input value='Найти' type='submit'>
 				&nbsp;&nbsp;
+			</form>
 			</td>
 		</tr>
-		</form>
 	</table>
-	</p>
 
-	<p>
+	<p class='white-bg'>
 	[% IF VBOX_PREF.TYPE eq '3' %]
-	<table width='100%' border='0' align='center'>
-		<tr><td colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
+	<table width='100%' border='0' align='center' valign='top'>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
 		<tr>
-			<td width='60%'>
+			<td valign='top' width='60%'>
 				<div id="chart_STATUS"></div>
 			</td>
-			<td width='40%'>
+			<td valign='top' width='40%'>
 				<div id="chart_STATUS_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td colspan='2' align='center'><br><h4>Время ожидания ответа на звонок</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Время ожидания ответа на звонок</h4></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='2'><br><br></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_RING_TIME_NOANSWER"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_RING_TIME_NOANSWER_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td colspan='2' align='center'><br><h4>Распределение звонков по телефонам</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Распределение звонков по телефонам</h4></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_PN"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_PN_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td colspan='2' align='center'><br><h4>Завершение звонков</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Завершение звонков</h4></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_TERM_NOANSWER"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_TERM_NOANSWER_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='2'><br><br></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_TERM_ANSWER"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_TERM_ANSWER_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td colspan='2' align='center'><br><h4>Продолжительность звонков</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Продолжительность звонков</h4></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_DURATION"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_DURATION_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td colspan='2' align='center'><br><h4>Техническая информация</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Техническая информация</h4></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_CAUSE"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_CAUSE_PRC"></div>
 			</td>
 		</tr>
 	</table>
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '10' %]
-	<table width='100%' border='0' align='center'>
-		<tr><td colspan='2' align='center'><h5>[% VBOX_PREF.GREETING | html %]</h5></td></tr>
-		<tr><td colspan='2' align='center'><br><h4>Общий отчет</h4></td></tr>
+	<table width='100%' border='0' align='center' valign='top'>
+		<tr><td valign='top' colspan='2' align='center'><h5>[% VBOX_PREF.GREETING | html %]</h5></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Общий отчет</h4></td></tr>
 		<tr>
-			<td width='60%'>
+			<td valign='top' width='60%'>
 				<div id="chart_SUMMARY"></div>
 			</td>
-			<td width='40%'>
+			<td valign='top' width='40%'>
 				<div id="chart_SUMMARY_PRC"></div>
 			</td>
 		</tr>
 	</table>
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '13' %]
-	<table width='100%' border='0' align='center'>
-		<tr><td colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
+	<table width='100%' border='0' align='center' valign='top'>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
 		<tr>
-			<td width='60%'>
+			<td valign='top' width='60%'>
 				<div id="chart_STATUS"></div>
 			</td>
-			<td width='40%'>
+			<td valign='top' width='40%'>
 				<div id="chart_STATUS_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td colspan='2' align='center'><br><h4>Время ожидания ответа на звонок</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Время ожидания ответа на звонок</h4></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='2'><br><br></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_RING_TIME_NOANSWER"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_RING_TIME_NOANSWER_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td colspan='2' align='center'><br><h4>Распределение звонков по агентам</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Распределение звонков по агентам</h4></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_PN"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_PN_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td colspan='2' align='center'><br><h4>Положение в очереди</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Положение в очереди</h4></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_Q_NUM_OUT"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_Q_NUM_OUT_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='2'><br><br></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_Q_NUM_ALL"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_Q_NUM_ALL_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='2'><br><br></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_Q_NUM_NOANSWER"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_Q_NUM_NOANSWER_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='2'><br><br></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_Q_NUM_ANSWER"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_Q_NUM_ANSWER_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td colspan='2' align='center'><br><h4>Завершение звонков</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Завершение звонков</h4></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_TERM_NOANSWER"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_TERM_NOANSWER_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='2'><br><br></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_TERM_ANSWER"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_TERM_ANSWER_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td colspan='2' align='center'><br><h4>Продолжительность звонков</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Продолжительность звонков</h4></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_DURATION"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_DURATION_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td colspan='2' align='center'><br><h4>Техническая информация</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Техническая информация</h4></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_CAUSE"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_CAUSE_PRC"></div>
 			</td>
 		</tr>
 	</table>
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '18' %]
-	<table width='100%' border='0' align='center'>
-		<tr><td colspan='2' align='center'><br><h4>Все звонки / статус</h4></td></tr>
+	<table width='100%' border='0' align='center' valign='top'>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Все звонки / статус</h4></td></tr>
 		<tr>
-			<td width='60%'>
+			<td valign='top' width='60%'>
 				<div id="chart_ALL_STATUS"></div>
 			</td>
-			<td width='40%'>
+			<td valign='top' width='40%'>
 				<div id="chart_ALL_STATUS_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td colspan='2' align='center'><br><h4>Все звонки / удачные или нет</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Все звонки / удачные или нет</h4></td></tr>
 		<tr>
-			<td width='60%'>
+			<td valign='top' width='60%'>
 				<div id="chart_STATUS"></div>
 			</td>
-			<td width='40%'>
+			<td valign='top' width='40%'>
 				<div id="chart_STATUS_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td colspan='2' align='center'><br><h4>Все звонки / попытка звонка</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Все звонки / попытка звонка</h4></td></tr>
 		<tr>
-			<td width='60%'>
+			<td valign='top' width='60%'>
 				<div id="chart_ATTEMPT"></div>
 			</td>
-			<td width='40%'>
+			<td valign='top' width='40%'>
 				<div id="chart_ATTEMPT_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td colspan='2' align='center'><br><h4>Успешные звонки / попытка звонка</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Успешные звонки / попытка звонка</h4></td></tr>
 		<tr>
-			<td width='60%'>
+			<td valign='top' width='60%'>
 				<div id="chart_GOOD_ATTEMPT"></div>
 			</td>
-			<td width='40%'>
+			<td valign='top' width='40%'>
 				<div id="chart_GOOD_ATTEMPT_PRC"></div>
 			</td>
 		</tr>
 	</table>
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '27' %]
-	<table width='100%' border='0' align='center'>
-		<tr><td colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
+	<table width='100%' border='0' align='center' valign='top'>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
 		<tr>
-			<td width='60%'>
+			<td valign='top' width='60%'>
 				<div id="chart_STATUS"></div>
 			</td>
-			<td width='40%'>
+			<td valign='top' width='40%'>
 				<div id="chart_STATUS_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td colspan='2' align='center'><br><h4>Время ожидания на парковке</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Время ожидания на парковке</h4></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='2'><br><br></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_RING_TIME_NOANSWER"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_RING_TIME_NOANSWER_PRC"></div>
 			</td>
 		</tr>
 	</table>
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '31' %]
-	<table width='100%' border='0' align='center'>
-		<tr><td colspan='2' align='center'><br><h4>Все звонки / статус</h4></td></tr>
+	<table width='100%' border='0' align='center' valign='top'>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Все звонки / статус</h4></td></tr>
 		<tr>
-			<td width='60%'>
+			<td valign='top' width='60%'>
 				<div id="chart_ALL_STATUS"></div>
 			</td>
-			<td width='40%'>
+			<td valign='top' width='40%'>
 				<div id="chart_ALL_STATUS_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td colspan='2' align='center'><br><h4>Все звонки / удачные или нет</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Все звонки / удачные или нет</h4></td></tr>
 		<tr>
-			<td width='60%'>
+			<td valign='top' width='60%'>
 				<div id="chart_STATUS"></div>
 			</td>
-			<td width='40%'>
+			<td valign='top' width='40%'>
 				<div id="chart_STATUS_PRC"></div>
 			</td>
 		</tr>
-		<tr><td colspan='2' align='center'><br><h4>Успешные звонки / попытка звонка</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Успешные звонки / попытка звонка</h4></td></tr>
 		<tr>
-			<td width='60%'>
+			<td valign='top' width='60%'>
 				<div id="chart_GOOD_ATTEMPT"></div>
 			</td>
-			<td width='40%'>
+			<td valign='top' width='40%'>
 				<div id="chart_GOOD_ATTEMPT_PRC"></div>
 			</td>
 		</tr>
-		<tr><td colspan='2' align='center'><br><h4>Продолжительность звонков</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h4>Продолжительность звонков</h4></td></tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<div id="chart_DURATION"></div>
 			</td>
-			<td>
+			<td valign='top'>
 				<div id="chart_DURATION_PRC"></div>
 			</td>
 		</tr>
@@ -518,14 +505,6 @@
 	[% END %]
 	</p>
 
-	<p>
-	<table width='95%'>
-		<tr class='list_data'>
-			<td>&nbsp;</td>
-		</tr>
-	</table>
-	</p>
-	
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 </body>

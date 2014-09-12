@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.35 2013-03-11 15:08:01 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.36 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Все сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -35,7 +35,7 @@
 	</p>
 
 	<p>
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
 			<td>
 		[% IF USER_CREDS.ROOT eq '0' %]
@@ -55,9 +55,9 @@
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
+	<table width='95%' id='d-tbl'>
 		[% IF MSG_LIST scalar %]
-		<tr class='list_data'>
+		<tr>
 			<th>#</th>
 			<th>Номер</th>
 			<th>Тип</th>
@@ -118,7 +118,7 @@
 		[% END %]
 		</tr>
 		[% ELSE %]
-		<tr class='list_data'>
+		<tr>
 			<td colspan='8'>&nbsp;</td>
 		</tr>
 		<tr>

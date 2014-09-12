@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.25 2014-02-05 11:40:16 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.26 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Статистика номера - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -36,7 +36,7 @@
 	</p>
 
 	<p>
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
 			<td>
 				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Просмотреть сообщения</a>
@@ -52,8 +52,8 @@
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%' id='d-tbl'>
+		<tr>
 			<th>Время действия</th>
 			<th>Номер звонящего</th>
 			<th>Длительность</th>

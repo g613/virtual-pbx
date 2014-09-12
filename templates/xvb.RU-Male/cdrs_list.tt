@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.2 2013-03-11 15:08:03 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.3 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -19,95 +19,10 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='100%' class='logo'>
-		<tr>
-			<td align='center'><h2>Список звонков</h2></td>
-		</tr>
-	</table>
+			
+	<h1>Список звонков</h1>
 	
-	<p>
-	<table width='100%' class='list_data' id='d-tbl'>
-		[% IF USE_BILLING %]
-		<tr class='list_data'>
-			<th>Начало звонка</th>
-			<th>Номер звонящего</th>
-			<th>Длительность</th>
-			<th>Стоимость</th>
-			<th>Номер назначения</th>
-			<th>Тип</th>
-		</tr>
-		[% IF MSG_PREV ne '' %]
-		<tr>
-			<td align='left' colspan='6'>
-				<a title='предыдущая страница' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
-			</td>
-		</tr>
-		[% END %]
-
-		[% FOREACH msg = CDR_LIST %]
-			<tr class='nocolor' align='center'>
-				<td><a title='детализация звонка' href='?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
-				<td>[% msg.CALLER_ID | html %]</td>
-				<td>[% msg.CDR_DURATION | duration_str %]</td>
-				<td align='right'>[% msg.COST %] ([% msg.DESCRIPTION | locale_msg %])</td>
-				<td>[% msg.CALLED_ID | html %]</td>
-				<td>[% msg.CALL_TYPE | locale_msg %]</td>
-			</tr>
-		[% END %]
-
-		<tr>
-		[% IF MSG_NEXT ne '' %]
-			<td align='right' colspan='6'>
-				<a title='следующая страница' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
-			</td>
-		[% ELSE %]
-			<td colspan='6'>&nbsp;</td>
-		[% END %]
-		</tr>
-		[% ELSE %]
-		<tr class='list_data'>
-			<th>Начало звонка</th>
-			<th>Номер звонящего</th>
-			<th>Длительность</th>
-			<th>Номер назначения</th>
-			<th>Тип</th>
-		</tr>
-		[% IF MSG_PREV ne '' %]
-		<tr>
-			<td align='left' colspan='5'>
-				<a title='предыдущая страница' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
-			</td>
-		</tr>
-		[% END %]
-
-		[% FOREACH msg = CDR_LIST %]
-			<tr class='nocolor' align='center'>
-				<td><a title='детализация звонка' href='?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
-				<td>[% msg.CALLER_ID | html %]</td>
-				<td>[% msg.CDR_DURATION | duration_str %]</td>
-				<td>[% msg.CALLED_ID | html %]</td>
-				<td>[% msg.CALL_TYPE | locale_msg %]</td>
-			</tr>
-		[% END %]
-
-		<tr>
-		[% IF MSG_NEXT ne '' %]
-			<td align='right' colspan='5'>
-				<a title='следующая страница' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
-			</td>
-		[% ELSE %]
-			<td colspan='5'>&nbsp;</td>
-		[% END %]
-		</tr>
-		[% END %]
-	</table>
-	</p>
-
-	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
-	
-	<p>	
-	<table width='100%' class='bottom_hr'>
+	<table width='100%'>
 		<tr>
 			<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 			<td align='right'>
@@ -160,17 +75,95 @@
 					<option value="service">сервисный</option>
 				</select>
 				<input value='Найти' type='submit'>
+				&nbsp;
 				<input name='need_excel' value='Excel' type='submit'>
 				<script language='JavaScript'>
+					document.write("<select name='chart_group_period'><option selected value=''>группировать по</option><option value='min'>минута</option><option value='h'>час</option><option value='hd'>час дня</option><option value='d'>день</option><option value='dw'>день недели</option><option value='dw'>день месяца</option><option value='w'>неделя</option><option value='m'>месяц</option><option value='y'>год</option><option value='did'>номер назначения</option><option value='cid'>номер звонящего</option><option value='ct'>тип звонка</option></select>&nbsp;");
 					document.write("<input name='need_chart' value='Графики' type='submit'>");
-					document.write("<select name='chart_group_period'><option selected value=''>группировать по</option><option value='min'>минута</option><option value='h'>час</option><option value='hd'>час дня</option><option value='d'>день</option><option value='dw'>день недели</option><option value='dw'>день месяца</option><option value='w'>неделя</option><option value='m'>месяц</option><option value='y'>год</option><option value='did'>номер назначения</option><option value='cid'>номер звонящего</option><option value='ct'>тип звонка</option></select>");
 				</script>
-				&nbsp;
 			</td>
 			</form>
 		</tr>
 	</table>
+	
+	<p>
+	<table width='100%' id='d-tbl'>
+		[% IF USE_BILLING %]
+		<tr>
+			<th>Начало звонка</th>
+			<th>Номер звонящего</th>
+			<th>Длительность</th>
+			<th>Стоимость</th>
+			<th>Номер назначения</th>
+			<th>Тип</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='6'>
+				<a title='предыдущая страница' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH msg = CDR_LIST %]
+			<tr class='nocolor' align='center'>
+				<td><a title='детализация звонка' href='?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
+				<td>[% msg.CALLER_ID | html %]</td>
+				<td>[% msg.CDR_DURATION | duration_str %]</td>
+				<td align='right'>[% msg.COST %] ([% msg.DESCRIPTION | locale_msg %])</td>
+				<td>[% msg.CALLED_ID | html %]</td>
+				<td>[% msg.CALL_TYPE | locale_msg %]</td>
+			</tr>
+		[% END %]
+
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='6'>
+				<a title='следующая страница' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+		
+		<!-- end bill -->
+		[% ELSE %]
+		<tr>
+			<th>Начало звонка</th>
+			<th>Номер звонящего</th>
+			<th>Длительность</th>
+			<th>Номер назначения</th>
+			<th>Тип</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='5'>
+				<a title='предыдущая страница' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH msg = CDR_LIST %]
+			<tr class='nocolor' align='center'>
+				<td><a title='детализация звонка' href='?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
+				<td>[% msg.CALLER_ID | html %]</td>
+				<td>[% msg.CDR_DURATION | duration_str %]</td>
+				<td>[% msg.CALLED_ID | html %]</td>
+				<td>[% msg.CALL_TYPE | locale_msg %]</td>
+			</tr>
+		[% END %]
+
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='5'>
+				<a title='следующая страница' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+			</td>
+		</tr>
+		[% END %]
+		[% END %]
+	</table>
 	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+	
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

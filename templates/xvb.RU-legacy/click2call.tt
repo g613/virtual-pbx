@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.10 2014-02-05 07:35:10 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.12 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -41,7 +41,7 @@
 	</p>
 
 	<p>
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
 			<td>
 				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль пользователя</a>
@@ -53,8 +53,8 @@
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%' id='d-tbl'>
+		<tr>
 			<th>Ссылка</th>
 			<th>Внутренний номер</th>
 			<th>MAX звонков</th>
@@ -65,12 +65,12 @@
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
 			<td align='left'>https://[% USER_CREDS.DOWNLOAD_IP %]/c2c?key=[% c2c.SECRET | html %]&ac=[% USER_CREDS.ACCESS_CODE %]&ph=<b>&lt;номер телефона&gt;</b></td>
 			<td align='left' nowrap='nowrap'>
-				<input class='in_t0' size="16" name='redir_to' type'text' value='[% c2c.EXTENSION | html %]'>
+				<input class='in_t0' size="16" name='redir_to' type='text' value='[% c2c.EXTENSION | html %]'>
 				<script language="JavaScript">
 					exten_icon( '[% c2c.EXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 				</script>
 			</td>
-			<td><input class='in_t0' size="5" name='call_limit' type'text' value='[% c2c.CALL_LIMIT | html %]'></td>
+			<td><input class='in_t0' size="5" name='call_limit' type='text' value='[% c2c.CALL_LIMIT | html %]'></td>
 			<td>
 				<input type='hidden' value='[% c2c.ID %]' name='data_id'>
 				<input type='hidden' value='[% c2c.SECRET %]' name='c2c_sec'>
@@ -99,7 +99,7 @@
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
 			<td></td>
 			<td align='left'><input size="16" name='redir_to' type='text'></td>
-			<td><input size="5" name='call_limit' type'text'></td>
+			<td><input size="5" name='call_limit' type='text'></td>
 			<td>
 				<input type='hidden' value='c2c_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>

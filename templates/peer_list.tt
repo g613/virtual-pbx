@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.31 2014/08/15 13:12:47 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.33 2014/09/11 15:06:39 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -12,36 +12,12 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-			[% END %]
-			</td>
-			<td align='center'><h2>SIP Peers</h2></td>
-			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
-		</tr>
-	</table>
-	</p>
+			
+	<h1>SIP Peers</h1>
 
 	<p>
-	<table width='95%' class='top_hr'>
+	<table width='95%'>
 		<tr align='left'>
-			<td>
-				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=route_list&uniq=[% USER_CREDS.UNIQ %]'>Routes</a>
-				[% IF USER_CREDS.ALLOW_PHONES %]
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>Phones</a>
-				[% END %]
-			</td>
 			<td align='right'>
 				<a title='delete all peers' href='?action=peer_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete all records'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
 			</td>
@@ -50,8 +26,8 @@
 	</p>
 
 	<p>
-	<table width='95%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='95%' id='d-tbl'>
+		<tr>
 			<th width='15%'>Proxy (*)</th>
 			<th>Port (*)</th>
 			<th>Domain</th>
@@ -72,7 +48,7 @@
 		[% FOREACH p = PEERS %]
 		<tr align='center' class='nocolor' id='d-tr-[% p.DATA_ID %]'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
-			<td><input class='in_t0' size="17" name='host' type'text' value='[% p.host | html %]'></td>
+			<td><input class='in_t0' size="17" name='host' type='text' value='[% p.host | html %]'></td>
 			<td><input class='in_t0' size="5" name='port' type='text' value="[% p.port | html %]"></td>
 			<td><input class='in_t0' size="17" name='domain' type='text' value="[% p.fromdomain | html %]"></td>
 			<td><input class='in_t0' size="12" name='username' type='text' value="[% p.username | html %]"></td>
@@ -145,7 +121,7 @@
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return peers_unhide(this)'>
 			<td nowrap="nowrap">
-				<input size="17" name='host' type'text'>
+				<input size="17" name='host' type='text'>
 				<script language='JavaScript'>
 					var options_ind = 1;
 					var options_str = '<select name="tmpl" onFocus="peers_list_init(this,1)" onBlur="peers_list_init(this,2)" onChange="peers_hide(this.form)"><option value="."></option>';
@@ -201,36 +177,15 @@
 			<td>
 				<input type='hidden' value='peer_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<input value='&nbsp;&nbsp;create&nbsp;&nbsp;' type='submit'>
+				<input value='add' type='submit'>
 			</td>
 			</form>
 		</tr>
-		<tr><td colspan='9'>&nbsp;</td></tr>
 	</table>
 	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
-	<p>
-	<table width='95%' class='bottom_hr'>
-		<tr align='center'>
-			[% IF USER_CREDS.ALLOW_PHONES %]
-			<td>
-				<a class='headers'  href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>Phones</a>
-			</td>
-			[% END %]
-			<td>
-				<a class='headers' href='?action=route_list&uniq=[% USER_CREDS.UNIQ %]'>Routes</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
-			</td>
-		</tr>
-	</table>
-	</p>
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

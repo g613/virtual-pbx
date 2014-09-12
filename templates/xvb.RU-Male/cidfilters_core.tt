@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters_core.tt,v 1.2 2013-03-11 15:08:03 gosha Exp $ -->
+<!-- $Id: cidfilters_core.tt,v 1.3 2014/09/07 18:30:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID фильтры - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -12,27 +12,26 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='100%' class='logo'>
+	
+	<table width='100%'>
 		<tr>
-			<td align='center' width='90%'><h2>
+			<td align='center' width='90%'><h1>
 			[% IF CID_LIST_TYPE eq '1' %]
 				Черный список
 			[% ELSE %]
 				Белый список
 			[% END %]
 			абонентов
-			</h2></td>
+			</h1></td>
 			<td align='right'>
 				<a title='в формате excel' href='?action=cid_list&id=[% VBOX_PREF.ID %]&cid_list_type=[% CID_LIST_TYPE %]&cid_type=2&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;
 			</td>
 		</tr>
 	</table>
-	</p>
 
 	<p>
-	<table width='100%' class='list_data' id='d-tbl'>
-		<tr class='list_data'>
+	<table width='100%' id='d-tbl'>
+		<tr>
 			<th>Номер звонящего</th>
 			<th>Описание</th>
 			<th>Действия</th>
@@ -60,8 +59,7 @@
 		</form>
 		</tr>
 		[% END %]
-		<tr><td></td></tr>
-		<tr class='list_data' align='center'>
+		<tr align='center'>
 		<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 			<input type='hidden' name='action' value='cid_add'>
 			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
