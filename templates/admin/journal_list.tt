@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.3 2014/09/09 13:26:46 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.4 2014/09/26 18:37:50 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Actions journal</title>
 
@@ -140,6 +140,9 @@
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
 	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 </body>
 </html>

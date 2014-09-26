@@ -459,6 +459,9 @@
 	</table>
 	</p>
 	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>
 </html>

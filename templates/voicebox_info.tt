@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.269 2014/09/12 10:55:07 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.274 2014/09/23 19:41:45 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -299,7 +299,7 @@
 			<tr>
 				<td>Greeting: </td>
 				<td>
-					<textarea rows='[% VBOX_PREF.GREETING | textarea_rows %]' colls='30' name='GREETING'>[% VBOX_PREF.GREETING | html %]</textarea>
+					<textarea rows='[% VBOX_PREF.GREETING | textarea_rows %]' cols='30' name='GREETING'>[% VBOX_PREF.GREETING | html %]</textarea>
 				</td>
 			</tr>
 			[% END %]
@@ -457,7 +457,7 @@
 			<tr class='addon_info'>
 				<td>Time tags: </td>
 				<td>
-					<textarea rows='[% VBOX_PREF.GREETING_TAGS | textarea_rows %]' colls='30' name='GREETING_TAGS'>[% VBOX_PREF.GREETING_TAGS | html %]</textarea>
+					<textarea rows='[% VBOX_PREF.GREETING_TAGS | textarea_rows %]' cols='30' name='GREETING_TAGS'>[% VBOX_PREF.GREETING_TAGS | html %]</textarea>
 				</td>
 			</tr>
 			[% END %]
@@ -526,7 +526,7 @@
 			<tr>
 				<td>Find-Me list: </td>
 				<td>
-					<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' colls='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+					<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 				</td>
 			</tr>
 			<tr class='addon_info'>
@@ -542,13 +542,13 @@
 			<tr class='addon_info'>
 				<td>Seamless transferring list: </td>
 				<td>
-					<textarea rows='[% VBOX_PREF.FMC | textarea_rows %]' colls='30' name='FMC'>[% VBOX_PREF.FMC | html %]</textarea>
+					<textarea rows='[% VBOX_PREF.FMC | textarea_rows %]' cols='30' name='FMC'>[% VBOX_PREF.FMC | html %]</textarea>
 				</td>
 			</tr>
 			<tr class='addon_info'>
 				<td>GoTo if call status: </td>
 				<td>
-					<textarea rows='[% VBOX_PREF.GOTO_IF_CALL_STATUS | textarea_rows %]' colls='30' name='GOTO_IF_CALL_STATUS'>[% VBOX_PREF.GOTO_IF_CALL_STATUS | html %]</textarea>
+					<textarea rows='[% VBOX_PREF.GOTO_IF_CALL_STATUS | textarea_rows %]' cols='30' name='GOTO_IF_CALL_STATUS'>[% VBOX_PREF.GOTO_IF_CALL_STATUS | html %]</textarea>
 				</td>
 			</tr>
 			<tr class='addon_info'>
@@ -813,7 +813,7 @@
 				<tr>
 					<td>Post/Put params: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' colls='30' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='30' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -843,6 +843,16 @@
 						<input name="NEED_PARAMS" type="checkbox" checked>
 					[% ELSE %]
 						<input name="NEED_PARAMS" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>No wait response: </td>
+					<td>
+					[% IF VBOX_PREF.NO_WAIT %]
+						<input name="NO_WAIT" type="checkbox" checked>
+					[% ELSE %]
+						<input name="NO_WAIT" type="checkbox">
 					[% END %]
 					</td>
 				</tr>
@@ -903,7 +913,7 @@
 				<tr>
 					<td>Fax Header: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' colls='30' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='30' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -972,7 +982,7 @@
 				<tr class='addon_info'>
 					<td>Other vars: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.OTHER_VARS | textarea_rows %]' colls='30' name='OTHER_VARS'>[% VBOX_PREF.OTHER_VARS | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.OTHER_VARS | textarea_rows %]' cols='30' name='OTHER_VARS'>[% VBOX_PREF.OTHER_VARS | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -1188,7 +1198,7 @@
 				<tr>
 					<td>Agents list: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' colls='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1501,7 +1511,7 @@
 				<tr>
 					<td>Fax Header: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' colls='30' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='30' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
 					</td>
 				</tr>
 				[% END %]
@@ -1957,7 +1967,7 @@
 				<tr>
 					<td>Phones: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' colls='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -2343,7 +2353,7 @@
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%'  id='addon-data'>
 							<tr>
-								<th><a class='error' href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='dynamic agents'>Phone number</a></th>
+								<th><a class='warning-font' href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='dynamic agents'>Phone number</a></th>
 								<th>All calls</th>
 								<th>Answered calls</th>
 								<th>Duaration</th>
@@ -2885,6 +2895,7 @@
 						<th>Day Of Month</th>
 						<th>Month</th>
 						<th>Year</th>
+						<th>Mode</th>
 						<th>Actions</th>
 					</tr>
 					[% FOREACH param = BLAST_SCHEDULE %]
@@ -2894,12 +2905,23 @@
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 						<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-						<td><input class='in_t0' size='5'  name='priority' type='text' value='[% param.PRIORITY | html %]'></td>
+						<td><input class='in_t0' size='5' name='priority' type='text' value='[% param.PRIORITY | html %]'></td>
 						<td><input class='in_t0' size='11' name='time_h'type='text' value='[% param.TIME_H | html %]'></td>
-						<td><input class='in_t0' size='5'  name='dayofweek' type='text' value='[% param.DAYOFWEEK | html %]'></td>
-						<td><input class='in_t0' size='5'  name='dayofmonth' type='text' value='[% param.DAYOFMONTH | html %]'></td>
-						<td><input class='in_t0' size='5'  name='month' type='text' value='[% param.MONTH | html %]'></td>
-						<td><input class='in_t0' size='5'  name='year' vtype='text' value='[% param.YEAR | html %]'></td>
+						<td><input class='in_t0' size='5' name='dayofweek' type='text' value='[% param.DAYOFWEEK | html %]'></td>
+						<td><input class='in_t0' size='5' name='dayofmonth' type='text' value='[% param.DAYOFMONTH | html %]'></td>
+						<td><input class='in_t0' size='5' name='month' type='text' value='[% param.MONTH | html %]'></td>
+						<td><input class='in_t0' size='5' name='year' vtype='text' value='[% param.YEAR | html %]'></td>
+						<td>
+							<select class='in_t0' name="redirect_to">
+								[% IF param.REDIRECT_TO eq '-block-' %]
+								<option value="-block-" selected>disable</option>
+								<option value="0">enable</option>
+								[% ELSE %]
+								<option value="0" selected>enable</option>
+								<option value="-block-">disable</option>
+								[% END %]
+							</select> 
+						</td>
 						<td align='left' nowrap='nowrap'>
 							<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]','d-tbl-d1')" title='delete schedule item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>&nbsp;
 							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
@@ -2918,14 +2940,19 @@
 						<input type='hidden' name='action' value='schedule_add'>
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-						<input type='hidden' name='redirect_to' value='0'>
 						<input type='hidden' name='callerid' value='*'>
-						<td><input size='5' type='text'  name='priority' value='5'></td>
+						<td><input size='5' type='text' name='priority' value='5'></td>
 						<td><input size='11' type='text' name='time_h' value='*'></td>
-						<td><input size='5' type='text'  name='dayofweek' value='*'></td>
-						<td><input size='5' type='text'  name='dayofmonth' value='*'></td>
-						<td><input size='5' type='text'  name='month' value='*'></td>
-						<td><input size='5' type='text'  name='year' value='*'></td>
+						<td><input size='5' type='text' name='dayofweek' value='*'></td>
+						<td><input size='5' type='text' name='dayofmonth' value='*'></td>
+						<td><input size='5' type='text' name='month' value='*'></td>
+						<td><input size='5' type='text' name='year' value='*'></td>
+						<td>
+							<select name="redirect_to">
+								<option value="0" selected>enable</option>
+								<option value="-block-">disable</option>
+							</select> 
+						</td>
 						<td align='center'>
 							<input type='submit' value='add'>
 						</td>
@@ -2984,7 +3011,7 @@
 							[% ELSIF param.CALL_STATUS eq 'wait' %]
 								wait	
 							[% ELSIF param.CALL_STATUS %]
-								<a class='error' href='?action=act_list&call_id=[% param.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
+								<a class='warning-font' href='?action=act_list&call_id=[% param.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
 							[% ELSE %]
 								unknown
 							[% END %]
@@ -3196,7 +3223,7 @@
 							[% ELSIF param.CALL_STATUS eq 'wait' %]
 								wait	
 							[% ELSIF param.CALL_STATUS %]
-								<a class='error' href='?action=act_list&call_id=[% param.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
+								<a class='warning-font' href='?action=act_list&call_id=[% param.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
 							[% ELSE %]
 								unknown
 							[% END %]

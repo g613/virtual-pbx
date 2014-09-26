@@ -176,7 +176,43 @@
 	<script language='JavaScript'>listcolorer( 'list-data' );</script>
 	</p>
 	
+	<p>
+	<table width='95%'>
+		<form>
+		<tr align='left'>
+			<td>
+				&nbsp;
+				Shared DID: 
+				<input size='11' type='text' name='phone'>
+				&nbsp;
+				Group: 
+				<select name="group_id">
+				[% FOREACH gr = GROUPS %]
+					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+				[% END %]
+				</select>
+				&nbsp;
+				[% IF TEMPLATES scalar %]
+				Template: 
+				<select name="conf_file">
+				[% FOREACH tmpl = TEMPLATES %]
+					<option value="[% tmpl.FILE | html %]">[% tmpl.DESC | html %]</option>
+				[% END %]
+				</select>
+				&nbsp;
+				[% END %]
+				<input value='&nbsp;&nbsp;Add tenant&nbsp;&nbsp;' type='submit'>
+				<input type='hidden' value='user_add' name='action'>
+			</td>
+		</tr>
+		</form>
+	</table>
+	</p>
+
 	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>
 </html>

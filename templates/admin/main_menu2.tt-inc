@@ -1,41 +1,29 @@
-			<td>
-				<a class='headers' href='?action=node_list'>Nodes</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=group_list'>Groups</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=user_list'>Tenants</a>
-			</td>
-			<td>
-				<a class='headers' href='ai?action=partner_list'>Partners</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=did_list_sipdomain'>SIP-Domains</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=did_list'>Private DIDs</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=did_attr_list'>DIDs atr</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=report_list'>Reports</a>
-			</td>
+			<p align='right'>
+				<a href='?action=node_list'>Nodes</a>
+				|
+				<a href='?action=group_list'>Groups</a>
+				|
+				<a href='?action=user_list'>Tenants</a>
+				|
+				<a href='ai?action=partner_list'>Partners</a>
+				|
+				<a href='?action=did_list_sipdomain'>SIP-Domains</a>
+				|
+				<a href='?action=did_list'>Private DIDs</a>
+				|
+				<a href='?action=did_attr_list'>DIDs attr</a>
+				|
+				<a href='?action=report_list'>SQL-Reports</a>
 			[% IF USE_BILLING %]
-			<td>
-				<a class='headers' href='?action=tariff_list'>Tariffs</a>
-			</td>
+				|
+				<a href='?action=tariff_list'>Tariffs</a>
 			[% END %]
-			<td>
-				<a class='headers' href='?action=cdr_list'>CDRs</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=j_list'>Journals</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=phone_list'>SIP phones</a>
-			</td>
-			<td>
-				<a class='headers' href='?action=peer_list'>SIP peers</a>
-			</td>
+				|
+				<a href='?action=cdr_list'>CDRs</a>
+				|
+				<a href='?action=j_list'>Journals</a>
+				|
+				<a href='?action=phone_list'>SIP phones</a>
+				|
+				<a href='?action=peer_list'>SIP peers</a>
+			</p>

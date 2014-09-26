@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.78 2014/09/11 14:04:05 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.79 2014/09/17 15:34:07 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -632,9 +632,11 @@ function click2call_win( server, key, ac, lang ) {
 	WinPop=window.open("","click2call","width=450,height=240,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
 	WinPop.document.write('<html>\n<head><title>Click2Call - XVB VirtualPBX</title>\n<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" /></head>\n<body><center><form method="post" action="'+server+'/c2c"><input type="hidden" value="'+key+'" name="key"><input type="hidden" value="'+ac+'" name="ac">');
 	if ( lang == 'ru' ) {
-		WinPop.document.write('<h1>Заказ звонка</h1><input type="text" size="25" name="ph" placeholder="введите Ваш номер телефона"><br/><br/><input value="заказать звонок" type="submit"><input type="hidden" name="message" value="<center>Запрос обработан. Ожидайте звонка.</center>">');
+		response_str = Base64.encode('<center>Запрос обработан. Ожидайте звонка.</center>');
+		WinPop.document.write('<h1>Заказ звонка</h1><input type="text" size="25" name="ph" placeholder="введите Ваш номер телефона"><br/><br/><input value="заказать звонок" type="submit"><input type="hidden" name="b64message" value="'+ response_str +'">');
 	} else {
-		WinPop.document.write('<h1>Order a Call</h1><input type="text" size="25" name="ph" placeholder="enter your phone here"><br/><br/><input value="order a call" type="submit"><input type="hidden" name="message" value="<center>Please wait a call.</center>">');
+		response_str = '<center>Please wait a call.</center>';
+		WinPop.document.write('<h1>Order a Call</h1><input type="text" size="25" name="ph" placeholder="enter your phone here"><br/><br/><input value="order a call" type="submit"><input type="hidden" name="message" value="'+ response_str +'">');
 	}
 	WinPop.document.write('</form></center></body></html>');
 	WinPop.document.close();
@@ -648,9 +650,11 @@ function webfax_win( server, key, ac, lang, uniq ) {
 	WinPop=window.open("","webfax","width=640,height=240,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
 	WinPop.document.write('<html>\n<head><title>WebFax - XVB VirtualPBX</title>\n<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" /></head>\n<body><center><form method="post" action="'+server+'/c2c"><input type="hidden" value="'+key+'" name="key"><input type="hidden" value="'+ac+'" name="ac">');
 	if ( lang == 'ru' ) {
-		WinPop.document.write('<h1>Отправка факса</h1><input type="text" size="30" name="ph" placeholder="введите номер факса"><br/><br/><input value="отправить факс" type="submit"><input type="hidden" name="message" value="<center>Запрос обработан. Ожидайте отправки факса.<br><a href=\''+server+'/ui?action=act_list&call_id=__CALLID__&uniq='+uniq+'\'>Для проверки статуса перейдите по этой ссылке</a></center>">');
+		response_str = Base64.encode('<center>Запрос обработан. Ожидайте отправки факса.<br><a href=\''+server+'/ui?action=act_list&call_id=__CALLID__&uniq='+uniq+'\'>Для проверки статуса перейдите по этой ссылке</a></center>');
+		WinPop.document.write('<h1>Отправка факса</h1><input type="text" size="30" name="ph" placeholder="введите номер факса"><br/><br/><input value="отправить факс" type="submit"><input type="hidden" name="b64message" value="'+ response_str +'">');
 	} else {
-		WinPop.document.write('<h1>Send Fax</h1><input type="text" size="30" name="ph" placeholder="enter fax number here"><br/><br/><input value="send fax" type="submit"><input type="hidden" name="message" value="<center>Please wait. .<br><a href=\''+server+'/ui?action=act_list&call_id=__CALLID__&uniq='+uniq+'\'>Click here to check status</a></center>">');
+		response_str = '<center>Please wait...<br><a href=\''+server+'/ui?action=act_list&call_id=__CALLID__&uniq='+uniq+'\'>Click here to check status</a></center>';
+		WinPop.document.write('<h1>Send Fax</h1><input type="text" size="30" name="ph" placeholder="enter fax number here"><br/><br/><input value="send fax" type="submit"><input type="hidden" name="message" value="'+ response_str +'">');
 	}
 	WinPop.document.write('</form></center></body></html>');
 	WinPop.document.close();
@@ -665,7 +669,7 @@ function click2call_code( server, key, ac, lang ) {
 
 	WinPop.document.write('<html><title>Click2Call - code</title><body><p><small>&lt;script language="JavaScript"&gt;function click2call_win(){var ScreenWidth=window.screen.width; placementx=ScreenWidth/2-220; placementy=200;WinPop=window.open("","click2call","width=450,height=200, toolbar=no,location=no,directories=no,status=no, scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy); WinPop.document.write(\'&lt;html&gt;&lt;head&gt;&lt;title&gt;Click2Call - XVB VirtualPBX&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;center&gt;&lt;form method="post" action="'+server+'/c2c"&gt;&lt;input type="hidden" value="'+key+'" name="key"&gt;&lt;input type="hidden" value="'+ac+'" name="ac"&gt;\');');
 	if ( lang == 'ru' ) {
-		WinPop.document.write('WinPop.document.write(\'&lt;h2&gt;Заказ звонка&lt;/h2&gt;&lt;input type="text" size="25" name="ph" placeholder="введите Ваш номер телефона"&gt;&lt;br/&gt;&lt;br/&gt;&lt;input value="заказать звонок" type="submit"&gt;&lt;input type="hidden" name="message" value="&lt;center&gt;Запрос обработан. Ожидайте звонка.&lt;/center&gt;"&gt;\');');
+		WinPop.document.write('WinPop.document.write(\'&lt;h2&gt;Заказ звонка&lt;/h2&gt;&lt;input type="text" size="25" name="ph" placeholder="введите Ваш номер телефона"&gt;&lt;br/&gt;&lt;br/&gt;&lt;input value="заказать звонок" type="submit"&gt;&lt;input type="hidden" name="message" value="&lt;center&gt;Please wait a call.&lt;/center&gt;"&gt;\');');
 	} else {
 		WinPop.document.write('WinPop.document.write(\'&lt;h2&gt;Order a Call&lt;/h2&gt;&lt;input type="text" size="25" name="ph" placeholder="enter your phone here"&gt;&lt;br/&gt;&lt;br/&gt;&lt;input value="order a call" type="submit"&gt;&lt;input type="hidden" name="message" value="&lt;center&gt;Please wait a call.&lt;/center&gt;"&gt;\');');
 	}
