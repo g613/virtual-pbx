@@ -351,3 +351,12 @@ p.white-bg {
 tr.player {
 	background:#177182  repeat-x;
 }
+.warning-font {
+	color:red;
+}
+ul {
+	padding: 0px 0px 10px 10px;
+}
+li {
+	padding: 10px 0px 5px 0px;
+}

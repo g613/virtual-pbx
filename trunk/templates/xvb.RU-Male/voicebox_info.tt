@@ -1,11 +1,15 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.33 2014/09/12 10:55:07 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.40 2014/09/23 19:41:45 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
 	[% ELSE %]
 	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<!--callblast-->
+	[% IF VBOX_PREF.TYPE eq '18' %]
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 	[% END %]
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 	<script language="JavaScript">
@@ -198,6 +202,21 @@
 					</ul>
 					</span></a>
 					[% END %]
+					
+					[% IF VBOX_PREF.TYPE eq '18' %]
+					<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
+					<h4>Советы:</h4>
+						<ul>Формат временных интервалов: 
+							начало_интервала-конец_интервала.<br>Форматы:
+							<li><b>время</b> - чч:мм-чч:мм</li>
+							<li><b>день недели</b> - день-день<br>( mon - понедельник, ... tue,wed,thu,<br>fri,sat,... sun - воскресенье )</li>
+							<li><b>день месяца</b> - день-день ( 1..31 )</li>
+							<li><b>месяц</b> - месяц-месяц<br>( jan - январь, feb,mar,apr,may,jun,jul,aug,<br>sep,oct,nov,... dec - декабрь )</li>
+							<li><b>год</b> - год-год (например 2009-2009)
+							<li><b>*</b> - любое значение</li>
+						</ul>
+					</span></a>
+					[% END %]
 			</td>
 			<td width='70%' align='center'>
 				<h1>Внутренний номер # <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
@@ -326,7 +345,7 @@
 				<tr>
 					<td>Приветствие: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.GREETING | textarea_rows %]' colls='30' name='GREETING'>[% VBOX_PREF.GREETING | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.GREETING | textarea_rows %]' cols='30' name='GREETING'>[% VBOX_PREF.GREETING | html %]</textarea>
 					</td>
 				</tr>
 				[% END %]
@@ -559,7 +578,7 @@
 						</span></a>
 					</td>
 					<td>
-						<textarea rows='[% VBOX_PREF.GREETING_TAGS | textarea_rows %]' colls='30' name='GREETING_TAGS'>[% VBOX_PREF.GREETING_TAGS | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.GREETING_TAGS | textarea_rows %]' cols='30' name='GREETING_TAGS'>[% VBOX_PREF.GREETING_TAGS | html %]</textarea>
 					</td>
 				</tr>
 				[% END %]
@@ -639,7 +658,7 @@
 							Алгоритм вызова будет зависеть от 'Алгоритма звонка'
 						</span></a></td>
 					<td>
-						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' colls='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -669,7 +688,7 @@
 							<i><b>!!! Не используйте данное поле если в Вашем списке номеров больше 1 телефона !!!</b></i>
 						</span></a></td>
 					<td>
-						<textarea rows='[% VBOX_PREF.GOTO_IF_CALL_STATUS | textarea_rows %]' colls='30' name='GOTO_IF_CALL_STATUS'>[% VBOX_PREF.GOTO_IF_CALL_STATUS | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.GOTO_IF_CALL_STATUS | textarea_rows %]' cols='30' name='GOTO_IF_CALL_STATUS'>[% VBOX_PREF.GOTO_IF_CALL_STATUS | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -677,7 +696,7 @@
 							Список номеров, через запятую, на которые возможен перевод звонка без разрыва соединения в одно касание ( кнопки 1 - 3 )
 						</span></a></td>
 					<td>
-						<textarea rows='[% VBOX_PREF.FMC | textarea_rows %]' colls='30' name='FMC'>[% VBOX_PREF.FMC | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.FMC | textarea_rows %]' cols='30' name='FMC'>[% VBOX_PREF.FMC | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -964,7 +983,7 @@
 					<td>Часовой пояс расписания</td>
 					<td>
 						<input size='20' type='text' name='TZ_NAME' value='[% VBOX_PREF.TZ_NAME | html %]'>
-						<script lang='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'По умолчанию')</script>
+						<script language='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'По умолчанию')</script>
 					</td>
 				</tr>
 				[% END %]
@@ -993,7 +1012,7 @@
 				<tr>
 					<td>Параметры POST/PUT: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' colls='30' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='30' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1030,6 +1049,18 @@
 						<input name="NEED_PARAMS" type="checkbox" checked>
 					[% ELSE %]
 						<input name="NEED_PARAMS" type="checkbox">
+					[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Не ждать ответа: <span>
+							Отправить запрос и не ждать данных от сервера
+						</span></a></td>
+					<td>
+					[% IF VBOX_PREF.NO_WAIT %]
+						<input name="NO_WAIT" type="checkbox" checked>
+					[% ELSE %]
+						<input name="NO_WAIT" type="checkbox">
 					[% END %]
 					</td>
 				</tr>
@@ -1102,7 +1133,7 @@
 				<tr>
 					<td>Заголовок факса: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' colls='30' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='30' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -1179,7 +1210,7 @@
 							Переменная=Значение.
 						</span></a></td>
 					<td>
-						<textarea rows='[% VBOX_PREF.OTHER_VARS | textarea_rows %]' colls='30' name='OTHER_VARS'>[% VBOX_PREF.OTHER_VARS | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.OTHER_VARS | textarea_rows %]' cols='30' name='OTHER_VARS'>[% VBOX_PREF.OTHER_VARS | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -1422,7 +1453,7 @@
 							Список номеров которые обслуживают очередь. Алгоритм вызова будет зависеть от 'Алгоритма звонка'
 						</span></a></td>
 					<td>
-						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' colls='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1754,7 +1785,7 @@
 					<td>Time Zone</td>
 					<td>
 						<input size='20' type='text' name='TZ_NAME' value='[% VBOX_PREF.TZ_NAME | html %]'>
-						<script lang='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'По умолчанию')</script>
+						<script language='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'По умолчанию')</script>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1794,7 +1825,7 @@
 				<tr>
 					<td>Заголовок факса: </td>
 					<td>
-						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' colls='30' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='30' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
 					</td>
 				</tr>
 				[% END %]
@@ -1842,6 +1873,9 @@
 				
 				[% IF VBOX_PREF.TYPE eq '18' %]
 				<!-- CallBlast -->
+				<script language='JavaScript' src="/xvb/js/jquery/jquery.min.js"></script>
+				<script language='JavaScript' src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+				<script language='JavaScript' src="/xvb/js/jquery/calendar/lang/calendar-ru.min.js"></script>
 				<tr>
 					<td><a href='#' class='info'>Включить `Автоинформатор`:  <span>
 						Если Вы хотите приостановить работу автоинформатора выключите данный флаг.
@@ -1870,20 +1904,44 @@
 					<td><a href='#' class='info'>Начать звонить в: <span>
 						Время после которого система начнет совершать звонки.
 					</span></a></td>
-					<td>
+					<td nowrap='nowrap'>
 						<input name="START_TIMESTAMP" value="[% VBOX_PREF.START_TIMESTAMP | html %]" type="hidden">
-						<input size='16' name="START_DATE" value="[% BLAST_START_DATE | html %]" type="text">
-						&nbsp;гггг/мм/дд ЧЧ:ММ
+						<script type="text/javascript">
+							jQuery(document).ready(function() {
+								jQuery("#START_DATE").dynDateTime({
+									showsTime: true,
+									ifFormat: "%Y/%m/%d %H:%M",
+									align: "TL",
+									electric: false,
+									singleClick: false,
+									button: ".next()"
+								});
+							});
+						</script>
+						<input size='16' name="START_DATE" value="[% BLAST_START_DATE | html %]" id='START_DATE' type="text">
+						<button type="button">...</button>
 					</td>
 				</tr>
 				<tr>
 					<td><a href='#' class='info'>Закончить звонить в: <span>
 						Время после которого система перестанет совершать звонки.
 					</span></a></td>
-					<td>
+					<td nowrap='nowrap'>
 						<input name="STOP_TIMESTAMP" value="[% VBOX_PREF.STOP_TIMESTAMP | html %]" type="hidden">
-						<input size='16' name="STOP_DATE" value="[% BLAST_STOP_DATE | html %]" type="text">
-						&nbsp;гггг/мм/дд ЧЧ:ММ
+						<script type="text/javascript">
+							jQuery(document).ready(function() {
+								jQuery("#STOP_DATE").dynDateTime({
+									showsTime: true,
+									ifFormat: "%Y/%m/%d %H:%M",
+									align: "TL",
+									electric: false,
+									singleClick: false,
+									button: ".next()"
+								});
+							});
+						</script>
+						<input size='16' name="STOP_DATE" value="[% BLAST_STOP_DATE | html %]" id='STOP_DATE' type="text">
+						<button type="button">...</button>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1933,7 +1991,7 @@
 					<td>Часовой пояс: </td>
 					<td>
 						<input size='20' type='text' name='TZ_NAME' value='[% VBOX_PREF.TZ_NAME | html %]'>
-						<script lang='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'По умолчанию')</script>
+						<script language='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'По умолчанию')</script>
 					</td>
 				</tr>
 				[% END %]
@@ -2334,7 +2392,7 @@
 							Список номеров Пейджинга / интеркома.
 						</span></a></td>
 					<td>
-						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' colls='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
+						<textarea rows='[% VBOX_PREF.CALL_NUMBER | textarea_rows %]' cols='30' name='CALL_NUMBER'>[% VBOX_PREF.CALL_NUMBER | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -2750,7 +2808,7 @@
 						<td colspan='2' align='center'>
 						<table width='100%'  id='addon-data'>
 							<tr>
-								<th rowspan='2'><a class='error' href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='динамические агенты'>Номер телефона</a></th>
+								<th rowspan='2'><a class='warning-font' href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='динамические агенты'>Номер телефона</a></th>
 								<th colspan='2'>Звонки</th>
 								<th colspan='2'>Длительность</th>
 								<th rowspan='2'>Среднее время<br> до ответа</th>
@@ -3035,6 +3093,7 @@
 						<td>Факс по запросу: </td>
 						<td align='right' nowrap='nowrap'>
 							[% IF VB_DATA.C2C_SECRET %]
+							<script language='Javascript' src='/xvb/js/base64.js'></script>
 							<a title='Отправить Факс' href='#' onclick="webfax_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% VB_DATA.C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru','[% USER_CREDS.UNIQ %]')"><img border='0' src='/xvb/images/phone.png' alt='отправить факс' /></a>&nbsp;&nbsp;
 							[% END %]
 							<a title='скачать tiff' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.FAX_FILE %]'><img border='0' src='/xvb/images/msg_download_tif.png' alt='fax' /></a>
@@ -3288,6 +3347,7 @@
 							<th>День месяца</th>
 							<th>Месяц</th>
 							<th>Год</th>
+							<th>Режим</th>
 							<th>Действия</th>
 						</tr>
 						[% FOREACH param = BLAST_SCHEDULE %]
@@ -3303,6 +3363,17 @@
 							<td><input class='in_t0' size='5'  name='dayofmonth' type='text' value='[% param.DAYOFMONTH | html %]'></td>
 							<td><input class='in_t0' size='5'  name='month' type='text' value='[% param.MONTH | html %]'></td>
 							<td><input class='in_t0' size='5'  name='year' vtype='text' value='[% param.YEAR | html %]'></td>
+							<td>
+								<select class='in_t0' name="redirect_to">
+									[% IF param.REDIRECT_TO eq '-block-' %]
+									<option value="-block-" selected>пропустить</option>
+									<option value="0">звонить</option>
+									[% ELSE %]
+									<option value="0" selected>звонить</option>
+									<option value="-block-">пропустить</option>
+									[% END %]
+								</select> 
+							</td>
 							<td align='left' nowrap='nowrap'>
 								<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]','d-tbl-d1')" title='удалить пункт расписания'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
 								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
@@ -3321,7 +3392,6 @@
 							<input type='hidden' name='action' value='schedule_add'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-							<input type='hidden' name='redirect_to' value='0'>
 							<input type='hidden' name='callerid' value='*'>
 							<td><input size='5' type='text'  name='priority' value='5'></td>
 							<td><input size='11' type='text' name='time_h' value='*'></td>
@@ -3329,6 +3399,12 @@
 							<td><input size='5' type='text'  name='dayofmonth' value='*'></td>
 							<td><input size='5' type='text'  name='month' value='*'></td>
 							<td><input size='5' type='text'  name='year' value='*'></td>
+							<td>
+								<select name="redirect_to">
+									<option value="0" selected>звонить</option>
+									<option value="-block-">пропустить</option>
+								</select> 
+							</td>
 							<td align='center'>
 								<input type='submit' value='добавить'>
 							</td>
@@ -3386,7 +3462,7 @@
 							[% ELSIF param.CALL_STATUS eq 'wait' %]
 								wait	
 							[% ELSIF param.CALL_STATUS %]
-								<a class='error' href='?action=act_list&call_id=[% param.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
+								<a class='warning-font' href='?action=act_list&call_id=[% param.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
 							[% ELSE %]
 								unknown
 							[% END %]
@@ -3599,7 +3675,7 @@
 							[% ELSIF param.CALL_STATUS eq 'wait' %]
 								wait	
 							[% ELSIF param.CALL_STATUS %]
-								<a class='error' href='?action=act_list&call_id=[% param.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
+								<a class='warning-font' href='?action=act_list&call_id=[% param.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CALL_STATUS | html %]</a>
 							[% ELSE %]
 								unknown
 							[% END %]

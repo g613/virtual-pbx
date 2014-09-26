@@ -1039,6 +1039,7 @@ create	table VPBX_VBOXES_TTS
 	GOTO_IF_FAIL	VARCHAR(255),
 	NEED_PARAMS		INT(1) not null default 0,
 	QUIET_MODE		INT(1) not null default 0,
+	NO_WAIT			INT(1) not null default 0,
 
 	unique(ID),
 

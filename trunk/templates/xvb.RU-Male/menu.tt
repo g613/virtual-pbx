@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: menu.tt,v 1.13 2014/09/10 15:28:08 gosha Exp $ -->
+<!-- $Id: menu.tt,v 1.16 2014/09/19 14:59:49 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - main menu</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -21,48 +21,50 @@
 		/>
 	</p>
 	<p align='left'>
-		<br/>
+		
+		<ul>
 	[% IF USER_CREDS.ROOT eq '0' %]
 			<li><a class='amenu' target='xvb_data' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль</a></li>
-			<br/>
+			
 	[% END %]
 			<li><a class='amenu' target='xvb_data' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>IVR / входящие</a></li>
-			<br/>
+			
 			<li><a class='amenu' target='xvb_data' href='?action=msg_list_all&uniq=[% USER_CREDS.UNIQ %]'>Сообщения</a></li>
-			<br/>
+			
 	[% IF USER_CREDS.ROOT eq '0' %]
 			<li><a class='amenu' target='xvb_data' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>Звонки</a></li>
-			<br/>
+			
 			<li><a class='amenu' target='xvb_data' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]'>Телефонная книга</a></li>
-			<br/>
+			
 			[% IF USER_CREDS.ALLOW_PHONES %]
 				<li><a class='amenu' target='xvb_data' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>Телефоны</a></li>
-			<br/>
+			
 			[% END %]
 			[% IF USER_CREDS.CUSTOM_ROUTE %]
 			[% IF USER_CREDS.MAX_PEERS %]
 				<li><a class='amenu' target='xvb_data' href='?action=peer_list&uniq=[% USER_CREDS.UNIQ %]'>SIP Шлюзы</a></li>
-			<br/>
+			
 			[% END %]
 				<li><a class='amenu' target='xvb_data' href='?action=route_list&uniq=[% USER_CREDS.UNIQ %]'>Маршруты</a></li>
-			<br/>
+			
 			[% END %]
 			[% IF USER_CREDS.MAX_C2C_ITEMS %]
 				<li><a class='amenu' target='xvb_data' href='?action=c2c_list&uniq=[% USER_CREDS.UNIQ %]'>Click2Call</a></li>
-			<br/>
+			
 			[% END %]
 			<li><a class='amenu' target='xvb_data' href='?action=cid_list&cid_list_type=2&cid_type=2&uniq=[% USER_CREDS.UNIQ %]'>Белый список</a></li>
-			<br/>
+			
 			<li><a class='amenu' target='xvb_data' href='?action=cid_list&cid_list_type=1&cid_type=2&uniq=[% USER_CREDS.UNIQ %]'>Черный список</a></li>
-			<br/>
+			
 			<li><a class='amenu' target='xvb_data' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Журнал операций</a></li>
 			[% IF USER_CREDS.ALLOW_MACROS %]
-			<br/>
+			
 			<li><a class='amenu' target='xvb_data' href='?action=macros_list&uniq=[% USER_CREDS.UNIQ %]'>Макросы</a></li>
 			[% END %]
 	[% END %]
-			<br/>
-			<li><a class='amenu' target='_top' href=?action=logout>Выход</a></td></li>
+			
+			<li><a class='amenu' target='_top' href=?action=logout>Выход</a></li>
+		</ul>
 	</p>
 </body>
 </html>

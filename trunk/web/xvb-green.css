@@ -1,5 +1,5 @@
 body { 
-	color:#black;
+	color:black;
 	font-family:Arial, Helvetica, sans-serif;
 	background:#dedede  repeat-x;
 	font-size:12px;
@@ -137,7 +137,7 @@ a.amenu {
 /* Tips */
 a.info {
 	position:relative;
-	color:#black;
+	color:black;
 	font-weight: normal;
 	border-bottom:1px dashed #ccc;
 }
@@ -171,6 +171,7 @@ a.info:hover span{
 a.help {
 	position:relative;
 	font-weight: normal;
+	color:black;
 }
 a.help:hover {
 	z-index:3;
@@ -344,4 +345,13 @@ p.white-bg {
 }
 tr.player {
 	background:#00cc00  repeat-x;
+}
+.warning-font {
+	color:red;
+}
+ul {
+	padding: 0px 0px 10px 10px;
+}
+li {
+	padding: 10px 0px 5px 0px;
 }

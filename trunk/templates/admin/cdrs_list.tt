@@ -73,9 +73,13 @@
 				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
 				<button type="button">...</button>
 				<input name='action' value='cdr_list' type='hidden'>
+				&nbsp;
 				<input size='10' type='text' placeholder='Caller ID' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				&nbsp;
 				<input size='10' type='text' placeholder='Called ID' name='called_id' value='[% CDR_CALLED_ID | html %]'>
+				&nbsp;
 				<input size='10' type='text' placeholder='Access Code' name='ac' value='[% CDR_AC | html %]'>
+				&nbsp;
 				<select name="call_type">
 					<option value="" selected>call type</option>
 					<option value="" >all calls</option>
@@ -141,8 +145,10 @@
 	
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 	
-
 	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 </html>
 	
