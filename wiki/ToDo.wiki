@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- web-pапросы в backround'е</font>
+<font color='green'>+ web-pапросы в backround'е</font> ( 26.09.2014 / build 8645 )
 
 <font color='green'>+ новый ui</font> ( 12.09.2014 / build 8555 )
 
