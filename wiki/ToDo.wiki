@@ -4,7 +4,7 @@
 
 <font color='red'>- Возможность переписывать групповые правиля для конкретного пользователя</font> 
 
-<font color='green'>+ Текущие звонки</font> ( 05.10.2014 / build 8740 )
+<font color='green'>+ Список online звонков в вебе</font> ( 05.10.2014 / build 8740 )
 
 <font color='green'>+ web-запросы в background'е</font> ( 26.09.2014 / build 8645 )
 
