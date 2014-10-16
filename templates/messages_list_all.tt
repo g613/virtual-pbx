@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.52 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.57 2014/10/14 19:33:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -17,7 +17,7 @@
 </head>
 
 <body onLoad="XVBInit()">
-	<table width='95%'>
+	<table width='100%'>
 		<tr align='left'>
 			<td>
 		[% IF USER_CREDS.ROOT eq '0' %]
@@ -36,10 +36,10 @@
 	<h1>All Messages</h1>
 
 	<p>
-	<table width='95%'>
+	<table width='100%'>
 		<tr>
 			<td align='right'>
-				<form method="get" action="[% CGI_URL %]">
+				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -72,10 +72,12 @@
 				<input name='action' value='msg_list_all' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				&nbsp;
-				<select name="msg_type">
+				<select name="msg_type" id='msg_type_selector'>
 					<option value="" selected>Message type</option>
 					<option value="30:40">User messages</option>
 					<option value="1:2:3:4:5:6">System messages</option>
+					<option value=",1">Only voice messages</option>
+					<option value=",0">Fax / DTMF</option>
 					<option value="1">User name</option>
 					<option value="2">User greeting</option>
 					<option value="3">Follow-Me Announcement</option>
@@ -87,9 +89,12 @@
 				</select>
 				&nbsp;
 				<input placeholder='Caller' size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
+				&nbsp;
 				<input placeholder='Called' size='10' type='text' name='called_id' value='[% CALLED_ID | html %]'>
+				&nbsp;
 				<input value='Search' type='submit'>
 				</form>
+				<script langiage='JavaScript'>setActiveSelector('msg_type_selector',"[% MSG_TYPE | html %]");</script>
 			</td>
 		</tr>
 	</table>

@@ -96,7 +96,7 @@
 		</tr>
 		[% END %]
 
-		<form>
+		<form method="post" onSubmit='return checkChanges(this)'>
 		<tr align='center'>
 			<td align='right'>
 				<input size='20' name='P_NAME' type='text'></td>

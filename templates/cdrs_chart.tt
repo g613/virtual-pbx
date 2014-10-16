@@ -1,7 +1,7 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.21 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.25 2014/10/14 19:33:21 gosha Exp $ -->
 <head>
-	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	<title>Virtual PBX - statistics - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 
@@ -19,34 +19,15 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<p>
-	<table width='95%' class='logo'>
-		<tr>
-			<td align='left' width='20%'>
-			[% IF USER_CREDS.LOGO_HREF eq '' %]
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			[% ELSE %]
-				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-			[% END %]
-			</td>
-			<td align='center'><h2>Charts</h2><h3>( [% CDR_HEADER %] )</h3></td>
-			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
-		</tr>
-	</table>
-	</p>
+	<h1>Statistics ( [% CDR_HEADER %] )</h1>
 
-	<p>
-	<table width='95%'>
+	<table width='100%'>
+		<script language='JavaScript'>
+			var time_period = getTimePeriod( 'en', '[% CDR_PERIOD %]' );
+			var period = time_period.period;
+			var group_by = time_period.group_by;
+		</script>
 		<tr align='left'>
-			<td>
-				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Journals</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>Extensions list</a>
-			</td>
 			<td align='right'>
 				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 				<script type="text/javascript">
@@ -84,9 +65,9 @@
 				&nbsp;
 				<input placeholder='Called' size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<select name="call_type">
-					<option value="" selected>call type</option>
-					<option value="" >all calls</option>
+				&nbsp;
+				<select name="call_type" id='call_type_selector'>
+					<option value="" selected>all calls</option>
 					<option value="incoming">incoming</option>
 					<option value="local">local</option>
 					<option value="transit">transit</option>
@@ -97,24 +78,23 @@
 					<option value="alarmclock">alarmclock</option>
 					<option value="service">service</option>
 				</select>
+				&nbsp;
+				<select name='chart_group_period' id='gb_type_selector'>
+					<option value=''>group by...</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='did'>DID</option><option value='cid'>CallerID</option><option value='ct'>call type</option>
+				</select>
+				&nbsp;
+				<input name='need_chart' value='1' type='hidden'>
 				<input value='Search' type='submit'>
-				<input name='need_excel' value='Excel' type='submit'>
-				<script language='JavaScript'>
-					document.write("<select name='chart_group_period'><option selected value=''>group by</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='did'>DID</option><option value='cid'>CallerID</option><option value='ct'>call type</option></select>");
-					document.write("<input name='need_chart' value='Chart' type='submit'>");
-				</script>
 				</form>
+				<script language='JavaScript'>
+					setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");
+					setActiveSelector('gb_type_selector',group_by);
+				</script>
 			</td>
 		</tr>
 	</table>
-	</p>
 	
 	<p>
-	<script language='JavaScript'>
-		var time_period = getTimePeriod( 'en', '[% CDR_PERIOD %]' );
-		var period = time_period.period;
-		var group_by = time_period.group_by;
-	</script>
 	[% IF CDR_LIST scalar %]
 	<script language='JavaScript'>
 		var graphx=new Array();

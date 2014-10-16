@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.9 2014/09/26 18:37:50 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.10 2014/09/29 19:57:12 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs / Call Detail</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -66,15 +66,13 @@
 			<td align='left'>[% msg.DATA | html %]</td>
 		</tr>
 		[% END %]
-		<tr>
 		[% IF MSG_NEXT ne '' %]
+		<tr>
 			<td align='right' colspan='7'>
 				<a title='next page' href='?action=cdr_list&from=[% MSG_NEXT %]&call_id=[% CDR_CALL_ID %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
 			</td>
-		[% ELSE %]
-			<td colspan='7'>&nbsp;</td>
-		[% END %]
 		</tr>
+		[% END %]
 	</table>
 	</p>
 

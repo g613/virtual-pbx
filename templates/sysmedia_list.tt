@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: sysmedia_list.tt,v 1.4 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: sysmedia_list.tt,v 1.5 2014/10/13 15:30:32 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SysMedia - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -16,7 +16,7 @@
 	<h1>System media files</h1>
 
 	<p>
-	<table width='95%' id='d-tbl'>
+	<table width='100%' id='d-tbl'>
 		<tr>
 			<th></th>
 			<th>File name</th>

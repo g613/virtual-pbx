@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Virtual PBX - users</title>
+	<title>Virtual PBX - tenants</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 </head>
@@ -16,35 +16,27 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 
+	<table width='95%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				<a href='?action=user_list&partner=[% PARTNER | html %]'>Tenants</a>
+			</td>
+		</tr>
+	</table>
+	
 	<center>
-	<p>
 	<table width='95%' class='logo'>
 		<tr>
-			<td align='left' width='20%'>
-			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
-			</td>
-			<td align='center'><h2>User info</h2></td>
-			<td align='right' width='20%'>
-				[% INCLUDE version.tt %]
+			<td align='center'><h1>Tenant info</h1></td>
+			<td align='right'>
+				<a title='delete tenat' href='?action=user_del&user_id=[% USER.ID %]&single_user=1' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 			</td>
 		</tr>
 	</table>
-	</p>
 
-
-	<p>
-	<table width='95%'>
-		<tr align='left'>
-			<td>
-				<a href='?action=user_list&partner=[% PARTNER | html %]'>Users</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=user_del&user_id=[% USER.ID %]&single_user=1&partner=[% PARTNER | html %]' onclick="return DelConfirm('en')">Delete</a>
-			</td>
-		</tr>
-	</table>
-	</p>
-
-	<p>
 	<table width='95%'>
 		<tr>
 		</tr>
@@ -96,7 +88,7 @@
 			</tr>
 			<tr>
 				<td>
-					Phone number: 
+					Shared DID: 
 				</td>
 				<td>
 					<input size='15' name='US_VOICENUMBER' type='text' value="[% USER.VOICENUMBER | html %]">
@@ -164,12 +156,13 @@
 									<b>[% USER.USER_BALANCE %]</b> [% TARIFF.DESCRIPTION %]
 								</td>
 								<td colspan='4' align='right'>
-									<form method='post'>
+									<form method="post" onSubmit='return checkChanges(this)'>
 									<input size='5' type='text' name='balance'>
 									<input type='hidden' value='[% USER.ID %]' name='user_id'>
 									<input type='hidden' value='[% USER.CURRENCY_ID %]' name='cur_id'>
 									<input type='hidden' value='balance_update' name='action'>
 									<input type='hidden' value='[% PARTNER | html %]' name='partner'>
+									&nbsp;
 									<input value='+/-' type='submit'>
 									</form>
 								</td>
@@ -190,10 +183,11 @@
 								[% END %]
 								</td>
 								<td valign='top' width='20%' align='center' nowrap='nowrap'>
-								<form>
+								<form method="post" onSubmit='return checkChanges(this)'>
 									<input size='11' type='text' name='did'>
 									<input type='hidden' name='pn' value='[% USER.VOICENUMBER | html %]'>
 									<input type='hidden' name='ac' value='[% USER.ACCESS_CODE | html %]'>
+									&nbsp;
 									<input value='add DID' type='submit'>
 									<input type='hidden' value='did_add' name='action'>
 									<input type='hidden' value='[% PARTNER | html %]' name='partner'>
@@ -203,11 +197,21 @@
 						</table>
 					</td>
 				</tr>
+				<tr>
+				<td>
+					<h4>Quick links:</h4>
+					&nbsp;&nbsp;<a href='ui?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP Peers</a>
+					&nbsp;/&nbsp;<a href='ui?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Routes</a>
+					&nbsp;/&nbsp;<a href='ui?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Phones</a>
+					&nbsp;/&nbsp;<a href='ui?action=macros_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Macros</a>
+					&nbsp;/&nbsp;<a href='ui?action=cdr_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>CDRs</a>
+					&nbsp;/&nbsp;<a href='ui?action=j_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Journals</a>
+				</td>
+				</tr>
 				</table>
 			</td>
 		</tr>
 	</table>
-	</p>
 	
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>

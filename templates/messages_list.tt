@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.71 2014/09/10 14:16:09 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.74 2014/10/14 19:33:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -36,10 +36,10 @@
 	<h1>Messages for Extension Number# <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
 
 	<p>
-	<table width='95%'>
+	<table width='100%'>
 		<tr>
 			<td align='right'>
-				<form method="get" action="[% CGI_URL %]">
+				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -74,7 +74,9 @@
 				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
 				&nbsp;
 				<input placeholder='Caller' size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
+				&nbsp;
 				<input placeholder='Called' size='10' type='text' name='called_id' value='[% CALLED_ID | html %]'>
+				&nbsp;
 				<input value='Search' type='submit'>
 				</form>
 			</td>

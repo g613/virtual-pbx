@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.55 2014/09/11 14:04:05 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.57 2014/10/15 14:32:19 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extensions - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -17,6 +17,7 @@
 		<tr>
 			<td align='center' width='75%'><h1>Extensions List</h1></td>
 			<td align='right' width='25%'>
+			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 				&nbsp;
 				[% IF USER_CREDS.ROOT eq '0' %]
 				<input size='6' type='text' name='new_ext'>
@@ -26,13 +27,14 @@
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='go' value='list' type='hidden'>
 				[% END %]
+			</form>
 			</td>
 		</tr>
 	</table>
 	</p>
 
 	<p>
-	<table width='95%' id='d-tbl'>
+	<table width='100%' id='d-tbl'>
 		<tr>
 				<th rowspan='2'>Extension</th>
 				<th rowspan='2'>Name</th>

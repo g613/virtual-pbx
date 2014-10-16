@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.33 2014/09/11 15:06:39 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.34 2014/10/13 15:30:32 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -16,7 +16,7 @@
 	<h1>SIP Peers</h1>
 
 	<p>
-	<table width='95%'>
+	<table width='100%'>
 		<tr align='left'>
 			<td align='right'>
 				<a title='delete all peers' href='?action=peer_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete all records'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
@@ -26,7 +26,7 @@
 	</p>
 
 	<p>
-	<table width='95%' id='d-tbl'>
+	<table width='100%' id='d-tbl'>
 		<tr>
 			<th width='15%'>Proxy (*)</th>
 			<th>Port (*)</th>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.7 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.10 2014/10/12 10:05:27 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Все сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -33,12 +33,12 @@
 
 	<center>
 			
-	<h1>Все сообщения</h1>
+	<h1>Сообщения</h1>
 
 	<table width='100%'>
 		<tr>
 			<td align='right'>
-				<form method="get" action="[% CGI_URL %]">
+				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -75,10 +75,12 @@
 				&nbsp;
 				<input size='10' type='text' name='called_id' value='[% CALLED_ID | html %]' placeholder='кому звонил'>
 				&nbsp;
-				<select name="msg_type">
-					<option selected='selected' value="" >Тип сообщения</option>
+				<select name="msg_type" id='msg_type_selector'>
+					<option selected='selected' value="">Все сообщения</option>
 					<option value="30:40">Все пользовательские</option>
 					<option value="1:2:3:4:5:6">Все системные</option>
+					<option value=",1">Только голосовые</option>
+					<option value=",0">Факсы / DTMF</option>
 					<option value="1">Имя пользователя</option>
 					<option value="2">Приветствие пользователя</option>
 					<option value="3">Анонс исходящего звонка</option>
@@ -92,6 +94,7 @@
 				<input value='Найти' type='submit'>
 				&nbsp;&nbsp;
 				</form>
+				<script langiage='JavaScript'>setActiveSelector('msg_type_selector',"[% MSG_TYPE | html %]");</script>
 			</td>
 		</tr>
 	</table>

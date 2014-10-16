@@ -1,4 +1,6 @@
 -- drop database xvb;
+create user 'xvb'@'localhost' identified by 'pass1xvb';
+
 create database xvb;
 use xvb;
 
@@ -277,7 +279,9 @@ create table VPBX_SEQUENCES
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 delimiter //
-CREATE FUNCTION seq(seq_name char (50)) returns int
+CREATE 
+DEFINER='xvb'@'localhost'
+FUNCTION seq(seq_name char (50)) returns int
 begin
 	UPDATE VPBX_SEQUENCES SET SEC_VAL=last_insert_id(SEC_VAL+1) WHERE SEC_NAME=seq_name;
 	RETURN last_insert_id();
@@ -321,7 +325,7 @@ create	table VPBX_GROUPS
 	ALLOW_EXTSTAT				INT(1) default 1,
 	ADVANCED_CALLBLAST			INT(1) default 1,
 
-	MAX_SIZE_MSGS				INT(16) default 0,
+	MAX_SIZE_MSGS				BIGINT(16) default 0,
 	MAX_ALL_MSGS				INT(10) default 1000,
 	MAX_EXTENSIONS				INT(10) default 100,
 	MAX_EXT_CIDS				INT(10) default 200,
@@ -458,7 +462,9 @@ create table VPBX_ACCOUNTS
 
 	I_DIGIT_TIMEOUT	FLOAT(3,2) not null default 1,
 
-    unique			(ACCESS_CODE),
+	CUSTOM_RULES	TEXT(1024),
+    
+	unique			(ACCESS_CODE),
     CONSTRAINT PK_VPBX_SUBSCRIPTION PRIMARY KEY (ID),
     CONSTRAINT FK_VPBX_LANG FOREIGN KEY (LANG) REFERENCES VPBX_LANG(ID) ON UPDATE CASCADE,
     CONSTRAINT FK_VPBX_TZ FOREIGN KEY (TZ_NAME) REFERENCES VPBX_TZ(TZ_NAME) ON UPDATE CASCADE,
@@ -503,7 +509,9 @@ create table VPBX_DIDS
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 delimiter //
-CREATE trigger clean_did AFTER DELETE ON VPBX_DIDS
+CREATE 
+DEFINER='xvb'@'localhost'
+trigger clean_did AFTER DELETE ON VPBX_DIDS
 FOR EACH ROW
 BEGIN
 	update VPBX_SIPPEERS set INC_EXT = '0' where INC_EXT = concat('DID',OLD.DID) and SUBSCR_ID = OLD.SUBSCR_ID; 
@@ -1546,6 +1554,28 @@ create	table VPBX_CID_FILTERS
 	INDEX I_FILTERS (ID,CID_LIST_TYPE,CID_TYPE)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+create table VPBX_ONLINE_CALLS
+(
+
+	SERVER_ID			VARCHAR(100) not null,
+	CALL_ID				VARCHAR(32),
+	CALL_TYPE			VARCHAR(15),
+    SUBSCR_ID			INT(16) not null,
+	CALLER_ID			VARCHAR(100),
+	CALLED_ID			VARCHAR(255),
+	ACCESS_CODE			VARCHAR(100) not null,
+	START_TIMESTAMP		INT(16),
+	AST_ID  			VARCHAR(100),
+	STATUS				INT(1) not null default 0,
+
+	unique(AST_ID,CALL_ID),
+	
+	INDEX I_OC_SERVER_ID (SERVER_ID),
+	INDEX I_OC_CALL_ID (CALL_ID),
+	INDEX I_OC_SUBSCRIBER_ID (SUBSCR_ID),
+	INDEX I_OC_ACCESS_CODE (ACCESS_CODE)
+) ENGINE=MEMORY DEFAULT CHARSET=utf8;
+
 -- End Virtual PBX
 
 -- Data
@@ -2482,7 +2512,9 @@ CREATE INDEX record_idx ON pua (pres_id);
 
 -- phone last reg time /asterisk
 delimiter //
-CREATE trigger ins_reg_time BEFORE UPDATE ON VPBX_SIPPEERS 
+CREATE 
+DEFINER='xvb'@'localhost'
+trigger ins_reg_time BEFORE UPDATE ON VPBX_SIPPEERS 
 FOR EACH ROW
 BEGIN
 	IF NEW.regseconds is not null THEN
@@ -2496,7 +2528,9 @@ delimiter ;
 
 -- phone last reg time kamailio
 delimiter //
-CREATE trigger ins_reg_time_kam_upd AFTER UPDATE ON location
+CREATE 
+DEFINER='xvb'@'localhost'
+trigger ins_reg_time_kam_upd AFTER UPDATE ON location
 FOR EACH ROW
 BEGIN
 	UPDATE VPBX_SIPPEERS 
@@ -2509,7 +2543,9 @@ END;
 //
 delimiter ;
 delimiter //
-CREATE trigger ins_reg_time_kam_ins AFTER INSERT ON location
+CREATE 
+DEFINER='xvb'@'localhost'
+trigger ins_reg_time_kam_ins AFTER INSERT ON location
 FOR EACH ROW
 BEGIN
 	UPDATE VPBX_SIPPEERS 
@@ -2523,8 +2559,5 @@ END;
 delimiter ;
 
 -- grants
-
-create user 'xvb'@'localhost' identified by 'pass1xvb';
-
 grant all on *.* to 'xvb'@'localhost';
 

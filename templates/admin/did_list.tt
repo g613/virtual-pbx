@@ -37,7 +37,7 @@
 	<table width='100%'>
 		<tr>
 			<td align='right'>
-				<form method='post'>
+				<form method="post" onSubmit='return checkChanges(this)'>
 					<input size='11' name='f_vn' type='text' placeholder='DID' value='[% F_VN | html %]'>
 					&nbsp;
 					<input size='10' name='f_ac' type='text' placeholder='Access code' value='[% F_AC | html %]'>
@@ -83,7 +83,7 @@
 			<td></td>
 		</tr>
 		[% END %]
-		<form>
+		<form method="post" onSubmit='return checkChanges(this)'>
 		<tr align='center'>
 			<td align='right'><input placeholder='DID' size='15' type='text' name='did'></td>
 			<td align='right'>

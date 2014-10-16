@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.22 2014/09/12 10:55:07 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.24 2014/10/13 15:30:32 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension activity - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -19,7 +19,7 @@
 
 <body onLoad="XVBInit()">
 	
-	<table width='95%'>
+	<table width='100%'>
 		<tr align='left'>
 			<td>
 				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
@@ -36,7 +36,7 @@
 			
 	<h1>Extension #[% VBOX_PREF.EXT_NUMBER | html %] activity</h1>
 
-	<table width='95%'>
+	<table width='100%'>
 		<tr>
 			<td align='right'>
 				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
@@ -73,8 +73,8 @@
 				Caller ID:
 				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				&nbsp;
-				<select name="act_type")">
-					<option value=""  selected>all</option>
+				<select name="act_type" id="act_type_selector">
+					<option value="" selected>all</option>
 				[% FOREACH at = ACT_TYPES %]
 					<option value="[% at %]">[% at %]</option>
 				[% END %]
@@ -85,6 +85,7 @@
 				<input value='Search' type='submit'>
 				<input name='need_excel' value='Excel' type='submit'>
 				</form>
+				<script langiage='JavaScript'>setActiveSelector('act_type_selector',"[% ACT_TYPE | html %]");</script>
 			<td>
 		</tr>
 	</table>

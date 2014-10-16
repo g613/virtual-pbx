@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: menu.tt,v 1.16 2014/09/19 14:59:49 gosha Exp $ -->
+<!-- $Id: menu.tt,v 1.18 2014/10/13 15:30:32 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - main menu</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -32,8 +32,10 @@
 			<li><a class='amenu' target='xvb_data' href='?action=msg_list_all&uniq=[% USER_CREDS.UNIQ %]'>Сообщения</a></li>
 			
 	[% IF USER_CREDS.ROOT eq '0' %]
-			<li><a class='amenu' target='xvb_data' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>Звонки</a></li>
+			<li><a class='amenu' target='xvb_data' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>История звонков</a></li>
 			
+			<li><a class='amenu' target='xvb_data' href='?action=cdr_list&need_chart=1&uniq=[% USER_CREDS.UNIQ %]'>Статистика АТС</a></li>
+
 			<li><a class='amenu' target='xvb_data' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]'>Телефонная книга</a></li>
 			
 			[% IF USER_CREDS.ALLOW_PHONES %]

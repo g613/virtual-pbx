@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.38 2014/09/11 15:06:39 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.39 2014/10/13 15:30:32 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -22,7 +22,7 @@
 	<h1>SIP Phones</h1>
 
 	<p>
-	<table width='95%'>
+	<table width='100%'>
 		<tr align='left'>
 			<td align='right'>
 				<a title='get excel table' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;&nbsp;
@@ -33,7 +33,7 @@
 	</p>
 
 	<p>
-	<table width='95%' id='d-tbl'>
+	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>&nbsp;</th>
 			<th>Auth name</th>

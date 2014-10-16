@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.8 2014/09/26 18:37:50 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.11 2014/10/15 14:32:19 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -34,7 +34,7 @@
 	<table width='100%'>
 		<tr>
 			<td align='right'>
-				<form method='post'>
+				<form method="post" onSubmit='return checkChanges(this)'>
 					<input size='6' name='phone' type='text' placeholder='Phone' value='[% PHONE | html %]'>
 					&nbsp;
 					<input size='10' name='ip' type='text' placeholder='Reg IP' value='[% IP | html %]'>
@@ -104,15 +104,13 @@
 		</tr>
 		[% END %]
 	
-		<tr>
 		[% IF MSG_NEXT ne '' %]
+		<tr>
 			<td align='right' colspan='10'>
 				<a title='previous page' href='?action=phone_list&ip=[% IP | html %]&from=[% MSG_NEXT %]&phone=[% PHONE | html %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
 			</td>
-		[% ELSE %]
-			<td colspan='10'>&nbsp;</td>
-		[% END %]
 		</tr>
+		[% END %]
 	</table>
 	</p>
 

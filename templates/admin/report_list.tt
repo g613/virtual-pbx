@@ -37,16 +37,18 @@
 	<table width='100%'>
 		<tr>
 			<td align='left' width='50%'>
-				<form method='post'>
+				<form method="post" onSubmit='return checkChanges(this)'>
 					<input type='hidden' name='action' value='report_run'>
 					<input placeholder='Report #' type='text' name='report_id' size='5'>
+					&nbsp;
 					<input value='Run' type='submit'>
 				</form>
 			</td>
 			<td align='right'>
-				<form method="post">
+				<form method="post" onSubmit='return checkChanges(this)'>
 					<input size='20' name='name' type='text' placeholder='Report name' value='[% SEARCH_NAME %]'>
 					<input type='hidden' value='report_list' name='action'>
+					&nbsp;
 					<input value='Search' type='submit'>
 				</form>
 			</td>
@@ -96,7 +98,7 @@
 	
 		<tr>
 			<td align='left' colspan='3'>
-				<form method="post">
+				<form method="post" onSubmit='return checkChanges(this)'>
 				&nbsp;
 				<input placeholder='Report name' size='20' name='R_NAME' type='text'>
 				<input type='hidden' value='report_add' name='action'>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.13 2014/09/11 14:04:05 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.14 2014/10/13 15:30:32 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Phone book - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -13,7 +13,7 @@
 <body onLoad="XVBInit()">
 	<center>
 
-	<table width='95%'>
+	<table width='100%'>
 		<tr>
 			<td width='85%' align='center'>
 				<h1>Phone book</h1>
@@ -51,14 +51,15 @@
 					<input type='hidden' name='section' value='PBOOK'>
 					<input type='hidden' name='action' value='restore'>
 					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-					<input name='is_excel' type='submit' value='Append data from CSV'>
+					<input type='hidden' name='is_excel' value='1'>
+					<input type='submit' value='Append data from CSV'>
 				</form>
 			</td>
 		</tr>
 	</table>
 
 	<p>
-	<table width='95%' id='d-tbl'>
+	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>First name</th>
 			<th>Last name</th>

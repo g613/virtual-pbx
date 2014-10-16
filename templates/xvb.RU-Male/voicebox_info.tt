@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.40 2014/09/23 19:41:45 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.41 2014/10/13 15:30:32 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -3237,7 +3237,8 @@
 									<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 									<input type='hidden' name='action' value='ext_restore'>
 									<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-									<input name='is_excel' type='submit' value='Добавить из CSV файла'>
+									<input type='hidden' name='is_excel' value='1'>
+									<input type='submit' value='Добавить из CSV файла'>
 								</td>
 								</form>
 							</tr>
@@ -3509,7 +3510,8 @@
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-							<input name='is_excel' type='submit' value='Добавить из CSV файла'>
+							<input type='hidden' name='is_excel' value='1'>
+							<input type='submit' value='Добавить из CSV файла'>
 							</form>
 						</td>
 					</tr>
@@ -3723,7 +3725,8 @@
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-							<input name='is_excel' type='submit' value='Добавить из CSV файла'>
+							<input type='hidden' name='is_excel' value='1'>
+							<input type='submit' value='Добавить из CSV файла'>
 							</form>
 						</td>
 					</tr>

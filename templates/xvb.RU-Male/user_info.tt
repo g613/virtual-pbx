@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.15 2014/09/10 14:16:09 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.16 2014/10/04 09:52:06 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -13,7 +13,7 @@
 <body onLoad="checkfr('uniq=[% USER_CREDS.UNIQ %]&saction=user_info');XVBInit()">
 	<center>
 			
-	<h1>Профиль пользователя AC# <b>[% USER_CREDS.ACCESS_CODE | html %]</h1>
+	<h1>Профиль пользователя AC# [% USER_CREDS.ACCESS_CODE | html %]</h1>
 
 	<p>
 	<table width='100%'>
@@ -309,7 +309,7 @@ SIP-домен: [% d.DOMAIN | html %]
 									&nbsp;
 									&nbsp;
 									&nbsp;
-									<b>[% TARIFF.USER_BALANCE | bill_float %]</b> [% TARIFF.DESCRIPTION %] ( на [% CACHE_TIME | html %] )
+										<b>[% TARIFF.USER_BALANCE | bill_float %]</b> [% TARIFF.DESCRIPTION %] ( на [% CACHE_TIME | html %] )
 								</td>
 							</tr>
 						</table>
