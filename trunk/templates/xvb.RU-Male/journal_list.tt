@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.3 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.5 2014/10/14 19:33:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Журнал операций - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -24,7 +24,7 @@
 
 	<table width='100%'>
 		<tr align='right'>
-			<form method="get" action="[% CGI_URL %]">
+			<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 			<td align='right' colspan='5'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
@@ -59,13 +59,8 @@
 				<input name='action' value='j_list' type='hidden'>
 				<input size='6' type='text' name='ext_num' value='[% J_EXT_NUM %]' placeholder='номер'>
 				&nbsp;
-				<select name="action_type">
-					[% IF J_ACTION %]
-						<option value="[% J_ACTION %]" selected>[% J_ACTION | locale_msg %]</option>
-						<option value="" >Все события</option>
-					[% ELSE %]
-						<option value="" selected>Все события</option>
-					[% END %]
+				<select name="action_type" id="j_type_selector">
+					<option value="" selected>Все события</option>
 				[% FOREACH at = ACTIONS %]
 					<option value="[% at %]">[% at | locale_msg %]</option>
 				[% END %]
@@ -78,6 +73,9 @@
 				&nbsp;
 			</td>
 			</form>
+			<script language='JavaScript'>
+				setActiveSelector('j_type_selector',"[% J_ACTION %]");
+			</script>
 		</tr>
 	</table>
 
@@ -93,7 +91,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='5'>
-				<a title='предыдущая страница' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&ext_num=[% J_EXT_NUM %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=[% J_DATA | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='предыдущая страница' href='?action=j_list&action_type=[% J_ACTION %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&ext_num=[% J_EXT_NUM %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=[% J_DATA | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -115,7 +113,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='5'>
-				<a title='следующая страница' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&ext_num=[% J_EXT_NUM %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=[% J_DATA | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+				<a title='следующая страница' href='?action=j_list&action_type=[% J_ACTION %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&ext_num=[% J_EXT_NUM %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=[% J_DATA | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]

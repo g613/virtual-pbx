@@ -49,7 +49,7 @@
 
 	<p>
 	<table width='90%' class='report_data'>
-		<form enctype="multipart/form-data" method="post" action='?'>
+		<form method="post" onSubmit='return checkChanges(this)'>
 		<tr>
 			<td>Create date: </td>
 			<td>[% REPORT_DATA.CREATE_DATE %]</td>

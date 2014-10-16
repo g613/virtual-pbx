@@ -82,7 +82,7 @@
 			<td></td>
 		</tr>
 		[% END %]
-		<form>
+		<form method="post" onSubmit='return checkChanges(this)'>
 		<tr align='center'>
 			<td><input size='30' name='T_DID' type='text'></td>
 			<td>

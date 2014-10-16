@@ -36,6 +36,9 @@
 	
 	<table width='100%'>
 		<tr>
+			<td align='left'>
+				Calls: [% USER.CUR_CALLS %]
+			</td>
 			<td width='90%' align='center'>
 				<h1>Tenant info</h1>
 			</td>
@@ -154,23 +157,10 @@
 			</tr>
 			<tr>
 				<td>
-					Calls on IVR:
+					Custom group rules:
 				</td>
 				<td>
-					[% USER.CUR_CALLS %]
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Quick links:
-				</td>
-				<td>
-					&nbsp;<a href='ui?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP Peers</a><br>
-					&nbsp;<a href='ui?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Routes</a><br>
-					&nbsp;<a href='ui?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Phones</a><br>
-					&nbsp;<a href='ui?action=macros_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Macros</a><br>
-					&nbsp;<a href='ui?action=cdr_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>CDRs</a><br>
-					&nbsp;<a href='ui?action=j_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Journals</a>
+					<textarea rows='14' cols='40' name='US_CUSTOM_RULES'>[% USER.CUSTOM_RULES | html %]</textarea>
 				</td>
 			</tr>
 			<tr><td colspan='2'>&nbsp;</td></tr>
@@ -274,6 +264,18 @@
 							</tr>
 						</table>
 					</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+				<td>
+					<h4>Quick links:</h4>
+					&nbsp;&nbsp;<a href='ui?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP Peers</a>
+					&nbsp;/&nbsp;<a href='ui?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Routes</a>
+					&nbsp;/&nbsp;<a href='ui?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Phones</a>
+					&nbsp;/&nbsp;<a href='ui?action=macros_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Macros</a>
+					&nbsp;/&nbsp;<a href='ui?action=cdr_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>CDRs</a>
+					&nbsp;/&nbsp;<a href='ui?action=j_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Journals</a>
+				</td>
 				</tr>
 				</table>
 			</td>

@@ -88,6 +88,7 @@
 				<input type='hidden' value='[% node.NODE_ID %]' name='data_id'>
 				<input type='hidden' value='node_update' name='action'>
 				<input type='hidden' value='[% MSG_FROM %]' name='from'>
+				<a href='?action=sysstatus&a=msg_download'><img border='0' src='/xvb/images/information-button.png' title="sysstatus" /></a>&nbsp;&nbsp;
 				<a title='delete node' href='?action=node_del&node_id=[% node.NODE_ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 				
 				<span class='in_t' id='in_t_id-[% node.NODE_ID %]'>
@@ -102,7 +103,7 @@
 		</tr>
 		[% END %]
 
-		<form>
+		<form method="post" onSubmit='return checkChanges(this)'>
 		<tr align='center'>
 			<td><input size='15' type='text' name='N_NODE_ID'></td>
 			<td><input size='15' type='text' name='N_DOWNLOAD_IP'></td>

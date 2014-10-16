@@ -45,7 +45,7 @@
 
 	<p align='center'>
 	<table width='98%' id='list-data'>
-		<form metdod='post'>
+		<form method="post" onSubmit='return checkChanges(this)'>
 		<tr class='nocolor'>
 			<td>Id</td>
 			<td align='left' colspan='2'>[% ID | html %]</td>

@@ -40,7 +40,7 @@
 
 	<p>
 	<table width='95%'>
-		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+		<form method="get" onSubmit='return checkChanges(this)'>
 		<tr align='right'>
 			<td width='100%'>
 				<script type="text/javascript">
@@ -80,9 +80,8 @@
 				&nbsp;
 				<input size='10' type='text' placeholder='Access Code' name='ac' value='[% CDR_AC | html %]'>
 				&nbsp;
-				<select name="call_type">
-					<option value="" selected>call type</option>
-					<option value="" >all calls</option>
+				<select name="call_type" id='call_type_selector'>
+					<option value="" selected>all calls</option>
 					<option value="incoming">incoming</option>
 					<option value="local">local</option>
 					<option value="transit">transit</option>
@@ -95,6 +94,7 @@
 				</select>
 				&nbsp;
 				<input value='Search' type='submit'>
+				<script language='JavaScript'>setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");</script>
 			</td>
 		</tr>
 		</form>
@@ -131,15 +131,13 @@
 		</tr>
 		[% END %]
 
-		<tr>
 		[% IF MSG_NEXT ne '' %]
+		<tr>
 			<td align='right' colspan='7'>
 				<a title='next page' href='?action=cdr_list&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
 			</td>
-		[% ELSE %]
-			<td colspan='7'>&nbsp;</td>
-		[% END %]
 		</tr>
+		[% END %]
 	</table>
 	</p>
 	

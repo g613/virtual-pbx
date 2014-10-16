@@ -227,7 +227,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>Eanble Google Analytics: </td>
+						<td>Enable Google Analytics: </td>
 						<td>
 						<select name="GR_ALLOW_GA">
 						[% IF GROUP.ALLOW_GA eq "1" %]

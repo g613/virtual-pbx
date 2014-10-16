@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.7 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.8 2014/10/12 10:05:27 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -37,7 +37,7 @@
 
 	<table width='100%'>
 		<tr>
-			<form method="get" action="[% CGI_URL %]">
+			<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 			<td align='right'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {

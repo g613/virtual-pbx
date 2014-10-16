@@ -79,7 +79,7 @@
 		</tr>
 		[% END %]
 		
-		<form>
+		<form method="post" onSubmit='return checkChanges(this)'>
 		<tr>
 			<td colspan='3' align='left'>
 			<input placeholder='ID' size='3' name='T_ID' type='text'>

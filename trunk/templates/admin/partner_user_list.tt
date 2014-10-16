@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Virtual PBX - users</title>
+	<title>Virtual PBX - tenants</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
 </head>
@@ -16,27 +16,23 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 
-	<center>
-	<p>
 	<table width='95%' class='logo'>
 		<tr>
 			<td align='left' width='20%'>
 			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
-			<td align='center'><h2>Users</h2></td>
-			<td align='right' width='20%'>
-				[% INCLUDE version.tt %]
-			</td>
 		</tr>
 	</table>
-	</p>
+	
+	<center>
 
-	<p>
+	<h1>Tennants</h1>
+
 	<table width='95%'>
 		<tr>
 			<td align='right'>
-			<form method='post'>
-			<input placeholder='Phone number' size='15' name='f_vn' type='text' value='[% F_VN | html %]'>
+			<form method="post" onSubmit='return checkChanges(this)'>
+			<input placeholder='Shared DID' size='15' name='f_vn' type='text' value='[% F_VN | html %]'>
 			&nbsp;
 			<input placeholder='Access code' size='10' name='f_ac' type='text'  value='[% F_AC | html %]'>
 			&nbsp;
@@ -52,7 +48,7 @@
 	<p>
 	<table width='95%' id='list-data'>
 		<tr>
-				<th>Phone number</th>
+				<th>Shared DID</th>
 				<th>Access code</th>
 				<th>User name</th>
 				<th>Language</th>
@@ -114,15 +110,6 @@
 		[% END %]
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<form>
-			<td align='left' colspan='6'>
-				<input placeholder='Phone number' size='15' type='text' name='phone'>
-				&nbsp;
-				<input value='Create new account' type='submit'>
-				<input type='hidden' value='user_add' name='action'>
-				<input type='hidden' value='[% PARTNER | html %]' name='partner'>
-			</td>
-			</form>
 			<td align='right' colspan='2'>
 				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
@@ -132,7 +119,22 @@
 	<script language='JavaScript'>listcolorer( 'list-data' );</script>
 	</p>
 	
-	
+	<p>
+	<table width='95%'>
+		<form method="post" onSubmit='return checkChanges(this)'>
+		<tr align='left'>
+			<td align='left' colspan='6'>
+				<input placeholder='Shared DID' size='15' type='text' name='phone'>
+				&nbsp;
+				<input value='Create new tenant' type='submit'>
+				<input type='hidden' value='user_add' name='action'>
+				<input type='hidden' value='[% PARTNER | html %]' name='partner'>
+			</td>
+			</form>
+		</tr>
+	</tabel>
+	</p>
+
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

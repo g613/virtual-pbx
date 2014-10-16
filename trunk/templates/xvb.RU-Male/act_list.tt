@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.6 2014/09/12 10:55:07 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.8 2014/10/11 19:51:54 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Активность номера - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -34,7 +34,7 @@
 
 	<center>
 			
-	<h1>Активность нутреннего номера #[% VBOX_PREF.EXT_NUMBER | html %]</h1>
+	<h1>Активность внутреннего номера #[% VBOX_PREF.EXT_NUMBER | html %]</h1>
 
 	<table width='100%'>
 		<tr>
@@ -72,8 +72,8 @@
 				&nbsp;
 				<input placeholder='Звонящий' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				&nbsp;
-				<select name="act_type")">
-					<option selected value="" >любой тип</option>
+				<select name="act_type" id="act_type_selector">
+					<option selected value="">любой тип</option>
 				[% FOREACH at = ACT_TYPES %]
 					<option value="[% at %]">[% at | locale_msg %]</option>
 				[% END %]
@@ -84,6 +84,7 @@
 				<input value='Найти' type='submit'>
 				<input name='need_excel' value='Excel' type='submit'>
 			</form>
+			<script langiage='JavaScript'>setActiveSelector('act_type_selector',"[% ACT_TYPE | html %]");</script>
 			</td>
 		</tr>
 	</table>

@@ -37,7 +37,7 @@
 	<table width='100%'>
 		<tr>
 			<td align='right'>
-				<form method='post'>
+				<form method="post" onSubmit='return checkChanges(this)'>
 					<input size='14' name='f_group' type='text' placeholder='Group name' 'value='[% F_GROUP | html %]'>
 					<input type='hidden' value='group_list' name='action'>
 					&nbsp;
@@ -85,7 +85,7 @@
 		[% END %]
 
 		<tr>
-			<form method='post'>
+			<form method="post" onSubmit='return checkChanges(this)'>
 			<td align='left' colspan='6'>
 				<input size='15' placeholder='Group name' type='text' name='group_name'>
 				&nbsp;

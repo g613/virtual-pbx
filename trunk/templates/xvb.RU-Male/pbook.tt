@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.6 2014/09/11 15:06:39 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.7 2014/10/13 15:30:32 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Телефонная книга - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -23,7 +23,8 @@
 					<input type='hidden' name='section' value='PBOOK'>
 					<input type='hidden' name='action' value='restore'>
 					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-					<input name='is_excel' type='submit' value='Импорт из CSV'>
+					<input type='hidden' name='is_excel' value='1'>
+					<input type='submit' value='Импорт из CSV'>
 				</form>
 			</td>
 			<td width='50%' align='right' nowrap='nowrap'>

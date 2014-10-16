@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: partner_login.tt,v 1.3 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: partner_login.tt,v 1.4 2014/10/15 14:32:19 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - login</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -7,20 +7,17 @@
 </head>
 
 <body onLoad="XVBInit()">
-	<center>
-	<p>
 	<table width='95%' class='logo'>
 		<tr>
 			<td align='left' width='20%'>
 				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
-			<td align='center'><h2>Welcome to VirtualPBX</h2></td>
-			<td align='right' width='20%'>
-				&nbsp;
-			</td>
 		</tr>
 	</table>
-	</p>
+			
+	<center>
+	
+	<h1>Welcome to VirtualPBX</h1>
 
 	<p align='center'>
 	<table width='50%' class='half-width'>

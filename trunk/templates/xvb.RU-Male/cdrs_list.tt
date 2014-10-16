@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.3 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.8 2014/10/14 19:33:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -20,7 +20,7 @@
 <body onLoad="XVBInit()">
 	<center>
 			
-	<h1>Список звонков</h1>
+	<h1>История звонков</h1>
 	
 	<table width='100%'>
 		<tr>
@@ -61,9 +61,9 @@
 				&nbsp;
 				<input size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]' placeholder='кому звонил'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<select name="call_type">
-					<option selected value="" >тип звонка</option>
-					<option value="" >все звонки</option>
+				&nbsp;
+				<select name="call_type" id="call_type_selector">
+					<option value="" selected>все звонки</option>
 					<option value="incoming">входящий</option>
 					<option value="local">локальный</option>
 					<option value="transit">транзит</option>
@@ -74,15 +74,14 @@
 					<option value="alarmclock">будильник</option>
 					<option value="service">сервисный</option>
 				</select>
-				<input value='Найти' type='submit'>
 				&nbsp;
+				<input value='Найти' type='submit'>
 				<input name='need_excel' value='Excel' type='submit'>
-				<script language='JavaScript'>
-					document.write("<select name='chart_group_period'><option selected value=''>группировать по</option><option value='min'>минута</option><option value='h'>час</option><option value='hd'>час дня</option><option value='d'>день</option><option value='dw'>день недели</option><option value='dw'>день месяца</option><option value='w'>неделя</option><option value='m'>месяц</option><option value='y'>год</option><option value='did'>номер назначения</option><option value='cid'>номер звонящего</option><option value='ct'>тип звонка</option></select>&nbsp;");
-					document.write("<input name='need_chart' value='Графики' type='submit'>");
-				</script>
 			</td>
 			</form>
+			<script language='JavaScript'>
+				setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");
+			</script>
 		</tr>
 	</table>
 	

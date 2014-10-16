@@ -37,7 +37,7 @@
 	
 	<table width='100%'>
 		<tr>
-			<form method='post'>
+			<form method="post" onSubmit='return checkChanges(this)'>
 			<td align='right'>
 				<input placeholder='shared DID' size='12' name='f_vn' type='text' value='[% F_VN | html %]'>
 				&nbsp;
@@ -45,18 +45,14 @@
 				&nbsp;
 				<input placeholder='User name' size='25' name='f_uname' type='text' value='[% F_UNAME | html %]'>
 				&nbsp;
-				<select name="f_group">
-					<option value="">any group</option>
+				<select name="f_group" id="group_type_selector">
+					<option value="" selected>any group</option>
 					[% FOREACH gr = GROUPS %]
-						[% IF gr.GROUP_ID eq F_GROUP %]
-							<option value="[% gr.GROUP_ID | html %]" selected>[% gr.GROUP_NAME | html %]</option>
-						[% ELSE %]
-							<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
-						[% END %]
+						<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
 					[% END %]
 				</select>
 				&nbsp;
-				<select name="f_status">
+				<select name="f_status" id="status_type_selector">
 				   	<option value="" selected>Any</option>
 					<option value="1">Active</option>
 					<option value="0">Locked</option>
@@ -66,6 +62,10 @@
 				&nbsp;
 				<input value='search' type='submit'>
 			</td>
+			<script language='JavaScript'>
+				setActiveSelector('status_type_selector',"[% F_STATUS %]");
+				setActiveSelector('group_type_selector',"[% F_GROUP %]");
+			</script>
 			</form>
 		</tr>
 	</table>
@@ -143,31 +143,7 @@
 		[% END %]
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right'>
-				<input size='12' placeholder='Shared DID' type='text' name='phone'>
-			</td>
-			<td colspan='8' align='left'>
-				&nbsp;
-				Group: 
-				<select name="group_id">
-				[% FOREACH gr = GROUPS %]
-					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
-				[% END %]
-				</select>
-				&nbsp;
-				[% IF TEMPLATES scalar %]
-				Template: 
-				<select name="conf_file">
-				[% FOREACH tmpl = TEMPLATES %]
-					<option value="[% tmpl.FILE | html %]">[% tmpl.DESC | html %]</option>
-				[% END %]
-				</select>
-				&nbsp;
-				[% END %]
-				<input value='&nbsp;&nbsp;Add tenant&nbsp;&nbsp;' type='submit'>
-				<input type='hidden' value='user_add' name='action'>
-			</td>
-			<td align='right'>
+			<td align='right' colspan='10'>
 				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
 		</tr>
@@ -178,7 +154,7 @@
 	
 	<p>
 	<table width='95%'>
-		<form>
+		<form method="post" onSubmit='return checkChanges(this)'>
 		<tr align='left'>
 			<td>
 				&nbsp;

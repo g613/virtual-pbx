@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.15 2014/09/12 10:55:07 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.16 2014/10/14 19:33:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -151,6 +151,7 @@
 				<button type="button">...</button>
 				&nbsp;
 				<input placeholder='Caller ID' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				&nbsp;
 				<select name='chart_group_period'>
 				<script language='Javascript'>
 					document.write( "<option selected value='"+ group_by +"'>"+ period +"</option>" );

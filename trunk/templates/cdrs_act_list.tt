@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.23 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.24 2014/10/13 15:30:32 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Call Detail - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -16,7 +16,7 @@
 	<h1>Call Detail</h1>
 
 	<p>
-	<table width='95%' id='d-tbl'>
+	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>Start Date</th>
 			<th>Caller ID</th>

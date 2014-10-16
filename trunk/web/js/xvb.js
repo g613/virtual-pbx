@@ -1,8 +1,9 @@
 /*
-    <!-- $Id: xvb.js,v 1.79 2014/09/17 15:34:07 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.85 2014/10/14 19:33:21 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
+var selectors_list = [];
 
 function CLStart( obj ) {
 	obj.className='in_t1';
@@ -189,6 +190,7 @@ function checkChanges( obj, skip_shaddow ) {
 		if ( obj.elements[i].type == 'checkbox' || obj.elements[i].type == 'radio' ) {
 			if ( obj.elements[i].checked != obj.elements[i].defaultChecked ) {
 				change_flag = true;
+				break;
 				//alert( "Type: " + obj.elements[i].type + ' - checked 0, old: ' + obj.elements[i].defaultChecked  );
 			}
 		} else if ( obj.elements[i].type == 'submit' ) {
@@ -198,22 +200,36 @@ function checkChanges( obj, skip_shaddow ) {
 		} else if ( obj.elements[i].type != 'select-one' ) {
 			if ( obj.elements[i].value != obj.elements[i].defaultValue ) {
 				change_flag = true;
+				break;
 				//alert( "Type: " + obj.elements[i].type + ' - checked 1'  );
 			}
 		} else {
-			var df_ind = -1;
-			for ( i2=0; i2 < obj.elements[i].options.length; i2++ ) {
-				if ( obj.elements[i].options[i2].defaultSelected == true ) {
-					df_ind = i2;
+			if ( selectors_list[ obj.elements[i].id ] != null ) {
+				if ( selectors_list[ obj.elements[i].id ] != obj.elements[i].selectedIndex ) {
+					change_flag = true;
 					break;
 				}
-			}
-			if ( df_ind == -1 ) {
-				obj.elements[i].options[0].defaultSelected = true;
-			}
-			if ( obj.elements[i].options[ obj.elements[i].selectedIndex ].defaultSelected != true) {
-				change_flag = true;
-				//alert( "Type: " + obj.elements[i].type + ' - checked 2'  );
+			} else {
+				var df_ind = -1;
+				for ( i2=0; i2 < obj.elements[i].options.length; i2++ ) {
+					if ( obj.elements[i].options[i2].defaultSelected == true ) {
+						df_ind = i2;
+						break;
+					}
+				}
+				if ( df_ind == -1 ) {
+					if ( obj.elements[i].selectedIndex > 0 ) {
+						change_flag = true;
+						break;
+					}
+					//obj.elements[i].options[0].defaultSelected = true;
+				} else {
+					if ( obj.elements[i].options[ obj.elements[i].selectedIndex ].defaultSelected != true) {
+						change_flag = true;
+						break;
+						//alert( "Type: " + obj.elements[i].type + ' - checked 2'  );
+					}
+				}
 			}
 		}
 	}
@@ -330,19 +346,19 @@ function ShowPlayer( file ) {
 	if ( canPlayOGG ) {
 		var wav_file = file.replace("wav?media=mp3;","ogg?");
 		wav_file = wav_file.replace("=mp3","=ogg");
-		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><img border="0" src="/xvb/images/vb_del.png" alt="close" /></a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
 	} else if ( canPlayMP3 ) {
 		var wav_file = file;
-		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><img border="0" src="/xvb/images/vb_del.png" alt="close" /></a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
 	} else {
 		var plugin = (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) ? navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin : 0;
 		if ( plugin ) {
 			// flash
-			player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td><object type="application/x-shockwave-flash" data="/xvb/ump3player.swf" height="70" width="470"><param name="wmode" VALUE="transparent" /><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="movie" value="/xvb/ump3player.swf" /><param name="FlashVars" value="way='+file+'&amp;swf=/xvb/ump3player.swf&amp;w=470&amp;h=70&amp;time_seconds=0&amp;autoplay=1&amp;q=&amp;skin=white&amp;volume=90&amp;comment=Voice messages" /></object></td></tr></table>';
+			player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><img border="0" src="/xvb/images/vb_del.png" alt="close" /></a></td></tr><tr><td><object type="application/x-shockwave-flash" data="/xvb/ump3player.swf" height="70" width="470"><param name="wmode" VALUE="transparent" /><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="movie" value="/xvb/ump3player.swf" /><param name="FlashVars" value="way='+file+'&amp;swf=/xvb/ump3player.swf&amp;w=470&amp;h=70&amp;time_seconds=0&amp;autoplay=1&amp;q=&amp;skin=white&amp;volume=90&amp;comment=Voice messages" /></object></td></tr></table>';
 		} else if ( canPlayWAV ) {
 			var wav_file = file.replace("wav?media=mp3;","wav?");
 			wav_file = wav_file.replace("=mp3","=wav");
-			player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()">close</a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+			player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><img border="0" src="/xvb/images/vb_del.png" alt="close" /></a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
 		} else {
 			player_data = 'Your browser not supported';
 		}
@@ -633,10 +649,10 @@ function click2call_win( server, key, ac, lang ) {
 	WinPop.document.write('<html>\n<head><title>Click2Call - XVB VirtualPBX</title>\n<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" /></head>\n<body><center><form method="post" action="'+server+'/c2c"><input type="hidden" value="'+key+'" name="key"><input type="hidden" value="'+ac+'" name="ac">');
 	if ( lang == 'ru' ) {
 		response_str = Base64.encode('<center>Запрос обработан. Ожидайте звонка.</center>');
-		WinPop.document.write('<h1>Заказ звонка</h1><input type="text" size="25" name="ph" placeholder="введите Ваш номер телефона"><br/><br/><input value="заказать звонок" type="submit"><input type="hidden" name="b64message" value="'+ response_str +'">');
+		WinPop.document.write('<h1>Заказ звонка</h1><input type="text" size="30" name="ph" placeholder="введите Ваш номер телефона"><br/><br/><input value="заказать звонок" type="submit"><input type="hidden" name="b64message" value="'+ response_str +'">');
 	} else {
 		response_str = '<center>Please wait a call.</center>';
-		WinPop.document.write('<h1>Order a Call</h1><input type="text" size="25" name="ph" placeholder="enter your phone here"><br/><br/><input value="order a call" type="submit"><input type="hidden" name="message" value="'+ response_str +'">');
+		WinPop.document.write('<h1>Order a Call</h1><input type="text" size="30" name="ph" placeholder="enter your phone here"><br/><br/><input value="order a call" type="submit"><input type="hidden" name="message" value="'+ response_str +'">');
 	}
 	WinPop.document.write('</form></center></body></html>');
 	WinPop.document.close();
@@ -1278,6 +1294,17 @@ function checkfr(newurl) {
 function breakout_of_frame() {
 	if (top.location != location) {
 		top.location.href = document.location.href ;
+	}
+}
+/* Set active selector */
+function setActiveSelector(objid,cur_val) {
+	var selector = document.getElementById(objid);
+	for ( i=0; i < selector.options.length; i++ ) {
+		if ( selector.options[i].value == cur_val ) {
+			selector.options[i].selected = true;
+			selectors_list[objid] = i;
+			break;
+		}
 	}
 }
 

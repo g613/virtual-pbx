@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.274 2014/09/23 19:41:45 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.276 2014/10/13 15:30:32 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -26,7 +26,7 @@
 
 <body onLoad="XVBInit()">
 	
-	<table width='95%'>
+	<table width='100%'>
 		<tr>
 			<td align='left'>
 			[% IF USER_CREDS.ROOT eq '0' %]
@@ -2641,7 +2641,7 @@
 						<td>Fax on Demand: </td>
 						<td align='right' nowrap='nowrap'>
 							[% IF VB_DATA.C2C_SECRET %]
-							<a title='SendFax' href='#' onclick="webfax_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% VB_DATA.C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','en','[% USER_CREDS.UNIQ %]')"><img border='0' src='/xvb/images/phone.png' alt='Отправить факс' /></a>&nbsp;&nbsp;
+							<a title='SendFax' href='#' onclick="webfax_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% VB_DATA.C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','en','[% USER_CREDS.UNIQ %]')"><img border='0' src='/xvb/images/phone.png' alt='Send fax' /></a>&nbsp;&nbsp;
 							[% END %]
 							<a title='download' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.FAX_FILE %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 							&nbsp;<a title='delete' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% VBOX_PREF.FAX_FILE %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-s6','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
@@ -2786,7 +2786,8 @@
 									<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 									<input type='hidden' name='action' value='ext_restore'>
 									<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-									<input name='is_excel' type='submit' value='Append data from CSV'>
+									<input type='hidden' name='is_excel' value='1'>
+									<input type='submit' value='Append data from CSV'>
 								</td>
 								</form>
 							</tr>
@@ -3058,7 +3059,8 @@
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-							<input name='is_excel' type='submit' value='Append data from CSV'>
+							<input type='hidden' name='is_excel' value='1'>
+							<input type='submit' value='Append data from CSV'>
 							</form>
 						</td>
 					</tr>
@@ -3271,7 +3273,8 @@
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-							<input name='is_excel' type='submit' value='Append data from CSV'>
+							<input type='hidden' name='is_excel' value='1'>
+							<input type='submit' value='Append data from CSV'>
 							</form>
 						</td>
 					</tr>

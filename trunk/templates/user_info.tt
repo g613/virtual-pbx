@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.91 2014/09/07 18:36:23 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.93 2014/10/13 15:30:32 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -13,10 +13,10 @@
 <body onLoad="checkfr('uniq=[% USER_CREDS.UNIQ %]&saction=user_info');XVBInit()">
 	<center>
 	
-	<h1>User info AC# <b>[% USER_CREDS.ACCESS_CODE | html %]</h1>
+	<h1>User info AC# [% USER_CREDS.ACCESS_CODE | html %]</h1>
 
 	<p>
-	<table width='95%'>
+	<table width='100%'>
 		<tr>
 			<td valign='top'>
 			<table class='user_data'>

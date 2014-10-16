@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.4 2014/09/26 18:37:50 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.8 2014/10/15 14:32:19 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Actions journal</title>
 
@@ -40,7 +40,7 @@
 	<table width='100%'>
 		<tr>
 			<td align='right'>
-			<form method="get" action="[% CGI_URL %]">
+			<form method="get" onSubmit='return checkChanges(this)'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -76,13 +76,8 @@
 				&nbsp;
 				<input size='12' placeholder='exten' type='text' name='ext_num' value='[% J_EXT_NUM %]'>
 				&nbsp;
-				<select name="action_type")">
-					[% IF J_ACTION %]
-						<option value="[% J_ACTION %]" selected>[% J_ACTION %]</option>
-						<option value="" >all</option>
-					[% ELSE %]
-						<option value="" selected>all</option>
-					[% END %]
+				<select name="action_type" id="j_type_selector">
+					<option value="" selected>all</option>
 				[% FOREACH at = ACTIONS %]
 					<option value="[% at %]">[% at %]</option>
 				[% END %]
@@ -92,6 +87,10 @@
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				&nbsp;
 				<input value='Search' type='submit'>
+				<script language='JavaScript'>
+					setActiveSelector('j_type_selector',"[% J_ACTION %]");
+				</script>
+			</form>
 			</td>
 		</tr>
 	</table>
@@ -109,7 +108,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='6'>
-				<a title='previous page' href='?action=j_list&from=[% MSG_PREV %]&ac=[% J_AC %]&ext_num=[% J_EXT_NUM %]&data=[% J_DATA | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=j_list&action_type=[% J_ACTION %]&from=[% MSG_PREV %]&ac=[% J_AC %]&ext_num=[% J_EXT_NUM %]&data=[% J_DATA | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -125,15 +124,13 @@
 			</tr>
 		[% END %]
 
-		<tr>
 		[% IF MSG_NEXT ne '' %]
+		<tr>
 			<td align='right' colspan='6'>
-				<a title='next page' href='?action=j_list&from=[% MSG_NEXT %]&ac=[% J_AC %]&ext_num=[% J_EXT_NUM %]&data=[% J_DATA | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+				<a title='next page' href='?action=j_list&action_type=[% J_ACTION %]&from=[% MSG_NEXT %]&ac=[% J_AC %]&ext_num=[% J_EXT_NUM %]&data=[% J_DATA | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
 			</td>
-		[% ELSE %]
-			<td colspan='6'>&nbsp;</td>
-		[% END %]
 		</tr>
+		[% END %]
 	</table>
 	</p>
 
