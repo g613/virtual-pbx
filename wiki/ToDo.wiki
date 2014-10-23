@@ -1,6 +1,13 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- Фильтры в сообщениях по длительности</font>
+
+<font color='red'>- Фильтры в cdr по длительности звонка</font>
+
+<font color='green'>+ Фильтры в ai телефонах по user-agent</font>
+19.10.2014 / build 8870 )
+
 <font color='green'>+ Улучшить генерацию дефолтного пинкода</font> ( 16.10.2014 / build 8844 )
 
 <font color='green'>+ В сообщения добавить фильтры голосовое / факсовое сообщение</font> ( 14.10.2014 / build 8787 )
