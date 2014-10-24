@@ -1,12 +1,16 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Фильтры в сообщениях по длительности</font>
+<font color='red'>- в бесшовном трансфере добавить поддержку перевода на ivr</font>
 
-<font color='red'>- Фильтры в cdr по длительности звонка</font>
+<font color='red'>- в статистике звонков периоды группировки по длительности звонка</font>
+
+<font color='green'>+ Фильтры в сообщениях по длительности</font> ( 24.10.2014 / build 8894 )
+
+<font color='green'>+ Фильтры в cdr по длительности звонка</font> ( 24.10.2014 / build 8894 )
 
 <font color='green'>+ Фильтры в ai телефонах по user-agent</font>
-19.10.2014 / build 8870 )
+( 19.10.2014 / build 8870 )
 
 <font color='green'>+ Улучшить генерацию дефолтного пинкода</font> ( 16.10.2014 / build 8844 )
 
