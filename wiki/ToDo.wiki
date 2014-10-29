@@ -1,7 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- возможность локализации AI</font>
+<font color='red'>- возможность запретить переход в административный режим по нажатии *</font>
+
+<font color='green'>+ возможность локализации AI</font> ( 28.10.2014 / build 8952 )
 
 <font color='green'>+ в бесшовном трансфере добавить поддержку перевода на ivr</font> ( 26.10.2014 / build 8948 )
 
