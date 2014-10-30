@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.24 2014/10/13 15:30:32 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.25 2014/10/23 12:18:12 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension activity - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -70,8 +70,9 @@
 				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
 				<button type="button">...</button>
 				&nbsp;
-				Caller ID:
-				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				<input size='10' type='text' placeholder='Caller' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				&nbsp;
+				<input size='8' type='text' placeholder='Duration' name='duration' value='[% CDR_DURATION | html %]'>
 				&nbsp;
 				<select name="act_type" id="act_type_selector">
 					<option value="" selected>all</option>
@@ -103,7 +104,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='5'>
-				<a title='previous page' href='?action=ext_stat&id=[% VBOX_PREF.ID %]&act_type[% ACT_TYPE | html %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=ext_stat&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type[% ACT_TYPE | html %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -134,7 +135,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='5'>
-				<a title='next page' href='?action=ext_stat&id=[% VBOX_PREF.ID %]&act_type=[% ACT_TYPE | html %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+				<a title='next page' href='?action=ext_stat&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% ACT_TYPE | html %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
 			</td>
 		[% ELSE %]
 			<td colspan='5'>&nbsp;</td>

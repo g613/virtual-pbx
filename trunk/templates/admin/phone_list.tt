@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.11 2014/10/15 14:32:19 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.13 2014/10/22 12:59:05 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -15,7 +15,7 @@
 	<table width='95%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
@@ -35,14 +35,18 @@
 		<tr>
 			<td align='right'>
 				<form method="post" onSubmit='return checkChanges(this)'>
+					<input size='11' name='ac' type='text' placeholder='Access code' value='[% AC | html %]'>
+					&nbsp;
 					<input size='6' name='phone' type='text' placeholder='Phone' value='[% PHONE | html %]'>
 					&nbsp;
 					<input size='10' name='ip' type='text' placeholder='Reg IP' value='[% IP | html %]'>
 					&nbsp;
 					<input size='11' name='authname' type='text' placeholder='Auth name' value='[% AUTHNAME | html %]'>
 					&nbsp;
+					<input size='11' name='ua' type='text' placeholder='User agent' value='[% UA | html %]'>
+					&nbsp;
 					<input type='hidden' value='phone_list' name='action'>
-					<input value='search' type='submit'>
+					<input value='Search' type='submit'>
 				</form>
 			</td>
 		</tr>
@@ -66,7 +70,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='9'>
-				<a title='previous page' href='?action=phone_list&ip=[% IP | html %]&from=[% MSG_PREV %]&phone=[% PHONE | html %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=phone_list&ua=[% UA | html %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_PREV %]&phone=[% PHONE | html %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -107,7 +111,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='10'>
-				<a title='previous page' href='?action=phone_list&ip=[% IP | html %]&from=[% MSG_NEXT %]&phone=[% PHONE | html %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+				<a title='previous page' href='?action=phone_list&ua=[% UA | html %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_NEXT %]&phone=[% PHONE | html %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
 			</td>
 		</tr>
 		[% END %]

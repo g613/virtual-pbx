@@ -23,7 +23,7 @@
 	<table width='95%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
@@ -74,11 +74,13 @@
 				<button type="button">...</button>
 				<input name='action' value='cdr_list' type='hidden'>
 				&nbsp;
-				<input size='10' type='text' placeholder='Caller ID' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				<input size='10' type='text' placeholder='Caller' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				&nbsp;
-				<input size='10' type='text' placeholder='Called ID' name='called_id' value='[% CDR_CALLED_ID | html %]'>
+				<input size='10' type='text' placeholder='Called' name='called_id' value='[% CDR_CALLED_ID | html %]'>
 				&nbsp;
 				<input size='10' type='text' placeholder='Access Code' name='ac' value='[% CDR_AC | html %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Duration' name='duration' value='[% CDR_DURATION | html %]'>
 				&nbsp;
 				<select name="call_type" id='call_type_selector'>
 					<option value="" selected>all calls</option>
@@ -114,7 +116,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='7'>
-				<a title='previous page' href='?action=cdr_list&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=cdr_list&from=[% MSG_PREV %]&duration=[% CDR_DURATION | html %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -134,7 +136,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='7'>
-				<a title='next page' href='?action=cdr_list&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+				<a title='next page' href='?action=cdr_list&from=[% MSG_NEXT %]&duration=[% CDR_DURATION | html %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]

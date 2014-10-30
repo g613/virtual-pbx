@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.85 2014/10/14 19:33:21 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.88 2014/10/23 18:34:44 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -444,7 +444,7 @@ function graphit(g,gwidth){
 
 	coll_width = parseInt(90/total.length-1);
 
-	output='<table width="95%" border="0" cellspacing="0" cellpadding="0"><tr><th width="10%">'+(g[0][0])+'</th>';
+	output='<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><th width="10%">'+(g[0][0])+'</th>';
 	for (i2=1;i2<g[0].length;i2++) {
 		//output+='<th colspan="2">'+ (g[0][i2]) +'</th>';
 		output+='<th colspan="2" width="'+coll_width+'%">'+g[0][i2]+'</th>';
@@ -1071,81 +1071,99 @@ function getTimePeriod(lang,period) {
 
 	if ( lang == 'ru' ) {
 		if ( period == '%Y-%m-%d' ) {
-			period = 'день';
+			period = 'День';
 			group_by = 'd';
 		} else if ( period == '%w - %W' ) {
-			period = 'день недели';
+			period = 'День недели';
 			group_by = 'dw';
 		} else if ( period == '%d' ) {
-			period = 'день месяца';
+			period = 'День месяца';
 			group_by = 'dm';
 		} else if ( period == '%V' ) {
-			period = 'неделя';
+			period = 'Неделя';
 			group_by = 'w';
 		} else if ( period == '%Y-%m' ) {
-			period = 'месяц';
+			period = 'Месяц';
 			group_by = 'm';
 		} else if ( period == '%Y' ) {
-			period = 'год';
+			period = 'Год';
 			group_by = 'y';
 		} else if ( period == '%H' ) {
-			period = 'час дня';
+			period = 'Час дня';
 			group_by = 'hd';
 		} else if ( period == '%Y-%m-%d %H' ) {
-			period = 'час';
+			period = 'Час';
 			group_by = 'h';
 		} else if ( period == '%Y-%m-%d %H:%i' ) {
-			period = 'минута';
+			period = 'Минута';
 			group_by = 'min';
 		} else if ( period == 'CALLED_ID' ) {
-			period = 'номер назначения';
+			period = 'Номер назначения';
 			group_by = 'did';
 		} else if ( period == 'CALLER_ID' ) {
-			period = 'номер звонящего';
+			period = 'Номер звонящего';
 			group_by = 'cid';
 		} else if ( period == 'CALL_TYPE' ) {
-			period = 'тип звонка';
+			period = 'Тип звонка';
 			group_by = 'ct';
+		} else if ( period == 'd10' ) {
+			period = 'Длительность / 10 сек';
+			group_by = 'd10';
+		} else if ( period == 'd30' ) {
+			period = 'Длительность / 30 сек';
+			group_by = 'd30';
+		} else if ( period == 'd60' ) {
+			period = 'Длительность (минуты)';
+			group_by = 'd60';
 		} else {
 			period = 'группировать по';
 		}
 	} else {
 		if ( period == '%Y-%m-%d' ) {
-			period = 'day';
+			period = 'Day';
 			group_by = 'd';
 		} else if ( period == '%w - %W' ) {
-			period = 'day of week';
+			period = 'Day of week';
 			group_by = 'dw';
 		} else if ( period == '%d' ) {
-			period = 'day of month';
+			period = 'Day of month';
 			group_by = 'dm';
 		} else if ( period == '%V' ) {
-			period = 'week';
+			period = 'Week';
 			group_by = 'w';
 		} else if ( period == '%Y-%m' ) {
-			period = 'month';
+			period = 'Month';
 			group_by = 'm';
 		} else if ( period == '%Y' ) {
-			period = 'year';
+			period = 'Year';
 			group_by = 'y';
 		} else if ( period == '%H' ) {
-			period = 'hour of day';
+			period = 'Hour of day';
 			group_by = 'hd';
 		} else if ( period == '%Y-%m-%d %H' ) {
-			period = 'hour';
+			period = 'Hour';
 			group_by = 'h';
 		} else if ( period == '%Y-%m-%d %H:%i' ) {
-			period = 'minute';
+			period = 'Minute';
 			group_by = 'min';
 		} else if ( period == 'CALLED_ID' ) {
 			period = 'DID';
 			group_by = 'did';
 		} else if ( period == 'CALLER_ID' ) {
-			period = 'callerID';
+			period = 'CallerID';
 			group_by = 'cid';
 		} else if ( period == 'CALL_TYPE' ) {
-			period = 'call type';
+			period = 'Call type';
 			group_by = 'ct';
+		} else if ( period == 'd10' ) {
+			period = 'Duration / 10 sec';
+			group_by = 'd10';
+		} else if ( period == 'd30' ) {
+			period = 'Duration / 30 sec';
+			group_by = 'd30';
+		} else if ( period == 'd60' ) {
+			period = 'Duration (minutes)';
+			group_by = 'd60';
 		} else {
 			period = 'group by';
 		}

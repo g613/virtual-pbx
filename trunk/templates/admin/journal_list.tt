@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.8 2014/10/15 14:32:19 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.10 2014/10/23 12:18:12 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Actions journal</title>
 
@@ -21,7 +21,7 @@
 	<table width='95%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
@@ -74,7 +74,7 @@
 				<input name='action' value='j_list' type='hidden'>
 				<input size='12' placeholder='Access code' type='text' name='ac' value='[% J_AC %]'>
 				&nbsp;
-				<input size='12' placeholder='exten' type='text' name='ext_num' value='[% J_EXT_NUM %]'>
+				<input size='12' placeholder='Extension' type='text' name='ext_num' value='[% J_EXT_NUM %]'>
 				&nbsp;
 				<select name="action_type" id="j_type_selector">
 					<option value="" selected>all</option>
@@ -83,7 +83,7 @@
 				[% END %]
 				</select>
 				&nbsp;
-				<input size='18' placeholder='data' type='text' name='data' value='[% J_DATA | html %]'>
+				<input size='18' placeholder='Data' type='text' name='data' value='[% J_DATA | html %]'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				&nbsp;
 				<input value='Search' type='submit'>

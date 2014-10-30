@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: partner_login.tt,v 1.4 2014/10/15 14:32:19 gosha Exp $ -->
+<!-- $Id: partner_login.tt,v 1.5 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - login</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -10,7 +10,7 @@
 	<table width='95%' class='logo'>
 		<tr>
 			<td align='left' width='20%'>
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 		</tr>
 	</table>
@@ -35,7 +35,7 @@
 			</tr>
 			<tr>
 				<td colspan='2' align='center'>
-					<input type='submit' value='&nbsp;&nbsp;&nbsp;LOGIN&nbsp;&nbsp;&nbsp;'>
+					<input type='submit' value='Login'>
 				</td>
 			</tr>
 		</form>

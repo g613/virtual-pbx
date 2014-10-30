@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.16 2014/10/14 19:33:21 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.17 2014/10/23 12:18:12 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -150,7 +150,7 @@
 				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
 				<button type="button">...</button>
 				&nbsp;
-				<input placeholder='Caller ID' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				<input placeholder='Caller' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				&nbsp;
 				<select name='chart_group_period'>
 				<script language='Javascript'>

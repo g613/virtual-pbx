@@ -18,7 +18,7 @@
 	<table width='95%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
@@ -102,7 +102,7 @@
 				&nbsp;
 				<input placeholder='Report name' size='20' name='R_NAME' type='text'>
 				<input type='hidden' value='report_add' name='action'>
-				<input value='create new report' type='submit'>
+				<input value='Add report' type='submit'>
 				</form>
 			</td>
 			<td align='right' colspan='3'>

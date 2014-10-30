@@ -19,7 +19,7 @@
 	<table width='95%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
@@ -115,7 +115,7 @@
 				<input size='40' name='P_DESCRIPTION' type='text'></td>
 			</td>
 			<td align='center'>
-				<input value='Create new partner' type='submit'>
+				<input value='Add partner' type='submit'>
 				<input type='hidden' value='partner_add' name='action'>
 			</td>
 		[% IF MSG_NEXT ne '' %]

@@ -18,7 +18,7 @@
 	<table width='95%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
@@ -87,7 +87,7 @@
 			<input placeholder='Tariff name' size='25' name='T_NAME' type='text'>
 			&nbsp;
 			<input type='hidden' value='tariff_add' name='action'>
-			<input value='add new tariff' type='submit'>
+			<input value='Add tariff' type='submit'>
 			</td>
 			<td align='right' colspan='3'>
 			[% IF MSG_NEXT ne '' %]

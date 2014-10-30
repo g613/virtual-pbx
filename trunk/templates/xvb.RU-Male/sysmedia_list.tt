@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: sysmedia_list.tt,v 1.5 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: sysmedia_list.tt,v 1.6 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SysMedia - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -48,7 +48,7 @@
 				[% END %]
 				</select> 
 				<input type='file' name='file'>
-				<input type='submit' value='загрузить'>
+				<input type='submit' value='Загрузить'>
 			</td>
 			</form>
 		</tr>

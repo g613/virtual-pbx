@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.41 2014/10/13 15:30:32 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.42 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -227,7 +227,7 @@
 				[% IF USER_CREDS.ROOT eq '0' %]
 				<input size='5' type='text' name='new_ext'>
 				&nbsp;
-				<input value='добавить' type='submit'>
+				<input value='Добавить' type='submit'>
 				<input name='action' value='vb_add' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='go' value='list' type='hidden'>
@@ -270,7 +270,7 @@
 						[% END %]
 						</select>
 						&nbsp;&nbsp;
-						<noscript><input type='submit' value='&nbsp;изменить&nbsp;'></noscript>
+						<noscript><input type='submit' value='изменить'></noscript>
 
 					</td>
 				</tr>
@@ -2647,7 +2647,7 @@
 						<a id='xvb_view_mode_selector' href='#' onclick="return MoreExtOptions(this,0,'все опции','основные опции')">&nbsp;</a>
 					</td>
 					<td colspan='2' align='center'>
-						<input type='submit' value='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;изменить&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'>
+						<input type='submit' value='Сохранить изменения'>
 					</td>
 				</tr>
 				</form>
@@ -3134,7 +3134,7 @@
 					</tr>
 					<tr>
 						<td colspan='2' align='right'>
-						<input type='submit' value='загрузить'>
+						<input type='submit' value='Загрузить'>
 						</td>
 					</tr>
 					</form>
@@ -3151,7 +3151,7 @@
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-							<input type='submit' value='восстановить схему'>
+							<input type='submit' value='Восстановить схему'>
 							</form>
 							[% END %]
 						</td>
@@ -3204,7 +3204,7 @@
 										<script language='JavaScript'>
 											writeUpdateLinks( 'сохранить изменения' );
 										</script>
-										<noscript><input value='изменить' type='submit'></noscript>
+										<noscript><input value='Сохранить изменения' type='submit'></noscript>
 									</span>
 								</td>
 								</form>
@@ -3225,7 +3225,7 @@
 								<td><input type='text' name='name' value=''></td>
 								<td><input type='text' name='redir_to' value=''></td>
 								<td align='center'>
-									<input type='submit' value='добавить'>
+									<input type='submit' value='Добавить'>
 								</td>
 								</form>
 							</tr>
@@ -3298,7 +3298,7 @@
 									<script language='JavaScript'>
 										writeUpdateLinks( 'сохранить изменения' );
 									</script>
-									<noscript><input value='изменить' type='submit'></noscript>
+									<noscript><input value='Сохранить изменения' type='submit'></noscript>
 								</span>
 							</td>
 							</form>
@@ -3318,7 +3318,7 @@
 							<td><input size='9' type='text'  name='year' value='*'></td>
 							<td><input size='11' type='text' name='redirect_to' value='0'></td>
 							<td align='center'>
-								<input type='submit' value='добавить'>
+								<input type='submit' value='Добавить'>
 							</td>
 							</form>
 						</tr>
@@ -3381,7 +3381,7 @@
 									<script language='JavaScript'>
 										writeUpdateLinks( 'сохранить изменения' );
 									</script>
-									<noscript><input value='изменить' type='submit'></noscript>
+									<noscript><input value='Сохранить изменения' type='submit'></noscript>
 								</span>
 							</td>
 							</form>
@@ -3407,7 +3407,7 @@
 								</select> 
 							</td>
 							<td align='center'>
-								<input type='submit' value='добавить'>
+								<input type='submit' value='Добавить'>
 							</td>
 							</form>
 						</tr>
@@ -3476,7 +3476,7 @@
 								<script language='JavaScript'>
 									writeUpdateLinks( 'сохранить изменения' );
 								</script>
-								<noscript><input value='change' type='submit'></noscript>
+								<noscript><input value='Сохранить изменения' type='submit'></noscript>
 							</span>
 						</td>
 						</form>
@@ -3501,7 +3501,7 @@
 							&nbsp;
 							<input size='20' type='text' name='uv' value='' placeholder='Переменные'>
 							&nbsp;
-							<input type='submit' value='добавить'>
+							<input type='submit' value='Добавить'>
 							</form>
 						</td>
 						<td colspan='4' align='right' nowrap='nowrap'>
@@ -3581,7 +3581,7 @@
 									<script language='JavaScript'>
 										writeUpdateLinks( 'сохранить изменения' );
 									</script>
-									<noscript><input value='change' type='submit'></noscript>
+									<noscript><input value='Сохранить изменения' type='submit'></noscript>
 								</span>
 							</td>
 							</form>
@@ -3615,7 +3615,7 @@
 							<td><input size='15' name='var_value' type='text'></td>
 							<td><input size='11' name='redirect_to' type='text'></td>
 							<td align='center'>
-								<input type='submit' value='добавить'>
+								<input type='submit' value='Добавить'>
 							</td>
 							</form>
 						</tr>
@@ -3691,7 +3691,7 @@
 								<script language='JavaScript'>
 									writeUpdateLinks( 'сохранить изменения' );
 								</script>
-								<noscript><input value='change' type='submit'></noscript>
+								<noscript><input value='Сохранить изменения' type='submit'></noscript>
 							</span>
 						</td>
 						</form>
@@ -3716,7 +3716,7 @@
 							&nbsp;
 							<input size='20' type='text' name='uv' value='' placeholder='Переменные'>
 							&nbsp;
-							<input type='submit' value='добавить'>
+							<input type='submit' value='Добавить'>
 							</form>
 						</td>
 						<td colspan='4' align='right'>

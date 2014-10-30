@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.14 2014/10/13 15:30:32 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.15 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Phone book - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -42,7 +42,7 @@
 						<option value="snom">Snom config</option>
 					</select>
 					&nbsp;
-					<input name='submit' type='submit' value='&nbsp;download&nbsp;'>
+					<input name='submit' type='submit' value='Download'>
 				</form>
 			</td>
 			<td align='right'>
@@ -106,7 +106,7 @@
 			<td><input size='25' name='description' type='text'></td>
 			
 			<td align='center'>
-				<input type='submit' value='add'>
+				<input type='submit' value='Add'>
 			</td>
 		</form>
 		</tr>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.7 2014/10/13 15:30:32 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.8 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Телефонная книга - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -40,7 +40,7 @@
 						<option value="snom">Snom конфигурация</option>
 					</select>
 					&nbsp;
-					<input name='submit' type='submit' value='&nbsp;скачать&nbsp;'>
+					<input name='submit' type='submit' value='Скачать'>
 					&nbsp;
 					<a title='скачать книгу в формате excel' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]&format=excel&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
 					&nbsp;
@@ -81,7 +81,7 @@
 					<script language='JavaScript'>
 						writeUpdateLinks( 'сохранить изменения' );
 					</script>
-					<noscript><input value='изменить' type='submit'></noscript>
+					<noscript><input value='Сохранить изменения' type='submit'></noscript>
 				</span>
 			</td>
 		</form>
@@ -99,7 +99,7 @@
 			<td><input size='25' name='description' type='text'></td>
 			
 			<td align='center'>
-				<input type='submit' value='добавить'>
+				<input type='submit' value='Добавить'>
 			</td>
 		</form>
 		</tr>

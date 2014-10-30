@@ -19,7 +19,7 @@
 	<table width='95%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
@@ -39,7 +39,7 @@
 		<tr>
 			<form method="post" onSubmit='return checkChanges(this)'>
 			<td align='right'>
-				<input placeholder='shared DID' size='12' name='f_vn' type='text' value='[% F_VN | html %]'>
+				<input placeholder='Shared DID' size='12' name='f_vn' type='text' value='[% F_VN | html %]'>
 				&nbsp;
 				<input placeholder='Access code' size='12' name='f_ac' type='text' value='[% F_AC | html %]'>
 				&nbsp;
@@ -60,7 +60,7 @@
 				&nbsp;
 				<input type='hidden' value='user_list' name='action'>
 				&nbsp;
-				<input value='search' type='submit'>
+				<input value='Search' type='submit'>
 			</td>
 			<script language='JavaScript'>
 				setActiveSelector('status_type_selector',"[% F_STATUS %]");
@@ -99,7 +99,7 @@
 				[% us.VOICENUMBER | html %]
 			</td>
 			<td>
-				<a title='view tenant profile' href='ui?phone=[% us.VOICENUMBER %]&ac=[% us.ACCESS_CODE %]&pw=[% us.PIN_CODE %][% us.PIN_CODE2 %]&action=start&saction=user_info'>[% us.ACCESS_CODE | html %]</a>
+				<a title='view tenant profile' href='/ui?phone=[% us.VOICENUMBER %]&ac=[% us.ACCESS_CODE %]&pw=[% us.PIN_CODE %][% us.PIN_CODE2 %]&action=start&saction=user_info'>[% us.ACCESS_CODE | html %]</a>
 			</td>
 			<td align='left'>
 				[% us.FIRST_NAME | html %] [% us.LAST_NAME | html %]
@@ -177,7 +177,7 @@
 				</select>
 				&nbsp;
 				[% END %]
-				<input value='&nbsp;&nbsp;Add tenant&nbsp;&nbsp;' type='submit'>
+				<input value='Add tenant' type='submit'>
 				<input type='hidden' value='user_add' name='action'>
 			</td>
 		</tr>

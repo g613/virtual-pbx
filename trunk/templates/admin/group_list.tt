@@ -18,7 +18,7 @@
 	<table width='95%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
@@ -41,7 +41,7 @@
 					<input size='14' name='f_group' type='text' placeholder='Group name' 'value='[% F_GROUP | html %]'>
 					<input type='hidden' value='group_list' name='action'>
 					&nbsp;
-					<input value='search' type='submit'>
+					<input value='Search' type='submit'>
 				</form>
 			</td>
 		</tr>
@@ -96,7 +96,7 @@
 				</select>
 				&nbsp;
 				<input type='hidden' value='group_add' name='action'>
-				<input value='create new group' type='submit'>
+				<input value='Add group' type='submit'>
 			</td>
 			<td align='right' colspan='2'>
 				[% IF MSG_NEXT ne '' %]

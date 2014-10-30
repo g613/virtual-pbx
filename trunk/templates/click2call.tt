@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.14 2014/10/13 15:30:32 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.15 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -75,7 +75,7 @@
 			<td>
 				<input type='hidden' value='c2c_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<input value='&nbsp;&nbsp;create&nbsp;&nbsp;' type='submit'>
+				<input value='Add' type='submit'>
 			</td>
 			</form>
 		</tr>

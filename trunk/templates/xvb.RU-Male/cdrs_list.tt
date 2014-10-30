@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.8 2014/10/14 19:33:21 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.11 2014/10/23 13:57:03 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -38,7 +38,7 @@
 						});
 				});
 				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='с даты'>
+				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='С даты'>
 				<button type="button">...</button>
 				&nbsp;
 				<script type="text/javascript">
@@ -53,14 +53,16 @@
 						});
 				});
 				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='по дату'>
+				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='По дату'>
 				<button type="button">...</button>
 				<input name='action' value='cdr_list' type='hidden'>
 				&nbsp;
-				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]' placeholder='кто звонил'>
+				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]' placeholder='Кто звонил'>
 				&nbsp;
-				<input size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]' placeholder='кому звонил'>
+				<input size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]' placeholder='Кому звонил'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				&nbsp;
+				<input size='11' type='text' placeholder='Длительность' name='duration' value='[% CDR_DURATION | html %]'>
 				&nbsp;
 				<select name="call_type" id="call_type_selector">
 					<option value="" selected>все звонки</option>
@@ -99,7 +101,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='6'>
-				<a title='предыдущая страница' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='предыдущая страница' href='?action=cdr_list&duration=[% CDR_DURATION | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -118,7 +120,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='6'>
-				<a title='следующая страница' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+				<a title='следующая страница' href='?action=cdr_list&duration=[% CDR_DURATION | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -135,7 +137,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='5'>
-				<a title='предыдущая страница' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='предыдущая страница' href='?action=cdr_list&duration=[% CDR_DURATION | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -153,7 +155,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='5'>
-				<a title='следующая страница' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+				<a title='следующая страница' href='?action=cdr_list&duration=[% CDR_DURATION | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]

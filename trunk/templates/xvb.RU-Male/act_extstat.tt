@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.5 2014/09/12 10:55:07 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.6 2014/10/24 14:29:03 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -148,7 +148,7 @@
 				<input placeholder='По дату' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
 				<button type="button">...</button>
 				&nbsp;
-				<input placeholder='Звонящий' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				<input placeholder='Кто звонил' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				<select name='chart_group_period'>
 				<script language='Javascript'>
 					document.write( "<option selected value='"+ group_by +"'>"+ period +"</option>" );

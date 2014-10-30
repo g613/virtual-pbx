@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.93 2014/10/13 15:30:32 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.94 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -201,7 +201,7 @@ SipDomain: [% d.DOMAIN | html %]
 				</tr>
 				<tr>
 					<td colspan='2' align='center'>
-						<input type='submit' value='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;change&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'>
+						<input type='submit' value='Save changes'>
 					</td>
 				</tr>
 				</form>
