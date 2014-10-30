@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.8 2014/10/12 10:05:27 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.10 2014/10/23 13:57:03 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -51,7 +51,7 @@
 						});
 				});
 				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='с даты'>
+				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='С даты'>
 				<button type="button">...</button>
 				&nbsp;
 				<script type="text/javascript">
@@ -66,15 +66,17 @@
 						});
 				});
 				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='по дату'>
+				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='По дату'>
 				<button type="button">...</button>
 				<input name='action' value='msg_list' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
 				&nbsp;
-				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]' placeholder='кто звонил'>
+				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]' placeholder='Кто звонил'>
 				&nbsp;
-				<input size='10' type='text' name='called_id' value='[% CALLED_ID | html %]' placeholder='кому звонил'>
+				<input size='10' type='text' name='called_id' value='[% CALLED_ID | html %]' placeholder='Кому звонил'>
+				&nbsp;
+				<input size='11' type='text' placeholder='Длительность' name='duration' value='[% DURATION | html %]'>
 				&nbsp;
 				<input value='Найти' type='submit'>
 				</td>
@@ -98,7 +100,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='8'>
-				<a title='предыдущая страница ([% MSG_PREV %])' href='?action=msg_list&id=[% VBOX_PREF.ID %]&called_id=[% CALLED_ID | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='предыдущая страница ([% MSG_PREV %])' href='?action=msg_list&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&called_id=[% CALLED_ID | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -109,8 +111,6 @@
 			<td>[% msg.CALLERID | html %]</td>
 			<td>[% msg.CALLEDID | html %]</td>
 			[% IF msg.IS_VOICE %]
-				<td align='center'>[% msg.DURATION | duration_str | html %]</td>
-			[% ELSIF msg.FILE_NAME contain '.avi' %]
 				<td align='center'>[% msg.DURATION | duration_str | html %]</td>
 			[% ELSE %]
 				<td align='center'>--------</td>
@@ -142,7 +142,7 @@
 			[% IF MSG_NEXT ne '' %]
 			<tr>
 				<td align='right' colspan='8'>
-					<a title='следующая страница ([% MSG_NEXT %])' href='?action=msg_list&id=[% VBOX_PREF.ID %]&called_id=[% CALLED_ID | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+					<a title='следующая страница ([% MSG_NEXT %])' href='?action=msg_list&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&called_id=[% CALLED_ID | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 				</td>
 			</tr>
 			[% END %]

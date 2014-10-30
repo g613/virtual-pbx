@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: agent_login.tt,v 1.5 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: agent_login.tt,v 1.6 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - dynamic agents </title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -65,7 +65,7 @@
 			<tr>
 				<td colspan='2' align='center'>
 					<input name='action' type='hidden' value='agent_status'>
-					<input type='submit' value='&nbsp;&nbsp;&nbsp;Set status&nbsp;&nbsp;&nbsp;'>
+					<input type='submit' value='Set status'>
 				</td>
 			</tr>
 		</form>

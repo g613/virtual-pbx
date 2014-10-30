@@ -108,7 +108,7 @@
 			<td>
 				<input type='hidden' value='route_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<input value='add' type='submit'>
+				<input value='Add' type='submit'>
 			</td>
 			</form>
 		</tr>

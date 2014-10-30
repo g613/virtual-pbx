@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: login.tt,v 1.5 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: login.tt,v 1.6 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - вход</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -46,7 +46,7 @@
 				<td colspan='2' align='center'>
 					<input name='referer' type='hidden' value='[% REFERER | html %]'>
 					<input name='action' type='hidden' value='start'>
-					<input type='submit' value='&nbsp;&nbsp;&nbsp;Войти&nbsp;&nbsp;&nbsp;'>
+					<input type='submit' value='Войти'>
 				</td>
 				<td>&nbsp;</td>
 			</tr>

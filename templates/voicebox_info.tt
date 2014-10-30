@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.276 2014/10/13 15:30:32 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.277 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -62,7 +62,7 @@
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input size='6' type='text' name='new_ext'>
 				&nbsp;
-				<input value='create new' type='submit'>
+				<input value='Add extension' type='submit'>
 			</form>
 			</td>
 		</tr>
@@ -2196,7 +2196,7 @@
 						<a id='xvb_view_mode_selector' href='#' onclick="return MoreExtOptions(this,0,'all options','core options')">&nbsp;</a>
 					</td>
 					<td colspan='2' align='center'>
-						<input type='submit' value='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;change&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'>
+						<input type='submit' value='Save changes'>
 					</td>
 				</tr>
 				</form>
@@ -2681,7 +2681,7 @@
 					<tr>
 					<tr>
 						<td colspan='2' align='right'>
-							<input type='submit' value='upload'>
+							<input type='submit' value='Upload'>
 						</td>
 					</tr>
 					</form>
@@ -2698,7 +2698,7 @@
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-							<input type='submit' value='restore schema'>
+							<input type='submit' value='Restore schema'>
 							</form>
 							[% END %]
 						</td>
@@ -2774,7 +2774,7 @@
 								<td><input type='text' name='name' value='' size='20'></td>
 								<td><input type='text' name='redir_to' value='' size='15'></td>
 								<td align='center'>
-									<input type='submit' value='add'>
+									<input type='submit' value='Add'>
 								</td>
 								</form>
 							</tr>
@@ -2869,7 +2869,7 @@
 							<td><input size='9' type='text'  name='year' value='*'></td>
 							<td><input size='11' type='text'  name='redirect_to' value='0'></td>
 							<td align='center'>
-								<input type='submit' value='add'>
+								<input type='submit' value='Add'>
 							</td>
 							</form>
 						</tr>
@@ -2955,7 +2955,7 @@
 							</select> 
 						</td>
 						<td align='center'>
-							<input type='submit' value='add'>
+							<input type='submit' value='Add'>
 						</td>
 						</form>
 					</tr>
@@ -3050,7 +3050,7 @@
 							&nbsp;
 							<input size='25' type='text' name='uv' value='' placeholder='Variables'>
 							&nbsp;
-							<input type='submit' value='add'>
+							<input type='submit' value='Add'>
 							</form>
 						</td>
 						<td colspan='4' align='right' nowrap='nowrap'>
@@ -3164,7 +3164,7 @@
 							<td><input size='15' name='var_value' type='text'></td>
 							<td><input size='11' name='redirect_to' type='text'></td>
 							<td align='center'>
-								<input type='submit' value='add'>
+								<input type='submit' value='Add'>
 							</td>
 							</form>
 						</tr>
@@ -3264,7 +3264,7 @@
 							&nbsp;
 							<input size='25' placeholder='Variables' type='text' name='uv' value=''>
 							&nbsp;
-							<input type='submit' value='add'>
+							<input type='submit' value='Add'>
 							</form>
 						</td>
 						<td colspan='4' align='right'>

@@ -18,7 +18,7 @@
 	<table width='95%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
@@ -452,7 +452,7 @@
 				<input type='hidden' value='[% GROUP.GROUP_ID %]' name='group_id'>
 				<input type='hidden' value='group_update' name='action'>
 				<input type='hidden' value='gr' name='go'>
-				<input value='update group info' type='submit'>
+				<input value='Save changes' type='submit'>
 			</td>
 		</tr>
 		</form>

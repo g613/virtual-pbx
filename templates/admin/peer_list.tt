@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.8 2014/10/15 14:32:19 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.10 2014/10/22 12:59:05 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -14,7 +14,7 @@
 	<table width='95%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
@@ -38,10 +38,21 @@
 					&nbsp;
 					<input size='11' name='authname' type='text' placeholder='Peer ID' value='[% AUTHNAME | html %]'>
 					&nbsp;
+					<input size='11' name='ac' type='text' placeholder='Access code' value='[% AC | html %]'>
+					&nbsp;
+					<select name="need_reg" id="status_need_reg_selector">
+						<option value="" selected>registration...</option>
+						<option value="1">yes</option>
+						<option value="0">no</option>
+					</select>
+					&nbsp;
 					<input type='hidden' value='peer_list' name='action'>
-					<input value='search' type='submit'>
+					<input value='Search' type='submit'>
 				</form>
 			</td>
+			<script language='JavaScript'>
+				setActiveSelector('status_need_reg_selector',"[% NEED_REG %]");
+			</script>
 		</tr>
 	</table>
 	
@@ -65,7 +76,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='12'>
-				<a title='previous page' href='?action=peer_list&host=[% HOST | html %]&from=[% MSG_PREV %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=peer_list&ac=[% AC | html %]&need_reg=[% NEED_REG |html %]&host=[% HOST | html %]&from=[% MSG_PREV %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -106,7 +117,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='12'>
-				<a title='previous page' href='?action=peer_list&host=[% HOST | html %]&from=[% MSG_NEXT %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+				<a title='previous page' href='?action=peer_list&ac=[% AC | html %]&need_reg=[% NEED_REG |html %]&host=[% HOST | html %]&from=[% MSG_NEXT %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
 			</td>
 		</tr>
 		[% END %]

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.4 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.5 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP шлюзы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -109,7 +109,7 @@
 				<script language='JavaScript'>
 					writeUpdateLinks( 'сохранить изменения' );
 				</script>
-				<noscript><input value='изменить' type='submit'></noscript>
+				<noscript><input value='Сохранить изменения' type='submit'></noscript>
 				</span>
 			</td>
 			</form>
@@ -175,7 +175,7 @@
 			<td>
 				<input type='hidden' value='peer_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<input value='добавить' type='submit'>
+				<input value='Добавить' type='submit'>
 			</td>
 			</form>
 		</tr>

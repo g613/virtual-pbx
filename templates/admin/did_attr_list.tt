@@ -18,7 +18,7 @@
 	<table width='95%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
@@ -75,7 +75,7 @@
 				<script language='JavaScript'>
 					writeUpdateLinks( 'save changes' );
 				</script>
-				<noscript><input value='change' type='submit'></noscript>
+				<noscript><input value='Change' type='submit'></noscript>
 				</span>
 			</td>
 			</form>
@@ -93,7 +93,7 @@
 				</select>
 			</td>
 			<td>
-				<input value='ADD' type='submit'>
+				<input value='Add' type='submit'>
 				<input type='hidden' value='did_attr_add' name='action'>
 			</td>
 			[% IF MSG_NEXT ne '' %]

@@ -19,7 +19,7 @@
 	<table width='95%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
@@ -62,7 +62,7 @@
 				</td>
 				<td>
 					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]&nbsp;&nbsp;
-					<a title='view tenant profile' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=start&saction=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='view tenant profile' /></a>
+					<a title='view tenant profile' href='/ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=start&saction=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='view tenant profile' /></a>
 				</td>
 			</tr>
 			<tr>
@@ -95,7 +95,7 @@
 				</td>
 				<td>
 					[% USER.PIN_CODE | html %][% USER.PIN_CODE2 %]&nbsp;&nbsp;
-					<a title='exten 0' href='ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=vb_view&ext_id=0'><img border='0'  src='/xvb/images/vb_edit.png' alt='exten 0' /></a>
+					<a title='exten 0' href='/ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=vb_view&ext_id=0'><img border='0'  src='/xvb/images/vb_edit.png' alt='exten 0' /></a>
 				</td>
 			</tr>
 			<tr>
@@ -168,7 +168,7 @@
 				<td colspan='2' align='center'>
 					<input type='hidden' value='[% USER.ID %]' name='user_id'>
 					<input type='hidden' value='user_update' name='action'>
-					<input value='update tenant info' type='submit'>
+					<input value='Save changes' type='submit'>
 				</td>
 			</tr>
 			</form>
@@ -228,7 +228,7 @@
 									&nbsp;
 									<input type='hidden' name='pn' value='[% USER.VOICENUMBER | html %]'>
 									<input type='hidden' name='ac' value='[% USER.ACCESS_CODE | html %]'>
-									<input value='add DID' type='submit'>
+									<input value='Add DID' type='submit'>
 									<input type='hidden' value='did_add' name='action'>
 								</form>
 								</td>
@@ -257,7 +257,7 @@
 									&nbsp;
 									<input type='hidden' name='pn' value='[% USER.VOICENUMBER | html %]'>
 									<input type='hidden' name='ac' value='[% USER.ACCESS_CODE | html %]'>
-									<input value='add SIPDomain' type='submit'>
+									<input value='Add SipDomain' type='submit'>
 									<input type='hidden' value='did_add_sipdomain' name='action'>
 								</form>
 								</td>
@@ -269,12 +269,12 @@
 				<tr>
 				<td>
 					<h4>Quick links:</h4>
-					&nbsp;&nbsp;<a href='ui?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP Peers</a>
-					&nbsp;/&nbsp;<a href='ui?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Routes</a>
-					&nbsp;/&nbsp;<a href='ui?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Phones</a>
-					&nbsp;/&nbsp;<a href='ui?action=macros_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Macros</a>
-					&nbsp;/&nbsp;<a href='ui?action=cdr_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>CDRs</a>
-					&nbsp;/&nbsp;<a href='ui?action=j_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Journals</a>
+					&nbsp;&nbsp;<a href='/ui?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP Peers</a>
+					&nbsp;/&nbsp;<a href='/ui?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Routes</a>
+					&nbsp;/&nbsp;<a href='/ui?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Phones</a>
+					&nbsp;/&nbsp;<a href='/ui?action=macros_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Macros</a>
+					&nbsp;/&nbsp;<a href='/ui?action=cdr_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>CDRs</a>
+					&nbsp;/&nbsp;<a href='/ui?action=j_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Journals</a>
 				</td>
 				</tr>
 				</table>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.9 2014/09/11 15:06:39 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.10 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -79,7 +79,7 @@
 				<script language='JavaScript'>
 					writeUpdateLinks( 'сохранить изменения' );
 				</script>
-				<noscript><input value='изменить' type='submit'></noscript>
+				<noscript><input value='Сохранить изменения' type='submit'></noscript>
 				</span>
 			</td>
 			</form>
@@ -106,7 +106,7 @@
 			<td>
 				<input type='hidden' value='route_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<input value='добавить' type='submit'>
+				<input value='Добавить' type='submit'>
 			</td>
 			</form>
 		</tr>

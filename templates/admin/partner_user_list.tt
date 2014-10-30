@@ -19,7 +19,7 @@
 	<table width='95%' class='logo'>
 		<tr>
 			<td align='left' width='20%'>
-			<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 		</tr>
 	</table>
@@ -38,7 +38,7 @@
 			&nbsp;
 			<input type='hidden' value='user_list' name='action'>
 			<input type='hidden' value='[% PARTNER | html %]' name='partner'>
-			<input value='search' type='submit'>
+			<input value='Search' type='submit'>
 			</td>
 			</form>
 		</tr>
@@ -72,7 +72,7 @@
 				[% us.VOICENUMBER | html %]
 			</td>
 			<td>
-				<a title='view user profile' href='ui?phone=[% us.VOICENUMBER %]&ac=[% us.ACCESS_CODE %]&pw=[% us.PIN_CODE %][% us.PIN_CODE2 %]&action=user_info'>[% us.ACCESS_CODE | html %]</a>
+				<a title='view user profile' href='/ui?phone=[% us.VOICENUMBER %]&ac=[% us.ACCESS_CODE %]&pw=[% us.PIN_CODE %][% us.PIN_CODE2 %]&action=user_info'>[% us.ACCESS_CODE | html %]</a>
 			</td>
 			<td align='left'>
 				[% us.FIRST_NAME | html %] [% us.LAST_NAME | html %]
@@ -126,7 +126,7 @@
 			<td align='left' colspan='6'>
 				<input placeholder='Shared DID' size='15' type='text' name='phone'>
 				&nbsp;
-				<input value='Create new tenant' type='submit'>
+				<input value='Add tenant' type='submit'>
 				<input type='hidden' value='user_add' name='action'>
 				<input type='hidden' value='[% PARTNER | html %]' name='partner'>
 			</td>

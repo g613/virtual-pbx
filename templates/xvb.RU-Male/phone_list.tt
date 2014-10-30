@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.14 2014/09/11 15:06:39 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.15 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -40,10 +40,10 @@
 			<th>Имя пользователя</th>
 			<th>Исходящий АОН</th>
 			<th>Email</th>
+			<th>Группы перехвата</th>
 			<th>Запись</th>
 			<th>Сохранить запись в</th>
-			<th>Группы перехвата</th>
-			<th>Действия</th>
+			<th colspan='2'>Действия</th>
 		</tr>
 		
 		[% FOREACH p = PHONES %]
@@ -77,6 +77,7 @@
 			<td><input class='in_t0' size="16" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"></td>
 			<td><input class='in_t0' size="12" name='DEFCID' type='text' value="[% p.DEFCID | html %]"></td>
 			<td><input class='in_t0' size="15" name='EMAIL' type='text' value="[% p.EMAIL | html %]"></td>
+			<td><input class='in_t0' size="8" name='PICKUP_GROUPS' type='text' value="[% p.PICKUP_GROUPS | html %]"></td>
 			<td>
 				<select name="REC_MODE" class='in_t0'>
 				[% IF p.REC_MODE eq '1' %]
@@ -113,13 +114,15 @@
 				</select>
 			</td>
 			<td align='left' nowrap='nowrap'>
-				<input class='in_t0' size="8" name='REC_EXT' type='text' value="[% p.REC_EXT | html %]">
+				<input class='in_t0' size="6" name='REC_EXT' type='text' value="[% p.REC_EXT | html %]">
+			</td>
+			<td>
 				<script language="JavaScript">
 					exten_icon( '[% p.REC_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 				</script>
 			</td>
-			<td><input class='in_t0' size="8" name='PICKUP_GROUPS' type='text' value="[% p.PICKUP_GROUPS | html %]"></td>
 			<td align='left'>
+				&nbsp;
 				<input type='hidden' value='[% p.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='phone_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
@@ -128,7 +131,7 @@
 				<script language='JavaScript'>
 					writeUpdateLinks( 'сохранить изменения' );
 				</script>
-				<noscript><input value='change' type='submit'></noscript>
+				<noscript><input value='Сохранить изменеия' type='submit'></noscript>
 				</span>
 			</td>
 			</form>
@@ -145,6 +148,7 @@
 			<td><input size="16" name='DESCRIPTION' type='text'></td>
 			<td><input size="12" name='DEFCID' type='text'></td>
 			<td><input size="15" name='EMAIL' type='text'></td>
+			<td><input size="8" name='PICKUP_GROUPS' type='text'></td>
 			<td>
 				<select name="REC_MODE">
 					<option value="0" selected>Выключено</option>
@@ -154,12 +158,11 @@
 					<option value="4">Внешние</option>
 				</select>
 			</td>
-			<td align='left'><input size="8" name='REC_EXT' type='text'></td>
-			<td><input size="8" name='PICKUP_GROUPS' type='text'></td>
-			<td>
+			<td align='left'><input size="6" name='REC_EXT' type='text'></td>
+			<td colspan='2'>
 				<input type='hidden' value='phone_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<input value='добавить' type='submit'>
+				<input value='Добавить' type='submit'>
 			</td>
 			</form>
 		</tr>

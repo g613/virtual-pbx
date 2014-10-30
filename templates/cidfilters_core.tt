@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters_core.tt,v 1.26 2014/10/13 15:30:32 gosha Exp $ -->
+<!-- $Id: cidfilters_core.tt,v 1.27 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID filters - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -73,7 +73,7 @@
 			<td><input size='60' name='description' type='text'></td>
 			
 			<td align='center'>
-				<input type='submit' value='add'>
+				<input type='submit' value='Add'>
 			</td>
 		</form>
 		</tr>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.13 2014/09/17 15:34:07 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.14 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -62,7 +62,7 @@
 				<script language='JavaScript'>
 					writeUpdateLinks( 'сохранить изменения' );
 				</script>
-				<noscript><input value='изменить' type='submit'></noscript>
+				<noscript><input value='Сохранить изменения' type='submit'></noscript>
 				</span>
 			</td>
 			</form>
@@ -77,7 +77,7 @@
 			<td>
 				<input type='hidden' value='c2c_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<input value='&nbsp;&nbsp;добавить&nbsp;&nbsp;' type='submit'>
+				<input value='Добавить' type='submit'>
 			</td>
 			</form>
 		</tr>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.57 2014/10/14 19:33:21 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.58 2014/10/23 13:57:03 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -72,6 +72,12 @@
 				<input name='action' value='msg_list_all' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				&nbsp;
+				<input placeholder='Caller' size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
+				&nbsp;
+				<input placeholder='Called' size='10' type='text' name='called_id' value='[% CALLED_ID | html %]'>
+				&nbsp;
+				<input size='8' type='text' placeholder='Duration' name='duration' value='[% DURATION | html %]'>
+				&nbsp;
 				<select name="msg_type" id='msg_type_selector'>
 					<option value="" selected>Message type</option>
 					<option value="30:40">User messages</option>
@@ -87,10 +93,6 @@
 					<option value="30">New user message</option>
 					<option value="40">Old user message</option>
 				</select>
-				&nbsp;
-				<input placeholder='Caller' size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
-				&nbsp;
-				<input placeholder='Called' size='10' type='text' name='called_id' value='[% CALLED_ID | html %]'>
 				&nbsp;
 				<input value='Search' type='submit'>
 				</form>
@@ -117,7 +119,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='9'>
-				<a title='previous page' href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&from=[% MSG_PREV %]&called_id=[% CALLED_ID | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=msg_list_all&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&from=[% MSG_PREV %]&called_id=[% CALLED_ID | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -129,8 +131,6 @@
 			<td>[% msg.CALLERID | html %]</td>
 			<td>[% msg.CALLEDID | html %]</td>
 			[% IF msg.IS_VOICE %]
-			<td align='center'>[% msg.DURATION | duration_str | html %]</td>
-			[% ELSIF msg.FILE_NAME contain '.avi' %]
 			<td align='center'>[% msg.DURATION | duration_str | html %]</td>
 			[% ELSE %]
 			<td align='center'>--------</td>
@@ -162,7 +162,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='9'>
-				<a title='next page' href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&from=[% MSG_NEXT %]&called_id=[% CALLED_ID | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='next page' href='?action=msg_list_all&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&from=[% MSG_NEXT %]&called_id=[% CALLED_ID | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
 		[% ELSE %]
 			<td colspan='9'>&nbsp;</td>

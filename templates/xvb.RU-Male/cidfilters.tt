@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters.tt,v 1.3 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: cidfilters.tt,v 1.4 2014/10/21 19:05:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID фильтры - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -58,7 +58,7 @@
 					<script language='JavaScript'>
 						writeUpdateLinks( 'сохранить изменения' );
 					</script>
-					<noscript><input value='изменить' type='submit'></noscript>
+					<noscript><input value='Сохранить изменения' type='submit'></noscript>
 				</span>
 			</td>
 		</form>
@@ -76,7 +76,7 @@
 			<td><input size='60' name='description'  type='text'></td>
 			
 			<td align='center'>
-				<input type='submit' value='добавить'>
+				<input type='submit' value='Добавить'>
 			</td>
 		</form>
 		</tr>

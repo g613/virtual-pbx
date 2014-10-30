@@ -18,7 +18,7 @@
 	<table width='95%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
-				<img border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
 			<td valign='middle'>
 				[% INCLUDE main_menu.tt-inc %]
@@ -43,7 +43,7 @@
 					<input size='10' name='f_ac' type='text' placeholder='Access code' value='[% F_AC | html %]'>
 					&nbsp;
 					<input type='hidden' value='did_list' name='action'>
-					<input value='search' type='submit'>
+					<input value='Search' type='submit'>
 				</form>
 			</td>
 		</tr>
@@ -95,7 +95,7 @@
 			<td align='left'>
 				<input placeholder='Access code' size='10' type='text' name='ac'></td>
 			<td>
-				<input value='add DID' type='submit'>
+				<input value='Add DID' type='submit'>
 				<input type='hidden' value='did_add' name='action'>
 			</td>
 			<td>

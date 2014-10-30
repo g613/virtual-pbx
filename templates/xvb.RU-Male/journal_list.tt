@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.5 2014/10/14 19:33:21 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.6 2014/10/23 12:18:12 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Журнал операций - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -38,7 +38,7 @@
 						});
 				});
 				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='с даты'>
+				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='С даты'>
 				<button type="button">...</button>
 				&nbsp;
 				<script type="text/javascript">
@@ -53,11 +53,11 @@
 						});
 				});
 				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='по дату'>
+				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='По дату'>
 				<button type="button">...</button>
 				&nbsp;
 				<input name='action' value='j_list' type='hidden'>
-				<input size='6' type='text' name='ext_num' value='[% J_EXT_NUM %]' placeholder='номер'>
+				<input size='6' type='text' name='ext_num' value='[% J_EXT_NUM %]' placeholder='Номер'>
 				&nbsp;
 				<select name="action_type" id="j_type_selector">
 					<option value="" selected>Все события</option>
@@ -66,7 +66,7 @@
 				[% END %]
 				</select>
 				&nbsp;
-				<input size='18' type='text' name='data' value='[% J_DATA | html %]' placeholder='данные'>
+				<input size='18' type='text' name='data' value='[% J_DATA | html %]' placeholder='Данные'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				&nbsp;
 				<input value='Найти' type='submit'>
