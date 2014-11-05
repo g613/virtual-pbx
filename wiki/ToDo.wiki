@@ -3,7 +3,7 @@
 
 <font color='red'>- поиск по DATA в активити логах</font>
 
-<font color='red'- добавить переменную DATETIME - с читабельным локальным времене в tz пользователя</font>
+<font color='red'>- добавить переменную DATETIME - с читабельным локальным времене в tz пользователя</font>
 
 <font color='red'>- В cdr писать только локальный внутренний номер (`*0`) при local/callback/callblast/alarmclock звонках на ivr.</font>
 
