@@ -1,6 +1,12 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- поиск по DATA в активити логах</font>
+
+<font color='red'- добавить переменную DATETIME - с читабельным локальным времене в tz пользователя</font>
+
+<font color='red'>- В cdr писать только локальный внутренний номер (`*0`) при local/callback/callblast/alarmclock звонках на ivr.</font>
+
 <font color='green'>+ возможность запретить переход в административный режим по нажатии `*`</font> ( 30.10.2014 / build 8960 )
 
 <font color='green'>+ возможность локализации AI</font> ( 28.10.2014 / build 8952 )
