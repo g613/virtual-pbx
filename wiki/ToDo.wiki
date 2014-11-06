@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- просмотр общего списка активности админом арендатора</fon>
+<font color='red'>- просмотр общего списка активности админом арендатора</font>
 
 <font color='red'>- поиск по DATA в активити логах</font>
 
