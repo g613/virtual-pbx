@@ -1,13 +1,15 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- просмотр общего списка активности админом арендатора</font>
+<font color='red'>- логирование в журнале заходов в веб кабинет</font>
 
-<font color='red'>- поиск по DATA в активити логах</font>
+<font color='green'>+ просмотр общего списка активности админом арендатора</font> ( 12.11.2014 / build 9050 )
 
-<font color='green'>+ добавить переменную DATETIME - с читабельным локальным времене в tz пользователя</font> ( 06.11.2014 / build 9679 )
+<font color='green'>+ поиск по DATA в активити логах</font> ( 09.11.2014 / build 9013 )
 
-<font color='green'>+ В cdr писать только локальный внутренний номер (`*0`) при local/callback/callblast/alarmclock звонках на ivr.</font> ( 04.11.2014 / build 9670 )
+<font color='green'>+ добавить переменную DATETIME - с читабельным локальным времене в tz пользователя</font> ( 06.11.2014 / build 8979 )
+
+<font color='green'>+ В cdr писать только локальный внутренний номер (`*0`) при local/callback/callblast/alarmclock звонках на ivr.</font> ( 04.11.2014 / build 8970 )
 
 <font color='green'>+ возможность запретить переход в административный режим по нажатии `*`</font> ( 30.10.2014 / build 8960 )
 
