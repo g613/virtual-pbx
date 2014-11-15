@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.75 2014/10/23 13:57:03 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.76 2014/11/06 20:11:22 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -102,7 +102,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='8'>
-				<a title='previous page' href='?action=msg_list&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&called_id=[% CALLED_ID | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=msg_list&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -144,7 +144,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='8'>
-				<a title='next page' href='?action=msg_list&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&called_id=[% CALLED_ID | html %]&caller_id=[% CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='next page' href='?action=msg_list&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			</td>
 		[% END %]
 		</tr>

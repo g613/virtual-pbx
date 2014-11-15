@@ -1,7 +1,7 @@
 <html>
-<!-- $Id: act_list.tt,v 1.14 2014/11/07 16:04:45 gosha Exp $ -->
+<!-- $Id: act_list_all.tt,v 1.4 2014/11/09 20:20:54 gosha Exp $ -->
 <head>
-	<title>Virtual PBX - Активность номера - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	<title>Virtual PBX - Активность - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 
@@ -18,23 +18,9 @@
 </head>
 
 <body onLoad="XVBInit()">
-	<table width='100%'>
-		<tr align='left'>
-			<td>
-				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Параметры номера</a>
-				&nbsp;|&nbsp;
-				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Сообщения</a>
-				[% IF EXTENDED_STAT %]
-				&nbsp;|&nbsp;
-				<a href='?action=extended_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Расширенная статистика</a>
-				[% END %]
-			</td>
-		</tr>
-	</table>
-
 	<center>
 			
-	<h1>Активность внутреннего номера #[% VBOX_PREF.EXT_NUMBER | html %]</h1>
+	<h1>Активность АТС</h1>
 
 	<table width='100%'>
 		<tr>
@@ -72,6 +58,8 @@
 				&nbsp;
 				<input placeholder='Кто звонил' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				&nbsp;
+				<input placeholder='Вн. номер' size='10' type='text' name='ext' value='[% CDR_EXT | html %]'>
+				&nbsp;
 				<input size='11' type='text' placeholder='Длительность' name='duration' value='[% CDR_DURATION | html %]'>
 				&nbsp;
 				<input placeholder='Данные' size='15' type='text' name='data' value='[% CDR_DATA | html %]'>
@@ -83,7 +71,7 @@
 				[% END %]
 				</select>
 				&nbsp;
-				<input name='action' value='ext_stat' type='hidden'>
+				<input name='action' value='act_list_all' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
 				<input value='Найти' type='submit'>
@@ -99,45 +87,36 @@
 		<tr>
 			<th>Время действия</th>
 			<th>Номер звонящего</th>
+			<th>Внутренний номер</th>
 			<th>Длительность</th>
 			<th>Тип действия</th>
 			<th width='40%'>Данные</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='5'>
-				<a title='предыдущая страница' href='?action=ext_stat&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type[% ACT_TYPE | html %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			<td align='left' colspan='6'>
+				<a title='предыдущая страница' href='?action=act_list_all&ext=[% CDR_EXT | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type[% ACT_TYPE | html %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
 		
-		[% IF USER_CREDS.ROOT eq '0' %]
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
 			<td>
 				<a title='информация о звонке' href="?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]">[% msg.CDR_DATE | html %]</a>
 			</td>
 			<td align='right'>[% msg.CALLER_ID | html %]</td>
+			<td align='right'>[% msg.EXT_NUMBER | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td align='left'>[% msg.TYPE | locale_msg %]</td>
-			<td align='left'>[% msg.DATA | html %]</td>
-		</tr>
-		[% END %]
-		[% ELSE %]
-		[% FOREACH msg = CDR_LIST %]
-		<tr class='nocolor' align='center'>
-			<td>[% msg.CDR_DATE | html %]</td>
-			<td align='right'>[% msg.CALLER_ID | html %]</td>
-			<td>[% msg.CDR_DURATION | duration_str %]</td>
-			<td>[% msg.TYPE | locale_msg %]</td>
 			<td align='left'>[% msg.DATA | html %]</td>
 		</tr>
 		[% END %]
 		[% END %]
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right' colspan='5'>
-				<a title='следующая страница' href='?action=ext_stat&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% ACT_TYPE | html %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+			<td align='right' colspan='6'>
+				<a title='следующая страница' href='?action=act_list_all&ext=[% CDR_EXT | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% ACT_TYPE | html %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -147,7 +126,7 @@
 	<script language='JavaScript'>
 		var download_file_url="<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/$1/[% USER_CREDS.ACCESS_CODE %]/$2.[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>FILE</a>";
 		var callback_cdr_url="$1<a title='Информация о звонке' href='?action=act_list&call_id=$2&uniq=[% USER_CREDS.UNIQ %]'>CALL</a>";
-		cdrfilters( 'd-tbl', 4 );
+		cdrfilters( 'd-tbl', 5 );
 		listcolorer( 'd-tbl' );
 	</script>	
 	

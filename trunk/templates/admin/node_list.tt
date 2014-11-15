@@ -15,7 +15,7 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 	
-	<table width='95%' class='logo'>
+	<table width='100%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
 				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
@@ -36,7 +36,7 @@
 	<h1>Nodes</h1>
 	
 	<p>
-	<table width='95%' id='list-data'>
+	<table width='100%' id='list-data'>
 		<tr>
 			<th>Id</th>
 			<th>Download IP</th>

@@ -1,7 +1,7 @@
 <html>
-<!-- $Id: act_list.tt,v 1.29 2014/11/08 19:49:10 gosha Exp $ -->
+<!-- $Id: act_list_all.tt,v 1.4 2014/11/09 20:20:54 gosha Exp $ -->
 <head>
-	<title>Virtual PBX - Extension activity - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	<title>Virtual PBX - activity - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 
@@ -19,22 +19,9 @@
 
 <body onLoad="XVBInit()">
 	
-	<table width='100%'>
-		<tr align='left'>
-			<td>
-				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
-				&nbsp;|&nbsp;
-				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extension detail</a>
-				[% IF EXTENDED_STAT %]
-				&nbsp;|&nbsp;
-				<a href='?action=extended_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Extended statistics</a>
-				[% END %]
-			</td>
-	</table>
-
 	<center>
 			
-	<h1>Extension #[% VBOX_PREF.EXT_NUMBER | html %] activity</h1>
+	<h1>PBX activity</h1>
 
 	<table width='100%'>
 		<tr>
@@ -72,6 +59,8 @@
 				&nbsp;
 				<input size='10' type='text' placeholder='Caller' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				&nbsp;
+				<input placeholder='Ext' size='10' type='text' name='ext' value='[% CDR_EXT | html %]'>
+				&nbsp;
 				<input size='8' type='text' placeholder='Duration' name='duration' value='[% CDR_DURATION | html %]'>
 				&nbsp;
 				<input placeholder='Data' size='15' type='text' name='data' value='[% CDR_DATA | html %]'>
@@ -83,7 +72,7 @@
 				[% END %]
 				</select>
 				&nbsp;
-				<input name='action' value='ext_stat' type='hidden'>
+				<input name='action' value='act_list_all' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
 				<input value='Search' type='submit'>
@@ -100,45 +89,35 @@
 		<tr>
 			<th>Start Date</th>
 			<th>Caller ID</th>
+			<th>Extension</th>
 			<th>Duration</th>
 			<th>Type</th>
 			<th width='40%'>Data</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='5'>
-				<a title='previous page' href='?action=ext_stat&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type[% ACT_TYPE | html %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			<td align='left' colspan='6'>
+				<a title='previous page' href='?action=act_list_all&ext=[% CDR_EXT | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type[% ACT_TYPE | html %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
 		
-		[% IF USER_CREDS.ROOT eq '0' %]
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
 			<td align='center'>
 				<a title='call detail' href="?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]">[% msg.CDR_DATE | html %]</a>
 			</td>
 			<td align='right'>[% msg.CALLER_ID | html %]</td>
-			<td>[% msg.CDR_DURATION | duration_str %]</td>
-			<td>[% msg.TYPE | html %]</td>
-			<td align='left'>[% msg.DATA | html %]</td>
-		</tr>
-		[% END %]
-		[% ELSE %]
-		[% FOREACH msg = CDR_LIST %]
-		<tr class='nocolor' align='center'>
-			<td>[% msg.CDR_DATE | html %]</td>
-			<td align='right'>[% msg.CALLER_ID | html %]</td>
+			<td align='right'>[% msg.EXT_NUMBER | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td align='left'>[% msg.TYPE | html %]</td>
 			<td align='left'>[% msg.DATA | html %]</td>
 		</tr>
 		[% END %]
-		[% END %]
 		<tr>
 		[% IF MSG_NEXT ne '' %]
-			<td align='right' colspan='5'>
-				<a title='next page' href='?action=ext_stat&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% ACT_TYPE | html %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+			<td align='right' colspan='6'>
+				<a title='next page' href='?action=act_list_all&ext=[% CDR_EXT | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% ACT_TYPE | html %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
 			</td>
 		[% ELSE %]
 			<td colspan='5'>&nbsp;</td>
@@ -150,7 +129,7 @@
 	<script language='JavaScript'>
 		var download_file_url="<a title='download' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/$1/[% USER_CREDS.ACCESS_CODE %]/$2.[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>FILE</a>";
 		var callback_cdr_url="$1<a title='cdr' href='?action=act_list&call_id=$2&uniq=[% USER_CREDS.UNIQ %]'>CALL</a>";
-		cdrfilters( 'd-tbl', 4 );
+		cdrfilters( 'd-tbl', 5 );
 		listcolorer( 'd-tbl' );
 	</script>
 	

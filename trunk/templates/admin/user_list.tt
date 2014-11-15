@@ -16,7 +16,7 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 
-	<table width='95%' class='logo'>
+	<table width='100%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
 				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
@@ -71,7 +71,7 @@
 	</table>
 
 	<p>
-	<table width='95%' id='list-data'>
+	<table width='100%' id='list-data'>
 		<tr>
 			<th>Shared DID</th>
 			<th>Access code</th>
@@ -153,7 +153,7 @@
 	</p>
 	
 	<p>
-	<table width='95%'>
+	<table width='100%'>
 		<form method="post" onSubmit='return checkChanges(this)'>
 		<tr align='left'>
 			<td>

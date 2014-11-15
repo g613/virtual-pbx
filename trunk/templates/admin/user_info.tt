@@ -16,7 +16,7 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 
-	<table width='95%' class='logo'>
+	<table width='100%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
 				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
@@ -49,7 +49,7 @@
 	</table>
 	
 	<p>
-	<table width='95%'>
+	<table width='100%'>
 		<tr>
 		</tr>
 		<tr>
@@ -62,7 +62,7 @@
 				</td>
 				<td>
 					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]&nbsp;&nbsp;
-					<a title='view tenant profile' href='/ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=start&saction=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='view tenant profile' /></a>
+					<a title='view tenant profile' href='/ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&akey=[% ADMIN_KEY | html %]&action=start&saction=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='view tenant profile' /></a>
 				</td>
 			</tr>
 			<tr>
@@ -175,7 +175,7 @@
 			</table>
 			</td>
 			<td valign='top'>
-				<table width='95%'>
+				<table width='100%'>
 				[% IF USE_BILLING %]
 				<tr>
 					<td>
@@ -275,6 +275,8 @@
 					&nbsp;/&nbsp;<a href='/ui?action=macros_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Macros</a>
 					&nbsp;/&nbsp;<a href='/ui?action=cdr_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>CDRs</a>
 					&nbsp;/&nbsp;<a href='/ui?action=j_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Journals</a>
+					&nbsp;/&nbsp;<a href='/ui?action=act_list_all&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Activity</a>
+					&nbsp;/&nbsp;<a href='/ui?action=msg_list_all&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Messages</a>
 				</td>
 				</tr>
 				</table>

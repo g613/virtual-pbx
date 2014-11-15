@@ -20,7 +20,7 @@
 	[% END %]
 	
 
-	<table width='95%' class='logo'>
+	<table width='100%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
 				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
@@ -39,7 +39,7 @@
 	<h1>CDRs</h1>
 
 	<p>
-	<table width='95%'>
+	<table width='100%'>
 		<form method="get" onSubmit='return checkChanges(this)'>
 		<tr align='right'>
 			<td width='100%'>
@@ -82,6 +82,8 @@
 				&nbsp;
 				<input size='10' type='text' placeholder='Duration' name='duration' value='[% CDR_DURATION | html %]'>
 				&nbsp;
+				<input size='10' type='text' placeholder='Data' name='data' value='[% CDR_DATA | html %]'>
+				&nbsp;
 				<select name="call_type" id='call_type_selector'>
 					<option value="" selected>all calls</option>
 					<option value="incoming">incoming</option>
@@ -103,7 +105,7 @@
 	</table>
 	</p>
 	<p>
-	<table width='95%' id='d-tbl'>
+	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>Start Date</th>
 			<th>Caller ID</th>
@@ -116,7 +118,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='7'>
-				<a title='previous page' href='?action=cdr_list&from=[% MSG_PREV %]&duration=[% CDR_DURATION | html %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=cdr_list&from=[% MSG_PREV %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -124,23 +126,24 @@
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
 			<td><a title='call detail' href='?action=cdr_list&call_id=[% msg.CALL_ID %]'>[% msg.CDR_DATE | html %]</a></td>
-			<td>[% msg.CALLER_ID | html %]</td>
+			<td align='right'>[% msg.CALLER_ID | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td align='right'>[% msg.COST %] ([% msg.DESCRIPTION %])</td>
-			<td>[% msg.CALLED_ID | html %]</td>
+			<td align='right'>[% msg.CALLED_ID | html %]</td>
 			<td><a title='edit user settings' href='?ac=[% msg.ACCESS_CODE %]&action=user_info'>[% msg.ACCESS_CODE %]</a></td>
 			<td>[% msg.CALL_TYPE | html %]</td>
 		</tr>
 		[% END %]
-
+	
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='7'>
-				<a title='next page' href='?action=cdr_list&from=[% MSG_NEXT %]&duration=[% CDR_DURATION | html %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+				<a title='next page' href='?action=cdr_list&from=[% MSG_NEXT %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
 	</table>
+		
 	</p>
 	
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
