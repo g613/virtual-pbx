@@ -15,7 +15,7 @@
 	<noscript>[% CGI_ERROR | html %]</noscript>
 	[% END %]
 
-	<table width='95%' class='logo'>
+	<table width='100%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
 				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
@@ -50,7 +50,7 @@
 	</table>
 	
 	<p>
-	<table width='95%' id='list-data'>
+	<table width='100%' id='list-data'>
 		<tr>
 			<th></th>
 			<th>SIP Domain</th>
@@ -61,7 +61,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left'>
-				<a title='previous page' href='?action=did_list_sipdomain&from=[% MSG_PREV %]&f_vn=[% F_VN | html %]&f_ac=[% F_AC | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=did_list_sipdomain&from=[% MSG_PREV %]&f_vn=[% F_VN | htmlstrict %]&f_ac=[% F_AC | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -103,7 +103,7 @@
 			</td>
 			<td align='right'>
 			[% IF MSG_NEXT ne '' %]
-				<a title='next page' href='?action=did_list_sipdomain&from=[% MSG_NEXT %]&f_vn=[% F_VN | html %]&f_ac=[% F_AC | html %]'><img border='0' src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='next page' href='?action=did_list_sipdomain&from=[% MSG_NEXT %]&f_vn=[% F_VN | htmlstrict %]&f_ac=[% F_AC | html %]'><img border='0' src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
 			[% END %]
 			</td>
 		</tr>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.11 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.12 2014/11/03 20:05:48 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs / Call Detail</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -17,7 +17,7 @@
 	[% END %]
 	
 			
-	<table width='95%' class='logo'>
+	<table width='100%' class='logo'>
 		<tr align='left'>
 			<td width='10%'>
 				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
@@ -37,7 +37,7 @@
 	<h1>CDRs / Call Detail</h1>
 
 	<p>
-	<table width='95%' id='d-tbl'>
+	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>Start Date</th>
 			<th>Caller ID</th>

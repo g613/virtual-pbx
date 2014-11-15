@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.27 2014/10/23 15:33:58 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.28 2014/11/04 13:08:18 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - statistics - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -67,6 +67,8 @@
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				&nbsp;
 				<input size='8' type='text' placeholder='Duration' name='duration' value='[% CDR_DURATION | html %]'>
+				&nbsp;
+				<input placeholder='Data' size='15' type='text' name='data' value='[% CDR_DATA | html %]'>
 				&nbsp;
 				<select name="call_type" id='call_type_selector'>
 					<option value="" selected>all calls</option>

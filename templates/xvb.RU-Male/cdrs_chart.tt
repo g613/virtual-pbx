@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.11 2014/10/23 15:33:58 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.12 2014/11/04 13:08:18 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Статистика звонков АТС - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -69,6 +69,8 @@
 				<input name='need_chart' value='1' type='hidden'>
 				&nbsp;
 				<input size='11' type='text' placeholder='Длительность' name='duration' value='[% CDR_DURATION | html %]'>
+				&nbsp;
+				<input placeholder='Данные' size='15' type='text' name='data' value='[% CDR_DATA | html %]'>
 				&nbsp;
 				<select name="call_type" id="call_type_selector">
 					<option value="" selected>все звонки</option>

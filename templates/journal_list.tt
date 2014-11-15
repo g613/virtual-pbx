@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.24 2014/10/14 19:33:21 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.25 2014/11/06 20:11:22 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Actions journal - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -93,7 +93,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='5'>
-				<a title='previous page' href='?action=j_list&action_type=[% J_ACTION %]&from=[% MSG_PREV %]&ext_num=[% J_EXT_NUM %]&data=[% J_DATA | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=j_list&action_type=[% J_ACTION %]&from=[% MSG_PREV %]&ext_num=[% J_EXT_NUM %]&data=[% J_DATA | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
 			</td>
 		</tr>
 		[% END %]
@@ -115,7 +115,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='5'>
-				<a title='next page' href='?action=j_list&action_type=[% J_ACTION %]&from=[% MSG_NEXT %]&ext_num=[% J_EXT_NUM %]&data=[% J_DATA | html %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+				<a title='next page' href='?action=j_list&action_type=[% J_ACTION %]&from=[% MSG_NEXT %]&ext_num=[% J_EXT_NUM %]&data=[% J_DATA | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
 			</td>
 		[% ELSE %]
 			<td colspan='5'>&nbsp;</td>
