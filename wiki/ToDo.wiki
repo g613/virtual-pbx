@@ -1,6 +1,10 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>-  переменную добавить со временем последнего отвеченного звонка в IVR</font>
+
+<font color='red'>- LAST_ROUTE флаг для маршрутов</font>
+
 <font color='green'>+ логирование в журнале заходов в веб кабинет</font> ( 15.11.2014 / build 9081 )
 
 <font color='green'>+ просмотр общего списка активности админом арендатора</font> ( 12.11.2014 / build 9050 )
