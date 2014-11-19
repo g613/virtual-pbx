@@ -1,9 +1,13 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>-  переменную добавить со временем последнего отвеченного звонка в IVR</font>
+<font color='red'>- проверка маршрутов через WEB</font>
+
+<font color='red'>- переменную добавить со временем последнего отвеченного звонка в IVR</font>
 
 <font color='red'>- LAST_ROUTE флаг для маршрутов</font>
+
+<font color='red'>- В cdr писать только локальный внутренний номер (`*0`) при local/callback/callblast/alarmclock звонках на ivr.</font>
 
 <font color='green'>+ логирование в журнале заходов в веб кабинет</font> ( 15.11.2014 / build 9081 )
 
@@ -12,8 +16,6 @@
 <font color='green'>+ поиск по DATA в активити логах</font> ( 09.11.2014 / build 9013 )
 
 <font color='green'>+ добавить переменную DATETIME - с читабельным локальным времене в tz пользователя</font> ( 06.11.2014 / build 8979 )
-
-<font color='red'>- В cdr писать только локальный внутренний номер (`*0`) при local/callback/callblast/alarmclock звонках на ivr.</font>
 
 <font color='green'>+ возможность запретить переход в административный режим по нажатии `*`</font> ( 30.10.2014 / build 8960 )
 
