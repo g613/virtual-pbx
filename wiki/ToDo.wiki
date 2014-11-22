@@ -1,13 +1,13 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- проверка маршрутов через WEB</font>
+<font color='green'>+ проверка маршрутов через WEB</font> ( 22.11.2014 / buid 9112 )
 
-<font color='red'>- переменную добавить со временем последнего отвеченного звонка в IVR</font>
+<font color='green'>+ переменную добавить со временем последнего отвеченного звонка в IVR</font> ( 20.11.2014 / build 9100 )
 
-<font color='red'>- LAST_ROUTE флаг для маршрутов</font>
+<font color='green'>+ LAST_ROUTE флаг для маршрутов</font> ( 19.11.2014 / build 9099 )
 
-<font color='red'>- В cdr писать только локальный внутренний номер (`*0`) при local/callback/callblast/alarmclock звонках на ivr.</font>
+<font color='green'>+ В cdr писать только локальный внутренний номер (`*0`) при local/callback/callblast/alarmclock звонках на ivr.</font> (19.11.2014 / build 9088 )
 
 <font color='green'>+ логирование в журнале заходов в веб кабинет</font> ( 15.11.2014 / build 9081 )
 
