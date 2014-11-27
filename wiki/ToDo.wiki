@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- Удаление сообщение по критериям ( теже что для поиска ) </font>
+<font color='green'>+ Удаление сообщение по критериям ( теже что для поиска ) </font> ( 27.11.2014 / build 9130 )
 
 <font color='green'>+ проверка маршрутов через WEB</font> ( 22.11.2014 / buid 9112 )
 
