@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.13 2014/11/06 20:11:22 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.16 2014/11/24 20:09:46 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Все сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -94,6 +94,7 @@
 				</select>
 				&nbsp;
 				<input value='Найти' type='submit'>
+				<input value='Удалить' type='submit' name='find_and_delete' onclick='SubmitDelConfirm(this,"ru","Вы действительно хотите удалить ВСЕ найденные сообщения ?")'>
 				</form>
 				<script langiage='JavaScript'>setActiveSelector('msg_type_selector',"[% MSG_TYPE | html %]");</script>
 			</td>

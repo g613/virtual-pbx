@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.35 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.36 2014/11/18 19:44:27 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -38,8 +38,7 @@
 			<th>DTMF mode</th>
 			<th>Proto</th>
 			[% IF USER_CREDS.CUSTOM_REGS %]
-			<th>Receive calls</th>
-			<th>Incoming exten</th>
+			<th colspan='2'>Incoming exten</th>
 			<th width='1%'></th>
 			[% END %]
 			<th>Actions</th>
@@ -78,15 +77,11 @@
 			</td>
 			[% IF USER_CREDS.CUSTOM_REGS %]
 			<td>
-				<select name="NEED_REG" class='in_t0'>
-				[% IF p.NEED_REG eq '1' %]
-					<option value="1" selected>yes</option>
-					<option value="0">no</option>
-				[% ELSE %]
-					<option value="0" selected>no</option>
-					<option value="1">yes</option>
+				<input class='in_t0' name='NEED_REG' type='checkbox' title='Allow incoming calls'
+				[% IF p.NEED_REG %]
+				checked 
 				[% END %]
-				</select>
+				/>
 			</td>
 			<td>
 				<input class='in_t0' size="8" name='INC_EXT' type='text' value="[% p.INC_EXT | html %]">
@@ -121,7 +116,7 @@
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return peers_unhide(this)'>
 			<td nowrap="nowrap">
-				<input size="17" name='host' type='text'>
+				<input size="12" name='host' type='text'>
 				<script language='JavaScript'>
 					var options_ind = 1;
 					var options_str = '<select name="tmpl" onFocus="peers_list_init(this,1)" onBlur="peers_list_init(this,2)" onChange="peers_hide(this.form)"><option value="."></option>';
@@ -162,19 +157,7 @@
 					<option value="tcp">TCP</option>
 				</select>
 			</td>
-			[% IF USER_CREDS.CUSTOM_REGS %]
-			<td>
-				<select name="NEED_REG">
-					<option value="0" selected>no</option>
-					<option value="1">yes</option>
-				</select>
-			</td>
-			<td>
-				<input size="8" name='INC_EXT' type='text'>
-			</td>
-			<td></td>
-			[% END %]
-			<td>
+			<td colspan='4'>
 				<input type='hidden' value='peer_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<input value='Add' type='submit'>

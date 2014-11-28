@@ -1,13 +1,17 @@
 <html>
-<!-- $Id: route_list.tt,v 1.10 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.12 2014/11/19 20:22:36 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 	[% IF USER_CREDS.CSS_HREF eq '' %]
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
 	[% ELSE %]
 	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
 	[% END %]
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-ru.min.js"></script>
 	<script language="JavaScript">
 		var e_list = [];
 		[% FOREACH vb = VB_LIST %]
@@ -29,17 +33,58 @@
 	</table>
 
 	<p>
+	<table width='95%'>
+		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+		<tr align='right'>
+			<td align='left'>
+				[% MATCH_RESULTS | html %]
+			</td>
+			<td align='right'>
+				<input name='action' value='route_list' type='hidden'>
+				<input size='10' type='text' placeholder='Кто звонит' name='caller_id' value='[% ROUTE_CALLER_ID | html %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Кому звонит' name='called_id' value='[% ROUTE_CALLED_ID | html %]'>
+				&nbsp;
+				<input size='15' type='text' placeholder='Переменные' name='vars' value='[% ROUTE_VARS | html %]'>
+				&nbsp;
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#datetime").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='datetime' value='[% ROUTE_DATE | html %]' id='datetime' placeholder='Дата'>
+				<button type="button">...</button>
+				&nbsp;
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='need_lookup' value='1' type='hidden'>
+				<input value='Проверить' type='submit'>
+			</td>
+		</tr>
+		</form>
+	</table>
+	</p>
+
+	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>Приоритет</th>
 			<th>Шаблон номера</th>
 			<th>Преобразование</th>
+			<th>&nbsp;</th>
 			<th>Доступ</th>
 			<th>Длительность</th>
 			<th>Имя маршрута</th>
 			<th>Исходящий АОН</th>
 			<th>Расписание</th>
 			<th>Шлюз</th>
+			<th>&nbsp;</th>
 			<th>Действия</th>
 		</tr>
 		
@@ -49,6 +94,7 @@
 			<td><input class='in_t0' size="6" name='r_PRIORITY' type='text' value='[% r.PRIORITY | html %]'></td>
 			<td><input class='in_t0' size="15" name='r_PATTERN' type='text' value="[% r.PATTERN | html %]"></td>
 			<td><input class='in_t0' size="18" name='r_SUBSTR' type='text' value="[% r.SUBSTR | html %]"></td>
+			<td>[% r.SUBSTR_RESULT | html %]</td>
 			<td><input class='in_t0' size="14" name='r_EXT_NUMBER' type='text' value="[% r.EXT_NUMBER | html %]"></td>
 			<td><input class='in_t0' size="6" name='r_TLIMIT' type='text' value="[% r.TLIMIT | html %]"></td>
 			<td><input class='in_t0' size="13" name='r_DESCRIPTION' type='text' value="[% r.DESCRIPTION | html %]"></td>
@@ -70,6 +116,13 @@
 				[% END %]
 				</select>
 			</td>
+			<td align='center'>
+				<input class='in_t0' name='r_LAST_ROUTE' type='checkbox' title='Это последний маршрут'
+				[% IF r.LAST_ROUTE %]
+				checked 
+				[% END %]
+				/>
+			</td>
 			<td align='left'>
 				<input type='hidden' value='[% r.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='route_update' name='action'>
@@ -85,12 +138,12 @@
 			</form>
 		</tr>
 		[% END %]
-		<tr><td></td></tr>
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
 			<td><input size="6" name='r_PRIORITY' type='text'></td>
 			<td><input size="15" name='r_PATTERN' type='text'></td>
 			<td><input size="18" name='r_SUBSTR' type='text'></td>
+			<td>&nbsp;</td>
 			<td><input size="14" name='r_EXT_NUMBER' type='text'></td>
 			<td><input size="6" name='r_TLIMIT' type='text'></td>
 			<td><input size="13" name='r_DESCRIPTION' type='text'></td>
@@ -103,7 +156,7 @@
 				[% END %]
 				</select>
 			</td>
-			<td>
+			<td colspan='2'>
 				<input type='hidden' value='route_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<input value='Добавить' type='submit'>

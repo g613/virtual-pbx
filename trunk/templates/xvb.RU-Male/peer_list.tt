@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.5 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.6 2014/11/18 19:44:27 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP шлюзы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -35,11 +35,10 @@
 			<th>DTMF режим</th>
 			<th>Протокол</th>
 			[% IF USER_CREDS.CUSTOM_REGS %]
-			<th>Принимать звонки</th>
-			<th>на вн. номер</th>
+			<th colspan='2'>Вн. номер для входящих</th>
 			<th width='1%'></th>
 			[% END %]
-			<th>Действия</th>
+			<th>&nbsp;</th>
 		</tr>
 		
 		[% FOREACH p = PEERS %]
@@ -71,19 +70,15 @@
 					<option value="udp" selected>UDP</option>
 					<option value="tcp">TCP</option>
 				[% END %]
-				</select>
+				</select>	
 			</td>
 			[% IF USER_CREDS.CUSTOM_REGS %]
 			<td>
-				<select name="NEED_REG" class='in_t0'>
-				[% IF p.NEED_REG eq '1' %]
-					<option value="1" selected>да</option>
-					<option value="0">нет</option>
-				[% ELSE %]
-					<option value="0" selected>нет</option>
-					<option value="1">да</option>
+				<input class='in_t0' name='NEED_REG' type='checkbox' title='Принимать входящие звонки'
+				[% IF p.NEED_REG %]
+				checked 
 				[% END %]
-				</select>
+				/>
 			</td>
 			<td>
 				<input class='in_t0' size="4" name='INC_EXT' type='text' value="[% p.INC_EXT | html %]">
@@ -119,7 +114,7 @@
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return peers_unhide(this)'>
 			<td nowrap="nowrap">
-				<input size="17" name='host' type='text'>
+				<input size="12" name='host' type='text'>
 				<script language='JavaScript'>
 					var options_ind = 1;
 					var options_str = '<select name="tmpl" onFocus="peers_list_init(this,1)" onBlur="peers_list_init(this,2)" onChange="peers_hide(this.form)"><option value="."></option>';
@@ -160,26 +155,13 @@
 					<option value="tcp">TCP</option>
 				</select>
 			</td>
-			[% IF USER_CREDS.CUSTOM_REGS %]
-			<td>
-				<select name="NEED_REG">
-					<option value="0" selected>нет</option>
-					<option value="1">да</option>
-				</select>
-			</td>
-			<td>
-				<input size="4" name='INC_EXT' type='text'>
-			</td>
-			<td></td>
-			[% END %]
-			<td>
+			<td colspan='4'>
 				<input type='hidden' value='peer_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<input value='Добавить' type='submit'>
 			</td>
 			</form>
 		</tr>
-		<tr><td colspan='9'>&nbsp;</td></tr>
 	</table>
 	</p>
 
