@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.76 2014/11/06 20:11:22 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.79 2014/11/24 20:09:44 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -80,6 +80,7 @@
 				<input size='8' type='text' placeholder='Duration' name='duration' value='[% DURATION | html %]'>
 				&nbsp;
 				<input value='Search' type='submit'>
+				<input value='Delete' type='submit' name='find_and_delete' onclick='SubmitDelConfirm(this,"en","Are you sure you want to delete all matched messages found?")'>
 				</form>
 			</td>
 		</tr>

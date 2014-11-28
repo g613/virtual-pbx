@@ -1,15 +1,23 @@
 /*
-    <!-- $Id: xvb.js,v 1.88 2014/10/23 18:34:44 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.92 2014/11/28 11:22:16 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
 var selectors_list = [];
-
+/*
+var xvb_player_fallback2http = navigator.userAgent.toLowerCase().indexOf('safari/') > -1;
+*/
 function CLStart( obj ) {
 	obj.className='in_t1';
 }
 function CLStop( obj ) {
-	if ( obj.type != 'select-one' ) {
+	if ( obj.type == 'checkbox' ) {
+		if ( obj.checked == obj.defaultChecked ) {
+			obj.className='in_t0';
+		} else {
+			obj.className='in_t2';
+		}
+	} else if ( obj.type != 'select-one' ) {
 		if ( obj.value == obj.defaultValue ) {
 			obj.className='in_t0';
 		} else {
@@ -260,6 +268,15 @@ function DelConfirm( lang, msg ) {
 	return ret;
 }
 
+function SubmitDelConfirm( obj, lang, msg ) {
+	var ret = DelConfirm(lang,msg);
+	if ( ret == true ) {
+		obj.value=1;
+		obj.parentNode.onsubmit=false;
+		obj.parentNode.submit();
+	}
+}
+
 function getElementsByClassName( strClassName, obj ) {
 	if ( obj.className == strClassName ) {
 		aryClassElements[aryClassElements.length] = obj;
@@ -342,6 +359,14 @@ function ShowPlayer( file ) {
 	var canPlayMP3 = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/mpeg") !== "");
 	var canPlayWAV = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/x-wav") !== "");
 	var canPlayOGG = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/ogg") !== "");
+
+	/*
+		4 safari & untrasted cert
+	*/
+	if(typeof(xvb_player_fallback2http) !== 'undefined') {
+		var http_file_name = file.replace(/^https:/, 'http:');
+		file = http_file_name;
+	}
 
 	if ( canPlayOGG ) {
 		var wav_file = file.replace("wav?media=mp3;","ogg?");
@@ -516,8 +541,12 @@ function setShadowAttr() {
 		if ( all_el[i].className == 'in_t0' ) {
 			/* class t_0 */
 			if ( all_el[i].tagName == 'INPUT' || all_el[i].tagName == 'TEXTAREA' ) {
-				all_el[i].onfocus = function() { CLStart(this) };
-				all_el[i].onblur = function() { CLStop(this) };
+				if ( all_el[i].type == 'checkbox' ) {
+					all_el[i].onclick = function() { CLStop(this) };
+				} else {
+					all_el[i].onfocus = function() { CLStart(this) };
+					all_el[i].onblur = function() { CLStop(this) };
+				}
 			} else if ( all_el[i].tagName == 'SELECT' ) {
 				all_el[i].onchange = function() { CLStop(this) };
 			}

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.59 2014/11/06 20:11:22 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.62 2014/11/24 20:09:44 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -95,6 +95,7 @@
 				</select>
 				&nbsp;
 				<input value='Search' type='submit'>
+				<input value='Delete' type='submit' name='find_and_delete' onclick='SubmitDelConfirm(this,"en","Are you sure you want to delete all matched messages found?")'>
 				</form>
 				<script langiage='JavaScript'>setActiveSelector('msg_type_selector',"[% MSG_TYPE | html %]");</script>
 			</td>
