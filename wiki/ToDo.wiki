@@ -1,6 +1,12 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- Отчет по звонкам по группам ( sql-reports )</font>
+
+<font color='red'>- в ежедневных отчетах в статистике звонков номер B добавить</font>
+
+<font color='green'>+ новая переменная CUR_INVALID_INPUT</font> ( 29.11.2014 / build 9140 )
+
 <font color='green'>+ Удаление сообщение по критериям ( теже что для поиска ) </font> ( 27.11.2014 / build 9130 )
 
 <font color='green'>+ проверка маршрутов через WEB</font> ( 22.11.2014 / buid 9112 )
