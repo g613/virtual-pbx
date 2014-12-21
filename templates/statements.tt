@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.24 2014/09/09 13:26:46 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.25 2014/12/18 03:30:20 gosha Exp $ -->
 <!--SUBJECT:VirtualPBX daily statement:SUBJECT-->
 <head>
 	<BASE href='[% CGI_SERVER %]'>
@@ -122,6 +122,7 @@
 		<tr>
 			<th>Start Date</th>
 			<th>Caller ID</th>
+			<th>Called ID</th>
 			<th>Duration</th>
 			<th>Type</th>
 			<th>Cost</th>
@@ -130,6 +131,7 @@
 		<tr  align='center'>
 			<td>[% msg.CDR_DATE | html %]</td>
 			<td>[% msg.CALLER_ID | html %]</td>
+			<td>[% msg.CALLED_ID | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td>[% msg.CALL_TYPE | html %]</td>
 			<td>[% msg.COST %] ([% msg.DESCRIPTION %])</td>
@@ -141,6 +143,7 @@
 		<tr>
 			<th>Start Date</th>
 			<th>Caller ID</th>
+			<th>Called ID</th>
 			<th>Duration</th>
 			<th>Type</th>
 		</tr>
@@ -148,6 +151,7 @@
 		<tr  align='center'>
 			<td>[% msg.CDR_DATE | html %]</td>
 			<td>[% msg.CALLER_ID | html %]</td>
+			<td>[% msg.CALLED_ID | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td>[% msg.CALL_TYPE | html %]</td>
 		</tr>
