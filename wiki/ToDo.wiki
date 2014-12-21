@@ -1,8 +1,6 @@
 #labels Featured
 = ToDo list =
 
-<font color='green'>+ возможность n-way сall через интерком с телефонов</font> ( 19.12.2014 / build 9155 )
-
 <font color='green'>+ Отчет по звонкам по группам ( sql-reports )</font>
 ( 18.12.2014 / build 9150 )
 
