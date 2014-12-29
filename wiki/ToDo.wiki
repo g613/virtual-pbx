@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>- Игнорирование дубликатов при загрузке данных из csv для callblast/multidialout</font>
+
 <font color='red'>- "Подсветка" прослушанных сообщений</font>
 
 <font color='red'>- Подключение пользовательской АТС как шлюза ( сквозная нумерация )</font>
