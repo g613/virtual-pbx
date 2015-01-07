@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.6 2014/11/18 19:44:27 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.7 2014/12/28 10:34:09 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP шлюзы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -100,6 +100,9 @@
 				<input type='hidden' value='peer_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<a title='удалить шлюз' href='?action=peer_del&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% p.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>&nbsp;
+				[% IF p.setvar contain 'PBXMODE=1;' %]
+				<img title='Режим АТС' border='0' src='/xvb/images/check.png' alt='АТС' />&nbsp;
+				[% END %]
 				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
 				<script language='JavaScript'>
 					writeUpdateLinks( 'сохранить изменения' );

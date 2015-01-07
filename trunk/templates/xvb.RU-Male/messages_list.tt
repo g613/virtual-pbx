@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.14 2014/11/24 20:09:46 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.15 2014/12/22 06:00:23 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -91,12 +91,13 @@
 		<tr>
 			<th>#</th>
 			<th>Дата</th>
+			<th>&nbsp;</th>
 			<th>Кто звонил</th>
 			<th>Кому звонил</th>
 			<th>Длительность</th>
 			<th>Размер</th>
-			<th>Действия</th>
 			<th>Тип</th>
+			<th>&nbsp;</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
@@ -108,7 +109,21 @@
 		[% FOREACH msg = MSG_LIST %]
 		<tr class='nocolor' id='d-tr-[% msg.FILE_NAME %]'>
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
-			<td align='center'>[% msg.MSG_DATE | html %]</td>
+			[% IF msg.IS_VOICE %]
+			<td align='center'>
+				<a class='msg' id='msg[% msg.MSG_NUM %]' title='скачать сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>[% msg.MSG_DATE | html %]</a>
+			</td>
+			<td align='left'>
+				<a title='прослушать' 
+					onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen','[% msg.MSG_NUM %]' )"
+					href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+			</td>
+			[% ELSE %]
+			<td align='center'>
+				<a class='msg' title='скачать файл' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'>[% msg.MSG_DATE | html %]</a>
+			</td>
+			<td></td>
+			[% END %]
 			<td>[% msg.CALLERID | html %]</td>
 			<td>[% msg.CALLEDID | html %]</td>
 			[% IF msg.IS_VOICE %]
@@ -117,27 +132,15 @@
 				<td align='center'>--------</td>
 			[% END %]
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
-			<td nowrap='nowrap'>
-				&nbsp;
-				[% IF msg.IS_VOICE %]
-					<a title='скачать сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-				[% ELSE %]
-					<a title='скачать файл' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-				[% END %]
 					<a title='удалить сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
-				
-				[% IF msg.IS_VOICE %]
-					<a title='прослушать' 
-						onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
-						href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-				[% END %]
+			<td>[% msg.DESCRIPTION | locale_msg %]</td>
+			<td nowrap='nowrap'>
 				[% IF msg.FILE_TYPE eq '30' %]
 					<a title='Пометить как старое' href='?action=msg_status&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=40'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
 				[% ELSIF msg.FILE_TYPE eq '40' %]
 					<a title='Пометить как новое' href='?action=msg_status&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=30'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
 				[% END %] 
 			</td>
-			<td>[% msg.DESCRIPTION | locale_msg %]</td>
 			</tr>
 			[% END %]
 			[% IF MSG_NEXT ne '' %]
