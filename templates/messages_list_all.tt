@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.62 2014/11/24 20:09:44 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.63 2014/12/22 06:00:23 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -110,12 +110,13 @@
 			<th>#</th>
 			<th>Ext</th>
 			<th>Date</th>
+			<th>&nbsp;</th>
 			<th>CallerID</th>
 			<th>CalledID</th>
 			<th>Duration</th>
 			<th>Size</th>
-			<th>Actions</th>
 			<th>Type</th>
+			<th>&nbsp;</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
@@ -128,7 +129,21 @@
 		<tr class='nocolor' id='d-tr-[% msg.FILE_NAME %]'>
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
 			<td>&nbsp;<a href='?action=vb_view&id=[% msg.ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
-			<td align='center'>[% msg.MSG_DATE | html %]</td>
+			[% IF msg.IS_VOICE %]
+			<td align='center'>
+				<a class='msg' id='msg[% msg.MSG_NUM %]' title='download message' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>[% msg.MSG_DATE | html %]</a>
+			</td>
+			<td align='left'>
+				<a title='listen' 
+					onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen','[% msg.MSG_NUM %]' )"
+					href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+			</td>
+			[% ELSE %]
+			<td align='center'>
+				<a class='msg' title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'>[% msg.MSG_DATE | html %]</a>
+			</td>
+			<td></td>
+			[% END %]
 			<td>[% msg.CALLERID | html %]</td>
 			<td>[% msg.CALLEDID | html %]</td>
 			[% IF msg.IS_VOICE %]
@@ -137,27 +152,15 @@
 			<td align='center'>--------</td>
 			[% END %]
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
+			<td>[% msg.DESCRIPTION | html %]</td>
 			<td nowrap='nowrap'>
-				&nbsp;
-				[% IF msg.IS_VOICE %]
-					<a title='download imedia' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-				[% ELSE %]
-					<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-				[% END %]
-					<a title='delete message' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% msg.FILE_NAME %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
-
-				[% IF msg.IS_VOICE %]
-					<a title='play' 
-						onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
-						href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-				[% END %]
+				<a title='delete message' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% msg.FILE_NAME %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 				[% IF msg.FILE_TYPE eq '30' %]
 					<a title='Mark message as OLD' href='?action=msg_status&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=40&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
 				[% ELSIF msg.FILE_TYPE eq '40' %]
 					<a title='Mark message as NEW' href='?action=msg_status&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=30&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
 				[% END %] 
 			</td>
-			<td>[% msg.DESCRIPTION | html %]</td>
 		</tr>
 		[% END %]
 		<tr>

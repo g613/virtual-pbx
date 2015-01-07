@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.92 2014/11/28 11:22:16 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.94 2014/12/25 14:23:59 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -349,7 +349,7 @@ function ShowEl( Id ) {
 	document.getElementById(Id).className = 'addon_info_open';
 }
 
-function ShowPlayer( file ) {
+function ShowPlayer( file, msg_id ) {
 	var el=document.getElementById('shadow');
 	el.style.visibility='visible';
 	var div_id = document.getElementById('center');
@@ -371,10 +371,10 @@ function ShowPlayer( file ) {
 	if ( canPlayOGG ) {
 		var wav_file = file.replace("wav?media=mp3;","ogg?");
 		wav_file = wav_file.replace("=mp3","=ogg");
-		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><img border="0" src="/xvb/images/vb_del.png" alt="close" /></a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player" height="20%"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><img border="0" src="/xvb/images/vb_del.png" alt="close" /></a>&nbsp;</td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
 	} else if ( canPlayMP3 ) {
 		var wav_file = file;
-		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><img border="0" src="/xvb/images/vb_del.png" alt="close" /></a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player" height="20%"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><img border="0" src="/xvb/images/vb_del.png" alt="close" /></a>&nbsp;</td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
 	} else {
 		var plugin = (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) ? navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin : 0;
 		if ( plugin ) {
@@ -387,6 +387,16 @@ function ShowPlayer( file ) {
 		} else {
 			player_data = 'Your browser not supported';
 		}
+	}
+
+	/*
+		save history
+	*/
+	if ( history.pushState && history.replaceState && msg_id ) {
+		hist_url = document.getElementById('msg'+msg_id).href;
+		current_url = window.location.href;
+		history.replaceState({},"",hist_url);
+		history.replaceState({},"",current_url);
 	}
 
 	div_id.innerHTML = player_data;
