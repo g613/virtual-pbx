@@ -31,7 +31,7 @@
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
 			<td align='right'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
 				[% INCLUDE version.tt %]
 			<td>
 		</tr>
@@ -77,17 +77,13 @@
 				</script>
 				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
 				<button type="button">...</button>
-				&nbsp;
-				<input value='Run' type='submit'>
-				[% ELSE %]
-				<a title='run report' href='?action=report_run&report_id=[% REPORT_DATA.ID %]'><img border='0' src='/xvb/images/run.png' alt='run' /></a>&nbsp;&nbsp;
 				[% END %]
 				&nbsp;
-				<a title='get excel table' href='?action=report_run&report_id=[% REPORT_DATA.ID %]&need_excel=1'><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;&nbsp;
+				<input value='Run' type='submit'>
 				&nbsp;
-				<a title='edit report' href='?action=report_info&report_id=[% REPORT_DATA.ID %]'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>&nbsp;&nbsp;
-				&nbsp;
-				<a title='delete report' href='?action=report_del&report_id=[% REPORT_DATA.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+				<a title='get excel table' href='?action=report_run&report_id=[% REPORT_DATA.ID %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
+				<a title='edit report' href='?action=report_info&report_id=[% REPORT_DATA.ID %]'><span class='icon-cogs fs0'></span></a>
+				<a title='delete report' href='?action=report_del&report_id=[% REPORT_DATA.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><span class='icon-cross fs0'></span></a>
 				</form>
 			</td>
 		</tr>

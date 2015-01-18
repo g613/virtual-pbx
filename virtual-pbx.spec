@@ -541,6 +541,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 %CORE_DIR/web/css/*
 %CORE_DIR/web/images/*
 %CORE_DIR/web/js/*
+%CORE_DIR/web/fonts/*
 %CORE_DIR/web/ump3player.swf
 %CORE_DIR/contrib/nginx.conf
 

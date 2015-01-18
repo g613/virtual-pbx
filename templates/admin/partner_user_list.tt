@@ -61,7 +61,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='8'>
-				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -103,15 +103,15 @@
 			[% END %]
 			</td>
 			<td>
-				<a title='delete user' href='?action=user_del&user_id=[% us.ID %]&from=[% MSG_FROM %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>&nbsp;&nbsp;
-				<a title='edit user settings' href='?user_id=[% us.ID %]&action=user_info&partner=[% PARTNER | html %]'><img border='0'  src='/xvb/images/vb_edit.png' alt='user info' /></a>
+				<a title='delete user' href='?action=user_del&user_id=[% us.ID %]&from=[% MSG_FROM %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
+				<a title='Edit tenant settings' href='?user_id=[% us.ID %]&action=user_info&partner=[% PARTNER | html %]'><span class='icon-cogs fs0'></span></a>
 			</td>
 		</tr>
 		[% END %]
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='2'>
-				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
 		[% END %]

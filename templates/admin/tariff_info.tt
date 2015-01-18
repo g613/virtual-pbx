@@ -25,7 +25,7 @@
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
 			<td align='right'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
 				[% INCLUDE version.tt %]
 			<td>
 		</tr>
@@ -38,7 +38,7 @@
 				<h1>Tariff '[% NAME | html %]'</h1>
 			</td>
 			<td align='right'>
-				<a title='delete tariff' href='?action=tariff_del&tariff_id=[% ID %]' onclick="return DelConfirm('en')"><img border='0' src='/xvb/images/vb_del.png' alt='del' /></a>
+				<a title='delete tariff' href='?action=tariff_del&tariff_id=[% ID %]' onclick="return DelConfirm('en')"><span class='icon-cross fs0'></span></a>
 			</td>
 		</tr>
 	</table>

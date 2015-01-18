@@ -25,7 +25,7 @@
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
 			<td align='right'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
 				[% INCLUDE version.tt %]
 			<td>
 		</tr>
@@ -42,24 +42,24 @@
 			<th>Download IP</th>
 			<th>Asterisk IP</th>
 			<!--<th>AMI login:password</th>-->
-			<th>Comment</th>
+			<th>Description</th>
 			<th>Limits</th>
 			<th>Stat URL</th>
 			<th>Stats</th>
-			<th>Actions</th>
+			<th>&nbsp;</th>
 		</tr>
 			
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='5'>
-				<a title='previous page' href='?action=node_list&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=node_list&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
 
 		[% FOREACH node = NODES %]
 		<tr align='center' class='nocolor' id='d-tr-[% node.NODE_ID %]'>
-			<form method='post'>
+			<form method='post' id='f-[% node.NODE_ID %]' onSubmit='return xmlhttpPost(this,1)' action="">
 			<td align='left'>
 			[% IF node.NODE_STAT_URL %]
 				<a title='system statistics' href="[% node.NODE_STAT_URL %]">[% node.NODE_ID | html %]</a>
@@ -83,21 +83,17 @@
 					<b>Date:</b> [% node.stat.la_1-time | gmtime %]
 				[% END %]
 			</td>
-			<td>
+			<td align='left'>
 				<input type='hidden' value='[% node.NODE_ID %]' name='node_id'>
 				<input type='hidden' value='[% node.NODE_ID %]' name='data_id'>
 				<input type='hidden' value='node_update' name='action'>
 				<input type='hidden' value='[% MSG_FROM %]' name='from'>
-				<a href='?action=sysstatus&a=msg_download'><img border='0' src='/xvb/images/information-button.png' title="sysstatus" /></a>&nbsp;&nbsp;
-				<a title='delete node' href='?action=node_del&node_id=[% node.NODE_ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
-				
-				<span class='in_t' id='in_t_id-[% node.NODE_ID %]'>
-				<script language='JavaScript'>
-					writeUpdateLinks( 'save changes' );
-				</script>
-				<noscript><input value='Change' type='submit'></noscript>
-				</span>
-				
+				<a title='sys status' href='?action=sysstatus&a=msg_download'><span class='icon-info fs0'></span></a>
+				<a title='delete node' href='?action=node_del&node_id=[% node.NODE_ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
+                <span class='in_t' id='in_t_id-[% node.NODE_ID %]'>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% node.NODE_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+					<noscript><input value='Change' type='submit'></noscript>
+                </span>
 			</td>
 			</form>
 		</tr>
@@ -105,6 +101,7 @@
 
 		<form method="post" onSubmit='return checkChanges(this)'>
 		<tr align='center'>
+			<td>&nbsp;</td>
 			<td><input size='15' type='text' name='N_NODE_ID'></td>
 			<td><input size='15' type='text' name='N_DOWNLOAD_IP'></td>
 			<td><input size='15' type='text' name='N_NODE_IP'></td>
@@ -122,7 +119,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='5'>
-				<a title='next page' href='?action=node_list&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='next page' href='?action=node_list&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
 		[% END %]

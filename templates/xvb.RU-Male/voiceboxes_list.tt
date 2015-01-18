@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.7 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.10 2015/01/16 15:36:34 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список внутренних номеров - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -16,10 +16,11 @@
 
 	<table width='100%'>
 		<tr>
-			<td width='75%' align='center'>
+			<td align='right' width='20%'>&nbsp;</td>
+			<td align='center'>
 				<h1>Список внутренних номеров</h1>
 			</td>
-			<td align='right' width='25%'>
+			<td align='right' width='20%'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 				&nbsp;
 				[% IF USER_CREDS.ROOT eq '0' %]
@@ -35,23 +36,21 @@
 		</tr>
 	</table>
 
-	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th rowspan='2'>Номер</th>
-			<th rowspan='2'>Имя</th>
-			<th rowspan='2'>Тип</th>
-			<th colspan='5'>Опции</th>
-			<th rowspan='2'>Перейти к</th>
-			<th rowspan='2'>Получатель оповещения</th>
-			<th rowspan='2'>Действия</th>
+			<th>Номер</th>
+			<th>Тип</th>
+			<th>Имя</th>
+			<th title='Ждать ввода'>Ж</th>
+			<th title='Спрятать номер'>С</th>
+			<th title='Прямой доступ'>П</th>
+			<th title='Защита пинкодом'>З</th>
+			<th title='Глобальный номер'>Г</th>
+			<th>Перейти к</th>
+			<th>Получатель оповещения</th>
+			<th>&nbsp;</th>
 		</tr>
 		<tr>
-			<th>Ж</th>
-			<th>С</th>
-			<th>П</th>
-			<th>З</th>
-			<th>Г</th>
 		</tr>
 		[% FOREACH vb = VB_LIST %]
 		<tr class='nocolor' id='d-tr-[% vb.ID %]' align='center'>
@@ -59,10 +58,12 @@
 				&nbsp;[% vb.EXT_NUMBER | html %]
 			</td>
 			<td align='left'>
-				<a class='vb_name' href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% vb.NAME | html %]</a>
+				<a class='vb_name' href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]'>
+				[% vb.DESCRIPTION | locale_msg %]
+				</a>
 			</td>
 			<td align='left'>
-				[% vb.DESCRIPTION | locale_msg %]
+				[% vb.NAME | html %]
 			</td>
 			<td>
 				[% vb.WAITEXTENSION %]
@@ -90,14 +91,11 @@
 				[% vb.NOTIFYEMAIL | html %]
 			</td>
 			<td nowrap="nowrap">
-				<a href='?action=msg_list&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='просмотр сообщений'><img border='0' src='/xvb/images/msg_list.png' alt='msgs' /></a>&nbsp;
-				<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='редактировать внутренний номер'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>&nbsp;
-				<a href='?action=vb_del&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% vb.ID %]')" title='удалить внутренний номер'><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>
+				<a href='?action=vb_del&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% vb.ID %]')" title='удалить внутренний номер'><span class='icon-bin fs0'></span></a>
 			</td>
 		</tr>
 		[% END %]
 	</table>
-	</p>
 
 	<script language='JavaScript'>listcolorer('d-tbl');ext_list_build('d-tbl');</script>
 

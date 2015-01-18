@@ -25,7 +25,7 @@
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
 			<td align='right'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
 				[% INCLUDE version.tt %]
 			<td>
 		</tr>
@@ -58,25 +58,30 @@
 	<p>
 	<table width='98%' id='list-data'>
 		<tr>
-			<th>&nbsp;N&nbsp;</th>
+			<th>N</th>
+			<th>&nbsp;</th>
 			<th>Report name</th>
 			<th>Create date</th>
 			<th>Owner</th>
 			<th>Cache TTL</th>
-			<th>Actions</th>
+			<th>&nbsp;</th>
 		</tr>
 			
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='6'>
-				<a title='previous page' href='?action=reports_list&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_PREV %]'><img border='0' src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			<td align='left' colspan='7'>
+				<a title='previous page' href='?action=reports_list&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
 
 		[% FOREACH t = REPORTS %]
 		<tr align='center' class='nocolor'>
-			<td><a title='edit report' href='?action=report_info&report_id=[% t.ID %]'>[% t.ID %]</a></td>
+			<td>[% t.ID %]</td>
+			<td>
+				<a title='get excel table' href='?action=report_run&report_id=[% t.ID %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
+				<a title='edit report' href='?action=report_info&report_id=[% t.ID %]'><span class='icon-cogs fs0'></span></a>
+			</td>
 			<td align='left'><a title='run report' href='?action=report_run&report_id=[% t.ID %]'>[% t.NAME | html %]</a></td>
 			<td>[% t.CREATE_DATE %]</td>
 			<td>
@@ -88,10 +93,7 @@
 			</td>
 			<td>[% t.TTL | duration_str | html %]</td>
 			<td>
-				<a title='run report' href='?action=report_run&report_id=[% t.ID %]'><img border='0' src='/xvb/images/run.png' alt='run' /></a>&nbsp;&nbsp;
-				<a title='get excel table' href='?action=report_run&report_id=[% t.ID %]&need_excel=1'><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;&nbsp;
-				<a title='edit report' href='?action=report_info&report_id=[% t.ID %]'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>&nbsp;&nbsp;
-				<a title='delete report' href='?action=report_del&report_id=[% t.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+				<a title='delete report' href='?action=report_del&report_id=[% t.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -105,9 +107,9 @@
 				<input value='Add report' type='submit'>
 				</form>
 			</td>
-			<td align='right' colspan='3'>
+			<td align='right' colspan='4'>
 				[% IF MSG_NEXT ne '' %]
-				<a title='next page' href='?action=report_list&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='next page' href='?action=report_list&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
 				[% END %]
 			</td>
 		</tr>

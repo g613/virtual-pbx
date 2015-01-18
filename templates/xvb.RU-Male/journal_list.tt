@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.7 2014/11/06 20:11:22 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.11 2015/01/17 20:03:57 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Журнал операций - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -20,7 +20,18 @@
 <body onLoad="XVBInit()">
 	<center>
 			
-	<h1>Журнал операций</h1>
+	<table width='95%'>
+		<tr align='center'>
+			<td width='5%' align='left'>
+				[% IF J_EXT_ID %]
+				<a href='?action=vb_view&id=[% J_EXT_ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Параметры внутреннего номера"><span class='icon-cog fs0'></span></a>
+				[% END %]
+			</td>
+			<td>
+			<h1>Журнал операций</h1>
+			</td>
+		</tr>
+	</table>
 
 	<table width='100%'>
 		<tr align='right'>
@@ -57,7 +68,11 @@
 				<button type="button">...</button>
 				&nbsp;
 				<input name='action' value='j_list' type='hidden'>
+				[% IF J_EXT_ID %]
+				<input type='hidden' name='ext_num' value='[% J_EXT_NUM %]'>
+				[% ELSE %]
 				<input size='6' type='text' name='ext_num' value='[% J_EXT_NUM %]' placeholder='Номер'>
+				[% END %]
 				&nbsp;
 				<select name="action_type" id="j_type_selector">
 					<option value="" selected>Все события</option>
@@ -91,7 +106,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='5'>
-				<a title='предыдущая страница' href='?action=j_list&action_type=[% J_ACTION %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&ext_num=[% J_EXT_NUM %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=[% J_DATA | htmlstrict %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='предыдущая страница' href='?action=j_list&action_type=[% J_ACTION %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&ext_id=[% J_EXT_ID %]&ext_num=[% J_EXT_NUM | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=[% J_DATA | htmlstrict %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -113,7 +128,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='5'>
-				<a title='следующая страница' href='?action=j_list&action_type=[% J_ACTION %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&ext_num=[% J_EXT_NUM %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=[% J_DATA | htmlstrict %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_NEXT %] &lt;=' /></a>
+				<a title='следующая страница' href='?action=j_list&action_type=[% J_ACTION %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&ext_id=[% J_EXT_ID %]&ext_num=[% J_EXT_NUM | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=[% J_DATA | htmlstrict %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
 		[% END %]

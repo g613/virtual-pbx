@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.40 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.47 2015/01/17 21:26:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -19,56 +19,78 @@
 <body onLoad="XVBInit()">
 	<center>
 
-	<h1>SIP Phones</h1>
-
-	<p>
 	<table width='100%'>
-		<tr align='left'>
-			<td align='right'>
-				<a title='get excel table' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;&nbsp;
-				<a title='delete all phones' href='?action=phone_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete all records'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+		<tr>
+			<td align='center'><h1>SIP phones</h1></td>
+			<td align='right' width='10%'>
+				<a title='get excel table' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
+				<a title='delete all phones' href='?action=phone_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')"><span class='icon-cross fs0'></span></a>
 			</td>
 		</tr>
 	</table>
-	</p>
 
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+			<th>Phone</th>
+			<th>User name and email</th>
+			<th>CallerID</th>
+			<th>Record and rec Exten</th>
+			<th>Pickup Groups</th>
 			<th>Auth name</th>
 			<th>Password</th>
 			<th>&nbsp;</th>
-			<th>Phone</th>
-			<th>User name</th>
-			<th>CallerID</th>
-			<th>Email</th>
-			<th>Record</th>
-			<th>Rec Exten</th>
-			<th>Pickup Groups</th>
-			<th>Actions</th>
 		</tr>
 		
 		[% FOREACH p = PHONES %]
 		<tr align='center' class='nocolor' id='d-tr-[% p.DATA_ID %]'>
-			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+			<form method="post" action="[% CGI_URL %]" id='f-[% p.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 			<td align='left' nowrap='nowrap'>
-				<img 
 				[% IF p.REG_STATUS eq 'Registered' %]
-					src='/xvb/images/ball_green.png'
-				[% ELSE %]
-					src='/xvb/images/ball_red.png'
+					<a href='#' class='l-info'>
+					<span class='fs1'>✓</span>
+					<span class='l-info'>
+						[% p.REG_STATUS %]<br>
+						Reg date: [% p.REG_TIME | html %]<br>
+						Expired: [% p.REG_EXPIRED | html %]<br>
+						IP: [% p.ipaddr | html %]<br>
+						UA: [% p.useragent | html %]
+					</span>
+					</a>
+				[% ELSIF p.REG_TIME ne '-' %]
+					<a href='#' class='l-info'>
+					<span class='icon-info fs1'></span>
+					<span class='l-info'>
+						[% p.REG_STATUS %]<br>
+						Reg date: [% p.REG_TIME | html %]<br>
+						Expired: [% p.REG_EXPIRED | html %]<br>
+						IP: [% p.ipaddr | html %]<br>
+						UA: [% p.useragent | html %]
+						[% IF p.deny %]
+						Access only from IP: [% p.permit | html %]
+						[% END %]
+					</span>
+					</a>
 				[% END %]
-				title='[% p.REG_STATUS %], Reg date: [% p.REG_DATE | html %], Expired date: [% p.REG_EXPIRED | html %], IP: [% p.ipaddr | html %], UA: [% p.useragent | html %]' alt='[% p.REG_STATUS %]' />
 				[% IF p.DND %]
-					<img src='/xvb/images/dnd.png' title='DND enabled at [% p.DND | html %]' alt='DND enabled at [% p.DND | html %]' />
+					<a href='#' class='l-info'>
+					<span class='icon-blocked fs1'></span>
+					<span class='l-info'>
+						DND activated on [% p.DND | html %]
+					</span>
+					</a>
 				[% END %]
 				[% IF p.FWD_NUM %]
-					<img src='/xvb/images/fwd.png' title='Forward to: [% p.FWD_NUM | hmtml %]' alt='Forward to: [% p.FWD_NUM | hmtml %]' />
+					<a href='#' class='l-info'>
+					<span class='icon-mobile fs1'></span>
+					<span class='l-info'>
+						Call forward to: [% p.FWD_NUM | html %]
+					</span>
+					</a>
 				[% END %]
 			</td>
-			<td align='left'><input size="32" type='hidden' name='name' value="[% p.name %]">[% p.name %]</td>
-			<td><input class='in_t0' size="12" name='secret' type='text' value="[% p.secret | html %]"></td>
 			<td align='center'>
 				[% IF p.deny %]
 					<input class='in_t0' name='trusted_ip' type='checkbox' title='Access only for: [% p.permit | html %]' checked />
@@ -77,10 +99,12 @@
 				[% END %]
 			</td>
 			<td><input class='in_t0' size="10" name='callerid' type='text' value="[% p.callerid | html %]"></td>
-			<td><input class='in_t0' size="18" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"></td>
-			<td><input class='in_t0' size="12" name='DEFCID' type='text' value="[% p.DEFCID | html %]"></td>
-			<td><input class='in_t0' size="15" name='EMAIL' type='text' value="[% p.EMAIL | html %]"></td>
 			<td>
+				<input class='in_t0' size="18" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"><br>
+				<input class='in_t0' size="15" name='EMAIL' type='text' value="[% p.EMAIL | html %]">
+			</td>
+			<td><input class='in_t0' size="12" name='DEFCID' type='text' value="[% p.DEFCID | html %]"></td>
+			<td align='left' nowrap='nowrap'>
 				<select name="REC_MODE" class='in_t0'>
 				[% IF p.REC_MODE eq '1' %]
 					<option value="1" selected>On demand</option>
@@ -114,24 +138,23 @@
 					<option value="4">External</option>
 				[% END %]
 				</select>
-			</td>
-			<td align='left' nowrap='nowrap'>
+				<br>
 				<input class='in_t0' size="8" name='REC_EXT' type='text' value="[% p.REC_EXT | html %]">
 				<script language="JavaScript">
 					exten_icon( '[% p.REC_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'extension info' );
 				</script>
 			</td>
 			<td><input class='in_t0' size="8" name='PICKUP_GROUPS' type='text' value="[% p.PICKUP_GROUPS | html %]"></td>
+			<td align='left'><input size="32" type='hidden' name='name' value="[% p.name %]">[% p.name %]</td>
+			<td><input class='in_t0' size="12" name='secret' type='text' value="[% p.secret | html %]"></td>
 			<td align='left'>
 				<input type='hidden' value='[% p.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='phone_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='delete phone' href='?action=phone_del&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% p.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>&nbsp;
+				<a title='delete phone' href='?action=phone_del&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% p.DATA_ID %]')"><span class='icon-bin fs0'></span></a>
 				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
-				<script language='JavaScript'>
-					writeUpdateLinks( 'save changes' );
-				</script>
-				<noscript><input value='change' type='submit'></noscript>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% p.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+					<noscript><input value='change' type='submit'></noscript>
 				</span>
 			</td>
 			</form>
@@ -139,28 +162,16 @@
 		[% END %]
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-			<td><input size="10" name='callerid' type='text'></td>
-			<td><input size="18" name='DESCRIPTION' type='text'></td>
-			<td><input size="12" name='DEFCID' type='text'></td>
-			<td><input size="15" name='EMAIL' type='text'></td>
-			<td>
-				<select name="REC_MODE">
-					<option value="0" selected>Off</option>
-					<option value="1">On demand</option>
-					<option value="2">Always on</option>
-					<option value="3">Internal</option>
-					<option value="4">External</option>
-				</select>
-			</td>
-			<td align='left'><input size="8" name='REC_EXT' type='text'></td>
-			<td><input size="8" name='PICKUP_GROUPS' type='text'></td>
-			<td>
+			<td align='left' nowrap='nowrap' colspan='10'>
+				<input size="10" name='callerid' type='text' placeholder='Phone'>&nbsp;
+				<input size="18" name='DESCRIPTION' type='text' placeholder='User name'>&nbsp;
+				<input size="12" name='DEFCID' type='text' placeholder='CallerID'>&nbsp;
+				<input size="15" name='EMAIL' type='text' placeholder='Email'>&nbsp;
 				<input type='hidden' value='phone_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<input type='hidden' value='' name='PICKUP_GROUPS'>
+				<input type='hidden' value='0' name='REC_EXT'>
+				<input type='hidden' value='0' name='REC_MODE'>
 				<input value='Add' type='submit'>
 			</td>
 			</form>

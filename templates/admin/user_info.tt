@@ -26,7 +26,7 @@
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
 			<td align='right'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
 				[% INCLUDE version.tt %]
 			<td>
 		</tr>
@@ -43,7 +43,7 @@
 				<h1>Tenant info</h1>
 			</td>
 			<td align='right'>
-				<a title='delete tennat' href='?action=user_del&user_id=[% USER.ID %]&single_user=1' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+				<a title='delete tenat' href='?action=user_del&user_id=[% USER.ID %]&single_user=1' onclick="return DelConfirm('en')"><span class='icon-cross fs0'></span></a>
 			</td>
 		</tr>
 	</table>
@@ -62,7 +62,7 @@
 				</td>
 				<td>
 					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]&nbsp;&nbsp;
-					<a title='view tenant profile' href='/ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&akey=[% ADMIN_KEY | html %]&action=start&saction=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='view tenant profile' /></a>
+					<a title='Login to tenant account' href='/ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&akey=[% ADMIN_KEY | html %]&action=start&saction=user_info'><span class='icon-enter fs0'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -94,8 +94,7 @@
 					Pin code:
 				</td>
 				<td>
-					[% USER.PIN_CODE | html %][% USER.PIN_CODE2 %]&nbsp;&nbsp;
-					<a title='exten 0' href='/ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=vb_view&ext_id=0'><img border='0'  src='/xvb/images/vb_edit.png' alt='exten 0' /></a>
+					[% USER.PIN_CODE | html %][% USER.PIN_CODE2 %]
 				</td>
 			</tr>
 			<tr>
@@ -120,7 +119,7 @@
 						[% END %]
 					[% END %]
 					</select>
-					<a title='group info' href='?action=group_info&group_id=[% USER.GROUP_ID %]'><img border='0'  src='/xvb/images/vb_edit.png' alt='group info' /></a>
+					<a title='group info' href='?action=group_info&group_id=[% USER.GROUP_ID %]'><span class='icon-info fs0'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -155,6 +154,16 @@
 					</select>
 				</td>
 			</tr>
+			[% FOREACH cf = CUSTOM_FIELDS %]
+			<tr>
+				<td>
+					[% cf.NAME | html %]: 
+				</td>
+				<td>
+					<input size='40' name='US_[% cf.KEY %]' type='text' value="[% cf.VAL | html %]">
+				</td>
+			</tr>
+			[% END %]
 			<tr>
 				<td>
 					Custom group rules:
@@ -219,7 +228,7 @@
 								&nbsp;
 								&nbsp;
 								[% FOREACH d = DIDS %]
-									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&did=[% d.DID | html %]' onclick="return DelConfirm('en')">[% d.DID | html %]</a>&nbsp;;&nbsp;
+									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&did=[% d.DID | html %]' onclick="return DelConfirm('en')">[% d.DID | html %]</a>;&nbsp;
 								[% END %]
 								</td>
 								<td valign='top' width='20%' align='center' nowrap='nowrap'>
@@ -248,7 +257,7 @@
 								&nbsp;
 								&nbsp;
 								[% FOREACH d = DOMAINS %]
-									<a title='delete SIPDomain' href='?action=did_del_sipdomain&domain_id=[% d.ID %]&user_id=[% USER.ID | html %]&domain=[% d.DOMAIN | html %]' onclick="return DelConfirm('en')">[% d.DOMAIN | html %]</a>&nbsp;;&nbsp;
+									<a title='delete SIPDomain' href='?action=did_del_sipdomain&domain_id=[% d.ID %]&user_id=[% USER.ID | html %]&domain=[% d.DOMAIN | html %]' onclick="return DelConfirm('en')">[% d.DOMAIN | html %]</a>;&nbsp;
 								[% END %]
 								</td>
 								<td valign='top' width='20%' align='center' nowrap='nowrap'>

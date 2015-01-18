@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.15 2014/12/21 18:44:10 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.20 2015/01/17 20:35:20 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -21,7 +21,7 @@
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
 			<td align='right'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
 				[% INCLUDE version.tt %]
 			<td>
 		</tr>
@@ -73,7 +73,6 @@
 			<th>Port</th>
 			<th>Domain</th>
 			<th>User</th>
-			<th>Password</th>
 			<th>CallerID</th>
 			<th>DTMF mode</th>
 			<th colspan='2'>Need regs</th>
@@ -82,8 +81,8 @@
 		
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='12'>
-				<a title='previous page' href='?action=peer_list&ac=[% AC | html %]&pbxmode=[% PBXMODE %]&need_reg=[% NEED_REG | html %]&host=[% HOST | html %]&from=[% MSG_PREV %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			<td align='left' colspan='11'>
+				<a title='previous page' href='?action=peer_list&ac=[% AC | html %]&pbxmode=[% PBXMODE %]&need_reg=[% NEED_REG | html %]&host=[% HOST | html %]&from=[% MSG_PREV %]&authname=[% NAME | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -97,7 +96,6 @@
 			<td>[% p.port | html %]</td>
 			<td>[% p.fromdomain | html %]</td>
 			<td>[% p.username | html %]</td>
-			<td>[% p.secret | html %]</td>
 			<td>[% p.fromuser | html %]</td>
 			<td>[% p.dtmfmode | html %]</td>
 			<td>
@@ -109,19 +107,22 @@
 			</td>
 			<td>
 			[% IF p.REG_DATA %]
-				<img 
 				[% IF p.REG_DATA.state eq 'Registered' %]
-					src='/xvb/images/ball_green.png'
+					<span class='fs1'>✓</span>
 				[% ELSE %]
-					src='/xvb/images/ball_red.png'
+					<a href='#' class='r-info'>
+					<span class='icon-warning fs1'></span>
+					<span class='r-info'>
+						[% p.REG_DATA.state | html %]
+					</span>
+					</a>
 				[% END %]
-				title='[% p.REG_DATA.state | html %]' alt='[% p.REG_DATA.state | html %]' />
 			[% END %]
 			</td>
 
 			<td nowrap='nowrap'>
 
-			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+			<form method='post' id='f-[% p.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)' action="">
 				<input class='in_t0' name='PBXMODE' type='checkbox' title='PBX MODE'
 				[% IF p.setvar contain 'PBXMODE=1' %]
 				checked 
@@ -133,10 +134,8 @@
 				<input type='hidden' name='host' value='[% p.host | html %]'>
 				<input type='hidden' name='need_reg' value='[% p.NEED_REG | html %]'>
 				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
-				<script language='JavaScript'>
-					writeUpdateLinks( 'save changes' );
-				</script>
-				<noscript><input value='change' type='submit'></noscript>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% p.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+					<noscript><input value='change' type='submit'></noscript>
 				</span>
 			</form>
 			</td>
@@ -145,8 +144,8 @@
 	
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right' colspan='12'>
-				<a title='previous page' href='?action=peer_list&ac=[% AC | html %]&pbxmode=[% PBXMODE %]&need_reg=[% NEED_REG | html %]&host=[% HOST | html %]&from=[% MSG_NEXT %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+			<td align='right' colspan='11'>
+				<a title='previous page' href='?action=peer_list&ac=[% AC | html %]&pbxmode=[% PBXMODE %]&need_reg=[% NEED_REG | html %]&host=[% HOST | html %]&from=[% MSG_NEXT %]&authname=[% NAME | html %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
 		[% END %]

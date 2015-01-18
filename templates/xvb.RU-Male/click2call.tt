@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.14 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.15 2015/01/13 08:41:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -38,7 +38,7 @@
 		</tr>
 		[% FOREACH c2c = C2C_LIST %]
 		<tr align='center' class='nocolor' id='d-tr-[% c2c.ID %]'>
-			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+			<form method="post" action="[% CGI_URL %]" id='f-[% c2c.ID %]' onSubmit='return xmlhttpPost(this,1)'>
 			<td align='left'>https://[% USER_CREDS.DOWNLOAD_IP %]/c2c?key=[% c2c.SECRET | html %]&ac=[% USER_CREDS.ACCESS_CODE %]&ph=<b>&lt;номер телефона&gt;</b></td>
 			<td align='left' nowrap='nowrap'>
 				<input class='in_t0' size="11" name='redir_to' type='text' value='[% c2c.EXTENSION | html %]'>
@@ -47,23 +47,21 @@
 				</script>
 			</td>
 			<td><input class='in_t0' size="5" name='call_limit' type='text' value='[% c2c.CALL_LIMIT | html %]'></td>
-			<td align='left'>
+			<td align='right' nowrap='nowrap'>
 				<input type='hidden' value='[% c2c.ID %]' name='data_id'>
 				<input type='hidden' value='[% c2c.SECRET %]' name='c2c_sec'>
 				<input type='hidden' value='c2c_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='удалить click2call ссылку' href='?action=c2c_del&data_id=[% c2c.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% c2c.ID %]')"><img border='0' src='/xvb/images/vb_del.png' alt='удалить' /></a>&nbsp;&nbsp;
-				<a title='Click2Call код' href='#' onclick="click2call_code('https://[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru')"><img border='0' src='/xvb/images/run.png' alt='Click2Call код' /></a>&nbsp;&nbsp;
-				<a title='Click2Call' href='#' onclick="click2call_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru')"><img border='0' src='/xvb/images/phone.png' alt='Тестовый заказ звонка' /></a>&nbsp;&nbsp;
+				<span class='addon_info' id='in_t_id-[% c2c.ID %]'>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% c2c.ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+					<noscript><input value='Сохранить изменения' type='submit'></noscript>
+				</span>
 				<script language='JavaScript'>
 					stat_icon( '[% c2c.EXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'Click2Call', 'статистика' );
 				</script>
-				<span class='addon_info' id='in_t_id-[% c2c.ID %]'>
-				<script language='JavaScript'>
-					writeUpdateLinks( 'сохранить изменения' );
-				</script>
-				<noscript><input value='Сохранить изменения' type='submit'></noscript>
-				</span>
+				<a title='Click2Call' href='#' onclick="click2call_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru')"><span class='icon-phone fs0'></span></a>
+				<a title='Click2Call код' href='#' onclick="click2call_code('https://[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru')"><span class='icon-share fs0'></span></a>
+				<a title='удалить click2call ссылку' href='?action=c2c_del&data_id=[% c2c.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% c2c.ID %]')"><span class='icon-bin fs0'></span></a>
 			</td>
 			</form>
 		</tr>

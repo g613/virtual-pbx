@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: new_message.tt,v 1.26 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.27 2015/01/13 08:41:16 gosha Exp $ -->
 <!--SUBJECT:New message from: [% callerid | html %] in mailbox [% _USER_VBOX.EXT_NUMBER | html %]:SUBJECT-->
 <head>
 	<BASE href="[% CGI_SERVER %]">
@@ -11,13 +11,6 @@
 </head>
 
 <body link=blue vlink=purple>
-<p align='left'>
-[% IF USER_CREDS.LOGO_HREF eq '' %]
-	<img border='0' src='[% CGI_SERVER %]/xvb/images/logo-small.png' alt='Virtual PBX' />
-[% ELSE %]
-	<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-[% END %]
-</p>
 
 Hello,
 

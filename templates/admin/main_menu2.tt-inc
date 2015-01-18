@@ -26,4 +26,6 @@
 				<a href='?action=phone_list'>SIP phones</a>
 				|
 				<a href='?action=peer_list'>SIP peers</a>
+				|
+				<a href='?action=calls_list'>Calls</a>
 			</p>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.7 2014/12/28 10:34:09 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.12 2015/01/17 20:35:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP шлюзы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -16,8 +16,8 @@
 	<table width='100%'>
 		<tr>
 			<td align='center'><h1>SIP шлюзы</h1></td>
-			<td align='right'>
-				<a title='удалить все шлюзы' href='?action=peer_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все шлюзы'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+			<td align='right' width='5%'>
+				<a title='удалить все шлюзы' href='?action=peer_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все шлюзы'><span class='icon-cross fs0'></span></a>
 			</td>
 		</tr>
 	</table>
@@ -36,21 +36,26 @@
 			<th>Протокол</th>
 			[% IF USER_CREDS.CUSTOM_REGS %]
 			<th colspan='2'>Вн. номер для входящих</th>
-			<th width='1%'></th>
-			[% END %]
+			[% ELSE %]
 			<th>&nbsp;</th>
+			[% END %]
 		</tr>
 		
 		[% FOREACH p = PEERS %]
 		<tr align='center' class='nocolor' id='d-tr-[% p.DATA_ID %]'>
-			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+			<form method="post" action="[% CGI_URL %]" id='f-[% p.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 			<td><input class='in_t0' size="17" name='host' type='text' value='[% p.host | html %]'></td>
 			<td><input class='in_t0' size="5" name='port' type='text' value="[% p.port | html %]"></td>
 			<td><input class='in_t0' size="15" name='domain' type='text' value="[% p.fromdomain | html %]"></td>
 			<td><input class='in_t0' size="12" name='username' type='text' value="[% p.username | html %]"></td>
 			<td><input class='in_t0' size="10" name='secret' type='text' value="[% p.secret | html %]"></td>
 			<td><input class='in_t0' size="12" name='fromuser' type='text' value="[% p.fromuser | html %]"></td>
-			<td><input class='in_t0' size="15" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"></td>
+			<td align='left' nowrap='nowrap'>
+				<input class='in_t0' size="15" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]">
+				[% IF p.setvar contain 'PBXMODE=1;' %]
+				&nbsp;<span title='Режим АТС'>✓<span>
+				[% END %]
+			</td>
 			<td>
 				<select name="dtmfmode" class='in_t0'>
 					<option value="[% p.dtmfmode %]" selected>[% p.dtmfmode %]</option>
@@ -73,42 +78,37 @@
 				</select>	
 			</td>
 			[% IF USER_CREDS.CUSTOM_REGS %]
-			<td>
+			<td align='left' nowrap='nowrap'>
 				<input class='in_t0' name='NEED_REG' type='checkbox' title='Принимать входящие звонки'
 				[% IF p.NEED_REG %]
 				checked 
 				[% END %]
 				/>
-			</td>
-			<td>
 				<input class='in_t0' size="4" name='INC_EXT' type='text' value="[% p.INC_EXT | html %]">
-			</td>
-			<td align='center'>
+				&nbsp;
 			[% IF p.REG_DATA %]
-				<img 
 				[% IF p.REG_DATA.state eq 'Registered' %]
-					src='/xvb/images/ball_green.png'
+					<span class='fs1'>✓</span>
 				[% ELSE %]
-					src='/xvb/images/ball_red.png'
+					<a href='#' class='r-info'>
+					<span class='icon-warning fs1'></span>
+					<span class='r-info'>
+						[% p.REG_DATA.state | html %]
+					</span>
+					</a>
 				[% END %]
-				title='[% p.REG_DATA.state | html %]' alt='[% p.REG_DATA.state | html %]' />
 			[% END %]
 			</td>
 			[% END %]
-			<td align='left'>
+			<td align='right' nowrap='nowrap'>
 				<input type='hidden' value='[% p.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='peer_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='удалить шлюз' href='?action=peer_del&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% p.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>&nbsp;
-				[% IF p.setvar contain 'PBXMODE=1;' %]
-				<img title='Режим АТС' border='0' src='/xvb/images/check.png' alt='АТС' />&nbsp;
-				[% END %]
 				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
-				<script language='JavaScript'>
-					writeUpdateLinks( 'сохранить изменения' );
-				</script>
-				<noscript><input value='Сохранить изменения' type='submit'></noscript>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% p.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+					<noscript><input value='Сохранить изменения' type='submit'></noscript>
 				</span>
+				<a title='удалить шлюз' href='?action=peer_del&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% p.DATA_ID %]')"><span class='icon-bin fs0'></span></a>
 			</td>
 			</form>
 		</tr>
@@ -142,7 +142,7 @@
 			<td><input size="12" name='username' type='text'></td>
 			<td><input size="10" name='secret' type='text'></td>
 			<td><input size="12" name='fromuser' type='text'></td>
-			<td><input size="15" name='DESCRIPTION' type='text'></td>
+			<td align='left'><input size="15" name='DESCRIPTION' type='text'></td>
 			<td>
 				<select name="dtmfmode">
 					<option value="rfc2833" selected>rfc2833</option>
@@ -158,7 +158,7 @@
 					<option value="tcp">TCP</option>
 				</select>
 			</td>
-			<td colspan='4'>
+			<td colspan='11'>
 				<input type='hidden' value='peer_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<input value='Добавить' type='submit'>

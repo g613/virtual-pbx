@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: sysmedia_list.tt,v 1.6 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: sysmedia_list.tt,v 1.7 2015/01/13 08:41:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SysMedia - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -27,7 +27,7 @@
 		<tr align='left' class='nocolor' id='d-tr-[% f.file %]'>
 			<td>
 				[% IF f.uploaded %]
-				<a title='удалить загруженное' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=sysmedia_del&uniq=[% USER_CREDS.UNIQ %]&file=[% f.file %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% f.file %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+				<a title='удалить загруженное' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=sysmedia_del&uniq=[% USER_CREDS.UNIQ %]&file=[% f.file %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% f.file %]')"><span class='icon-bin fs0'></span></a>
 				[% END %]
 			</td>
 			<td>[% f.file | html %]</td>

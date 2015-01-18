@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
-<!-- $Id: itunes.tt,v 1.20 2014/02/14 04:04:33 gosha Exp $ -->
+<!-- $Id: itunes.tt,v 1.21 2015/01/14 15:15:42 gosha Exp $ -->
 <channel>
 	<ttl>60</ttl>
-	<title>VirtualPBX Itunes  Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	<title>XVB - Virtual PBX Ac:[% USER_CREDS.ACCESS_CODE | html %] podcasts</title>
 	<link>[% CGI_SERVER %][% CGI_URL %]</link>
 	<language>en-us</language>
-	<description>VirtualPBX Itunes</description>
+	<description>XVB - Virtual PBX Podcasts</description>
 	<itunes:author>Igor Okunev</itunes:author>
 	<image>
-		<title>VirtualPBX RSS feed  Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+		<title>XVB - VirtualPBX podcasts, Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 		<url>
 			[% IF USER_CREDS.LOGO_HREF eq '' %]
 				[% CGI_SERVER %]/xvb/images/logo-small.png
@@ -23,7 +23,7 @@
 [% FOREACH msg = MSG_LIST %]
 [% IF msg.IS_VOICE %]
 <item>
-	<title>id:[% msg.FILE_ID %] Message from [% msg.CALLERID | html %]</title>
+	<title>id:[% msg.FILE_ID %] Message from [% msg.CALLERID | html %] to [% msg.CALLEDID | html %]</title>
 	<guid isPermaLink="false">[% msg.ID | html %]-[% msg.FILE_NAME | html %]</guid>
 	<description>
 	&lt;ul&gt;

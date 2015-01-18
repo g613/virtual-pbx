@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.5 2014/12/18 03:30:20 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.6 2015/01/13 08:41:17 gosha Exp $ -->
 <!--SUBJECT:VirtualPBX - отчет за день:SUBJECT-->
 <head>
 	<BASE href='[% CGI_SERVER %]'>
@@ -37,14 +37,6 @@
 
 <body>
 	
-	<p align='left'>
-		[% IF USER_CREDS.LOGO_HREF eq '' %]
-			<img border='0' src='[% CGI_SERVER %]/xvb/images/logo-small.png' alt='Virtual PBX' />
-		[% ELSE %]
-			<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-		[% END %]
-	</p>
-
 	<h3>Информация об отчете:</h3>
 	<ul>
 		<li>Телефонный номер: [% USER_CREDS.VOICENUMBER | html %]</li>

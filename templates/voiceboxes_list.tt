@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.58 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.60 2015/01/15 20:41:22 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extensions - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -15,8 +15,9 @@
 	
 	<table width='100%'>
 		<tr>
-			<td align='center' width='75%'><h1>Extensions List</h1></td>
-			<td align='right' width='25%'>
+			<td width='20%'>&nbsp;</td>
+			<td align='center'><h1>Extensions List</h1></td>
+			<td align='right' width='20%'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 				&nbsp;
 				[% IF USER_CREDS.ROOT eq '0' %]
@@ -31,25 +32,20 @@
 			</td>
 		</tr>
 	</table>
-	</p>
 
-	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-				<th rowspan='2'>Extension</th>
-				<th rowspan='2'>Name</th>
-				<th rowspan='2'>Type</th>
-				<th colspan='5'>Options</th>
-				<th rowspan='2'>Next Exten</th>
-				<th rowspan='2'>Recipient notification</th>
-				<th rowspan='2'>Actions</th>
-		</tr>
-		<tr>
+			<th>Extension</th>
+			<th>Type</th>
+			<th>Name</th>
 			<th>W</th>
 			<th>H</th>
 			<th>D</th>
 			<th>P</th>
 			<th>G</th>
+			<th>Next Exten</th>
+			<th>Recipient notification</th>
+			<th>&nbsp;</th>
 		</tr>
 		[% FOREACH vb = VB_LIST %]
 		<tr class='nocolor' id='d-tr-[% vb.ID %]' align='center'>
@@ -57,10 +53,12 @@
 				&nbsp;[% vb.EXT_NUMBER | html %]
 			</td>
 			<td align='left'>
-				<a class='vb_name' href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% vb.NAME | html %]</a>
+				<a class='vb_name' href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]'>
+				[% vb.DESCRIPTION | html %]
+				</a>
 			</td>
 			<td align='left'>
-				[% vb.DESCRIPTION | html %]
+				[% vb.NAME | html %]
 			</td>
 			<td>
 				[% vb.WAITEXTENSION %]
@@ -84,14 +82,11 @@
 				[% vb.NOTIFYEMAIL | html %]
 			</td>
 			<td nowrap="nowrap">
-				<a href='?action=msg_list&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='view messages'><img border='0' src='/xvb/images/msg_list.png' alt='msgs' /></a>&nbsp;
-				<a href='?action=vb_view&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' title='edit extension'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a>&nbsp;
-				<a href='?action=vb_del&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% vb.ID %]')" title='delete extension'><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+				<a href='?action=vb_del&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% vb.ID %]')" title='delete extension'><span class='icon-bin fs0'></span></a>
 			</td>
 		</tr>
 		[% END %]
 	</table>
-	</p>
 
 	<script language='JavaScript'>listcolorer('d-tbl');ext_list_build('d-tbl');</script>
 

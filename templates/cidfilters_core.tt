@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters_core.tt,v 1.27 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: cidfilters_core.tt,v 1.28 2015/01/13 08:41:16 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID filters - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -12,6 +12,10 @@
 
 <body onLoad="XVBInit()">
 	<center>
+
+	<table width='95%'>
+		<tr align='center'>
+			<td>
 			<h1>
 			CID
 			[% IF CID_LIST_TYPE eq '1' %]
@@ -20,18 +24,13 @@
 				White list
 			[% END %]
 			</h1>
-
-	<p>	
-	<table width='95%'>
-		<tr align='left'>
-			<td align='right'>
-				<a title='get excel table' href='?action=cid_list&cid_list_type=[% CID_LIST_TYPE %]&cid_type=2&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;
+			</td>
+			<td align='right' width='5%'>
+				<a title='get excel table' href='?action=cid_list&cid_list_type=[% CID_LIST_TYPE %]&cid_type=2&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
 			</td>
 		</tr>
 	</table>
-	</p>
 		
-	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>Caller ID</th>
@@ -41,7 +40,7 @@
 
 		[% FOREACH param = CID_LIST %]
 		<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+		<form method="post" action="[% CGI_URL %]" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 			<input type='hidden' name='action' value='cid_update'>
 			<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
 			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
@@ -50,11 +49,9 @@
 			<td><input class='in_t0' size='60' name='description' type='text' value='[% param.DESCRIPTION | html %]'></td>
 	
 			<td align='left' nowrap='nowrap'>
-				<a href='?action=cid_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete CID item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>&nbsp;
+				<a href='?action=cid_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete CID item'><span class='icon-bin fs0'></span></a>
 				<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-					<script language='JavaScript'>
-						writeUpdateLinks( 'save changes' );
-					</script>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 					<noscript><input value='change' type='submit'></noscript>
 				</span>
 			</td>
@@ -78,7 +75,6 @@
 		</form>
 		</tr>
 	</table>
-	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 

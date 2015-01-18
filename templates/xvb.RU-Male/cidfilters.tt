@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters.tt,v 1.4 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: cidfilters.tt,v 1.6 2015/01/16 20:38:51 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID фильтры - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -13,53 +13,51 @@
 <body onLoad="XVBInit()">
 	<center>
 	
-	<h1>
-	[% IF CID_LIST_TYPE eq '1' %]
-		Черный список	
-	[% ELSE %]
-		Белый список
-	[% END %]
-	абонентов для внутреннего номера# [% VBOX_PREF.EXT_NUMBER | html %]
-	</h1>
-
 	<table width='100%'>
 		<tr align='left'>
-			<td>
-				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Параметры номера</a>
+			<td width='5%'>
+				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Параметры номера"><span class='icon-cog fs0'></span></a>
 			</td>
-			<td align='right'>
-				<a title='в формате excel' href='?action=cid_list&id=[% VBOX_PREF.ID %]&cid_list_type=[% CID_LIST_TYPE %]&cid_type=1&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;
+			<td align='center'>
+			<h1>
+		[% IF CID_LIST_TYPE eq '1' %]
+			Черный список	
+		[% ELSE %]
+			Белый список
+		[% END %]
+		 для номера # [% VBOX_PREF.EXT_NUMBER | html %]
+			</h1>
+			</td>
+			<td width='5%' align='right'>
+				<a title='в формате excel' href='?action=cid_list&id=[% VBOX_PREF.ID %]&cid_list_type=[% CID_LIST_TYPE %]&cid_type=1&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
 			</td>
 		</tr>
 	</table>
 		
-	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>Номер звонящего</th>
 			<th>Описание</th>
-			<th>Действие</th>
+			<th>&nbsp;</th>
 		</tr>
 
 		[% FOREACH param = CID_LIST %]
 		<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+		<form method="post" action="[% CGI_URL %]" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 			<input type='hidden' name='action' value='cid_update'>
 			<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 			<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
 			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 
-			<td><input class='in_t0' size='40' name='cid' type='text' value='[% param.CID | html %]'></td>
+			<td><input class='in_t0' size='50' name='cid' type='text' value='[% param.CID | html %]'></td>
 			<td><input class='in_t0' size='60' name='description'  type='text' value='[% param.DESCRIPTION | html %]'></td>
 	
-			<td align='left' nowrap='nowrap'>
-				<a href='?action=cid_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить запись'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+			<td align='right' nowrap='nowrap'>
 				<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-					<script language='JavaScript'>
-						writeUpdateLinks( 'сохранить изменения' );
-					</script>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 					<noscript><input value='Сохранить изменения' type='submit'></noscript>
 				</span>
+				<a href='?action=cid_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить запись'><span class='icon-bin fs0'></span></a>
 			</td>
 		</form>
 		</tr>
@@ -72,7 +70,7 @@
 			<input type='hidden' name='cid_list_type' value='[% CID_LIST_TYPE %]'>
 			<input type='hidden' name='cid_type' value='1'>
 			
-			<td><input size='40'  name='cid' type='text'></td>
+			<td><input size='50'  name='cid' type='text'></td>
 			<td><input size='60' name='description'  type='text'></td>
 			
 			<td align='center'>
@@ -81,7 +79,6 @@
 		</form>
 		</tr>
 	</table>
-	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
