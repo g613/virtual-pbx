@@ -23,19 +23,17 @@
 <body onLoad="XVBInit()">
 	<center>
 			
-	<h1>Routes</h1>
-
-	<p>
 	<table width='100%'>
-		<tr align='left'>
-			<td align='right'>
-				<a title='delete all routes' href='?action=route_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete all records'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+		<tr align='center'>
+			<td>
+				<h1>Routes</h1>
+			</td>
+			<td align='right' width='5%'>
+				<a title='delete all routes' href='?action=route_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')"><span class='icon-cross fs0'></span></a>
 			</td>
 		</tr>
 	</table>
-	</p>
 
-	<p>
 	<table width='95%'>
 		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 		<tr align='right'>
@@ -72,7 +70,6 @@
 		</tr>
 		</form>
 	</table>
-	</p>
 
 	<p>
 	<table width='100%' id='d-tbl'>
@@ -93,7 +90,7 @@
 		
 		[% FOREACH r = ROUTES %]
 		<tr align='center' class='nocolor' id='d-tr-[% r.DATA_ID %]'>
-			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+			<form method="post" action="[% CGI_URL %]" id='f-[% r.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 			<td><input class='in_t0' size="6" name='r_PRIORITY' type='text' value='[% r.PRIORITY | html %]'></td>
 			<td><input class='in_t0' size="15" name='r_PATTERN' type='text' value="[% r.PATTERN | html %]"></td>
 			<td><input class='in_t0' size="18" name='r_SUBSTR' type='text' value="[% r.SUBSTR | html %]"></td>
@@ -130,12 +127,10 @@
 				<input type='hidden' value='[% r.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='route_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='delete route' href='?action=route_del&data_id=[% r.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% r.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>&nbsp;
+				<a title='delete route' href='?action=route_del&data_id=[% r.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% r.DATA_ID %]')"><span class='icon-bin fs0'></span></a>
 				<span class='in_t' id='in_t_id-[% r.DATA_ID %]'>
-				<script language='JavaScript'>
-					writeUpdateLinks( 'save changes' );
-				</script>
-				<noscript><input value='change' type='submit'></noscript>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% r.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+					<noscript><input value='change' type='submit'></noscript>
 				</span>
 			</td>
 			</form>

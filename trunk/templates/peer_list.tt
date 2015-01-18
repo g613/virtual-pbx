@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.37 2014/12/28 10:34:09 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.42 2015/01/17 20:35:20 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -13,17 +13,14 @@
 <body onLoad="XVBInit()">
 	<center>
 			
-	<h1>SIP Peers</h1>
-
-	<p>
 	<table width='100%'>
-		<tr align='left'>
-			<td align='right'>
-				<a title='delete all peers' href='?action=peer_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete all records'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+		<tr>
+			<td align='center'><h1>SIP peers</h1></td>
+			<td align='right' width='5%'>
+				<a title='delete all peers' href='?action=peer_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete all records'><span class='icon-cross fs0'></span></a>
 			</td>
 		</tr>
 	</table>
-	</p>
 
 	<p>
 	<table width='100%' id='d-tbl'>
@@ -46,14 +43,19 @@
 		
 		[% FOREACH p = PEERS %]
 		<tr align='center' class='nocolor' id='d-tr-[% p.DATA_ID %]'>
-			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+			<form method="post" action="[% CGI_URL %]" id='f-[% p.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 			<td><input class='in_t0' size="17" name='host' type='text' value='[% p.host | html %]'></td>
 			<td><input class='in_t0' size="5" name='port' type='text' value="[% p.port | html %]"></td>
 			<td><input class='in_t0' size="17" name='domain' type='text' value="[% p.fromdomain | html %]"></td>
 			<td><input class='in_t0' size="12" name='username' type='text' value="[% p.username | html %]"></td>
 			<td><input class='in_t0' size="10" name='secret' type='text' value="[% p.secret | html %]"></td>
 			<td><input class='in_t0' size="12" name='fromuser' type='text' value="[% p.fromuser | html %]"></td>
-			<td><input class='in_t0' size="17" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"></td>
+			<td>
+				<input class='in_t0' size="17" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]">
+				[% IF p.setvar contain 'PBXMODE=1;' %]
+				&nbsp;<span title='PBX mode'>✓<span>
+				[% END %]
+			</td>
 			<td>
 				<select name="dtmfmode" class='in_t0'>
 					<option value="[% p.dtmfmode %]" selected>[% p.dtmfmode %]</option>
@@ -88,13 +90,16 @@
 			</td>
 			<td align='center'>
 			[% IF p.REG_DATA %]
-				<img 
 				[% IF p.REG_DATA.state eq 'Registered' %]
-					src='/xvb/images/ball_green.png'
+					<span class='fs1'>✓</span>
 				[% ELSE %]
-					src='/xvb/images/ball_red.png'
+					<a href='#' class='r-info'>
+					<span class='icon-warning fs1'></span>
+					<span class='r-info'>
+						[% p.REG_DATA.state | html %]
+					</span>
+					</a>
 				[% END %]
-				title='[% p.REG_DATA.state | html %]' alt='[% p.REG_DATA.state | html %]' />
 			[% END %]
 			</td>
 			[% END %]
@@ -102,15 +107,10 @@
 				<input type='hidden' value='[% p.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='peer_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='delete peer' href='?action=peer_del&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% p.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>&nbsp;
-				[% IF p.setvar contain 'PBXMODE=1;' %]
-				<img title='PBX mode' border='0' src='/xvb/images/check.png' alt='PBX' />&nbsp;  
-				[% END %]
+				<a title='delete peer' href='?action=peer_del&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% p.DATA_ID %]')"><span class='icon-bin fs0'></span></a>
 				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
-				<script language='JavaScript'>
-					writeUpdateLinks( 'save changes' );
-				</script>
-				<noscript><input value='change' type='submit'></noscript>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% p.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+					<noscript><input value='change' type='submit'></noscript>
 				</span>
 			</td>
 			</form>

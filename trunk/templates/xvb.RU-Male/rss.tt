@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: rss.tt,v 1.4 2014/02/14 04:04:34 gosha Exp $ -->
+<!-- $Id: rss.tt,v 1.5 2015/01/14 15:15:42 gosha Exp $ -->
 <rss version="0.91">
 <channel>
-	<title>VirtualPBX RSS feed  Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	<title>XVB - VirtualPBX rss feed, Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	<link>[% CGI_SERVER %][% CGI_URL %]</link>
-	<description>VirtualPBX RSS feed.</description>
+	<description>XVB - VirtualPBX rss feed.</description>
 	<image>
-		<title>VirtualPBX RSS feed  Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+		<title>XVB - VirtualPBX rss feed, Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 		<url>
 			[% IF USER_CREDS.LOGO_HREF eq '' %]
 				[% CGI_SERVER %]/xvb/images/logo-small.png
@@ -19,7 +19,7 @@
 
 [% FOREACH msg = MSG_LIST %]
 <item>
-	<title>id:[% msg.FILE_ID %] Сообщение от [% msg.CALLERID | html %]</title>
+	<title>id:[% msg.FILE_ID %] Сообщение от [% msg.CALLERID | html %] для [% msg.CALLEDID | html %] </title>
 	<guid isPermaLink="false">[% msg.ID | html %]-[% msg.FILE_NAME | html %]</guid>
 	[% IF msg.IS_VOICE %]
 		<link>https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?type=listen;media=[% USER_CREDS.SOUND_FORMAT %]</link>

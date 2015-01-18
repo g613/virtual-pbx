@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.15 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.18 2015/01/17 20:23:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Phone book - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -19,10 +19,8 @@
 				<h1>Phone book</h1>
 			</td>
 			<td align='right'>
-				<a title='excel file' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]&format=excel&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
-				&nbsp;
-				&nbsp;
-				<a href='?action=pbook_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete all records'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+				<a title='excel file' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]&format=excel&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
+				<a href='?action=pbook_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete all records'><span class='icon-cross fs0'></span></a>
 			</td>
 		</tr>
 	</table>
@@ -30,6 +28,16 @@
 	<table>
 		<tr id='csv-import'>
 			<td align='left'>
+				<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+					<input type='file' name='config_file'>
+					<input type='hidden' name='section' value='PBOOK'>
+					<input type='hidden' name='action' value='restore'>
+					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+					<input type='hidden' name='is_excel' value='1'>
+					<input type='submit' value='Append data from CSV'>
+				</form>
+			</td>
+			<td align='right'>
 				<form method="post" action="[% CGI_URL %]" onSubmit='return true'>
 					<input type='hidden' name='action' value='pbook_list'>
 					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
@@ -45,20 +53,9 @@
 					<input name='submit' type='submit' value='Download'>
 				</form>
 			</td>
-			<td align='right'>
-				<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
-					<input type='file' name='config_file'>
-					<input type='hidden' name='section' value='PBOOK'>
-					<input type='hidden' name='action' value='restore'>
-					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-					<input type='hidden' name='is_excel' value='1'>
-					<input type='submit' value='Append data from CSV'>
-				</form>
-			</td>
 		</tr>
 	</table>
 
-	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>First name</th>
@@ -71,7 +68,7 @@
 
 		[% FOREACH param = PBOOK_LIST %]
 		<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+		<form method="post" action="[% CGI_URL %]" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 			<input type='hidden' name='action' value='pbook_update'>
 			<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
 			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
@@ -83,11 +80,9 @@
 			<td><input class='in_t0' size='25' name='description' type='text' value='[% param.DESCRIPTION | html %]'></td>
 	
 			<td align='left' nowrap='nowrap'>
-				<a href='?action=pbook_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete PBook item'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>&nbsp;
+				<a href='?action=pbook_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete PBook item'><span class='icon-bin fs0'></span></a>
 				<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-					<script language='JavaScript'>
-						writeUpdateLinks( 'save changes' );
-					</script>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 					<noscript><input value='change' type='submit'></noscript>
 				</span>
 			</td>
@@ -111,7 +106,6 @@
 		</form>
 		</tr>
 	</table>
-	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 

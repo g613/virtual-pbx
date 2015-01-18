@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: macros_list.tt,v 1.4 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: macros_list.tt,v 1.5 2015/01/13 08:41:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Макросы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -21,28 +21,26 @@
 			<th>Имя</th>
 			<th>Описание</th>
 			<th>Данные</th>
-			<th>Действия</th>
+			<th>&nbsp;</th>
 		</tr>
 		
 		[% FOREACH m = MACROS %]
 		<tr align='center' class='nocolor' id='d-tr-[% m.ID %]'>
-			<form method="post" action="[% CGI_URL %]" onSubmit='JavaScript:return xmlhttpPost(this,1)'>
+			<form method="post" action="[% CGI_URL %]" id='f-[% m.ID %]' onSubmit='return xmlhttpPost(this,1)'>
 			<td><input class='in_t0' size="25" name='NAME' type='text' value='[% m.MACRO_NAME | html %]'></td>
 			<td><input class='in_t0' size="40" name='DESCRIPTION' type='text' value='[% m.DESCRIPTION | html %]'></td>
 			<td>
 				<textarea class='in_t0' rows='[% m.DATA | textarea_rows %]' cols='35' name='DATA'>[% m.DATA | html %]</textarea>
 			</td>
-			<td>
+			<td align='right' nowrap='nowrap'>
 				<input type='hidden' value='[% m.ID %]' name='data_id'>
 				<input type='hidden' value='macros_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='удалить макрос' href='?action=macros_del&data_id=[% m.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% m.ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>
 				<span class='addon_info' id='in_t_id-[% m.ID %]'>
-				<script language='JavaScript'>
-					writeUpdateLinks( 'сохранить изменения' );
-				</script>
-				<noscript><input value='Сохранить измения' type='submit'></noscript>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% m.ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+					<noscript><input value='Сохранить измения' type='submit'></noscript>
 				</span>
+				<a title='удалить макрос' href='?action=macros_del&data_id=[% m.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% m.ID %]')"><span class='icon-bin fs0'></span></a>
 			</td>
 			</form>
 		</tr>

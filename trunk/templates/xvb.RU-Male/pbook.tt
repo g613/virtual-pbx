@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.8 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.11 2015/01/17 20:23:31 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Телефонная книга - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -13,7 +13,15 @@
 <body onLoad="XVBInit()">
 	<center>
 			
-	<h1>Телефонная книга</h1>
+	<table width='100%'>
+		<tr>
+			<td align='center'><h1>Телефонная книга</h1></td>
+			<td align='right' width='10%'>
+				<a title='скачать книгу в формате excel' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]&format=excel&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
+				<a href='?action=pbook_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все данные'><span class='icon-cross fs0'></span></a>
+			</td>
+		</tr>
+	</table>
 
 	<table width='100%'>
 		<tr>
@@ -41,17 +49,12 @@
 					</select>
 					&nbsp;
 					<input name='submit' type='submit' value='Скачать'>
-					&nbsp;
-					<a title='скачать книгу в формате excel' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]&format=excel&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
-					&nbsp;
-					<a href='?action=pbook_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все данные'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>
 				</form>
 			</td>
 		</tr>
 		</tr>
 	</table>
 		
-	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>Имя</th>
@@ -59,12 +62,12 @@
 			<th>Телефон</th>
 			<th>Быстрый набор</th>
 			<th>Коментарий</th>
-			<th>Действия</th>
+			<th>&nbsp;</th>
 		</tr>
 
 		[% FOREACH param = PBOOK_LIST %]
 		<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+		<form method="post" action="[% CGI_URL %]" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 			<input type='hidden' name='action' value='pbook_update'>
 			<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
 			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
@@ -75,14 +78,12 @@
 			<td><input class='in_t0' size='15' name='shortcut' type='text' value='[% param.SHORTCUT | html %]'></td>
 			<td><input class='in_t0' size='25' name='description' type='text' value='[% param.DESCRIPTION | html %]'></td>
 	
-			<td align='left' nowrap='nowrap'>
-				<a href='?action=pbook_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить элемент'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+			<td align='right' nowrap='nowrap'>
 				<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-					<script language='JavaScript'>
-						writeUpdateLinks( 'сохранить изменения' );
-					</script>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 					<noscript><input value='Сохранить изменения' type='submit'></noscript>
 				</span>
+				<a href='?action=pbook_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить элемент'><span class='icon-bin fs0'></span></a>
 			</td>
 		</form>
 		</tr>
@@ -104,7 +105,6 @@
 		</form>
 		</tr>
 	</table>
-	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 

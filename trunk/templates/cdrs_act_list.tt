@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.24 2014/10/13 15:30:32 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.27 2015/01/17 21:26:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Call Detail - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -23,13 +23,12 @@
 			<th>Duration</th>
 			<th>Extension</th>
 			<th>Type</th>
-			<th>&nbsp;</th>
 			<th width='25%'>Data</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='7'>
-				<a title='previous page' href='?action=act_list&from=[% MSG_PREV %]&call_id=[% CDR_CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+			<td align='left' colspan='6'>
+				<a title='previous page' href='?action=act_list&from=[% MSG_PREV %]&call_id=[% CDR_CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -48,21 +47,14 @@
 			[% END %]
 			</td>
 			<td align='left'>[% msg.TYPE | html %]</td>
-			<td>
-				[% IF msg.EXT_ID %]
-				<a href='?action=cid_add&id=[% msg.EXT_ID %]&cid_list_type=1&cid_type=1&cid=[% msg.CALLER_ID | html %]&description=for call at [% msg.CDR_DATE | html %]&uniq=[% USER_CREDS.UNIQ %]' title='add CID to black list for ext [% msg.EXT_NUMBER | html %]'><img border='0' src='/xvb/images/vb_edit_black.png' alt='add' /></a>
-				[% END %]
-			</td>
 			<td align='left'>[% msg.DATA | html %]</td>
 		</tr>
 		[% END %]
 		<tr>
 		[% IF MSG_NEXT ne '' %]
-			<td align='right' colspan='7'>
-				<a title='next page' href='?action=act_list&from=[% MSG_NEXT %]&call_id=[% CDR_CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+			<td align='right' colspan='6'>
+				<a title='next page' href='?action=act_list&from=[% MSG_NEXT %]&call_id=[% CDR_CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
 			</td>
-		[% ELSE %]
-			<td colspan='7'>&nbsp;</td>
 		[% END %]
 		</tr>
 	</table>
@@ -72,7 +64,7 @@
 		var download_file_url="<a title='download' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/$1/[% USER_CREDS.ACCESS_CODE %]/$2.[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>FILE</a>";
 		var callback_cdr_url="$1<a title='cdr' href='?action=act_list&call_id=$2&uniq=[% USER_CREDS.UNIQ %]'>CALL</a>";
 		var js_date_str="[% JS_DATE_STR | html %]-DTMF history";
-		cdrfilters( 'd-tbl', 6 );
+		cdrfilters( 'd-tbl', 5 );
 		listcolorer( 'd-tbl' );
 	</script>
 

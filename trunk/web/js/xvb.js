@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.94 2014/12/25 14:23:59 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.96 2015/01/14 15:15:42 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -371,19 +371,19 @@ function ShowPlayer( file, msg_id ) {
 	if ( canPlayOGG ) {
 		var wav_file = file.replace("wav?media=mp3;","ogg?");
 		wav_file = wav_file.replace("=mp3","=ogg");
-		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player" height="20%"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><img border="0" src="/xvb/images/vb_del.png" alt="close" /></a>&nbsp;</td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player" height="20%"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><span class="icon-cross fs0"></a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
 	} else if ( canPlayMP3 ) {
 		var wav_file = file;
-		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player" height="20%"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><img border="0" src="/xvb/images/vb_del.png" alt="close" /></a>&nbsp;</td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player" height="20%"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><span class="icon-cross fs0"></a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
 	} else {
 		var plugin = (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) ? navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin : 0;
 		if ( plugin ) {
 			// flash
-			player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><img border="0" src="/xvb/images/vb_del.png" alt="close" /></a></td></tr><tr><td><object type="application/x-shockwave-flash" data="/xvb/ump3player.swf" height="70" width="470"><param name="wmode" VALUE="transparent" /><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="movie" value="/xvb/ump3player.swf" /><param name="FlashVars" value="way='+file+'&amp;swf=/xvb/ump3player.swf&amp;w=470&amp;h=70&amp;time_seconds=0&amp;autoplay=1&amp;q=&amp;skin=white&amp;volume=90&amp;comment=Voice messages" /></object></td></tr></table>';
+			player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><span class="icon-cross fs0"></a></td></tr><tr><td><object type="application/x-shockwave-flash" data="/xvb/ump3player.swf" height="70" width="470"><param name="wmode" VALUE="transparent" /><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="movie" value="/xvb/ump3player.swf" /><param name="FlashVars" value="way='+file+'&amp;swf=/xvb/ump3player.swf&amp;w=470&amp;h=70&amp;time_seconds=0&amp;autoplay=1&amp;q=&amp;skin=white&amp;volume=90&amp;comment=Voice messages" /></object></td></tr></table>';
 		} else if ( canPlayWAV ) {
 			var wav_file = file.replace("wav?media=mp3;","wav?");
 			wav_file = wav_file.replace("=mp3","=wav");
-			player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><img border="0" src="/xvb/images/vb_del.png" alt="close" /></a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+			player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><span class="icon-cross fs0"></a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
 		} else {
 			player_data = 'Your browser not supported';
 		}
@@ -452,7 +452,9 @@ function getCookie(name) {
 }
 
 function writeUpdateLinks( alt ) {
-	document.write("<input type='image' title='"+alt+"' name='"+alt+"' alt='"+alt+"' src='/xvb/images/save.png'>&nbsp;");
+	document.write("&nbsp;<input type='image' title='"+alt+"' name='"+alt+"' alt='"+alt+"' src='/xvb/images/save.png'>&nbsp;");
+	//document.write("<a href='#' onclick='xmlhttpPost(document.getElementById("+'"f-'+obj+'"'+"),1);'><span class='icon-floppy-disk fs0 blink' title='"+alt+"'></span></a>");
+	//document.write("&nbsp;<input class='fs0 icon-updatelink' type='image' title='"+alt+"' name='"+alt+"' alt='&#xe962;' src=''>&nbsp;");
 }
 
 function graphit(g,gwidth){
@@ -751,11 +753,11 @@ function ext_list_build( element_id ) {
 			// Yes /  No
 			if ( td_obj[i2] != null ) {
 				var data = td_obj[i2].innerHTML;
-				var new_str = '-';
 				if ( data == 1 ) {
-					new_str = "<img border='0' src='/xvb/images/check.png' alt='*' />"
+					td_obj[i2].innerHTML = "✓";
+				} else {
+					td_obj[i2].innerHTML = "-";
 				}
-				td_obj[i2].innerHTML = new_str;
 			}
 		}
 	}
@@ -828,14 +830,14 @@ function exten_dropdown2_hook( value, select_name ) {
 function exten_icon( extension, uniq, title ) {
 	/* edit icon */
 	if ( e_list[extension] != null && e_list[extension][0] != null ) {
-		document.write("<a href='?action=vb_view&id="+ e_list[extension][0] +"&uniq="+ uniq +" ' title='"+ title +"'><img border='0' src='/xvb/images/vb_edit.png' alt='"+ title +"' /></a>&nbsp;");
+		document.write("<a href='?action=vb_view&id="+ e_list[extension][0] +"&uniq="+ uniq +" ' title='"+ title +"'><span class='icon-info fs1'><span></a>");
 	}
 }
 /* vb stat icon */
 function stat_icon( extension, uniq, act_type, title ) {
 	/* edit icon */
 	if ( e_list[extension] != null && e_list[extension][0] != null ) {
-		document.write("<a href='?action=ext_stat&act_type="+ act_type +"&id="+ e_list[extension][0] +"&uniq="+ uniq +" ' title='"+ title +"'><img border='0' src='/xvb/images/information-button.png' alt='"+ title +"' /></a>&nbsp;&nbsp;");
+		document.write("<a href='?action=ext_stat&act_type="+ act_type +"&id="+ e_list[extension][0] +"&uniq="+ uniq +" ' title='"+ title +"'><span class='icon-stats-bars fs0'></a>");
 	}
 }
 /* peers tmpl functions */

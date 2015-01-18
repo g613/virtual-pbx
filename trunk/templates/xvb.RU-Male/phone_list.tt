@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.15 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.22 2015/01/17 21:26:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -22,9 +22,9 @@
 	<table width='100%'>
 		<tr>
 			<td align='center'><h1>SIP телефоны</h1></td>
-			<td align='right'>
-				<a title='в формате excel' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>&nbsp;&nbsp;
-				<a title='удалить все телефоны' href='?action=phone_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все телефоны'><img border='0' src='/xvb/images/msg_delete.png' alt='del' /></a>
+			<td align='right' width='10%'>
+				<a title='в формате excel' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
+				<a title='удалить все телефоны' href='?action=phone_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все телефоны'><span class='icon-cross fs0'></span></a>
 			</td>
 		</tr>
 	</table>
@@ -32,40 +32,64 @@
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>&nbsp;</th>
+			<th colspan='2'>Статус</th>
+			<th>Телефон</th>
+			<th>Имя пользователя и Email</th>
+			<th>Исходящий АОН</th>
+			<th>Запись и место хранения</th>
+			<th>Группы перехвата</th>
 			<th>Логин</th>
 			<th>Пароль</th>
 			<th>&nbsp;</th>
-			<th>Телефон</th>
-			<th>Имя пользователя</th>
-			<th>Исходящий АОН</th>
-			<th>Email</th>
-			<th>Группы перехвата</th>
-			<th>Запись</th>
-			<th>Сохранить запись в</th>
-			<th colspan='2'>Действия</th>
 		</tr>
 		
 		[% FOREACH p = PHONES %]
 		<tr align='center' class='nocolor' id='d-tr-[% p.DATA_ID %]'>
-			<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+			<form method="post" action="[% CGI_URL %]" id='f-[% p.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 			<td align='left' nowrap='nowrap'>
-				<img 
 				[% IF p.REG_STATUS eq 'Registered' %]
-					src='/xvb/images/ball_green.png'
-				[% ELSE %]
-					src='/xvb/images/ball_red.png'
+					<a href='#' class='l-info'>
+					<span class='fs1'>✓</span>
+					<span class='l-info'>
+						[% p.REG_STATUS %]<br>
+						Дата регистрации: [% p.REG_TIME | html %]<br>
+						Окончание: [% p.REG_EXPIRED | html %]<br>
+						IP: [% p.ipaddr | html %]<br>
+						UA: [% p.useragent | html %]
+					</span>
+					</a>
+				[% ELSIF p.REG_TIME ne '-' %]
+					<a href='#' class='l-info'>
+					<span class='icon-info fs1'></span>
+					<span class='l-info'>
+						[% p.REG_STATUS %]<br>
+						Дата регистрации: [% p.REG_TIME | html %]<br>
+						Окончание: [% p.REG_EXPIRED | html %]<br>
+						IP: [% p.ipaddr | html %]<br>
+						UA: [% p.useragent | html %]
+						[% IF p.deny %]
+						Доступ только с IP адреса: [% p.permit | html %]
+						[% END %]
+					</span>
+					</a>
 				[% END %]
-				title='[% p.REG_STATUS %], Дата регистрации: [% p.REG_TIME | html %] ( окончание: [% p.REG_EXPIRED | html %] ), IP: [% p.ipaddr | html %], UA: [% p.useragent | html %]' alt='[% p.REG_STATUS %]' />
 				[% IF p.DND %]
-					<img src='/xvb/images/dnd.png' title='DND включено [% p.DND | html %]' alt='DND включено [% p.DND | html %]' />
+					<a href='#' class='l-info'>
+					<span class='icon-blocked fs1'></span>
+					<span class='l-info'>
+						DND включено [% p.DND | html %]
+					</span>
+					</a>
 				[% END %]
 				[% IF p.FWD_NUM %]
-					<img src='/xvb/images/fwd.png' title='Перенеаправление на : [% p.FWD_NUM | hmtml %]' alt='Перенаправление на : [% p.FWD_NUM | hmtml %]' />
+					<a href='#' class='l-info'>
+					<span class='icon-mobile fs1'></span>
+					<span class='l-info'>
+						Перенеаправление на : [% p.FWD_NUM | html %]
+					</span>
+					</a>
 				[% END %]
 			</td>
-			<td align='left'><input type='hidden' name='name' value="[% p.name %]">[% p.name %]</td>
-			<td><input class='in_t0' size="12" name='secret' type='text' value="[% p.secret | html %]"></td>
 			<td align='center'>
 				[% IF p.deny %]
 					<input class='in_t0' name='trusted_ip' type='checkbox' title='Доступ только с IP адреса: [% p.permit | html %]' checked />
@@ -74,11 +98,12 @@
 				[% END %]
 			</td>
 			<td><input class='in_t0' size="10" name='callerid' type='text' value="[% p.callerid | html %]"></td>
-			<td><input class='in_t0' size="16" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"></td>
-			<td><input class='in_t0' size="12" name='DEFCID' type='text' value="[% p.DEFCID | html %]"></td>
-			<td><input class='in_t0' size="15" name='EMAIL' type='text' value="[% p.EMAIL | html %]"></td>
-			<td><input class='in_t0' size="8" name='PICKUP_GROUPS' type='text' value="[% p.PICKUP_GROUPS | html %]"></td>
 			<td>
+				<input class='in_t0' size="16" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"><br>
+				<input class='in_t0' size="15" name='EMAIL' type='text' value="[% p.EMAIL | html %]">
+			</td>
+			<td><input class='in_t0' size="12" name='DEFCID' type='text' value="[% p.DEFCID | html %]"></td>
+			<td align='left' nowrap='nowrap'>
 				<select name="REC_MODE" class='in_t0'>
 				[% IF p.REC_MODE eq '1' %]
 					<option value="1" selected>По запросу</option>
@@ -112,27 +137,24 @@
 					<option value="4">Внешние</option>
 				[% END %]
 				</select>
-			</td>
-			<td align='left' nowrap='nowrap'>
-				<input class='in_t0' size="6" name='REC_EXT' type='text' value="[% p.REC_EXT | html %]">
-			</td>
-			<td>
+				<br>
+				<input class='in_t0' size="8" name='REC_EXT' type='text' value="[% p.REC_EXT | html %]">
 				<script language="JavaScript">
 					exten_icon( '[% p.REC_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 				</script>
 			</td>
-			<td align='left'>
-				&nbsp;
+			<td><input class='in_t0' size="8" name='PICKUP_GROUPS' type='text' value="[% p.PICKUP_GROUPS | html %]"></td>
+			<td align='left'><input type='hidden' name='name' value="[% p.name %]">[% p.name %]</td>
+			<td><input class='in_t0' size="12" name='secret' type='text' value="[% p.secret | html %]"></td>
+			<td align='right' nowrap='nowrap'>
 				<input type='hidden' value='[% p.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='phone_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='удалить телефон' href='?action=phone_del&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% p.DATA_ID %]')"><img border='0'  src='/xvb/images/vb_del.png' alt='удалить' /></a>&nbsp;
 				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
-				<script language='JavaScript'>
-					writeUpdateLinks( 'сохранить изменения' );
-				</script>
-				<noscript><input value='Сохранить изменеия' type='submit'></noscript>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% p.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+					<noscript><input value='Сохранить изменеия' type='submit'></noscript>
 				</span>
+				<a title='удалить телефон' href='?action=phone_del&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% p.DATA_ID %]')"><span class='icon-bin fs0'></span></a>
 			</td>
 			</form>
 		</tr>
@@ -140,28 +162,20 @@
 		<tr><td></td></tr>
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-			<td><input size="10" name='callerid' type='text'></td>
-			<td><input size="16" name='DESCRIPTION' type='text'></td>
-			<td><input size="12" name='DEFCID' type='text'></td>
-			<td><input size="15" name='EMAIL' type='text'></td>
-			<td><input size="8" name='PICKUP_GROUPS' type='text'></td>
-			<td>
-				<select name="REC_MODE">
-					<option value="0" selected>Выключено</option>
-					<option value="1">По запросу</option>
-					<option value="2">Всегда</option>
-					<option value="3">Внутренние</option>
-					<option value="4">Внешние</option>
-				</select>
-			</td>
-			<td align='left'><input size="6" name='REC_EXT' type='text'></td>
-			<td colspan='2'>
+			<td align='left' colspan='10'>
+				<input size="10" name='callerid' type='text' placeholder='Телефон'>
+				&nbsp;
+				<input size="16" name='DESCRIPTION' type='text' placeholder='Имя'>
+				&nbsp;
+				<input size="15" name='EMAIL' type='text' placeholder='Email'>
+				&nbsp;
+				<input size="12" name='DEFCID' type='text' placeholder='АОН'>
+				&nbsp;
 				<input type='hidden' value='phone_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<input type='hidden' value='' name='PICKUP_GROUPS'>
+				<input type='hidden' value='0' name='REC_EXT'>
+				<input type='hidden' value='0' name='REC_MODE'>
 				<input value='Добавить' type='submit'>
 			</td>
 			</form>

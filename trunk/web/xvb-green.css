@@ -160,7 +160,6 @@ a.info:hover {
 a.info span {
 	display: none;
 }
-
 a.info:hover span{
 	display:block;
 	position:absolute;
@@ -168,6 +167,64 @@ a.info:hover span{
 	top:2em;
 	left:15em;
 	width:30em;
+	border:1px solid #9eb9ff;
+	background-color:yellow;
+	color:#000;
+	text-align:justify;
+	font-size:12px;
+	font-weight:normal;
+	padding: 4px 4px 3px;
+	border-radius: 10px;
+	overflow:auto;
+}
+
+a.l-info {
+	position:relative;
+	color:#177182;
+	font-weight: normal;
+}
+a.l-info:hover {
+	z-index:3;
+}
+a.l-info span.l-info {
+	display: none;
+}
+a.l-info:hover span.l-info {
+	display:block;
+	position:absolute;
+	z-index:1;
+	top:2em;
+	left:1em;
+	width:20em;
+	border:1px solid #9eb9ff;
+	background-color:yellow;
+	color:#000;
+	text-align:justify;
+	font-size:12px;
+	font-weight:normal;
+	padding: 4px 4px 3px;
+	border-radius: 10px;
+	overflow:auto;
+}
+
+a.r-info {
+	position:relative;
+	color:#177182;
+	font-weight: normal;
+}
+a.r-info:hover {
+	z-index:3;
+}
+a.r-info span.r-info {
+	display: none;
+}
+a.r-info:hover span.r-info {
+	display:block;
+	position:absolute;
+	z-index:1;
+	top:2em;
+	left:-20em;
+	width:20em;
 	border:1px solid #9eb9ff;
 	background-color:yellow;
 	color:#000;
@@ -189,10 +246,10 @@ a.help {
 a.help:hover {
 	z-index:3;
 }
-a.help span{
+a.help span.help{
 	display: none;
 }
-a.help:hover span{
+a.help:hover span.help{
 	display:block;
 	position:absolute;
 	z-index:1;
@@ -211,6 +268,18 @@ a.help:hover span{
 	overflow:auto;
 }
 /* End Helps */
+
+/* Read /unread msg */
+a.msg:hover {
+	color:red;
+}
+a.msg:visited {
+	color:gray;
+}
+a.msg {
+	border-bottom:1px dashed #ccc;
+}
+/* end msg */
 
 .display_none {
 	display: none;
@@ -368,3 +437,204 @@ ul {
 li {
 	padding: 10px 0px 5px 0px;
 }
+
+/* Icon */
+.fs0 {
+	font-size: 24px;
+	color:#00cc00;
+	padding: 5px;
+}
+.fs0:hover {
+	color:red;
+}
+.fs1 {
+	font-size: 16px;
+	color:#00cc00;
+	padding: 3px;
+}
+.icon-cross {
+	color:red;
+	font-size: 20px;
+}
+.black {
+	color:white;
+	background:black;
+}
+.white {
+	color:black;
+	background:white;
+}
+@-webkit-keyframes pulsate { 50% { color: #fff; text-shadow: 0 -1px rgba(0,0,0,.3), 0 0 5px #ffd, 0 0 8px #fff; } }
+@keyframes pulsate { 50% { color: #fff; text-shadow: 0 -1px rgba(0,0,0,.3), 0 0 5px #ffd, 0 0 8px #fff; } }
+.blink { text-shadow: 0 -1px rgba(0,0,0,.1); -webkit-animation: pulsate 1.2s linear infinite; animation: pulsate 1.2s linear infinite; }
+
+/* Icon src */
+@font-face {
+	font-family: 'icomoon';
+	src:url('/xvb/fonts/icomoon.eot?4f0i7r');
+	src:url('/xvb/fonts/icomoon.eot?#iefix4f0i7r') format('embedded-opentype'),
+		url('/xvb/fonts/icomoon.woff?4f0i7r') format('woff'),
+		url('/xvb/fonts/icomoon.ttf?4f0i7r') format('truetype'),
+		url('/xvb/fonts/icomoon.svg?4f0i7r#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-plus-square-o:before {
+	content: "\e600";
+}
+
+.icon-home2:before {
+	content: "\e901";
+}
+
+.icon-pencil:before {
+	content: "\e905";
+}
+
+.icon-podcast:before {
+	content: "\e91c";
+}
+
+.icon-copy:before {
+	content: "\e92c";
+}
+
+.icon-folder-open:before {
+	content: "\e930";
+}
+
+.icon-phone:before {
+	content: "\e942";
+}
+
+.icon-history:before {
+	content: "\e94d";
+}
+
+.icon-calendar:before {
+	content: "\e953";
+}
+
+.icon-mobile:before {
+	content: "\e958";
+}
+
+.icon-floppy-disk:before {
+	content: "\e962";
+}
+
+.icon-bubble2:before {
+	content: "\e96e";
+}
+
+.icon-search:before {
+	content: "\e986";
+}
+
+.icon-wrench:before {
+	content: "\e991";
+}
+
+.icon-cog:before {
+	content: "\e994";
+}
+
+.icon-cogs:before {
+	content: "\e995";
+}
+
+.icon-stats-bars:before {
+	content: "\e99c";
+}
+
+.icon-bin:before {
+	content: "\e9ac";
+}
+
+.icon-power:before {
+	content: "\e9b5";
+}
+
+.icon-clipboard:before {
+	content: "\e9b8";
+}
+
+.icon-download3:before {
+	content: "\e9c7";
+}
+
+.icon-warning:before {
+	content: "\ea07";
+}
+
+.icon-question:before {
+	content: "\ea09";
+}
+
+.icon-info:before {
+	content: "\ea0c";
+}
+
+.icon-cancel-circle:before {
+	content: "\ea0d";
+}
+
+.icon-blocked:before {
+	content: "\ea0e";
+}
+
+.icon-cross:before {
+	content: "\ea0f";
+}
+
+.icon-enter:before {
+	content: "\ea13";
+}
+
+.icon-volume-medium:before {
+	content: "\ea27";
+}
+
+.icon-loop2:before {
+	content: "\ea2e";
+}
+
+.icon-arrow-right:before {
+	content: "\ea34";
+}
+
+.icon-arrow-left:before {
+	content: "\ea38";
+}
+
+.icon-share:before {
+	content: "\ea7d";
+}
+
+.icon-feed3:before {
+	content: "\ea95";
+}
+
+.icon-file-excel:before {
+	content: "\eadd";
+}
+
+.icon-libreoffice:before {
+	content: "\eade";
+}
+

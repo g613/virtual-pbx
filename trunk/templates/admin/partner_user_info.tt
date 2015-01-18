@@ -32,7 +32,7 @@
 		<tr>
 			<td align='center'><h1>Tenant info</h1></td>
 			<td align='right'>
-				<a title='delete tenat' href='?action=user_del&user_id=[% USER.ID %]&single_user=1' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+				<a title='delete tenat' href='?action=user_del&user_id=[% USER.ID %]&single_user=1' onclick="return DelConfirm('en')"><span class='icon-cross fs0'></span></a>
 			</td>
 		</tr>
 	</table>
@@ -50,7 +50,7 @@
 				</td>
 				<td>
 					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]&nbsp;&nbsp;
-					<a title='view user profile' href='/ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=user_info'><img border='0'  src='/xvb/images/vb_edit.png' alt='view user profile' /></a>
+					<a title='Login to tenant account' href='/ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=start&saction=user_info'><span class='icon-enter fs0'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -74,7 +74,7 @@
 					Access code:
 				</td>
 				<td>
-					[% USER.ACCESS_CODE | html %]&nbsp;&nbsp;
+					[% USER.ACCESS_CODE | html %]
 				</td>
 			</tr>
 			<tr>
@@ -82,8 +82,7 @@
 					Pin code:
 				</td>
 				<td>
-					[% USER.PIN_CODE | html %][% USER.PIN_CODE2 %]&nbsp;&nbsp;
-					<a title='exten 0' href='/ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=vb_view&ext_id=0'><img border='0'  src='/xvb/images/vb_edit.png' alt='exten 0' /></a>
+					[% USER.PIN_CODE | html %][% USER.PIN_CODE2 %]
 				</td>
 			</tr>
 			<tr>
@@ -179,7 +178,7 @@
 								<td valign='top' width='20%'><h4>Assigned DIDs:</h4></td>
 								<td valign='top' width='60%'>
 								[% FOREACH d = DIDS %]
-									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&partner=[% PARTNER | html %]' onclick="return DelConfirm('en')">[% d.DID | html %]</a>&nbsp;;&nbsp;
+									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&partner=[% PARTNER | html %]' onclick="return DelConfirm('en')">[% d.DID | html %]</a>;&nbsp;
 								[% END %]
 								</td>
 								<td valign='top' width='20%' align='center' nowrap='nowrap'>

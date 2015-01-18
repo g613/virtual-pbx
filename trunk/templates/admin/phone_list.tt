@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.15 2014/11/06 20:11:22 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.19 2015/01/17 20:35:20 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -22,7 +22,7 @@
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
 			<td align='right'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
 				[% INCLUDE version.tt %]
 			<td>
 		</tr>
@@ -57,20 +57,20 @@
 		<tr>
 			<th>Access code</th>
 			<th>&nbsp;</th>
-			<th>Auth name</th>
-			<th>Password</th>
+			<th>Phone</th>
 			<th>Reg IP</th>
 			<th>&nbsp;</th>
-			<th>&nbsp;</th>
-			<th>Phone</th>
 			<th>User name</th>
 			<th>CallerID</th>
+			<th>&nbsp;</th>
+			<th>Auth name</th>
+			<th>Password</th>
 		</tr>
 		
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='9'>
-				<a title='previous page' href='?action=phone_list&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_PREV %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=phone_list&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_PREV %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -78,40 +78,54 @@
 		[% FOREACH p = SIPDEV %]
 		<tr align='left' class='nocolor'>
 			<td><a title='edit user settings' href='?ac=[% p.ACCESS_CODE %]&action=user_info'>[% p.ACCESS_CODE %]</a></td>
-			<td>
-				[% IF ALLOW_RESET %]
-				<a title='change auth name' href='?action=auth_name_reset&id=[% p.name | html %]&ac=[% p.ACCESS_CODE | html %]'><img border='0'  src='/xvb/images/msg_status.png' alt='new auth name' /></a>
+			<td align='center'>
+				[% IF p.REG_STATUS eq 'Registered' %]
+					<a href='#' class='l-info'>
+					<span class='fs1'>✓</span>
+					<span class='l-info'>
+						[% p.REG_STATUS %]<br>
+						Reg date: [% p.REG_TIME | html %]<br>
+						Expired: [% p.REG_EXPIRED | html %]<br>
+						IP: [% p.ipaddr | html %]<br>
+						UA: [% p.useragent | html %]
+					</span>
+					</a>
+				[% ELSIF p.REG_TIME ne '-' %]
+					<a href='#' class='l-info'>
+					<span class='icon-info fs1'></span>
+					<span class='l-info'>
+						[% p.REG_STATUS %]<br>
+						Reg date: [% p.REG_TIME | html %]<br>
+						Expired: [% p.REG_EXPIRED | html %]<br>
+						IP: [% p.ipaddr | html %]<br>
+						UA: [% p.useragent | html %]
+					</span>
+					</a>
 				[% END %]
 			</td>
-			<td>[% p.name %]</td>
-			<td>[% p.secret | html %]</td>
+			<td>[% p.callerid | html %]</td>
 			<td>[% p.ipaddr | html %]</td>
 			<td align='center'>
 				[% IF p.deny %]
 					<input type='checkbox' title='Access only for: [% p.permit | html %]' checked />
 				[% END %]
 			</td>
-			<td align='center'>
-				<img 
-				[% IF p.REG_STATUS eq 'Registered' %]
-					src='/xvb/images/ball_green.png'
-				[% ELSIF  p.REG_STATUS eq 'Unregistered'  %]
-					src='/xvb/images/ball_red.png'
-				[% ELSE %]
-					src=''
-				[% END %]
-				title='[% p.REG_STATUS %], Reg date: [% p.REG_DATE | html %], Expired date: [% p.REG_EXPIRED | html %], IP: [% p.ipaddr | html %], UA: [% p.useragent | html %]' alt='[% p.REG_STATUS %]' />
-			</td>
-			<td>[% p.callerid | html %]</td>
 			<td>[% p.DESCRIPTION | html %]</td>
 			<td>[% p.DEFCID | html %]</td>
+			<td>
+				[% IF ALLOW_RESET %]
+				<a title='change auth name' href='?action=auth_name_reset&id=[% p.name | html %]&ac=[% p.ACCESS_CODE | html %]'><span class='icon-loop2 fs1'></span></a>
+				[% END %]
+			</td>
+			<td>[% p.name %]</td>
+			<td>[% p.secret %]</td>
 		</tr>
 		[% END %]
 	
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='10'>
-				<a title='previous page' href='?action=phone_list&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_NEXT %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+				<a title='previous page' href='?action=phone_list&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_NEXT %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
 		[% END %]

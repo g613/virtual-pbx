@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.94 2014/10/21 19:05:17 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.95 2015/01/13 08:41:16 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -221,9 +221,9 @@ SipDomain: [% d.DOMAIN | html %]
 								<td align='center' nowrap='nowrap'>
 									<a title='play' 
 										onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% CUSTOM_MOH %]?media=mp3;type=listen' )"
-										href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>&nbsp;&nbsp;
-										<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% CUSTOM_MOH %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-									&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% CUSTOM_MOH %]&type=1&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr')" title='delete MOH file'><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+										href="#"><span class='icon-volume-medium fs0'></span></a>
+										<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% CUSTOM_MOH %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+									&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% CUSTOM_MOH %]&type=1&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr')" title='delete MOH file'><span class='icon-bin fs0'></span></a>
 								</td>
 							</tr>
 							[% END %]

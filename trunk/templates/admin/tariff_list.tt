@@ -25,7 +25,7 @@
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
 			<td align='right'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
 				[% INCLUDE version.tt %]
 			<td>
 		</tr>
@@ -49,7 +49,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='6'>
-				<a title='previous page' href='?action=tariff_list&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=tariff_list&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -72,8 +72,8 @@
 				</select>
 			</td>
 			<td>
-				<a title='clone tariff' href='?action=clone&noauto=1&tname=TARIFF&id=[% t.ID %]&fname=NAME&fid=ID&newaction=tariff_info%26tariff_id'><img border='0' src='/xvb/images/clone.png' alt='clone' /></a>&nbsp;&nbsp;
-				<a title='delete tariff' href='?action=tariff_del&tariff_id=[% t.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0' src='/xvb/images/vb_del.png' alt='del' /></a>
+				<a title='clone tariff' href='?action=clone&noauto=1&tname=TARIFF&id=[% t.ID %]&fname=NAME&fid=ID&newaction=tariff_info%26tariff_id'><span class='icon-copy fs0'></span></a>
+				<a title='delete tariff' href='?action=tariff_del&tariff_id=[% t.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
 			</td>
 			</form>
 		</tr>
@@ -91,7 +91,7 @@
 			</td>
 			<td align='right' colspan='3'>
 			[% IF MSG_NEXT ne '' %]
-				<a title='next page' href='?action=tariff_list&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='next page' href='?action=tariff_list&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
 			[% END %]
 			</td>
 		</tr>

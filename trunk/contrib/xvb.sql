@@ -320,6 +320,7 @@ create	table VPBX_GROUPS
 	ALLOW_MACROS				INT(1) default 1,
 	ALLOW_PHONES				INT(1) default 1,
 	ALLOW_GA					INT(1) default 0,
+	ALLOW_CTR					INT(1) default 0,
 	ALLOW_API					INT(1) default 1,
 	ALLOW_ICECAST				INT(1) default 1,
 	ALLOW_EXTSTAT				INT(1) default 1,

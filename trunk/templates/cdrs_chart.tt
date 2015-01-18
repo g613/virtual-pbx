@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.28 2014/11/04 13:08:18 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.29 2015/01/13 08:41:16 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - statistics - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -98,7 +98,6 @@
 		</tr>
 	</table>
 	
-	<p>
 	[% IF CDR_LIST scalar %]
 	<script language='JavaScript'>
 		var graphx=new Array();
@@ -117,7 +116,6 @@
 	[% ELSE %]
 		No records
 	[% END %]
-	</p>
 
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>

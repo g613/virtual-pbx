@@ -26,7 +26,7 @@
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
 			<td align='right'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
 				[% INCLUDE version.tt %]
 			<td>
 		</tr>
@@ -50,14 +50,14 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='6'>
-				<a title='previous page' href='?action=partner_list&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=partner_list&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
 
 		[% FOREACH p = PARTNERS %]
 		<tr align='center' class='nocolor' id='d-tr-[% p.ID %]'>
-			<form method='post'>
+			<form method='post' id='f-[% p.ID %]' onSubmit='return xmlhttpPost(this,1)' action="">
 			<td align='right'>
 				<input class='in_t0' size='20' name='P_NAME' type='text' value='[% p.NAME | html %]'></td>
 			</td>
@@ -78,18 +78,16 @@
 			<td align='right'>
 				<input class='in_t0' size='30' name='P_DESCRIPTION' type='text' value='[% p.DESCRIPTION | html %]'></td>
 			</td>
-			<td>
+			<td align='right'>
 				<input type='hidden' value='[% p.ID %]' name='partner_id'>
 				<input type='hidden' value='[% p.ID %]' name='data_id'>
 				<input type='hidden' value='partner_update' name='action'>
 				<input type='hidden' value='[% MSG_FROM %]' name='from'>
-				<a title='delete partner account' href='?action=partner_del&partner_id=[% p.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>&nbsp;&nbsp;
 				<span class='in_t' id='in_t_id-[% p.ID %]'>
-				<script language='JavaScript'>
-					writeUpdateLinks( 'save changes' );
-				</script>
-				<noscript><input value='change' type='submit'></noscript>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% p.ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+					<noscript><input value='change' type='submit'></noscript>
 				</span>
+				<a title='delete partner account' href='?action=partner_del&partner_id=[% p.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
 			</td>
 			</form>
 			<td></td>
@@ -120,7 +118,7 @@
 			</td>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='10'>
-				<a title='next page' href='?action=partner_list&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='next page' href='?action=partner_list&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
 			</td>
 		[% END %]
 		</tr>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.43 2015/01/01 20:25:55 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.51 2015/01/17 20:23:31 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -29,34 +29,67 @@
 
 <body onLoad="XVBInit()">
 	
+	<center>
+	
 	<table width='100%'>
-		<tr valign='bottom'>
-			<td width='15%' align='left' nowrap='nowrap'>
+		<tr valign='top'>
+			<td width='40%' align='left' nowrap='nowrap'>
 			[% IF USER_CREDS.ROOT eq '0' %]
-				<a href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')">Удалить</a>
-				&nbsp;|&nbsp;
-				<a href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Клонировать</a>
-				&nbsp;|&nbsp;
+				<a href='?action=j_list&ext_id=[% VBOX_PREF.ID %]&ext_num=[% VBOX_PREF.EXT_NUMBER | html %]&uniq=[% USER_CREDS.UNIQ %]' title="История изменений"><span class='icon-history fs0'></span></a>
+				<a href='?action=vb_add&new_ext=new-ext&uniq=[% USER_CREDS.UNIQ %]' title="Добавить новый внутренний номер"><span class='icon-plus-square-o fs0'></span></a>
+				<a href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Клонировать внутренний номер"><span class='icon-copy fs0'></span></a>
 			[% END %]
-				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Сообщения</a>
-				&nbsp;|&nbsp;
-				<a href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Активность</a>
-				[% IF EXTENDED_STAT %]
-				&nbsp;|&nbsp;
-				<a href='?action=extended_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Расширенная статистика</a>
-				[% END %]
+				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Сообщения"><span class='icon-folder-open fs0'></span></a>
+				<a href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Активность"><span class='icon-stats-bars fs0'></span></a>
+			[% IF EXTENDED_STAT %]
+				<a href='?action=extended_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Расширенная статистика"><span class='icon-power fs0'></span></a>
+			[% END %]
 			</td>
+			<td width='55%' align='left'>
+				<h1>Внутренний номер # <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
+			</td>
+			<td align='right'>
+			[% IF USER_CREDS.ROOT eq '0' %]
+				<a href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title="Удалить внутренний номер"><span class='icon-cross fs0'></span></a>
+			[% END %]
+			</td>
+		</tr>
+		<tr>
+			<td align='right' colspan='3'>
+				<select onchange="LoadingOn(); ChangeExten(this.value,'[% USER_CREDS.UNIQ %]')">
+					<script language="JavaScript">exten_dropdown('<option value="[% VBOX_PREF.ID | html %]">Перейти к номеру</option>')</script>
+				</select>
 			</td>
 		</tr>
 	</table>
 
-	<center>
-	
 	<table width='100%'>
-		<tr valign='bottom'>
-			<td width='5%'>
+		<tr>
+			<td width='59%' valign='top'>
+			<table width='100%'>
+				[% IF USER_CREDS.ROOT eq '0' %]
+				<form method="post" action="[% CGI_URL %]">
+				<tr>
+					<td>Тип номера:</td>
+					<td>
+						<input type='hidden' name='action' value='vb_change_type'>
+						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+						<select name="type" onchange="LoadingOn(); ChangeVbType(this.value,'[% VBOX_PREF.ID %]', '[% USER_CREDS.UNIQ %]')">
+						[% FOREACH vt = VB_TYPES %]
+							[% IF VBOX_PREF.TYPE eq vt.ID %]
+								<option value="[% vt.ID %]" selected>[% vt.DESCRIPTION | locale_msg %]</option>
+							[% ELSE %]
+								[% IF vt.ID vb_allow '0' %]
+									<option value="[% vt.ID %]">[% vt.DESCRIPTION | locale_msg %]</option>
+								[% END %]
+							[% END %]
+						[% END %]
+						</select>
+						<noscript><input type='submit' value='изменить'></noscript>
+					
 					[% IF VBOX_PREF.TYPE eq '1' %]
-					<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
+					<a href='#' class='help'><span class='icon-bubble2 fs0'></span><span class='help'>
 					<h4>Советы:</h4>
 					При разрешенной перемотке 'приветствия пользователя' 
 					звонящий абонент может использовать клавиши:
@@ -71,7 +104,7 @@
 					[% END %]
 
 					[% IF VBOX_PREF.TYPE eq '3' %]
-					<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
+					<a href='#' class='help'><span class='icon-bubble2 fs0'></span><span class='help'>
 					<h4>Советы:</h4>
 					Во время разговора удаленный абонент может нажать:
 					<ul>
@@ -117,7 +150,7 @@
 					[% END %]
 
 					[% IF VBOX_PREF.TYPE eq '5' %]
-					<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
+					<a href='#' class='help'><span class='icon-bubble2 fs0'></span><span class='help'>
 					<h4>Советы:</h4>
 					При заполнении данных расписания можно использовать следуещее:
 					    <ul>CallerID основной черный список ( BL# )</ul>
@@ -144,7 +177,7 @@
 					[% END %]
 
 					[% IF VBOX_PREF.TYPE eq '13' %]
-					<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
+					<a href='#' class='help'><span class='icon-bubble2 fs0'></span><span class='help'>
 					<h4>Советы:</h4>
 					Во время разговора удаленный абонент может нажать:
 					<ul>
@@ -190,7 +223,7 @@
 					[% END %]
 					
 					[% IF VBOX_PREF.TYPE eq '17' %]
-					<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
+					<a href='#' class='help'><span class='icon-bubble2 fs0'></span><span class='help'>
 					<h4>Советы:</h4>
 					При прослушивании сообщений можно нажать:
 					<ul>
@@ -204,7 +237,7 @@
 					[% END %]
 					
 					[% IF VBOX_PREF.TYPE eq '18' %]
-					<a href='#' class='help'><img border='0' src='/xvb/images/help.png' alt='extension help' /><span>
+					<a href='#' class='help'><span class='icon-bubble2 fs0'></span><span class='help'>
 					<h4>Советы:</h4>
 						<ul>Формат временных интервалов: 
 							начало_интервала-конец_интервала.<br>Форматы:
@@ -217,61 +250,6 @@
 						</ul>
 					</span></a>
 					[% END %]
-			</td>
-			<td width='70%' align='center'>
-				<h1>Внутренний номер # <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
-			</td>
-			<td align='right'>
-			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-				&nbsp;
-				[% IF USER_CREDS.ROOT eq '0' %]
-				<input size='5' type='text' name='new_ext'>
-				&nbsp;
-				<input value='Добавить' type='submit'>
-				<input name='action' value='vb_add' type='hidden'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='go' value='list' type='hidden'>
-				[% END %]
-			</form>
-		</tr>
-	</table>
-	
-	<table width='100%'>
-		<tr>
-			<td align='right'>
-				<select onchange="LoadingOn(); ChangeExten(this.value,'[% USER_CREDS.UNIQ %]')">
-					<script language="JavaScript">exten_dropdown('<option value="[% VBOX_PREF.ID | html %]">Перейти к номеру</option>')</script>
-				</select>
-			</td>
-		</tr>
-	</table>
-
-	<table width='100%'>
-		<tr>
-			<td width='59%' valign='top'>
-			<table width='100%'>
-				[% IF USER_CREDS.ROOT eq '0' %]
-				<form method="post" action="[% CGI_URL %]">
-				<tr>
-					<td>Тип номера:</td>
-					<td>
-						<input type='hidden' name='action' value='vb_change_type'>
-						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
-						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-						<select name="type" onchange="LoadingOn(); ChangeVbType(this.value,'[% VBOX_PREF.ID %]', '[% USER_CREDS.UNIQ %]')">
-						[% FOREACH vt = VB_TYPES %]
-							[% IF VBOX_PREF.TYPE eq vt.ID %]
-								<option value="[% vt.ID %]" selected>[% vt.DESCRIPTION | locale_msg %]</option>
-							[% ELSE %]
-								[% IF vt.ID vb_allow '0' %]
-									<option value="[% vt.ID %]">[% vt.DESCRIPTION | locale_msg %]</option>
-								[% END %]
-							[% END %]
-						[% END %]
-						</select>
-						&nbsp;&nbsp;
-						<noscript><input type='submit' value='изменить'></noscript>
-
 					</td>
 				</tr>
 				</form>
@@ -491,8 +469,8 @@
 							из комбинаций.
 							</span></a>
 						: &nbsp;&nbsp;(
-						<a href='?action=cid_list&id=[% VBOX_PREF.ID %]&cid_list_type=2&cid_type=1&uniq=[% USER_CREDS.UNIQ %]' title='Белый список абонентов'><img border='0' src='/xvb/images/vb_edit.png' alt='edit' /></a> /
-						<a href='?action=cid_list&id=[% VBOX_PREF.ID %]&cid_list_type=1&cid_type=1&uniq=[% USER_CREDS.UNIQ %]' title='Черный список абонентов'><img border='0' src='/xvb/images/vb_edit_black.png' alt='edit' /></a> )
+						<a href='?action=cid_list&id=[% VBOX_PREF.ID %]&cid_list_type=2&cid_type=1&uniq=[% USER_CREDS.UNIQ %]' title='Белый список абонентов'><span class='icon-libreoffice fs1 white'></span></a> /
+						<a href='?action=cid_list&id=[% VBOX_PREF.ID %]&cid_list_type=1&cid_type=1&uniq=[% USER_CREDS.UNIQ %]' title='Черный список абонентов'><span class='icon-libreoffice fs1 black'></span></a> )
 					</td>
 					<td>
 						<select name="CID">
@@ -1698,7 +1676,7 @@
 							WT - время ожидания клиентом в очереди ( в секундах ), 
 							Пример: http://crm.com?wt=% VAR:WT %&cid=% VAR:CID %&qid=% VAR:QUID %
 						</span></a>
-						<select name='crm' onchange='javascript:document.vb_opt.Q_URL.value=this.value'>
+						<select name='crm' onchange='document.vb_opt.Q_URL.value=this.value'>
 							<option value='[% VBOX_PREF.Q_URL | html %]' selected>Web URL</option>
 							<option value='http://www.anywho.com/qry/wp_rl?npa=% VAR:CID:1:3 %&telephone=% VAR:CID:4:10 %'>AnyWho</option>
 							<option value='http://www.google.com/search?rls=en&q=phonebook:% VAR:CID:1:10 %'>Google</option>
@@ -1860,7 +1838,7 @@
 					</span></a></td>
 					<td>
 						<input size='8' name="MSG_LIMITS" value="[% VBOX_PREF.MSG_LIMITS | html %]" type="text">
-						<select name='bbs_ttl' onchange='javascript:document.vb_opt.MSG_LIMITS.value=this.value'>
+						<select name='bbs_ttl' onchange='document.vb_opt.MSG_LIMITS.value=this.value'>
 							<option value='-1' selected>не ограничен</option>
 							<option value='3600'>1 час</option>
 							<option value='86400'>1 день</option>
@@ -2657,11 +2635,15 @@
 			<td width='1%'>&nbsp;</td>
 
 			<td valign='top' width='40%' align='left'>
+				<br>
 				<table width='100%' id='d-tbl-s'>
 					[% IF VBOX_PREF.TYPE eq '3' %]
 					[% IF VB_DATA %]
 					<tr>
-						<td colspan='2' align='left'><h4>Статистика звонков ( начало [% CALL_STAT_DATE | html %] ):</h4></td>
+						<td align='left'><h4>Статистика звонков ( начало [% CALL_STAT_DATE | html %] ):</h4></td>
+						<td align='right'>
+							<a href='?action=callout_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm( 'Вы точно хотите сбросить статистику ?' )" title='обнулить статистику'><span class='icon-loop2 fs0'></span></a>
+						</td>
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
@@ -2681,9 +2663,7 @@
 							[% FOREACH param = VB_DATA %]
 							[% IF param.NUMBER eq '===' %]
 							<tr align='center' class='resume'>
-								<td align='center'>
-									<a href='?action=callout_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm( 'Вы точно хотите сбросить статистику ?' )" title='обнулить статистику'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>
-								</td>
+								<td></td>
 							[% ELSE %]
 							<tr align='center' class='nocolor'>
 								<td align='left'>[% param.NUMBER | html %]</td>
@@ -2726,7 +2706,10 @@
 
 					[% IF VBOX_PREF.TYPE eq '10' %]
 					<tr>
-						<td colspan='2' align='left'><h4>Результаты голосования ( начало [% VOTING_STAT_DATE | html %] ):</h4></td>
+						<td align='left'><h4>Результаты голосования ( начало [% VOTING_STAT_DATE | html %] ):</h4></td>
+						<td align='right'>
+							<a href='?action=voting_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm( 'def', 'Вы точно хотите сбросить статистику ?' )" title='обнулить статистику'><span class='icon-loop2 fs0'></span></a>
+						</td>
 					</tr>
 					<tr>
 						<td colspan='2'><pre>[% VBOX_PREF.GREETING | html %]</pre></td>
@@ -2742,9 +2725,7 @@
 							[% FOREACH param = VB_DATA %]
 							[% IF param.DIGIT eq '===' %]
 							<tr align='center' class='resume'>
-								<td align='center'>
-									<a href='?action=voting_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm( 'def', 'Вы точно хотите сбросить статистику ?' )" title='обнулить статистику'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>
-								</td>
+								<td></td>
 							[% ELSE %]
 							<tr align='center' class='nocolor'>
 								<td>[% param.DIGIT | html %]</td>
@@ -2779,10 +2760,15 @@
 							[% FOREACH param = VB_DATA %]
 							<tr align='center' class='nocolor'>
 								<td>
-									<img border='0' src='/xvb/images/information-button.png' title="[% param.TITLE | html %]" />
+									<a href='#' class='r-info'>
+										<span class='icon-info fs0'></span>
+										<span class='r-info'>
+											[% param.TITLE | html %]
+										</span>
+									</a>
 								</td>
 								<td align='center'>
-									<a title='скачать файл' href='[% param.FILE_URL %]' onclick="return true"><img border='0' src='/xvb/images/msg_download.png' alt='скачать файл' /></a>
+									<a title='скачать файл' href='[% param.FILE_URL %]' onclick="return true"><span class='icon-download3 fs0'></span></a>
 								</td>
 								<td>[% param.CREATE_DATE | html %]</td>
 								<td>[% param.DOWNLOAD_DATE | html %]</td>
@@ -2802,7 +2788,10 @@
 					[% IF VBOX_PREF.TYPE eq '13' %]
 					[% IF VB_DATA %]
 					<tr>
-						<td colspan='2' align='left'><h4>Статистика звонков ( начало [% CALL_STAT_DATE | html %] ):</h4></td>
+						<td align='left'><h4>Статистика звонков ( начало [% CALL_STAT_DATE | html %] ):</h4></td>
+						<td align='right'>
+							<a href='?action=callout_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm( 'def', 'Вы точно хотите сбросить статистику ?' )" title='обнулить статистику'><span class='icon-loop2 fs0'></span></a>
+						</td>
 					</tr>
 					<tr>
 						<td colspan='2' align='center'>
@@ -2822,9 +2811,7 @@
 							[% FOREACH param = VB_DATA %]
 							[% IF param.NUMBER eq '===' %]
 							<tr align='center' class='resume'>
-								<td align='center'>
-									<a href='?action=callout_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm( 'def', 'Вы точно хотите сбросить статистику ?' )" title='обнулить статистику'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>
-								</td>
+								<td></td>
 							[% ELSE %]
 							<tr align='center' class='nocolor'>
 								<td align='left'><span class='agent_state[% param.STATUS %]'>[% param.NUMBER | html %]</span></td>
@@ -2849,8 +2836,10 @@
 					[% IF VBOX_PREF.TYPE eq '18' %]
 					[% IF BLAST_STAT %]
 					<tr>
-						<td align='left'><h4>Статистика автоинформатора:</h4></td>
-						<td align='right'>Звонков сейчас: [% BLAST_CALLS | html %]</td>
+						<td align='left' colspan='2'><h4>Статистика автоинформатора:</h4></td>
+					</tr>
+					<tr>
+						<td align='right' colspan='2'>Звонков сейчас: [% BLAST_CALLS | html %]</td>
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
@@ -2990,9 +2979,9 @@
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.NAME_FILE %]?media=mp3;type=listen' )"
-								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.NAME_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.NAME_FILE %]&type=1&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s0','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								href="#"><span class='icon-volume-medium fs0'></span></a>
+							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.NAME_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.NAME_FILE %]&type=1&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s0','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3002,9 +2991,9 @@
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.GREET_FILE %]?media=mp3;type=listen' )"
-								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.GREET_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.GREET_FILE %]&type=2&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s1','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								href="#"><span class='icon-volume-medium fs0'></span></a>
+							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.GREET_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.GREET_FILE %]&type=2&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s1','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3016,9 +3005,9 @@
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;type=listen' )"
-								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s2','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								href="#"><span class='icon-volume-medium fs0'></span></a>
+							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s2','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3028,9 +3017,9 @@
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;type=listen' )"
-								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s7','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								href="#"><span class='icon-volume-medium fs0'></span></a>
+							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s7','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3040,9 +3029,9 @@
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %]?media=mp3;type=listen' )"
-								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s3','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								href="#"><span class='icon-volume-medium fs0'></span></a>
+							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s3','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3055,9 +3044,9 @@
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;type=listen' )"
-								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s4','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								href="#"><span class='icon-volume-medium fs0'></span></a>
+							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s4','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3067,9 +3056,9 @@
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;type=listen' )"
-								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s8','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								href="#"><span class='icon-volume-medium fs0'></span></a>
+							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s8','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3079,9 +3068,9 @@
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
 								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %]?media=mp3;type=listen' )"
-								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s5','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+								href="#"><span class='icon-volume-medium fs0'></span></a>
+							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s5','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3094,10 +3083,10 @@
 						<td align='right' nowrap='nowrap'>
 							[% IF VB_DATA.C2C_SECRET %]
 							<script language='Javascript' src='/xvb/js/base64.js'></script>
-							<a title='Отправить Факс' href='#' onclick="webfax_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% VB_DATA.C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru','[% USER_CREDS.UNIQ %]')"><img border='0' src='/xvb/images/phone.png' alt='отправить факс' /></a>&nbsp;&nbsp;
+							<a title='Отправить Факс' href='#' onclick="webfax_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% VB_DATA.C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru','[% USER_CREDS.UNIQ %]')"><span class='icon-phone fs0'></span></a>
 							[% END %]
-							<a title='скачать tiff' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.FAX_FILE %]'><img border='0' src='/xvb/images/msg_download_tif.png' alt='fax' /></a>
-							&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.FAX_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s6','d-tbl-s')" title='удалить факс'><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+							<a title='скачать tiff' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.FAX_FILE %]'><span class='icon-download3 fs0'></span></a>
+							<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.FAX_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s6','d-tbl-s')" title='удалить факс'><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3156,18 +3145,19 @@
 							[% END %]
 						</td>
 						<td align='center'>
-							<a title='сохранить схему' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/ext_backup/[% VBOX_PREF.ID %]?uniq=[% USER_CREDS.UNIQ | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='схема' /></a>
+							<a title='сохранить схему' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/ext_backup/[% VBOX_PREF.ID %]?uniq=[% USER_CREDS.UNIQ | html %]'><span class='icon-download3 fs0'></span></a>
 						</td>
 					</tr>
 
 					[% IF VBOX_PREF.TYPE eq '4' %]
 					<tr><td colspan='2'>&nbsp;</td></tr>
 					<tr>
-						<td align='left'><h4>Список компании ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ) :</h4></td>
-						<td align='right'>
-							<a title='Экспорт в Excel' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
-							&nbsp;&nbsp;&nbsp;
-							<a href='?action=dir_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')" title='удалить весь список сотрудников'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить все' /></a>
+						<td colspan='2' align='left'><h4>Список компании ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ) :</h4></td>
+					</tr>
+					<tr>
+						<td align='right' colspan='2'>
+							<a title='Экспорт в Excel' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
+							<a href='?action=dir_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')" title='удалить весь список сотрудников'><span class='icon-cross fs0'></span></a>
 						</td>
 					</tr>
 					<tr>
@@ -3176,36 +3166,35 @@
 							<tr>
 								<th>Имя и фамилия</th>
 								<th>Внутренний номер</th>
-								<th>Действия</th>
+								<th>&nbsp;</th>
 							</tr>
 							[% IF MSG_PREV ne '' %]
 							<tr>
 								<td align='left' colspan='7'>
-									<a title='предыдущая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+									<a title='предыдущая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>◄</span></a>
 								</td>
 							</tr>
 							[% END %]
 							[% FOREACH param = VB_DATA %]
 							<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-								<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+								<form method="post" action="[% CGI_URL %]" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 								<input type='hidden' name='action' value='dir_update'>
 								<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 								<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
 								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 								<td><input class='in_t0' type='text' name='name' value='[% param.NAME | html %]'></td>
-								<td><input class='in_t0' type='text' name='redir_to' value='[% param.REDIRECT_TO | html %]'></td>
-								<td align='left' nowrap='nowrap'>
-									<a href='?action=dir_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить данный пункт'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+								<td>
+									<input class='in_t0' type='text' name='redir_to' value='[% param.REDIRECT_TO | html %]'>
 									<script language="JavaScript">
 										exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 									</script>
-									&nbsp;
+								</td>
+								<td align='right' nowrap='nowrap'>
 									<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-										<script language='JavaScript'>
-											writeUpdateLinks( 'сохранить изменения' );
-										</script>
+										<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 										<noscript><input value='Сохранить изменения' type='submit'></noscript>
 									</span>
+									<a href='?action=dir_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить данный пункт'><span class='icon-bin fs0'></span></a>
 								</td>
 								</form>
 							</tr>
@@ -3213,7 +3202,7 @@
 							[% IF MSG_NEXT ne '' %]
 							<tr>
 								<td align='right' colspan='7'>
-									<a title='следующая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+									<a title='следующая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
 								</td>
 							</tr>
 							[% END %]
@@ -3257,7 +3246,7 @@
 			<tr>
 				<td colspan='2' align='left'><h4>Расписание:</h4></td>
 				<td align='right'>
-					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')" title='удалить все расписание'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить все' /></a>
+					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')" title='удалить все расписание'><span class='icon-cross fs0'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -3272,11 +3261,11 @@
 							<th>Месяц</th>
 							<th>Год</th>
 							<th>Внутренний номер</th>
-							<th>Действия</th>
+							<th>&nbsp;</th>
 						</tr>
 						[% FOREACH param = VB_DATA %]
 						<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-							<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+							<form method="post" action="[% CGI_URL %]" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 							<input type='hidden' name='action' value='schedule_update'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
@@ -3289,17 +3278,15 @@
 							<td><input class='in_t0' size='5'  name='month' type='text' value='[% param.MONTH | html %]'></td>
 							<td><input class='in_t0' size='9'  name='year' vtype='text' value='[% param.YEAR | html %]'></td>
 							<td><input class='in_t0' size='11'  name='redirect_to' type='text' value='[% param.REDIRECT_TO | html %]'></td>
-							<td align='left' nowrap='nowrap'>
-								<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить пункт расписания'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+							<td align='right' nowrap='nowrap'>
+								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+									<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+									<noscript><input value='Сохранить изменения' type='submit'></noscript>
+								</span>
 								<script language="JavaScript">
 									exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 								</script>
-								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-									<script language='JavaScript'>
-										writeUpdateLinks( 'сохранить изменения' );
-									</script>
-									<noscript><input value='Сохранить изменения' type='submit'></noscript>
-								</span>
+								<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить пункт расписания'><span class='icon-bin fs0'></span></a>
 							</td>
 							</form>
 						</tr>
@@ -3335,7 +3322,7 @@
 			<tr>
 				<td colspan='2' align='left'><h4>Расписание автонформатора:</h4></td>
 				<td align='right'>
-					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')" title='удалить все расписание'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить все' /></a>
+					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')" title='удалить все расписание'><span class='icon-cross fs0'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -3349,11 +3336,11 @@
 							<th>Месяц</th>
 							<th>Год</th>
 							<th>Режим</th>
-							<th>Действия</th>
+							<th>&nbsp;</th>
 						</tr>
 						[% FOREACH param = BLAST_SCHEDULE %]
 						<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-							<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+							<form method="post" action="[% CGI_URL %]" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 							<input type='hidden' name='action' value='schedule_update'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
@@ -3375,14 +3362,12 @@
 									[% END %]
 								</select> 
 							</td>
-							<td align='left' nowrap='nowrap'>
-								<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]','d-tbl-d1')" title='удалить пункт расписания'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+							<td align='right' nowrap='nowrap'>
 								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-									<script language='JavaScript'>
-										writeUpdateLinks( 'сохранить изменения' );
-									</script>
+									<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 									<noscript><input value='Сохранить изменения' type='submit'></noscript>
 								</span>
+								<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]','d-tbl-d1')" title='удалить пункт расписания'><span class='icon-bin fs0'></span></a>
 							</td>
 							</form>
 						</tr>
@@ -3419,9 +3404,8 @@
 			<tr>
 				<td colspan='2' align='left'><h4>Список 'Автоинформатор' ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ) :</h4></td>
 				<td align='right'>
-					<a title='Экспорт в Excel' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
-					&nbsp;&nbsp;&nbsp;
-					<a title='удалить весь список абонентов' href='?action=callblast_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')"><img border='0' src='/xvb/images/msg_delete.png' alt='удалить все' /></a>
+					<a title='Экспорт в Excel' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
+					<a title='удалить весь список абонентов' href='?action=callblast_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')"><span class='icon-cross fs0'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -3435,18 +3419,18 @@
 						<th>Статус</th>
 						<th>Длительность</th>
 						<th>Попытка</th>
-						<th>Действия</th>
+						<th>&nbsp;</th>
 					</tr>
 					[% IF MSG_PREV ne '' %]
 					<tr>
 						<td align='left' colspan='8'>
-							<a title='предыдущая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+							<a title='предыдущая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>◄</span></a>
 						</td>
 					</tr>
 					[% END %]
 					[% FOREACH param = VB_DATA %]
 					<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-						<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+						<form method="post" action="[% CGI_URL %]" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 						<input type='hidden' name='action' value='callblast_update'>
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 						<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
@@ -3470,14 +3454,12 @@
 						</td>
 						<td>[% param.DURATION | duration_str | html %]</td>
 						<td>[% param.ATTEMPT %]</td>
-						<td align='left' nowrap='nowrap'>
-							<a href='?action=callblast_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+						<td align='right' nowrap='nowrap'>
 							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-								<script language='JavaScript'>
-									writeUpdateLinks( 'сохранить изменения' );
-								</script>
+								<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 								<noscript><input value='Сохранить изменения' type='submit'></noscript>
 							</span>
+							<a href='?action=callblast_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><span class='icon-bin fs0'></span></a>
 						</td>
 						</form>
 					</tr>
@@ -3485,7 +3467,7 @@
 					[% IF MSG_NEXT ne '' %]
 					<tr>
 						<td align='right' colspan='8'>
-							<a title='следующая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+							<a title='следующая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3526,7 +3508,7 @@
 			<tr>
 				<td colspan='2' align='left'><h4>Список условий для `Перейти если`:</h4></td>
 				<td align='right'>
-					<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='Удалить все пункты `перейти если`'><img border='0' src='/xvb/images/msg_delete.png' alt='Удалить все пункты `перейти если`' /></a>
+					<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='Удалить все пункты `перейти если`'><span class='icon-cross fs0'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -3539,11 +3521,11 @@
 							<th>Условие</th>
 							<th>Значение</th>
 							<th>Внутренний номер</th>
-							<th>Действия</th>
+							<th>&nbsp;</th>
 						</tr>
 						[% FOREACH param = VB_DATA %]
 						<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-							<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+							<form method="post" action="[% CGI_URL %]" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 							<input type='hidden' name='action' value='gotoif_update'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
@@ -3572,17 +3554,15 @@
 							</td>
 							<td><input class='in_t0' size='15' name='var_value' type='text' value='[% param.VAR_VALUE | html %]'></td>
 							<td><input class='in_t0' size='11'  name='redirect_to' type='text' value='[% param.REDIRECT_TO | html %]'></td>
-							<td align='left' nowrap='nowrap'>
-								<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='удалить'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+							<td align='right' nowrap='nowrap'>
+								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+									<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+									<noscript><input value='Сохранить изменения' type='submit'></noscript>
+								</span>
 								<script language="JavaScript">
 									exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 								</script>
-								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-									<script language='JavaScript'>
-										writeUpdateLinks( 'сохранить изменения' );
-									</script>
-									<noscript><input value='Сохранить изменения' type='submit'></noscript>
-								</span>
+								<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='удалить'><span class='icon-bin fs0'></span></a>
 							</td>
 							</form>
 						</tr>
@@ -3630,11 +3610,9 @@
 			<tr>
 				<td colspan='2' align='left'><h4>Список 'Автоматического обзвона' ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ) :</h4></td>
 				<td align='right'>
-					<a title='Экспорт в Excel' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><img border='0' src='/xvb/images/excel.png' alt='excel' /></a>
-					&nbsp;&nbsp;&nbsp;
-					<a title='Сбросить статус в "wait/необработано" для всех' href='?action=multidialout_reset&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')"><img border='0' src='/xvb/images/msg_status.png' alt='сбросить статус для всех' /></a>
-					&nbsp;&nbsp;&nbsp;
-					<a title='удалить весь список абонентов' href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')"><img border='0' src='/xvb/images/msg_delete.png' alt='удалить все' /></a>
+					<a title='Сбросить статус в "wait/необработано" для всех' href='?action=multidialout_reset&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')"><span class='icon-loop2 fs0'></span></a>
+					<a title='Экспорт в Excel' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
+					<a title='удалить весь список абонентов' href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')"><span class='icon-cross fs0'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -3649,18 +3627,18 @@
 						<th>Длительность</th>
 						<th>Попытка</th>
 						<th>Примечание</th>
-						<th>Действия</th>
+						<th>&nbsp;</th>
 					</tr>
 					[% IF MSG_PREV ne '' %]
 					<tr>
 						<td align='left' colspan='8'>
-							<a title='предыдущая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+							<a title='предыдущая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>◄</span></a>
 						</td>
 					</tr>
 					[% END %]
 					[% FOREACH param = VB_DATA %]
 					<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-						<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,1)'>
+						<form method="post" action="[% CGI_URL %]" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 						<input type='hidden' name='action' value='multidialout_update'>
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 						<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
@@ -3685,14 +3663,12 @@
 						<td>[% param.DURATION | duration_str | html %]</td>
 						<td>[% param.ATTEMPT %]</td>
 						<td>[% param.CALL_NOTE %]</td>
-						<td align='left' nowrap='nowrap'>
-							<a href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><img border='0' src='/xvb/images/msg_delete.png' alt='удалить' /></a>&nbsp;
+						<td align='right' nowrap='nowrap'>
 							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-								<script language='JavaScript'>
-									writeUpdateLinks( 'сохранить изменения' );
-								</script>
+								<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 								<noscript><input value='Сохранить изменения' type='submit'></noscript>
 							</span>
+							<a href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить'><span class='icon-bin fs0'></span></a>
 						</td>
 						</form>
 					</tr>
@@ -3700,7 +3676,7 @@
 					[% IF MSG_NEXT ne '' %]
 					<tr>
 						<td align='right' colspan='9'>
-							<a title='следующая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='[% MSG_PREV %] &gt;=' /></a>
+							<a title='следующая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
 						</td>
 					</tr>
 					[% END %]

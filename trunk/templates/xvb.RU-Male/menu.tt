@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: menu.tt,v 1.19 2014/11/07 16:04:45 gosha Exp $ -->
+<!-- $Id: menu.tt,v 1.20 2015/01/07 09:04:47 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - main menu</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -33,6 +33,10 @@
 			
 	[% IF USER_CREDS.ROOT eq '0' %]
 			<li><a class='amenu' target='xvb_data' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>История звонков</a></li>
+			
+			[% IF USER_CREDS.ALLOW_CTR %]
+				<li><a class='amenu' target='xvb_data' href='?action=calls_list&uniq=[% USER_CREDS.UNIQ %]'>Текущие звонки</a></li>
+			[% END %]
 			
 			<li><a class='amenu' target='xvb_data' href='?action=cdr_list&need_chart=1&uniq=[% USER_CREDS.UNIQ %]'>Статистика АТС</a></li>
 

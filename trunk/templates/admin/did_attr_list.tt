@@ -25,7 +25,7 @@
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
 			<td align='right'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
 				[% INCLUDE version.tt %]
 			<td>
 		</tr>
@@ -46,14 +46,14 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='4'>
-				<a title='previous page' href='?action=did_attr_list&from=[% MSG_PREV %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=did_attr_list&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
 
 		[% FOREACH t = DIDS %]
 		<tr align='center' class='nocolor' id='d-tr-[% t.DID %]'>
-			<form method='post'>
+			<form method='post' id='f-[% t.DID %]' onSubmit='return xmlhttpPost(this,1)' action="">
 			<td><input class='in_t0' size='30' name='T_DID' type='text' value='[% t.DID | html %]'></td>
 			<td>
 				<select class='in_t0' name='T_LANG_ID'>
@@ -66,17 +66,15 @@
 					[% END %]
 				</select>
 			</td>
-			<td>
+			<td align='right'>
 				<input type='hidden' value='[% t.DID %]' name='data_id'>
 				<input type='hidden' value='did_attr_update' name='action'>
 				<input type='hidden' value='[% MSG_FROM %]' name='from'>
-				<a title='delete shared DID' href='?action=did_attr_del&did=[% t.DID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
 				<span class='in_t' id='in_t_id-[% t.DID %]'>
-				<script language='JavaScript'>
-					writeUpdateLinks( 'save changes' );
-				</script>
-				<noscript><input value='Change' type='submit'></noscript>
+					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% t.DID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+					<noscript><input value='Change' type='submit'></noscript>
 				</span>
+				<a title='delete shared DID' href='?action=did_attr_del&did=[% t.DID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
 			</td>
 			</form>
 			<td></td>
@@ -98,7 +96,7 @@
 			</td>
 			[% IF MSG_NEXT ne '' %]
 			<td align='right'>
-				<a title='next page' href='?action=did_attr_list&from=[% MSG_NEXT %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='next page' href='?action=did_attr_list&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
 			</td>
 			[% END %]
 		</tr>

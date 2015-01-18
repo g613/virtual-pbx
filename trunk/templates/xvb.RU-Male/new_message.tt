@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: new_message.tt,v 1.7 2014/07/04 13:47:02 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.8 2015/01/13 08:41:17 gosha Exp $ -->
 <!--SUBJECT:У Вас новое сообщение в ящике #[% _USER_VBOX.EXT_NUMBER | html %] от [% callerid | html %]:SUBJECT-->
 <!--!EMAIL_FROM:'Виртуальная АТС' <sa1es@virtuаl-pbx.ru>:EMAIL_FROM-->
 <head>
@@ -12,13 +12,6 @@
 </head>
 
 <body link=blue vlink=purple>
-<p align='left'>
-[% IF USER_CREDS.LOGO_HREF eq '' %]
-	<img border='0' src='[% CGI_SERVER %]/xvb/images/logo-small.png' alt='Virtual PBX' />
-[% ELSE %]
-	<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
-[% END %]
-</p>
 
 Здравствуйте,
 

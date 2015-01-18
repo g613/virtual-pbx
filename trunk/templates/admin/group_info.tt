@@ -25,7 +25,7 @@
 				[% INCLUDE main_menu.tt-inc-custom %]
 			</td>
 			<td align='right'>
-				<a href='/xvb/XVB-AI.pdf?a=msg_download'><img border='0' src='/xvb/images/help.png' alt='about' /></a>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
 				[% INCLUDE version.tt %]
 			<td>
 		</tr>
@@ -38,7 +38,7 @@
 				<h1>Group '<b>[% GROUP.GROUP_NAME | html %]</b>'</h1>
 			</td>
 			<td align='right'>
-				<a title='delete group' href='?action=group_del&group_id=[% GROUP.GROUP_ID %]' onclick="return DelConfirm('en')"><img border='0'  src='/xvb/images/vb_del.png' alt='del' /></a>
+				<a title='delete group' href='?action=group_del&group_id=[% GROUP.GROUP_ID %]' onclick="return DelConfirm('en')"><span class='icon-cross fs0'></span></a>
 			</td>
 		</tr>
 	</table>
@@ -246,6 +246,20 @@
 						</select>
 						</td>
 					</tr>
+					<tr>
+						<td>Enable Call Tracking: </td>
+						<td>
+						<select name="GR_ALLOW_CTR">
+						[% IF GROUP.ALLOW_CTR %]
+							<option value="1">yes</option>
+							<option value="0">no</option>
+						[% ELSE %]
+							<option value="0">no</option>
+							<option value="1">yes</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
 			</table>
 			</td>
 		</tr>
@@ -441,7 +455,7 @@
 						[% END %]
 					[% END %]
 				</select>
-				<a title='tarif info' href='?action=tariff_info&tariff_id=[% GROUP.TARIFF_ID %]'><img border='0'  src='/xvb/images/vb_edit.png' alt='tarif info' /></a>
+				<a title='tarif info' href='?action=tariff_info&tariff_id=[% GROUP.TARIFF_ID %]'><span class='icon-info fs0'></span></a>
 			</td>
 		</tr>
 		<tr>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.63 2014/12/22 06:00:23 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.66 2015/01/17 20:23:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -17,25 +17,25 @@
 </head>
 
 <body onLoad="XVBInit()">
+	<center>
+	
 	<table width='100%'>
 		<tr align='left'>
-			<td>
+			<td width='15%'>
+				<a href='?action=get_itunes_all&uniq=[% USER_CREDS.UNIQ %]' title="Podcasts"><span class='icon-podcast fs0'></span></a>
+				<a href='?action=get_rss_all&uniq=[% USER_CREDS.UNIQ %]' title="Rss"><span class='icon-feed3 fs0'></span></a>
+			</td>
+			<td align='center'>
+				<h1>All Messages</h1>
+			</td>
+			<td align='right' width='15%'>
 		[% IF USER_CREDS.ROOT eq '0' %]
-				<a href='?action=msg_cleanup&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to delete all messages?')">Delete messages</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href='?action=msg_cleanup&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to delete all messages?')" title='Delete all messages'><span class='icon-cross fs0'></span></a>
 		[% END %]
-				<a href='?action=get_rss_all&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Rss</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=get_itunes_all&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Itunes</a>
 			</td>
 		</tr>
 	</table>
 
-	<center>
-		
-	<h1>All Messages</h1>
-
-	<p>
 	<table width='100%'>
 		<tr>
 			<td align='right'>
@@ -101,9 +101,7 @@
 			</td>
 		</tr>
 	</table>
-	</p>
 
-	<p>
 	<table width='95%' id='d-tbl'>
 		[% IF MSG_LIST scalar %]
 		<tr>
@@ -121,7 +119,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='9'>
-				<a title='previous page' href='?action=msg_list_all&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&from=[% MSG_PREV %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_prev.png' alt='[% MSG_PREV %] &lt;=' /></a>
+				<a title='previous page' href='?action=msg_list_all&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&from=[% MSG_PREV %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -136,7 +134,7 @@
 			<td align='left'>
 				<a title='listen' 
 					onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen','[% msg.MSG_NUM %]' )"
-					href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
+					href="#"><span class='icon-volume-medium fs0'></span></a>
 			</td>
 			[% ELSE %]
 			<td align='center'>
@@ -154,11 +152,11 @@
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
 			<td>[% msg.DESCRIPTION | html %]</td>
 			<td nowrap='nowrap'>
-				<a title='delete message' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% msg.FILE_NAME %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+				<a title='delete message' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs0'></span></a>
 				[% IF msg.FILE_TYPE eq '30' %]
-					<a title='Mark message as OLD' href='?action=msg_status&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=40&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
+					<a title='Mark message as OLD' href='?action=msg_status&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=40&uniq=[% USER_CREDS.UNIQ %]'><span class='icon-loop2 fs0'></span></a>
 				[% ELSIF msg.FILE_TYPE eq '40' %]
-					<a title='Mark message as NEW' href='?action=msg_status&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=30&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_status.png' alt='status' /></a>
+					<a title='Mark message as NEW' href='?action=msg_status&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=30&uniq=[% USER_CREDS.UNIQ %]'><span class='icon-loop2 fs0'></span></a>
 				[% END %] 
 			</td>
 		</tr>
@@ -166,7 +164,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='9'>
-				<a title='next page' href='?action=msg_list_all&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&from=[% MSG_NEXT %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><img border='0'  src='/xvb/images/msg_next.png' alt='=&gt; [% MSG_NEXT %]' /></a>
+				<a title='next page' href='?action=msg_list_all&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&from=[% MSG_NEXT %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
 			</td>
 		[% ELSE %]
 			<td colspan='9'>&nbsp;</td>
@@ -184,7 +182,6 @@
 		</tr>
 		[% END %]
 	</table>
-	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
