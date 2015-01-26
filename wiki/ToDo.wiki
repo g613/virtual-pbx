@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='red'>ASR для company directory</font>
+
 <font color='green'>+ Игнорирование дубликатов при загрузке данных из csv для callblast/multidialout</font> ( 06.01.2015 / build 9220 )
 
 <font color='green'>+ "Подсветка" прослушанных сообщений</font> ( 03.01.2015 / build 9198 )
