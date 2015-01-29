@@ -3,7 +3,7 @@
 
 <font color='red'>- поиск по IP в фильтрах журнала</font>
 
-<font color='red'>+ ASR для company directory ( через <a href='https://console.developers.google.com'>Google</a> / <a href='https://developer.tech.yandex.ru/'>Yandex</font> ) </font> ( 28.01.2015 / build 9495 )
+<font color='red'>+ ASR для company directory ( через <a href='https://console.developers.google.com'>Google</a> / <a href='https://developer.tech.yandex.ru/'>Yandex</a> ) </font> ( 28.01.2015 / build 9495 )
 
 <font color='green'>+ Игнорирование дубликатов при загрузке данных из csv для callblast/multidialout</font> ( 06.01.2015 / build 9220 )
 
