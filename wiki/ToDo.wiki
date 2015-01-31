@@ -1,7 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- поиск по IP в фильтрах журнала</font>
+<font color='red'>- возможность локализации pi интерфейса</font>
+
+<font color='green'>+ поиск по IP в фильтрах журнала</font> ( 31.01.2015 / build 9510 )
 
 <font color='green'>+ ASR для company directory ( через <a href='https://console.developers.google.com'>Google</a> / <a href='https://developer.tech.yandex.ru/'>Yandex</a> ) </font> ( 28.01.2015 / build 9495 )
 
