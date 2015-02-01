@@ -1,7 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- возможность локализации pi интерфейса</font>
+<font color='red'>- хранить ip/useragent сип клиента после разрегистрации на vpbx</font>
+
+<font color='green'>+ возможность локализации pi интерфейса</font> ( 01.02.2015 / build 9515 )
 
 <font color='green'>+ поиск по IP в фильтрах журнала</font> ( 31.01.2015 / build 9510 )
 
