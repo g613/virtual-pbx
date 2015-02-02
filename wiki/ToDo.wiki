@@ -1,7 +1,9 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'>- хранить ip/useragent сип клиента после разрегистрации на vpbx</font>
+<font color='green'>+ добавление нескольких сип телефонов ( если номер теелефона 100-109 - добавятся 10 внутренних телефонов)</font> ( 02.01.2015 / build 9536 )
+
+<font color='green'>+ хранить ip/useragent сип клиента после разрегистрации на vpbx</font> ( 01.02.2015 / build 9530 )
 
 <font color='green'>+ возможность локализации pi интерфейса</font> ( 01.02.2015 / build 9515 )
 
