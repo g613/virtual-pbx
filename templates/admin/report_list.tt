@@ -59,8 +59,9 @@
 	<table width='98%' id='list-data'>
 		<tr>
 			<th>N</th>
-			<th>&nbsp;</th>
+			<th width='30px'>&nbsp;</th>
 			<th>Report name</th>
+			<th width='30px'>&nbsp;</th>
 			<th>Create date</th>
 			<th>Owner</th>
 			<th>Cache TTL</th>
@@ -69,7 +70,7 @@
 			
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='7'>
+			<td align='left' colspan='8'>
 				<a title='previous page' href='?action=reports_list&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
@@ -80,9 +81,13 @@
 			<td>[% t.ID %]</td>
 			<td>
 				<a title='get excel table' href='?action=report_run&report_id=[% t.ID %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
+			</td>
+			<td align='left'>
+				<a title='run report' href='?action=report_run&report_id=[% t.ID %]'>[% t.NAME | html %]</a>
+			</td>
+			<td>
 				<a title='edit report' href='?action=report_info&report_id=[% t.ID %]'><span class='icon-cogs fs0'></span></a>
 			</td>
-			<td align='left'><a title='run report' href='?action=report_run&report_id=[% t.ID %]'>[% t.NAME | html %]</a></td>
 			<td>[% t.CREATE_DATE %]</td>
 			<td>
 				[% IF t.TYPE eq '1' %]
@@ -99,7 +104,7 @@
 		[% END %]
 	
 		<tr>
-			<td align='left' colspan='3'>
+			<td align='left' colspan='4'>
 				<form method="post" onSubmit='return checkChanges(this)'>
 				&nbsp;
 				<input placeholder='Report name' size='20' name='R_NAME' type='text'>

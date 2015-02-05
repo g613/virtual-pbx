@@ -260,6 +260,23 @@
 						</select>
 						</td>
 					</tr>
+					<tr>
+						<td>ASR engine: </td>
+						<td>
+						<select name="GR_ASR_ENGINE">
+						[% IF GROUP.ASR_ENGINE eq "" %]
+							<option value="">none</option>
+						[% ELSIF GROUP.ASR_ENGINE eq "Google" %]
+							<option value="Google">Google</option>
+						[% ELSIF GROUP.ASR_ENGINE eq "Yandex" %]
+							<option value="Yandex">Yandex</option>
+						[% END %]
+							<option value="">none</option>
+							<option value="Google">Google</option>
+							<option value="Yandex">Yandex</option>
+						</select>
+						</td>
+					</tr>
 			</table>
 			</td>
 		</tr>

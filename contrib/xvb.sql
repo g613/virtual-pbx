@@ -376,8 +376,10 @@ create	table VPBX_GROUPS
 	MAX_CALL_DURATION			INT(10)	not null default 0,
 
 	PH_FEATURES					VARCHAR(255) not null default '*',
-	
+
 	HOOKS						VARCHAR(255) not null default '',
+
+	ASR_ENGINE					VARCHAR(16),
 
 	VBL_1 INT(10) not NULL default -1,
 	VBL_2 INT(10) not NULL default -1,
@@ -964,14 +966,14 @@ create	table VPBX_VBOXES_GC_EXPLORER
 
 create	table VPBX_VBOXES_DIRECTORY
 (
-	ID				INT(16)		    not null,
-	USE_FIRSTNAME	INT(1)			default 0,
-	USE_TTS_NAME	INT(1)			default 0,
+	ID					INT(16)		    not null,
+	USE_FIRSTNAME		INT(1)			default 0,
+	USE_TTS_NAME		INT(1)			default 0,
+	USE_VOICE_SEARCH	INT(1)			default 0,
+	KEY_LEN				INT(4)			not null default 3,
 
-	KEY_LEN			INT(4)			not null default 3,
-
-	DIR_LANG		INT(16)			not null default 0,
-	DIR_HELPEXT		VARCHAR(255),
+	DIR_LANG			INT(16)			not null default 0,
+	DIR_HELPEXT			VARCHAR(255),
 
 	unique(ID),
  
@@ -2525,6 +2527,9 @@ BEGIN
 	IF NEW.regseconds is not null THEN
 		IF NEW.regseconds > 0 THEN
 			SET NEW.REG_TIME = UNIX_TIMESTAMP();
+		ELSE
+			SET NEW.useragent = OLD.useragent;
+			SET NEW.ipaddr = OLD.ipaddr;
 		END IF;
 	END IF;
 END;
