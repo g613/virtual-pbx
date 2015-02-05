@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.286 2015/01/17 20:23:30 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.289 2015/01/31 20:23:23 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -687,33 +687,33 @@
 
 				[% IF VBOX_PREF.TYPE eq '4' %]
 				<tr>
-					<td>Use First name: </td>
+					<td>Search by : </td>
 					<td>
-						[% IF VBOX_PREF.USE_FIRSTNAME == '1' %]
-							<input name="USE_FIRSTNAME" type="radio" value="1" checked>
-						[% ELSE %]
-							<input name="USE_FIRSTNAME" type="radio" value="1">
-						[% END %]
-					</td>
-				</tr>
-				<tr>
-					<td>Use Last name: </td>
-					<td>
-						[% IF VBOX_PREF.USE_FIRSTNAME == '0' %]
-							<input name="USE_FIRSTNAME" type="radio" value="0" checked>
-						[% ELSE %]
-							<input name="USE_FIRSTNAME" type="radio" value="0">
-						[% END %]
-					</td>
-				</tr>
-				<tr>
-					<td>Use First or Last name: </td>
-					<td>
-						[% IF VBOX_PREF.USE_FIRSTNAME == '2' %]
-							<input name="USE_FIRSTNAME" type="radio" value="2" checked>
-						[% ELSE %]
-							<input name="USE_FIRSTNAME" type="radio" value="2">
-						[% END %]
+						<select name="USE_FIRSTNAME">
+							<option value="1"
+							[% IF VBOX_PREF.USE_FIRSTNAME == '1' %]
+								selected
+							[% END %]
+							>First name</option>
+							<option value="0"
+							[% IF VBOX_PREF.USE_FIRSTNAME == '0' %]
+								selected
+							[% END %]
+							>Last name</option>
+							<option value="2"
+							[% IF VBOX_PREF.USE_FIRSTNAME == '2' %]
+								selected
+							[% END %]
+							>First or Last name</option>
+				
+							[% IF USER_CREDS.ASR_ENGINE ne '' %]
+							<option value="3"
+							[% IF VBOX_PREF.USE_FIRSTNAME == '3' %]
+								selected
+							[% END %]
+							>First and Last name</option>
+							[% END %]
+						</select>
 					</td>
 				</tr>
 				[% IF USER_CREDS.TTS_GREETING ne '0' %]
@@ -724,6 +724,18 @@
 							<input name="USE_TTS_NAME" type="checkbox" checked>
 						[% ELSE %]
 							<input name="USE_TTS_NAME" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				[% END %]
+				[% IF USER_CREDS.ASR_ENGINE ne '' %]
+				<tr class='addon_info'>
+					<td>Use Voice Input: </td>
+					<td>
+						[% IF VBOX_PREF.USE_VOICE_SEARCH %]
+							<input name="USE_VOICE_SEARCH" type="checkbox" checked>
+						[% ELSE %]
+							<input name="USE_VOICE_SEARCH" type="checkbox">
 						[% END %]
 					</td>
 				</tr>
@@ -2829,12 +2841,14 @@
 							<td><input class='in_t0' size='7'  name='dayofmonth' type='text' value='[% param.DAYOFMONTH | html %]'></td>
 							<td><input class='in_t0' size='5'  name='month' type='text' value='[% param.MONTH | html %]'></td>
 							<td><input class='in_t0' size='9'  name='year' vtype='text' value='[% param.YEAR | html %]'></td>
-							<td><input class='in_t0' size='11'  name='redirect_to' type='text' value='[% param.REDIRECT_TO | html %]'></td>
-							<td align='left' nowrap='nowrap'>
-								<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete schedule item'><span class='icon-bin fs0'></span></a>
+							<td>
+								<input class='in_t0' size='11'  name='redirect_to' type='text' value='[% param.REDIRECT_TO | html %]'>
 								<script language="JavaScript">
 									exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
 								</script>
+							</td>
+							<td align='left' nowrap='nowrap'>
+								<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete schedule item'><span class='icon-bin fs0'></span></a>
 								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
 									<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 									<noscript><input value='change' type='submit'></noscript>
@@ -3103,12 +3117,14 @@
 								</select> 
 							</td>
 							<td><input class='in_t0' size='15' name='var_value' type='text' value='[% param.VAR_VALUE | html %]'></td>
-							<td><input class='in_t0' size='11'  name='redirect_to' type='text' value='[% param.REDIRECT_TO | html %]'></td>
-							<td align='left' nowrap='nowrap'>
-								<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete gotoif item'><span class='icon-bin fs0'></span></a>
+							<td>
+								<input class='in_t0' size='11'  name='redirect_to' type='text' value='[% param.REDIRECT_TO | html %]'>
 								<script language="JavaScript">
 									exten_icon( '[% param.REDIRECT_TO | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
 								</script>
+							</td>
+							<td align='left' nowrap='nowrap'>
+								<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete gotoif item'><span class='icon-bin fs0'></span></a>
 								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
 									<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 									<noscript><input value='change' type='submit'></noscript>

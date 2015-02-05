@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.19 2015/01/17 20:35:20 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.20 2015/02/02 15:42:33 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -45,9 +45,16 @@
 					&nbsp;
 					<input size='11' name='ua' type='text' placeholder='User agent' value='[% UA | html %]'>
 					&nbsp;
+					<select name="rst" id='rst_selector'>
+						<option value="" selected>reg status</option>
+						<option value="1">registered</option>
+						<option value="0">unregistered</option>
+					</select>
+					&nbsp;
 					<input type='hidden' value='phone_list' name='action'>
 					<input value='Search' type='submit'>
 				</form>
+				<script language='JavaScript'>setActiveSelector('rst_selector',"[% RST %]");</script>
 			</td>
 		</tr>
 	</table>
@@ -70,7 +77,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='9'>
-				<a title='previous page' href='?action=phone_list&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_PREV %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><span class='fs0'>◄</span></a>
+				<a title='previous page' href='?action=phone_list&rst=[% RST %]&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_PREV %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -125,7 +132,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='10'>
-				<a title='previous page' href='?action=phone_list&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_NEXT %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><span class='fs0'>►</span></a>
+				<a title='previous page' href='?action=phone_list&rst=[% RST %]&&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_NEXT %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
 		[% END %]

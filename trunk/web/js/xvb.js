@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.96 2015/01/14 15:15:42 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.97 2015/02/04 19:11:30 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -584,6 +584,18 @@ function setShadowAttr() {
 			if ( all_el[i].name != '' && all_el[i].onclick == null ) {
 				all_el[i].onclick = function() { this.blur(); this.form.onsubmit=false; this.form.submit };
 			}
+		}
+		
+		if ( all_el[i].tagName == 'INPUT' && all_el[i].type != 'checkbox' ) {
+               		all_el[i].onmouseover = function() { 
+					if ( this.value.length > this.size - 2 ) {
+						this.title = this.value;
+					} else {
+						this.title = '';
+					}
+				};
+		} else if ( all_el[i].tagName == 'TEXTAREA' ) {
+               		all_el[i].onmouseover = function() { this.title = this.value; };
 		}
 	}
 }

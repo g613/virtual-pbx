@@ -76,6 +76,7 @@ dialout-confirm : "To accept this call press 0, to decline this call press 7,  t
 directory-intro0 : "Welcome to the directory. Please enter the first three letters of your party's last name using your touch tone keypad. Use the 7 key for Q and the 9 key for Z"
 directory-intro1 : "Welcome to the directory. Please enter the first three letters of your party's first name using your touch tone keypad. Use the 7 key for Q and the 9 key for Z" 
 directory-intro2 : "Welcome to the directory. Please enter the first three letters of your party's first or last name using your touch tone keypad. Use the 7 key for Q and the 9 key for Z"
+directory-intro3 : "Welcome to the directory. Please enter first and last name using your touch tone keypad. Use the 7 key for Q and the 9 key for Z"
 directory-multi : "If this is the person you are looking for press 1 now, otherwise please press * to continue or # to go to the main menu."
 directory-nomatch : "No directory entries match your search."
 directory-nomore : "There are no more compatible entries in the directory. "

@@ -166,16 +166,15 @@ a.info:hover span{
 	position:absolute;
 	z-index:1;
 	top:2em;
-	left:15em;
+	left:8em;
 	width:30em;
-	border:1px solid #9eb9ff;
-	background-color:yellow;
+	border:1px solid #bababa;
+	background-color:#ffffcc;
 	color:#000;
 	text-align:justify;
 	font-size:12px;
 	font-weight:normal;
-	padding: 4px 4px 3px;
-	border-radius: 10px;
+	padding: 6px;
 	overflow:auto;
 }
 
@@ -197,14 +196,13 @@ a.l-info:hover span.l-info {
 	top:2em;
 	left:1em;
 	width:20em;
-	border:1px solid #9eb9ff;
-	background-color:yellow;
+	border:1px solid #bababa;
+	background-color:#ffffcc;
 	color:#000;
 	text-align:justify;
 	font-size:12px;
 	font-weight:normal;
-	padding: 4px 4px 3px;
-	border-radius: 10px;
+	padding: 6px;
 	overflow:auto;
 }
 
@@ -226,14 +224,13 @@ a.r-info:hover span.r-info {
 	top:2em;
 	left:-20em;
 	width:20em;
-	border:1px solid #9eb9ff;
-	background-color:yellow;
+	border:1px solid #bababa;
+	background-color:#ffffcc;
 	color:#000;
 	text-align:justify;
 	font-size:12px;
 	font-weight:normal;
-	padding: 4px 4px 3px;
-	border-radius: 10px;
+	padding: 6px;
 	overflow:auto;
 }
 /* End Tips */
@@ -256,15 +253,14 @@ a.help:hover span.help{
 	top:0em;
 	right:-33em;
 	width:35em;
-	border:1px solid #9eb9ff;
-	background-color:yellow;
+	border:1px solid #bababa;
+	background-color:#ffffcc;
 	color:#000;
 	text-align:justify;
 	font-size:12px;
 	font-weight:normal;
 	line-height:15px;
-	padding: 4px 4px 3px;
-	border-radius: 10px;
+	padding: 6px;
 	overflow:auto;
 }
 /* End Helps */

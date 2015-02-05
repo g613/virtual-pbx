@@ -87,6 +87,7 @@
 					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% p.ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 					<noscript><input value='change' type='submit'></noscript>
 				</span>
+				<a title='login to partner account' href='/pi?partner=[% p.NAME | html %]&password=[% p.PASSWORD | html %]'><span class='icon-enter fs0'></span></a>
 				<a title='delete partner account' href='?action=partner_del&partner_id=[% p.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
 			</td>
 			</form>
