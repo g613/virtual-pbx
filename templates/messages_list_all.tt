@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.66 2015/01/17 20:23:30 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.67 2015/03/13 16:02:52 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -163,22 +163,20 @@
 		[% END %]
 		<tr>
 		[% IF MSG_NEXT ne '' %]
-			<td align='right' colspan='9'>
+			<td align='right' colspan='10'>
 				<a title='next page' href='?action=msg_list_all&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&from=[% MSG_NEXT %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
 			</td>
-		[% ELSE %]
-			<td colspan='9'>&nbsp;</td>
 		[% END %]
 		</tr>
 		[% ELSE %]
 		<tr>
-			<td colspan='9'>&nbsp;</td>
+			<td colspan='10'>&nbsp;</td>
 		</tr>
 		<tr>
-			<td colspan='9' align='center'><h4>No messages</h4></td>
+			<td colspan='10' align='center'><h4>No messages</h4></td>
 		</tr>
 		<tr>
-			<td colspan='9'>&nbsp;</td>
+			<td colspan='10'>&nbsp;</td>
 		</tr>
 		[% END %]
 	</table>
