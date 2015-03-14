@@ -481,6 +481,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 %CORE_DIR/templates/*
 %CORE_DIR/doc/*.odt
 %CORE_DIR/contrib/xvb.sql
+%CORE_DIR/contrib/fail2ban/*
 %CORE_DIR/contrib/icecast.xml
 %CORE_DIR/contrib/spec-files/*.gz
 %CORE_DIR/etc/BOM-*.txt
@@ -521,7 +522,6 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*
 %CORE_DIR/contrib/odbc/*
-%CORE_DIR/contrib/fail2ban/*
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/recordings
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/tts
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/podcasts

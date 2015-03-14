@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.20 2015/01/17 20:23:31 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.21 2015/03/13 16:02:52 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Все сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -161,14 +161,14 @@
 		[% END %]
 		<tr>
 		[% IF MSG_NEXT ne '' %]
-			<td align='right' colspan='9'>
+			<td align='right' colspan='10'>
 				<a title='следующая страница ([% MSG_NEXT %])' href='?action=msg_list_all&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
 			</td>
 		[% END %]
 		</tr>
 		[% ELSE %]
 		<tr>
-			<td colspan='9' align='center'><h4>Сообщений нет</h4></td>
+			<td colspan='10' align='center'><h4>Сообщений нет</h4></td>
 		</tr>
 		[% END %]
 	</table>
