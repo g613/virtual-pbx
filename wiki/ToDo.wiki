@@ -1,6 +1,8 @@
 #labels Featured
 = ToDo list =
 
+<font color='green'>+ добавить метаинформацию в имя скаченного файла ( датав/ calle/called )</font> ( 14.03.2015 / build 9578 )
+
 <font color='green'>+ fail2ban для логов ui</font> ( 21.02.2015 / build 9559 )
 
 <font color='green'>+ фильтр по статусу телефона в ai</font> ( 04.02.2015 / build 9544 )
