@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.22 2015/01/17 21:26:30 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.23 2015/03/26 14:45:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -151,7 +151,7 @@
 				<input type='hidden' value='phone_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
-					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% p.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% p.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 					<noscript><input value='Сохранить изменеия' type='submit'></noscript>
 				</span>
 				<a title='удалить телефон' href='?action=phone_del&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% p.DATA_ID %]')"><span class='icon-bin fs0'></span></a>

@@ -91,7 +91,7 @@
 				<a title='sys status' href='?action=sysstatus&a=msg_download'><span class='icon-info fs0'></span></a>
 				<a title='delete node' href='?action=node_del&node_id=[% node.NODE_ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
                 <span class='in_t' id='in_t_id-[% node.NODE_ID %]'>
-					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% node.NODE_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% node.NODE_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 					<noscript><input value='Change' type='submit'></noscript>
                 </span>
 			</td>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: macros_list.tt,v 1.5 2015/01/13 08:41:17 gosha Exp $ -->
+<!-- $Id: macros_list.tt,v 1.6 2015/03/26 14:45:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Макросы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -37,7 +37,7 @@
 				<input type='hidden' value='macros_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<span class='addon_info' id='in_t_id-[% m.ID %]'>
-					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% m.ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% m.ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 					<noscript><input value='Сохранить измения' type='submit'></noscript>
 				</span>
 				<a title='удалить макрос' href='?action=macros_del&data_id=[% m.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% m.ID %]')"><span class='icon-bin fs0'></span></a>

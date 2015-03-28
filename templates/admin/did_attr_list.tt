@@ -71,7 +71,7 @@
 				<input type='hidden' value='did_attr_update' name='action'>
 				<input type='hidden' value='[% MSG_FROM %]' name='from'>
 				<span class='in_t' id='in_t_id-[% t.DID %]'>
-					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% t.DID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% t.DID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 					<noscript><input value='Change' type='submit'></noscript>
 				</span>
 				<a title='delete shared DID' href='?action=did_attr_del&did=[% t.DID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>

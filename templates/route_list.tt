@@ -129,7 +129,7 @@
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<a title='delete route' href='?action=route_del&data_id=[% r.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% r.DATA_ID %]')"><span class='icon-bin fs0'></span></a>
 				<span class='in_t' id='in_t_id-[% r.DATA_ID %]'>
-					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% r.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% r.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 					<noscript><input value='change' type='submit'></noscript>
 				</span>
 			</td>

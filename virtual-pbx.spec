@@ -473,6 +473,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 %attr(755,root,root) %CORE_DIR/contrib/utils/dashboard.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/ices2
 %attr(755,root,root) %CORE_DIR/contrib/utils/xvb-ctl
+%attr(755,root,root) %CORE_DIR/contrib/utils/db_data_cli.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/modtest.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/MemCached.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/rpm/*
