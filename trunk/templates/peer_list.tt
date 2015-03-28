@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.42 2015/01/17 20:35:20 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.43 2015/03/26 14:45:41 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -109,7 +109,7 @@
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<a title='delete peer' href='?action=peer_del&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% p.DATA_ID %]')"><span class='icon-bin fs0'></span></a>
 				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
-					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% p.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% p.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 					<noscript><input value='change' type='submit'></noscript>
 				</span>
 			</td>

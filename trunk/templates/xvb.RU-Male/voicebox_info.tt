@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.53 2015/01/26 18:54:38 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.54 2015/03/26 14:45:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -3205,7 +3205,7 @@
 								</td>
 								<td align='right' nowrap='nowrap'>
 									<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-										<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+										<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 										<noscript><input value='Сохранить изменения' type='submit'></noscript>
 									</span>
 									<a href='?action=dir_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить данный пункт'><span class='icon-bin fs0'></span></a>
@@ -3299,7 +3299,7 @@
 							</td>
 							<td align='right' nowrap='nowrap'>
 								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-									<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+									<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 									<noscript><input value='Сохранить изменения' type='submit'></noscript>
 								</span>
 								<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить пункт расписания'><span class='icon-bin fs0'></span></a>
@@ -3380,7 +3380,7 @@
 							</td>
 							<td align='right' nowrap='nowrap'>
 								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-									<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+									<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 									<noscript><input value='Сохранить изменения' type='submit'></noscript>
 								</span>
 								<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=[% param.DATA_ID | html %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]','d-tbl-d1')" title='удалить пункт расписания'><span class='icon-bin fs0'></span></a>
@@ -3472,7 +3472,7 @@
 						<td>[% param.ATTEMPT %]</td>
 						<td align='right' nowrap='nowrap'>
 							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-								<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+								<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 								<noscript><input value='Сохранить изменения' type='submit'></noscript>
 							</span>
 							<a href='?action=callblast_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><span class='icon-bin fs0'></span></a>
@@ -3577,7 +3577,7 @@
 							</td>
 							<td align='right' nowrap='nowrap'>
 								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-									<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+									<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 									<noscript><input value='Сохранить изменения' type='submit'></noscript>
 								</span>
 								<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='удалить'><span class='icon-bin fs0'></span></a>
@@ -3683,7 +3683,7 @@
 						<td>[% param.CALL_NOTE %]</td>
 						<td align='right' nowrap='nowrap'>
 							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-								<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+								<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 								<noscript><input value='Сохранить изменения' type='submit'></noscript>
 							</span>
 							<a href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить'><span class='icon-bin fs0'></span></a>

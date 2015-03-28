@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.289 2015/01/31 20:23:23 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.290 2015/03/26 14:45:41 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -2753,7 +2753,7 @@
 								</td>
 								<td align='right' nowrap='nowrap'>
 									<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-										<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+										<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 										<noscript><input value='change' type='submit'></noscript>
 									</span>
 									<a href='?action=dir_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete directory item'><span class='icon-bin fs0'></span></a>
@@ -2850,7 +2850,7 @@
 							<td align='left' nowrap='nowrap'>
 								<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete schedule item'><span class='icon-bin fs0'></span></a>
 								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-									<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+									<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 									<noscript><input value='change' type='submit'></noscript>
 								</span>
 							</td>
@@ -2928,7 +2928,7 @@
 						<td align='left' nowrap='nowrap'>
 							<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]','d-tbl-d1')" title='delete schedule item'><span class='icon-bin fs0'></span></a>
 							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-								<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+								<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 								<noscript><input value='change' type='submit'></noscript>
 							</span>
 						</td>
@@ -3021,7 +3021,7 @@
 						<td align='left' nowrap='nowrap'>
 							<a href='?action=callblast_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><span class='icon-bin fs0'></span></a>
 							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-								<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+								<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 								<noscript><input value='change' type='submit'></noscript>
 							</span>
 						</td>
@@ -3126,7 +3126,7 @@
 							<td align='left' nowrap='nowrap'>
 								<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete gotoif item'><span class='icon-bin fs0'></span></a>
 								<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-									<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+									<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 									<noscript><input value='change' type='submit'></noscript>
 								</span>
 							</td>
@@ -3231,7 +3231,7 @@
 						<td align='left' nowrap='nowrap'>
 							<a href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><span class='icon-bin fs0'></span></a>
 							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-								<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+								<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 								<noscript><input value='change' type='submit'></noscript>
 							</span>
 						</td>

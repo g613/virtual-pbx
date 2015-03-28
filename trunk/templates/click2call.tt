@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.16 2015/01/13 08:41:16 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.17 2015/03/26 14:45:41 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -58,7 +58,7 @@
 					stat_icon( '[% c2c.EXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'Click2Call', 'statistics' );
 				</script>
 				<span class='addon_info' id='in_t_id-[% c2c.ID %]'>
-					<a href='#' onclick="xmlhttpPost(document.getElementById('f-[% c2c.ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% c2c.ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 					<noscript><input value='change' type='submit'></noscript>
 				</span>
 			</td>
