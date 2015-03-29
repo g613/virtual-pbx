@@ -1,7 +1,7 @@
 #labels Featured
 = ToDo list =
 
-<font color='red'> !!!! [http://virtual-pbx.ru/changelog.html `ChangeLog` переехал] !!!</font>
+<font color='green'> !!!! [http://virtual-pbx.ru/changelog.html `ChangeLog` переехал] !!!</green>
 
 <font color='green'>+ добавить метаинформацию в имя скаченного файла ( датав/ calle/called )</font> ( 14.03.2015 / build 9578 )
 
