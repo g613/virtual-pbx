@@ -1,0 +1,1 @@
+Remove GA code from /opt/VirtualPBX/web/js/xvb-custom.js and /opt/VirtualPBX/web/js/xvb.js ( for old versions )
