@@ -1,14 +1,17 @@
 
-    XVB - VirtualPBX
-Multi Tenant PBX Platform
-(exported from code.google.com/p/virtual-pbx)
+    XVB - VirtualPBX ( http://virtual-pbx.ru/main.html )
 
-The virtual-pbx application is designed for processing incoming/outgoing calls in an isolated environment (numbered plan, routing calls, phones, cdrs, web gui and so forth. ) for multiple users.
+Multi Tenant PBX Platform
+
+
+The virtual-pbx application is designed for processing incoming/outgoing calls in an isolated 
+environment (numbered plan, routing calls, phones, cdrs, web gui and so forth. ) for multiple users.
 
 Main features:
 
     Processing incoming / outgoing calls.
-    Completely isolated environment for different users ( incoming / outgoing routes, dial plan, sip-endpoints, web-interface, cdrs, call-recordings, etc ).
+    Completely isolated environment for different users ( incoming / outgoing routes, 
+    dial plan, sip-endpoints, web-interface, cdrs, call-recordings, etc ).
     Custom greetings support.
     Email/Twitter notifications.
     Multiple language voice prompts.
@@ -74,3 +77,7 @@ Main features:
         Paging / Intercom
         Play DTMF Tones
         MultiDialout
+
+
+
+(exported from code.google.com/p/virtual-pbx)
