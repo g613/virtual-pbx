@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.84 2015/03/13 16:02:52 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.85 2015/05/13 14:52:02 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -47,6 +47,7 @@
 							align: "TL",
 							electric: false,
 							singleClick: false,
+							xdate: "00:00",
 							button: ".next()"
 						});
 				});
@@ -62,6 +63,7 @@
 							align: "TL",
 							electric: false,
 							singleClick: false,
+							xdate: "23:59",
 							button: ".next()"
 						});
 				});

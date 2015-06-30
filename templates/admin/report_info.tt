@@ -64,6 +64,7 @@
 							align: "TL",
 							electric: false,
 							singleClick: false,
+							xdate: "00:00",
 							button: ".next()"
 						});
 				});
@@ -79,6 +80,7 @@
 							align: "TL",
 							electric: false,
 							singleClick: false,
+							xdate: "23:59",
 							button: ".next()"
 						});
 				});
@@ -99,17 +101,17 @@
 
 	<p>
 	<table width='90%' class='report_data'>
-		<form method="post" onSubmit='return checkChanges(this)'>
+		<form enctype="multipart/form-data" method="post" onSubmit='return checkChanges(this)'>
 		<tr>
 			<td>Create date: </td>
 			<td>[% REPORT_DATA.CREATE_DATE %]</td>
-			<td rowspan='7' valign='midle' align='center'>
+			<td rowspan='8' valign='midle' align='center'>
 				<p align='left'>SQL query:</p>
-				<textarea rows='16' cols='60' name='R_QUERY'>[% REPORT_DATA.QUERY | html %]</textarea>
-				<br />
-				<input type='hidden' value='report_update' name='action'>
-				<input type='hidden' value='[% REPORT_DATA.ID %]' name='report_id'>
-				<input type='submit' value='Save changes'>
+				<textarea rows='16' cols='45' name='R_QUERY'>[% REPORT_DATA.QUERY | html %]</textarea>
+			</td>
+			<td rowspan='8' valign='midle' align='center'>
+				<p align='left'>Post filter:</p>
+				<textarea rows='16' cols='45' name='R_POST_FILTER'>[% REPORT_DATA.POST_FILTER | html %]</textarea>
 			</td>
 		</tr>
 		<tr>
@@ -145,6 +147,19 @@
 			<td>SQL file: </td>
 			<td>
 				<input type='file' name='R_FILE'>
+			</td>
+		</tr>
+		<tr>
+			<td>Filter file: </td>
+			<td>
+				<input type='file' name='R_FILTER_FILE'>
+			</td>
+		</tr>
+		<tr>
+			<td colspan='3' align='center'>
+				<input type='hidden' value='report_update' name='action'>
+				<input type='hidden' value='[% REPORT_DATA.ID %]' name='report_id'>
+				<input type='submit' value='Save changes'>
 			</td>
 		</tr>
 		</form>

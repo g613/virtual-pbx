@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.54 2015/03/26 14:45:42 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.57 2015/05/13 15:34:44 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -110,9 +110,7 @@
 					<ul>
 						<li><b>*9</b> - для трансфера звонка</li>
 						<li><b>*8</b> - для парковки звонка</li>
-						[% IF ASTERISK_VERSION eq '18' %]
 						<li><b>*4XXX</b> - изменение тембра голоса</li>
-						[% END %]
 						<li><b>*3XX</b> - фоновая музыка \ звуки</li>
 							<ul>
 								<li><b>01</b> - мяч</li>
@@ -183,9 +181,7 @@
 					<ul>
 						<li><b>*9</b> - для трансфера звонка</li>
 						<li><b>*8</b> - для парковки звонка</li>
-						[% IF ASTERISK_VERSION eq '18' %]
 						<li><b>*4XXX</b> - изменение тембра голоса</li>
-						[% END %]
 						<li><b>*3XX</b> - фоновая музыка \ звуки</li>
 							<ul>
 								<li><b>01</b> - мяч</li>
@@ -526,7 +522,6 @@
 						<input size='4' name="VOLUME_TX" value="[% VBOX_PREF.VOLUME_TX | html %]" type="text">
 					</td>
 				</tr>
-				[% IF ASTERISK_VERSION eq '18' %]
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Тембр голоса Вх/Исх:<span>
 						Допустимые значения от 0.1 ( низкий тембр ) до 4 ( высокий тембр )
@@ -538,10 +533,6 @@
 						<input size='4' name="PITCH_TX" value="[% VBOX_PREF.PITCH_TX | html %]" type="text">
 					</td>
 				</tr>
-				[% ELSE %]
-					<input name="PITCH_RX" value="[% VBOX_PREF.PITCH_RX | html %]" type="hidden">
-					<input name="PITCH_TX" value="[% VBOX_PREF.PITCH_TX | html %]" type="hidden">
-				[% END %]
 				<tr class='addon_info'><td colspan='2'>&nbsp;</td></tr>
 
 				[% IF VBOX_PREF.TYPE eq '1' %]
@@ -1390,18 +1381,6 @@
 					[% END %]
 					</td>
 				</tr>
-				[% IF ASTERISK_VERSION ne '18' %]
-				<tr class='addon_info'>
-					<td>Режим 'шпиона':</td>
-					<td>
-						[% IF VBOX_PREF.SPY_MODE %]
-							<input name="SPY_MODE" type="checkbox" checked>
-						[% ELSE %]
-							<input name="SPY_MODE" type="checkbox">
-						[% END %]
-					</td>
-				</tr>
-				[% END %]
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '12' %]
@@ -1889,6 +1868,18 @@
 							<input name="START_AFTER_CHANGE" type="checkbox" checked>
 						[% ELSE %]
 							<input name="START_AFTER_CHANGE" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr>
+					<td><a href='#' class='info'>Записать ответ: <span>
+						При установке данного флага система будет вести запись каналов во время проигрывания приветствия абоненту.
+					</span></a></td>
+					<td>
+						[% IF VBOX_PREF.RECORD_CALL %]
+							<input name="RECORD_CALL" type="checkbox" checked>
+						[% ELSE %]
+							<input name="RECORD_CALL" type="checkbox">
 						[% END %]
 					</td>
 				</tr>

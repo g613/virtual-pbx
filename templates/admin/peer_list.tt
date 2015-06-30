@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.21 2015/03/26 14:45:41 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.22 2015/05/26 14:54:59 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -75,7 +75,7 @@
 			<th>User</th>
 			<th>CallerID</th>
 			<th>DTMF mode</th>
-			<th colspan='2'>Need regs</th>
+			<th colspan='2'>Incoming calls</th>
 			<th>&nbsp;</th>
 		</tr>
 		
@@ -98,12 +98,14 @@
 			<td>[% p.username | html %]</td>
 			<td>[% p.fromuser | html %]</td>
 			<td>[% p.dtmfmode | html %]</td>
+			
+			<form method='post' id='f-[% p.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)' action="">
 			<td>
-			[% IF p.NEED_REG eq '1' %]
-				yes
-			[% ELSE %]
-				no
-			[% END %]
+				<input class='in_t0' name='need_reg' type='checkbox' title='Incoming calls'
+				[% IF p.NEED_REG eq '1' %]
+				checked 
+				[% END %]
+				/>
 			</td>
 			<td>
 			[% IF p.REG_DATA %]
@@ -122,7 +124,6 @@
 
 			<td nowrap='nowrap'>
 
-			<form method='post' id='f-[% p.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)' action="">
 				<input class='in_t0' name='PBXMODE' type='checkbox' title='PBX MODE'
 				[% IF p.setvar contain 'PBXMODE=1' %]
 				checked 
@@ -132,13 +133,12 @@
 				<input type='hidden' value='pbx_mode_update' name='action'>
 				<input type='hidden' name='user_id' value='[% p.SUBSCR_ID %]'>
 				<input type='hidden' name='host' value='[% p.host | html %]'>
-				<input type='hidden' name='need_reg' value='[% p.NEED_REG | html %]'>
 				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
 					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% p.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 					<noscript><input value='change' type='submit'></noscript>
 				</span>
-			</form>
 			</td>
+			</form>
 		</tr>
 		[% END %]
 	

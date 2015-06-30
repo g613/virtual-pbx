@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.21 2015/03/13 16:02:52 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.22 2015/05/13 14:52:02 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Все сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -48,6 +48,7 @@
 							align: "TL",
 							electric: false,
 							singleClick: false,
+							xdate: "00:00",
 							button: ".next()"
 						});
 				});
@@ -63,6 +64,7 @@
 							align: "TL",
 							electric: false,
 							singleClick: false,
+							xdate: "23:59",
 							button: ".next()"
 						});
 				});

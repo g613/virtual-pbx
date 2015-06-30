@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.97 2015/02/04 19:11:30 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.101 2015/06/18 15:21:19 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -397,6 +397,7 @@ function ShowPlayer( file, msg_id ) {
 		current_url = window.location.href;
 		history.replaceState({},"",hist_url);
 		history.replaceState({},"",current_url);
+		document.getElementById('msg'+msg_id).className = 'msgread';
 	}
 
 	div_id.innerHTML = player_data;
@@ -668,6 +669,7 @@ function cdrfilters( element_id, col_num ) {
 					var new_str = data.replace(re, download_file_url);
 					if ( data != new_str ) {
 						td_obj[col_num].innerHTML = new_str;
+						data = new_str;
 					}
 				}
 				// CALLID pattern ( Callback / AlarmClock )
@@ -1168,8 +1170,14 @@ function getTimePeriod(lang,period) {
 		} else if ( period == 'd60' ) {
 			period = 'Длительность (минуты)';
 			group_by = 'd60';
+		} else if ( period == 'cst' ) {
+			period = 'Статус звонка';
+			group_by = 'cst';
+		} else if ( period == '6pref' ) {
+			period = 'Префикс номера (6)';
+			group_by = '6pref';
 		} else {
-			period = 'группировать по';
+			period = 'группировать по...';
 		}
 	} else {
 		if ( period == '%Y-%m-%d' ) {
@@ -1217,8 +1225,14 @@ function getTimePeriod(lang,period) {
 		} else if ( period == 'd60' ) {
 			period = 'Duration (minutes)';
 			group_by = 'd60';
+		} else if ( period == 'cst' ) {
+			period = 'Call status';
+			group_by = 'cst';
+		} else if ( period == '6pref' ) {
+			period = 'DID prefix (6)';
+			group_by = '6pref';
 		} else {
-			period = 'group by';
+			period = 'group by...';
 		}
 	}
 

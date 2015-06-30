@@ -51,6 +51,7 @@
 							align: "TL",
 							electric: false,
 							singleClick: false,
+							xdate: "00:00",
 							button: ".next()"
 						});
 				});
@@ -66,6 +67,7 @@
 							align: "TL",
 							electric: false,
 							singleClick: false,
+							xdate: "23:59",
 							button: ".next()"
 						});
 				});
@@ -126,7 +128,13 @@
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
 			<td><a title='call detail' href='?action=cdr_list&call_id=[% msg.CALL_ID %]'>[% msg.CDR_DATE | html %]</a></td>
-			<td align='right'>[% msg.CALLER_ID | html %]</td>
+			[% IF msg.DATA contain 'STATUS=ANSWER' %]
+				<td align='right'>[% msg.CALLER_ID | html %]</td>
+			[% ELSIF msg.DATA contain 'STATUS=' %]
+				<td align='right' class='warning-font'>[% msg.CALLER_ID | html %]</td>
+			[% ELSE %]
+				<td align='right'>[% msg.CALLER_ID | html %]</td>
+			[% END %]
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td align='right'>[% msg.COST %] ([% msg.DESCRIPTION %])</td>
 			<td align='right'>[% msg.CALLED_ID | html %]</td>

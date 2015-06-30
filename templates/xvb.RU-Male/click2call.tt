@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.16 2015/03/26 14:45:42 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.17 2015/05/13 14:52:02 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -12,9 +12,6 @@
 	[% END %]
 	<script language='Javascript' src='/xvb/js/base64.js'></script>
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
-	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
-	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
 	<script language="JavaScript">
 		var e_list = [];
 		[% FOREACH vb = VB_LIST %]

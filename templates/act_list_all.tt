@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list_all.tt,v 1.7 2015/01/17 20:03:57 gosha Exp $ -->
+<!-- $Id: act_list_all.tt,v 1.8 2015/05/13 14:52:02 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - activity - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -35,6 +35,7 @@
 							align: "TL",
 							electric: false,
 							singleClick: false,
+							xdate: "00:00",
 							button: ".next()"
 						});
 				});
@@ -50,6 +51,7 @@
 							align: "TL",
 							electric: false,
 							singleClick: false,
+							xdate: "23:59",
 							button: ".next()"
 						});
 				});

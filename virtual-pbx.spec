@@ -302,6 +302,7 @@ mkdir -p /var/log/VirtualPBX/backup
 touch /var/log/VirtualPBX/XVB.log
 touch /var/log/VirtualPBX/XVB.stderr
 touch /var/log/VirtualPBX/XVB.cdr
+touch /var/log/VirtualPBX/XVB.secure
 chown -R asterisk.asterisk /var/log/VirtualPBX || true
 
 # updates

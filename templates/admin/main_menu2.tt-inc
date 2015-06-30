@@ -21,6 +21,8 @@
 				|
 				<a href='?action=cdr_list'>CDRs</a>
 				|
+				<a href='?action=cdr_list&need_chart=1'>Statistics</a>
+				|
 				<a href='?action=j_list'>Journals</a>
 				|
 				<a href='?action=phone_list'>SIP phones</a>

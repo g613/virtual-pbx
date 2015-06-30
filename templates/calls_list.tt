@@ -1,0 +1,113 @@
+<html>
+<!-- $Id: calls_list.tt,v 1.10 2015/01/17 20:03:57 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Live calls - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	[% IF CDR_REFRESH_TIME %]
+	<meta http-equiv="refresh" content="[% CDR_REFRESH_TIME %]">
+	[% END %]
+</head>
+
+<body>
+	<center>
+
+	<h1>Live calls</h1>
+
+	<table width='100%'>
+		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+		<tr align='right'>
+			<td width='100%'>
+				<input type='hidden' name='c2c' value='[% CDR_C2C %]'>
+				<input name='action' value='calls_list' type='hidden'>
+				<input size='10' type='text' placeholder='Refresh' name='refresh' value='[% CDR_REFRESH_TIME %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Caller' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Called' name='called_id' value='[% CDR_CALLED_ID | html %]'>
+				&nbsp;
+				<input size='8' type='text' placeholder='Duration' name='duration' value='[% CDR_DURATION | html %]'>
+				&nbsp;
+				<select name="call_type" id="call_type_selector">
+					<option value="" selected>all calls</option>
+					<option value="incoming">incoming</option>
+					<option value="local">local</option>
+					<option value="transit">transit</option>
+					<option value="internal">internal</option>
+					<option value="callback">callback</option>
+					<option value="callblast">callblast</option>
+					<option value="click2call">click2call</option>
+					<option value="alarmclock">alarmclock</option>
+					<option value="service">service</option>
+				</select>
+				&nbsp;
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input value='Search' type='submit'>
+			</td>
+		</tr>
+		</form>
+		<script language='JavaScript'>
+			setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");
+		</script>
+	</table>
+
+	<p>
+	<table width='100%' id='d-tbl'>
+		<tr>
+			<th>Type</th>
+			<th>Start Date</th>
+			<th>Caller ID</th>
+			<th>Called NUM</th>
+			<th>Call duration</th>
+			<th>Extension</th>
+			<th>Duration</th>
+			<th>&nbsp;</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='8'>
+				<a title='previous page' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH msg = CALLS_LIST %]
+		<tr class='nocolor' align='center'>
+			<td>[% msg.CALL_TYPE | html %]</td>
+			<td><a title='call detail' href='?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
+			<td>[% msg.CALLER_ID | html %]</td>
+			<td>[% msg.CALLED_ID | html %]</td>
+			<td>[% msg.CDR_DURATION | duration_str %]</td>
+			<td>[% msg.EXT_ID | html %]</td>
+			<td>[% msg.EXT_TS | duration_str %]</td>
+			<td>
+				[% IF CDR_C2C %]
+					<a title='Listen' href='https://[% msg.NODE_IP %]/c2c?dlm=,&message=Please%20wait%20a%20call&ph=XVBSPY&user_vars=XVB_CHAN=[% msg.CALL_ID %],AST_CHAN=[% msg.AST_ID | htmlstrict %][% CDR_C2C %]'><span class='icon-phone fs0'></span></a>
+				[% END %]
+				<a title='Hangup' href='https://[% msg.NODE_IP %]/ui?action=calls_hangup&uniq=[% USER_CREDS.UNIQ %]&call_id=[% msg.CALL_ID | html %]' onclick="return DelConfirm('en')"><span class='icon-cancel-circle fs0'></span></a>
+			</td>
+		</tr>
+		[% END %]
+
+		<tr>
+		[% IF MSG_NEXT ne '' %]
+			<td align='right' colspan='8'>
+				<a title='next page' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]'><span class='fs0'>►</span></a>
+			</td>
+		[% END %]
+		</tr>
+	</table>
+	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+	
+	</center>
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
+	

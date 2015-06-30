@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.290 2015/03/26 14:45:41 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.293 2015/05/13 15:34:44 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -106,9 +106,7 @@
 						<ul>
 							<li><b>*9</b> - For call transfer</li>
 							<li><b>*8</b> - For call parking</li>
-							[% IF ASTERISK_VERSION eq '18' %]
 							<li><b>*4XXX</b> - Pitch control</li>
-							[% END %]
 							<li><b>*3XX</b> - Background Music</li>
 							<ul>
 								<li><b>01</b> - Ball Game</li>
@@ -178,9 +176,7 @@
 						<ul>
 							<li><b>*9</b> - For call transfer</li>
 							<li><b>*8</b> - For call parking</li>
-							[% IF ASTERISK_VERSION eq '18' %]
 							<li><b>*4XXX</b> - Pitch control</li>
-							[% END %]
 							<li><b>*3XX</b> - Background Music</li>
 							<ul>
 								<li><b>01</b> - Ball Game</li>
@@ -418,7 +414,6 @@
 					<input size='4' name="VOLUME_TX" value="[% VBOX_PREF.VOLUME_TX | html %]" type="text">
 				</td>
 			</tr>
-			[% IF ASTERISK_VERSION eq '18' %]
 			<tr class='addon_info'>
 				<td>Pitch control RX/TX:</td>
 				<td>
@@ -427,10 +422,6 @@
 					<input size='4' name="PITCH_TX" value="[% VBOX_PREF.PITCH_TX | html %]" type="text">
 				</td>
 			</tr>
-			[% ELSE %]
-				<input name="PITCH_RX" value="[% VBOX_PREF.PITCH_RX | html %]" type="hidden">
-				<input name="PITCH_TX" value="[% VBOX_PREF.PITCH_TX | html %]" type="hidden">
-			[% END %]
 			<tr class='addon_info'><td colspan='2'>&nbsp;</td></tr>
 			
 			[% IF VBOX_PREF.TYPE eq '1' %]
@@ -1143,18 +1134,6 @@
 					[% END %]
 					</td>
 				</tr>
-				[% IF ASTERISK_VERSION ne '18' %]
-				<tr class='addon_info'>
-					<td>Spy mode:</td>
-					<td>
-						[% IF VBOX_PREF.SPY_MODE %]
-							<input name="SPY_MODE" type="checkbox" checked>
-						[% ELSE %]
-							<input name="SPY_MODE" type="checkbox">
-						[% END %]
-					</td>
-				</tr>
-				[% END %]
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '12' %]
@@ -1562,6 +1541,16 @@
 							<input name="START_AFTER_CHANGE" type="checkbox" checked>
 						[% ELSE %]
 							<input name="START_AFTER_CHANGE" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Record answer: </td>
+					<td>
+						[% IF VBOX_PREF.RECORD_CALL %]
+							<input name="RECORD_CALL" type="checkbox" checked>
+						[% ELSE %]
+							<input name="RECORD_CALL" type="checkbox">
 						[% END %]
 					</td>
 				</tr>

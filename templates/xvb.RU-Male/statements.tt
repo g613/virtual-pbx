@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.6 2015/01/13 08:41:17 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.7 2015/06/16 16:14:14 gosha Exp $ -->
 <!--SUBJECT:VirtualPBX - отчет за день:SUBJECT-->
 <head>
 	<BASE href='[% CGI_SERVER %]'>
@@ -26,6 +26,9 @@
 		font-size:12px;
 		padding:5px 5px 5px 5px;
     	border: 1px solid white;
+	}
+	.warning-font {
+		color:red;
 	}
 	</style>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -120,7 +123,11 @@
 		[% FOREACH msg = CALLS %]
 		<tr align='center'>
 			<td>[% msg.CDR_DATE | html %]</td>
-			<td>[% msg.CALLER_ID | html %]</td>
+			[% IF msg.DATA contain 'STATUS=ANSWER' %]
+				<td align='right'>[% msg.CALLER_ID | html %]</td>
+			[% ELSE %]
+				<td align='right' class='warning-font'>[% msg.CALLER_ID | html %]</td>
+			[% END %]
 			<td>[% msg.CALLED_ID | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td>[% msg.CALL_TYPE | locale_msg %]</td>
@@ -140,7 +147,11 @@
 		[% FOREACH msg = CALLS %]
 		<tr align='center'>
 			<td>[% msg.CDR_DATE | html %]</td>
-			<td>[% msg.CALLER_ID | html %]</td>
+			[% IF msg.DATA contain 'STATUS=ANSWER' %]
+				<td align='right'>[% msg.CALLER_ID | html %]</td>
+			[% ELSE %]
+				<td align='right' class='warning-font'>[% msg.CALLER_ID | html %]</td>
+			[% END %]
 			<td>[% msg.CALLED_ID | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td>[% msg.CALL_TYPE | locale_msg %]</td>

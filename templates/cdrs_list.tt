@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.46 2015/01/17 20:03:57 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.49 2015/06/21 11:01:08 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -34,6 +34,7 @@
 							align: "TL",
 							electric: false,
 							singleClick: false,
+							xdate: "00:00",
 							button: ".next()"
 						});
 				});
@@ -49,6 +50,7 @@
 							align: "TL",
 							electric: false,
 							singleClick: false,
+							xdate: "23:59",
 							button: ".next()"
 						});
 				});
@@ -110,7 +112,13 @@
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
 			<td><a title='call detail' href='?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
-			<td align='right'>[% msg.CALLER_ID | html %]</td>
+			[% IF msg.DATA contain 'STATUS=ANSWER' %]
+				<td align='right'>[% msg.CALLER_ID | html %]</td>
+			[% ELSIF msg.DATA contain 'STATUS=' %]
+				<td align='right' class='warning-font'>[% msg.CALLER_ID | html %]</td>
+			[% ELSE %]
+				<td align='right'>[% msg.CALLER_ID | html %]</td>
+			[% END %]
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td align='right'>[% msg.COST %] ([% msg.DESCRIPTION %])</td>
 			<td align='right'>[% msg.CALLED_ID | html %]</td>
@@ -146,7 +154,11 @@
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
 			<td><a title='call detail' href='?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
-			<td>[% msg.CALLER_ID | html %]</td>
+			[% IF msg.DATA contain 'STATUS=ANSWER' %]
+				<td align='right'>[% msg.CALLER_ID | html %]</td>
+			[% ELSE %]
+				<td align='right' class='warning-font'>[% msg.CALLER_ID | html %]</td>
+			[% END %]
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td>[% msg.CALLED_ID | html %]</td>
 			<td>[% msg.CALL_TYPE | html %]</td>

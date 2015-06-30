@@ -1,0 +1,131 @@
+<html>
+<!-- $Id: cdrs_chart.tt,v 1.1 2015/06/18 15:21:19 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - statistics</title>
+
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
+
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+	<h1>Statistics ( [% CDR_HEADER %] )</h1>
+
+	<table width='100%'>
+		<script language='JavaScript'>
+			var time_period = getTimePeriod( 'en', '[% CDR_PERIOD %]' );
+			var period = time_period.period;
+			var group_by = time_period.group_by;
+		</script>
+		<tr align='left'>
+			<td align='right'>
+				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "00:00",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<button type="button">...</button>
+				&nbsp;
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "23:59",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<button type="button">...</button>
+				<input name='action' value='cdr_list' type='hidden'>
+				&nbsp;
+				<input placeholder='Caller' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				&nbsp;
+				<input placeholder='Called' size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]'>
+				&nbsp;
+				<input size='8' type='text' placeholder='Duration' name='duration' value='[% CDR_DURATION | html %]'>
+				&nbsp;
+				<input placeholder='Data' size='15' type='text' name='data' value='[% CDR_DATA | html %]'>
+				&nbsp;
+				<select name="call_type" id='call_type_selector'>
+					<option value="" selected>all calls</option>
+					<option value="incoming">incoming</option>
+					<option value="local">local</option>
+					<option value="transit">transit</option>
+					<option value="internal">internal</option>
+					<option value="callback">callback</option>
+					<option value="callblast">callblast</option>
+					<option value="click2call">click2call</option>
+					<option value="alarmclock">alarmclock</option>
+					<option value="service">service</option>
+				</select>
+				&nbsp;
+				<select name='chart_group_period' id='gb_type_selector'>
+					<option value=''>group by...</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='did'>DID</option><option value='cid'>CallerID</option><option value='ct'>call type</option><option value='d10'>duration / 10 sec</option><option value='d30'>duration / 30 sec</option><option value='d60'>duration / 60 sec</option><option value='cst'>call status</option><option value='6pref'>DID prefix (6)</option>
+				</select>
+				&nbsp;
+				<input name='need_chart' value='1' type='hidden'>
+				<input value='Search' type='submit'>
+				</form>
+				<script language='JavaScript'>
+					setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");
+					setActiveSelector('gb_type_selector',group_by);
+				</script>
+			</td>
+		</tr>
+	</table>
+	
+	[% IF CDR_LIST scalar %]
+	<script language='JavaScript'>
+		var graphx=new Array();
+		graphx[0] = [ period, 'Calls', 'Minutes', 'Minutes AVG', 'Cost' ];
+		var ind = 1;
+		[% FOREACH msg = CDR_LIST %]
+			graphx[ind] = [ '[% msg.PERIOD | html %]', [% msg.CNT | html %], [% msg.DURATION %], [% msg.AVG %], [% msg.USER_COST %] ];
+			ind = ind+1;
+		[% END %]
+		graphit(graphx,200)
+	</script>
+	[% ELSE %]
+		No records
+	[% END %]
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</html>
+	
