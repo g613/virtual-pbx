@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.43 2015/03/26 14:45:41 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.46 2015/07/14 13:02:15 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -118,27 +118,28 @@
 		[% END %]
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return peers_unhide(this)'>
+			
 			<td nowrap="nowrap">
-				<input size="12" name='host' type='text'>
-				<script language='JavaScript'>
-					var options_ind = 1;
-					var options_str = '<select name="tmpl" onFocus="peers_list_init(this,1)" onBlur="peers_list_init(this,2)" onChange="peers_hide(this.form)"><option value="."></option>';
-					var p_list = [];
-					p_list[0] = [ '.', '-- Select provider --' ];
+				<span id='selector-select' style="position:absolute; visibility:hidden">
+				<select name='tmpl' onchange="peers_hide(this.form)">
+					<option value=''>--providers--</option>
 					[% FOREACH p = PEERS_TMPL_LIST %]
-						options_str = options_str+'<option value="[% p.HOST %]"></option>';
-						p_list[options_ind] = [ '[% p.HOST %]', '[% p.NAME %]' ];
-						options_ind++;
+						<option value="[% p.HOST %]">[% p.NAME %]</option>
 					[% END %]
-					p_list[options_ind] = [ '.', 'Other' ];
-					
-					options_str = options_str + '<option value="."></option></select>';
-
-					if ( options_ind > 1 ) {
-		        			document.write( options_str );
-					}
-				</script>
+					<option value=''>custom</option>
+				</select>
+				</span>
+	
+				<span id='selector-text'>
+				<input size="14" name='host' type='text'>
+				<a href='#' class='l-info' onclick="
+							document.getElementById('selector-text').style.visibility='hidden';
+							document.getElementById('selector-select').style.visibility='visible';">
+					<span class='fs0'>▾</span>
+				</a>
+				</span>
 			</td>
+			
 			<td><input size="5" name='port' type='text'></td>
 			<td><input size="17" name='domain' type='text'></td>
 			<td><input size="12" name='username' type='text'></td>

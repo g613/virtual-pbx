@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.101 2015/06/18 15:21:19 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.106 2015/07/16 05:31:17 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -855,22 +855,6 @@ function stat_icon( extension, uniq, act_type, title ) {
 	}
 }
 /* peers tmpl functions */
-function peers_list_init(obj,mode) {
-	if ( mode == 1 ) {
-		obj.form.host.size=5;
-		obj.form.host.style.visibility='hidden';
-		for ( ind = 0; ind < p_list.length; ind++ ) {
-			obj.options[ind].text = p_list[ind][1];
-		}
-	} else {
-		for ( ind = 0; ind < p_list.length; ind++ ) {
-			obj.options[ind].text = '';
-		}
-		obj.form.host.size=19;
-		obj.form.host.style.visibility='visible';
-	}
-	obj.selectedIndex = 0;
-}
 function peers_unhide( id ) {
 	var mode = id.host.disabled;
 
@@ -891,18 +875,22 @@ function peers_hide( id ) {
 
 	id.host.disabled = id.port.disabled = id.domain.disabled = id.dtmfmode.disabled = id.proto.disabled = id.fromuser.disabled = 0;
 
-	if ( id.tmpl.value == '.' ) {
+	if ( id.tmpl.value == '' ) {
 		mode = 0;
 		id.host.value='';
 		id.username.focus();
 		id.host.focus();
+		id.DESCRIPTION.value='';
 	} else {
 		mode = 'disabled';
 		id.host.value=id.tmpl.value;
 		id.username.focus();
 		id.DESCRIPTION.value=id.tmpl.options[ id.tmpl.selectedIndex ].text;
+		id.tmpl.selectedIndex = 0;
 	}
 	id.host.disabled = id.port.disabled = id.domain.disabled = id.dtmfmode.disabled = id.proto.disabled = id.fromuser.disabled = mode;
+	document.getElementById('selector-select').style.visibility='hidden'; 
+	document.getElementById('selector-text').style.visibility='visible';
 }
 
 /* Extended stst */

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.48 2015/03/26 14:45:41 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.49 2015/07/06 15:44:04 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -68,9 +68,6 @@
 						Expired: [% p.REG_EXPIRED | html %]<br>
 						IP: [% p.ipaddr | html %]<br>
 						UA: [% p.useragent | html %]
-						[% IF p.deny %]
-						Access only from IP: [% p.permit | html %]
-						[% END %]
 					</span>
 					</a>
 				[% END %]

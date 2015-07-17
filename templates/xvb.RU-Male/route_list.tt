@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.16 2015/03/26 14:45:42 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.18 2015/07/14 12:41:23 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
@@ -89,7 +89,7 @@
 		<tr align='center' id='d-tr-[% r.DATA_ID %]' class='nocolor'>
 			<form method="post" action="[% CGI_URL %]" id='f-[% r.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 			<td><input class='in_t0' size="6" name='r_PRIORITY' type='text' value='[% r.PRIORITY | html %]'></td>
-			<td><input class='in_t0' size="15" name='r_PATTERN' type='text' value="[% r.PATTERN | html %]"></td>
+			<td align='left'><input class='in_t0' size="15" name='r_PATTERN' type='text' value="[% r.PATTERN | html %]"></td>
 			<td><input class='in_t0' size="18" name='r_SUBSTR' type='text' value="[% r.SUBSTR | html %]"></td>
 			<td>[% r.SUBSTR_RESULT | html %]</td>
 			<td><input class='in_t0' size="14" name='r_EXT_NUMBER' type='text' value="[% r.EXT_NUMBER | html %]"></td>
@@ -134,9 +134,36 @@
 		</tr>
 		[% END %]
 		<tr align='center'>
-			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
+			<form method='post' action='[% CGI_URL %]' name='route' onSubmit='return checkChanges(this)'>
 			<td><input size="6" name='r_PRIORITY' type='text'></td>
-			<td><input size="15" name='r_PATTERN' type='text'></td>
+			<td nowrap='nowrap'>
+				
+				<span id='selector-select' style="position:absolute; visibility:hidden">
+				<select name='tmpl' onchange="
+							document.route.r_PATTERN.value=this.value;
+							document.route.r_DESCRIPTION.value=this.form.tmpl.options[ this.form.tmpl.selectedIndex ].text;
+							this.form.tmpl.selectedIndex = 0;
+							document.getElementById('selector-select').style.visibility='hidden'; 
+							document.getElementById('selector-text').style.visibility='visible';">
+					
+					<option value="">--шаблоны--</option>
+					[% FOREACH r = ROUTE_TMPL_LIST %]
+						<option value='[% r.PATTERN | html %]'>[% r.NAME | locale_msg %]</option>
+					[% END %]
+					<option value="">свой шаблон</option>
+				</select>
+				</span>
+				
+				<span id='selector-text'>
+				<input size="14" name='r_PATTERN' type='text'>
+				<a href='#' class='l-info' onclick="
+							document.getElementById('selector-text').style.visibility='hidden';
+							document.getElementById('selector-select').style.visibility='visible';">
+					<span class='fs0'>▾</span>
+				</a>
+				</span>
+
+			</td>
 			<td><input size="18" name='r_SUBSTR' type='text'></td>
 			<td>&nbsp;</td>
 			<td><input size="14" name='r_EXT_NUMBER' type='text'></td>

@@ -707,6 +707,15 @@ create table VPBX_ROUTES (
 	PRIMARY KEY (DATA_ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+create table VPBX_ROUTES_TEMPLATES (
+	ID					INT(16) NOT NULL AUTO_INCREMENT,
+	
+	PATTERN				VARCHAR(255),
+	NAME				VARCHAR(255),
+
+	PRIMARY KEY (ID)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
 -- VB data tables
 create	table VPBX_VBOXES_CORE
 (
@@ -2342,6 +2351,14 @@ insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sipnet.ru','Sipnet',
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.skype.com','Skype Connect',"$_[0]->{'fromdomain'}='sip.skype.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='port,invite'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('voip.mtt.ru','YouMagic MTT',"$_[0]->{'fromdomain'}='voip.mtt.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='port,invite'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.zadarma.com','Zadarma',"$_[0]->{'fromdomain'}='sip.zadarma.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='invite'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'nat'}='yes'; $_[0]->{'port'}='5060';");
+
+insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('[87]9\\d{9}','call 2 cell');
+insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('810.*','call 2 internationals');
+insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('[87]\\d{10}','call 2 inter city');
+insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('[87]800\\d{7}','call 2 toll free');
+insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('[87]809\\d{7}','call 2 toll');
+insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('\\d{7}','call 2 7digits');
+insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('\\d{6}','call 2 6digits');
 
 insert into VPBX_DIDS_ATTR(DID,LANG_ID) VALUES( '613', 0 );
 
