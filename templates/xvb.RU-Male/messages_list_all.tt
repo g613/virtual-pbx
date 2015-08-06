@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.22 2015/05/13 14:52:02 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.24 2015/07/21 15:17:11 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Все сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -82,7 +82,7 @@
 				&nbsp;
 				<select name="msg_type" id='msg_type_selector'>
 					<option selected='selected' value="">Все сообщения</option>
-					<option value="30:40">Все пользовательские</option>
+					<option value="30:40:41:42:43">Все пользовательские</option>
 					<option value="1:2:3:4:5:6">Все системные</option>
 					<option value=",1">Только голосовые</option>
 					<option value=",0">Факсы / DTMF</option>
@@ -94,6 +94,8 @@
 					<option value="6">Факс по запросу</option>
 					<option value="30">Новое сообщение</option>
 					<option value="40">Старое сообщение</option>
+					<option value="40:30">Голосовая почта</option>
+					<option value="41">Запись звонка</option>
 				</select>
 				&nbsp;
 				<input value='Найти' type='submit'>

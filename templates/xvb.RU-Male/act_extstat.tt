@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.9 2015/05/13 14:52:02 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.16 2015/07/25 19:38:53 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -50,6 +50,7 @@
 			ExtStatdrawChart1('CAUSE','Все звонки / код разъединения',['Код разъединения','Количество']);
 			ExtStatdrawChart1('DURATION','Отвеченные звонки / продолжительность (минуты)',['Продолжительность','Количество']);
 			ExtStatdrawChart1('PN','Отвеченные звонки / агенты',['Агент','Количество']);
+			ExtStatdrawChart1('PN_DURATION','Отвеченные звонки / агенты - длительность',['Агент','Секунды']);
 			ExtStatdrawChart1('Q_NUM_OUT','Не отвеченные звонки / позиция в очереди на момент выхода',['Позиция','Количество']);
 			ExtStatdrawChart2('Q_NUM',['NOANSWER'],'NOANSWER','Не отвеченные звонки / позиция в очереди на момент входа',['Позиция','Количество']);
 			ExtStatdrawChart2('Q_NUM',['ANSWER'],'ANSWER','Отвеченные звонки / позиция в очереди на момент входа',['Позиция','Количество']);
@@ -173,17 +174,17 @@
 	<p class='white-bg'>
 	[% IF VBOX_PREF.TYPE eq '3' %]
 	<table width='100%' border='0' align='center' valign='top'>
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Статистика по звонкам</h3></td></tr>
 		<tr>
-			<td valign='top' width='60%'>
+			<td valign='top' width='50%'>
 				<div id="chart_STATUS"></div>
 			</td>
-			<td valign='top' width='40%'>
+			<td valign='top' width='50%'>
 				<div id="chart_STATUS_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Время ожидания ответа на звонок</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Время ожидания ответа на звонок</h3></td></tr>
 		<tr>
 			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER"></div>
@@ -203,7 +204,7 @@
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Распределение звонков по телефонам</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Распределение звонков по телефонам</h3></td></tr>
 		<tr>
 			<td valign='top'>
 				<div id="chart_PN"></div>
@@ -213,7 +214,7 @@
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Завершение звонков</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Завершение звонков</h3></td></tr>
 		<tr>
 			<td valign='top'>
 				<div id="chart_TERM_NOANSWER"></div>
@@ -233,7 +234,7 @@
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Продолжительность звонков</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Продолжительность звонков</h3></td></tr>
 		<tr>
 			<td valign='top'>
 				<div id="chart_DURATION"></div>
@@ -243,7 +244,7 @@
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Техническая информация</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Техническая информация</h3></td></tr>
 		<tr>
 			<td valign='top'>
 				<div id="chart_CAUSE"></div>
@@ -257,12 +258,12 @@
 	[% IF VBOX_PREF.TYPE eq '10' %]
 	<table width='100%' border='0' align='center' valign='top'>
 		<tr><td valign='top' colspan='2' align='center'><h5>[% VBOX_PREF.GREETING | html %]</h5></td></tr>
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Общий отчет</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Общий отчет</h3></td></tr>
 		<tr>
-			<td valign='top' width='60%'>
+			<td valign='top' width='50%'>
 				<div id="chart_SUMMARY"></div>
 			</td>
-			<td valign='top' width='40%'>
+			<td valign='top' width='50%'>
 				<div id="chart_SUMMARY_PRC"></div>
 			</td>
 		</tr>
@@ -270,17 +271,125 @@
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '13' %]
 	<table width='100%' border='0' align='center' valign='top'>
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Сводка</h3></td></tr>
 		<tr>
-			<td valign='top' width='60%'>
+			<td valign='top' align='center' align='50%'>
+			<table width='85%' align='right'>
+				<tr align='center'>
+					<th>Показатели</th>
+					<th>Все звонки</th>
+					<th>Отвеченные</th>
+					<th>Не отвеченные</th>
+				</tr>
+				<tr class='nocolor'>
+					<td align='left'>Всего звонков</td>
+					<td>[% SUMMARY.ALL_CALLS %]</td>
+					<td>[% SUMMARY.A_ALL_CALLS %]</td>
+					<td>[% SUMMARY.N_ALL_CALLS %]</td>
+				</tr>
+				<tr class='nocolor'>
+					<td align='left'>Средняя длительность звонка</td>
+					<td>-</td>
+					<td>[% SUMMARY.AVG_CALL_LENGTH | duration_str %]</td>
+					<td>-</td>
+				</tr>
+				<tr class='nocolor'>
+					<td align='left'>Максимальная длительность звонка</td>
+					<td>-</td>
+					<td>[% SUMMARY.MAX_CALL_LENGTH | duration_str %]</td>
+					<td>-</td>
+				</tr>
+				<tr class='nocolor'>
+					<td align='left'>Минимальная длительность звонка</td>
+					<td>-</td>
+					<td>[% SUMMARY.MIN_CALL_LENGTH | duration_str %]</td>
+					<td>-</td>
+				</tr>
+				<tr class='nocolor'>
+					<td align='left'>Длительность всех звонков</td>
+					<td>-</td>
+					<td>[% SUMMARY.TOT_CALL_LENGTH | duration_str %]</td>
+					<td>-</td>
+				</tr>
+				<tr class='nocolor'>
+					<td align='left'>Среднее время ожидания ответа</td>
+					<td>[% SUMMARY.AVG_CALL_WAIT | duration_str %]</td>
+					<td>[% SUMMARY.A_AVG_CALL_WAIT | duration_str %]</td>
+					<td>[% SUMMARY.N_AVG_CALL_WAIT | duration_str %]</td>
+				</tr>
+				<tr class='nocolor'>
+					<td align='left'>Максимальное время ожидания ответа</td>
+					<td>[% SUMMARY.MAX_CALL_WAIT | duration_str %]</td>
+					<td>[% SUMMARY.A_MAX_CALL_WAIT | duration_str %]</td>
+					<td>[% SUMMARY.N_MAX_CALL_WAIT | duration_str %]</td>
+				</tr>
+				<tr class='nocolor'>
+					<td align='left'>Минимальное время ожидания ответа</td>
+					<td>[% SUMMARY.MIN_CALL_WAIT | duration_str %]</td>
+					<td>[% SUMMARY.A_MIN_CALL_WAIT | duration_str %]</td>
+					<td>[% SUMMARY.N_MIN_CALL_WAIT | duration_str %]</td>
+				</tr>
+				<tr class='nocolor'>
+					<td align='left'>Суммарное время ожидания ответа</td>
+					<td>[% SUMMARY.TOT_CALL_WAIT | duration_str %]</td>
+					<td>[% SUMMARY.A_TOT_CALL_WAIT | duration_str %]</td>
+					<td>[% SUMMARY.N_TOT_CALL_WAIT | duration_str %]</td>
+				</tr>
+				<tr class='nocolor'>
+					<td align='left'>Средняя позиция входа в очередь</td>
+					<td>[% SUMMARY.AVG_IN_POSITION %]</td>
+					<td>[% SUMMARY.A_AVG_IN_POSITION %]</td>
+					<td>[% SUMMARY.N_AVG_IN_POSITION %]</td>
+				</tr>
+				<tr class='nocolor'>
+					<td align='left'>Максимальная позиция входа в очередь</td>
+					<td>[% SUMMARY.MAX_IN_POSITION %]</td>
+					<td>[% SUMMARY.A_MAX_IN_POSITION %]</td>
+					<td>[% SUMMARY.N_MAX_IN_POSITION %]</td>
+				</tr>
+				<tr class='nocolor'>
+					<td align='left'>Минимальная позиция входа в очередь</td>
+					<td>[% SUMMARY.MIN_IN_POSITION %]</td>
+					<td>[% SUMMARY.A_MIN_IN_POSITION %]</td>
+					<td>[% SUMMARY.N_MIN_IN_POSITION %]</td>
+				</tr>
+			</table>
+			</td>
+			<td valign='top' width='50%'>
+				<table valign='top' width='85%' align='right'>
+					<tr>
+						<th rowspan='2'>Агент</th>
+						<th rowspan='2'>Звонки</th>
+						<th colspan='2'>Длительность</th>
+						<th rowspan='2'>Среднее время<br> до ответа</th>
+					</tr>
+					<tr>
+						<th>всех</th>
+						<th>средяняя</th>
+					</tr>
+					[% FOREACH param = SUMMARY.AGENTS %]
+					<tr class='nocolor'>
+						<td align='left'>[% param.NUMBER | html %]</td>
+						<td>[% param.CALLS | html %]</td>
+						<td>[% param.DURATION | duration_str | html %]</td>
+						<td>[% param.AVG_DURATION | duration_str | html %]</td>
+						<td>[% param.AVG_WAIT | html %]</td>
+					</tr>
+					[% END %]
+				</table>
+			</td>
+		</tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Статистика по звонкам</h3></td></tr>
+		<tr>
+			<td valign='top' width='50%'>
 				<div id="chart_STATUS"></div>
 			</td>
-			<td valign='top' width='40%'>
+			<td valign='top' width='50%'>
 				<div id="chart_STATUS_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Время ожидания ответа на звонок</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Время ожидания ответа на звонок</h3></td></tr>
 		<tr>
 			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER"></div>
@@ -300,7 +409,7 @@
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Распределение звонков по агентам</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Распределение звонков по агентам</h3></td></tr>
 		<tr>
 			<td valign='top'>
 				<div id="chart_PN"></div>
@@ -309,8 +418,16 @@
 				<div id="chart_PN_PRC"></div>
 			</td>
 		</tr>
+		<tr>
+			<td valign='top'>
+				<div id="chart_PN_DURATION"></div>
+			</td>
+			<td valign='top'>
+				<div id="chart_PN_DURATION_PRC"></div>
+			</td>
+		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Положение в очереди</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Положение в очереди</h3></td></tr>
 		<tr>
 			<td valign='top'>
 				<div id="chart_Q_NUM_OUT"></div>
@@ -350,7 +467,7 @@
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Завершение звонков</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Завершение звонков</h3></td></tr>
 		<tr>
 			<td valign='top'>
 				<div id="chart_TERM_NOANSWER"></div>
@@ -370,7 +487,7 @@
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Продолжительность звонков</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Продолжительность звонков</h3></td></tr>
 		<tr>
 			<td valign='top'>
 				<div id="chart_DURATION"></div>
@@ -380,7 +497,7 @@
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Техническая информация</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Техническая информация</h3></td></tr>
 		<tr>
 			<td valign='top'>
 				<div id="chart_CAUSE"></div>
@@ -393,42 +510,42 @@
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '18' %]
 	<table width='100%' border='0' align='center' valign='top'>
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Все звонки / статус</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Все звонки / статус</h3></td></tr>
 		<tr>
-			<td valign='top' width='60%'>
+			<td valign='top' width='50%'>
 				<div id="chart_ALL_STATUS"></div>
 			</td>
-			<td valign='top' width='40%'>
+			<td valign='top' width='50%'>
 				<div id="chart_ALL_STATUS_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Все звонки / удачные или нет</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Все звонки / удачные или нет</h3></td></tr>
 		<tr>
-			<td valign='top' width='60%'>
+			<td valign='top' width='50%'>
 				<div id="chart_STATUS"></div>
 			</td>
-			<td valign='top' width='40%'>
+			<td valign='top' width='50%'>
 				<div id="chart_STATUS_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Все звонки / попытка звонка</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Все звонки / попытка звонка</h3></td></tr>
 		<tr>
-			<td valign='top' width='60%'>
+			<td valign='top' width='50%'>
 				<div id="chart_ATTEMPT"></div>
 			</td>
-			<td valign='top' width='40%'>
+			<td valign='top' width='50%'>
 				<div id="chart_ATTEMPT_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Успешные звонки / попытка звонка</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Успешные звонки / попытка звонка</h3></td></tr>
 		<tr>
-			<td valign='top' width='60%'>
+			<td valign='top' width='50%'>
 				<div id="chart_GOOD_ATTEMPT"></div>
 			</td>
-			<td valign='top' width='40%'>
+			<td valign='top' width='50%'>
 				<div id="chart_GOOD_ATTEMPT_PRC"></div>
 			</td>
 		</tr>
@@ -436,17 +553,17 @@
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '27' %]
 	<table width='100%' border='0' align='center' valign='top'>
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Статистика по звонкам</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Статистика по звонкам</h3></td></tr>
 		<tr>
-			<td valign='top' width='60%'>
+			<td valign='top' width='50%'>
 				<div id="chart_STATUS"></div>
 			</td>
-			<td valign='top' width='40%'>
+			<td valign='top' width='50%'>
 				<div id="chart_STATUS_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Время ожидания на парковке</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Время ожидания на парковке</h3></td></tr>
 		<tr>
 			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER"></div>
@@ -469,35 +586,35 @@
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '31' %]
 	<table width='100%' border='0' align='center' valign='top'>
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Все звонки / статус</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Все звонки / статус</h3></td></tr>
 		<tr>
-			<td valign='top' width='60%'>
+			<td valign='top' width='50%'>
 				<div id="chart_ALL_STATUS"></div>
 			</td>
-			<td valign='top' width='40%'>
+			<td valign='top' width='50%'>
 				<div id="chart_ALL_STATUS_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Все звонки / удачные или нет</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Все звонки / удачные или нет</h3></td></tr>
 		<tr>
-			<td valign='top' width='60%'>
+			<td valign='top' width='50%'>
 				<div id="chart_STATUS"></div>
 			</td>
-			<td valign='top' width='40%'>
+			<td valign='top' width='50%'>
 				<div id="chart_STATUS_PRC"></div>
 			</td>
 		</tr>
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Успешные звонки / попытка звонка</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Успешные звонки / попытка звонка</h3></td></tr>
 		<tr>
-			<td valign='top' width='60%'>
+			<td valign='top' width='50%'>
 				<div id="chart_GOOD_ATTEMPT"></div>
 			</td>
-			<td valign='top' width='40%'>
+			<td valign='top' width='50%'>
 				<div id="chart_GOOD_ATTEMPT_PRC"></div>
 			</td>
 		</tr>
-		<tr><td valign='top' colspan='2' align='center'><br><h4>Продолжительность звонков</h4></td></tr>
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Продолжительность звонков</h3></td></tr>
 		<tr>
 			<td valign='top'>
 				<div id="chart_DURATION"></div>

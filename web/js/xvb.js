@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.106 2015/07/16 05:31:17 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.107 2015/07/25 10:07:28 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -363,7 +363,7 @@ function ShowPlayer( file, msg_id ) {
 	/*
 		4 safari & untrasted cert
 	*/
-	if(typeof(xvb_player_fallback2http) !== 'undefined') {
+	if( (typeof(xvb_player_fallback2http) !== 'undefined') && xvb_player_fallback2http != false ) {
 		var http_file_name = file.replace(/^https:/, 'http:');
 		file = http_file_name;
 	}
@@ -940,10 +940,11 @@ function ExtStatdrawChart1(chart_param,title,title2) {
 				data_prc.setValue(i, 1, sum );
 				i++;
 			}
-			var chart = new google.visualization.PieChart(document.getElementById('chart_'+chart_param));
-			chart.draw(data, { width: 650, height: 350, min: 0, title: title + '  ( '+key+' )', is3D: true });
-			var chart_prc = new google.visualization.Table(document.getElementById('chart_'+chart_param+'_PRC'));
-			chart_prc.draw(data_prc, { showRowNumber: true });
+			var chart_prc = new google.visualization.ColumnChart(document.getElementById('chart_'+chart_param));
+			chart_prc.draw(data_prc, { height: 400, title: title + '  ( '+key+' )'});
+			
+			var chart = new google.visualization.PieChart(document.getElementById('chart_'+chart_param+'_PRC'));
+			chart.draw(data, { height: 400, min: 0, title: title + '  ( '+key+' )', is3D: true });
 			return;
 		}
 	} else {
@@ -984,11 +985,11 @@ function ExtStatdrawChart1(chart_param,title,title2) {
 			i++;
 		}
 
-		var chart = new google.visualization.ImageBarChart(document.getElementById('chart_'+chart_param));
-		chart.draw(data, { min: 0, title: title });
+		var chart = new google.visualization.ColumnChart(document.getElementById('chart_'+chart_param));
+		chart.draw(data, { height: 400, min: 0,isStacked: true, title: title, legend: { position: 'bottom', maxLines: 3 },bar: {groupWidth: "91%"}, });
 
-		var chart_prc = new google.visualization.ImageBarChart(document.getElementById('chart_'+chart_param+'_PRC'));
-		chart_prc.draw(data_prc, { min: 0, title: '% '+title });
+		var chart_prc = new google.visualization.BarChart(document.getElementById('chart_'+chart_param+'_PRC'));
+		chart_prc.draw(data_prc, { height: 400, min: 0, isStacked: true, title: '% '+title, legend: { position: 'bottom', maxLines: 3 },bar: {groupWidth: "91%"}, });
 	}
 }
 
@@ -1047,10 +1048,11 @@ function ExtStatdrawChart2(chart_param,subparam,divname,title,title2) {
 				data_prc.setValue(i, 1, sum );
 				i++;
 			}
-			var chart = new google.visualization.PieChart(document.getElementById('chart_'+chart_param+'_'+divname));
-			chart.draw(data, { width: 650, height: 350, min: 0, title: title + '  ( '+key+' )', is3D: true });
-			var chart_prc = new google.visualization.Table(document.getElementById('chart_'+chart_param+'_'+divname+'_PRC'));
-			chart_prc.draw(data_prc, { showRowNumber: true });
+			var chart_prc = new google.visualization.ColumnChart(document.getElementById('chart_'+chart_param+'_'+divname));
+			chart_prc.draw(data_prc, { height: 400, title: title + '  ( '+key+' )'});
+			
+			var chart = new google.visualization.PieChart(document.getElementById('chart_'+chart_param+'_'+divname+'_PRC'));
+			chart.draw(data, { height: 400, min: 0, title: title + '  ( '+key+' )', is3D: true });
 			return;
 		}
 	} else {
@@ -1100,11 +1102,11 @@ function ExtStatdrawChart2(chart_param,subparam,divname,title,title2) {
 			i++;
 		}
 
-		var chart = new google.visualization.ImageBarChart(document.getElementById('chart_'+chart_param+'_'+divname));
-		chart.draw(data, { min: 0, title: title });
+		var chart = new google.visualization.ColumnChart(document.getElementById('chart_'+chart_param+'_'+divname));
+		chart.draw(data, { height: 400, min: 0,isStacked: true, title: title, legend: { position: 'bottom', maxLines: 3 },bar: {groupWidth: "91%"}, });
 
-		var chart_prc = new google.visualization.ImageBarChart(document.getElementById('chart_'+chart_param+'_'+divname+'_PRC'));
-		chart_prc.draw(data_prc, { min: 0, title: '% '+title });
+		var chart_prc = new google.visualization.BarChart(document.getElementById('chart_'+chart_param+'_'+divname+'_PRC'));
+		chart_prc.draw(data_prc, { height: 400, min: 0, isStacked: true, title: '% '+title, legend: { position: 'bottom', maxLines: 3 },bar: {groupWidth: "91%"}, });
 	}
 }
 
@@ -1389,3 +1391,4 @@ function XVBInit() {
 	var img = new Image();
 	img.src = '/xvb/images/loading.gif';
 }
+
