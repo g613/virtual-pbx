@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.24 2015/07/25 19:38:41 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.35 2015/08/27 10:37:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -46,19 +46,67 @@
 		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
 		google.setOnLoadCallback(drawAllChart);
 		function drawAllChart() {
-			ExtStatdrawChart1('STATUS','All calls / disposition',['Status','Count']);
-			ExtStatdrawChart1('CAUSE','All calls / cause code',['Cause','Count']);
-			ExtStatdrawChart1('DURATION','Answered calls / duration (minutes)',['Duration','Count']);
-			ExtStatdrawChart1('PN','Answered calls / agent',['Agent','Count']);
+			ExtStatdrawChart1(	'STATUS',
+								'All calls / disposition',
+								['Status','Count'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=_FILTER_&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_',
+								{ 'ANSWER':'%STATUS=ANSWER%', 'NOANSWER':'!%STATUS=ANSWER%' }
+							);
+			ExtStatdrawChart1(	'DURATION',
+								'Answered calls / duration (minutes)',
+								['Duration','Count'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=%STATUS=ANSWER%_FILTER_&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_',
+								{ '0-1':'<PPDF>DURATION:<:60</PPDF>', '1-3':'<PPDF>DURATION:>:59,DURATION:<:180</PPDF>', '3-5':'<PPDF>DURATION:>:179,DURATION:<:300</PPDF>', '5-9':'<PPDF>DURATION:>:299,DURATION:<:540</PPDF>', '9-':'<PPDF>DURATION:>:539</PPDF>' }
+							);
+			ExtStatdrawChart1(	'PN',
+								'Answered calls / agent',
+								['Agent','Count'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=%PN=_FILTER_%&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_'
+							);
+			ExtStatdrawChart1(	'Q_NUM_OUT',
+								'Unanswered calls / out queue position',
+								['Position','Count'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=%Q_NUM_OUT=_FILTER_,%&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_'
+							);
 			ExtStatdrawChart1('PN_DURATION','Answered calls / agents - duration',['Agent','Seconds']);
-			ExtStatdrawChart1('Q_NUM_OUT','Unanswered calls / out queue position',['Position','Count']);
-			ExtStatdrawChart2('Q_NUM',['NOANSWER'],'NOANSWER','Unanswered calls / start queue position',['Position','Count']);
-			ExtStatdrawChart2('Q_NUM',['ANSWER'],'ANSWER','Answered calls / start queue position',['Position','Count']);
-			ExtStatdrawChart2('Q_NUM',['ANSWER','NOANSWER'],'ALL','All calls / start queue position',['Position','Count']);
-			ExtStatdrawChart2('TERM',['NOANSWER'],'NOANSWER','Unanswered calls / disconnect originator',['Disconnect originator','Count']);
-			ExtStatdrawChart2('TERM',['ANSWER'],'ANSWER','Answered calls / disconnect originator',['Disconnect originator','Count']);
-			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Unanswered calls / wait time (sec)',['Wait time','Count']);
-			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Answered calls / wait time (sec)',['Wait time','Count']);
+			ExtStatdrawChart2(	'Q_NUM',
+								['ANSWER','NOANSWER'],
+								'ALL',
+								'All calls / start queue position',
+								['Position','Count'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=%Q_NUM=_FILTER_%&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_'
+							);
+			ExtStatdrawChart2(	'TERM',
+								['ANSWER'],
+								'ANSWER',
+								'Answered calls / disconnect originator',
+								['Disconnect originator','Count'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=%STATUS=ANSWER, TERM=_FILTER_%&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_'
+							);
+			ExtStatdrawChart2(	'RING_TIME',
+								['NOANSWER'],
+								'NOANSWER',
+								'Unanswered calls / wait time (sec)',
+								['Wait time','Count'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=!%STATUS=ANSWER%_FILTER_&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_',
+								{ '00-10':'<PPDF>RING_TIME:<:10</PPDF>', '10-20':'<PPDF>RING_TIME:>:9,RING_TIME:<:20</PPDF>', '20-30':'<PPDF>RING_TIME:>:19,RING_TIME:<:30</PPDF>', '30-60':'<PPDF>RING_TIME:>:29,RING_TIME:<:60</PPDF>', '60-90':'<PPDF>RING_TIME:>:59,RING_TIME:<:90</PPDF>', '90-':'<PPDF>RING_TIME:>:90</PPDF>' }
+							);
+			ExtStatdrawChart2(	'RING_TIME',
+								['ANSWER'],
+								'ANSWER',
+								'Answered calls / wait time (sec)',
+								['Wait time','Count'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=%STATUS=ANSWER%_FILTER_&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_',
+								{ '00-10':'<PPDF>RING_TIME:<:10</PPDF>', '10-20':'<PPDF>RING_TIME:>:9,RING_TIME:<:20</PPDF>', '20-30':'<PPDF>RING_TIME:>:19,RING_TIME:<:30</PPDF>', '30-60':'<PPDF>RING_TIME:>:29,RING_TIME:<:60</PPDF>', '60-90':'<PPDF>RING_TIME:>:59,RING_TIME:<:90</PPDF>', '90-':'<PPDF>RING_TIME:>:90</PPDF>' }
+							);
+			ExtStatdrawChart2(	'RING_TIME',
+								['ANSWER','NOANSWER'],
+								'ALL',
+								'All calls / wait time (sec)',
+								['Wait time','Count'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=_FILTER_&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_',
+								{ '00-10':'<PPDF>RING_TIME:<:10</PPDF>', '10-20':'<PPDF>RING_TIME:>:9,RING_TIME:<:20</PPDF>', '20-30':'<PPDF>RING_TIME:>:19,RING_TIME:<:30</PPDF>', '30-60':'<PPDF>RING_TIME:>:29,RING_TIME:<:60</PPDF>', '60-90':'<PPDF>RING_TIME:>:59,RING_TIME:<:90</PPDF>', '90-':'<PPDF>RING_TIME:>:90</PPDF>' }
+							);
 		}
 		[% END %]
 		[% IF VBOX_PREF.TYPE eq '18' %]
@@ -173,23 +221,26 @@
 		</form>
 	</table>
 	</p>
-
+			
+	[% IF DATA_EXISTS eq '0' %]
+	[% ELSE %]
 	<p class='white-bg'>
 	[% IF VBOX_PREF.TYPE eq '3' %]
 	<table width='95%' border='0' align='center'>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Calls</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Calls</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
-				<div id="chart_STATUS"></div>
-			</td>
-			<td valign='top' width='50%'>
-				<div id="chart_STATUS_PRC"></div>
-			</td>
+			[% IF DATA_EXISTS eq '2' %]
+			<td valign='top' width='33%'><div id="chart_STATUS_TOT"></div></td><td valign='top' width='33%'><div id="chart_STATUS"></div></td><td valign='top' width='33%'><div id="chart_STATUS_PRC"></div></td>
+			[% ELSE %]
+			<td></td><td valign='top' width='50%'><div id="chart_STATUS"></div></td><td valign='top' width='50%'><div id="chart_STATUS_PRC"></div></td>
+			[% END %]
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Wait time</h3></td></tr>
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Wait time</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_RING_TIME_ANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER"></div>
 			</td>
@@ -198,8 +249,11 @@
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='3'><br><br></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_RING_TIME_NOANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_RING_TIME_NOANSWER"></div>
 			</td>
@@ -208,8 +262,11 @@
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Phones</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Phones</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_PN_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_PN"></div>
 			</td>
@@ -218,8 +275,11 @@
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Disconnect originator</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Disconnect originator</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_TERM_NOANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_TERM_NOANSWER"></div>
 			</td>
@@ -228,8 +288,11 @@
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='3'><br><br></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_TERM_ANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_TERM_ANSWER"></div>
 			</td>
@@ -238,8 +301,11 @@
 			</td>
 		</tr>
 	
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Call duration</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Call duration</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_DURATION_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_DURATION"></div>
 			</td>
@@ -248,8 +314,11 @@
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Tech info</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Tech info</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_CAUSE_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_CAUSE"></div>
 			</td>
@@ -261,140 +330,107 @@
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '10' %]
 	<table width='95%' border='0' align='center'>
-		<tr><td valign='top' colspan='2' align='center'><h5>[% VBOX_PREF.GREETING | html %]</h5></td></tr>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Summary</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><h5>[% VBOX_PREF.GREETING | html %]</h5></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Summary</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
-				<div id="chart_SUMMARY"></div>
-			</td>
-			<td valign='top' width='50%'>
-				<div id="chart_SUMMARY_PRC"></div>
-			</td>
+			[% IF DATA_EXISTS eq '2' %]
+			<td valign='top' width='33%'><div id="chart_SUMMARY_TOT"></div></td><td valign='top' width='33%'><div id="chart_SUMMARY"></div></td><td valign='top' width='33%'><div id="chart_SUMMARY_PRC"></div></td>
+			[% ELSE %]
+			<td></td><td valign='top' width='50%'><div id="chart_SUMMARY"></div></td><td valign='top' width='50%'><div id="chart_SUMMARY_PRC"></div></td>
+			[% END %]
 		</tr>
 	</table>
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '13' %]
 	<table width='95%' border='0' align='center'>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Summary</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Summary</h3></td></tr>
 		<tr>
-			<td valign='top' align='left'>
-			<table width='85%' align='right'>
+			<td valign='top' align='center' colspan='3'>
+			<table id='addon-data1' border='1'>
 				<tr align='center'>
-					<td>&nbsp;</th>
-					<td><b>All calls</b></td>
-					<td><b>Answered</b></td>
-					<td><b>Unanswered</b></td>
+					<th rowspan='2'>Period</th>
+					<th colspan='5'>Calls</th>
+					<th colspan='3'>Totals</th>
+					<th colspan='3'>Average</th>
+					<th colspan='3'>Maximum</th>
 				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Calls</td>
-					<td>[% SUMMARY.ALL_CALLS %]</td>
-					<td>[% SUMMARY.A_ALL_CALLS %]</td>
-					<td>[% SUMMARY.N_ALL_CALLS %]</td>
+				<tr align='center'>
+					<th>Received</th>
+					<th>Answered</th>
+					<th colspan='2'>Unanswered</th>
+					<th>Transferred</th>
+					<th>Wait unanswered</th>
+					<th>Wait answered</th>
+					<th>Duration</th>
+
+					<th>Wait unanswered</th>
+					<th>Wait answered</th>
+					<th>Duration</th>
+					
+					<th>Wait unanswered</th>
+					<th>Wait answered</th>
+					<th>Position</th>
 				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Average duration</td>
-					<td>[% SUMMARY.AVG_CALL_LENGTH | duration_str %]</td>
-					<td>-</td>
-					<td>-</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Max duration</td>
-					<td>[% SUMMARY.MAX_CALL_LENGTH | duration_str %]</td>
-					<td>-</td>
-					<td>-</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Min durtaion</td>
-					<td>[% SUMMARY.MIN_CALL_LENGTH | duration_str %]</td>
-					<td>-</td>
-					<td>-</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Total duration</td>
-					<td>[% SUMMARY.TOT_CALL_LENGTH | duration_str %]</td>
-					<td>-</td>
-					<td>-</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Average wait time</td>
-					<td>[% SUMMARY.AVG_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.A_AVG_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.N_AVG_CALL_WAIT | duration_str %]</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Max wait time</td>
-					<td>[% SUMMARY.MAX_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.A_MAX_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.N_MAX_CALL_WAIT | duration_str %]</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Min wait time</td>
-					<td>[% SUMMARY.MIN_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.A_MIN_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.N_MIN_CALL_WAIT | duration_str %]</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Total wait time</td>
-					<td>[% SUMMARY.TOT_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.A_TOT_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.N_TOT_CALL_WAIT | duration_str %]</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Average initial position</td>
-					<td>[% SUMMARY.AVG_IN_POSITION %]</td>
-					<td>[% SUMMARY.A_AVG_IN_POSITION %]</td>
-					<td>[% SUMMARY.N_AVG_IN_POSITION %]</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Max initial position</td>
-					<td>[% SUMMARY.MAX_IN_POSITION %]</td>
-					<td>[% SUMMARY.A_MAX_IN_POSITION %]</td>
-					<td>[% SUMMARY.N_MAX_IN_POSITION %]</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Min initial position</td>
-					<td>[% SUMMARY.MIN_IN_POSITION %]</td>
-					<td>[% SUMMARY.A_MIN_IN_POSITION %]</td>
-					<td>[% SUMMARY.N_MIN_IN_POSITION %]</td>
-				</tr>
-			</table>
-			</td>
-			<td valign='top' width='50%'>
-				<table valign='top' width='85%' align='right'>
-					<tr>
-						<th rowspan='2'>Agent</th>
-						<th rowspan='2'>Calls</th>
-						<th colspan='2'>Duration</th>
-						<th rowspan='2'>Ring time average</th>
-					</tr>
-					<tr>
-						<th>total</th>
-						<th>average</th>
-					</tr>
-					[% FOREACH param = SUMMARY.AGENTS %]
-					<tr class='nocolor'>
-						<td align='left'>[% param.NUMBER | html %]</td>
-						<td>[% param.CALLS | html %]</td>
-						<td>[% param.DURATION | duration_str | html %]</td>
-						<td>[% param.AVG_DURATION | duration_str | html %]</td>
-						<td>[% param.AVG_WAIT | html %]</td>
-					</tr>
+				[% FOREACH param = SUMMARY.PERIODS %]
+				<tr class='nocolor' align='right'>
+					<td>[% param.PERIOD | html %]</td>
+					[% IF param.PERIOD eq '=' %]
+					<td><a title='list of calls' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&action=ext_stat&id=[% VBOX_PREF.ID %]&act_type=Queue&uniq=[% USER_CREDS.UNIQ %]">[% param.ALL_CALLS | html %]</a></td>
+					<td><a title='list of calls' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=%STATUS=ANSWER%&act_type=Queue&action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]">[% param.A_ALL_CALLS | html %]</a></td>
+					<td><a title='list of calls' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=!%STATUS=ANSWER%&act_type=Queue&action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]">[% param.N_ALL_CALLS | html %]</a></td>
+					<td>[% param.N_ALL_CALLS_PRC | html %] %</td>
+					<td><a title='list of calls' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=!%STATUS=ANSWER%&act_type=Transfer&action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]">[% param.TRAN_CALLS | html %]</a></td>
+					[% ELSE %]
+					<td><a title='list of calls' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&tg_filter=[% CDR_PERIOD | html %]***[% param.PERIOD | html %]&action=ext_stat&id=[% VBOX_PREF.ID %]&act_type=Queue&uniq=[% USER_CREDS.UNIQ %]">[% param.ALL_CALLS | html %]</a></td>
+					<td><a title='list of calls' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=%STATUS=ANSWER%&tg_filter=[% CDR_PERIOD | html %]***[% param.PERIOD | html %]&act_type=Queue&action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]">[% param.A_ALL_CALLS | html %]</a></td>
+					<td><a title='list of calls' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=!%STATUS=ANSWER%&tg_filter=[% CDR_PERIOD | html %]***[% param.PERIOD | html %]&act_type=Queue&action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]">[% param.N_ALL_CALLS | html %]</a></td>
+					<td>[% param.N_ALL_CALLS_PRC | html %] %</td>
+					<td><a title='list of calls' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=!%STATUS=ANSWER%&tg_filter=[% CDR_PERIOD | html %]***[% param.PERIOD | html %]&act_type=Transfer&action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]">[% param.TRAN_CALLS | html %]</a></td>
 					[% END %]
-				</table>
+					<td>[% param.N_TOT_CALL_WAIT | duration_str | html %]</td>
+					<td>[% param.A_TOT_CALL_WAIT | duration_str | html %]</td>
+					<td>[% param.TOT_CALL_LENGTH | duration_str | html %]</td>
+					<td>[% param.N_AVG_CALL_WAIT | duration_str | html %]</td>
+					<td>[% param.A_AVG_CALL_WAIT | duration_str | html %]</td>
+					<td>[% param.AVG_CALL_LENGTH | duration_str | html %]</td>
+					<td>[% param.N_MAX_CALL_WAIT | duration_str | html %]</td>
+					<td>[% param.A_MAX_CALL_WAIT | duration_str | html %]</td>
+					<td>[% param.MAX_IN_POSITION | html %]</td>
+				</tr>
+				[% END %]
+			</table>
+			<script language='JavaScript'>listcolorer( 'addon-data1' );</script>
 			</td>
+			</tr>
 		</tr>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Calls</h3></td></tr>
+
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Call completion</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
-				<div id="chart_STATUS"></div>
+			[% IF DATA_EXISTS eq '2' %]
+			<td valign='top' width='33%'><div id="chart_STATUS_TOT"></div></td><td valign='top' width='33%'><div id="chart_STATUS"></div></td><td valign='top' width='33%'><div id="chart_STATUS_PRC"></div></td>
+			[% ELSE %]
+			<td></td><td valign='top' width='50%'><div id="chart_STATUS"></div></td><td valign='top' width='50%'><div id="chart_STATUS_PRC"></div></td>
+			[% END %]
+		</tr>
+		
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Wait time</h3></td></tr>
+		<tr>
+			<td valign='top'>
+				<div id="chart_RING_TIME_ALL_TOT"></div>
 			</td>
-			<td valign='top' width='50%'>
-				<div id="chart_STATUS_PRC"></div>
+			<td valign='top'>
+				<div id="chart_RING_TIME_ALL"></div>
+			</td>
+			<td valign='top'>
+				<div id="chart_RING_TIME_ALL_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Wait time</h3></td></tr>
+		<tr><td valign='top' colspan='3'><br><br></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_RING_TIME_ANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER"></div>
 			</td>
@@ -403,8 +439,11 @@
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='3'><br><br></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_RING_TIME_NOANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_RING_TIME_NOANSWER"></div>
 			</td>
@@ -412,9 +451,56 @@
 				<div id="chart_RING_TIME_NOANSWER_PRC"></div>
 			</td>
 		</tr>
-
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Agents</h3></td></tr>
+		
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Call duration</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_DURATION_TOT"></div>
+			</td>
+			<td valign='top'>
+				<div id="chart_DURATION"></div>
+			</td>
+			<td valign='top'>
+				<div id="chart_DURATION_PRC"></div>
+			</td>
+		</tr>
+
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Answering extensions</h3></td></tr>
+		<tr align='center'>
+			<td valign='top' colspan='3'>
+				<table valign='top' width='80%' border='1'>
+					<tr>
+						<th rowspan='2'>Agent</th>
+						<th rowspan='2' colspan='2'>Calls</th>
+						<th colspan='2'>Durtaion</th>
+						<th rowspan='2'>Wait time<br>average</th>
+						<th colspan='2'>Work time</th>
+					</tr>
+					<tr>
+						<th>total</th>
+						<th>average</th>
+						<th>duration</th>
+						<th>% efficiency</th>
+					</tr>
+					[% FOREACH param = SUMMARY.AGENTS %]
+					<tr class='nocolor' align='right'>
+						<td><a title='list of calls' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=%PN=[% param.NUMBER | html %]%&act_type=Queue&action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]">[% param.NUMBER | html %]</a></td>
+						<td>[% param.CALLS | html %]</td>
+						<td>[% param.CALLS_PRC | html %] %</td>
+						<td>[% param.DURATION | duration_str | html %]</td>
+						<td>[% param.AVG_DURATION | duration_str | html %]</td>
+						<td>[% param.AVG_WAIT | html %]</td>
+						<td>[% param.WORK_TIME | duration_str %]</td>
+						<td>[% param.KPD %]</td>
+					</tr>
+					[% END %]
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td valign='top'>
+				<div id="chart_PN_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_PN"></div>
 			</td>
@@ -424,65 +510,20 @@
 		</tr>
 		<tr>
 			<td valign='top'>
+				<div id="chart_PN_DURATION_TOT"></div>
+			</td>
+			<td valign='top'>
 				<div id="chart_PN_DURATION"></div>
 			</td>
 			<td valign='top'>
 				<div id="chart_PN_DURATION_PRC"></div>
 			</td>
 		</tr>
-
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Position in Queue</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Disconnect originator</h3></td></tr>
 		<tr>
 			<td valign='top'>
-				<div id="chart_Q_NUM_OUT"></div>
+				<div id="chart_TERM_ANSWER_TOT"></div>
 			</td>
-			<td valign='top'>
-				<div id="chart_Q_NUM_OUT_PRC"></div>
-			</td>
-		</tr>
-
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
-		<tr>
-			<td valign='top'>
-				<div id="chart_Q_NUM_ALL"></div>
-			</td>
-			<td valign='top'>
-				<div id="chart_Q_NUM_ALL_PRC"></div>
-			</td>
-		</tr>
-
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
-		<tr>
-			<td valign='top'>
-				<div id="chart_Q_NUM_NOANSWER"></div>
-			</td>
-			<td valign='top'>
-				<div id="chart_Q_NUM_NOANSWER_PRC"></div>
-			</td>
-		</tr>
-		
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
-		<tr>
-			<td valign='top'>
-				<div id="chart_Q_NUM_ANSWER"></div>
-			</td>
-			<td valign='top'>
-				<div id="chart_Q_NUM_ANSWER_PRC"></div>
-			</td>
-		</tr>
-
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Disconnect originator</h3></td></tr>
-		<tr>
-			<td valign='top'>
-				<div id="chart_TERM_NOANSWER"></div>
-			</td>
-			<td valign='top'>
-				<div id="chart_TERM_NOANSWER_PRC"></div>
-			</td>
-		</tr>
-
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
-		<tr>
 			<td valign='top'>
 				<div id="chart_TERM_ANSWER"></div>
 			</td>
@@ -490,66 +531,79 @@
 				<div id="chart_TERM_ANSWER_PRC"></div>
 			</td>
 		</tr>
-		
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Call duration</h3></td></tr>
+
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Position in Queue</h3></td></tr>
 		<tr>
 			<td valign='top'>
-				<div id="chart_DURATION"></div>
+				<div id="chart_Q_NUM_ALL_TOT"></div>
 			</td>
 			<td valign='top'>
-				<div id="chart_DURATION_PRC"></div>
+				<div id="chart_Q_NUM_ALL"></div>
+			</td>
+			<td valign='top'>
+				<div id="chart_Q_NUM_ALL_PRC"></div>
 			</td>
 		</tr>
-
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Tech info</h3></td></tr>
+		<tr><td valign='top' colspan='2'><br><br></td></tr>
 		<tr>
 			<td valign='top'>
-				<div id="chart_CAUSE"></div>
+				<div id="chart_Q_NUM_OUT_TOT"></div>
 			</td>
 			<td valign='top'>
-				<div id="chart_CAUSE_PRC"></div>
+				<div id="chart_Q_NUM_OUT"></div>
+			</td>
+			<td valign='top'>
+				<div id="chart_Q_NUM_OUT_PRC"></div>
 			</td>
 		</tr>
 	</table>
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '18' %]
 	<table width='95%' border='0' align='center'>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>All calls / status</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>All calls / status</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
-				<div id="chart_ALL_STATUS"></div>
-			</td>
-			<td valign='top' width='50%'>
-				<div id="chart_ALL_STATUS_PRC"></div>
-			</td>
+			[% IF DATA_EXISTS eq '2' %]
+			<td valign='top' width='33%'><div id="chart_ALL_STATUS_TOT"></div></td><td valign='top' width='33%'><div id="chart_ALL_STATUS"></div></td><td valign='top' width='33%'><div id="chart_ALL_STATUS_PRC"></div></td>
+			[% ELSE %]
+			<td></td><td valign='top' width='50%'><div id="chart_ALL_STATUS"></div></td><td valign='top' width='50%'><div id="chart_ALL_STATUS_PRC"></div></td>
+			[% END %]
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h3>All calls / success or failed</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>All calls / success or failed</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
+			<td valign='top'>
+				<div id="chart_STATUS_TOT"></div>
+			</td>
+			<td valign='top'>
 				<div id="chart_STATUS"></div>
 			</td>
-			<td valign='top' width='50%'>
+			<td valign='top'>
 				<div id="chart_STATUS_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h3>All calls / call attempt</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>All calls / call attempt</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
+			<td valign='top'>
+				<div id="chart_ATTEMPT_TOT"></div>
+			</td>
+			<td valign='top'>
 				<div id="chart_ATTEMPT"></div>
 			</td>
-			<td valign='top' width='50%'>
+			<td valign='top'>
 				<div id="chart_ATTEMPT_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Successful calls / call attempt</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Successful calls / call attempt</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
+			<td valign='top'>
+				<div id="chart_GOOD_ATTEMPT_TOT"></div>
+			</td>
+			<td valign='top'>
 				<div id="chart_GOOD_ATTEMPT"></div>
 			</td>
-			<td valign='top' width='50%'>
+			<td valign='top'>
 				<div id="chart_GOOD_ATTEMPT_PRC"></div>
 			</td>
 		</tr>
@@ -557,18 +611,20 @@
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '27' %]
 	<table width='95%' border='0' align='center'>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Status</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Status</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
-				<div id="chart_STATUS"></div>
-			</td>
-			<td valign='top' width='50%'>
-				<div id="chart_STATUS_PRC"></div>
-			</td>
+			[% IF DATA_EXISTS eq '2' %]
+			<td valign='top' width='33%'><div id="chart_STATUS_TOT"></div></td><td valign='top' width='33%'><div id="chart_STATUS"></div></td><td valign='top' width='33%'><div id="chart_STATUS_PRC"></div></td>
+			[% ELSE %]
+			<td></td><td valign='top' width='50%'><div id="chart_STATUS"></div></td><td valign='top' width='50%'><div id="chart_STATUS_PRC"></div></td>
+			[% END %]
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Wait time</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Wait time</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_RING_TIME_ANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER"></div>
 			</td>
@@ -577,8 +633,11 @@
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='3'><br><br></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_RING_TIME_NOANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_RING_TIME_NOANSWER"></div>
 			</td>
@@ -590,37 +649,45 @@
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '31' %]
 	<table width='95%' border='0' align='center'>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>All calls / status</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>All calls / status</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
-				<div id="chart_ALL_STATUS"></div>
-			</td>
-			<td valign='top' width='50%'>
-				<div id="chart_ALL_STATUS_PRC"></div>
-			</td>
+			[% IF DATA_EXISTS eq '2' %]
+			<td valign='top' width='33%'><div id="chart_ALL_STATUS_TOT"></div></td><td valign='top' width='33%'><div id="chart_ALL_STATUS"></div></td><td valign='top' width='33%'><div id="chart_ALL_STATUS_PRC"></div></td>
+			[% ELSE %]
+			<td></td><td valign='top' width='50%'><div id="chart_ALL_STATUS"></div></td><td valign='top' width='50%'><div id="chart_ALL_STATUS_PRC"></div></td>
+			[% END %]
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h3>All calls / success or failed</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>All calls / success or failed</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
+			<td valign='top'>
+				<div id="chart_STATUS_TOT"></div>
+			</td>
+			<td valign='top'>
 				<div id="chart_STATUS"></div>
 			</td>
-			<td valign='top' width='50%'>
+			<td valign='top'>
 				<div id="chart_STATUS_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Successful calls / call attempt</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Successful calls / call attempt</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
+			<td valign='top'>
+				<div id="chart_GOOD_ATTEMPT_TOT"></div>
+			</td>
+			<td valign='top'>
 				<div id="chart_GOOD_ATTEMPT"></div>
 			</td>
-			<td valign='top' width='50%'>
+			<td valign='top'>
 				<div id="chart_GOOD_ATTEMPT_PRC"></div>
 			</td>
 		</tr>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Call duration</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Call duration</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_DURATION_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_DURATION"></div>
 			</td>
@@ -632,6 +699,7 @@
 	[% END %]
 	</p>
 
+	[% END %]
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 </body>

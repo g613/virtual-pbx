@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.35 2015/05/13 14:52:02 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.37 2015/08/26 20:50:00 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension activity - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -107,7 +107,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='6'>
-				<a title='previous page' href='?action=ext_stat&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type[% ACT_TYPE | html %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>◄</span></a>
+				<a title='previous page' href='?action=ext_stat&tg_filter=[% CDR_TGFILTER | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type[% ACT_TYPE | html %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]&to_time=[% TO_TIME | html %]&from_time=[% FROM_TIME | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -144,7 +144,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='6'>
-				<a title='next page' href='?action=ext_stat&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% ACT_TYPE | html %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
+				<a title='next page' href='?action=ext_stat&tg_filter=[% CDR_TGFILTER | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% ACT_TYPE | html %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]&to_time=[% TO_TIME | html %]&from_time=[% FROM_TIME | html %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
 		[% END %]

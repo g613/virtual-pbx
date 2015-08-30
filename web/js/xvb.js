@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.107 2015/07/25 10:07:28 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.112 2015/08/26 20:50:00 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -894,9 +894,13 @@ function peers_hide( id ) {
 }
 
 /* Extended stst */
-function ExtStatdrawChart1(chart_param,title,title2) {
+function ExtStatdrawChart1(chart_param,title,title2,click_url,key_map) {
+	if ( js_data['DATA_EXISTS'] == 0 ) {
+		return;
+	}
 	var data = new google.visualization.DataTable();
 	var data_prc = new google.visualization.DataTable();
+	var data_tot = new google.visualization.DataTable();
 
 	data.addColumn('string', 'Data');
 	
@@ -906,8 +910,11 @@ function ExtStatdrawChart1(chart_param,title,title2) {
 	for ( key in js_data['DATA'][chart_param] ) {
 		for ( key2 in js_data['DATA'][chart_param][key] ) {
 			if ( all_column_keys[key2] == null ) {
-				all_column_keys[key2] = 1;
+				all_column_keys[key2] = 0;
 				all_column.push(key2);
+			}
+			if ( js_data['DATA'][chart_param][key][key2] != null ) {
+				all_column_keys[key2] = all_column_keys[key2] + js_data['DATA'][chart_param][key][key2];
 			}
 		}
 	}
@@ -938,25 +945,89 @@ function ExtStatdrawChart1(chart_param,title,title2) {
 				}
 				data.setValue(i, 1, sum );
 				data_prc.setValue(i, 1, sum );
+				data.setRowProperty(i,'xvblabel', all_column[key2]);
+				data_prc.setRowProperty(i,'xvblabel', all_column[key2]);
 				i++;
 			}
-			var chart_prc = new google.visualization.ColumnChart(document.getElementById('chart_'+chart_param));
-			chart_prc.draw(data_prc, { height: 400, title: title + '  ( '+key+' )'});
-			
-			var chart = new google.visualization.PieChart(document.getElementById('chart_'+chart_param+'_PRC'));
-			chart.draw(data, { height: 400, min: 0, title: title + '  ( '+key+' )', is3D: true });
+		
+			var div_id = document.getElementById('chart_'+chart_param);
+			if ( div_id != null ) {
+				var chart_prc = new google.visualization.ColumnChart(div_id);
+				chart_prc.draw(data_prc, { height: 400, legend: { position: 'bottom', maxLines: 4 }, title: key +' - '+ title});
+				if ( click_url != null ) {
+					google.visualization.events.addListener(chart_prc, 'select',
+					function() {
+						var selection = chart_prc.getSelection();
+						var new_url = click_url;
+						var item = selection[0];
+						if (item.row != null) {
+							var col_str = data_prc.getRowProperty(item.row,'xvblabel');
+							if ( key_map != null ) {
+								col_str = key_map[col_str];
+							}
+							var new_str = new_url.replace("_FILTER_", col_str );
+							new_url = new_str;
+						}
+						var new_str = new_url.replace(/&tg_filter.*$/, '' );
+						new_url = new_str;
+						document.location.href=new_url;
+					} );
+				}
+			}
+
+			div_id = document.getElementById('chart_'+chart_param+'_PRC');
+			if ( div_id != null ) {
+				var chart = new google.visualization.PieChart(div_id);
+				chart.draw(data, { height: 400, min: 0, title: key + ' - ' + title + '  ( % )', is3D: true });
+				
+				if ( click_url != null ) {
+					google.visualization.events.addListener(chart, 'select',
+					function() {
+						var selection = chart.getSelection();
+						var new_url = click_url;
+						var item = selection[0];
+						if (item.row != null) {
+							var col_str = data.getRowProperty(item.row,'xvblabel');
+							if ( key_map != null ) {
+								col_str = key_map[col_str];
+							}
+							var new_str = new_url.replace("_FILTER_", col_str );
+							new_url = new_str;
+						}
+						var new_str = new_url.replace(/&tg_filter.*$/, '' );
+						new_url = new_str;
+						document.location.href=new_url;
+					} );
+				}
+			}
 			return;
 		}
 	} else {
 		data_prc.addColumn('string', 'Data_prc');
+		data_tot.addColumn('string', 'Data_tot');
+		data_tot.addColumn('number', chart_param);
+
+		i = 0;
 		for ( var key2 in all_column ) {
 			data.addColumn('number', all_column[key2]);
 			data_prc.addColumn('number', all_column[key2]);
+			
+			data_tot.addRows(1);
+			data_tot.setValue(i, 0, all_column[key2] );
+			data_tot.setValue(i, 1, all_column_keys[all_column[key2]] );
+			
+			data_tot.setRowProperty(i,'xvblabel', all_column[key2]);
+			i++;
 		}
+
+		i = 0;
 		for ( var row_key in all_rows ) {
 			var key = all_rows[row_key];
 			data.addRows(1);
 			data_prc.addRows(1);
+			
+			data.setRowProperty(i,'xvblabel', key);
+			data_prc.setRowProperty(i,'xvblabel', key);
 
 			data.setValue(i, 0, key );
 			data_prc.setValue(i, 0, key );
@@ -979,23 +1050,107 @@ function ExtStatdrawChart1(chart_param,title,title2) {
 				prc_sum = 1;
 			}
 			for ( var key2 in all_column ) {
-				data_prc.setValue(i, i2, js_data['DATA'][chart_param][key][all_column[key2]]/prc_sum*100 );
+				if ( js_data['DATA'][chart_param][key][all_column[key2]] != null ) {
+					data_prc.setValue(i, i2, (js_data['DATA'][chart_param][key][all_column[key2]]/prc_sum*100).toFixed(2));
+				} else {
+					data_prc.setValue(i, i2, 0 );
+				}
 				i2++;
 			}
 			i++;
 		}
 
-		var chart = new google.visualization.ColumnChart(document.getElementById('chart_'+chart_param));
-		chart.draw(data, { height: 400, min: 0,isStacked: true, title: title, legend: { position: 'bottom', maxLines: 3 },bar: {groupWidth: "91%"}, });
+		var div_id = document.getElementById('chart_'+chart_param+'_TOT');
+		if ( div_id != null ) {
+			var chart_tot = new google.visualization.PieChart(div_id);
+			chart_tot.draw(data_tot, { height: 400, min: 0, title: title+' (sum)', is3D: true });
+			
+			if ( click_url != null ) {
+				google.visualization.events.addListener(chart_tot, 'select',
+				function() {
+					var selection = chart_tot.getSelection();
+					var new_url = click_url;
+					var item = selection[0];
+					if (item.row != null) {
+						var col_str = data_tot.getRowProperty(item.row,'xvblabel');
+						if ( key_map != null ) {
+							col_str = key_map[col_str];
+						}
+						var new_str = new_url.replace("_FILTER_", col_str );
+						new_url = new_str;
+					}
+					var new_str = new_url.replace(/&tg_filter.*$/, '' );
+					new_url = new_str;
+					document.location.href=new_url;
+				} );
+			}
+		}
 
-		var chart_prc = new google.visualization.BarChart(document.getElementById('chart_'+chart_param+'_PRC'));
-		chart_prc.draw(data_prc, { height: 400, min: 0, isStacked: true, title: '% '+title, legend: { position: 'bottom', maxLines: 3 },bar: {groupWidth: "91%"}, });
+		div_id = document.getElementById('chart_'+chart_param);
+		if ( div_id != null ) {
+			var chart = new google.visualization.ColumnChart(div_id);
+			chart.draw(data, { height: 400, min: 0,isStacked: true, title: title, legend: { position: 'bottom', maxLines: 4 },bar: {groupWidth: "91%"}, });
+			
+			if ( click_url != null ) {
+				google.visualization.events.addListener(chart, 'select',
+				function() {
+					var selection = chart.getSelection();
+					var new_url = click_url;
+					var item = selection[0];
+					if (item.row != null) {
+						var new_str = new_url.replace("_PERIOD_", data.getRowProperty(item.row,'xvblabel') );
+						new_url = new_str;
+					}
+					if (item.column != null) {
+						var col_str = data.getColumnLabel(item.column);
+						if ( key_map != null ) {
+							col_str = key_map[col_str];
+						}
+						var new_str = new_url.replace("_FILTER_", col_str );
+						new_url = new_str;
+					}
+					document.location.href=new_url;
+				} );
+			}
+		}
+
+		div_id = document.getElementById('chart_'+chart_param+'_PRC');
+		if ( div_id != null ) {
+			var chart_prc = new google.visualization.BarChart(div_id);
+			chart_prc.draw(data_prc, { height: 400, min: 0, isStacked: true, title: title+' (%)', legend: { position: 'bottom', maxLines: 4 },bar: {groupWidth: "91%"}, });
+			
+			if ( click_url != null ) {
+				google.visualization.events.addListener(chart_prc, 'select',
+				function() {
+					var selection = chart_prc.getSelection();
+					var new_url = click_url;
+					var item = selection[0];
+					if (item.row != null) {
+						var new_str = new_url.replace("_PERIOD_", data_prc.getRowProperty(item.row,'xvblabel') );
+						new_url = new_str;
+					}
+					if (item.column != null) {
+						var col_str = data_prc.getColumnLabel(item.column);
+						if ( key_map != null ) {
+							col_str = key_map[col_str];
+						}
+						var new_str = new_url.replace("_FILTER_", col_str );
+						new_url = new_str;
+					}
+					document.location.href=new_url;
+				} );
+			}
+		}
 	}
 }
 
-function ExtStatdrawChart2(chart_param,subparam,divname,title,title2) {
+function ExtStatdrawChart2(chart_param,subparam,divname,title,title2,click_url,key_map) {
+	if ( js_data['DATA_EXISTS'] == 0 ) {
+		return;
+	}
 	var data = new google.visualization.DataTable();
 	var data_prc = new google.visualization.DataTable();
+	var data_tot = new google.visualization.DataTable();
 
 	data.addColumn('string', 'Data');
 
@@ -1013,8 +1168,11 @@ function ExtStatdrawChart2(chart_param,subparam,divname,title,title2) {
 		for ( var key3 in subparam ) {
 			for ( var key2 in js_data['DATA'][chart_param][key][subparam[key3]] ) {
 				if ( all_column_keys[key2] == null ) {
-					all_column_keys[key2] = 1;
+					all_column_keys[key2] = 0;
 					all_column.push(key2);
+				}
+				if ( js_data['DATA'][chart_param][key][subparam[key3]][key2] != null ) {
+					all_column_keys[key2] = all_column_keys[key2] + js_data['DATA'][chart_param][key][subparam[key3]][key2];
 				}
 			}
 		}
@@ -1046,26 +1204,90 @@ function ExtStatdrawChart2(chart_param,subparam,divname,title,title2) {
 				}
 				data.setValue(i, 1, sum );
 				data_prc.setValue(i, 1, sum );
+				data.setRowProperty(i,'xvblabel', all_column[key2]);
+				data_prc.setRowProperty(i,'xvblabel', all_column[key2]);
 				i++;
 			}
-			var chart_prc = new google.visualization.ColumnChart(document.getElementById('chart_'+chart_param+'_'+divname));
-			chart_prc.draw(data_prc, { height: 400, title: title + '  ( '+key+' )'});
-			
-			var chart = new google.visualization.PieChart(document.getElementById('chart_'+chart_param+'_'+divname+'_PRC'));
-			chart.draw(data, { height: 400, min: 0, title: title + '  ( '+key+' )', is3D: true });
+		
+			var div_id = document.getElementById('chart_'+chart_param+'_'+divname);
+			if ( div_id != null ) {
+				var chart_prc = new google.visualization.ColumnChart(div_id);
+				chart_prc.draw(data_prc, { height: 400, legend: { position: 'bottom', maxLines: 4 }, title: key +' - '+ title});
+				
+				if ( click_url != null ) {
+					google.visualization.events.addListener(chart_prc, 'select',
+					function() {
+						var selection = chart_prc.getSelection();
+						var new_url = click_url;
+						var item = selection[0];
+						if (item.row != null) {
+							var col_str = data_prc.getRowProperty(item.row,'xvblabel');
+							if ( key_map != null ) {
+								col_str = key_map[col_str];
+							}
+							var new_str = new_url.replace("_FILTER_", col_str );
+							new_url = new_str;
+						}
+						var new_str = new_url.replace(/&tg_filter.*$/, '' );
+						new_url = new_str;
+						document.location.href=new_url;
+					} );
+				}
+			}
+
+			div_id = document.getElementById('chart_'+chart_param+'_'+divname+'_PRC');
+			if ( div_id != null ) {
+				var chart = new google.visualization.PieChart(div_id);
+				chart.draw(data, { height: 400, min: 0, title: key +' - '+ title + ' ( % )', is3D: true });
+				
+				if ( click_url != null ) {
+					google.visualization.events.addListener(chart, 'select',
+					function() {
+						var selection = chart.getSelection();
+						var new_url = click_url;
+						var item = selection[0];
+						if (item.row != null) {
+							var col_str = data.getRowProperty(item.row,'xvblabel');
+							if ( key_map != null ) {
+								col_str = key_map[col_str];
+							}
+							var new_str = new_url.replace("_FILTER_", col_str );
+							new_url = new_str;
+						}
+						var new_str = new_url.replace(/&tg_filter.*$/, '' );
+						new_url = new_str;
+						document.location.href=new_url;
+					} );
+				}
+			}
 			return;
 		}
 	} else {
 		data_prc.addColumn('string', 'Data_prc');
+		data_tot.addColumn('string', 'Data_tot');
+		data_tot.addColumn('number', chart_param);
+		
+		i = 0;
 		for ( var key2 in all_column ) {
 			data.addColumn('number', all_column[key2]);
 			data_prc.addColumn('number', all_column[key2]);
+			
+			data_tot.addRows(1);
+			data_tot.setValue(i, 0, all_column[key2] );
+			data_tot.setValue(i, 1, all_column_keys[all_column[key2]] );
+			data_tot.setRowProperty(i,'xvblabel', all_column[key2]);
+			i++;
 		}
+
+		i = 0;
 		for ( var row_key in all_rows ) {
 			var key = all_rows[row_key];
 			data.addRows(1);
 			data_prc.addRows(1);
 
+			data.setRowProperty(i,'xvblabel', key);
+			data_prc.setRowProperty(i,'xvblabel', key);
+			
 			data.setValue(i, 0, key );
 			data_prc.setValue(i, 0, key );
 			var i2 = 1;
@@ -1096,17 +1318,97 @@ function ExtStatdrawChart2(chart_param,subparam,divname,title,title2) {
 						}
 					}
 				}
-				data_prc.setValue(i, i2, sum/prc_sum*100 );
+				if ( sum != null ) {
+					data_prc.setValue(i, i2, (sum/prc_sum*100).toFixed(2) );
+				} else {
+					data_prc.setValue(i, i2, 0 );
+				}
 				i2++;
 			}
 			i++;
 		}
 
-		var chart = new google.visualization.ColumnChart(document.getElementById('chart_'+chart_param+'_'+divname));
-		chart.draw(data, { height: 400, min: 0,isStacked: true, title: title, legend: { position: 'bottom', maxLines: 3 },bar: {groupWidth: "91%"}, });
+		var div_id = document.getElementById('chart_'+chart_param+'_'+divname+'_TOT');
+		if ( div_id != null ) {
+			var chart_tot = new google.visualization.PieChart(div_id);
+			chart_tot.draw(data_tot, { height: 400, min: 0, title: title+' (sum)', is3D: true });
+			
+			if ( click_url != null ) {
+				google.visualization.events.addListener(chart_tot, 'select',
+				function() {
+					var selection = chart_tot.getSelection();
+					var new_url = click_url;
+					var item = selection[0];
+					if (item.row != null) {
+						var col_str = data_tot.getRowProperty(item.row,'xvblabel');
+						if ( key_map != null ) {
+							col_str = key_map[col_str];
+						}
+						var new_str = new_url.replace("_FILTER_", col_str );
+						new_url = new_str;
+					}
+					var new_str = new_url.replace(/&tg_filter.*$/, '' );
+					new_url = new_str;
+					document.location.href=new_url;
+				} );
+			}
+		}
 
-		var chart_prc = new google.visualization.BarChart(document.getElementById('chart_'+chart_param+'_'+divname+'_PRC'));
-		chart_prc.draw(data_prc, { height: 400, min: 0, isStacked: true, title: '% '+title, legend: { position: 'bottom', maxLines: 3 },bar: {groupWidth: "91%"}, });
+		div_id = document.getElementById('chart_'+chart_param+'_'+divname);
+		if ( div_id != null ) {
+			var chart = new google.visualization.ColumnChart(div_id);
+			chart.draw(data, { height: 400, min: 0,isStacked: true, title: title, legend: { position: 'bottom', maxLines: 4 },bar: {groupWidth: "91%"}, });
+			
+			if ( click_url != null ) {
+				google.visualization.events.addListener(chart, 'select',
+				function() {
+					var selection = chart.getSelection();
+					var new_url = click_url;
+					var item = selection[0];
+					if (item.row != null) {
+						var new_str = new_url.replace("_PERIOD_", data.getRowProperty(item.row,'xvblabel') );
+						new_url = new_str;
+					}
+					if (item.column != null) {
+						var col_str = data.getColumnLabel(item.column);
+						if ( key_map != null ) {
+							col_str = key_map[col_str];
+						}
+						var new_str = new_url.replace("_FILTER_", col_str );
+						new_url = new_str;
+					}
+					document.location.href=new_url;
+				} );
+			}
+		}
+
+		div_id = document.getElementById('chart_'+chart_param+'_'+divname+'_PRC');
+		if ( div_id != null ) {
+			var chart_prc = new google.visualization.BarChart(div_id);
+			chart_prc.draw(data_prc, { height: 400, min: 0, isStacked: true, title: title + ' (%)', legend: { position: 'bottom', maxLines: 4 },bar: {groupWidth: "91%"}, });
+			
+			if ( click_url != null ) {
+				google.visualization.events.addListener(chart_prc, 'select',
+				function() {
+					var selection = chart_prc.getSelection();
+					var new_url = click_url;
+					var item = selection[0];
+					if (item.row != null) {
+						var new_str = new_url.replace("_PERIOD_", data_prc.getRowProperty(item.row,'xvblabel') );
+						new_url = new_str;
+					}
+					if (item.column != null) {
+						var col_str = data_prc.getColumnLabel(item.column);
+						if ( key_map != null ) {
+							col_str = key_map[col_str];
+						}
+						var new_str = new_url.replace("_FILTER_", col_str );
+						new_url = new_str;
+					}
+					document.location.href=new_url;
+				} );
+			}
+		}
 	}
 }
 
@@ -1164,8 +1466,11 @@ function getTimePeriod(lang,period) {
 			period = 'Статус звонка';
 			group_by = 'cst';
 		} else if ( period == '6pref' ) {
-			period = 'Префикс номера (6)';
+			period = 'Префикс DID (6)';
 			group_by = '6pref';
+		} else if ( period == 'c6pref' ) {
+			period = 'Префикс звонящего (6)';
+			group_by = 'c6pref';
 		} else {
 			period = 'группировать по...';
 		}
@@ -1221,6 +1526,9 @@ function getTimePeriod(lang,period) {
 		} else if ( period == '6pref' ) {
 			period = 'DID prefix (6)';
 			group_by = '6pref';
+		} else if ( period == 'c6pref' ) {
+			period = 'Caller prefix (6)';
+			group_by = 'c6pref';
 		} else {
 			period = 'group by...';
 		}

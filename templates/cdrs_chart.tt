@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.32 2015/06/18 15:21:19 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.33 2015/08/09 19:51:10 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - statistics - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -86,7 +86,7 @@
 				</select>
 				&nbsp;
 				<select name='chart_group_period' id='gb_type_selector'>
-					<option value=''>group by...</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='did'>DID</option><option value='cid'>CallerID</option><option value='ct'>call type</option><option value='d10'>duration / 10 sec</option><option value='d30'>duration / 30 sec</option><option value='d60'>duration / 60 sec</option><option value='cst'>call status</option><option value='6pref'>DID prefix (6)</option>
+					<option value=''>group by...</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='did'>DID</option><option value='cid'>CallerID</option><option value='ct'>call type</option><option value='d10'>duration / 10 sec</option><option value='d30'>duration / 30 sec</option><option value='d60'>duration / 60 sec</option><option value='cst'>call status</option><option value='6pref'>DID prefix (6)</option><option value='c6pref'>Caller prefix (6)</option>
 				</select>
 				&nbsp;
 				<input name='need_chart' value='1' type='hidden'>

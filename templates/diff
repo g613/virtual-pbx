@@ -1,0 +1,22 @@
+Index: messages_list_all.tt
+===================================================================
+RCS file: /home/cvs/CVS/VirtualPBX/templates/messages_list_all.tt,v
+retrieving revision 1.70
+diff -r1.70 messages_list_all.tt
+149c149,151
+< 			<td>[% msg.CALLERID | html %]</td>
+---
+> 			<td>
+> 				<a title='call detail' href="?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]">[% msg.CALLERID | html %]</a>
+> 			</td>
+Index: xvb.RU-Male/messages_list_all.tt
+===================================================================
+RCS file: /home/cvs/CVS/VirtualPBX/templates/xvb.RU-Male/messages_list_all.tt,v
+retrieving revision 1.24
+diff -r1.24 messages_list_all.tt
+147c147,149
+< 			<td>[% msg.CALLERID | html %]</td>
+---
+> 			<td>
+> 				<a title='детализация звонка' href="?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]">[% msg.CALLERID | html %]</a>
+> 			</td>

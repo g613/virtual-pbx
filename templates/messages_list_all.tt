@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.70 2015/07/21 15:17:10 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.71 2015/08/05 07:23:37 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -146,7 +146,9 @@
 			</td>
 			<td></td>
 			[% END %]
-			<td>[% msg.CALLERID | html %]</td>
+			<td>
+				<a title='call detail' href="?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]">[% msg.CALLERID | html %]</a>
+			</td>
 			<td>[% msg.CALLEDID | html %]</td>
 			[% IF msg.IS_VOICE %]
 			<td align='center'>[% msg.DURATION | duration_str | html %]</td>

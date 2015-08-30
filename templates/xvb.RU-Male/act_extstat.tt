@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.16 2015/07/25 19:38:53 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.25 2015/08/27 10:37:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -46,19 +46,67 @@
 		google.load("visualization", "1", {packages:["imagebarchart","corechart","table"]});
 		google.setOnLoadCallback(drawAllChart);
 		function drawAllChart() {
-			ExtStatdrawChart1('STATUS','Все звонки / статус звонка',['Статус','Количество']);
-			ExtStatdrawChart1('CAUSE','Все звонки / код разъединения',['Код разъединения','Количество']);
-			ExtStatdrawChart1('DURATION','Отвеченные звонки / продолжительность (минуты)',['Продолжительность','Количество']);
-			ExtStatdrawChart1('PN','Отвеченные звонки / агенты',['Агент','Количество']);
+			ExtStatdrawChart1(	'STATUS',
+								'Все звонки / статус звонка',
+								['Статус','Количество'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=_FILTER_&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_',
+								{ 'ANSWER':'%STATUS=ANSWER%', 'NOANSWER':'!%STATUS=ANSWER%' }
+							);
+			ExtStatdrawChart1(	'DURATION',
+								'Отвеченные звонки / продолжительность (минуты)',
+								['Продолжительность','Количество'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=%STATUS=ANSWER%_FILTER_&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_',
+								{ '0-1':'<PPDF>DURATION:<:60</PPDF>', '1-3':'<PPDF>DURATION:>:59,DURATION:<:180</PPDF>', '3-5':'<PPDF>DURATION:>:179,DURATION:<:300</PPDF>', '5-9':'<PPDF>DURATION:>:299,DURATION:<:540</PPDF>', '9-':'<PPDF>DURATION:>:539</PPDF>' }
+							);
+			ExtStatdrawChart1(	'PN',
+								'Отвеченные звонки / агенты',
+								['Агент','Количество'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=%PN=_FILTER_%&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_'
+							);
 			ExtStatdrawChart1('PN_DURATION','Отвеченные звонки / агенты - длительность',['Агент','Секунды']);
-			ExtStatdrawChart1('Q_NUM_OUT','Не отвеченные звонки / позиция в очереди на момент выхода',['Позиция','Количество']);
-			ExtStatdrawChart2('Q_NUM',['NOANSWER'],'NOANSWER','Не отвеченные звонки / позиция в очереди на момент входа',['Позиция','Количество']);
-			ExtStatdrawChart2('Q_NUM',['ANSWER'],'ANSWER','Отвеченные звонки / позиция в очереди на момент входа',['Позиция','Количество']);
-			ExtStatdrawChart2('Q_NUM',['ANSWER','NOANSWER'],'ALL','Все звонки / позиция в очереди на момент входа',['Позиция','Количество']);
-			ExtStatdrawChart2('TERM',['NOANSWER'],'NOANSWER','Не отвеченные звонки / кто завершил',['Кто завершил','Количество']);
-			ExtStatdrawChart2('TERM',['ANSWER'],'ANSWER','Отвеченные звонки / кто завершил',['Кто завершил','Количество']);
-			ExtStatdrawChart2('RING_TIME',['NOANSWER'],'NOANSWER','Не отвеченные звонки/ время ожидания (сек)',['Время ожидания','Количество']);
-			ExtStatdrawChart2('RING_TIME',['ANSWER'],'ANSWER','Отвеченные звонки / время ожидания (сек)',['Время ожидания','Количество']);
+			ExtStatdrawChart1(	'Q_NUM_OUT',
+								'Не отвеченные звонки / позиция в очереди на момент выхода',
+								['Позиция','Количество'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=%Q_NUM=_FILTER_%&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_'
+							);
+			ExtStatdrawChart2(	'Q_NUM',
+								['ANSWER','NOANSWER'],
+								'ALL',
+								'Все звонки / позиция в очереди на момент входа',
+								['Позиция','Количество'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=%Q_NUM=_FILTER_%&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_'
+							);
+			ExtStatdrawChart2(	'TERM',
+								['ANSWER'],
+								'ANSWER',
+								'Отвеченные звонки / кто завершил',
+								['Кто завершил','Количество'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=%STATUS=ANSWER, TERM=_FILTER_%&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_'
+							);
+			ExtStatdrawChart2(	'RING_TIME',
+								['NOANSWER'],
+								'NOANSWER',
+								'Не отвеченные звонки/ время ожидания (сек)',
+								['Время ожидания','Количество'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=!%STATUS=ANSWER%_FILTER_&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_',
+								{ '00-10':'<PPDF>RING_TIME:<:10</PPDF>', '10-20':'<PPDF>RING_TIME:>:9,RING_TIME:<:20</PPDF>', '20-30':'<PPDF>RING_TIME:>:19,RING_TIME:<:30</PPDF>', '30-60':'<PPDF>RING_TIME:>:29,RING_TIME:<:60</PPDF>', '60-90':'<PPDF>RING_TIME:>:59,RING_TIME:<:90</PPDF>', '90-':'<PPDF>RING_TIME:>:90</PPDF>' }
+							);
+			ExtStatdrawChart2(	'RING_TIME',
+								['ANSWER'],
+								'ANSWER',
+								'Отвеченные звонки / время ожидания (сек)',
+								['Время ожидания','Количество'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=%STATUS=ANSWER%_FILTER_&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_',
+								{ '00-10':'<PPDF>RING_TIME:<:10</PPDF>', '10-20':'<PPDF>RING_TIME:>:9,RING_TIME:<:20</PPDF>', '20-30':'<PPDF>RING_TIME:>:19,RING_TIME:<:30</PPDF>', '30-60':'<PPDF>RING_TIME:>:29,RING_TIME:<:60</PPDF>', '60-90':'<PPDF>RING_TIME:>:59,RING_TIME:<:90</PPDF>', '90-':'<PPDF>RING_TIME:>:90</PPDF>' }
+							);
+			ExtStatdrawChart2(	'RING_TIME',
+								['ANSWER','NOANSWER'],
+								'ALL',
+								'Все звонки / время ожидания (сек)',
+								['Время ожидания','Количество'],
+								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=_FILTER_&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_',
+								{ '00-10':'<PPDF>RING_TIME:<:10</PPDF>', '10-20':'<PPDF>RING_TIME:>:9,RING_TIME:<:20</PPDF>', '20-30':'<PPDF>RING_TIME:>:19,RING_TIME:<:30</PPDF>', '30-60':'<PPDF>RING_TIME:>:29,RING_TIME:<:60</PPDF>', '60-90':'<PPDF>RING_TIME:>:59,RING_TIME:<:90</PPDF>', '90-':'<PPDF>RING_TIME:>:90</PPDF>' }
+							);
 		}
 		[% END %]
 		[% IF VBOX_PREF.TYPE eq '18' %]
@@ -144,8 +192,7 @@
 							electric: false,
 							singleClick: false,
 							xdate: "23:59",
-							button: ".next()"
-						});
+							button: ".next()"});
 				});
 				</script>
 				<input placeholder='По дату' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
@@ -171,21 +218,25 @@
 		</tr>
 	</table>
 
+	[% IF DATA_EXISTS eq '0' %]
+	[% ELSE %]
 	<p class='white-bg'>
 	[% IF VBOX_PREF.TYPE eq '3' %]
 	<table width='100%' border='0' align='center' valign='top'>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Статистика по звонкам</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Статистика по звонкам</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
-				<div id="chart_STATUS"></div>
-			</td>
-			<td valign='top' width='50%'>
-				<div id="chart_STATUS_PRC"></div>
-			</td>
+			[% IF DATA_EXISTS eq '2' %]
+			<td valign='top' width='33%'><div id="chart_STATUS_TOT"></div></td><td valign='top' width='33%'><div id="chart_STATUS"></div></td><td valign='top' width='33%'><div id="chart_STATUS_PRC"></div></td>
+			[% ELSE %]
+			<td></td><td valign='top' width='50%'><div id="chart_STATUS"></div></td><td valign='top' width='50%'><div id="chart_STATUS_PRC"></div></td>
+			[% END %]
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Время ожидания ответа на звонок</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Время ожидания ответа на звонок</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_RING_TIME_ANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER"></div>
 			</td>
@@ -194,8 +245,11 @@
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='3'><br><br></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_RING_TIME_NOANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_RING_TIME_NOANSWER"></div>
 			</td>
@@ -204,8 +258,11 @@
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Распределение звонков по телефонам</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Распределение звонков по телефонам</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_PN_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_PN"></div>
 			</td>
@@ -214,8 +271,11 @@
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Завершение звонков</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Завершение звонков</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_TERM_NOANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_TERM_NOANSWER"></div>
 			</td>
@@ -224,8 +284,11 @@
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='3'><br><br></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_TERM_ANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_TERM_ANSWER"></div>
 			</td>
@@ -234,8 +297,11 @@
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Продолжительность звонков</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Продолжительность звонков</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_DURATION_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_DURATION"></div>
 			</td>
@@ -244,8 +310,11 @@
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Техническая информация</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Техническая информация</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_CAUSE_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_CAUSE"></div>
 			</td>
@@ -257,140 +326,105 @@
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '10' %]
 	<table width='100%' border='0' align='center' valign='top'>
-		<tr><td valign='top' colspan='2' align='center'><h5>[% VBOX_PREF.GREETING | html %]</h5></td></tr>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Общий отчет</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><h5>[% VBOX_PREF.GREETING | html %]</h5></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Общий отчет</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
-				<div id="chart_SUMMARY"></div>
-			</td>
-			<td valign='top' width='50%'>
-				<div id="chart_SUMMARY_PRC"></div>
-			</td>
+			[% IF DATA_EXISTS eq '2' %]
+			<td valign='top' width='33%'><div id="chart_SUMMARY_TOT"></div></td><td valign='top' width='33%'><div id="chart_SUMMARY"></div></td><td valign='top' width='33%'><div id="chart_SUMMARY_PRC"></div></td>
+			[% ELSE %]
+			<td></td><td valign='top' width='50%'><div id="chart_SUMMARY"></div></td><td valign='top' width='50%'><div id="chart_SUMMARY_PRC"></div></td>
+			[% END %]
 		</tr>
 	</table>
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '13' %]
 	<table width='100%' border='0' align='center' valign='top'>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Сводка</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Статистика по звонкам</h3></td></tr>
 		<tr>
-			<td valign='top' align='center' align='50%'>
-			<table width='85%' align='right'>
+			<td valign='top' align='center' colspan='3'>
+			<table id='addon-data1' border='1'>
 				<tr align='center'>
-					<th>Показатели</th>
-					<th>Все звонки</th>
-					<th>Отвеченные</th>
-					<th>Не отвеченные</th>
+					<th rowspan='2'>Период</th>
+					<th colspan='5'>Звонки</th>
+					<th colspan='3'>Общие</th>
+					<th colspan='3'>Средние</th>
+					<th colspan='3'>Максимальные</th>
 				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Всего звонков</td>
-					<td>[% SUMMARY.ALL_CALLS %]</td>
-					<td>[% SUMMARY.A_ALL_CALLS %]</td>
-					<td>[% SUMMARY.N_ALL_CALLS %]</td>
+				<tr align='center'>
+					<th>Поступило</th>
+					<th>Принято</th>
+					<th colspan='2'>Потеряно</th>
+					<th>Переведено</th>
+					<th>Ожид.потер.</th>
+					<th>Ожид.прин.</th>
+					<th>Разговор</th>
+
+					<th>Ожид.потер.</th>
+					<th>Ожид.прин.</th>
+					<th>Разговор</th>
+					
+					<th>Ожид.потер.</th>
+					<th>Ожид.прин.</th>
+					<th>Позиция</th>
 				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Средняя длительность звонка</td>
-					<td>-</td>
-					<td>[% SUMMARY.AVG_CALL_LENGTH | duration_str %]</td>
-					<td>-</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Максимальная длительность звонка</td>
-					<td>-</td>
-					<td>[% SUMMARY.MAX_CALL_LENGTH | duration_str %]</td>
-					<td>-</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Минимальная длительность звонка</td>
-					<td>-</td>
-					<td>[% SUMMARY.MIN_CALL_LENGTH | duration_str %]</td>
-					<td>-</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Длительность всех звонков</td>
-					<td>-</td>
-					<td>[% SUMMARY.TOT_CALL_LENGTH | duration_str %]</td>
-					<td>-</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Среднее время ожидания ответа</td>
-					<td>[% SUMMARY.AVG_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.A_AVG_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.N_AVG_CALL_WAIT | duration_str %]</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Максимальное время ожидания ответа</td>
-					<td>[% SUMMARY.MAX_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.A_MAX_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.N_MAX_CALL_WAIT | duration_str %]</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Минимальное время ожидания ответа</td>
-					<td>[% SUMMARY.MIN_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.A_MIN_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.N_MIN_CALL_WAIT | duration_str %]</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Суммарное время ожидания ответа</td>
-					<td>[% SUMMARY.TOT_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.A_TOT_CALL_WAIT | duration_str %]</td>
-					<td>[% SUMMARY.N_TOT_CALL_WAIT | duration_str %]</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Средняя позиция входа в очередь</td>
-					<td>[% SUMMARY.AVG_IN_POSITION %]</td>
-					<td>[% SUMMARY.A_AVG_IN_POSITION %]</td>
-					<td>[% SUMMARY.N_AVG_IN_POSITION %]</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Максимальная позиция входа в очередь</td>
-					<td>[% SUMMARY.MAX_IN_POSITION %]</td>
-					<td>[% SUMMARY.A_MAX_IN_POSITION %]</td>
-					<td>[% SUMMARY.N_MAX_IN_POSITION %]</td>
-				</tr>
-				<tr class='nocolor'>
-					<td align='left'>Минимальная позиция входа в очередь</td>
-					<td>[% SUMMARY.MIN_IN_POSITION %]</td>
-					<td>[% SUMMARY.A_MIN_IN_POSITION %]</td>
-					<td>[% SUMMARY.N_MIN_IN_POSITION %]</td>
-				</tr>
-			</table>
-			</td>
-			<td valign='top' width='50%'>
-				<table valign='top' width='85%' align='right'>
-					<tr>
-						<th rowspan='2'>Агент</th>
-						<th rowspan='2'>Звонки</th>
-						<th colspan='2'>Длительность</th>
-						<th rowspan='2'>Среднее время<br> до ответа</th>
-					</tr>
-					<tr>
-						<th>всех</th>
-						<th>средяняя</th>
-					</tr>
-					[% FOREACH param = SUMMARY.AGENTS %]
-					<tr class='nocolor'>
-						<td align='left'>[% param.NUMBER | html %]</td>
-						<td>[% param.CALLS | html %]</td>
-						<td>[% param.DURATION | duration_str | html %]</td>
-						<td>[% param.AVG_DURATION | duration_str | html %]</td>
-						<td>[% param.AVG_WAIT | html %]</td>
-					</tr>
+				[% FOREACH param = SUMMARY.PERIODS %]
+				<tr class='nocolor' align='right'>
+					<td>[% param.PERIOD | html %]</td>
+					[% IF param.PERIOD eq '=' %]
+					<td><a title='список звонков' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&action=ext_stat&id=[% VBOX_PREF.ID %]&act_type=Queue&uniq=[% USER_CREDS.UNIQ %]">[% param.ALL_CALLS | html %]</a></td>
+					<td><a title='список звонков' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=%STATUS=ANSWER%&act_type=Queue&action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]">[% param.A_ALL_CALLS | html %]</a></td>
+					<td><a title='список звонков' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=!%STATUS=ANSWER%&act_type=Queue&action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]">[% param.N_ALL_CALLS | html %]</a></td>
+					<td>[% param.N_ALL_CALLS_PRC | html %] %</td>
+					<td><a title='список звонков' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=!%STATUS=ANSWER%&act_type=Transfer&action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]">[% param.TRAN_CALLS | html %]</a></td>
+					[% ELSE %]
+					<td><a title='список звонков' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&tg_filter=[% CDR_PERIOD | html %]***[% param.PERIOD | html %]&action=ext_stat&id=[% VBOX_PREF.ID %]&act_type=Queue&uniq=[% USER_CREDS.UNIQ %]">[% param.ALL_CALLS | html %]</a></td>
+					<td><a title='список звонков' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=%STATUS=ANSWER%&tg_filter=[% CDR_PERIOD | html %]***[% param.PERIOD | html %]&act_type=Queue&action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]">[% param.A_ALL_CALLS | html %]</a></td>
+					<td><a title='список звонков' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=!%STATUS=ANSWER%&tg_filter=[% CDR_PERIOD | html %]***[% param.PERIOD | html %]&act_type=Queue&action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]">[% param.N_ALL_CALLS | html %]</a></td>
+					<td>[% param.N_ALL_CALLS_PRC | html %] %</td>
+					<td><a title='список звонков' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=!%STATUS=ANSWER%&tg_filter=[% CDR_PERIOD | html %]***[% param.PERIOD | html %]&act_type=Transfer&action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]">[% param.TRAN_CALLS | html %]</a></td>
 					[% END %]
-				</table>
+					<td>[% param.N_TOT_CALL_WAIT | duration_str | html %]</td>
+					<td>[% param.A_TOT_CALL_WAIT | duration_str | html %]</td>
+					<td>[% param.TOT_CALL_LENGTH | duration_str | html %]</td>
+					<td>[% param.N_AVG_CALL_WAIT | duration_str | html %]</td>
+					<td>[% param.A_AVG_CALL_WAIT | duration_str | html %]</td>
+					<td>[% param.AVG_CALL_LENGTH | duration_str | html %]</td>
+					<td>[% param.N_MAX_CALL_WAIT | duration_str | html %]</td>
+					<td>[% param.A_MAX_CALL_WAIT | duration_str | html %]</td>
+					<td>[% param.MAX_IN_POSITION | html %]</td>
+				</tr>
+				[% END %]
+			</table>
+			<script language='JavaScript'>listcolorer( 'addon-data1' );</script>
 			</td>
+			</tr>
 		</tr>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Статистика по звонкам</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
-				<div id="chart_STATUS"></div>
+			[% IF DATA_EXISTS eq '2' %]
+			<td valign='top' width='33%'><div id="chart_STATUS_TOT"></div></td><td valign='top' width='33%'><div id="chart_STATUS"></div></td><td valign='top' width='33%'><div id="chart_STATUS_PRC"></div></td>
+			[% ELSE %]
+			<td></td><td valign='top' width='50%'><div id="chart_STATUS"></div></td><td valign='top' width='50%'><div id="chart_STATUS_PRC"></div></td>
+			[% END %]
+		</tr>
+		
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Время ожидания ответа на звонок</h3></td></tr>
+		<tr>
+			<td valign='top'>
+				<div id="chart_RING_TIME_TOT_TOT"></div>
 			</td>
-			<td valign='top' width='50%'>
-				<div id="chart_STATUS_PRC"></div>
+			<td valign='top'>
+				<div id="chart_RING_TIME_TOT"></div>
+			</td>
+			<td valign='top'>
+				<div id="chart_RING_TIME_TOT_PRC"></div>
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Время ожидания ответа на звонок</h3></td></tr>
+		<tr><td valign='top' colspan='3'><br><br></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_RING_TIME_ANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER"></div>
 			</td>
@@ -399,8 +433,11 @@
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='3'><br><br></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_RING_TIME_NOANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_RING_TIME_NOANSWER"></div>
 			</td>
@@ -408,9 +445,55 @@
 				<div id="chart_RING_TIME_NOANSWER_PRC"></div>
 			</td>
 		</tr>
-
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Распределение звонков по агентам</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Продолжительность звонков</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_DURATION_TOT"></div>
+			</td>
+			<td valign='top'>
+				<div id="chart_DURATION"></div>
+			</td>
+			<td valign='top'>
+				<div id="chart_DURATION_PRC"></div>
+			</td>
+		</tr>
+			
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Распределение звонков по агентам</h3></td></tr>
+		<tr align='center'>
+			<td valign='top' colspan='3'>
+				<table valign='top' width='80%' border='1'>
+					<tr>
+						<th rowspan='2'>Агент</th>
+						<th rowspan='2' colspan='2'>Звонки</th>
+						<th colspan='2'>Длительность</th>
+						<th rowspan='2'>Среднее время<br> до ответа</th>
+						<th colspan='2'>Рабочее время</th>
+					</tr>
+					<tr>
+						<th>всех</th>
+						<th>средяняя</th>
+						<th>длительность</th>
+						<th>% КПД</th>
+					</tr>
+					[% FOREACH param = SUMMARY.AGENTS %]
+					<tr class='nocolor' align='right'>
+						<td><a title='список звонков' href="?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&data=%PN=[% param.NUMBER | html %]%&act_type=Queue&action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]">[% param.NUMBER | html %]</a></td>
+						<td>[% param.CALLS | html %]</td>
+						<td>[% param.CALLS_PRC | html %] %</td>
+						<td>[% param.DURATION | duration_str | html %]</td>
+						<td>[% param.AVG_DURATION | duration_str | html %]</td>
+						<td>[% param.AVG_WAIT | html %]</td>
+						<td>[% param.WORK_TIME | duration_str %]</td>
+						<td>[% param.KPD %]</td>
+					</tr>
+					[% END %]
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td valign='top'>
+				<div id="chart_PN_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_PN"></div>
 			</td>
@@ -420,65 +503,20 @@
 		</tr>
 		<tr>
 			<td valign='top'>
+				<div id="chart_PN_DURATION_TOT"></div>
+			</td>
+			<td valign='top'>
 				<div id="chart_PN_DURATION"></div>
 			</td>
 			<td valign='top'>
 				<div id="chart_PN_DURATION_PRC"></div>
 			</td>
 		</tr>
-
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Положение в очереди</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Завершение звонков</h3></td></tr>
 		<tr>
 			<td valign='top'>
-				<div id="chart_Q_NUM_OUT"></div>
+				<div id="chart_TERM_ANSWER_TOT"></div>
 			</td>
-			<td valign='top'>
-				<div id="chart_Q_NUM_OUT_PRC"></div>
-			</td>
-		</tr>
-
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
-		<tr>
-			<td valign='top'>
-				<div id="chart_Q_NUM_ALL"></div>
-			</td>
-			<td valign='top'>
-				<div id="chart_Q_NUM_ALL_PRC"></div>
-			</td>
-		</tr>
-
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
-		<tr>
-			<td valign='top'>
-				<div id="chart_Q_NUM_NOANSWER"></div>
-			</td>
-			<td valign='top'>
-				<div id="chart_Q_NUM_NOANSWER_PRC"></div>
-			</td>
-		</tr>
-		
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
-		<tr>
-			<td valign='top'>
-				<div id="chart_Q_NUM_ANSWER"></div>
-			</td>
-			<td valign='top'>
-				<div id="chart_Q_NUM_ANSWER_PRC"></div>
-			</td>
-		</tr>
-
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Завершение звонков</h3></td></tr>
-		<tr>
-			<td valign='top'>
-				<div id="chart_TERM_NOANSWER"></div>
-			</td>
-			<td valign='top'>
-				<div id="chart_TERM_NOANSWER_PRC"></div>
-			</td>
-		</tr>
-
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
-		<tr>
 			<td valign='top'>
 				<div id="chart_TERM_ANSWER"></div>
 			</td>
@@ -487,65 +525,80 @@
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Продолжительность звонков</h3></td></tr>
+
+		<tr><td valign='top' colspan='2' align='center'><br><h3>Положение в очереди</h3></td></tr>
 		<tr>
 			<td valign='top'>
-				<div id="chart_DURATION"></div>
+				<div id="chart_Q_NUM_OUT_TOT"></div>
 			</td>
 			<td valign='top'>
-				<div id="chart_DURATION_PRC"></div>
+				<div id="chart_Q_NUM_OUT"></div>
+			</td>
+			<td valign='top'>
+				<div id="chart_Q_NUM_OUT_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Техническая информация</h3></td></tr>
+		<tr><td valign='top' colspan='23'><br><br></td></tr>
 		<tr>
 			<td valign='top'>
-				<div id="chart_CAUSE"></div>
+				<div id="chart_Q_NUM_TOT"></div>
 			</td>
 			<td valign='top'>
-				<div id="chart_CAUSE_PRC"></div>
+				<div id="chart_Q_NUM"></div>
+			</td>
+			<td valign='top'>
+				<div id="chart_Q_NUM_PRC"></div>
 			</td>
 		</tr>
 	</table>
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '18' %]
 	<table width='100%' border='0' align='center' valign='top'>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Все звонки / статус</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Все звонки / статус</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
-				<div id="chart_ALL_STATUS"></div>
-			</td>
-			<td valign='top' width='50%'>
-				<div id="chart_ALL_STATUS_PRC"></div>
-			</td>
+			[% IF DATA_EXISTS eq '2' %]
+			<td valign='top' width='33%'><div id="chart_ALL_STATUS_TOT"></div></td><td valign='top' width='33%'><div id="chart_ALL_STATUS"></div></td><td valign='top' width='33%'><div id="chart_ALL_STATUS_PRC"></div></td>
+			[% ELSE %]
+			<td></td><td valign='top' width='50%'><div id="chart_ALL_STATUS"></div></td><td valign='top' width='50%'><div id="chart_ALL_STATUS_PRC"></div></td>
+			[% END %]
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Все звонки / удачные или нет</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Все звонки / удачные или нет</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
+			<td valign='top'>
+				<div id="chart_STATUS_TOT"></div>
+			</td>
+			<td valign='top'>
 				<div id="chart_STATUS"></div>
 			</td>
-			<td valign='top' width='50%'>
+			<td valign='top'>
 				<div id="chart_STATUS_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Все звонки / попытка звонка</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Все звонки / попытка звонка</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
+			<td valign='top'>
+				<div id="chart_ATTEMPT_TOT"></div>
+			</td>
+			<td valign='top'>
 				<div id="chart_ATTEMPT"></div>
 			</td>
-			<td valign='top' width='50%'>
+			<td valign='top'>
 				<div id="chart_ATTEMPT_PRC"></div>
 			</td>
 		</tr>
 
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Успешные звонки / попытка звонка</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Успешные звонки / попытка звонка</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
+			<td valign='top'>
+				<div id="chart_GOOD_ATTEMPT_TOT"></div>
+			</td>
+			<td valign='top'>
 				<div id="chart_GOOD_ATTEMPT"></div>
 			</td>
-			<td valign='top' width='50%'>
+			<td valign='top'>
 				<div id="chart_GOOD_ATTEMPT_PRC"></div>
 			</td>
 		</tr>
@@ -553,18 +606,20 @@
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '27' %]
 	<table width='100%' border='0' align='center' valign='top'>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Статистика по звонкам</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Статистика по звонкам</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
-				<div id="chart_STATUS"></div>
-			</td>
-			<td valign='top' width='50%'>
-				<div id="chart_STATUS_PRC"></div>
-			</td>
+			[% IF DATA_EXISTS eq '2' %]
+			<td valign='top' width='33%'><div id="chart_STATUS_TOT"></div></td><td valign='top' width='33%'><div id="chart_STATUS"></div></td><td valign='top' width='33%'><div id="chart_STATUS_PRC"></div></td>
+			[% ELSE %]
+			<td></td><td valign='top' width='50%'><div id="chart_STATUS"></div></td><td valign='top' width='50%'><div id="chart_STATUS_PRC"></div></td>
+			[% END %]
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Время ожидания на парковке</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Время ожидания на парковке</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_RING_TIME_ANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_RING_TIME_ANSWER"></div>
 			</td>
@@ -573,8 +628,11 @@
 			</td>
 		</tr>
 		
-		<tr><td valign='top' colspan='2'><br><br></td></tr>
+		<tr><td valign='top' colspan='3'><br><br></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_RING_TIME_NOANSWER_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_RING_TIME_NOANSWER"></div>
 			</td>
@@ -586,36 +644,44 @@
 	[% END %]
 	[% IF VBOX_PREF.TYPE eq '31' %]
 	<table width='100%' border='0' align='center' valign='top'>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Все звонки / статус</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Все звонки / статус</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
-				<div id="chart_ALL_STATUS"></div>
-			</td>
-			<td valign='top' width='50%'>
-				<div id="chart_ALL_STATUS_PRC"></div>
-			</td>
+			[% IF DATA_EXISTS eq '2' %]
+			<td valign='top' width='33%'><div id="chart_ALL_STATUS_TOT"></div></td><td valign='top' width='33%'><div id="chart_ALL_STATUS"></div></td><td valign='top' width='33%'><div id="chart_ALL_STATUS_PRC"></div></td>
+			[% ELSE %]
+			<td></td><td valign='top' width='50%'><div id="chart_ALL_STATUS"></div></td><td valign='top' width='50%'><div id="chart_ALL_STATUS_PRC"></div></td>
+			[% END %]
 		</tr>
 		
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Все звонки / удачные или нет</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Все звонки / удачные или нет</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
+			<td valign='top'>
+				<div id="chart_STATUS_TOT"></div>
+			</td>
+			<td valign='top'>
 				<div id="chart_STATUS"></div>
 			</td>
-			<td valign='top' width='50%'>
+			<td valign='top'>
 				<div id="chart_STATUS_PRC"></div>
 			</td>
 		</tr>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Успешные звонки / попытка звонка</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Успешные звонки / попытка звонка</h3></td></tr>
 		<tr>
-			<td valign='top' width='50%'>
+			<td valign='top'>
+				<div id="chart_GOOD_ATTEMPT_TOT"></div>
+			</td>
+			<td valign='top'>
 				<div id="chart_GOOD_ATTEMPT"></div>
 			</td>
-			<td valign='top' width='50%'>
+			<td valign='top'>
 				<div id="chart_GOOD_ATTEMPT_PRC"></div>
 			</td>
 		</tr>
-		<tr><td valign='top' colspan='2' align='center'><br><h3>Продолжительность звонков</h3></td></tr>
+		<tr><td valign='top' colspan='3' align='center'><br><h3>Продолжительность звонков</h3></td></tr>
 		<tr>
+			<td valign='top'>
+				<div id="chart_DURATION_TOT"></div>
+			</td>
 			<td valign='top'>
 				<div id="chart_DURATION"></div>
 			</td>
@@ -627,6 +693,7 @@
 	[% END %]
 	</p>
 
+	[% END %]
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 </body>

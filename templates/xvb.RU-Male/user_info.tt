@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.18 2015/01/13 08:41:17 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.19 2015/08/17 20:36:28 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -182,8 +182,14 @@ SIP-домен: [% d.DOMAIN | html %]
 								<option value="10" selected>звонки+активность обобщенная</option>
 							[% ELSIF USER_CREDS.STATEMENTS eq '12' %]
 								<option value="12" selected>звонки (список+обобщенная)</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '14' %]
-								<option value="14" selected>вся статистика</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '16' %]
+								<option value="16" selected>очереди</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '18' %]
+								<option value="18" selected>очереди+активность</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '26' %]
+								<option value="26" selected>очереди+активность+звонки</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '30' %]
+								<option value="30" selected>вся статистика</option>
 							[% END %]
 								<option value="0">не требуется</option>
 								<option value="2">внутренняя активность</option>
@@ -192,7 +198,10 @@ SIP-домен: [% d.DOMAIN | html %]
 								<option value="8">звонки обобщенная</option>
 								<option value="10">звонки+активность обобщенная</option>
 								<option value="12">звонки (список+обобщенная)</option>
-								<option value="14">вся статистика</option>
+								<option value="16">очереди</option>
+								<option value="18">очереди+активность</option>
+								<option value="26">очереди+активность+звонки</option>
+								<option value="30">вся статистика</option>
 						</select>
 					</td>
 				</tr>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.95 2015/01/13 08:41:16 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.96 2015/08/17 20:36:28 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -182,8 +182,14 @@ SipDomain: [% d.DOMAIN | html %]
 								<option value="10" selected>calls+activities summary</option>
 							[% ELSIF USER_CREDS.STATEMENTS eq '12' %]
 								<option value="12" selected>calls (summary/list)</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '14' %]
-								<option value="14" selected>all</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '16' %]
+								<option value="16" selected>queues</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '18' %]
+								<option value="18" selected>queues+activities</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '26' %]
+								<option value="26" selected>queues+activities+calls</option>
+							[% ELSIF USER_CREDS.STATEMENTS eq '30' %]
+								<option value="30" selected>all</option>
 							[% END %]
 								<option value="0">disable</option>
 								<option value="2">activities summary</option>
@@ -192,7 +198,10 @@ SipDomain: [% d.DOMAIN | html %]
 								<option value="8">calls summary</option>
 								<option value="10">calls+activities summary</option>
 								<option value="12">calls (summary/list)</option>
-								<option value="14">all</option>
+								<option value="16">queues</option>
+								<option value="18">queues+activities</option>
+								<option value="26">queues+activities+calls</option>
+								<option value="30">all</option>
 						</select>
 					</td>
 				</tr>
