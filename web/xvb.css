@@ -477,11 +477,11 @@ li {
 
 @font-face {
 	font-family: 'icomoon';
-	src:url('/xvb/fonts/icomoon.eot?hbritu');
-	src:url('/xvb/fonts/icomoon.eot?#iefixhbritu') format('embedded-opentype'),
-		url('/xvb/fonts/icomoon.ttf?hbritu') format('truetype'),
-		url('/xvb/fonts/icomoon.woff?hbritu') format('woff'),
-		url('/xvb/fonts/icomoon.svg?hbritu#icomoon') format('svg');
+	src:url('fonts/icomoon.eot?dwnubt');
+	src:url('fonts/icomoon.eot?#iefixdwnubt') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?dwnubt') format('truetype'),
+		url('fonts/icomoon.woff?dwnubt') format('woff'),
+		url('fonts/icomoon.svg?dwnubt#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -526,6 +526,9 @@ li {
 }
 .icon-calendar:before {
 	content: "\e953";
+}
+.icon-printer:before {
+	content: "\e954";
 }
 .icon-mobile:before {
 	content: "\e958";

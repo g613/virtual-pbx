@@ -37,46 +37,13 @@ Requires: perl(Gearman::Worker)
 Requires: perl(Authen::SASL)
 
 %description
-The XVB virtual pbx application is intended for processing incoming/outgoing calls and rapid organization 
-IVR menu. also provides an isolated environment (numbered plan, routing calls, institute phones and so forth.)
-for multiple users.
-
-Virtual-pbx application include:
-	- Processing incoming / outgoing calls.
-	- Completely isolated environment for different users 
-	  ( incoming / outgoing routes, dial plan, sip-endpoints, web-interface, cdrs, call-recordings, etc ).
-	- Custom user greetings support.
-	- Email/Twitter notifications.
-	- Multiple language voice prompts.
-	- Text To Speech ( TTS ) for multiple languages.
-	- Custom music on hold (MOH) for each user.
-	- Multiple language WEB interface with xml/json API support.
-	- Flexible customisation for system voice messages.
-	- Managing voice mail via phone or WEB interface.
-	- User specified time zones support.
-	- Call transfer support ( blind transfer ).
-	- White / Black lists support for each IVR item.
-	- CDR support.
-	- IVR logging.
-	- XML backup / restore configuration.
-	- Multiple roles within a single IVR account.
-	- Privated / Shared DIDs support.
-	- SQL reports.
-	- Management API.
-	- Radius accounting.
-	- Background music for Find-Me / Queue calls.
-	- HD codec ( g722 ).
-	- Email/Web interface Branding.
-	- Recording outgoing calls ( auto / on demand ).
-	- Full DTMF history for each call.
-	- Support Multi-tenant asterisk with Kamailio as sip registrar server / load balancer.
-	- FMC - Fixed Mobile Convergence
-	- Several types of extensions.
+The XVB virtual-pbx application is designed for processing incoming/outgoing calls in an isolated environment 
+(numbered plan, routing calls, phones, cdrs, web gui and so forth. ) for multiple users. 
 
 ####################################################
 #
 %package voip
-Summary: Voice Application Server / HostedIVR solution based on asterisk - VOIP application
+Summary: XVB pbx - VOIP applications
 Group:   System Environment/Services
 
 Requires: asterisk >= 1.6.0.28
@@ -99,7 +66,7 @@ Voice Application Server / HostedIVR solution based on asterisk - VOIP applicati
 ####################################################
 #
 %package web
-Summary: Voice Application Server / HostedIVR solution based on asterisk - WEB interface
+Summary: XVB pbx - WEB interface
 Group:   System Environment/Services
 
 Requires: virtual-pbx = %{version}-%{release}
@@ -119,7 +86,7 @@ Voice Application Server / HostedIVR solution based on asterisk  - WEB interface
 ####################################################
 #
 %package management
-Summary: Voice Application Server / HostedIVR solution based on asterisk - Management utilites
+Summary: XVB pbx - Management utilites
 Group:   System Environment/Services
 
 Requires: virtual-pbx = %{version}-%{release}
@@ -131,7 +98,7 @@ Voice Application Server / HostedIVR solution based on asterisk  - Management ut
 ####################################################
 #
 %package sound-files
-Summary: Voice Application Server / HostedIVR solution based on asterisk - Sound files
+Summary: XVB pbx - Sound files
 Group:   System Environment/Services
 
 %description sound-files
@@ -141,7 +108,7 @@ Voice Application Server / HostedIVR solution based on asterisk - Sound files
 ####################################################
 #
 %package devel
-Summary: Voice Application Server / HostedIVR solution based on asterisk - devel
+Summary: XVB pbx - devel
 Group:   System Environment/Services
 
 %description devel
@@ -151,7 +118,7 @@ Voice Application Server / HostedIVR solution based on asterisk - devel
 ####################################################
 #
 %package balancer
-Summary: Voice Application Server / HostedIVR solution based on asterisk - Load balancer
+Summary: XVB pbx - Load balancer
 Group:   System Environment/Services
 Requires: kamailio
 

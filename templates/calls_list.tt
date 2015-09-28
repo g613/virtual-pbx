@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: calls_list.tt,v 1.10 2015/01/17 20:03:57 gosha Exp $ -->
+<!-- $Id: calls_list.tt,v 1.11 2015/09/25 13:06:51 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Live calls - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -62,6 +62,7 @@
 			<th>Start Date</th>
 			<th>Caller ID</th>
 			<th>Called NUM</th>
+			<th>&nbsp;</th>
 			<th>Call duration</th>
 			<th>Extension</th>
 			<th>Duration</th>
@@ -69,7 +70,7 @@
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='8'>
+			<td align='left' colspan='9'>
 				<a title='previous page' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
@@ -81,6 +82,7 @@
 			<td><a title='call detail' href='?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
 			<td>[% msg.CALLER_ID | html %]</td>
 			<td>[% msg.CALLED_ID | html %]</td>
+			<td>[% msg.ANSWERED | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td>[% msg.EXT_ID | html %]</td>
 			<td>[% msg.EXT_TS | duration_str %]</td>
@@ -95,7 +97,7 @@
 
 		<tr>
 		[% IF MSG_NEXT ne '' %]
-			<td align='right' colspan='8'>
+			<td align='right' colspan='9'>
 				<a title='next page' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]'><span class='fs0'>►</span></a>
 			</td>
 		[% END %]

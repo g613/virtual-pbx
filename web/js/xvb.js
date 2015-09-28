@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.112 2015/08/26 20:50:00 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.113 2015/08/30 20:40:28 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -953,6 +953,11 @@ function ExtStatdrawChart1(chart_param,title,title2,click_url,key_map) {
 			var div_id = document.getElementById('chart_'+chart_param);
 			if ( div_id != null ) {
 				var chart_prc = new google.visualization.ColumnChart(div_id);
+				if ( (typeof(need_print) !== 'undefined') && need_print != null ) {	
+    					google.visualization.events.addListener(chart_prc, 'ready', function () {
+					      div_id.innerHTML = '<img src="' + chart_prc.getImageURI() + '">';
+					});
+				}
 				chart_prc.draw(data_prc, { height: 400, legend: { position: 'bottom', maxLines: 4 }, title: key +' - '+ title});
 				if ( click_url != null ) {
 					google.visualization.events.addListener(chart_prc, 'select',
@@ -978,6 +983,11 @@ function ExtStatdrawChart1(chart_param,title,title2,click_url,key_map) {
 			div_id = document.getElementById('chart_'+chart_param+'_PRC');
 			if ( div_id != null ) {
 				var chart = new google.visualization.PieChart(div_id);
+				if ( (typeof(need_print) !== 'undefined') && need_print != null ) {	
+    					google.visualization.events.addListener(chart, 'ready', function () {
+					      div_id.innerHTML = '<img src="' + chart.getImageURI() + '">';
+					});
+				}
 				chart.draw(data, { height: 400, min: 0, title: key + ' - ' + title + '  ( % )', is3D: true });
 				
 				if ( click_url != null ) {
@@ -1063,6 +1073,11 @@ function ExtStatdrawChart1(chart_param,title,title2,click_url,key_map) {
 		var div_id = document.getElementById('chart_'+chart_param+'_TOT');
 		if ( div_id != null ) {
 			var chart_tot = new google.visualization.PieChart(div_id);
+			if ( (typeof(need_print) !== 'undefined') && need_print != null ) {	
+    				google.visualization.events.addListener(chart_tot, 'ready', function () {
+				      div_id.innerHTML = '<img src="' + chart_tot.getImageURI() + '">';
+				});
+			}
 			chart_tot.draw(data_tot, { height: 400, min: 0, title: title+' (sum)', is3D: true });
 			
 			if ( click_url != null ) {
@@ -1089,6 +1104,11 @@ function ExtStatdrawChart1(chart_param,title,title2,click_url,key_map) {
 		div_id = document.getElementById('chart_'+chart_param);
 		if ( div_id != null ) {
 			var chart = new google.visualization.ColumnChart(div_id);
+			if ( (typeof(need_print) !== 'undefined') && need_print != null ) {	
+    				google.visualization.events.addListener(chart, 'ready', function () {
+				      div_id.innerHTML = '<img src="' + chart.getImageURI() + '">';
+				});
+			}
 			chart.draw(data, { height: 400, min: 0,isStacked: true, title: title, legend: { position: 'bottom', maxLines: 4 },bar: {groupWidth: "91%"}, });
 			
 			if ( click_url != null ) {
@@ -1117,6 +1137,11 @@ function ExtStatdrawChart1(chart_param,title,title2,click_url,key_map) {
 		div_id = document.getElementById('chart_'+chart_param+'_PRC');
 		if ( div_id != null ) {
 			var chart_prc = new google.visualization.BarChart(div_id);
+			if ( (typeof(need_print) !== 'undefined') && need_print != null ) {	
+    				google.visualization.events.addListener(chart_prc, 'ready', function () {
+				      div_id.innerHTML = '<img src="' + chart_prc.getImageURI() + '">';
+				});
+			}
 			chart_prc.draw(data_prc, { height: 400, min: 0, isStacked: true, title: title+' (%)', legend: { position: 'bottom', maxLines: 4 },bar: {groupWidth: "91%"}, });
 			
 			if ( click_url != null ) {
@@ -1212,6 +1237,11 @@ function ExtStatdrawChart2(chart_param,subparam,divname,title,title2,click_url,k
 			var div_id = document.getElementById('chart_'+chart_param+'_'+divname);
 			if ( div_id != null ) {
 				var chart_prc = new google.visualization.ColumnChart(div_id);
+				if ( (typeof(need_print) !== 'undefined') && need_print != null ) {	
+    					google.visualization.events.addListener(chart_prc, 'ready', function () {
+					      div_id.innerHTML = '<img src="' + chart_prc.getImageURI() + '">';
+					});
+				}
 				chart_prc.draw(data_prc, { height: 400, legend: { position: 'bottom', maxLines: 4 }, title: key +' - '+ title});
 				
 				if ( click_url != null ) {
@@ -1238,6 +1268,11 @@ function ExtStatdrawChart2(chart_param,subparam,divname,title,title2,click_url,k
 			div_id = document.getElementById('chart_'+chart_param+'_'+divname+'_PRC');
 			if ( div_id != null ) {
 				var chart = new google.visualization.PieChart(div_id);
+				if ( (typeof(need_print) !== 'undefined') && need_print != null ) {	
+    					google.visualization.events.addListener(chart, 'ready', function () {
+					      div_id.innerHTML = '<img src="' + chart.getImageURI() + '">';
+					});
+				}
 				chart.draw(data, { height: 400, min: 0, title: key +' - '+ title + ' ( % )', is3D: true });
 				
 				if ( click_url != null ) {
@@ -1331,6 +1366,12 @@ function ExtStatdrawChart2(chart_param,subparam,divname,title,title2,click_url,k
 		var div_id = document.getElementById('chart_'+chart_param+'_'+divname+'_TOT');
 		if ( div_id != null ) {
 			var chart_tot = new google.visualization.PieChart(div_id);
+    		
+			if ( (typeof(need_print) !== 'undefined') && need_print != null ) {	
+				google.visualization.events.addListener(chart_tot, 'ready', function () {
+				      div_id.innerHTML = '<img src="' + chart_tot.getImageURI() + '">';
+				});
+			}
 			chart_tot.draw(data_tot, { height: 400, min: 0, title: title+' (sum)', is3D: true });
 			
 			if ( click_url != null ) {
@@ -1357,6 +1398,12 @@ function ExtStatdrawChart2(chart_param,subparam,divname,title,title2,click_url,k
 		div_id = document.getElementById('chart_'+chart_param+'_'+divname);
 		if ( div_id != null ) {
 			var chart = new google.visualization.ColumnChart(div_id);
+    			
+			if ( (typeof(need_print) !== 'undefined') && need_print != null ) {	
+				google.visualization.events.addListener(chart, 'ready', function () {
+				      div_id.innerHTML = '<img src="' + chart.getImageURI() + '">';
+				});
+			}
 			chart.draw(data, { height: 400, min: 0,isStacked: true, title: title, legend: { position: 'bottom', maxLines: 4 },bar: {groupWidth: "91%"}, });
 			
 			if ( click_url != null ) {
@@ -1381,10 +1428,15 @@ function ExtStatdrawChart2(chart_param,subparam,divname,title,title2,click_url,k
 				} );
 			}
 		}
-
 		div_id = document.getElementById('chart_'+chart_param+'_'+divname+'_PRC');
 		if ( div_id != null ) {
 			var chart_prc = new google.visualization.BarChart(div_id);
+
+			if ( (typeof(need_print) !== 'undefined') && need_print != null ) {	
+    				google.visualization.events.addListener(chart_prc, 'ready', function () {
+				      div_id.innerHTML = '<img src="' + chart_prc.getImageURI() + '">';
+				});
+			}
 			chart_prc.draw(data_prc, { height: 400, min: 0, isStacked: true, title: title + ' (%)', legend: { position: 'bottom', maxLines: 4 },bar: {groupWidth: "91%"}, });
 			
 			if ( click_url != null ) {

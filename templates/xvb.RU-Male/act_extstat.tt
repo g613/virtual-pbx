@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.25 2015/08/27 10:37:30 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.28 2015/09/02 05:32:49 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -150,8 +150,13 @@
 	<table width='100%'>
 		<tr>
 			<td align='left' width='10%'>
+				[% IF NEED_PRINT eq '' %]
 				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Параметры номера"><span class='icon-cog fs0'></span></a>
 				<a href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Активность"><span class='icon-stats-bars fs0'></span></a>
+				<script language='Javascript'>
+					document.write( "<a href='?need_print=1&id=[% VBOX_PREF.ID %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&caller_id=[% CDR_CALLER_ID | html %]&data=[% CDR_DATA | html %]&action=extended_stat&uniq=[% USER_CREDS.UNIQ %]&a=msg_download&chart_group_period="+ group_by +"' target='_blank' title='Версия для печати'><span class='icon-printer fs0'></span></a>" );
+				</script>
+				[% END %]
 			</td>
 			<td align='center'>
 				<h1>Внутренний номер #[% VBOX_PREF.EXT_NUMBER | html %] расширенная статистика</h1><h3>( [% CDR_HEADER %] 
@@ -162,7 +167,10 @@
 			</td>
 		</tr>
 	</table>
-			
+	
+	[% IF NEED_PRINT eq '1' %]
+	<script language="javascript">need_print=1;</script>
+	[% ELSE %]
 	<table width='100%'>
 		<tr>
 			<td align='right'>
@@ -217,6 +225,7 @@
 			</td>
 		</tr>
 	</table>
+	[% END %]
 
 	[% IF DATA_EXISTS eq '0' %]
 	[% ELSE %]
@@ -410,13 +419,13 @@
 		<tr><td valign='top' colspan='3' align='center'><br><h3>Время ожидания ответа на звонок</h3></td></tr>
 		<tr>
 			<td valign='top'>
-				<div id="chart_RING_TIME_TOT_TOT"></div>
+				<div id="chart_RING_TIME_ALL_TOT"></div>
 			</td>
 			<td valign='top'>
-				<div id="chart_RING_TIME_TOT"></div>
+				<div id="chart_RING_TIME_ALL"></div>
 			</td>
 			<td valign='top'>
-				<div id="chart_RING_TIME_TOT_PRC"></div>
+				<div id="chart_RING_TIME_ALL_PRC"></div>
 			</td>
 		</tr>
 		

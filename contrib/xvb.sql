@@ -1063,8 +1063,8 @@ create	table VPBX_VBOXES_TTS
 
 	GOTO_IF_FAIL	VARCHAR(255),
 	NEED_PARAMS		INT(1) not null default 0,
-	QUIET_MODE		INT(1) not null default 0,
 	NO_WAIT			INT(1) not null default 0,
+	TTS_REPEAT_CNT	INT(8) not null default 1,
 
 	unique(ID),
 
@@ -1686,7 +1686,7 @@ INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(7, 'ANNOUNCEM
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(30, 'NEW', 'New user message');
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(40, 'OLD', 'Old user message');
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(41, 'MONITOR', 'Call recording');
-INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(42, 'FAX', 'Fax message');
+INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(42, 'RXFAX', 'Fax message');
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(43, 'DTMF', 'DTMF input');
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(50, 'TRASH', 'User trash');
 -- DTMF PATTERN
@@ -2391,7 +2391,7 @@ from
 	VPBX_SIPPEERS
 where type='friend' and PEER_TYPE = 0;
 
-INSERT INTO version (table_name, table_version) values( 'location', 6 );
+INSERT INTO version (table_name, table_version) values( 'location', 8 );
 CREATE TABLE location (
     id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
     ruid VARCHAR(64) DEFAULT '' NOT NULL,
@@ -2412,6 +2412,10 @@ CREATE TABLE location (
     methods INT(11) DEFAULT NULL,
     instance VARCHAR(255) DEFAULT NULL,
     reg_id INT(11) DEFAULT 0 NOT NULL,
+	server_id INT(11) DEFAULT 0 NOT NULL,
+	connection_id INT(11) DEFAULT 0 NOT NULL,
+	keepalive INT(11) DEFAULT 0 NOT NULL,
+	partition INT(11) DEFAULT 0 NOT NULL,
     CONSTRAINT ruid_idx UNIQUE (ruid)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -2433,18 +2437,19 @@ CREATE TABLE location_attrs (
 CREATE INDEX account_record_idx ON location_attrs (username, domain, ruid);
 CREATE INDEX last_modified_idx ON location_attrs (last_modified);
 
-INSERT INTO version (table_name, table_version) values ('presentity','3');
+INSERT INTO version (table_name, table_version) values ('presentity','4');
 CREATE TABLE presentity (
-    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    username VARCHAR(64) NOT NULL,
-    domain VARCHAR(64) NOT NULL,
-    event VARCHAR(64) NOT NULL,
-    etag VARCHAR(64) NOT NULL,
-    expires INT(11) NOT NULL,
-    received_time INT(11) NOT NULL,
-    body BLOB NOT NULL,
-    sender VARCHAR(128) NOT NULL,
-    CONSTRAINT presentity_idx UNIQUE (username, domain, event, etag)
+	id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	username VARCHAR(64) NOT NULL,
+	domain VARCHAR(64) NOT NULL,
+	event VARCHAR(64) NOT NULL,
+	etag VARCHAR(64) NOT NULL,
+	expires INT(11) NOT NULL,
+	received_time INT(11) NOT NULL,
+	body BLOB NOT NULL,
+	sender VARCHAR(128) NOT NULL,
+	priority INT(11) DEFAULT 0 NOT NULL,
+	CONSTRAINT presentity_idx UNIQUE (username, domain, event, etag)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 CREATE INDEX presentity_expires ON presentity (expires);

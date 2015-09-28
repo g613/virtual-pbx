@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.293 2015/05/13 15:34:44 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.295 2015/09/19 11:08:04 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -809,14 +809,10 @@
 						</script>
 					</td>
 				</tr>
-				<tr class='addon_info'>
-					<td>Quiet mode: </td>
+				<tr>
+					<td>Repeat answer: </td>
 					<td>
-					[% IF VBOX_PREF.QUIET_MODE %]
-						<input name="QUIET_MODE" type="checkbox" checked>
-					[% ELSE %]
-						<input name="QUIET_MODE" type="checkbox">
-					[% END %]
+						<input size='4' type='text' name='TTS_REPEAT_CNT' value='[% VBOX_PREF.TTS_REPEAT_CNT | html %]'>&nbsp;times
 					</td>
 				</tr>
 				<tr class='addon_info'>
