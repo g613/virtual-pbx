@@ -846,6 +846,8 @@ create	table VPBX_VBOXES_DIALOUT
 	MOH_ID			INT(16)			not null default 0,
 	FMC				VARCHAR(255),
 
+	MISS_CALL_ALERT	INT(1)			default 0,
+
 	unique(ID),
 
     CONSTRAINT FK_VPBX_VBOXES_DIALOUT FOREIGN KEY (ID) REFERENCES VPBX_VBOXES_CORE(ID) ON DELETE CASCADE,
@@ -896,6 +898,8 @@ create	table VPBX_VBOXES_QUEUES
 	WRAPUPTIME			INT(6)			default 0,
 	JOINEMPTY			INT(1)			default 0,
 	REMEMBER_AGENT		INT(1)			default 0,
+	MISS_CALL_ALERT		INT(1)			default 0,
+
 	unique(ID),
 
     CONSTRAINT FK_VPBX_VBOXES_QUEUES FOREIGN KEY (ID) REFERENCES VPBX_VBOXES_CORE(ID) ON DELETE CASCADE,
@@ -2362,6 +2366,7 @@ insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('[87]800\\d{7}','call 2 t
 insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('[87]809\\d{7}','call 2 toll');
 insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('\\d{7}','call 2 7digits');
 insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('\\d{6}','call 2 6digits');
+insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('[87]954\\d{9}','ru-satellite');
 
 insert into VPBX_DIDS_ATTR(DID,LANG_ID) VALUES( '613', 0 );
 

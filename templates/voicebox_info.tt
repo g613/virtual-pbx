@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.295 2015/09/19 11:08:04 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.296 2015/10/11 19:48:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -639,6 +639,16 @@
 					[% END %]
 					</td>
 				</tr>
+				<tr class='addon_info'>
+					<td>Miss call alert: </td>
+					<td>
+						[% IF VBOX_PREF.MISS_CALL_ALERT %]
+							<input name="MISS_CALL_ALERT" type="checkbox" checked>
+						[% ELSE %]
+							<input name="MISS_CALL_ALERT" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
 				<tr>
 					<td>Send new message notify to: </td>
 					<td>
@@ -1270,6 +1280,16 @@
 							[% END %]
 						[% END %]
 						</select>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Miss call alert: </td>
+					<td>
+						[% IF VBOX_PREF.MISS_CALL_ALERT %]
+							<input name="MISS_CALL_ALERT" type="checkbox" checked>
+						[% ELSE %]
+							<input name="MISS_CALL_ALERT" type="checkbox">
+						[% END %]
 					</td>
 				</tr>
 				<tr class='addon_info'>

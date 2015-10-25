@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.25 2015/08/05 07:23:37 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.26 2015/10/10 11:14:22 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Все сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -81,7 +81,7 @@
 				<input size='11' type='text' placeholder='Длительность' name='duration' value='[% DURATION | html %]'>
 				&nbsp;
 				<select name="msg_type" id='msg_type_selector'>
-					<option selected='selected' value="">Все сообщения</option>
+					<option selected='selected' value="">Любые сообщения</option>
 					<option value="30:40:41:42:43">Все пользовательские</option>
 					<option value="1:2:3:4:5:6">Все системные</option>
 					<option value=",1">Только голосовые</option>

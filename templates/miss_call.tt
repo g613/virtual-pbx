@@ -1,0 +1,30 @@
+<html>
+<!-- $Id: miss_call.tt,v 1.2 2015/10/13 16:02:15 gosha Exp $ -->
+<!--SUBJECT:Miss call from: [% callerid | html %]:SUBJECT-->
+<head>
+	<BASE href="[% CGI_SERVER %]">
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="[% CGI_SERVER %]/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+</head>
+
+<body link=blue vlink=purple>
+
+Hello,
+
+<p>
+Miss call information:
+	Caller: <b>[% _CDR.CALLER_ID | html %]</b>
+	Call date: <b>[% ORIGDATE | html %]</b>
+	Extension: <b>[% _USER_VBOX.EXT_NUMBER | html %]</b>
+	Status: <b>[% _CDR.ENH_STATUS | html %]</b>
+	Wait time: <b>[% _CDR.ENH_RING_TIME %] ( sec )</b>
+</p>
+
+Thanks!
+
+</body>
+</html>
+

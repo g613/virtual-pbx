@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.59 2015/09/19 11:08:05 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.60 2015/10/11 19:48:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -815,6 +815,16 @@
 					[% END %]
 					</td>
 				</tr>
+				<tr class='addon_info'>
+					<td>Уведомить о пропущенном вызове: </td>
+					<td>
+						[% IF VBOX_PREF.MISS_CALL_ALERT %]
+							<input name="MISS_CALL_ALERT" type="checkbox" checked>
+						[% ELSE %]
+							<input name="MISS_CALL_ALERT" type="checkbox">
+						[% END %]
+					</td>
+				</tr>
 				<tr>
 					<td>Уведомить о новом сообщении: </td>
 					<td>
@@ -1533,6 +1543,16 @@
 							[% END %]
 						[% END %]
 						</select>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Уведомить о пропущенном вызове: </td>
+					<td>
+						[% IF VBOX_PREF.MISS_CALL_ALERT %]
+							<input name="MISS_CALL_ALERT" type="checkbox" checked>
+						[% ELSE %]
+							<input name="MISS_CALL_ALERT" type="checkbox">
+						[% END %]
 					</td>
 				</tr>
 				<tr class='addon_info'>

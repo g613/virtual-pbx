@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: new_message.tt,v 1.8 2015/01/13 08:41:17 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.9 2015/10/11 19:48:25 gosha Exp $ -->
 <!--SUBJECT:У Вас новое сообщение в ящике #[% _USER_VBOX.EXT_NUMBER | html %] от [% callerid | html %]:SUBJECT-->
 <!--!EMAIL_FROM:'Виртуальная АТС' <sa1es@virtuаl-pbx.ru>:EMAIL_FROM-->
 <head>
@@ -41,7 +41,7 @@
 
 -- 
 <br>Спасибо,<br> 
-&nbsp;&nbsp;Ваш VirtualPBX.
+&nbsp;&nbsp;Ваш XVB PBX.
 
 </body>
 </html>

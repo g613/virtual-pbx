@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.71 2015/08/05 07:23:37 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.72 2015/10/10 11:14:20 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -81,7 +81,7 @@
 				<input size='8' type='text' placeholder='Duration' name='duration' value='[% DURATION | html %]'>
 				&nbsp;
 				<select name="msg_type" id='msg_type_selector'>
-					<option value="" selected>Message type</option>
+					<option value="" selected>Any messages</option>
 					<option value="30:40:41:42:43">User messages</option>
 					<option value="1:2:3:4:5:6">System messages</option>
 					<option value=",1">Only voice messages</option>
