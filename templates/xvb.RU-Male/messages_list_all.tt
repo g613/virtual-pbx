@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.26 2015/10/10 11:14:22 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.28 2016/01/11 12:44:46 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Все сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -29,9 +29,7 @@
 				<h1>Сообщения</h1>
 			</td>
 			<td align='right' width='15%'>
-		[% IF USER_CREDS.ROOT eq '0' %]
-				<a href='?action=msg_cleanup&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Вы действительно хотите удалить все сообщения?')"><span class='icon-cross fs0'></span></a>
-		[% END %]
+				<a href='#' onclick="return SubmitConfirm('ru','Вы действительно хотите удалить ВСЕ найденные сообщения ?')"><span class='icon-cross fs0'></span></a>
 			</td>
 		</tr>
 	</table>
@@ -39,7 +37,7 @@
 	<table width='100%'>
 		<tr>
 			<td align='right'>
-				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)' id='find-form'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -72,6 +70,7 @@
 				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='По дату'>
 				<button type="button">...</button>
 				<input name='action' value='msg_list_all' type='hidden'>
+				<input name='any_did' value='[% ANY_DID | html %]' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				&nbsp;
 				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]' placeholder='Кто звонил'>
@@ -99,7 +98,7 @@
 				</select>
 				&nbsp;
 				<input value='Найти' type='submit'>
-				<input value='Удалить' type='submit' name='find_and_delete' onclick='SubmitDelConfirm(this,"ru","Вы действительно хотите удалить ВСЕ найденные сообщения ?")'>
+				<input name='find_and_delete' value='' type='hidden' id='find-flt'>
 				</form>
 				<script langiage='JavaScript'>setActiveSelector('msg_type_selector',"[% MSG_TYPE | html %]");</script>
 			</td>
@@ -122,7 +121,7 @@
 		<tr>
 		[% IF MSG_PREV ne '' %]
 			<td align='left' colspan='9'>
-				<a title='предыдущая страница ([% MSG_PREV %])' href='?action=msg_list_all&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
+				<a title='предыдущая страница ([% MSG_PREV %])' href='?action=msg_list_all&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&any_did=[% ANY_DID | html %]'><span class='fs0'>◄</span></a>
 		[% END %]
 		</tr>
 		[% FOREACH msg = MSG_LIST %]
@@ -168,7 +167,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='10'>
-				<a title='следующая страница ([% MSG_NEXT %])' href='?action=msg_list_all&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
+				<a title='следующая страница ([% MSG_NEXT %])' href='?action=msg_list_all&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&any_did=[% ANY_DID | html %]'><span class='fs0'>►</span></a>
 			</td>
 		[% END %]
 		</tr>

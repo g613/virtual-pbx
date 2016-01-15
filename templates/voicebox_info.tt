@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.296 2015/10/11 19:48:25 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.301 2016/01/11 14:26:14 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -64,27 +64,28 @@
 		<td width='53%' valign='top'>
 		<table width='100%'>
 			<form method="post" action="[% CGI_URL %]">
-			[% IF USER_CREDS.ROOT eq '0' %]
 			<tr>
 				<td>Type:</td>
 				<td>
+				[% IF USER_CREDS.ROOT eq '0' %]
 					<input type='hidden' name='action' value='vb_change_type'>
 					<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 					<select name="type" onchange="LoadingOn(); ChangeVbType(this.value,'[% VBOX_PREF.ID %]','[% USER_CREDS.UNIQ %]')">
 					[% FOREACH vt = VB_TYPES %]
 						[% IF VBOX_PREF.TYPE eq vt.ID %]
-						<option value="[% vt.ID %]" selected>[% vt.DESCRIPTION | html %]</option>
-						[% ELSE %]
-							[% IF vt.ID vb_allow '0' %]
-								<option value="[% vt.ID %]">[% vt.DESCRIPTION | html %]</option>
-							[% END %]
+							<option value="[% vt.ID %]" selected>[% vt.DESCRIPTION | html %]</option>
+						[% ELSIF vt.ID vb_allow '0' %]
+							<option value="[% vt.ID %]">[% vt.DESCRIPTION | html %]</option>
 						[% END %]
 					[% END %]
 					</select>
 					&nbsp;&nbsp;
 					<noscript><input type='submit' value='&nbsp;change&nbsp;'></noscript>
-				
+				[% ELSE %]
+					[% VBOX_PREF.DESCRIPTION | html %]
+				[% END %]
+
 				[% IF VBOX_PREF.TYPE eq '1' %]
 				<a href='#' class='help'><span class='icon-bubble2 fs0'></span><span class='help'>
 				<h4>Playback hints:</h4>
@@ -216,14 +217,17 @@
 				</td>
 			</tr>
 			</form>
+			
 			<form name='vb_opt' method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
 			<tr>
 				<td>Number:</td>
 				<td>
 					[% IF VBOX_PREF.EXT_NUMBER eq '0' %]
 					<input size='15' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]' readonly>
-					[% ELSE %]
+					[% ELSIF USER_CREDS.ROOT eq '0' %]
 					<input size='15' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]'>
+					[% ELSE %]
+					<input size='15' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]' readonly>
 					[% END %]
 					<input type='hidden' name='action' value='vb_update'>
 					<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -231,22 +235,6 @@
 					&nbsp;&nbsp;id : [% VBOX_PREF.ID %]
 				</td>
 			</tr>
-			[% ELSE %]
-			<tr>
-				<td>Type:</td>
-				<td>
-					<input size='30' type='text' name='type_desc' value='[% VBOX_PREF.DESCRIPTION | html %]' readonly>
-				</td>
-			</tr>
-			<form name='vb_opt' method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
-			<tr>
-				<td>Number:</td>
-				<td>
-					<input size='15' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]' readonly>
-					&nbsp;&nbsp;id : [% VBOX_PREF.ID %]
-				</td>
-			</tr>
-			[% END %]
 			<tr>
 				<td>Next Extension: </td>
 				<td>
@@ -3282,6 +3270,7 @@
 			</tr>
 			[% END %]
 		</table>
+		<span><a name="addarea">&nbsp;</a></span>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</center>
 	<script language='JavaScript'>MoreExtOptions(document.getElementById('xvb_view_mode_selector'),1,'all options','core options');</script>

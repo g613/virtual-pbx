@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.49 2015/06/21 11:01:08 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.52 2016/01/11 12:44:46 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -20,12 +20,19 @@
 <body onLoad="XVBInit()">
 	<center>
 			
-	<h1>CDRs</h1>
+	<table width='100%'>
+		<tr>
+			<td align='center'><h1>CDRs</h1></td>
+			<td align='right' width='10%'>
+				<a title='download excel file' href='#' onclick="return SubmitConfirm('');"><span class='icon-file-excel fs0'></span></a>
+			</td>
+		</tr>
+	</table>
 
 	<table width='100%'>
 		<tr align='left'>
 			<td align='right'>
-				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)' id='find-form'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -58,8 +65,11 @@
 				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
 				<button type="button">...</button>
 				<input name='action' value='cdr_list' type='hidden'>
+				<input name='any_did' value='[% CDR_ANY_DID | html %]' type='hidden'>
 				&nbsp;
 				<input placeholder='Caller' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				&nbsp;
+				<input size='10' type='text' name='cnam' value='[% CDR_CNAM | html %]' placeholder='CNAM'>
 				&nbsp;
 				<input placeholder='Called' size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
@@ -82,7 +92,7 @@
 				</select>
 				&nbsp;
 				<input value='Search' type='submit'>
-				<input name='need_excel' value='Excel' type='submit'>
+				<input name='need_excel' value='' type='hidden' id='find-flt'>
 				</form>
 				<script language='JavaScript'>
 					setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");
@@ -104,7 +114,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='6'>
-				<a title='previous page' href='?action=cdr_list&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>◄</span></a>
+				<a title='previous page' href='?action=cdr_list&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&any_did=[% CDR_ANY_DID | html %]&cnam=[% CDR_CNAM | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -129,7 +139,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='6'>
-				<a title='next page' href='?action=cdr_list&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
+				<a title='next page' href='?action=cdr_list&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&cnam=[% CDR_CNAM | html %]'><span class='fs0'>►</span></a>
 			</td>
 		[% ELSE %]
 			<td colspan='6'>&nbsp;</td>
@@ -146,7 +156,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='5'>
-				<a title='previous page' href='?action=cdr_list&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>◄</span></a>
+				<a title='previous page' href='?action=cdr_list&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&any_did=[% CDR_ANY_DID | html %]&cnam=[% CDR_CNAM | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -168,7 +178,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='5'>
-				<a title='next page' href='?action=cdr_list&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
+				<a title='next page' href='?action=cdr_list&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&cnam=[% CDR_CNAM | html %]'><span class='fs0'>►</span></a>
 			</td>
 		[% ELSE %]
 			<td colspan='5'>&nbsp;</td>

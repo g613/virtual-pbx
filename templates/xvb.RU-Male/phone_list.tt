@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.25 2015/08/08 09:57:44 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.27 2016/01/11 14:26:14 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -178,6 +178,7 @@
 			</form>
 		</tr>
 	</table>
+	<a name="addarea">&nbsp;</a>
 	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>

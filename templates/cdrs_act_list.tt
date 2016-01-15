@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.29 2015/07/09 15:45:32 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.30 2016/01/08 08:13:48 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Call Detail - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -36,7 +36,13 @@
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
 			<td>[% msg.CDR_DATE | html %]</td>
-			<td>[% msg.CALLER_ID | html %]</td>
+			<td>
+			[% IF msg.CNAM %]
+				'[% msg.CNAM | html %]'&nbsp;&nbsp;&lt;[% msg.CALLER_ID | html %]&gt;
+			[% ELSE %]
+				[% msg.CALLER_ID | html %]
+			[% END %]
+			</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td align='left'>
 			[% IF msg.EXT_ID %]

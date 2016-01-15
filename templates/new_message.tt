@@ -1,13 +1,16 @@
 <html>
-<!-- $Id: new_message.tt,v 1.27 2015/01/13 08:41:16 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.29 2016/01/07 20:53:11 gosha Exp $ -->
 <!--SUBJECT:New message from: [% callerid | html %] in mailbox [% _USER_VBOX.EXT_NUMBER | html %]:SUBJECT-->
 <head>
 	<BASE href="[% CGI_SERVER %]">
-	[% IF USER_CREDS.CSS_HREF eq '' %]
-	<link rel="stylesheet" type="text/css" href="[% CGI_SERVER %]/xvb/xvb.css" />
-	[% ELSE %]
-	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
-	[% END %]
+	<style>
+	body { 
+		color:#177182;
+		font-family:Arial, Helvetica, sans-serif;
+		background:#f7f7f7 repeat-x;
+		font-size:13px;
+	}
+	</style>
 </head>
 
 <body link=blue vlink=purple>
@@ -15,8 +18,11 @@
 Hello,
 
 <p>
-Just wanted to let you know you were just left message in mailbox <b>[% CALLED_ID | html %]</b> # <b>[% _USER_VBOX.EXT_NUMBER | html %]</b>
-from <b>[% callerid | html %]</b>, on <b>[% origdate | html %]</b>, so you might want to check it when you get a chance.
+Just wanted to let you know you were just left message in mailbox <b>[% CALLED_ID | html %]</b> # <b>[% _USER_VBOX.EXT_NUMBER | html %]</b> from <b>[% callerid | html %]</b>
+[% IF cnam %] 
+( [% cnam | html %] )
+[% END %]
+, on <b>[% origdate | html %]</b>, so you might want to check it when you get a chance.
 </p>
 
 <p>

@@ -14,6 +14,7 @@ BuildArch: noarch
 Requires: mysql
 Requires: memcached
 Requires: sox
+#Requires: tmpwatch
 Requires: ffmpeg
 Requires: lame
 Requires: mpg123
@@ -35,6 +36,7 @@ Requires: perl(IO::Socket::SSL)
 Requires: perl(Gearman::Client)
 Requires: perl(Gearman::Worker)
 Requires: perl(Authen::SASL)
+Provides: perl(Asterisk::AMI) 
 
 %description
 The XVB virtual-pbx application is designed for processing incoming/outgoing calls in an isolated environment 
@@ -147,6 +149,7 @@ mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/recordings
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/tts
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/podcasts
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/helperdb
+mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/backups
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/data
 
 #start-devel
@@ -487,6 +490,8 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 %attr(755,root,root) %CORE_DIR/contrib/utils/tts-gen.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/node_diag.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/tts_clean.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/ui_backup.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/event-listener.pl
 %CORE_DIR/contrib/asterisk/feautures.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*
@@ -495,6 +500,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/tts
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/podcasts
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/helperdb
+%attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/backups
 %attr(755,root,root) %CORE_DIR/contrib/utils/file2moh.pl
 
 ####################################################
@@ -526,6 +532,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 %attr(755,root,root) %CORE_DIR/contrib/utils/billing_processor_daily.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/billing_processor_monthly.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/queues_hourly_avg.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/tts_mng.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/db_backup.pl
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/db
 

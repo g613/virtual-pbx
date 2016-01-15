@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: macros_list.tt,v 1.15 2015/03/26 14:45:41 gosha Exp $ -->
+<!-- $Id: macros_list.tt,v 1.17 2016/01/11 14:26:14 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Macros - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -59,6 +59,7 @@
 		</tr>
 		<tr><td colspan='4'>&nbsp;</td></tr>
 	</table>
+	<a name="addarea">&nbsp;</a>
 	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>

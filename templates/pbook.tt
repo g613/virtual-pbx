@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.19 2015/03/26 14:45:41 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.22 2016/01/11 14:26:14 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Phone book - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -63,7 +63,8 @@
 			<th>Phone</th>
 			<th>Shortcut</th>
 			<th>Comment</th>
-			<th>Actions</th>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
 		</tr>
 
 		[% FOREACH param = PBOOK_LIST %]
@@ -78,6 +79,8 @@
 			<td><input class='in_t0' size='20' name='ph' type='text' value='[% param.PHONE | html %]'></td>
 			<td><input class='in_t0' size='15' name='shortcut' type='text' value='[% param.SHORTCUT | html %]'></td>
 			<td><input class='in_t0' size='25' name='description' type='text' value='[% param.DESCRIPTION | html %]'></td>
+			
+			<td><a href='?action=crm_info&data_id=[% param.CRM_CUSTOMER_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CRM_CUSTOMER_NAME | html %]</a></td>
 	
 			<td align='left' nowrap='nowrap'>
 				<a href='?action=pbook_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete PBook item'><span class='icon-bin fs0'></span></a>
@@ -100,12 +103,13 @@
 			<td><input size='15' name='shortcut' type='text'></td>
 			<td><input size='25' name='description' type='text'></td>
 			
-			<td align='center'>
+			<td colspan='2' align='center'>
 				<input type='submit' value='Add'>
 			</td>
 		</form>
 		</tr>
 	</table>
+	<span><a name="addarea">&nbsp;</a></span>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 

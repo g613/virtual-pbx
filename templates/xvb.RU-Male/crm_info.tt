@@ -1,0 +1,189 @@
+<html>
+<!-- $Id: crm_info.tt,v 1.5 2016/01/09 19:45:22 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Информация о клиенте - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+			
+	<table width='100%'>
+		<tr>
+			<td align='left' width='10%'>
+				<a href='?action=msg_list_all&uniq=[% USER_CREDS.UNIQ %]&any_did=[% ANY_DID | html %]' title="Сообщения"><span class='icon-folder-open fs0'></span></a>
+				<a href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&any_did=[% ANY_DID | html %]' title="История звонков"><span class='icon-stats-bars fs0'></span></a>
+			</td>
+			<td align='center'><h1>Информация о клиенте</h1></td>
+			<td align='right' width='10%'>
+				<a href='?action=crm_del&data_id=[% CRM.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title="Удалить"><span class='icon-cross fs0'></span></a>
+			</td>
+		</tr>
+	</table>
+
+	<p>
+	<table width='100%'>
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		<tr>
+			<td>Клиент:</td>
+			<td>
+				<textarea rows='[% CRM.C_NAME | textarea_rows %]' cols='30' name='cname'>[% CRM.C_NAME | html %]</textarea>
+			</td>
+			<td rowspan='4' width='60%' valign='top'>
+	
+	<h4>Контакты:</h4>	
+	<table id='d-tbl'>
+		<tr>
+			<th>Имя</th>
+			<th>Фамилия</th>
+			<th>Телефон</th>
+			<th>Быстрый набор</th>
+			<th>&nbsp;</th>
+		</tr>
+
+		[% FOREACH param = PBOOK_LIST %]
+		<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
+		<form method="post" action="[% CGI_URL %]" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
+			<input type='hidden' name='action' value='pbook_update'>
+			<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
+			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+
+			<td><input class='in_t0' size='15' name='fn' type='text' value='[% param.FIRST_NAME | html %]'></td>
+			<td><input class='in_t0' size='15' name='ln' type='text' value='[% param.LAST_NAME | html %]'></td>
+			<td><input class='in_t0' size='17' name='ph' type='text' value='[% param.PHONE | html %]'></td>
+			<td><input class='in_t0' size='10' name='shortcut' type='text' value='[% param.SHORTCUT | html %]'></td>
+	
+			<td align='right' nowrap='nowrap'>
+				<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+					<noscript><input value='Сохранить изменения' type='submit'></noscript>
+				</span>
+				<a href='?action=pbook_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить элемент'><span class='icon-bin fs0'></span></a>
+			</td>
+		</form>
+		</tr>
+		[% END %]
+		<tr align='center' id='submit_row'>
+		<a name="addarea">&nbsp;</a>
+		<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+			<input type='hidden' name='action' value='pbook_add'>
+			<input type='hidden' name='crm_id' value='[% CRM.DATA_ID %]'>
+			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+			
+			<td><input size='15' name='fn' type='text'></td>
+			<td><input size='15' name='ln' type='text'></td>
+			<td><input size='17' name='ph' type='text'></td>
+			<td><input size='10' name='shortcut' type='text'></td>
+			
+			<td colspan='2' align='center'>
+				<input type='submit' value='Добавить'>
+			</td>
+		</form>
+		</tr>
+	</table>
+	
+			</td>
+		</tr>
+		<tr>
+			<td>Описание:</td>
+			<td colspan='2'>
+				<textarea rows='[% CRM.C_NOTE | textarea_rows %]' cols='30' name='description'>[% CRM.C_NOTE | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Переменные:
+			</td>
+			<td>
+				<textarea rows='[% CRM.C_VARS | textarea_rows %]' cols='30' name='vars'>[% CRM.C_VARS | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td align='center' colspan='2'>
+				<input type='hidden' name='data_id' value='[% CRM.DATA_ID %]'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<input type='hidden' name='action' value='crm_update'>
+				<input type='submit' value='Сохранить изменения'>
+			</td>
+		</tr>
+		</form>
+		<tr>
+		<td colspan='2'></td>
+		<td>
+	<h4>Коментарии</h4>
+	<table>
+		<tr>
+		<td>
+		<a name="addarea">&nbsp;</a>
+		<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+			<input type='hidden' name='action' value='crm_n_add'>
+			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+			<input type='hidden' name='customer_id' value='[% CRM.DATA_ID %]'>
+				
+			<textarea rows='2' cols='60' name='description'></textarea>
+		</td>
+		<td>
+			<input type='submit' value='Добавить коментарий'>
+		</td>
+		</form>
+		</tr>
+	</table>
+	</td>
+	</tr>
+	</table>
+	</p>
+		
+	<table id='d-tbl-n'>
+	[% FOREACH param = NOTES %]
+		<tr align='left' class='nocolor' id='d-tr-n-[% param.DATA_ID %]'>
+			<td valign='top' width='10%'>
+			<br/>
+			<b>
+			[% IF param.CALL_ID %]
+				<a title='детализация звонка' href='?action=act_list&call_id=[% param.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.NOTE_DATE | html %]</a>
+			[% ELSE %]
+				[% param.NOTE_DATE | html %]
+			[% END %]
+			</b>
+			<br/>
+		[% IF param.CALL_TYPE %]
+			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+				<input type='hidden' name='action' value='crm_n_add'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<input type='hidden' name='customer_id' value='[% CRM.DATA_ID %]'>
+				<input type='hidden' name='call_id' value='[% param.CALL_ID %]'>
+				<input type='hidden' name='type' value='Call'>
+				<input type='hidden' name='ts' value='[% param.START_TIMESTAMP %]'>
+				<textarea rows='2' cols='80' name='description'>Звонок: [% param.CNAM | html %] [% param.CALLER_ID | html %] на [% param.CALLED_ID | html %], [% param.CDR_DURATION | duration_str %]
+				[% IF msg.DATA contain 'STATUS=ANSWER' %] - отвечен[% END %]
+				</textarea>
+			</td>
+			<td align='right'>
+				<input type='submit' value='+'>
+			</form>
+		[% ELSE %]
+				<pre>[% param.NOTE | html %]</pre>
+			</td>
+			<td align='right' nowrap='nowrap'>
+				<a href='?action=crm_n_del&data_id=[% param.DATA_ID %]&customer_id=[% CRM.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-n-[% param.DATA_ID %]','d-tbl-n')" title='удалить элемент'><span class='icon-bin fs0'></span></a>
+			</td>
+		[% END %]
+		</tr>
+	[% END %]
+	</table>
+
+	<script language='JavaScript'>
+	listcolorer( 'd-tbl' );
+	listcolorer( 'd-tbl-n' );
+	</script>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
+	

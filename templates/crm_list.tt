@@ -1,0 +1,65 @@
+<html>
+<!-- $Id: crm_list.tt,v 1.1 2016/01/07 18:45:27 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Customers - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+			
+	<table width='100%'>
+		<tr>
+			<td align='center'><h1>Customers</h1></td>
+		</tr>
+	</table>
+
+	<table width='100%' id='d-tbl'>
+		<tr>
+			<th>Customer</th>
+			<th>Variables</th>
+			<th>Description</th>
+			<th>&nbsp;</th>
+		</tr>
+
+		[% FOREACH param = CRM_LIST %]
+		<tr align='left' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
+			<td><a href='?action=crm_info&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.C_NAME | html %]</a></td>
+			<td>[% param.C_VARS | html %]</td>
+			<td>[% param.C_NOTE | html %]</td>
+	
+			<td align='right' nowrap='nowrap'>
+				<a href='?action=crm_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete'><span class='icon-bin fs0'></span></a>
+			</td>
+		</form>
+		</tr>
+		[% END %]
+		<tr align='center' id='submit_row'>
+		<a name="addarea">&nbsp;</a>
+		<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+			<input type='hidden' name='action' value='crm_add'>
+			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+			
+			<td><input size='18' name='cname' type='text'></td>
+			<td><input size='18' name='vars' type='text'></td>
+			<td><input size='20' name='description' type='text'></td>
+			
+			<td align='center'>
+				<input type='submit' value='Add'>
+			</td>
+		</form>
+		</tr>
+	</table>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
+	

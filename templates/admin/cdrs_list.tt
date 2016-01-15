@@ -110,7 +110,7 @@
 	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>Start Date</th>
-			<th>Caller ID</th>
+			<th colspan='2'>Caller ID</th>
 			<th>Duration</th>
 			<th>Cost</th>
 			<th>Called NUM</th>
@@ -119,7 +119,7 @@
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='7'>
+			<td align='left' colspan='8'>
 				<a title='previous page' href='?action=cdr_list&from=[% MSG_PREV %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
@@ -128,6 +128,7 @@
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
 			<td><a title='call detail' href='?action=cdr_list&call_id=[% msg.CALL_ID %]'>[% msg.CDR_DATE | html %]</a></td>
+			<td>[% msg.CNAM | html %]</td>
 			[% IF msg.DATA contain 'STATUS=ANSWER' %]
 				<td align='right'>[% msg.CALLER_ID | html %]</td>
 			[% ELSIF msg.DATA contain 'STATUS=' %]
@@ -145,7 +146,7 @@
 	
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right' colspan='7'>
+			<td align='right' colspan='8'>
 				<a title='next page' href='?action=cdr_list&from=[% MSG_NEXT %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>

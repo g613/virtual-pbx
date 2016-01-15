@@ -455,9 +455,9 @@ create table VPBX_ACCOUNTS
 	MSG_IN_PAGE		INT(10)			default 20,
     STATEMENTS	    INT(1)		    default 0,
 	DEMO_MODE		INT(1) 			default 0,
-	MSG_STORE_PERIOD INT(16) not null default 0,
+	MSG_STORE_PERIOD VARCHAR(255)	not null default '0',
 	
-	SOUND_FORMAT	VARCHAR(5)			default 'wav',
+	SOUND_FORMAT	VARCHAR(5)		default 'wav',
 	DATE_FORMAT		INT(16)			default 1,
 	
 	GA_ACCOUNT		VARCHAR(50),
@@ -486,6 +486,7 @@ create	table VPBX_PHONE_BOOK
 	FIRST_NAME		VARCHAR(100)	not null,
 	LAST_NAME		VARCHAR(100)	not null,
 	DESCRIPTION		VARCHAR(255),
+	CRM_CUSTOMER_ID	INT(16),
 
     CONSTRAINT FK_VPBX_PBOOK_SUBSCR FOREIGN KEY (SUBSCR_ID) REFERENCES VPBX_ACCOUNTS(ID) ON DELETE CASCADE,
 	CONSTRAINT PK_VPBX_PBOOK_DATA PRIMARY KEY (DATA_ID)
@@ -657,6 +658,7 @@ create table VPBX_SIPPEERS (
 	NEED_REG		INT(1)			not null default 0,
 	REG_EXPIRE		INT(6)			not null default 0,
 	REG_USERNAME	VARCHAR(80)		NOT NULL DEFAULT '',
+	REG_AUTHNAME	VARCHAR(80)		NOT NULL DEFAULT '',
 	REG_TIME		INT(11)			NOT NULL default 0,
 	INC_EXT			VARCHAR(255)	not null default '0',
 	PICKUP_GROUPS	VARCHAR(255)	not null default '',
@@ -1488,6 +1490,7 @@ create	table VPBX_CDRS
     SUBSCR_ID			INT(16)     not null,
 	CALLER_ID			VARCHAR(100),
 	CALLED_ID			VARCHAR(255),
+	CNAM				VARCHAR(255),
 
 	START_TIMESTAMP		DECIMAL(15,5),
 	STOP_TIMESTAMP		DECIMAL(15,5),
@@ -1597,6 +1600,40 @@ create table VPBX_ONLINE_CALLS
 	INDEX I_OC_ACCESS_CODE (ACCESS_CODE)
 ) ENGINE=MEMORY DEFAULT CHARSET=utf8;
 
+create	table VPBX_CRM_CUSTOMERS
+(
+	DATA_ID				INT(16)	not null AUTO_INCREMENT,
+    SUBSCR_ID			INT(16) not null,
+	
+	C_NAME				VARCHAR(255),
+	C_VARS				VARCHAR(255),
+	C_NOTE				TEXT(2048),
+
+	CREATE_TIMESTAMP	INT(16),
+	
+	PRIMARY KEY (DATA_ID),
+
+	CONSTRAINT FK_VPBX_CUSTOMER_SUBSCR FOREIGN KEY (SUBSCR_ID) REFERENCES VPBX_ACCOUNTS(ID)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+create  table VPBX_CRM_NOTES
+(
+	DATA_ID             INT(16) not null AUTO_INCREMENT,
+	SUBSCR_ID           INT(16) not null,
+	CUSTOMER_ID         INT(16) not null,
+	CALL_ID             VARCHAR(32),
+	NOTE                TEXT(4096),
+	TYPE                VARCHAR(50),
+
+	CREATE_TIMESTAMP	INT(16),
+
+	CONSTRAINT FK_VPBX_CRM_NOTE_SUBSCR FOREIGN KEY (SUBSCR_ID) REFERENCES VPBX_ACCOUNTS(ID),
+	CONSTRAINT FK_VPBX_CRM_NOTE_CUSTOMER FOREIGN KEY (CUSTOMER_ID) REFERENCES VPBX_CRM_CUSTOMERS(DATA_ID),
+
+	CONSTRAINT PK_VPBX_CRM_NOTE_DATA PRIMARY KEY (DATA_ID),
+
+	INDEX I_CRM_N_CALL_ID (CALL_ID)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 -- End Virtual PBX
 
 -- Data
@@ -1620,7 +1657,7 @@ INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_T
 INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE) VALUES(1,'xvb.RU-Male','Russian (Male+TTS)','msu_ru_nsh_clunits','ru_RU.UTF-8','Festival');
 INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE) VALUES(2,'xvb.EN-Female','English (Female+TTS)','cmu_us_slt_arctic_clunits','en_US.UTF-8','Festival');
 INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE) VALUES(3,'xvb.EN-Male','English (Male+TTS)','cmu_us_awb_arctic_clunits','en_US.UTF-8','Festival');
-INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE) VALUES(6,'xvb.RU-Female','Russian (Female+TTS)','ru','ru_RU.UTF-8','GTranslate');
+INSERT INTO VPBX_LANG(ID,LANG_NAME, DESCRIPTION, LANG_VOICE, LANG_LOCALE, LANG_TTS_ENGINE) VALUES(6,'xvb.RU-Female','Russian (Female+TTS)','anna','ru_RU.UTF-8','RHVoice');
 -- VB Types
 INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(1, 'Playback', 'Playback only');
 INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(2, 'Record', 'VoiceMail');
@@ -2358,6 +2395,7 @@ insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sipnet.ru','Sipnet',
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.skype.com','Skype Connect',"$_[0]->{'fromdomain'}='sip.skype.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='port,invite'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('voip.mtt.ru','YouMagic MTT',"$_[0]->{'fromdomain'}='voip.mtt.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='port,invite'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.zadarma.com','Zadarma',"$_[0]->{'fromdomain'}='sip.zadarma.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='invite'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'nat'}='yes'; $_[0]->{'port'}='5060';");
+insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('voip.domru.ru','DOM.RU',"$_[0]->{'fromdomain'}='voip.domru.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'REG_AUTHNAME'} = substr($_[0]->{'username'},-7); $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='port,invite'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'nat'}='yes'; $_[0]->{'port'}='5060';");
 
 insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('[87]9\\d{9}','call 2 cell');
 insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('810.*','call 2 internationals');

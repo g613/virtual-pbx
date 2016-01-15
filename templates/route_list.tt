@@ -162,6 +162,7 @@
 			</form>
 		</tr>
 	</table>
+	<a name="addarea">&nbsp;</a>
 	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>

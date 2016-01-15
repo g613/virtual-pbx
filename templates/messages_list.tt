@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.85 2015/05/13 14:52:02 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.86 2016/01/11 12:44:46 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -30,7 +30,7 @@
 				<h1>Messages for Extension Number# <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
 			</td>
 			<td align='right' width='15%'>
-				<a href='?action=msg_delete&clear_ext=1&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to delete all messages?')" title='delete all messages'><span class='icon-cross fs0'></span></a>
+				<a href='#' onclick="return SubmitConfirm('def','Are you sure want to delete all found messages ?')"><span class='icon-cross fs0'></span></a>
 			</td>
 		</tr>
 	</table>
@@ -38,7 +38,7 @@
 	<table width='100%'>
 		<tr>
 			<td align='right'>
-				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)' id='find-form'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -81,7 +81,7 @@
 				<input size='8' type='text' placeholder='Duration' name='duration' value='[% DURATION | html %]'>
 				&nbsp;
 				<input value='Search' type='submit'>
-				<input value='Delete' type='submit' name='find_and_delete' onclick='SubmitDelConfirm(this,"en","Are you sure you want to delete all matched messages found?")'>
+				<input name='find_and_delete' value='' type='hidden' id='find-flt'>
 				</form>
 			</td>
 		</tr>

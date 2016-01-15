@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.18 2015/07/14 12:41:23 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.20 2016/01/11 14:26:14 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
@@ -186,6 +186,7 @@
 			</form>
 		</tr>
 	</table>
+	<a name="addarea">&nbsp;</a>
 	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>

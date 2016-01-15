@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.60 2015/10/11 19:48:25 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.64 2016/01/11 14:26:14 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -67,11 +67,11 @@
 		<tr>
 			<td width='59%' valign='top'>
 			<table width='100%'>
-				[% IF USER_CREDS.ROOT eq '0' %]
 				<form method="post" action="[% CGI_URL %]">
 				<tr>
 					<td>Тип номера:</td>
 					<td>
+					[% IF USER_CREDS.ROOT eq '0' %]
 						<input type='hidden' name='action' value='vb_change_type'>
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
@@ -79,19 +79,20 @@
 						[% FOREACH vt = VB_TYPES %]
 							[% IF VBOX_PREF.TYPE eq vt.ID %]
 								<option value="[% vt.ID %]" selected>[% vt.DESCRIPTION | locale_msg %]</option>
-							[% ELSE %]
-								[% IF vt.ID vb_allow '0' %]
-									<option value="[% vt.ID %]">[% vt.DESCRIPTION | locale_msg %]</option>
-								[% END %]
+							[% ELSIF vt.ID vb_allow '0' %]
+								<option value="[% vt.ID %]">[% vt.DESCRIPTION | locale_msg %]</option>
 							[% END %]
 						[% END %]
 						</select>
 						<noscript><input type='submit' value='изменить'></noscript>
+					[% ELSE %]
+						[% VBOX_PREF.DESCRIPTION | locale_msg %]
+					[% END %]
 					
 					[% IF VBOX_PREF.TYPE eq '1' %]
 					<a href='#' class='help'><span class='icon-bubble2 fs0'></span><span class='help'>
 					<h4>Советы:</h4>
-					При разрешенной перемотке 'приветствия пользователя' 
+					При разрешенной перемотке 'приветствия пользователя'<br> 
 					звонящий абонент может использовать клавиши:
 					<ul>
 						<li><b>4</b> - назад на 30 секунд</li>
@@ -235,7 +236,7 @@
 					[% IF VBOX_PREF.TYPE eq '18' %]
 					<a href='#' class='help'><span class='icon-bubble2 fs0'></span><span class='help'>
 					<h4>Советы:</h4>
-						<ul>Формат временных интервалов: 
+						<ul>Формат временных интервалов расписания: 
 							начало_интервала-конец_интервала.<br>Форматы:
 							<li><b>время</b> - чч:мм-чч:мм</li>
 							<li><b>день недели</b> - день-день<br>( mon - понедельник, ... tue,wed,thu,<br>fri,sat,... sun - воскресенье )</li>
@@ -249,14 +250,17 @@
 					</td>
 				</tr>
 				</form>
+				
 				<form name='vb_opt' method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
 				<tr>
 					<td>Внутренний номер:</td>
 					<td>
 						[% IF VBOX_PREF.EXT_NUMBER eq '0' %]
 						<input size='15' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]' readonly>
-						[% ELSE %]
+						[% ELSIF USER_CREDS.ROOT eq '0' %]
 						<input size='15' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]'>
+						[% ELSE %]
+						<input size='15' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]' readonly>
 						[% END %]
 						<input type='hidden' name='action' value='vb_update'>
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -264,23 +268,7 @@
 						&nbsp;&nbsp;id : [% VBOX_PREF.ID %]
 					</td>
 				</tr>
-				[% ELSE %]
-				<tr>
-					<td>Тип номера:</td>
-					<td>
-						<input size='30' type='text' name='type_description' value='[% VBOX_PREF.DESCRIPTION | locale_msg %]' readonly>
-					</td>
-				</tr>
-				</form>
-				<form name='vb_opt' method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
-				<tr>
-					<td>Внутренний номер:</td>
-					<td>
-						<input size='15' type='text' name='EXT_NUMBER' value='[% VBOX_PREF.EXT_NUMBER | html %]' readonly>
-						&nbsp;&nbsp;id : [% VBOX_PREF.ID %]
-					</td>
-				</tr>
-				[% END %]
+				
 				<tr>
 					<td><a href='#' class='info'>Перейти к: <span>
 							Номер на который следует перейти после после выполнения действий в текущем номере
@@ -3737,7 +3725,7 @@
 			</tr>
 			[% END %]
 		</table>
-		</p>
+		<span><a name="addarea">&nbsp;</a></span>
 
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
