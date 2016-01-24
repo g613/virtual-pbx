@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.31 2015/05/13 14:52:02 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.32 2016/01/15 11:53:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Actions journal - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -51,8 +51,7 @@
 				});
 				</script>
 				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<button type="button">...</button>
-				&nbsp;
+				<a link="#"><span class='fs0'>▾</span></a>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#to_time").dynDateTime({
@@ -67,8 +66,7 @@
 				});
 				</script>
 				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<button type="button">...</button>
-				&nbsp;
+				<a link="#"><span class='fs0'>▾</span></a>
 				<input name='action' value='j_list' type='hidden'>
 				[% IF J_EXT_ID %]
 				<input type='hidden' name='ext_num' value='[% J_EXT_NUM %]'>

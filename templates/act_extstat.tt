@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.38 2015/09/02 05:32:49 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.40 2016/01/21 18:04:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -149,7 +149,7 @@
 	
 	<table width='100%'>
 		<tr>
-			<td align='left' width='10%'>
+			<td align='left' width='15%'>
 				[% IF NEED_PRINT eq '' %]
 				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Extension detail"><span class='icon-cog fs0'></span></a>
 				<a href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Activity"><span class='icon-stats-bars fs0'></span></a>
@@ -191,8 +191,7 @@
 				});
 				</script>
 				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<button type="button">...</button>
-				&nbsp;
+				<a link="#"><span class='fs0'>▾</span></a>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#to_time").dynDateTime({
@@ -207,8 +206,7 @@
 				});
 				</script>
 				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<button type="button">...</button>
-				&nbsp;
+				<a link="#"><span class='fs0'>▾</span></a>
 				<input placeholder='Caller' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				&nbsp;
 				<input placeholder='Data' size='15' type='text' name='data' value='[% CDR_DATA | html %]'>

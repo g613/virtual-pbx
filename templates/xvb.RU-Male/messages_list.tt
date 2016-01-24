@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.21 2016/01/11 12:44:46 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.23 2016/01/21 13:16:58 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -30,7 +30,7 @@
 				<h1>Сообщения для внутреннего номера # <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
 			</td>
 			<td align='right' width='15%'>
-				<a href='#' onclick="return SubmitConfirm('ru','Вы действительно хотите удалить ВСЕ найденные сообщения ?')"><span class='icon-cross fs0'></span></a>
+				<a title='удалить сообщения' href='#' onclick="return SubmitConfirm('ru','Вы действительно хотите удалить ВСЕ найденные сообщения ?')"><span class='icon-cross fs0'></span></a>
 			</td>
 		</tr>
 	</table>
@@ -53,8 +53,7 @@
 				});
 				</script>
 				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='С даты'>
-				<button type="button">...</button>
-				&nbsp;
+				<a link="#"><span class='fs0'>▾</span></a>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#to_time").dynDateTime({
@@ -69,11 +68,10 @@
 				});
 				</script>
 				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='По дату'>
-				<button type="button">...</button>
+				<a link="#"><span class='fs0'>▾</span></a>
 				<input name='action' value='msg_list' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
-				&nbsp;
 				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]' placeholder='Кто звонил'>
 				&nbsp;
 				<input size='10' type='text' name='called_id' value='[% CALLED_ID | html %]' placeholder='Кому звонил'>

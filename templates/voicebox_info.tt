@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.301 2016/01/11 14:26:14 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.302 2016/01/21 18:04:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -66,7 +66,7 @@
 			<form method="post" action="[% CGI_URL %]">
 			<tr>
 				<td>Type:</td>
-				<td>
+				<td nowrap='nowrap'>
 				[% IF USER_CREDS.ROOT eq '0' %]
 					<input type='hidden' name='action' value='vb_change_type'>
 					<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -237,7 +237,7 @@
 			</tr>
 			<tr>
 				<td>Next Extension: </td>
-				<td>
+				<td nowrap='nowrap'>
 					<input size='15' type='text' name='NEXTEXTENSION' value='[% VBOX_PREF.NEXTEXTENSION | html %]'>
 					<script language="JavaScript">
 						exten_dropdown2('NEXTEXTENSION','[% VBOX_PREF.NEXTEXTENSION | html %]','<option selected value="[% VBOX_PREF.NEXTEXTENSION | html %]">[% VBOX_PREF.NEXTEXTENSION | html %] - Current setting</option><option value="***">--------- raw editor ---------</option>');
@@ -490,7 +490,7 @@
 			</tr>
 			<tr class='addon_info'>
 			<td>Goto if call fail: </td>
-				<td>
+				<td nowrap='nowrap'>
 					<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 					<script language="JavaScript">
 						exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option selected value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
@@ -655,7 +655,7 @@
 					<td>Ring timeout (sec): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-						( 1 ring approximately equals 4 seconds )
+						( 1 ring equals ~ 4 seconds )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -737,7 +737,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td>Help Extension: </td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='DIR_HELPEXT' value='[% VBOX_PREF.DIR_HELPEXT | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'DIR_HELPEXT','[% VBOX_PREF.DIR_HELPEXT | html %]','<option selected value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
@@ -799,7 +799,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td>Goto if request fail: </td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option selected value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
@@ -1070,7 +1070,7 @@
 					<td>Ring timeout (sec): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-						( 1 ring approximately equals 4 seconds )
+						( 1 ring equals ~ 4 seconds )
 					</td>
 				</tr>
 				<tr>
@@ -1198,7 +1198,7 @@
 					<td>Ring timeout (sec): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-						( 1 ring approximately equals 4 seconds )
+						( 1 ring equals ~ 4 seconds )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1341,7 +1341,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td>Goto if queue fail: </td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option selected value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
@@ -1412,7 +1412,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td>Goto exten: </td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='CB_EXT' value='[% VBOX_PREF.CB_EXT | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'CB_EXT','[% VBOX_PREF.CB_EXT | html %]','<option selected value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
@@ -1578,7 +1578,7 @@
 					<td>Ring timeout (sec): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-						( 10 - 120, 1 ring approximately equals 4 seconds )
+						( 10 - 120 sec )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1664,7 +1664,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td>Goto if request fail: </td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option selected value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
@@ -1744,7 +1744,7 @@
 					<td>Ring timeout (sec): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-						( 10 - 120, 1 ring approximately equals 4 seconds )
+						( 10 - 120 sec )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1784,7 +1784,7 @@
 				</tr>
 				<tr>
 					<td>Go to if not busy: </td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_OK' value='[% VBOX_PREF.GOTO_IF_OK | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_OK','[% VBOX_PREF.GOTO_IF_OK | html %]','<option selected value="[% VBOX_PREF.GOTO_IF_OK | html %]">[% VBOX_PREF.GOTO_IF_OK | html %] - Current setting</option><option value="***">--------- raw editor ---------</option>');
@@ -1794,7 +1794,7 @@
 				</tr>
 				<tr>
 					<td>Go to if busy: </td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_BUSY' value='[% VBOX_PREF.GOTO_IF_BUSY | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_BUSY','[% VBOX_PREF.GOTO_IF_BUSY | html %]','<option selected value="[% VBOX_PREF.GOTO_IF_BUSY | html %]">[% VBOX_PREF.GOTO_IF_BUSY | html %] - Current setting</option><option value="***">--------- raw editor ---------</option>');
@@ -1859,7 +1859,7 @@
 				</tr>
 				<tr class='addon_info'>
 				<td>Goto if UNParking: </td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option selected value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
@@ -2065,7 +2065,7 @@
 					<td>Ring timeout (sec): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-						( 1 ring approximately equals 4 seconds )
+						( 1 ring equals ~ 4 seconds )
 					</td>
 				</tr>
 				<tr class='addon_info'>

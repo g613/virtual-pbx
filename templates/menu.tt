@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: menu.tt,v 1.2 2015/10/10 11:14:20 gosha Exp $ -->
+<!-- $Id: menu.tt,v 1.3 2016/01/19 11:20:29 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - main menu</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -43,10 +43,12 @@
 
 			<li><a class='amenu' target='xvb_data' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]'>Phone book</a></li>
 			
-			[% IF USER_CREDS.ALLOW_PHONES %]
-				<li><a class='amenu' target='xvb_data' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>SIP Phones</a></li>
+			<li><a class='amenu' target='xvb_data' href='?action=crm_list&uniq=[% USER_CREDS.UNIQ %]'>Customers</a></li>
 			
+			[% IF USER_CREDS.ALLOW_PHONES %]
+				<li><a class='amenu' target='xvb_data' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>SIP Phones</a></li>			
 			[% END %]
+
 			[% IF USER_CREDS.CUSTOM_ROUTE %]
 			[% IF USER_CREDS.MAX_PEERS %]
 				<li><a class='amenu' target='xvb_data' href='?action=peer_list&uniq=[% USER_CREDS.UNIQ %]'>SIP peers</a></li>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: crm_info.tt,v 1.5 2016/01/09 19:45:22 gosha Exp $ -->
+<!-- $Id: crm_info.tt,v 1.7 2016/01/19 15:16:32 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о клиенте - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -28,71 +28,20 @@
 
 	<p>
 	<table width='100%'>
+		<tr>
+		<td width='35%' valign='top'>
+		<table>
 		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
 		<tr>
 			<td>Клиент:</td>
 			<td>
-				<textarea rows='[% CRM.C_NAME | textarea_rows %]' cols='30' name='cname'>[% CRM.C_NAME | html %]</textarea>
-			</td>
-			<td rowspan='4' width='60%' valign='top'>
-	
-	<h4>Контакты:</h4>	
-	<table id='d-tbl'>
-		<tr>
-			<th>Имя</th>
-			<th>Фамилия</th>
-			<th>Телефон</th>
-			<th>Быстрый набор</th>
-			<th>&nbsp;</th>
-		</tr>
-
-		[% FOREACH param = PBOOK_LIST %]
-		<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-		<form method="post" action="[% CGI_URL %]" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
-			<input type='hidden' name='action' value='pbook_update'>
-			<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
-			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-
-			<td><input class='in_t0' size='15' name='fn' type='text' value='[% param.FIRST_NAME | html %]'></td>
-			<td><input class='in_t0' size='15' name='ln' type='text' value='[% param.LAST_NAME | html %]'></td>
-			<td><input class='in_t0' size='17' name='ph' type='text' value='[% param.PHONE | html %]'></td>
-			<td><input class='in_t0' size='10' name='shortcut' type='text' value='[% param.SHORTCUT | html %]'></td>
-	
-			<td align='right' nowrap='nowrap'>
-				<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
-					<noscript><input value='Сохранить изменения' type='submit'></noscript>
-				</span>
-				<a href='?action=pbook_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить элемент'><span class='icon-bin fs0'></span></a>
-			</td>
-		</form>
-		</tr>
-		[% END %]
-		<tr align='center' id='submit_row'>
-		<a name="addarea">&nbsp;</a>
-		<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-			<input type='hidden' name='action' value='pbook_add'>
-			<input type='hidden' name='crm_id' value='[% CRM.DATA_ID %]'>
-			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-			
-			<td><input size='15' name='fn' type='text'></td>
-			<td><input size='15' name='ln' type='text'></td>
-			<td><input size='17' name='ph' type='text'></td>
-			<td><input size='10' name='shortcut' type='text'></td>
-			
-			<td colspan='2' align='center'>
-				<input type='submit' value='Добавить'>
-			</td>
-		</form>
-		</tr>
-	</table>
-	
+				<textarea rows='[% CRM.C_NAME | textarea_rows %]' cols='25' name='cname'>[% CRM.C_NAME | html %]</textarea>
 			</td>
 		</tr>
 		<tr>
 			<td>Описание:</td>
-			<td colspan='2'>
-				<textarea rows='[% CRM.C_NOTE | textarea_rows %]' cols='30' name='description'>[% CRM.C_NOTE | html %]</textarea>
+			<td>
+				<textarea rows='[% CRM.C_NOTE | textarea_rows %]' cols='25' name='description'>[% CRM.C_NOTE | html %]</textarea>
 			</td>
 		</tr>
 		<tr>
@@ -100,7 +49,7 @@
 				Переменные:
 			</td>
 			<td>
-				<textarea rows='[% CRM.C_VARS | textarea_rows %]' cols='30' name='vars'>[% CRM.C_VARS | html %]</textarea>
+				<textarea rows='[% CRM.C_VARS | textarea_rows %]' cols='25' name='vars'>[% CRM.C_VARS | html %]</textarea>
 			</td>
 		</tr>
 		<tr>
@@ -112,28 +61,81 @@
 			</td>
 		</tr>
 		</form>
-		<tr>
-		<td colspan='2'></td>
-		<td>
-	<h4>Коментарии</h4>
-	<table>
-		<tr>
-		<td>
-		<a name="addarea">&nbsp;</a>
-		<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-			<input type='hidden' name='action' value='crm_n_add'>
-			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-			<input type='hidden' name='customer_id' value='[% CRM.DATA_ID %]'>
+		</table>
+		</td>
+		<td valign='top'>
+		<h4>Контакты:</h4>	
+		<table id='d-tbl'>
+			<tr>
+				<th>Имя</th>
+				<th>Фамилия</th>
+				<th>Телефон</th>
+				<th>Быстрый набор</th>
+				<th>&nbsp;</th>
+			</tr>
+
+			[% FOREACH param = PBOOK_LIST %]
+			<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
+			<form method="post" action="[% CGI_URL %]" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
+				<input type='hidden' name='action' value='pbook_update'>
+				<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+
+				<td><input class='in_t0' size='15' name='fn' type='text' value='[% param.FIRST_NAME | html %]'></td>
+				<td><input class='in_t0' size='15' name='ln' type='text' value='[% param.LAST_NAME | html %]'></td>
+				<td><input class='in_t0' size='17' name='ph' type='text' value='[% param.PHONE | html %]'></td>
+				<td><input class='in_t0' size='10' name='shortcut' type='text' value='[% param.SHORTCUT | html %]'></td>
+	
+				<td align='right' nowrap='nowrap'>
+					<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+						<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+						<noscript><input value='Сохранить изменения' type='submit'></noscript>
+					</span>
+					<a href='?action=pbook_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить элемент'><span class='icon-bin fs0'></span></a>
+				</td>
+			</form>
+			</tr>
+			[% END %]
+			<tr align='center' id='submit_row'>
+			<a name="addarea">&nbsp;</a>
+			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+				<input type='hidden' name='action' value='pbook_add'>
+				<input type='hidden' name='crm_id' value='[% CRM.DATA_ID %]'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+			
+				<td><input size='15' name='fn' type='text'></td>
+				<td><input size='15' name='ln' type='text'></td>
+				<td><input size='17' name='ph' type='text'></td>
+				<td><input size='10' name='shortcut' type='text'></td>
 				
-			<textarea rows='2' cols='60' name='description'></textarea>
+				<td align='center'>
+					<input type='submit' value='Добавить'>
+				</td>
+			</form>
+			</tr>
+		</table>
 		</td>
-		<td>
-			<input type='submit' value='Добавить коментарий'>
-		</td>
-		</form>
 		</tr>
-	</table>
-	</td>
+		<tr>
+		<td colspan='2' nowrap='nowrap' valign='top'>
+			<h4>Коментарии</h4>
+			<table>
+			<tr>
+			<td>
+			<a name="addarea">&nbsp;</a>
+			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+				<input type='hidden' name='action' value='crm_n_add'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<input type='hidden' name='customer_id' value='[% CRM.DATA_ID %]'>
+				<textarea rows='2' cols='60' name='description'></textarea>
+			</td>
+			<td>
+				<input type='submit' value='Добавить коментарий'>
+			</td>
+			</form>
+			</tr>
+		</table>
+		</td>
 	</tr>
 	</table>
 	</p>
@@ -141,7 +143,7 @@
 	<table id='d-tbl-n'>
 	[% FOREACH param = NOTES %]
 		<tr align='left' class='nocolor' id='d-tr-n-[% param.DATA_ID %]'>
-			<td valign='top' width='10%'>
+			<td valign='top'>
 			<br/>
 			<b>
 			[% IF param.CALL_ID %]

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.16 2015/08/09 19:51:10 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.17 2016/01/15 11:53:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Статистика звонков АТС - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -45,8 +45,7 @@
 				});
 				</script>
 				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='С даты'>
-				<button type="button">...</button>
-				&nbsp;
+				<a link="#"><span class='fs0'>▾</span></a>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#to_time").dynDateTime({
@@ -61,9 +60,8 @@
 				});
 				</script>
 				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='По дату'>
-				<button type="button">...</button>
+				<a link="#"><span class='fs0'>▾</span></a>
 				<input name='action' value='cdr_list' type='hidden'>
-				&nbsp;
 				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]' placeholder='Кто звонил'>
 				&nbsp;
 				<input size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]' placeholder='Кому звонил'>

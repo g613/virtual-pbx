@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.64 2016/01/11 14:26:14 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.65 2016/01/21 18:04:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -70,7 +70,7 @@
 				<form method="post" action="[% CGI_URL %]">
 				<tr>
 					<td>Тип номера:</td>
-					<td>
+					<td nowrap='nowrap'>
 					[% IF USER_CREDS.ROOT eq '0' %]
 						<input type='hidden' name='action' value='vb_change_type'>
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -273,7 +273,7 @@
 					<td><a href='#' class='info'>Перейти к: <span>
 							Номер на который следует перейти после после выполнения действий в текущем номере
 							</span></a></td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='NEXTEXTENSION' value='[% VBOX_PREF.NEXTEXTENSION | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2('NEXTEXTENSION','[% VBOX_PREF.NEXTEXTENSION | html %]','<option selected value="[% VBOX_PREF.NEXTEXTENSION | html %]">[% VBOX_PREF.NEXTEXTENSION | html %] - Текущее значение</option><option value="***">--------- ручной ввод ---------</option>')
@@ -623,7 +623,7 @@
 							Внутренний номер на который будет осуществлен переход в случае неудачного звонка.
 							Используется в случае если необходимо сделать какие либо действия, сложнее чем VoiceMail при неудачном звонке.
 						</span></a></td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
@@ -688,7 +688,7 @@
 					<td>Таймаут соединения (сек): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-						( 1 звонок равен примерно 4 секундам )
+						( 1 звонок равен ~ 4 секундам )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -924,7 +924,7 @@
 					<td><a href='#' class='info'>Помощник: <span>
 							Перейти к данному внутреннему номеру в случае если пользователь ничего не ввел. В простейшем случае можно ввести номер секретаря или сделать звонок всем.
 						</span></a></td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='DIR_HELPEXT' value='[% VBOX_PREF.DIR_HELPEXT | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'DIR_HELPEXT','[% VBOX_PREF.DIR_HELPEXT | html %]','<option value="">------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
@@ -1000,7 +1000,7 @@
 					<td><a href='#' class='info'>Если ошибка перейти к: <span>
 							Перейти к данному внутреннему номеру в случае неудачного WEB запроса
 						</span></a></td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
@@ -1313,7 +1313,7 @@
 					<td>Таймаут соединения (сек): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-						( 1 звонок равен примерно 4 секундам )
+						( 1 звонок равен ~ 4 секундам )
 					</td>
 				</tr>
 				<tr>
@@ -1453,7 +1453,7 @@
 					<td>Время вызова агента (сек): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-						( 1 звонок равен примерно 4 секундам )
+						( 1 звонок равен ~ 4 секундам )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1618,7 +1618,7 @@
 					<td><a href='#' class='info'>Если не дозвонились, перейти к:<span>
 							Внутренний номер на который будет осуществлен переход в случае неудачного звонка.
 						</span></a></td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="" selected>------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
@@ -1720,7 +1720,7 @@
 							Внутренний номер на который будет переброшен звонок после CallBack 
 							соединения, номер должен иметь установленный флаг 'Прямой доступ'
 							</span></a></td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='CB_EXT' value='[% VBOX_PREF.CB_EXT | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'CB_EXT','[% VBOX_PREF.CB_EXT | html %]','<option value="" selected>------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
@@ -1935,7 +1935,7 @@
 					<td>Таймаут соединения (сек): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-						( 10 - 120 секунд, 1 звонок равен примерно 4 секундам )
+						( 10 - 120 секунд )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -2041,7 +2041,7 @@
 					<td><a href='#' class='info'>Если ошибка перейти к: <span>
 							Перейти к данному внутреннему номеру в случае неудачного WEB запроса
 						</span></a></td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="" selected>------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
@@ -2137,7 +2137,7 @@
 					<td>Таймаут соединения (сек): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-						( 10 - 120 секунд, 1 звонок равен примерно 4 секундам )
+						( 10 - 120 секунд )
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -2187,7 +2187,7 @@
 					<td><a href='#' class='info'>Перейти если не занят: <span>
 							Перейти к данному пункту IVR если в календаре нет событий на это время
 						</span></a></td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_OK' value='[% VBOX_PREF.GOTO_IF_OK | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_OK','[% VBOX_PREF.GOTO_IF_OK | html %]','<option value="[% VBOX_PREF.GOTO_IF_OK | html %]" selected>[% VBOX_PREF.GOTO_IF_OK | html %] - Текущее значение</option><option value="***">--------- ручной ввод ---------</option>')
@@ -2199,7 +2199,7 @@
 					<td><a href='#' class='info'>Перейти если занят: <span>
 							Перейти к данному пункту IVR если в календаре на данное время назначены какие либо события ( флаг занят\свободен не учитывается )
 						</span></a></td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_BUSY' value='[% VBOX_PREF.GOTO_IF_BUSY | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_BUSY','[% VBOX_PREF.GOTO_IF_BUSY | html %]','<option value="[% VBOX_PREF.GOTO_IF_BUSY | html %]" selected>[% VBOX_PREF.GOTO_IF_BUSY | html %] - Текущее значение</option><option value="***">--------- ручной ввод ---------</option>')
@@ -2270,7 +2270,7 @@
 							Внутренний номер на который будет осуществлен переход
 							в случае неудачной парковки
 						</span></a></td>
-					<td>
+					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
 							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="" selected>------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
@@ -2502,7 +2502,7 @@
 					<td>Таймаут соединения (сек): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
-						( 10 - 120 секунд, 1 звонок равен примерно 4 секундам )
+						( 10 - 120 секунд )
 					</td>
 				</tr>
 				<tr class='addon_info'>

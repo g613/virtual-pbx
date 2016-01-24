@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.113 2015/08/30 20:40:28 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.115 2016/01/11 12:44:46 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -268,12 +268,17 @@ function DelConfirm( lang, msg ) {
 	return ret;
 }
 
-function SubmitDelConfirm( obj, lang, msg ) {
-	var ret = DelConfirm(lang,msg);
+function SubmitConfirm( lang, msg ) {
+	var ret;
+	if ( lang.length > 0  ) {
+		ret = DelConfirm(lang,msg);
+	} else {
+		ret = true;
+	}
 	if ( ret == true ) {
-		obj.value=1;
-		obj.parentNode.onsubmit=false;
-		obj.parentNode.submit();
+		document.getElementById('find-flt').value='1';
+		document.getElementById('find-form').submit();
+		document.getElementById('find-flt').value='';
 	}
 }
 
@@ -1523,6 +1528,9 @@ function getTimePeriod(lang,period) {
 		} else if ( period == 'c6pref' ) {
 			period = 'Префикс звонящего (6)';
 			group_by = 'c6pref';
+		} else if ( period == 'SUBSCR_ID' ) {
+			period = 'ID арендатора';
+			group_by = 'sbscr';
 		} else {
 			period = 'группировать по...';
 		}
@@ -1581,6 +1589,9 @@ function getTimePeriod(lang,period) {
 		} else if ( period == 'c6pref' ) {
 			period = 'Caller prefix (6)';
 			group_by = 'c6pref';
+		} else if ( period == 'SUBSCR_ID' ) {
+			period = 'Tenant ID';
+			group_by = 'sbscr';
 		} else {
 			period = 'group by...';
 		}

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.52 2016/01/11 12:44:46 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.53 2016/01/15 11:53:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -47,8 +47,7 @@
 				});
 				</script>
 				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<button type="button">...</button>
-				&nbsp;
+				<a link="#"><span class='fs0'>▾</span></a>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#to_time").dynDateTime({
@@ -63,10 +62,9 @@
 				});
 				</script>
 				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<button type="button">...</button>
+				<a link="#"><span class='fs0'>▾</span></a>
 				<input name='action' value='cdr_list' type='hidden'>
 				<input name='any_did' value='[% CDR_ANY_DID | html %]' type='hidden'>
-				&nbsp;
 				<input placeholder='Caller' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				&nbsp;
 				<input size='10' type='text' name='cnam' value='[% CDR_CNAM | html %]' placeholder='CNAM'>
