@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: crm_list.tt,v 1.1 2016/01/07 18:45:27 gosha Exp $ -->
+<!-- $Id: crm_list.tt,v 1.4 2016/03/05 20:07:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Справочник клиентов - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -18,14 +18,37 @@
 			<td align='center'><h1>Справочник клиентов</h1></td>
 		</tr>
 	</table>
+	
+	<table width='100%'>
+		<tr>
+			<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)' id='find-form'>
+			<td align='right'>
+				<input name='action' value='crm_list' type='hidden'>
+				<input size='10' type='text' name='name' value='[% CRM_NAME | html %]' placeholder='Клиент'>
+				&nbsp;
+				<input size='15' type='text' name='desc' value='[% CRM_DESC | html %]' placeholder='Описание'>
+				&nbsp;
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input value='Найти' type='submit'>
+			</td>
+			</form>
+		</tr>
+	</table>
 
 	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>Клиент</th>
 			<th>Переменные</th>
-			<th>Коментарий</th>
+			<th>Описание</th>
 			<th>&nbsp;</th>
 		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='4'>
+				<a title='предыдущая страница' href='?action=crm_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&name=[% CRM_NAME | htmlstricr %]&desc=[% CRM_DESC | htmlstrict %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
 
 		[% FOREACH param = CRM_LIST %]
 		<tr align='left' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
@@ -38,6 +61,13 @@
 			</td>
 		</form>
 		</tr>
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='4'>
+				<a title='следующая страница' href='?action=crm_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&name=[% CRM_NAME | htmlstricr %]&desc=[% CRM_DESC | htmlstrict %]'><span class='fs0'>►</span></a>
+			</td>
+		</tr>
+		[% END %]
 		[% END %]
 		<tr align='center' id='submit_row'>
 		<a name="addarea">&nbsp;</a>

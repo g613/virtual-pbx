@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.65 2016/01/21 18:04:43 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.67 2016/01/25 15:34:41 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -276,7 +276,7 @@
 					<td nowrap='nowrap'>
 						<input size='15' type='text' name='NEXTEXTENSION' value='[% VBOX_PREF.NEXTEXTENSION | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2('NEXTEXTENSION','[% VBOX_PREF.NEXTEXTENSION | html %]','<option selected value="[% VBOX_PREF.NEXTEXTENSION | html %]">[% VBOX_PREF.NEXTEXTENSION | html %] - Текущее значение</option><option value="***">--------- ручной ввод ---------</option>')
+							exten_dropdown2('NEXTEXTENSION','[% VBOX_PREF.NEXTEXTENSION | html %]','<option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.NEXTEXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
 					</td>
@@ -1621,7 +1621,7 @@
 					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="" selected>------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
 					</td>
@@ -1723,7 +1723,7 @@
 					<td nowrap='nowrap'>
 						<input size='15' type='text' name='CB_EXT' value='[% VBOX_PREF.CB_EXT | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'CB_EXT','[% VBOX_PREF.CB_EXT | html %]','<option value="" selected>------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
+							exten_dropdown2( 'CB_EXT','[% VBOX_PREF.CB_EXT | html %]','<option value="">------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.CB_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
 					</td>
@@ -2044,7 +2044,7 @@
 					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="" selected>------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
 					</td>
@@ -2190,7 +2190,7 @@
 					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_OK' value='[% VBOX_PREF.GOTO_IF_OK | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_OK','[% VBOX_PREF.GOTO_IF_OK | html %]','<option value="[% VBOX_PREF.GOTO_IF_OK | html %]" selected>[% VBOX_PREF.GOTO_IF_OK | html %] - Текущее значение</option><option value="***">--------- ручной ввод ---------</option>')
+							exten_dropdown2( 'GOTO_IF_OK','[% VBOX_PREF.GOTO_IF_OK | html %]','<option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_OK | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
 					</td>
@@ -2202,7 +2202,7 @@
 					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_BUSY' value='[% VBOX_PREF.GOTO_IF_BUSY | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_BUSY','[% VBOX_PREF.GOTO_IF_BUSY | html %]','<option value="[% VBOX_PREF.GOTO_IF_BUSY | html %]" selected>[% VBOX_PREF.GOTO_IF_BUSY | html %] - Текущее значение</option><option value="***">--------- ручной ввод ---------</option>')
+							exten_dropdown2( 'GOTO_IF_BUSY','[% VBOX_PREF.GOTO_IF_BUSY | html %]','<option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_BUSY | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
 					</td>
@@ -2273,7 +2273,7 @@
 					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
 						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="" selected>------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
 							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
 						</script>
 					</td>
