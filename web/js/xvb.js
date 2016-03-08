@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.115 2016/01/11 12:44:46 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.116 2016/01/25 13:58:18 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -817,6 +817,7 @@ function exten_dropdown( prefix ) {
 }
 function exten_dropdown2( select_name, extension, prefix ) {
 	document.write('<select onchange=\'exten_dropdown2_hook(this.value,"'+ select_name +'")\' name="'+ select_name +'-DD">' + prefix);
+	var item_exists = 0;
 	for( var i=0, l=e_menu.length; i<l; ++i ) {
 		var ext_num = e_menu[i];
 		/* by Ext Name */
@@ -824,6 +825,7 @@ function exten_dropdown2( select_name, extension, prefix ) {
 			document.write('<option value="'+ ext_num +'"');
 			if ( ext_num == extension ) {
 				document.write(' selected ');
+				item_exists = 1;
 			}
 			document.write( '>' + ext_num + ' - ');
 			if ( e_list[ext_num][2].length > 0 ) {
@@ -833,6 +835,9 @@ function exten_dropdown2( select_name, extension, prefix ) {
 			}
 			document.write('</option>');
 		}
+	}
+	if ( item_exists == 0 && extension.length > 0 ) {
+		document.write('<option value="'+ extension +'" selected>!!! '+ extension +' !!! </option>');
 	}
 	document.write('</select>');
 	document.getElementsByName(select_name)[0].className = 'display_none';
