@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: new_message.tt,v 1.11 2016/01/07 20:53:11 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.12 2016/05/01 17:32:00 gosha Exp $ -->
 <!--SUBJECT:У Вас новое сообщение в ящике #[% _USER_VBOX.EXT_NUMBER | html %] от [% callerid | html %]:SUBJECT-->
 <!--!EMAIL_FROM:'Виртуальная АТС' <sa1es@virtuаl-pbx.ru>:EMAIL_FROM-->
 <head>
@@ -19,8 +19,17 @@
 Здравствуйте,
 
 <p>
-Сообщаем Вам, что на Ваш ящик голосовой почты (<b>[% CALLED_ID | html %]</b> # <b>[% _USER_VBOX.EXT_NUMBER | html %]</b>) получено новое сообщение
-от <b>[% callerid | html %]</b>
+Сообщаем Вам, что
+[% IF file_type eq '41' %]
+ для внутреннего номера # <b>[% _USER_VBOX.EXT_NUMBER | html %]</b> доступна новая запись звонка на номер [% calledid | html %]
+[% ELSIF file_type eq '42' %]
+ получен новый факс для внутреннего номера <b>[% CALLED_ID | html %]</b> # <b>[% _USER_VBOX.EXT_NUMBER | html %]</b>
+[% ELSIF file_type eq '43' %]
+ получены новые DTMF данные для внутреннего номера <b>[% CALLED_ID | html %]</b> # <b>[% _USER_VBOX.EXT_NUMBER | html %]</b>
+[% ELSE %]
+ на Ваш ящик голосовой почты (<b>[% CALLED_ID | html %]</b> # <b>[% _USER_VBOX.EXT_NUMBER | html %]</b>) получено новое сообщение
+[% END %]
+ от <b>[% callerid | html %]</b>
 [% IF cnam %] 
 ( [% cnam | html %] )
 [% END %]
@@ -30,19 +39,6 @@
 <p>
 [% IF FILE_LINK ne '' %]
 <a href="[% FILE_LINK %]">Вы можете скачать файл по этой ссылке.</a>
-<!-- /
-[% IF is_voice %]
-</p><p>
-<a href="https://twitter.com/intent/tweet?text=Вы%20должны%20это%20слышать&url=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/msg_download/[% _USER_VBOX.ID | html %]/[% USER_CREDS.ACCESS_CODE %]/[% file_name | html %].mp3%3fmedia=mp3"><img src="/xvb/images/twitter22.png" alt="Поделиться в twitter" title="Поделиться в twitter" /></a>
-&nbsp;
-<a href="http://www.facebook.com/share.php?t=VirtualPBX&u=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/fbshare/[% _USER_VBOX.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% file_name %]%3fdate=[% origdate | html %]&amp;cid=[% callerid | html %]"><img src="/xvb/images/facebook22.png" alt="Поделиться в facebook" title="Подилиться в facebook" /></a>
-&nbsp;
-<a href="http://connect.mail.ru/share?share_url=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/msg_download/[% _USER_VBOX.ID | html %]/[% USER_CREDS.ACCESS_CODE %]/[% file_name | html %].mp3%3fmedia=mp3"><img src="/xvb/images/mailru.png" alt="Поделиться в МойМир" title="Поделиться в МойМир" /></a>
-&nbsp;
-<a href="http://vkontakte.ru/share.php?url=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/msg_download/[% _USER_VBOX.ID | html %]/[% USER_CREDS.ACCESS_CODE %]/[% file_name | html %].mp3%3fmedia=mp3"><img src="/xvb/images/vk.png" alt="Вконтакте" title="Вконтакте" /></a>
-</p><p>
-[% END %]
-/ -->
 [% END %]
 </p>
 

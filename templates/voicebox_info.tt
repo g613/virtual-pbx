@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.304 2016/01/25 15:34:41 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.305 2016/03/06 10:15:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -282,7 +282,12 @@
 					<input size='30' type='text' name='NOTIFYEMAIL' value='[% VBOX_PREF.NOTIFYEMAIL | html %]'>
 				</td>
 			</tr>
+			[% IF VBOX_PREF.TYPE ne '1' %]
+			<tr class='addon_info'>
+			[% END %]
+			[% IF VBOX_PREF.TYPE eq '1' %]
 			<tr>
+			[% END %]
 				<td>Wait Extension: </td>
 				<td>
 				[% IF VBOX_PREF.WAITEXTENSION %]

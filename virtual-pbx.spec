@@ -486,6 +486,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 %attr(755,root,root) %CORE_DIR/contrib/utils/msg_clean.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/click2call.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/webhelper.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/billing_gw.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/sys_status.sh
 %attr(755,root,root) %CORE_DIR/contrib/utils/tts-gen.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/node_diag.pl

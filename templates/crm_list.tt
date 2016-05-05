@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: crm_list.tt,v 1.3 2016/03/05 20:07:16 gosha Exp $ -->
+<!-- $Id: crm_list.tt,v 1.4 2016/04/29 15:01:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Customers - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -61,13 +61,13 @@
 			</td>
 		</form>
 		</tr>
+		[% END %]
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='4'>
 				<a title='next page' href='?action=crm_list&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&name=[% CRM_NAME | htmlstricr %]&desc=[% CRM_DESC | htmlstrict %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
-		[% END %]
 		[% END %]
 		<tr align='center' id='submit_row'>
 		<a name="addarea">&nbsp;</a>

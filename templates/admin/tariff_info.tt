@@ -76,6 +76,10 @@
 			<td>Daily rate</td>
 			<td align='left' colspan='2'><input class='in_t0' name='T_DAILY_PRICE' type='text' value='[% DAILY_PRICE | html %]'></td>
 		</tr>
+		<tr class='nocolor'>
+			<td>Billing URL</td>
+			<td align='left' colspan='2'><input class='in_t0' name='T_BILLING_URL' type='text' value='[% BILLING_URL | html %]' size='100'></td>
+		</tr>
 		<tr>
 			<td colspan='3'>&nbsp;</td>
 		</tr>

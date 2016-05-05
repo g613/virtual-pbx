@@ -232,7 +232,7 @@
 								[% END %]
 								</td>
 								<td valign='top' width='20%' align='center' nowrap='nowrap'>
-								<form>
+								<form method='post'>
 									<input size='11' type='text' name='did'>
 									&nbsp;
 									<input type='hidden' name='pn' value='[% USER.VOICENUMBER | html %]'>
