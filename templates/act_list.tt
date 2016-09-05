@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.38 2016/01/15 11:53:30 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.39 2016/08/31 19:29:00 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension activity - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -32,13 +32,16 @@
 			<td align='center'>
 				<h1>Extension #[% VBOX_PREF.EXT_NUMBER | html %] activity</h1>
 			</td>
+			<td align='right' width='10%'>
+				<a title='excel' href='#' onclick="return SubmitConfirm('');"><span class='icon-file-excel fs0'></span></a>
+			</td>
 		</tr>
 	</table>
 
 	<table width='100%'>
 		<tr>
 			<td align='right'>
-				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)' id='find-form'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -86,7 +89,7 @@
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
 				<input value='Search' type='submit'>
-				<input name='need_excel' value='Excel' type='submit'>
+				<input name='need_excel' value='' type='hidden' id='find-flt'>
 				</form>
 				<script langiage='JavaScript'>setActiveSelector('act_type_selector',"[% ACT_TYPE | html %]");</script>
 			<td>

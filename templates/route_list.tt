@@ -61,7 +61,7 @@
 				});
 				</script>
 				<input size='16' type='text' name='datetime' value='[% ROUTE_DATE | html %]' id='datetime' placeholder='Date'>
-				<button type="button">...</button>
+				<a link="#"><span class='fs0'>▾</span></a>
 				&nbsp;
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='need_lookup' value='1' type='hidden'>

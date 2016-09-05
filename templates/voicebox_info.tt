@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.305 2016/03/06 10:15:40 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.308 2016/08/19 18:48:06 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -442,17 +442,13 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Send new message notify to: </td>
+				<td>Send new message notify: </td>
 				<td>
-					<select name="SENDNOTIFYEMAIL">
-					[% FOREACH ca = NOTIFY_TYPES %]
-						[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-						<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
-						[% ELSE %]
-						<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
-						[% END %]
+					<input name="SENDNOTIFYEMAIL" type="checkbox" 
+					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+						checked
 					[% END %]
-					</select>
+					>
 				</td>
 			</tr>
 			<tr class='addon_info'>
@@ -643,17 +639,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Send new message notify to: </td>
+					<td>Send new message notify: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
-							[% END %]
-						[% END %]
-						</select>
+					<input name="SENDNOTIFYEMAIL" type="checkbox" 
+					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+						checked
+					[% END %]
+					>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -899,17 +891,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Send new message notify to: </td>
+					<td>Send new message notify: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
-							[% END %]
-						[% END %]
-						</select>
+					<input name="SENDNOTIFYEMAIL" type="checkbox" 
+					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+						checked
+					[% END %]
+					>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -968,17 +956,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Send new message notify to: </td>
+					<td>Send new message notify: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
-							[% END %]
-						[% END %]
-						</select>
+					<input name="SENDNOTIFYEMAIL" type="checkbox" 
+					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+						checked
+					[% END %]
+					>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1079,17 +1063,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Send new message notify to: </td>
+					<td>Send new message notify: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
-							[% END %]
-						[% END %]
-						</select>
+					<input name="SENDNOTIFYEMAIL" type="checkbox" 
+					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+						checked
+					[% END %]
+					>
 					</td>
 				</tr>
 				[% IF USER_CREDS.ALLOW_PHONES %]
@@ -1262,17 +1242,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Send new message notify to: </td>
+					<td>Send new message notify: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
-							[% END %]
-						[% END %]
-						</select>
+					<input name="SENDNOTIFYEMAIL" type="checkbox" 
+					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+						checked
+					[% END %]
+					>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1456,33 +1432,13 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td>Say date/time: </td>
+					<td>Format: </td>
 					<td>
-						[% IF VBOX_PREF.TIME_FORMAT == '0' %]
-							<input name="TIME_FORMAT" type="radio" value="0" checked>
-						[% ELSE %]
-							<input name="TIME_FORMAT" type="radio" value="0">
-						[% END %]
-					</td>
-				</tr>
-				<tr class='addon_info'>
-					<td>Say time: </td>
-					<td>
-						[% IF VBOX_PREF.TIME_FORMAT == '1' %]
-							<input name="TIME_FORMAT" type="radio" value="1" checked>
-						[% ELSE %]
-							<input name="TIME_FORMAT" type="radio" value="1">
-						[% END %]
-					</td>
-				</tr>
-				<tr class='addon_info'>
-					<td>Say date: </td>
-					<td>
-						[% IF VBOX_PREF.TIME_FORMAT == '2' %]
-							<input name="TIME_FORMAT" type="radio" value="2" checked>
-						[% ELSE %]
-							<input name="TIME_FORMAT" type="radio" value="2">
-						[% END %]
+						<select name="TIME_FORMAT">
+							<option value="0" [% IF VBOX_PREF.TIME_FORMAT == '0' %] selected [% END %]>date and time</option>
+							<option value="1" [% IF VBOX_PREF.TIME_FORMAT == '1' %] selected [% END %]>time</option>
+							<option value="2" [% IF VBOX_PREF.TIME_FORMAT == '2' %] selected [% END %]>date</option>
+						</select>
 					</td>
 				</tr>
 				[% END %]
@@ -2029,17 +1985,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Send new message notify to: </td>
+					<td>Send new message notify: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
-							[% END %]
-						[% END %]
-						</select>
+					<input name="SENDNOTIFYEMAIL" type="checkbox" 
+					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+						checked
+					[% END %]
+					>
 					</td>
 				</tr>
 				[% END %]
@@ -2147,17 +2099,13 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td>Send new message notify to: </td>
+					<td>Send new message notify: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | html %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | html %]</option>
-							[% END %]
-						[% END %]
-						</select>
+					<input name="SENDNOTIFYEMAIL" type="checkbox" 
+					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+						checked
+					[% END %]
+					>
 					</td>
 				</tr>
 				<tr class='addon_info'>

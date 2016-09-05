@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.97 2016/01/25 12:17:16 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.98 2016/06/29 15:08:13 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - PBX profile - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -325,7 +325,7 @@ SipDomain: [% d.DOMAIN | html %]
 									&nbsp;
 									&nbsp;
 									&nbsp;
-									<b>[% TARIFF.USER_BALANCE | bill_float %]</b> [% TARIFF.DESCRIPTION %] ( as at [% CACHE_TIME | html %] )
+									<b>[% TARIFF.USER_BALANCE %]</b> [% TARIFF.DESCRIPTION %] ( as at [% CACHE_TIME | html %] )
 								</td>
 							</tr>
 						</table>

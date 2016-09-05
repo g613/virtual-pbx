@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.20 2016/01/11 14:26:14 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.21 2016/08/19 15:31:27 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
@@ -59,7 +59,7 @@
 				});
 				</script>
 				<input size='16' type='text' name='datetime' value='[% ROUTE_DATE | html %]' id='datetime' placeholder='Дата'>
-				<button type="button">...</button>
+				<a link="#"><span class='fs0'>▾</span></a>
 				&nbsp;
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='need_lookup' value='1' type='hidden'>

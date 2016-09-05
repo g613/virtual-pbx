@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.68 2016/03/06 10:15:40 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.72 2016/08/24 13:51:34 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -328,9 +328,7 @@
 				</tr>
 				<tr>
 					<td><a href='#' class='info'>Получатель оповещения: <span>
-							Адрес электронной почты ( например: gosha@mail.ru ) или</ br>
-							Twitter аккаунт ( например: gosha:goshapassword - для публичных. gosha:goshapswd@to - для приватных сообщений )
-							используемый для уведомления о новых  сообщениях.<br><b>Наследуется вложенными номерами.</b>
+							Адрес электронной почты	используемый для<br>уведомления о новых сообщениях.<br><b>Наследуется вложенными номерами.</b>
 							</span></a></td>
 					<td>
 						<input size='30' type='text' name='NOTIFYEMAIL' value='[% VBOX_PREF.NOTIFYEMAIL | html %]'>
@@ -347,11 +345,16 @@
 							( для перехода на следующий уровень вложенного меню например )
 							</span></a> </td>
 					<td>
-					[% IF VBOX_PREF.WAITEXTENSION %]
-						<input name="WAITEXTENSION" type="checkbox" checked>
-					[% ELSE %]
-						<input name="WAITEXTENSION" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="WAITEXTENSION" type="checkbox" class="onoffswitch-checkbox" id="WAITEXTENSION-ch" 
+						[% IF VBOX_PREF.WAITEXTENSION %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="WAITEXTENSION-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -365,11 +368,16 @@
 								'Расписание' - 'Перейти к'</b></br>
 							</span></a></td>
 					<td>
-					[% IF VBOX_PREF.HIDDEN %]
-						<input name="HIDDEN" type="checkbox" checked>
-					[% ELSE %]
-						<input name="HIDDEN" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="HIDDEN" type="checkbox" class="onoffswitch-checkbox" id="HIDDEN-ch" 
+						[% IF VBOX_PREF.HIDDEN %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="HIDDEN-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -377,11 +385,16 @@
 							Доступ к данному номеру будет возможен только после ввода Пин-кода
 						</span></a></td>
 					<td>
-					[% IF VBOX_PREF.PROTECT %]
-						<input name="PROTECT" type="checkbox" checked>
-					[% ELSE %]
-						<input name="PROTECT" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="PROTECT" type="checkbox" class="onoffswitch-checkbox" id="PROTECT-ch" 
+						[% IF VBOX_PREF.PROTECT %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="PROTECT-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -394,11 +407,16 @@
 							набрать например сразу 1*1*9 из главного меню ( номер 0 )<br>
 						</span></a></td>
 					<td>
-					[% IF VBOX_PREF.DIRECT %]
-						<input name="DIRECT" type="checkbox" checked>
-					[% ELSE %]
-						<input name="DIRECT" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="DIRECT" type="checkbox" class="onoffswitch-checkbox" id="DIRECT-ch" 
+						[% IF VBOX_PREF.DIRECT %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="DIRECT-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -421,11 +439,16 @@
 							для номера 2 пользователь нажав 2 перейдет на внутренний номер '1*2'
 						</span></a></td>
 					<td>
-					[% IF VBOX_PREF.GLOBAL %]
-						<input name="GLOBAL" type="checkbox" checked>
-					[% ELSE %]
-						<input name="GLOBAL" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="GLOBAL" type="checkbox" class="onoffswitch-checkbox" id="GLOBAL-ch" 
+						[% IF VBOX_PREF.GLOBAL %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="GLOBAL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% IF VBOX_PREF.TYPE eq '1' %]
@@ -437,11 +460,16 @@
 								<b>5</b> - пауза<br>
 							</span></a></td>
 					<td>
-					[% IF VBOX_PREF.GREETING_CONTROL %]
-						<input name="GREETING_CONTROL" type="checkbox" checked>
-					[% ELSE %]
-						<input name="GREETING_CONTROL" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="GREETING_CONTROL" type="checkbox" class="onoffswitch-checkbox" id="GREETING_CONTROL-ch" 
+						[% IF VBOX_PREF.GREETING_CONTROL %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="GREETING_CONTROL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -569,44 +597,60 @@
 						</span></a>
 					</td>
 					<td>
-					[% IF VBOX_PREF.WO_CONFIRM %]
-						<input name="WO_CONFIRM" type="checkbox" checked>
-					[% ELSE %]
-						<input name="WO_CONFIRM" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="WO_CONFIRM" type="checkbox" class="onoffswitch-checkbox" id="WO_CONFIRM-ch" 
+						[% IF VBOX_PREF.WO_CONFIRM %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="WO_CONFIRM-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
 					<td>Уведомить о новом сообщении: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | locale_msg %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | locale_msg %]</option>
-							[% END %]
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
 						[% END %]
-						</select>
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Вложить сообщение в письмо: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 				</td>
 				<tr class='addon_info'>
 					<td>Сохранить сообщение на сервере: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -731,11 +775,16 @@
 							и предложение принять\отклонить\перевести данный вызов.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="CONFIRM_CALL" type="checkbox" class="onoffswitch-checkbox" id="CONFIRM_CALL-ch" 
 						[% IF VBOX_PREF.CONFIRM_CALL %]
-							<input name="CONFIRM_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="CONFIRM_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="CONFIRM_CALL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -743,11 +792,16 @@
 							При установленном флаге вызываемому абоненту будет проигран номер звонящего.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="SAY_CALLERID" type="checkbox" class="onoffswitch-checkbox" id="SAY_CALLERID-ch" 
 						[% IF VBOX_PREF.SAY_CALLERID %]
-							<input name="SAY_CALLERID" type="checkbox" checked>
-						[% ELSE %]
-							<input name="SAY_CALLERID" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="SAY_CALLERID-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -757,11 +811,16 @@
 							и предложение принять\отклонить\перевести данный вызов.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="SCREENING_MODE" type="checkbox" class="onoffswitch-checkbox" id="SCREENING_MODE-ch" 
 						[% IF VBOX_PREF.SCREENING_MODE %]
-							<input name="SCREENING_MODE" type="checkbox" checked>
-						[% ELSE %]
-							<input name="SCREENING_MODE" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="SCREENING_MODE-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
@@ -770,11 +829,16 @@
 							При установленном флаге 'Если не дозвонились, перейти к' данный флаг игнорируется.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_IF_FAIL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_IF_FAIL-ch" 
 						[% IF VBOX_PREF.RECORD_IF_FAIL %]
-							<input name="RECORD_IF_FAIL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_IF_FAIL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_IF_FAIL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
@@ -782,54 +846,76 @@
 							Автоматически включать запись всех разговоров.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_CALL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_CALL-ch" 
 						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_CALL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Вложить сообщение в письмо: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Сохранить сообщение на сервере: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Уведомить о пропущенном вызове: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="MISS_CALL_ALERT" type="checkbox" class="onoffswitch-checkbox" id="MISS_CALL_ALERT-ch" 
 						[% IF VBOX_PREF.MISS_CALL_ALERT %]
-							<input name="MISS_CALL_ALERT" type="checkbox" checked>
-						[% ELSE %]
-							<input name="MISS_CALL_ALERT" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="MISS_CALL_ALERT-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
 					<td>Уведомить о новом сообщении: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | locale_msg %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | locale_msg %]</option>
-							[% END %]
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
 						[% END %]
-						</select>
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -893,11 +979,16 @@
 							Имя и Фамилия будут произнесены по буквам.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="USE_TTS_NAME" type="checkbox" class="onoffswitch-checkbox" id="USE_TTS_NAME-ch" 
 						[% IF VBOX_PREF.USE_TTS_NAME %]
-							<input name="USE_TTS_NAME" type="checkbox" checked>
-						[% ELSE %]
-							<input name="USE_TTS_NAME" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="USE_TTS_NAME-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -907,11 +998,16 @@
 							При установленном значении данного параметра, пользователь может ввести данные голосом ( продиктовав имя и/или фамилию )
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="USE_VOICE_SEARCH" type="checkbox" class="onoffswitch-checkbox" id="USE_VOICE_SEARCH-ch" 
 						[% IF VBOX_PREF.USE_VOICE_SEARCH %]
-							<input name="USE_VOICE_SEARCH" type="checkbox" checked>
-						[% ELSE %]
-							<input name="USE_VOICE_SEARCH" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="USE_VOICE_SEARCH-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -1027,11 +1123,16 @@
 							дальнейшем их можно использовать как %DTMF_INPUT0%,%DTMF_INPUT1% и nд.
 						</span></a></td>
 					<td>
-					[% IF VBOX_PREF.NEED_PARAMS %]
-						<input name="NEED_PARAMS" type="checkbox" checked>
-					[% ELSE %]
-						<input name="NEED_PARAMS" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="NEED_PARAMS" type="checkbox" class="onoffswitch-checkbox" id="NEED_PARAMS-ch" 
+						[% IF VBOX_PREF.NEED_PARAMS %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="NEED_PARAMS-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1039,11 +1140,16 @@
 							Отправить запрос и не ждать данных от сервера
 						</span></a></td>
 					<td>
-					[% IF VBOX_PREF.NO_WAIT %]
-						<input name="NO_WAIT" type="checkbox" checked>
-					[% ELSE %]
-						<input name="NO_WAIT" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="NO_WAIT" type="checkbox" class="onoffswitch-checkbox" id="NO_WAIT-ch" 
+						[% IF VBOX_PREF.NO_WAIT %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="NO_WAIT-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1088,11 +1194,16 @@
 							При установке данного флага Вам выдадут временный URL через который будет транслироваться конференция.
 						</span></a></td>
 					<td>
-					[% IF VBOX_PREF.SHARE_VIA_ICECAST %]
-						<input name="SHARE_VIA_ICECAST" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SHARE_VIA_ICECAST" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="SHARE_VIA_ICECAST" type="checkbox" class="onoffswitch-checkbox" id="SHARE_VIA_ICECAST-ch" 
+						[% IF VBOX_PREF.SHARE_VIA_ICECAST %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SHARE_VIA_ICECAST-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -1101,11 +1212,16 @@
 							Автоматически включать запись при входе в конференц комнату.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_CALL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_CALL-ch" 
 						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_CALL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -1121,34 +1237,46 @@
 				<tr>
 					<td>Уведомить о новом сообщении: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | locale_msg %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | locale_msg %]</option>
-							[% END %]
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
 						[% END %]
-						</select>
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Отправить факс в письме: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Оставить факс на сервере: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -1198,34 +1326,46 @@
 				<tr>
 					<td>Уведомить о новом сообщении: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | locale_msg %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | locale_msg %]</option>
-							[% END %]
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
 						[% END %]
-						</select>
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Отправить DTMF в письме: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Хранить DTMF на сервере: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1234,11 +1374,16 @@
 							Например введенный IP адрес 127*0*0*1 на 127.0.0.1
 						</span></a></td>
 					<td>
-					[% IF VBOX_PREF.NEED_FORMATED %]
-						<input name="NEED_FORMATED" type="checkbox" checked>
-					[% ELSE %]
-						<input name="NEED_FORMATED" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="NEED_FORMATED" type="checkbox" class="onoffswitch-checkbox" id="NEED_FORMATED-ch" 
+						[% IF VBOX_PREF.NEED_FORMATED %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="NEED_FORMATED-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -1265,11 +1410,16 @@
 							При включении данного флага будет производится проверки уникальности голосования на основе номера звонящего и `Имени` голосования. Период для проверки уникальности равен периоду хранения CDR.
 						</span></a></td>
 					<td>
-					[% IF VBOX_PREF.UNIQ_CIDS %]
-						<input name="UNIQ_CIDS" type="checkbox" checked>
-					[% ELSE %]
-						<input name="UNIQ_CIDS" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="UNIQ_CIDS" type="checkbox" class="onoffswitch-checkbox" id="UNIQ_CIDS-ch" 
+						[% IF VBOX_PREF.UNIQ_CIDS %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="UNIQ_CIDS-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -1324,15 +1474,16 @@
 				<tr>
 					<td>Уведомить о новом сообщении: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | locale_msg %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | locale_msg %]</option>
-							[% END %]
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
 						[% END %]
-						</select>
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% IF USER_CREDS.ALLOW_PHONES %]
@@ -1341,11 +1492,16 @@
 							Разрешить вводить только номера внутренних телефонов.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="PHONE_MODE" type="checkbox" class="onoffswitch-checkbox" id="PHONE_MODE-ch" 
 						[% IF VBOX_PREF.PHONE_MODE %]
-							<input name="PHONE_MODE" type="checkbox" checked>
-						[% ELSE %]
-							<input name="PHONE_MODE" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="PHONE_MODE-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -1354,30 +1510,46 @@
 							Автоматически включать запись всех разговоров.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_CALL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_CALL-ch" 
 						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_CALL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Вложить сообщение в письмо: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Сохранить сообщение на сервере: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -1393,11 +1565,16 @@
 				<tr class='addon_info'>
 					<td>Сказать дату подкаста: </td>
 					<td>
-					[% IF VBOX_PREF.PODCAST_ANNOUNCEMENT %]
-						<input name="PODCAST_ANNOUNCEMENT" type="checkbox" checked>
-					[% ELSE %]
-						<input name="PODCAST_ANNOUNCEMENT" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="PODCAST_ANNOUNCEMENT" type="checkbox" class="onoffswitch-checkbox" id="PODCAST_ANNOUNCEMENT-ch" 
+						[% IF VBOX_PREF.PODCAST_ANNOUNCEMENT %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="PODCAST_ANNOUNCEMENT-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
@@ -1407,11 +1584,16 @@
 						системные сообщения.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="ONLY_LATEST" type="checkbox" class="onoffswitch-checkbox" id="ONLY_LATEST-ch" 
 						[% IF VBOX_PREF.ONLY_LATEST %]
-							<input name="ONLY_LATEST" type="checkbox" checked>
-						[% ELSE %]
-							<input name="ONLY_LATEST" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="ONLY_LATEST-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -1517,64 +1699,91 @@
 				<tr class='addon_info'>
 					<td>Сказать положение в очереди : </td>
 					<td>
-					[% IF VBOX_PREF.ANNOUNCE_POSITION %]
-						<input name="ANNOUNCE_POSITION" type="checkbox" checked>
-					[% ELSE %]
-						<input name="ANNOUNCE_POSITION" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="ANNOUNCE_POSITION" type="checkbox" class="onoffswitch-checkbox" id="ANNOUNCE_POSITION-ch" 
+						[% IF VBOX_PREF.ANNOUNCE_POSITION %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="ANNOUNCE_POSITION-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
 					<td>Уведомить о новом сообщении: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | locale_msg %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | locale_msg %]</option>
-							[% END %]
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
 						[% END %]
-						</select>
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Уведомить о пропущенном вызове: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="MISS_CALL_ALERT" type="checkbox" class="onoffswitch-checkbox" id="MISS_CALL_ALERT-ch" 
 						[% IF VBOX_PREF.MISS_CALL_ALERT %]
-							<input name="MISS_CALL_ALERT" type="checkbox" checked>
-						[% ELSE %]
-							<input name="MISS_CALL_ALERT" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="MISS_CALL_ALERT-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Записать разговор: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_CALL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_CALL-ch" 
 						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_CALL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Вложить сообщение в письмо: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Сохранить сообщение на сервере: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1584,11 +1793,16 @@
 							звонок перейдет на номер 'Если не дозвонились перейти к' или 'Перейти к'...
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="JOINEMPTY" type="checkbox" class="onoffswitch-checkbox" id="JOINEMPTY-ch" 
 						[% IF VBOX_PREF.JOINEMPTY %]
-							<input name="JOINEMPTY" type="checkbox" checked>
-						[% ELSE %]
-							<input name="JOINEMPTY" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1599,11 +1813,16 @@
 							примерно 30 дней.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="REMEMBER_AGENT" type="checkbox" class="onoffswitch-checkbox" id="REMEMBER_AGENT-ch" 
 						[% IF VBOX_PREF.REMEMBER_AGENT %]
-							<input name="REMEMBER_AGENT" type="checkbox" checked>
-						[% ELSE %]
-							<input name="REMEMBER_AGENT" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="REMEMBER_AGENT-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1612,11 +1831,16 @@
 							То есть если агент не берет трубку то он будет исключен из очереди ( для текущего звонка ).
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="WAIT_BUSY_ONLY" type="checkbox" class="onoffswitch-checkbox" id="WAIT_BUSY_ONLY-ch" 
 						[% IF VBOX_PREF.WAIT_BUSY_ONLY %]
-							<input name="WAIT_BUSY_ONLY" type="checkbox" checked>
-						[% ELSE %]
-							<input name="WAIT_BUSY_ONLY" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="WAIT_BUSY_ONLY-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1738,11 +1962,16 @@
 					Разрешить задать звонящему пользователю интервал времени через который следует перезвонить. Интервал задается в виде: 'чч*мм'
 							</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="CB_USE_TIMEOFFSET" type="checkbox" class="onoffswitch-checkbox" id="CB_USE_TIMEOFFSET-ch" 
 						[% IF VBOX_PREF.CB_USE_TIMEOFFSET %]
-							<input name="CB_USE_TIMEOFFSET" type="checkbox" checked>
-						[% ELSE %]
-							<input name="CB_USE_TIMEOFFSET" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="CB_USE_TIMEOFFSET-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1750,11 +1979,16 @@
 					Разрешить звонящему пользователю задать внутренний номер на который должна перейти система после того как дозвонилась до него. Если пользователь нажмет просто решетку то будет использован номер из 'Начать с:' номер который введет пользователь должен иметь установленный флаг 'Прямой доступ'
 							</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="CB_DYNAMIC_EXT" type="checkbox" class="onoffswitch-checkbox" id="CB_DYNAMIC_EXT-ch" 
 						[% IF VBOX_PREF.CB_DYNAMIC_EXT %]
-							<input name="CB_DYNAMIC_EXT" type="checkbox" checked>
-						[% ELSE %]
-							<input name="CB_DYNAMIC_EXT" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="CB_DYNAMIC_EXT-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -1762,40 +1996,20 @@
 				[% IF VBOX_PREF.TYPE eq '15' %]
 				<!-- DateTime -->
 				<tr class='addon_info'>
-					<td>Time Zone</td>
+					<td>Часовой пояс</td>
 					<td>
 						<input size='20' type='text' name='TZ_NAME' value='[% VBOX_PREF.TZ_NAME | html %]'>
 						<script language='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'По умолчанию')</script>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td>Сказать дату и время: </td>
+					<td>Формат: </td>
 					<td>
-						[% IF VBOX_PREF.TIME_FORMAT == '0' %]
-							<input name="TIME_FORMAT" type="radio" value="0" checked>
-						[% ELSE %]
-							<input name="TIME_FORMAT" type="radio" value="0">
-						[% END %]
-					</td>
-				</tr>
-				<tr class='addon_info'>
-					<td>Сказать время: </td>
-					<td>
-						[% IF VBOX_PREF.TIME_FORMAT == '1' %]
-							<input name="TIME_FORMAT" type="radio" value="1" checked>
-						[% ELSE %]
-							<input name="TIME_FORMAT" type="radio" value="1">
-						[% END %]
-					</td>
-				</tr>
-				<tr class='addon_info'>
-					<td>Сказать дату: </td>
-					<td>
-						[% IF VBOX_PREF.TIME_FORMAT == '2' %]
-							<input name="TIME_FORMAT" type="radio" value="2" checked>
-						[% ELSE %]
-							<input name="TIME_FORMAT" type="radio" value="2">
-						[% END %]
+						<select name="TIME_FORMAT">
+							<option value="0" [% IF VBOX_PREF.TIME_FORMAT == '0' %] selected [% END %]>дата и время</option>
+							<option value="1" [% IF VBOX_PREF.TIME_FORMAT == '1' %] selected [% END %]>время</option>
+							<option value="2" [% IF VBOX_PREF.TIME_FORMAT == '2' %] selected [% END %]>дaта</option>
+						</select>
 					</td>
 				</tr>
 				[% END %]
@@ -1861,11 +2075,16 @@
 						Если Вы хотите приостановить работу автоинформатора выключите данный флаг.
 					</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="ACTIVE" type="checkbox" class="onoffswitch-checkbox" id="ACTIVE-ch" 
 						[% IF VBOX_PREF.ACTIVE %]
-							<input name="ACTIVE" type="checkbox" checked>
-						[% ELSE %]
-							<input name="ACTIVE" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="ACTIVE-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
@@ -1873,11 +2092,16 @@
 						При установке данного флага система начнет автообзвон после изменения приветствия.
 					</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="START_AFTER_CHANGE" type="checkbox" class="onoffswitch-checkbox" id="START_AFTER_CHANGE-ch" 
 						[% IF VBOX_PREF.START_AFTER_CHANGE %]
-							<input name="START_AFTER_CHANGE" type="checkbox" checked>
-						[% ELSE %]
-							<input name="START_AFTER_CHANGE" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="START_AFTER_CHANGE-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
@@ -1885,11 +2109,16 @@
 						При установке данного флага система будет вести запись каналов во время проигрывания приветствия абоненту.
 					</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_CALL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_CALL-ch" 
 						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_CALL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
@@ -2025,11 +2254,16 @@
 							Например введенный IP адрес 127*0*0*1 на 127.0.0.1
 						</span></a></td>
 					<td>
-					[% IF VBOX_PREF.NEED_FORMATED %]
-						<input name="NEED_FORMATED" type="checkbox" checked>
-					[% ELSE %]
-						<input name="NEED_FORMATED" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="NEED_FORMATED" type="checkbox" class="onoffswitch-checkbox" id="NEED_FORMATED-ch" 
+						[% IF VBOX_PREF.NEED_FORMATED %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="NEED_FORMATED-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -2060,11 +2294,16 @@
 							дальнейшем их можно использовать как %DTMF_INPUT0%,%DTMF_INPUT1% и nд.
 						</span></a></td>
 					<td>
-					[% IF VBOX_PREF.NEED_PARAMS %]
-						<input name="NEED_PARAMS" type="checkbox" checked>
-					[% ELSE %]
-						<input name="NEED_PARAMS" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="NEED_PARAMS" type="checkbox" class="onoffswitch-checkbox" id="NEED_PARAMS-ch" 
+						[% IF VBOX_PREF.NEED_PARAMS %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="NEED_PARAMS-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -2074,11 +2313,16 @@
 							методом POST. 
 						</span></a></td>
 					<td>
-					[% IF VBOX_PREF.NEED_VOICE %]
-						<input name="NEED_VOICE" type="checkbox" checked>
-					[% ELSE %]
-						<input name="NEED_VOICE" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="NEED_VOICE" type="checkbox" class="onoffswitch-checkbox" id="NEED_VOICE-ch" 
+						[% IF VBOX_PREF.NEED_VOICE %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="NEED_VOICE-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -2131,11 +2375,16 @@
 							Если установлен данный флаг, то после прослушивания `будильника` записанное сообщение автоматически удалиться.
 							</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="AC_AUTO_REMOVE" type="checkbox" class="onoffswitch-checkbox" id="AC_AUTO_REMOVE-ch" 
 						[% IF VBOX_PREF.AC_AUTO_REMOVE %]
-							<input name="AC_AUTO_REMOVE" type="checkbox" checked>
-						[% ELSE %]
-							<input name="AC_AUTO_REMOVE" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="AC_AUTO_REMOVE-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -2314,7 +2563,16 @@
 							Разрешить пользователю во время прослушивания воспользоваться кнопками: 1 - подтвердить мероприятие, 3 - чтобы отказаться от мероприятия.
 						</span></a></td>
 					<td>
-						<input name="ACCESS_MODE" type="checkbox" [% IF VBOX_PREF.ACCESS_MODE %] checked [% END %]>
+						<div class="onoffswitch">
+						<input name="ACCESS_MODE" type="checkbox" class="onoffswitch-checkbox" id="ACCESS_MODE-ch" 
+						[% IF VBOX_PREF.ACCESS_MODE %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="ACCESS_MODE-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -2348,7 +2606,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Количество мероприятий: <span>
-							Количество количество мероприятий запрашиваемых с сервера.
+							Количество мероприятий запрашиваемых с сервера.
 						</span></a></td>
 					<td>
 						<input size='3' type='text' name='GOOGLE_MAX_EVENTS' value='[% VBOX_PREF.GOOGLE_MAX_EVENTS | html %]'>
@@ -2437,44 +2695,61 @@
 							Автоматически включать запись всех разговоров.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_CALL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_CALL-ch" 
 						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_CALL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Вложить сообщение в письмо: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Сохранить сообщение на сервере: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
 					<td>Уведомить о новом сообщении: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | locale_msg %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | locale_msg %]</option>
-							[% END %]
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
 						[% END %]
-						</select>
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -2530,11 +2805,16 @@
 							и предложение принять\отклонить\перевести данный вызов.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="CONFIRM_CALL" type="checkbox" class="onoffswitch-checkbox" id="CONFIRM_CALL-ch" 
 						[% IF VBOX_PREF.CONFIRM_CALL %]
-							<input name="CONFIRM_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="CONFIRM_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="CONFIRM_CALL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -2542,11 +2822,16 @@
 							При установленном флаге будет проигран номер кому звонят.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="SAY_CALLEDID" type="checkbox" class="onoffswitch-checkbox" id="SAY_CALLEDID-ch" 
 						[% IF VBOX_PREF.SAY_CALLEDID %]
-							<input name="SAY_CALLEDID" type="checkbox" checked>
-						[% ELSE %]
-							<input name="SAY_CALLEDID" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="SAY_CALLEDID-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -2554,11 +2839,16 @@
 							При установленном флаге после разговора оператора спросят ввести цифры ( можно использовать для ручной маркировки статуса разговора ).
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="WAIT_NOTES" type="checkbox" class="onoffswitch-checkbox" id="WAIT_NOTES-ch" 
 						[% IF VBOX_PREF.WAIT_NOTES %]
-							<input name="WAIT_NOTES" type="checkbox" checked>
-						[% ELSE %]
-							<input name="WAIT_NOTES" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="WAIT_NOTES-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
@@ -2566,44 +2856,61 @@
 							Автоматически включать запись всех разговоров.
 						</span></a></td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_CALL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_CALL-ch" 
 						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_CALL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Вложить сообщение в письмо: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Сохранить сообщение на сервере: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Уведомить о новом сообщении: </td>
 					<td>
-						<select name="SENDNOTIFYEMAIL">
-						[% FOREACH ca = NOTIFY_TYPES %]
-							[% IF VBOX_PREF.SENDNOTIFYEMAIL eq ca.NOTIFY_ID %]
-							<option value="[% ca.NOTIFY_ID %]" selected>[% ca.DESCRIPTION | locale_msg %]</option>
-							[% ELSE %]
-							<option value="[% ca.NOTIFY_ID %]">[% ca.DESCRIPTION | locale_msg %]</option>
-							[% END %]
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
 						[% END %]
-						</select>
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>

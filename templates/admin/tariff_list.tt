@@ -61,15 +61,11 @@
 			<td>[% t.MONTHLY_PRICE | html %]</td>
 			<td>[% t.DAILY_PRICE | html %]</td>
 			<td>
-				<select class='in_t0' name='T_CURRENCY_ID'>
 					[% FOREACH c = CURRENCY %]
 						[% IF t.CURRENCY_ID eq c.CUR_ID %]
-							<option value="[% c.CUR_ID | html %]" selected>[% c.DESCRIPTION | html %]</option>
-						[% ELSE %]
-							<option value="[% c.CUR_ID | html %]">[% c.DESCRIPTION | html %]</option>
+							[% c.DESCRIPTION | html %]
 						[% END %]
 					[% END %]
-				</select>
 			</td>
 			<td>
 				<a title='clone tariff' href='?action=clone&noauto=1&tname=TARIFF&id=[% t.ID %]&fname=NAME&fid=ID&newaction=tariff_info%26tariff_id'><span class='icon-copy fs0'></span></a>
