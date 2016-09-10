@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.48 2016/01/11 14:26:14 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.49 2016/09/06 19:04:28 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -90,16 +90,20 @@
 			</td>
 			<td align='center'>
 			[% IF p.REG_DATA %]
+					<a href='#' class='r-info'>
 				[% IF p.REG_DATA.state eq 'Registered' %]
 					<span class='fs1'>✓</span>
 				[% ELSE %]
-					<a href='#' class='r-info'>
 					<span class='icon-warning fs1'></span>
+				[% END %]
 					<span class='r-info'>
 						[% p.REG_DATA.state | html %]
+						[% IF p.host eq 'dynamic' %]
+						<br>IP: [% p.ipaddr | html %]
+						<br>UA: [% p.useragent | html %]
+						[% END %]
 					</span>
 					</a>
-				[% END %]
 			[% END %]
 			</td>
 			[% END %]

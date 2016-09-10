@@ -29,5 +29,7 @@
 				|
 				<a href='?action=peer_list'>SIP peers</a>
 				|
+				<a href='?action=msg_list_all'>Messages</a>
+				|
 				<a href='?action=calls_list'>Calls</a>
 			</p>

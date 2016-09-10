@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.27 2016/01/11 14:26:14 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.28 2016/09/06 13:19:00 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -54,7 +54,7 @@
 						[% p.REG_STATUS %]<br>
 						Дата регистрации: [% p.REG_TIME | html %]<br>
 						Окончание: [% p.REG_EXPIRED | html %]<br>
-						IP: [% p.ipaddr | html %]<br>
+						IP: [% p.ipaddr | html %]:[% p.port | html %]<br>
 						UA: [% p.useragent | html %]
 					</span>
 					</a>
