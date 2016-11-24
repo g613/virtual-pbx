@@ -71,13 +71,13 @@
 			<td></td>
 			<td align='right'>[% d.DOMAIN | html %]</td>
 			<td align='right'>
-				[% d.VOICENUMBER | html %]
+				<a href='?action=user_info&ac=[% d.ACCESS_CODE | html %]'>[% d.ACCESS_CODE | html %]</a>
 			</td>
 			<td>
-				<b>#</b>
+				@
 			</td>
 			<td align='left'>
-				<a href='?action=user_info&ac=[% d.ACCESS_CODE | html %]'>[% d.ACCESS_CODE | html %]</a>
+				[% d.VOICENUMBER | html %]
 			</td>
 			<td>
 				<a title='delete SIP Domain' href='?action=did_del_sipdomain&domain_id=[% d.ID %]&user_id=[% d.SUBSCR_ID | html %]&from=[% MSG_FROM %]&domain=[% d.DOMAIN | html %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
@@ -90,13 +90,14 @@
 			<td></td>
 			<td align='right'><input placeholder='SIP Domain' size='35' type='text' name='domain'></td>
 			<td align='right'>
-				<input placeholder='Shared DID' size='15' type='text' name='pn'>
+				<input placeholder='Access code' size='10' type='text' name='ac'>
 			</td>
 			<td>
-				#
+				@
 			</td>
 			<td align='left'>
-				<input placeholder='Access code' size='10' type='text' name='ac'></td>
+				<input placeholder='Shared DID' size='15' type='text' name='pn'>
+			</td>
 			<td>
 				<input value='Add sip domain' type='submit'>
 				<input type='hidden' value='did_add_sipdomain' name='action'>

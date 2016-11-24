@@ -68,15 +68,15 @@
 		[% END %]
 		
 		[% FOREACH gr = GROUPS %]
-		<tr align='center' class='nocolor'>
+		<tr align='left' class='nocolor'>
 			<td>[% gr.GROUP_ID | html %]</a>
-			<td align='left'><a title='edit group' href='?action=group_info&group_id=[% gr.GROUP_ID %]'>[% gr.GROUP_NAME | html %]</a>
+			<td><a title='edit group' href='?action=group_info&group_id=[% gr.GROUP_ID %]'>[% gr.GROUP_NAME | html %]</a>
 			<td>[% gr.LANG_NAME | html %]</td>
 			<td>[% gr.TARIFF_NAME | html %]</td>
 			<td>[% gr.PREF_CODEC | html %]</td>
 			<td>[% gr.SUB_SOUND_DIR | html %]</td>
 			<td>[% gr.SUB_TEMPLATE_DIR | html %]</td>
-			<td>
+			<td align='center'>
 				<a title='clone group' href='?action=clone&tname=GROUP&id=[% gr.GROUP_ID %]&fname=GROUP_NAME&fid=GROUP_ID&newaction=group_info%26group_id'><span class='icon-copy fs0'></span></a>
 				<a title='delete group' href='?action=group_del&group_id=[% gr.GROUP_ID %]&from=[% MSG_FROM %]&f_group=[% F_GROUP | html %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
 			</td>

@@ -38,8 +38,21 @@
 	</table>
 	<center>
 	
-	<h1>[% REPORT_DATA.NAME | html %] - report result</h1>
+	
+	<table width='100%'>
+		<tr>
+			<td width='85%' align='center'>
+				<h1>[% REPORT_DATA.NAME | html %] - report result</h1>
+			</td>
+			<td align='right' nowrap='nopwrap'>
+				<a title='get excel table' href='?action=report_run&report_id=[% REPORT_DATA.ID %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
+				<a title='edit report' href='?action=report_info&report_id=[% REPORT_DATA.ID %]'><span class='icon-cogs fs0'></span></a>
+				<a title='delete report' href='?action=report_del&report_id=[% REPORT_DATA.ID %]' onclick="return DelConfirm('en')"><span class='icon-cross fs0'></span></a>
+			</td>
+		</tr>
+	</table>
 
+	[% IF REPORT_DATA.DATE_START %]
 	<p>
 	<table width='98%'>
 		<tr>
@@ -47,7 +60,6 @@
 				<form method="get" action='?'>
 				<input name='action' value='report_run' type='hidden'>
 				<input name='report_id' value='[% REPORT_DATA.ID %]' type='hidden'>
-				[% IF REPORT_DATA.DATE_START %]
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -78,17 +90,13 @@
 				</script>
 				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
 				<a link="#"><span class='fs0'>▾</span></a>
-				[% END %]
 				<input value='Run' type='submit'>
-				&nbsp;
-				<a title='get excel table' href='?action=report_run&report_id=[% REPORT_DATA.ID %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
-				<a title='edit report' href='?action=report_info&report_id=[% REPORT_DATA.ID %]'><span class='icon-cogs fs0'></span></a>
-				<a title='delete report' href='?action=report_del&report_id=[% REPORT_DATA.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><span class='icon-cross fs0'></span></a>
 				</form>
 			</td>
 		</tr>
 	</table>
 	</p>
+	[% END %]
 
 	<p>
 	<table width='98%' class='tablesorter' id='report_table'>

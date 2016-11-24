@@ -69,13 +69,13 @@
 		<tr align='center' class='nocolor'>
 			<td align='right'>[% did.DID | html %]</td>
 			<td align='right'>
-				[% did.VOICENUMBER | html %]
+				<a href='?action=user_info&ac=[% did.ACCESS_CODE | html %]'>[% did.ACCESS_CODE | html %]</a>
 			</td>
 			<td>
-				<b>#</b>
+				@
 			</td>
 			<td align='left'>
-				<a href='?action=user_info&ac=[% did.ACCESS_CODE | html %]'>[% did.ACCESS_CODE | html %]</a>
+				[% did.VOICENUMBER | html %]
 			</td>
 			<td>
 				<a title='delete DID' href='?action=did_del&did_id=[% did.ID %]&user_id=[% did.SUBSCR_ID | html %]&from=[% MSG_FROM %]&did=[% did.DID | html %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
@@ -87,13 +87,14 @@
 		<tr align='center'>
 			<td align='right'><input placeholder='DID' size='15' type='text' name='did'></td>
 			<td align='right'>
-				<input placeholder='Shared DID' size='15' type='text' name='pn'>
+				<input placeholder='Access code' size='10' type='text' name='ac'>
 			</td>
 			<td>
-				#
+				@
 			</td>
 			<td align='left'>
-				<input placeholder='Access code' size='10' type='text' name='ac'></td>
+				<input placeholder='Shared DID' size='15' type='text' name='pn'>
+			</td>
 			<td>
 				<input value='Add DID' type='submit'>
 				<input type='hidden' value='did_add' name='action'>

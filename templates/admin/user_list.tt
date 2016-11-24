@@ -95,7 +95,7 @@
 
 		[% FOREACH us = USERS %]
 		<tr align='center' class='nocolor'>
-			<td>
+			<td align='right'>
 				[% us.VOICENUMBER | html %]
 			</td>
 			<td>
@@ -108,7 +108,7 @@
 			<td align='left'>
 				[% us.LANG_NAME | html %]
 			</td>
-			<td>[% us.GROUP_NAME | html %]</td>
+			<td align='left'>[% us.GROUP_NAME | html %]</td>
 			[% IF us.STATUS %]
 			<td class='success'>
 				active
@@ -124,7 +124,7 @@
 					-
 				[% END %]
 			</td>
-			<td>
+			<td align='left'>
 				[% us.TARIFF_NAME | html %]
 			</td>
 			<td align='right'>

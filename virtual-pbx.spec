@@ -475,6 +475,7 @@ ln -s %CORE_DIR/contrib/utils/xvb-ctl /usr/local/bin/xvb-ctl &>/dev/null || true
 %attr(755,root,root) %CORE_DIR/contrib/utils/radiusgw.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_reg_uac
 %attr(755,root,root) %CORE_DIR/contrib/utils/reg_uac.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/sipstatictmpl.pl
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-reg_uac
 %attr(755,root,root) %CORE_DIR/contrib/utils/node_stat.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/callblast.pl
