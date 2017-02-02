@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.308 2016/08/19 18:48:06 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.312 2017/01/23 19:34:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1376,7 +1376,13 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td>On Call Answered URL</td>
+					<td>Entry URL:</td>
+					<td>
+						<input size='30' type='text' name='Q_INIT_URL' value='[% VBOX_PREF.Q_INIT_URL | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>On Call Answered URL:</td>
 					<td>
 						<input size='30' type='text' name='Q_ANSWERED_URL' value='[% VBOX_PREF.Q_ANSWERED_URL | html %]'>
 					</td>
@@ -1448,6 +1454,12 @@
 					<td>Fax Header: </td>
 					<td>
 						<textarea rows='[% VBOX_PREF.HEADERINFO | textarea_rows %]' cols='30' name='HEADERINFO'>[% VBOX_PREF.HEADERINFO | html %]</textarea>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Fax URL: </td>
+					<td>
+						<input size='30' type='text' name='FAX_URL' value='[% VBOX_PREF.FAX_URL | html %]'>
 					</td>
 				</tr>
 				[% END %]

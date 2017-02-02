@@ -2,7 +2,7 @@
 %define ASTERISK_VARLIB_HOME %{_datadir}/asterisk
 Name: virtual-pbx
 Summary: Voice Application Server / HostedIVR solution based on asterisk - Core files
-Version: 3
+Version: 4
 Release: 1
 License: EPL v1.0 / CC BY 3.0
 BuildRoot: %{_tmppath}/%{name}-%{version}-build
@@ -36,6 +36,7 @@ Requires: perl(IO::Socket::SSL)
 Requires: perl(Gearman::Client)
 Requires: perl(Gearman::Worker)
 Requires: perl(Authen::SASL)
+#Requires: perl(Net::DNS)
 Provides: perl(Asterisk::AMI) 
 
 %description
@@ -92,7 +93,7 @@ Summary: XVB pbx - Management utilites
 Group:   System Environment/Services
 
 Requires: virtual-pbx = %{version}-%{release}
-Requires: mysql-server
+#Requires: mysql-server
 %description management
 Voice Application Server / HostedIVR solution based on asterisk  - Management utilites
 
@@ -537,7 +538,6 @@ ln -s %CORE_DIR/contrib/utils/xvb-ctl /usr/local/bin/xvb-ctl &>/dev/null || true
 %attr(755,root,root) %CORE_DIR/contrib/utils/billing_processor_monthly.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/queues_hourly_avg.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/tts_mng.pl
-%attr(755,root,root) %CORE_DIR/contrib/utils/db_backup.pl
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/db
 
 

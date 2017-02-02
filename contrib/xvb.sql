@@ -627,7 +627,7 @@ create table VPBX_SIPPEERS (
 	dtmfmode  ENUM('rfc2833','info','shortinfo','inband','auto') not null DEFAULT 'auto',
 
 	context VARCHAR(50) NOT NULL DEFAULT 'xvb-phones',
-	setvar  VARCHAR(255) DEFAULT NULL,
+	setvar  VARCHAR(1024) DEFAULT NULL,
 
 	defaultuser varchar(80) NOT NULL default '',
 	fullcontact varchar(80) NOT NULL DEFAULT '',
@@ -667,6 +667,7 @@ create table VPBX_SIPPEERS (
 	PEER_TYPE		INT(1)			not null default 0,
 
 	DEFCID			VARCHAR(50) default '',
+	CO_LIMIT		INT(5)			not null default 0,
 
 	unique(name),
     CONSTRAINT FK_VPBX_SIPPPERS_SUBSCR FOREIGN KEY (SUBSCR_ID) REFERENCES VPBX_ACCOUNTS(ID) ON DELETE CASCADE,
@@ -896,6 +897,7 @@ create	table VPBX_VBOXES_QUEUES
 	CALLERID_PREF		VARCHAR(255),
 	CALLERIDNUM_PREF	VARCHAR(255),
 	Q_URL				TEXT(1024),
+	Q_INIT_URL			TEXT(1024),
 	Q_ANSWERED_URL		TEXT(1024),
 	PARKING_EXT			VARCHAR(255),
 	Q_MAX_W_CALLS		INT(3)			default 0,
@@ -1157,6 +1159,7 @@ create	table VPBX_VBOXES_FAXTX
 	ID			INT(16)		    not null,
 
 	HEADERINFO			VARCHAR(255),
+	FAX_URL				TEXT(1024),
 
 	unique(ID),
 
@@ -2401,6 +2404,7 @@ insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sipnet.ru','Sipnet',
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.skype.com','Skype Connect',"$_[0]->{'fromdomain'}='sip.skype.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='port,invite'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('voip.mtt.ru','YouMagic MTT',"$_[0]->{'fromdomain'}='voip.mtt.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='port,invite'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.zadarma.com','Zadarma',"$_[0]->{'fromdomain'}='sip.zadarma.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='invite'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'nat'}='yes'; $_[0]->{'port'}='5060';");
+insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('pbx.zadarma.com','ZadarmaPBX',"$_[0]->{'fromdomain'}='pbx.zadarma.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='invite'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'nat'}='yes'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('voip.domru.ru','DOM.RU',"$_[0]->{'fromdomain'}='voip.domru.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'REG_AUTHNAME'} = substr($_[0]->{'username'},-7); $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='port,invite'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'nat'}='yes'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('mpbx.sip.beeline.ru','BeeLine',"$_[0]->{'REG_EXPIRE'}='60'; $_[0]->{'REG_USERNAME'} = $_[0]->{'username'}.'@mpbx.sip.beeline.ru'; $_[0]->{'fromdomain'}='mpbx.sip.beeline.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'port'}='5060'; $_[0]->{'insecure'}='port,invite';");
 

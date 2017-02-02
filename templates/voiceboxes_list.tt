@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.60 2015/01/15 20:41:22 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.62 2017/01/17 18:32:51 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extensions - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -15,7 +15,10 @@
 	
 	<table width='100%'>
 		<tr>
-			<td width='20%'>&nbsp;</td>
+			<td align='left' width='20%'>
+				&nbsp;
+				<a href='?action=ivrflow_list&uniq=[% USER_CREDS.UNIQ %]' title="IVR Flow"><span class='icon-power fs0'></span></a>
+			</td>
 			<td align='center'><h1>Extensions List</h1></td>
 			<td align='right' width='20%'>
 			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
