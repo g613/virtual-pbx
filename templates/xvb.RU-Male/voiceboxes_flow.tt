@@ -1,0 +1,50 @@
+<html>
+<!-- $Id: voiceboxes_flow.tt,v 1.4 2017/01/29 18:58:28 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Диаграмма прохожения звонка - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script src="/xvb/js/mermaid.min.js"></script>
+	<script>mermaid.initialize({
+		startOnLoad:true,
+			flowchart:{
+				useMaxWidth:false
+		}
+	});</script>
+	<link rel="stylesheet" type="text/css" href="/xvb/css/mermaid.css" />
+</head>
+<body>
+	<center>
+
+	<table width='100%'>
+		<tr>
+			<td align='right' width='15%'>&nbsp;</td>
+			<td align='center'>
+				<h1>Диаграмма прохождения звонка</h1>
+			</td>
+			<td align='right' width='20%'>
+			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+				&nbsp;
+				<input size='10' type='text' name='f_pref' value='[% F_PREF | html %]'>
+				&nbsp;
+				<input value='Фильтр' type='submit'>
+				<input name='action' value='ivrflow_list' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+			</form>
+			</td>
+		</tr>
+	</table>
+
+	<div class="mermaid" align="left">
+[% IF IVRFLOW %]
+[% IVRFLOW %]
+[% END %]
+	</div>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
