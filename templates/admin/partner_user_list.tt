@@ -26,7 +26,7 @@
 	
 	<center>
 
-	<h1>Tennants</h1>
+	<h1>Tenants</h1>
 
 	<table width='100%'>
 		<tr>
@@ -50,7 +50,7 @@
 		<tr>
 				<th>Shared DID</th>
 				<th>Access code</th>
-				<th>User name</th>
+				<th>Tenant name</th>
 				<th>Language</th>
 				<th>Status</th>
 				<th>R/O</th>

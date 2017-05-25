@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.23 2017/01/05 20:47:37 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.24 2017/02/23 18:45:03 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -63,11 +63,11 @@
 	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>Access code</th>
+			<th>Tenant name</th>
 			<th>&nbsp;</th>
 			<th>Phone</th>
 			<th>Reg IP</th>
 			<th>&nbsp;</th>
-			<th>User name</th>
 			<th>CallerID</th>
 			<th>Lines</th>
 			<th>Auth name</th>
@@ -86,6 +86,9 @@
 		[% FOREACH p = SIPDEV %]
 		<tr align='left' class='nocolor'>
 			<td><a title='edit user settings' href='?ac=[% p.ACCESS_CODE %]&action=user_info'>[% p.ACCESS_CODE %]</a></td>
+			<td>
+				[% p.FIRST_NAME | html %] [% p.LAST_NAME | html %]
+			</td>
 			<td align='center'>
 				[% IF p.REG_STATUS eq 'Registered' %]
 					<a href='#' class='l-info'>
@@ -115,10 +118,14 @@
 			<td>[% p.ipaddr | html %]</td>
 			<td align='center'>
 				[% IF p.deny %]
-					<input type='checkbox' title='Access only for: [% p.permit | html %]' checked />
+					<a href='#' class='l-info'>
+					<span class='fs1'>✓</span>
+					<span class='l-info'>
+					Access only for: [% p.permit | html %]
+					</span>
+					</a>
 				[% END %]
 			</td>
-			<td>[% p.DESCRIPTION | html %]</td>
 			<td>[% p.DEFCID | html %]</td>
 			<form method='post' id='f-[% p.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)' action="">
 			<td nowrap='nowrap'>

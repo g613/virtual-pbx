@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.29 2017/01/05 19:34:23 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.30 2017/02/11 09:55:51 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -21,7 +21,7 @@
 			
 	<table width='100%'>
 		<tr>
-			<td align='center'><h1>SIP телефоны</h1></td>
+			<td align='center'><h1>Внутренние SIP телефоны</h1></td>
 			<td align='right' width='10%'>
 				<a title='в формате excel' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
 				<a title='удалить все телефоны' href='?action=phone_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все телефоны'><span class='icon-cross fs0'></span></a>

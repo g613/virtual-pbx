@@ -451,7 +451,7 @@ ln -s %CORE_DIR/contrib/utils/xvb-ctl /usr/local/bin/xvb-ctl &>/dev/null || true
 %attr(755,root,root) %CORE_DIR/contrib/utils/modtest.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/MemCached.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/rpm/*
-%attr(644,root,root) %CORE_DIR/contrib/utils/rpm/sys_update-data/*
+%attr(755,root,root) %CORE_DIR/contrib/utils/rpm/sys_update-data/*
 %CORE_DIR/lib/*
 %CORE_DIR/templates/*
 %CORE_DIR/doc/*.odt

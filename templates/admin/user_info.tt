@@ -55,10 +55,9 @@
 		<tr>
 			<td width='50%' valign='top'>
 			<table width='100%'>
-			<form method='post' onSubmit='return checkChanges(this)'>
 			<tr>
 				<td>
-					User name:
+					Tenant name:
 				</td>
 				<td>
 					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]&nbsp;&nbsp;
@@ -89,14 +88,24 @@
 					[% USER.ACCESS_CODE | html %]&nbsp;&nbsp;
 				</td>
 			</tr>
+			<form method='post' id='find-form'>
 			<tr>
 				<td>
 					Pin code:
 				</td>
-				<td>
-					[% USER.PIN_CODE | html %][% USER.PIN_CODE2 %]
+				<td nowrap='nowrap'>
+					<input size='30' type='text' name='pin' value='[% USER.PIN_CODE | html %][% USER.PIN_CODE2 %]'>
+					<input type='hidden' value='[% USER.ID %]' name='user_id'>
+					<input type='hidden' value='user_update_pin' name='action'>
+					<input type='hidden' name='ai' value=''id='find-flt'>
+					<a title='update pin code' href='#' onclick="return SubmitConfirm('');"><span class='icon-loop2 fs0'></span></a>
 				</td>
 			</tr>
+			</form>
+			<tr>
+				<td></td>
+			</tr>
+			<form method='post' onSubmit='return checkChanges(this)'>
 			<tr>
 				<td>
 					Shared DID: 
@@ -166,10 +175,18 @@
 			[% END %]
 			<tr>
 				<td>
+					Description:
+				</td>
+				<td>
+					<textarea rows='5' cols='40' name='US_DESCRIPTION'>[% USER.DESCRIPTION | html %]</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
 					Custom group rules:
 				</td>
 				<td>
-					<textarea rows='14' cols='40' name='US_CUSTOM_RULES'>[% USER.CUSTOM_RULES | html %]</textarea>
+					<textarea rows='10' cols='40' name='US_CUSTOM_RULES'>[% USER.CUSTOM_RULES | html %]</textarea>
 				</td>
 			</tr>
 			<tr><td colspan='2'>&nbsp;</td></tr>

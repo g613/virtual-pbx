@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.23 2016/09/06 19:04:28 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.24 2017/02/23 18:45:03 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -67,21 +67,19 @@
 	<table width='100%' id='d-tbl'>
 		<tr>
 			<th>Access code</th>
-			<th>Peer ID</th>
-			<th>Proto</th>
+			<th>Tenant name</th>
 			<th>Proxy</th>
 			<th>Port</th>
 			<th>Domain</th>
-			<th>User</th>
 			<th>CallerID</th>
-			<th>DTMF mode</th>
 			<th colspan='2'>Incoming calls</th>
 			<th>&nbsp;</th>
+			<th>Peer ID</th>
 		</tr>
 		
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='11'>
+			<td align='left' colspan='9'>
 				<a title='previous page' href='?action=peer_list&ac=[% AC | html %]&pbxmode=[% PBXMODE %]&need_reg=[% NEED_REG | html %]&host=[% HOST | html %]&from=[% MSG_PREV %]&authname=[% NAME | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
@@ -90,14 +88,23 @@
 		[% FOREACH p = SIPDEV %]
 		<tr align='left' class='nocolor' id='d-tr-[% p.DATA_ID %]'>
 			<td><a title='edit user settings' href='?ac=[% p.ACCESS_CODE %]&action=user_info'>[% p.ACCESS_CODE %]</a></td>
-			<td>[% p.name %]</td>
-			<td>[% p.transport | html %]</td>
-			<td><span title='[% p.DESCRIPTION | html %]'>[% p.host | html %]</span></td>
+			<td>
+				[% p.FIRST_NAME | html %] [% p.LAST_NAME | html %]
+			</td>
+			<td>
+				<a href='#' class='l-info'>
+				<span>[% p.host | html %]</span>
+				<span class='l-info'>
+					Name: [% p.DESCRIPTION | html  %]<br>
+					Proto: [% p.transport | html %]<br>
+					DTMF: [% p.dtmfmode | html %]<br>
+					User: [% p.username | html %]<br>
+				</span>
+				</a>
+			</td>
 			<td>[% p.port | html %]</td>
 			<td>[% p.fromdomain | html %]</td>
-			<td>[% p.username | html %]</td>
 			<td>[% p.fromuser | html %]</td>
-			<td>[% p.dtmfmode | html %]</td>
 			
 			<form method='post' id='f-[% p.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)' action="">
 			<td>
@@ -143,12 +150,13 @@
 				</span>
 			</td>
 			</form>
+			<td>[% p.name %]</td>
 		</tr>
 		[% END %]
 	
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right' colspan='11'>
+			<td align='right' colspan='9'>
 				<a title='previous page' href='?action=peer_list&ac=[% AC | html %]&pbxmode=[% PBXMODE %]&need_reg=[% NEED_REG | html %]&host=[% HOST | html %]&from=[% MSG_NEXT %]&authname=[% NAME | html %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>

@@ -46,7 +46,7 @@
 			<form method='post' onSubmit='return checkChanges(this)'>
 			<tr>
 				<td>
-					User name:
+					Tenant name:
 				</td>
 				<td>
 					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]&nbsp;&nbsp;

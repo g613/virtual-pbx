@@ -43,12 +43,21 @@
 				&nbsp;
 				<input placeholder='Access code' size='12' name='f_ac' type='text' value='[% F_AC | html %]'>
 				&nbsp;
-				<input placeholder='User name' size='25' name='f_uname' type='text' value='[% F_UNAME | html %]'>
+				<input placeholder='Tenant name' size='25' name='f_uname' type='text' value='[% F_UNAME | html %]'>
+				&nbsp;
+				<input placeholder='Description' size='20' name='f_desc' type='text' value='[% F_DESC | html %]'>
 				&nbsp;
 				<select name="f_group" id="group_type_selector">
 					<option value="" selected>any group</option>
 					[% FOREACH gr = GROUPS %]
 						<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+					[% END %]
+				</select>
+				&nbsp;
+				<select name="f_tariff" id="tarif_type_selector">
+					<option value="" selected>any tarif</option>
+					[% FOREACH t = TARIFFS %]
+						<option value="[% t.ID | html %]">[% t.NAME | html %]</option>
 					[% END %]
 				</select>
 				&nbsp;
@@ -65,6 +74,7 @@
 			<script language='JavaScript'>
 				setActiveSelector('status_type_selector',"[% F_STATUS %]");
 				setActiveSelector('group_type_selector',"[% F_GROUP %]");
+				setActiveSelector('tarif_type_selector',"[% F_TARIFF %]");
 			</script>
 			</form>
 		</tr>
@@ -75,8 +85,8 @@
 		<tr>
 			<th>Shared DID</th>
 			<th>Access code</th>
-			<th>User name</th>
-			<th>Language</th>
+			<th>Tenant name</th>
+			<th>Description</th>
 			<th>Group</th>
 			<th>Status</th>
 			<th>R/O</th>
@@ -88,7 +98,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr align='center' class='nocolor'>
 			<td align='left' colspan='10'>
-				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><span class='fs0'>◄</span></a>
+				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_desc=[% F_DESC | html %]&f_tariff=[% F_TARIFF | html %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -106,7 +116,7 @@
 				[% us.FIRST_NAME | html %] [% us.LAST_NAME | html %]
 			</td>
 			<td align='left'>
-				[% us.LANG_NAME | html %]
+				[% us.DESCRIPTION | html %]
 			</td>
 			<td align='left'>[% us.GROUP_NAME | html %]</td>
 			[% IF us.STATUS %]
@@ -143,7 +153,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='10'>
-				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><span class='fs0'>►</span></a>
+				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_desc=[% F_DESC | html %]&f_tariff=[% F_TARIFF | html %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -158,7 +168,7 @@
 			<td>
 				&nbsp;
 				Shared DID: 
-				<input size='11' type='text' name='phone'>
+				<input size='11' type='text' name='phone' value='[% DEF_SH_DID | html %]'>
 				&nbsp;
 				Group: 
 				<select name="group_id">
