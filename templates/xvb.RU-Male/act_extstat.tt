@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.30 2016/01/21 18:04:43 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.31 2017/06/14 20:09:38 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -149,7 +149,7 @@
 	
 	<table width='100%'>
 		<tr>
-			<td align='left' width='15%'>
+			<td width='10%' align='left' nowrap='nowrap' valign='top'>
 				[% IF NEED_PRINT eq '' %]
 				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Параметры номера"><span class='icon-cog fs0'></span></a>
 				<a href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Активность"><span class='icon-stats-bars fs0'></span></a>
@@ -159,12 +159,19 @@
 				[% END %]
 			</td>
 			<td align='center'>
-				<h1>Внутренний номер #[% VBOX_PREF.EXT_NUMBER | html %] расширенная статистика</h1><h3>( [% CDR_HEADER %] 
+				<h1>Расширенная статистика - 
+				[% IF VBOX_PREF.NAME %]
+				[% VBOX_PREF.NAME | html %]  ( #[% VBOX_PREF.EXT_NUMBER | html %] )
+				[% ELSE %]
+				#[% VBOX_PREF.EXT_NUMBER | html %]
+				[% END %]
+				</h1><h3>( [% CDR_HEADER %] 
 				<script language='javascript'>
 					document.write( ', период группировки: ' + period );
 				</script>
 			)</h3>
 			</td>
+			<td width='8%'>&nbsp;</td>
 		</tr>
 	</table>
 	

@@ -125,6 +125,14 @@
 					</select>
 				</td>
 			</tr>
+			<tr>
+				<td>
+					Description:
+				</td>
+				<td>
+					<textarea rows='5' cols='40' name='US_DESCRIPTION'>[% USER.DESCRIPTION | html %]</textarea>
+				</td>
+			</tr>
 			<tr><td colspan='2'>&nbsp;</td></tr>
 			<tr>
 				<td colspan='2' align='center'>

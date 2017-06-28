@@ -1,0 +1,122 @@
+<html>
+<!-- $Id: dashboard.tt,v 1.4 2017/06/14 20:09:38 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Dashboard - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
+
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	
+	<script language="javascript">
+
+		google.charts.load('current', {'packages':['imagebarchart','corechart']});
+		google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+			// chart0
+			var in_data0 = [% JS_DATA_IN %];
+			in_data0.unshift( ['Date','Answered','Unanswered','VoiceMail'] );
+			var data0 = google.visualization.arrayToDataTable(in_data0);
+			var chart0 = new google.visualization.ColumnChart(document.getElementById('incalls'));
+			chart0.draw(data0, {  height: 300, min: 0,isStacked: true, title: 'Incoming calls', legend: { position: 'bottom', maxLines: 4 },bar: {groupWidth: "91%"}, });
+
+			google.visualization.events.addListener(chart0, 'select',
+				function() {
+				var item = chart0.getSelection()[0];
+					if ( (typeof(item) !== 'undefined') && item.row != null && data0.getValue(item.row,item.column) > 0 ) {
+						var filter = '';
+						if ( item.column == 1 ) {
+							filter = '&data=%25STATUS=ANSWER%25';
+						} else {
+							filter = '&data=!%25STATUS=ANSWER%25';
+						}
+						var new_url = "/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&action=cdr_list&call_type=incoming&uniq=[% USER_CREDS.UNIQ %]&tg_filter=%25m-%25d***" + data0.getValue(item.row,0) + filter;
+						document.location.href=new_url;
+					}
+				} );
+
+			// chart1
+			var in_data1 = [% JS_DATA_OUT %];
+			in_data1.unshift( ['Date','All calls','Failed calls'] );
+			var data1 = google.visualization.arrayToDataTable( in_data1 );
+			var chart1 = new google.visualization.LineChart(document.getElementById('outcalls'));
+			chart1.draw(data1, { title: 'Outbound calls',legend: { position: 'bottom' } });
+			
+			google.visualization.events.addListener(chart1, 'select',
+				function() {
+				var item = chart1.getSelection()[0];
+					if ( (typeof(item) !== 'undefined') && item.row != null && data1.getValue(item.row,item.column) > 0 ) {
+						var filter = '';
+						if ( item.column == 2 ) {
+							filter = '&data=!%25STATUS=ANSWER%25<PPDF>STATUS:regexp:CHANUNAVAIL|CONGESTION|INVALIDARGS</PPDF>';
+						}
+						var new_url = "/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&call_type=transit&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&tg_filter=%25m-%25d***" + data1.getValue(item.row,0) + filter;
+						document.location.href=new_url;
+					}
+				} );
+
+			[% IF GEO_INFO %]
+				// chart2
+				var data2 = google.visualization.arrayToDataTable( [% JS_DATA_REG %] );
+				var chart2 = new google.visualization.PieChart(document.getElementById('geo_opt'));
+				chart2.draw(data2, { pieHole: 0.4, chartArea:{left:3,top:30,width:'100%',height:'90%'},title: 'Incoming calls geo-info (Top 20)' } );
+				
+				google.visualization.events.addListener(chart2, 'select',
+					function() {
+						var item = chart2.getSelection()[0];
+
+						if ( (typeof(item) !== 'undefined') && item.row != null && data2.getValue(item.row,0) !== 'others' && data2.getValue(item.row,0) !== 'unknown' ) {
+							var new_url = "/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&action=cdr_list&call_type=incoming&uniq=[% USER_CREDS.UNIQ %]"+'&data=%25'+data2.getValue(item.row,0)+'%25';
+							document.location.href=new_url;
+						}
+					} );
+			[% ELSE %]
+				// chart3
+				var data3 = google.visualization.arrayToDataTable( [% JS_DATA_ALL %] );
+				var chart3 = new google.visualization.PieChart(document.getElementById('geo_opt'));
+				chart3.draw(data3, { chartArea:{left:3,top:30,width:'100%',height:'100%'}, title: 'Call types'} );
+			[% END %]
+			
+			// chart4
+			var in_data4 = [% JS_DATA_F %];
+			in_data4.unshift( ['Date','Files','Size (MB)'] );
+			var data4 = google.visualization.arrayToDataTable( in_data4 );
+			var chart4 = new google.visualization.AreaChart(document.getElementById('files'));
+			chart4.draw(data4, { vAxis: {minValue: 0} , title: 'Recorded files'} );
+		}
+	</script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+		<h1>Dashboard ( for last [% PERIOD %] days )</h1>
+		<table>
+			<tr>
+				<td width='50%' height='100%'>
+					<div id="incalls" style="width: 100%; height: 300"></div>
+				</td>
+				<td width='50%' valign='top'>
+					<div id="outcalls" style="width: 100%; height: 300"></div>
+				</td>
+			</tr>
+			<tr>
+				<td width='50%'>
+					<div id="geo_opt" style="width: 100%; height: 300"></div>
+				</td>
+				<td width='50%'>
+					<div id="files" style="width: 100%; height: 300"></div>
+				</td>
+			</tr>
+		</table>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
+

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.76 2017/01/23 19:34:25 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.77 2017/06/28 14:04:02 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1095,6 +1095,20 @@
 					<td>Параметры POST/PUT: </td>
 					<td>
 						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='30' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td><a href='#' class='info'>Content-type параметров: <span>
+						Если ничего не задано то используется application/x-www-form-urlencoded для POST / PUT запросов 
+						</span></a></td>
+					<td>
+						<select name="TTS_C_TYPE">
+							<option selected value="[% VBOX_PREF.TTS_C_TYPE | html %]">[% VBOX_PREF.TTS_C_TYPE | html %]</option>
+							<option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
+							<option value="application/json">application/json</option>
+							<option value="application/xml">application/xml</option>
+							<option value=""> </option>
+						</select>
 					</td>
 				</tr>
 				<tr class='addon_info'>

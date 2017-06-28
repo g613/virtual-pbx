@@ -109,7 +109,7 @@
 				[% us.VOICENUMBER | html %]
 			</td>
 			<td>
-				<a title='Login to tenent profile' href='/ui?phone=[% us.VOICENUMBER %]&ac=[% us.ACCESS_CODE %]&pw=[% us.PIN_CODE %][% us.PIN_CODE2 %]&action=start&saction=user_info'>[% us.ACCESS_CODE | html %]</a>
+				<a title='Login to tenent profile' href='/ui?phone=[% us.VOICENUMBER %]&ac=[% us.ACCESS_CODE %]&pw=[% us.PIN_CODE %][% us.PIN_CODE2 %]&action=start&saction=dashboard_list'>[% us.ACCESS_CODE | html %]</a>
 				<a title='Edit tenant settings' href='?ac=[% us.ACCESS_CODE %]&action=user_info'>&nbsp;&nbsp;&nbsp;<span class='icon-cogs fs0'></span></a>
 			</td>
 			<td align='left'>

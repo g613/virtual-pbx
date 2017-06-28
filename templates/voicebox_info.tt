@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.312 2017/01/23 19:34:25 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.314 2017/06/28 14:04:02 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -290,62 +290,92 @@
 			[% END %]
 				<td>Wait Extension: </td>
 				<td>
-				[% IF VBOX_PREF.WAITEXTENSION %]
-					<input name="WAITEXTENSION" type="checkbox" checked>
-				[% ELSE %]
-					<input name="WAITEXTENSION" type="checkbox">
-				[% END %]
+						<div class="onoffswitch">
+						<input name="WAITEXTENSION" type="checkbox" class="onoffswitch-checkbox" id="WAITEXTENSION-ch" 
+						[% IF VBOX_PREF.WAITEXTENSION %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="WAITEXTENSION-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 				</td>
 			</tr>
 			<tr class='addon_info'>
 				<td>Hide extension: </td>
 				<td>
-				[% IF VBOX_PREF.HIDDEN %]
-					<input name="HIDDEN" type="checkbox" checked>
-				[% ELSE %]
-					<input name="HIDDEN" type="checkbox">
-				[% END %]
+						<div class="onoffswitch">
+						<input name="HIDDEN" type="checkbox" class="onoffswitch-checkbox" id="HIDDEN-ch" 
+						[% IF VBOX_PREF.HIDDEN %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="HIDDEN-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 				</td>
 			</tr>
 			<tr class='addon_info'>
 				<td>Protected with pin code: </td>
 				<td>
-				[% IF VBOX_PREF.PROTECT %]
-					<input name="PROTECT" type="checkbox" checked>
-				[% ELSE %]
-					<input name="PROTECT" type="checkbox">
-				[% END %]
+						<div class="onoffswitch">
+						<input name="PROTECT" type="checkbox" class="onoffswitch-checkbox" id="PROTECT-ch" 
+						[% IF VBOX_PREF.PROTECT %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="PROTECT-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 				</td>
 			</tr>
 			<tr class='addon_info'>
 				<td>Direct access: </td>
 				<td>
-				[% IF VBOX_PREF.DIRECT %]
-					<input name="DIRECT" type="checkbox" checked>
-				[% ELSE %]
-					<input name="DIRECT" type="checkbox">
-				[% END %]
+						<div class="onoffswitch">
+						<input name="DIRECT" type="checkbox" class="onoffswitch-checkbox" id="DIRECT-ch" 
+						[% IF VBOX_PREF.DIRECT %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="DIRECT-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 				</td>
 			</tr>
 			<tr class='addon_info'>
 				<td>Global extension: </td>
 				<td>
-				[% IF VBOX_PREF.GLOBAL %]
-					<input name="GLOBAL" type="checkbox" checked>
-				[% ELSE %]
-					<input name="GLOBAL" type="checkbox">
-				[% END %]
+						<div class="onoffswitch">
+						<input name="GLOBAL" type="checkbox" class="onoffswitch-checkbox" id="GLOBAL-ch" 
+						[% IF VBOX_PREF.GLOBAL %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="GLOBAL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 				</td>
 			</tr>
 			[% IF VBOX_PREF.TYPE eq '1' %]
 			<tr>
 				<td>Allow greeting rewind: </td>
 				<td>
-				[% IF VBOX_PREF.GREETING_CONTROL %]
-					<input name="GREETING_CONTROL" type="checkbox" checked>
-				[% ELSE %]
-					<input name="GREETING_CONTROL" type="checkbox">
-				[% END %]
+						<div class="onoffswitch">
+						<input name="GREETING_CONTROL" type="checkbox" class="onoffswitch-checkbox" id="GREETING_CONTROL-ch" 
+						[% IF VBOX_PREF.GREETING_CONTROL %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="GREETING_CONTROL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 				</td>
 			</tr>
 			[% END %]
@@ -444,40 +474,61 @@
 			<tr>
 				<td>Send new message notify: </td>
 				<td>
-					<input name="SENDNOTIFYEMAIL" type="checkbox" 
-					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
-						checked
-					[% END %]
-					>
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 				</td>
 			</tr>
 			<tr class='addon_info'>
 				<td>Send attachment: </td>
 				<td>
-				[% IF VBOX_PREF.SEND_ATTACH %]
-					<input name="SEND_ATTACH" type="checkbox" checked>
-				[% ELSE %]
-					<input name="SEND_ATTACH" type="checkbox">
-				[% END %]
-			</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+				</td>
+			</tr>
 			<tr class='addon_info'>
 				<td>Keep message on the server: </td>
 				<td>
-				[% IF VBOX_PREF.KEEP_MSG %]
-					<input name="KEEP_MSG" type="checkbox" checked>
-				[% ELSE %]
-					<input name="KEEP_MSG" type="checkbox">
-				[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 				</td>
 			</tr>
 			<tr class='addon_info'>
 				<td>Record without confirmation: </td>
 				<td>
-				[% IF VBOX_PREF.WO_CONFIRM %]
-					<input name="WO_CONFIRM" type="checkbox" checked>
-				[% ELSE %]
-					<input name="WO_CONFIRM" type="checkbox">
-				[% END %]
+						<div class="onoffswitch">
+						<input name="WO_CONFIRM" type="checkbox" class="onoffswitch-checkbox" id="WO_CONFIRM-ch" 
+						[% IF VBOX_PREF.WO_CONFIRM %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="WO_CONFIRM-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 				</td>
 			</tr>
 			[% END %]
@@ -562,90 +613,136 @@
 				<tr class='addon_info'>
 					<td>Confirm calls: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="CONFIRM_CALL" type="checkbox" class="onoffswitch-checkbox" id="CONFIRM_CALL-ch" 
 						[% IF VBOX_PREF.CONFIRM_CALL %]
-							<input name="CONFIRM_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="CONFIRM_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="CONFIRM_CALL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Say callerid: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="SAY_CALLERID" type="checkbox" class="onoffswitch-checkbox" id="SAY_CALLERID-ch" 
 						[% IF VBOX_PREF.SAY_CALLERID %]
-							<input name="SAY_CALLERID" type="checkbox" checked>
-						[% ELSE %]
-							<input name="SAY_CALLERID" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="SAY_CALLERID-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Screening mode: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="SCREENING_MODE" type="checkbox" class="onoffswitch-checkbox" id="SCREENING_MODE-ch" 
 						[% IF VBOX_PREF.SCREENING_MODE %]
-							<input name="SCREENING_MODE" type="checkbox" checked>
-						[% ELSE %]
-							<input name="SCREENING_MODE" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="SCREENING_MODE-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
 					<td>Start voicemail if call fail: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_IF_FAIL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_IF_FAIL-ch" 
 						[% IF VBOX_PREF.RECORD_IF_FAIL %]
-							<input name="RECORD_IF_FAIL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_IF_FAIL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_IF_FAIL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
 					<td>Record calls: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_CALL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_CALL-ch" 
 						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_CALL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Send attachment: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Keep message on the server: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Miss call alert: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="MISS_CALL_ALERT" type="checkbox" class="onoffswitch-checkbox" id="MISS_CALL_ALERT-ch" 
 						[% IF VBOX_PREF.MISS_CALL_ALERT %]
-							<input name="MISS_CALL_ALERT" type="checkbox" checked>
-						[% ELSE %]
-							<input name="MISS_CALL_ALERT" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="MISS_CALL_ALERT-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
 					<td>Send new message notify: </td>
 					<td>
-					<input name="SENDNOTIFYEMAIL" type="checkbox" 
-					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
-						checked
-					[% END %]
-					>
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -706,11 +803,16 @@
 				<tr class='addon_info'>
 					<td>Use TTS: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="USE_TTS_NAME" type="checkbox" class="onoffswitch-checkbox" id="USE_TTS_NAME-ch" 
 						[% IF VBOX_PREF.USE_TTS_NAME %]
-							<input name="USE_TTS_NAME" type="checkbox" checked>
-						[% ELSE %]
-							<input name="USE_TTS_NAME" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="USE_TTS_NAME-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -718,11 +820,16 @@
 				<tr class='addon_info'>
 					<td>Use Voice Input: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="USE_VOICE_SEARCH" type="checkbox" class="onoffswitch-checkbox" id="USE_VOICE_SEARCH-ch" 
 						[% IF VBOX_PREF.USE_VOICE_SEARCH %]
-							<input name="USE_VOICE_SEARCH" type="checkbox" checked>
-						[% ELSE %]
-							<input name="USE_VOICE_SEARCH" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="USE_VOICE_SEARCH-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -794,6 +901,20 @@
 						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='30' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
 					</td>
 				</tr>
+				<tr>
+					<td><a href='#' class='info'>Content-type of params: <span>
+						application/x-www-form-urlencoded as default for POST / PUT requests
+						</span></a></td>
+					<td>
+						<select name="TTS_C_TYPE">
+							<option selected value="[% VBOX_PREF.TTS_C_TYPE | html %]">[% VBOX_PREF.TTS_C_TYPE | html %]</option>
+							<option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
+							<option value="application/json">application/json</option>
+							<option value="application/xml">application/xml</option>
+							<option value=""> </option>
+						</select>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Goto if request fail: </td>
 					<td nowrap='nowrap'>
@@ -813,21 +934,31 @@
 				<tr class='addon_info'>
 					<td>Read user params: </td>
 					<td>
-					[% IF VBOX_PREF.NEED_PARAMS %]
-						<input name="NEED_PARAMS" type="checkbox" checked>
-					[% ELSE %]
-						<input name="NEED_PARAMS" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="NEED_PARAMS" type="checkbox" class="onoffswitch-checkbox" id="NEED_PARAMS-ch" 
+						[% IF VBOX_PREF.NEED_PARAMS %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="NEED_PARAMS-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>No wait response: </td>
 					<td>
-					[% IF VBOX_PREF.NO_WAIT %]
-						<input name="NO_WAIT" type="checkbox" checked>
-					[% ELSE %]
-						<input name="NO_WAIT" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="NO_WAIT" type="checkbox" class="onoffswitch-checkbox" id="NO_WAIT-ch" 
+						[% IF VBOX_PREF.NO_WAIT %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="NO_WAIT-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -863,22 +994,32 @@
 				<tr class='addon_info'>
 					<td>HTTP-Broadcast: </td>
 					<td>
-					[% IF VBOX_PREF.SHARE_VIA_ICECAST %]
-						<input name="SHARE_VIA_ICECAST" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SHARE_VIA_ICECAST" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="SHARE_VIA_ICECAST" type="checkbox" class="onoffswitch-checkbox" id="SHARE_VIA_ICECAST-ch" 
+						[% IF VBOX_PREF.SHARE_VIA_ICECAST %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SHARE_VIA_ICECAST-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
 				<tr>
 					<td>Record conference: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_CALL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_CALL-ch" 
 						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_CALL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -893,30 +1034,46 @@
 				<tr>
 					<td>Send new message notify: </td>
 					<td>
-					<input name="SENDNOTIFYEMAIL" type="checkbox" 
-					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
-						checked
-					[% END %]
-					>
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Send attachment: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Keep message on the server: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -958,40 +1115,61 @@
 				<tr>
 					<td>Send new message notify: </td>
 					<td>
-					<input name="SENDNOTIFYEMAIL" type="checkbox" 
-					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
-						checked
-					[% END %]
-					>
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Send attachment: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Keep message on the server: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Format input var: </td>
 					<td>
-					[% IF VBOX_PREF.NEED_FORMATED %]
-						<input name="NEED_FORMATED" type="checkbox" checked>
-					[% ELSE %]
-						<input name="NEED_FORMATED" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="NEED_FORMATED" type="checkbox" class="onoffswitch-checkbox" id="NEED_FORMATED-ch" 
+						[% IF VBOX_PREF.NEED_FORMATED %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="NEED_FORMATED-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 				</td>
 				[% END %]
 
@@ -1012,11 +1190,16 @@
 				<tr class='addon_info'>
 					<td>Uniq CIDs: </td>
 					<td>
-					[% IF VBOX_PREF.UNIQ_CIDS %]
-						<input name="UNIQ_CIDS" type="checkbox" checked>
-					[% ELSE %]
-						<input name="UNIQ_CIDS" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="UNIQ_CIDS" type="checkbox" class="onoffswitch-checkbox" id="UNIQ_CIDS-ch" 
+						[% IF VBOX_PREF.UNIQ_CIDS %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="UNIQ_CIDS-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -1065,52 +1248,78 @@
 				<tr>
 					<td>Send new message notify: </td>
 					<td>
-					<input name="SENDNOTIFYEMAIL" type="checkbox" 
-					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
-						checked
-					[% END %]
-					>
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% IF USER_CREDS.ALLOW_PHONES %]
 				<tr class='addon_info'>
 					<td>Only local phones: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="PHONE_MODE" type="checkbox" class="onoffswitch-checkbox" id="PHONE_MODE-ch" 
 						[% IF VBOX_PREF.PHONE_MODE %]
-							<input name="PHONE_MODE" type="checkbox" checked>
-						[% ELSE %]
-							<input name="PHONE_MODE" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="PHONE_MODE-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
 				<tr class='addon_info'>
 					<td>Record calls: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_CALL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_CALL-ch" 
 						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_CALL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Send attachment: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Keep message on the server: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -1125,21 +1334,31 @@
 				<tr class='addon_info'>
 					<td>Play podcast announcement: </td>
 					<td>
-					[% IF VBOX_PREF.PODCAST_ANNOUNCEMENT %]
-						<input name="PODCAST_ANNOUNCEMENT" type="checkbox" checked>
-					[% ELSE %]
-						<input name="PODCAST_ANNOUNCEMENT" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="PODCAST_ANNOUNCEMENT" type="checkbox" class="onoffswitch-checkbox" id="PODCAST_ANNOUNCEMENT-ch" 
+						[% IF VBOX_PREF.PODCAST_ANNOUNCEMENT %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="PODCAST_ANNOUNCEMENT-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
 					<td>Play only one latest podcast: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="ONLY_LATEST" type="checkbox" class="onoffswitch-checkbox" id="ONLY_LATEST-ch" 
 						[% IF VBOX_PREF.ONLY_LATEST %]
-							<input name="ONLY_LATEST" type="checkbox" checked>
-						[% ELSE %]
-							<input name="ONLY_LATEST" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="ONLY_LATEST-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -1234,90 +1453,136 @@
 				<tr class='addon_info'>
 					<td>Announce Queue position: </td>
 					<td>
-					[% IF VBOX_PREF.ANNOUNCE_POSITION %]
-						<input name="ANNOUNCE_POSITION" type="checkbox" checked>
-					[% ELSE %]
-						<input name="ANNOUNCE_POSITION" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="ANNOUNCE_POSITION" type="checkbox" class="onoffswitch-checkbox" id="ANNOUNCE_POSITION-ch" 
+						[% IF VBOX_PREF.ANNOUNCE_POSITION %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="ANNOUNCE_POSITION-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
 					<td>Send new message notify: </td>
 					<td>
-					<input name="SENDNOTIFYEMAIL" type="checkbox" 
-					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
-						checked
-					[% END %]
-					>
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Miss call alert: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="MISS_CALL_ALERT" type="checkbox" class="onoffswitch-checkbox" id="MISS_CALL_ALERT-ch" 
 						[% IF VBOX_PREF.MISS_CALL_ALERT %]
-							<input name="MISS_CALL_ALERT" type="checkbox" checked>
-						[% ELSE %]
-							<input name="MISS_CALL_ALERT" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="MISS_CALL_ALERT-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Record calls: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_CALL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_CALL-ch" 
 						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_CALL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Send attachment: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Keep message on the server: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Clean queue: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="WAIT_BUSY_ONLY" type="checkbox" class="onoffswitch-checkbox" id="WAIT_BUSY_ONLY-ch" 
 						[% IF VBOX_PREF.WAIT_BUSY_ONLY %]
-							<input name="WAIT_BUSY_ONLY" type="checkbox" checked>
-						[% ELSE %]
-							<input name="WAIT_BUSY_ONLY" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="WAIT_BUSY_ONLY-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Join empty: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="JOINEMPTY" type="checkbox" class="onoffswitch-checkbox" id="JOINEMPTY-ch" 
 						[% IF VBOX_PREF.JOINEMPTY %]
-							<input name="JOINEMPTY" type="checkbox" checked>
-						[% ELSE %]
-							<input name="JOINEMPTY" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Remember the agent: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="REMEMBER_AGENT" type="checkbox" class="onoffswitch-checkbox" id="REMEMBER_AGENT-ch" 
 						[% IF VBOX_PREF.REMEMBER_AGENT %]
-							<input name="REMEMBER_AGENT" type="checkbox" checked>
-						[% ELSE %]
-							<input name="REMEMBER_AGENT" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="REMEMBER_AGENT-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1410,21 +1675,31 @@
 				<tr class='addon_info'>
 					<td>Allow callback delay: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="CB_USE_TIMEOFFSET" type="checkbox" class="onoffswitch-checkbox" id="CB_USE_TIMEOFFSET-ch" 
 						[% IF VBOX_PREF.CB_USE_TIMEOFFSET %]
-							<input name="CB_USE_TIMEOFFSET" type="checkbox" checked>
-						[% ELSE %]
-							<input name="CB_USE_TIMEOFFSET" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="CB_USE_TIMEOFFSET-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Allow the selection of ext: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="CB_DYNAMIC_EXT" type="checkbox" class="onoffswitch-checkbox" id="CB_DYNAMIC_EXT-ch" 
 						[% IF VBOX_PREF.CB_DYNAMIC_EXT %]
-							<input name="CB_DYNAMIC_EXT" type="checkbox" checked>
-						[% ELSE %]
-							<input name="CB_DYNAMIC_EXT" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="CB_DYNAMIC_EXT-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -1504,31 +1779,46 @@
 				<tr>
 					<td>Activate CallBlast: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="ACTIVE" type="checkbox" class="onoffswitch-checkbox" id="ACTIVE-ch" 
 						[% IF VBOX_PREF.ACTIVE %]
-							<input name="ACTIVE" type="checkbox" checked>
-						[% ELSE %]
-							<input name="ACTIVE" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="ACTIVE-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
 					<td>Monitoring for greeting: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="START_AFTER_CHANGE" type="checkbox" class="onoffswitch-checkbox" id="START_AFTER_CHANGE-ch" 
 						[% IF VBOX_PREF.START_AFTER_CHANGE %]
-							<input name="START_AFTER_CHANGE" type="checkbox" checked>
-						[% ELSE %]
-							<input name="START_AFTER_CHANGE" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="START_AFTER_CHANGE-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Record answer: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_CALL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_CALL-ch" 
 						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_CALL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
@@ -1620,12 +1910,18 @@
 				<tr class='addon_info'>
 					<td>Format input var: </td>
 					<td>
-					[% IF VBOX_PREF.NEED_FORMATED %]
-						<input name="NEED_FORMATED" type="checkbox" checked>
-					[% ELSE %]
-						<input name="NEED_FORMATED" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="NEED_FORMATED" type="checkbox" class="onoffswitch-checkbox" id="NEED_FORMATED-ch" 
+						[% IF VBOX_PREF.NEED_FORMATED %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="NEED_FORMATED-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '20' %]
@@ -1648,21 +1944,31 @@
 				<tr class='addon_info'>
 					<td>Read user params: </td>
 					<td>
-					[% IF VBOX_PREF.NEED_PARAMS %]
-						<input name="NEED_PARAMS" type="checkbox" checked>
-					[% ELSE %]
-						<input name="NEED_PARAMS" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="NEED_PARAMS" type="checkbox" class="onoffswitch-checkbox" id="NEED_PARAMS-ch" 
+						[% IF VBOX_PREF.NEED_PARAMS %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="NEED_PARAMS-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Record voice message: </td>
 					<td>
-					[% IF VBOX_PREF.NEED_VOICE %]
-						<input name="NEED_VOICE" type="checkbox" checked>
-					[% ELSE %]
-						<input name="NEED_VOICE" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="NEED_VOICE" type="checkbox" class="onoffswitch-checkbox" id="NEED_VOICE-ch" 
+						[% IF VBOX_PREF.NEED_VOICE %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="NEED_VOICE-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1706,11 +2012,16 @@
 				<tr>
 					<td>Remove message after dial: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="AC_AUTO_REMOVE" type="checkbox" class="onoffswitch-checkbox" id="AC_AUTO_REMOVE-ch" 
 						[% IF VBOX_PREF.AC_AUTO_REMOVE %]
-							<input name="AC_AUTO_REMOVE" type="checkbox" checked>
-						[% ELSE %]
-							<input name="AC_AUTO_REMOVE" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="AC_AUTO_REMOVE-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1865,7 +2176,16 @@
 				<tr>
 					<td>Allow to confirm events: </td>
 					<td>
-						<input name="ACCESS_MODE" type="checkbox" [% IF VBOX_PREF.ACCESS_MODE %] checked [% END %]>
+						<div class="onoffswitch">
+						<input name="ACCESS_MODE" type="checkbox" class="onoffswitch-checkbox" id="ACCESS_MODE-ch" 
+						[% IF VBOX_PREF.ACCESS_MODE %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="ACCESS_MODE-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1970,40 +2290,61 @@
 				<tr class='addon_info'>
 					<td>Record call: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_CALL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_CALL-ch" 
 						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_CALL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Send attachment: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Keep message on the server: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
 					<td>Send new message notify: </td>
 					<td>
-					<input name="SENDNOTIFYEMAIL" type="checkbox" 
-					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
-						checked
-					[% END %]
-					>
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				[% END %]
@@ -2054,70 +2395,106 @@
 				<tr class='addon_info'>
 					<td>Confirm calls: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="CONFIRM_CALL" type="checkbox" class="onoffswitch-checkbox" id="CONFIRM_CALL-ch" 
 						[% IF VBOX_PREF.CONFIRM_CALL %]
-							<input name="CONFIRM_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="CONFIRM_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="CONFIRM_CALL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Say calledid: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="SAY_CALLEDID" type="checkbox" class="onoffswitch-checkbox" id="SAY_CALLEDID-ch" 
 						[% IF VBOX_PREF.SAY_CALLEDID %]
-							<input name="SAY_CALLEDID" type="checkbox" checked>
-						[% ELSE %]
-							<input name="SAY_CALLEDID" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="SAY_CALLEDID-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Wait call notes: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="WAIT_NOTES" type="checkbox" class="onoffswitch-checkbox" id="WAIT_NOTES-ch" 
 						[% IF VBOX_PREF.WAIT_NOTES %]
-							<input name="WAIT_NOTES" type="checkbox" checked>
-						[% ELSE %]
-							<input name="WAIT_NOTES" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="WAIT_NOTES-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr>
 					<td>Record calls: </td>
 					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_CALL" type="checkbox" class="onoffswitch-checkbox" id="RECORD_CALL-ch" 
 						[% IF VBOX_PREF.RECORD_CALL %]
-							<input name="RECORD_CALL" type="checkbox" checked>
-						[% ELSE %]
-							<input name="RECORD_CALL" type="checkbox">
+							checked
 						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_CALL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Send attachment: </td>
 					<td>
-					[% IF VBOX_PREF.SEND_ATTACH %]
-						<input name="SEND_ATTACH" type="checkbox" checked>
-					[% ELSE %]
-						<input name="SEND_ATTACH" type="checkbox">
-					[% END %]
-				</td>
+						<div class="onoffswitch">
+						<input name="SEND_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="SEND_ATTACH-ch" 
+						[% IF VBOX_PREF.SEND_ATTACH %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SEND_ATTACH-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Keep message on the server: </td>
 					<td>
-					[% IF VBOX_PREF.KEEP_MSG %]
-						<input name="KEEP_MSG" type="checkbox" checked>
-					[% ELSE %]
-						<input name="KEEP_MSG" type="checkbox">
-					[% END %]
+						<div class="onoffswitch">
+						<input name="KEEP_MSG" type="checkbox" class="onoffswitch-checkbox" id="KEEP_MSG-ch" 
+						[% IF VBOX_PREF.KEEP_MSG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
 					<td>Send new message notify: </td>
 					<td>
-					<input name="SENDNOTIFYEMAIL" type="checkbox" 
-					[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
-						checked
-					[% END %]
-					>
+						<div class="onoffswitch">
+						<input name="SENDNOTIFYEMAIL" type="checkbox" class="onoffswitch-checkbox" id="SENDNOTIFYEMAIL-ch" 
+						[% IF VBOX_PREF.SENDNOTIFYEMAIL %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="SENDNOTIFYEMAIL-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
 					</td>
 				</tr>
 				<tr class='addon_info'>
