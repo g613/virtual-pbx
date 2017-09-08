@@ -1,0 +1,259 @@
+<html>
+<!-- $Id: phone_info.tt,v 1.1 2017/08/23 12:36:38 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - SIP Phone - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script language="JavaScript">
+		var e_list = [];
+		var vb_ind = 0;
+		[% FOREACH vb = VB_LIST %]
+		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | locale_msg %]','[% vb.NAME | html %]',vb_ind++];
+		[% END %]
+		var e_menu = [];
+		for ( var m_num in e_list ) {
+			e_menu[e_list[m_num][3]] = m_num;
+		}
+	</script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+			
+	<table width='100%'>
+		<tr>
+			<td align='center'><h1>SIP phone settings</h1></td>
+			<td align='right' width='10%'>
+				<a title='delete phone' href='?action=phone_del&data_id=[% PHONE.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='delete phone'><span class='icon-bin-all fs2'></span></a>
+			</td>
+		</tr>
+	</table>
+
+	<p width='70%'>
+	<table width='60%' align='left'>
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		<tr>
+			<td>
+				SIP name:
+			</td>
+			<td>
+				<input type='hidden' name='name' value="[% PHONE.name %]">
+				[% PHONE.name %]
+			</td>
+			<td rowspan='10' valign='top'>
+				<h3>Status:</h3>
+				<ul>
+				[% IF PHONE.REG_STATUS eq 'Registered' %]
+					<li>[% PHONE.REG_STATUS %]</li>
+					<li>Last register date: [% PHONE.REG_TIME | html %]</li>
+					<li>Expiration date: [% PHONE.REG_EXPIRED | html %]</li>
+					<li>IP: [% PHONE.ipaddr | html %]:[% PHONE.port | html %]</li>
+					<li>UA: [% PHONE.useragent | html %]</li>
+					<li>Contact: [% PHONE.fullcontact | html %]</li>
+				[% ELSIF PHONE.REG_TIME ne '-' %]
+					<li>[% PHONE.REG_STATUS %]</li>
+					<li>Last register date: [% PHONE.REG_TIME | html %]</li>
+					<li>IP: [% PHONE.ipaddr | html %]</li>
+					<li>UA: [% PHONE.useragent | html %]</li>
+				[% ELSE %]
+					<li>Unregistered</li>
+				[% END %]
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				SIP password:
+			</td>
+			<td>
+				<input size="30" name='secret' type='text' value="[% PHONE.secret | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td width='25%'>
+				Phone number:
+			</td>
+			<td width='35%'>
+				<input size="30" name='callerid' type='text' value="[% PHONE.callerid | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				User name:
+			</td>
+			<td>
+				<input size="30" name='DESCRIPTION' type='text' value="[% PHONE.DESCRIPTION | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				CallerID:
+			</td>
+			<td>
+				<input size="30" name='DEFCID' type='text' value="[% PHONE.DEFCID | html %]">
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				Record:
+			</td>
+			<td>
+				<select name="REC_MODE">
+				[% IF p.REC_MODE eq '1' %]
+					<option value="1" selected>On demand</option>
+					<option value="0">Off</option>
+					<option value="2">Always on</option>
+					<option value="3">Internal</option>
+					<option value="4">External</option>
+				[% ELSIF p.REC_MODE eq '2' %]
+					<option value="2" selected>Always on</option>
+					<option value="0">Off</option>
+					<option value="1">On demand</option>
+					<option value="3">Internal</option>
+					<option value="4">External</option>
+				[% ELSIF p.REC_MODE eq '3' %]
+					<option value="3" selected>Internal</option>
+					<option value="0">Off</option>
+					<option value="1">On demand</option>
+					<option value="2">Always on</option>
+					<option value="4">External</option>
+				[% ELSIF p.REC_MODE eq '4' %]
+					<option value="4" selected>External</option>
+					<option value="0">Off</option>
+					<option value="1">On demand</option>
+					<option value="2">Always on</option>
+					<option value="3">Internal</option>
+				[% ELSE %]
+					<option value="0" selected>Off</option>
+					<option value="1">On demand</option>
+					<option value="2">Always on</option>
+					<option value="3">Internal</option>
+					<option value="4">External</option>
+				[% END %]
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Recording extension:
+			</td>
+			<td wrap='nowrap'>
+				<input size="20" name='REC_EXT' type='text' value="[% PHONE.REC_EXT | html %]">
+				<script language="JavaScript">
+					exten_dropdown2('REC_EXT','[% PHONE.REC_EXT | html %]','<option value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
+					exten_icon( '[% PHONE.REC_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+				</script>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Email:
+			</td>
+			<td>
+				<input  size="30" name='EMAIL' type='text' value="[% PHONE.EMAIL | html %]">
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				Allow access only for:
+			</td>
+			<td>
+				<input size="30" name='trusted_ip' type='text' value="[% PHONE.permit | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Concurrent calls (aoubound):
+			</td>
+			<td>
+				<input size="30" type='text' value='[% PHONE.CO_LIMIT %]' name='COL'>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				Pickup groups:
+			</td>
+			<td>
+				<input size="30" name='PICKUP_GROUPS' type='text' value="[% PHONE.PICKUP_GROUPS | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Forwarding number:
+			</td>
+			<td>
+				<input size="30" name='FWD_NUM' type='text' value="[% PHONE.FWD_NUM | html %]">
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				Forward timeout:
+			</td>
+			<td>
+				<select name="FWD_AFTER">
+					<option value="-1"
+				[% IF PHONE.FWD_AFTER eq '-1' %]
+					selected
+				[% END %]
+					>don't forward</option>
+					<option value="0"
+				[% IF PHONE.FWD_AFTER eq '0' %]
+					selected
+				[% END %]
+					>immediately</option>
+					<option value="12"
+				[% IF PHONE.FWD_AFTER eq '12' %]
+					selected
+				[% END %]
+					>after 3 rings</option>
+					<option value="20"
+				[% IF PHONE.FWD_AFTER eq '20' %]
+					selected
+				[% END %]
+					>after 5 rings</option>
+				</select>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				DND':
+			</td>
+			<td>
+				<input name='RAWDND' type='hidden' value="[% PHONE.RAWDND | html %]" />
+				[% IF PHONE.DND %]
+					<input name='DND' type='checkbox' checked /> ( activated on [% PHONE.DND | html %] )
+				[% ELSE %]
+					<input name='DND' type='checkbox' />
+				[% END %]
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan='3'>&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan='2' align='center'>
+				<input type='hidden' value='[% PHONE.DATA_ID %]' name='data_id'>
+				<input type='hidden' value='phone_update' name='action'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<input type='submit' value='Save changes'>
+			</td>
+		</tr>
+	</table>
+	</form>
+	<a name="addarea">&nbsp;</a>
+	</p>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

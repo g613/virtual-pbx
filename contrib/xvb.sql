@@ -410,7 +410,7 @@ create	table VPBX_GROUPS
 	VBL_23 INT(10) not NULL default -1,
 	VBL_24 INT(10) not NULL default 0,
 	VBL_25 INT(10) not NULL default -1,
-	VBL_26 INT(10) not NULL default 0,
+	VBL_26 INT(10) not NULL default -1,
 	VBL_27 INT(10) not NULL default -1,
 	VBL_28 INT(10) not NULL default 0,
 	VBL_29 INT(10) not NULL default -1,
@@ -659,6 +659,7 @@ create table VPBX_SIPPEERS (
 	REC_EXT			VARCHAR(255)	not null default '0',
 	EMAIL			VARCHAR(255)	default '',
 	FWD_NUM			VARCHAR(255)	default '',
+	FWD_AFTER		INT(6)			default 0,
 
 	NEED_REG		INT(1)			not null default 0,
 	REG_EXPIRE		INT(6)			not null default 0,

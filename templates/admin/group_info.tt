@@ -38,7 +38,7 @@
 				<h1>Group '<b>[% GROUP.GROUP_NAME | html %]</b>'</h1>
 			</td>
 			<td align='right'>
-				<a title='delete group' href='?action=group_del&group_id=[% GROUP.GROUP_ID %]' onclick="return DelConfirm('en')"><span class='icon-cross fs0'></span></a>
+				<a title='delete group' href='?action=group_del&group_id=[% GROUP.GROUP_ID %]' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>
 			</td>
 		</tr>
 	</table>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.314 2017/06/28 14:04:02 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.315 2017/07/18 12:39:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -46,7 +46,7 @@
 			</td>
 			<td align='right'>
 			[% IF USER_CREDS.ROOT eq '0' %]
-				<a href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title="Delete extension"><span class='icon-cross fs0'></span></a>
+				<a href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title="Delete extension"><span class='icon-bin-all fs2'></span></a>
 			[% END %]
 			</td>
 		</tr>
@@ -3054,7 +3054,7 @@
 					<tr>
 						<td align='right' colspan='2'>
 							<a title='get excel table' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
-							<a href='?action=dir_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL directory items'><span class='icon-cross fs0'></span></a>
+							<a href='?action=dir_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL directory items'><span class='icon-bin-all fs2'></span></a>
 						</td>
 					</tr>
 					<tr>
@@ -3145,7 +3145,7 @@
 			<tr>
 				<td colspan='2' align='left'><h4>Schedule data:</h4></td>
 				<td align='right'>
-					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL schedule items'><span class='icon-cross fs0'></span></a>
+					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL schedule items'><span class='icon-bin-all fs2'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -3220,7 +3220,7 @@
 			<tr>
 				<td colspan='2' align='left'><h4>CallBlast Schedule:</h4></td>
 				<td align='right'>
-					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL schedule items'><span class='icon-cross fs0'></span></a>
+					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL schedule items'><span class='icon-bin-all fs2'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -3304,7 +3304,7 @@
 				<td colspan='2' align='left'><h4>CallBlast data ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ) :</h4></td>
 				<td align='right'>
 					<a title='get excel table' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
-					<a href='?action=callblast_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL callblast items'><span class='icon-cross fs0'></span></a>
+					<a href='?action=callblast_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL callblast items'><span class='icon-bin-all fs2'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -3407,7 +3407,7 @@
 			<tr>
 				<td colspan='2' align='left'><h4>Goto If data:</h4></td>
 				<td align='right'>
-					<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL gotoif items'><span class='icon-cross fs0'></span></a>
+					<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL gotoif items'><span class='icon-bin-all fs2'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -3512,7 +3512,7 @@
 				<td align='right'>
 					<a href='?action=multidialout_reset&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='Reset status to wait for ALL multidialout items'><span class='icon-loop2 fs0'></span></a>
 					<a title='get excel table' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
-					<a href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL multidialout items'><span class='icon-cross fs0'></span></a>
+					<a href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL multidialout items'><span class='icon-bin-all fs2'></span></a>
 				</td>
 			</tr>
 			<tr>

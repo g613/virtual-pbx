@@ -380,6 +380,10 @@ mkdir -p /tmp/xvb-download && chmod 777 /tmp/xvb-download
 if [ -f %CORE_DIR/web/js/xvb-custom.js ]; then
 	cat %CORE_DIR/web/js/xvb-custom.js >> %CORE_DIR/web/js/xvb.js
 fi
+if [ -f %CORE_DIR/web/xvb-custom.css ]; then
+	cat %CORE_DIR/web/xvb-custom.css >> %CORE_DIR/web/xvb.css
+	cat %CORE_DIR/web/xvb-custom.css >> %CORE_DIR/web/xvb-green.css
+fi
 
 chkconfig httpd on
 

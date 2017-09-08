@@ -43,7 +43,7 @@
 				<h1>Tenant info</h1>
 			</td>
 			<td align='right'>
-				<a title='delete tenat' href='?action=user_del&user_id=[% USER.ID %]&single_user=1' onclick="return DelConfirm('en')"><span class='icon-cross fs0'></span></a>
+				<a title='delete tenat' href='?action=user_del&user_id=[% USER.ID %]&single_user=1' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>
 			</td>
 		</tr>
 	</table>

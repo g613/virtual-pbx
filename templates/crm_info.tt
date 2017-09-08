@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: crm_info.tt,v 1.7 2016/01/19 15:16:31 gosha Exp $ -->
+<!-- $Id: crm_info.tt,v 1.8 2017/07/18 12:39:20 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Customer info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -21,7 +21,7 @@
 			</td>
 			<td align='center'><h1>Customer info</h1></td>
 			<td align='right' width='10%'>
-				<a href='?action=crm_del&data_id=[% CRM.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title="Delete"><span class='icon-cross fs0'></span></a>
+				<a href='?action=crm_del&data_id=[% CRM.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title="Delete"><span class='icon-bin-all fs2'></span></a>
 			</td>
 		</tr>
 	</table>

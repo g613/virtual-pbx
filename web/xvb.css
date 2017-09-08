@@ -457,6 +457,11 @@ li {
 	color:#177282;
 	padding: 3px;
 }
+.fs2 {
+	font-size: 24px;
+	color:red;
+	padding: 5px;
+}
 .icon-cross {
 	color:red;
 	font-size: 20px;
@@ -626,6 +631,9 @@ li {
 	content: "\e99c";
 }
 .icon-bin:before {
+	content: "\e9ac";
+}
+.icon-bin-all:before {
 	content: "\e9ac";
 }
 .icon-power:before {

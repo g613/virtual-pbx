@@ -1,0 +1,259 @@
+<html>
+<!-- $Id: phone_info.tt,v 1.2 2017/08/23 12:36:38 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - SIP Phone - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script language="JavaScript">
+		var e_list = [];
+		var vb_ind = 0;
+		[% FOREACH vb = VB_LIST %]
+		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | locale_msg %]','[% vb.NAME | html %]',vb_ind++];
+		[% END %]
+		var e_menu = [];
+		for ( var m_num in e_list ) {
+			e_menu[e_list[m_num][3]] = m_num;
+		}
+	</script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+			
+	<table width='100%'>
+		<tr>
+			<td align='center'><h1>Параметры SIP телефона</h1></td>
+			<td align='right' width='10%'>
+				<a title='удалить телефон' href='?action=phone_del&data_id=[% PHONE.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить телефон'><span class='icon-bin-all fs2'></span></a>
+			</td>
+		</tr>
+	</table>
+
+	<p width='70%'>
+	<table width='60%' align='left'>
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		<tr>
+			<td>
+				SIP имя:
+			</td>
+			<td>
+				<input type='hidden' name='name' value="[% PHONE.name %]">
+				[% PHONE.name %]
+			</td>
+			<td rowspan='10' valign='top'>
+				<h3>Статус:</h3>
+				<ul>
+				[% IF PHONE.REG_STATUS eq 'Registered' %]
+					<li>[% PHONE.REG_STATUS %]</li>
+					<li>Дата последней регистрации: [% PHONE.REG_TIME | html %]</li>
+					<li>Зарегистрирован до: [% PHONE.REG_EXPIRED | html %]</li>
+					<li>IP: [% PHONE.ipaddr | html %]:[% PHONE.port | html %]</li>
+					<li>UA: [% PHONE.useragent | html %]</li>
+					<li>Contact: [% PHONE.fullcontact | html %]</li>
+				[% ELSIF PHONE.REG_TIME ne '-' %]
+					<li>[% PHONE.REG_STATUS %]</li>
+					<li>Дата последней регистрации: [% PHONE.REG_TIME | html %]</li>
+					<li>IP: [% PHONE.ipaddr | html %]</li>
+					<li>UA: [% PHONE.useragent | html %]</li>
+				[% ELSE %]
+					<li>Unregistered</li>
+				[% END %]
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				SIP пароль:
+			</td>
+			<td>
+				<input size="30" name='secret' type='text' value="[% PHONE.secret | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td width='25%'>
+				Телефон:
+			</td>
+			<td width='35%'>
+				<input size="30" name='callerid' type='text' value="[% PHONE.callerid | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Имя пользователя:
+			</td>
+			<td>
+				<input size="30" name='DESCRIPTION' type='text' value="[% PHONE.DESCRIPTION | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Исходящий АОН:
+			</td>
+			<td>
+				<input size="30" name='DEFCID' type='text' value="[% PHONE.DEFCID | html %]">
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				Запись разговоров:
+			</td>
+			<td>
+				<select name="REC_MODE">
+				[% IF PHONE.REC_MODE eq '1' %]
+					<option value="1" selected>По запросу</option>
+					<option value="0">Выключено</option>
+					<option value="2">Всегда</option>
+					<option value="3">Внутренние</option>
+					<option value="4">Внешние</option>
+				[% ELSIF PHONE.REC_MODE eq '2' %]
+					<option value="2" selected>Всегда</option>
+					<option value="0">Выключено</option>
+					<option value="1">По запросу</option>
+					<option value="3">Внутренние</option>
+					<option value="4">Внешние</option>
+				[% ELSIF PHONE.REC_MODE eq '3' %]
+					<option value="3" selected>Внутренние</option>
+					<option value="0">Выключено</option>
+					<option value="1">По запросу</option>
+					<option value="2">Всегда</option>
+					<option value="4">Внешние</option>
+				[% ELSIF PHONE.REC_MODE eq '4' %]
+					<option value="4" selected>Внешние</option>
+					<option value="0">Выключено</option>
+					<option value="1">По запросу</option>
+					<option value="2">Всегда</option>
+					<option value="3">Внутренние</option>
+				[% ELSE %]
+					<option value="0" selected>Выключено</option>
+					<option value="1">По запросу</option>
+					<option value="2">Всегда</option>
+					<option value="3">Внутренние</option>
+					<option value="4">Внешние</option>
+				[% END %]
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Внутренний номер для хранения записей:
+			</td>
+			<td wrap='nowrap'>
+				<input size="20" name='REC_EXT' type='text' value="[% PHONE.REC_EXT | html %]">
+				<script language="JavaScript">
+					exten_dropdown2( 'REC_EXT','[% PHONE.REC_EXT | html %]','<option value="">------------------------------</option><option value="***">--------- ручной ввод ---------</option>');
+					exten_icon( '[% PHONE.REC_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
+				</script>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Email адрес для оповещения:
+			</td>
+			<td>
+				<input  size="30" name='EMAIL' type='text' value="[% PHONE.EMAIL | html %]">
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				Разрешить доступ только с адресов:
+			</td>
+			<td>
+				<input size="30" name='trusted_ip' type='text' value="[% PHONE.permit | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Количество одновременных исходящих звонков:
+			</td>
+			<td>
+				<input size="30" type='text' value='[% PHONE.CO_LIMIT %]' name='COL'>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				Группы перехвата:
+			</td>
+			<td>
+				<input size="30" name='PICKUP_GROUPS' type='text' value="[% PHONE.PICKUP_GROUPS | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Перенаправление звонков на номер:
+			</td>
+			<td>
+				<input size="30" name='FWD_NUM' type='text' value="[% PHONE.FWD_NUM | html %]">
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				Таймаут перенаправления:
+			</td>
+			<td>
+				<select name="FWD_AFTER">
+					<option value="-1"
+				[% IF PHONE.FWD_AFTER eq '-1' %]
+					selected
+				[% END %]
+					>не перенаправлять</option>
+					<option value="0"
+				[% IF PHONE.FWD_AFTER eq '0' %]
+					selected
+				[% END %]
+					>сразу</option>
+					<option value="12"
+				[% IF PHONE.FWD_AFTER eq '12' %]
+					selected
+				[% END %]
+					>через 3 гудка</option>
+					<option value="20"
+				[% IF PHONE.FWD_AFTER eq '20' %]
+					selected
+				[% END %]
+					>через 5 гудков</option>
+				</select>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				Режим 'не беспокоить':
+			</td>
+			<td>
+				<input name='RAWDND' type='hidden' value="[% PHONE.RAWDND | html %]" />
+				[% IF PHONE.DND %]
+					<input name='DND' type='checkbox' checked /> ( с [% PHONE.DND | html %] )
+				[% ELSE %]
+					<input name='DND' type='checkbox' />
+				[% END %]
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan='3'>&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan='2' align='center'>
+				<input type='hidden' value='[% PHONE.DATA_ID %]' name='data_id'>
+				<input type='hidden' value='phone_update' name='action'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<input type='submit' value='Сохранить изменения'>
+			</td>
+		</tr>
+	</table>
+	</form>
+	<a name="addarea">&nbsp;</a>
+	</p>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

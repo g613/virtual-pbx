@@ -47,7 +47,7 @@
 			<td align='right' nowrap='nopwrap'>
 				<a title='get excel table' href='?action=report_run&report_id=[% REPORT_DATA.ID %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
 				<a title='edit report' href='?action=report_info&report_id=[% REPORT_DATA.ID %]'><span class='icon-cogs fs0'></span></a>
-				<a title='delete report' href='?action=report_del&report_id=[% REPORT_DATA.ID %]' onclick="return DelConfirm('en')"><span class='icon-cross fs0'></span></a>
+				<a title='delete report' href='?action=report_del&report_id=[% REPORT_DATA.ID %]' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>
 			</td>
 		</tr>
 	</table>

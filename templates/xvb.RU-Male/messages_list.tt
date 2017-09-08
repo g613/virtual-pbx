@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.23 2016/01/21 13:16:58 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.24 2017/07/18 12:39:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -30,7 +30,7 @@
 				<h1>Сообщения для внутреннего номера # <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
 			</td>
 			<td align='right' width='15%'>
-				<a title='удалить сообщения' href='#' onclick="return SubmitConfirm('ru','Вы действительно хотите удалить ВСЕ найденные сообщения ?')"><span class='icon-cross fs0'></span></a>
+				<a title='удалить сообщения' href='#' onclick="return SubmitConfirm('ru','Вы действительно хотите удалить ВСЕ найденные сообщения ?')"><span class='icon-bin-all fs2'></span></a>
 			</td>
 		</tr>
 	</table>

@@ -29,7 +29,7 @@
 				<h1>Routes</h1>
 			</td>
 			<td align='right' width='5%'>
-				<a title='delete all routes' href='?action=route_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')"><span class='icon-cross fs0'></span></a>
+				<a title='delete all routes' href='?action=route_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>
 			</td>
 		</tr>
 	</table>

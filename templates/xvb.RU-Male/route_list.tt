@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.21 2016/08/19 15:31:27 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.22 2017/07/18 12:39:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
@@ -27,7 +27,7 @@
 		<tr>
 			<td align='center'><h1>Маршруты</h1></td>
 			<td align='right' width='5%'>
-				<a title='удалить все маршруты' href='?action=route_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все маршруты'><span class='icon-cross fs0'></span></a>
+				<a title='удалить все маршруты' href='?action=route_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все маршруты'><span class='icon-bin  fs2'></span></a>
 			</td>
 		</tr>
 	</table>

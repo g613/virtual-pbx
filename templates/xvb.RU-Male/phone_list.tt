@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.30 2017/02/11 09:55:51 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.34 2017/08/24 13:10:08 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -24,7 +24,7 @@
 			<td align='center'><h1>Внутренние SIP телефоны</h1></td>
 			<td align='right' width='10%'>
 				<a title='в формате excel' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
-				<a title='удалить все телефоны' href='?action=phone_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все телефоны'><span class='icon-cross fs0'></span></a>
+				<a title='удалить все телефоны' href='?action=phone_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все телефоны'><span class='icon-bin-all fs2'></span></a>
 			</td>
 		</tr>
 	</table>
@@ -34,12 +34,12 @@
 		<tr>
 			<th colspan='2'>Статус</th>
 			<th>Телефон</th>
-			<th>Имя пользователя и Email</th>
+			<th>Имя пользователя </th>
 			<th>Исходящий АОН</th>
-			<th>Запись и место хранения</th>
+			<th>Запись</th>
 			<th>Группы перехвата</th>
-			<th>Логин</th>
-			<th>Пароль</th>
+			<th>SIP имя</th>
+			<th>SIP пароль</th>
 			<th>&nbsp;</th>
 		</tr>
 		
@@ -79,12 +79,14 @@
 					</a>
 				[% END %]
 				[% IF p.FWD_NUM %]
+					[% IF p.FWD_AFTER > "-1" %]
 					<a href='#' class='l-info'>
 					<span class='icon-mobile fs1'></span>
 					<span class='l-info'>
 						Перенеаправление на : [% p.FWD_NUM | html %]
 					</span>
 					</a>
+					[% END %]
 				[% END %]
 			</td>
 			<td align='center'>
@@ -94,12 +96,16 @@
 					<input class='in_t0' name='trusted_ip' type='checkbox' title='Ограничить доступ только с текущего IP адреса: [% p.ipaddr | html %]' />
 				[% END %]
 			</td>
-			<td><input class='in_t0' size="10" name='callerid' type='text' value="[% p.callerid | html %]"></td>
+			<td>
+				<input class='in_t0' size="10" name='callerid' type='hidden' value="[% p.callerid | html %]">
+				<a href='?action=phone_info&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' title="параметры телефона">
+				[% p.callerid | html %]
+				</a>
+			</td>
 			<td>
 				<input class='in_t0' size="16" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]"><br>
-				<input class='in_t0' size="15" name='EMAIL' type='text' value="[% p.EMAIL | html %]">
 			</td>
-			<td><input class='in_t0' size="12" name='DEFCID' type='text' value="[% p.DEFCID | html %]"></td>
+			<td><input class='in_t0' size="11" name='DEFCID' type='text' value="[% p.DEFCID | html %]"></td>
 			<td align='left' nowrap='nowrap'>
 				<select name="REC_MODE" class='in_t0'>
 				[% IF p.REC_MODE eq '1' %]
@@ -135,17 +141,24 @@
 				[% END %]
 				</select>
 				<br>
-				<input class='in_t0' size="8" name='REC_EXT' type='text' value="[% p.REC_EXT | html %]">
-				<script language="JavaScript">
-					exten_icon( '[% p.REC_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
-				</script>
 			</td>
-			<td><input class='in_t0' size="8" name='PICKUP_GROUPS' type='text' value="[% p.PICKUP_GROUPS | html %]"></td>
-			<td align='left'><input type='hidden' name='name' value="[% p.name %]">[% p.name %]</td>
-			<td><input class='in_t0' size="12" name='secret' type='text' value="[% p.secret | html %]"></td>
+			<td><input class='in_t0' size="7" name='PICKUP_GROUPS' type='text' value="[% p.PICKUP_GROUPS | html %]"></td>
+			<td align='left'>
+				[% p.name %]
+			</td>
+			<td align='left'>
+				[% p.secret | html %]
+			</td>
 			<td align='right' nowrap='nowrap'>
 				<input type='hidden' value='[% p.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='[% p.CO_LIMIT %]' name='COL'>
+				<input type='hidden' value='[% p.FWD_AFTER %]' name='FWD_AFTER'>
+				<input type='hidden' value='[% p.FWD_NUM %]' name='FWD_NUM'>
+				<input type='hidden' value='[% p.DND %]' name='DND'>
+				<input type='hidden' value='[% p.RAWDND %]' name='RAWDND'>
+				<input type='hidden' value="[% p.EMAIL | html %]" name='EMAIL' >
+				<input type='hidden' value="[% p.REC_EXT | html %]" name='REC_EXT'>
+				<input type='hidden' value="[% p.secret | html %]" name='secret'>
 				<input type='hidden' value='phone_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
@@ -161,17 +174,16 @@
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' onSubmit='return checkChanges(this)'>
 			<td align='left' colspan='10'>
-				<input size="10" name='callerid' type='text' placeholder='Телефон'>
+				<input size="12" name='callerid' type='text' placeholder='Телефон'>
 				&nbsp;
-				<input size="16" name='DESCRIPTION' type='text' placeholder='Имя'>
+				<input size="20" name='DESCRIPTION' type='text' placeholder='Имя'>
 				&nbsp;
-				<input size="15" name='EMAIL' type='text' placeholder='Email'>
-				&nbsp;
-				<input size="12" name='DEFCID' type='text' placeholder='АОН'>
+				<input size="14" name='DEFCID' type='text' placeholder='АОН'>
 				&nbsp;
 				<input type='hidden' value='phone_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<input type='hidden' value='' name='PICKUP_GROUPS'>
+				<input type='hidden' value='' name='EMAIL'>
 				<input type='hidden' value='0' name='REC_EXT'>
 				<input type='hidden' value='0' name='REC_MODE'>
 				<input value='Добавить' type='submit'>

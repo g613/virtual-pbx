@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: dashboard.tt,v 1.4 2017/06/14 20:09:38 gosha Exp $ -->
+<!-- $Id: dashboard.tt,v 1.6 2017/09/06 05:23:18 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Dashboard - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -115,6 +115,29 @@
 				</td>
 			</tr>
 		</table>
+		[% IF JS_DATA_MIS %]
+		<h3>Missed calls</h3>
+		<table width='100%' id='d-tbl'>
+			<tr>
+				<th colspan="2">CallerID</th>
+				<th>Calls</th>
+				<th>Date of the last call</th>
+				<th>Our redials</th>
+				<th>Date of the last call</th>
+			</tr>
+			[% FOREACH cdr = JS_DATA_MIS %]
+			<tr class='nocolor' align='center'>
+				<td>[% cdr.CNAM | html %]</td>
+				<td><a title='calls' href="?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&any_did=[% cdr.CALLER_ID | html %]&from_time=[% FROM_TIME | html %]">[% cdr.CID | html %]</a></td>
+				<td>[% cdr.CALLS | html %]</td>
+				<td>[% cdr.DATE | html %]</td>
+				<td>[% cdr.OUR_CALLS | html %]</td>
+				<td>[% cdr.OUR_DATE | html %]</td>
+			</tr>
+			[% END %]
+		</table>
+		<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+		[% END %]
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

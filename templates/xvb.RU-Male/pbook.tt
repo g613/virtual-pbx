@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.15 2016/01/11 14:26:14 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.16 2017/07/18 12:39:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Телефонная книга - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -18,7 +18,7 @@
 			<td align='center'><h1>Телефонная книга</h1></td>
 			<td align='right' width='10%'>
 				<a title='скачать книгу в формате excel' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]&format=excel&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
-				<a href='?action=pbook_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все данные'><span class='icon-cross fs0'></span></a>
+				<a href='?action=pbook_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все данные'><span class='icon-bin-all fs2'></span></a>
 			</td>
 		</tr>
 	</table>

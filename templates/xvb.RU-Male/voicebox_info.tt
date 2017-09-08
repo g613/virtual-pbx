@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.77 2017/06/28 14:04:02 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.78 2017/07/18 12:39:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -50,7 +50,7 @@
 			</td>
 			<td align='right'>
 			[% IF USER_CREDS.ROOT eq '0' %]
-				<a href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title="Удалить внутренний номер"><span class='icon-cross fs0'></span></a>
+				<a href='?action=vb_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title="Удалить внутренний номер"><span class='icon-bin-all fs2'></span></a>
 			[% END %]
 			</td>
 		</tr>
@@ -3510,7 +3510,7 @@
 					<tr>
 						<td align='right' colspan='2'>
 							<a title='Экспорт в Excel' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
-							<a href='?action=dir_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')" title='удалить весь список сотрудников'><span class='icon-cross fs0'></span></a>
+							<a href='?action=dir_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')" title='удалить весь список сотрудников'><span class='icon-bin-all fs2'></span></a>
 						</td>
 					</tr>
 					<tr>
@@ -3599,7 +3599,7 @@
 			<tr>
 				<td colspan='2' align='left'><h4>Расписание:</h4></td>
 				<td align='right'>
-					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')" title='удалить все расписание'><span class='icon-cross fs0'></span></a>
+					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')" title='удалить все расписание'><span class='icon-bin-all fs2'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -3677,7 +3677,7 @@
 			<tr>
 				<td colspan='2' align='left'><h4>Расписание автонформатора:</h4></td>
 				<td align='right'>
-					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')" title='удалить все расписание'><span class='icon-cross fs0'></span></a>
+					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')" title='удалить все расписание'><span class='icon-bin-all fs2'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -3760,7 +3760,7 @@
 				<td colspan='2' align='left'><h4>Список 'Автоинформатор' ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ) :</h4></td>
 				<td align='right'>
 					<a title='Экспорт в Excel' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
-					<a title='удалить весь список абонентов' href='?action=callblast_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')"><span class='icon-cross fs0'></span></a>
+					<a title='удалить весь список абонентов' href='?action=callblast_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')"><span class='icon-bin-all fs2'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -3863,7 +3863,7 @@
 			<tr>
 				<td colspan='2' align='left'><h4>Список условий для `Перейти если`:</h4></td>
 				<td align='right'>
-					<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='Удалить все пункты `перейти если`'><span class='icon-cross fs0'></span></a>
+					<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='Удалить все пункты `перейти если`'><span class='icon-bin-all fs2'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -3969,7 +3969,7 @@
 				<td align='right'>
 					<a title='Сбросить статус в "wait/необработано" для всех' href='?action=multidialout_reset&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')"><span class='icon-loop2 fs0'></span></a>
 					<a title='Экспорт в Excel' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
-					<a title='удалить весь список абонентов' href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')"><span class='icon-cross fs0'></span></a>
+					<a title='удалить весь список абонентов' href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')"><span class='icon-bin-all fs2'></span></a>
 				</td>
 			</tr>
 			<tr>
