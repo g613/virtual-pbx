@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: miss_call.tt,v 1.3 2015/10/28 08:18:01 gosha Exp $ -->
+<!-- $Id: miss_call.tt,v 1.4 2017/11/01 20:06:41 gosha Exp $ -->
 <!--SUBJECT:Miss call from: [% callerid | html %]:SUBJECT-->
 <head>
 	<BASE href="[% CGI_SERVER %]">
@@ -18,12 +18,12 @@
 Hello,
 
 <p>
-Miss call information:
-	Caller: <b>[% _CDR.CALLER_ID | html %]</b>
-	Call date: <b>[% ORIGDATE | html %]</b>
-	Extension: <b>[% _USER_VBOX.EXT_NUMBER | html %]</b>
-	Status: <b>[% _CDR.ENH_STATUS | html %]</b>
-	Wait time: <b>[% _CDR.ENH_RING_TIME %] ( sec )</b>
+Miss call information:<br>
+	Caller: <b>[% _CDR.CALLER_ID | html %]</b><br>
+	Call date: <b>[% ORIGDATE | html %]</b><br>
+	Extension: <b>[% _USER_VBOX.EXT_NUMBER | html %]</b><br>
+	Status: <b>[% _CDR.ENH_STATUS | html %]</b><br>
+	Wait time: <b>[% _CDR.ENH_RING_TIME %] ( sec )</b><br>
 </p>
 
 Thanks!

@@ -1,0 +1,19 @@
+<html>
+<!-- $Id: dashboard_load.tt,v 1.2 2017/12/21 02:05:26 gosha Exp $ -->
+<head>
+	<meta http-equiv="refresh" content="0;URL=/ui?action=dashboard_list&uniq=[% USER_CREDS.UNIQ %]" />
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+</head>
+<body>
+	<center>
+	<h1>Dashboard ( for previous 15 days )</h1><br/><br/><br/><br/>
+	<div style="width: 100%; height: 70%">
+		<img width="50" src="/xvb/images/loading.gif" style="opacity: 1;">
+	</div>
+	</center>
+</body>
+</html>

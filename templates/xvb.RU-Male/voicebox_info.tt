@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.78 2017/07/18 12:39:21 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.79 2017/11/01 20:06:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -2883,6 +2883,23 @@
 						</label></div>
 					</td>
 				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Динамический АОН:<span>
+							При установке данного флага системы будет проверять возможность установить CallerID для каждого звонка ( АОН из маршрута )
+						</span></a></td>
+					<td>
+						<div class="onoffswitch">
+						<input name="DYNAMIC_CID" type="checkbox" class="onoffswitch-checkbox" id="DYNAMIC_CID-ch" 
+						[% IF VBOX_PREF.DYNAMIC_CID %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="DYNAMIC_CID-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr>
 					<td><a href='#' class='info'>Запись разговора:<span>
 							Автоматически включать запись всех разговоров.
@@ -3967,7 +3984,7 @@
 			<tr>
 				<td colspan='2' align='left'><h4>Список 'Автоматического обзвона' ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ) :</h4></td>
 				<td align='right'>
-					<a title='Сбросить статус в "wait/необработано" для всех' href='?action=multidialout_reset&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')"><span class='icon-loop2 fs0'></span></a>
+					<a title='Сбросить статус в "wait/необработано" для всех' href='?action=multidialout_reset&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def', 'Вы точно хотите сбросить статус совершенных звонков?')"><span class='icon-loop2 fs0'></span></a>
 					<a title='Экспорт в Excel' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
 					<a title='удалить весь список абонентов' href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&data_id=all' onclick="return DelConfirm('ru')"><span class='icon-bin-all fs2'></span></a>
 				</td>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: calls_list.tt,v 1.11 2015/09/25 13:06:51 gosha Exp $ -->
+<!-- $Id: calls_list.tt,v 1.12 2017/09/13 18:26:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Live calls - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -85,7 +85,11 @@
 			<td>[% msg.ANSWERED | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td>[% msg.EXT_ID | html %]</td>
-			<td>[% msg.EXT_TS | duration_str %]</td>
+			<td>
+				[% IF msg.EXT_ID ne "" %]
+				[% msg.EXT_TS | duration_str %]
+				[% END %]
+			</td>
 			<td>
 				[% IF CDR_C2C %]
 					<a title='Listen' href='https://[% msg.NODE_IP %]/c2c?dlm=,&message=Please%20wait%20a%20call&ph=XVBSPY&user_vars=XVB_CHAN=[% msg.CALL_ID %],AST_CHAN=[% msg.AST_ID | htmlstrict %][% CDR_C2C %]'><span class='icon-phone fs0'></span></a>

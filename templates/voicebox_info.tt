@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.315 2017/07/18 12:39:21 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.316 2017/11/01 20:06:41 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -2437,6 +2437,21 @@
 						</label></div>
 					</td>
 				</tr>
+				<tr class='addon_info'>
+					<td>Dynamic CallerID</td>
+					<td>
+						<div class="onoffswitch">
+						<input name="DYNAMIC_CID" type="checkbox" class="onoffswitch-checkbox" id="DYNAMIC_CID-ch" 
+						[% IF VBOX_PREF.DYNAMIC_CID %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="DYNAMIC_CID-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr>
 					<td>Record calls: </td>
 					<td>
@@ -3510,7 +3525,7 @@
 			<tr>
 				<td colspan='2' align='left'><h4>MultiDailout data ( [% MSG_FROM | html %] .. [% MSG_TO | html %] ) :</h4></td>
 				<td align='right'>
-					<a href='?action=multidialout_reset&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='Reset status to wait for ALL multidialout items'><span class='icon-loop2 fs0'></span></a>
+					<a href='?action=multidialout_reset&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Do you really want to reset calls statistic ?')" title='Reset status to wait for ALL multidialout items'><span class='icon-loop2 fs0'></span></a>
 					<a title='get excel table' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
 					<a href='?action=multidialout_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL multidialout items'><span class='icon-bin-all fs2'></span></a>
 				</td>

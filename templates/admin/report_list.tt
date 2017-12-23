@@ -58,7 +58,7 @@
 	<p>
 	<table width='98%' id='list-data'>
 		<tr>
-			<th>N</th>
+			<th>#</th>
 			<th width='30px'>&nbsp;</th>
 			<th>Report name</th>
 			<th width='30px'>&nbsp;</th>

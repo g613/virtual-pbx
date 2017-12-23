@@ -289,6 +289,7 @@ chkconfig memcached on
 # install sounds
 #
 find %ASTERISK_VARLIB_HOME/sounds/ -name '*.wav16' -exec perl %CORE_DIR/contrib/utils/rpm/wave-install.pl {} ';'
+find %ASTERISK_VARLIB_HOME/sounds/ -name '*.wav16' -exec rm -f {} ';'
 
 ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.RU-Male/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.RU-Male &> /dev/null
 ln -s %ASTERISK_VARLIB_HOME/sounds/xvb.EN-Female/digits %ASTERISK_VARLIB_HOME/sounds/digits/xvb.EN-Female &> /dev/null
@@ -395,7 +396,7 @@ service httpd restart
 %post management
 
 # auto start DB
-chkconfig mysqld on
+chkconfig mysqld on || chkconfig mariadb on
 
 # db update
 perl %CORE_DIR/contrib/utils/rpm/db_update.pl

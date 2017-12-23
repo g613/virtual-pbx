@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: dashboard.tt,v 1.6 2017/09/06 05:23:19 gosha Exp $ -->
+<!-- $Id: dashboard.tt,v 1.11 2017/11/28 07:45:27 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Dashboard - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -25,7 +25,7 @@
 			in_data0.unshift( ['Дата','Отвеченные','Неотвеченные','Голосовая почта'] );
 			var data0 = google.visualization.arrayToDataTable(in_data0);
 			var chart0 = new google.visualization.ColumnChart(document.getElementById('incalls'));
-			chart0.draw(data0, {  height: 300, min: 0,isStacked: true, title: 'Входящие звонки', legend: { position: 'bottom', maxLines: 4 },bar: {groupWidth: "91%"}, });
+			chart0.draw(data0, {  chartArea:{width:'82%',height:'67%'}, min: 0,isStacked: true, title: 'Входящие звонки', legend: { position: 'bottom', maxLines: 4 },bar: {groupWidth: "91%"}, });
 	                
 			google.visualization.events.addListener(chart0, 'select',
 				function() {
@@ -44,18 +44,23 @@
 
 			// chart1
 			var in_data1 = [% JS_DATA_OUT %];
-			in_data1.unshift( ['Дата','Все','Сбой вызова'] );
+			in_data1.unshift( ['Дата','Успешные','Сбой вызова','Неотвеченные'] );
 			var data1 = google.visualization.arrayToDataTable( in_data1 );
-			var chart1 = new google.visualization.LineChart(document.getElementById('outcalls'));
-			chart1.draw(data1, { title: 'Исходящие звонки',legend: { position: 'bottom' } });
+			var chart1 = new google.visualization.ColumnChart(document.getElementById('outcalls'));
+			//chart1.draw(data1, { title: 'Исходящие звонки',legend: { position: 'bottom' } });
+			chart1.draw(data1, { chartArea:{width:'82%',height:'67%'}, min: 0,isStacked: true, title: 'Исходящие звонки', legend: { position: 'bottom', maxLines: 4 },bar: {groupWidth: "91%"}, });
 
 			google.visualization.events.addListener(chart1, 'select',
 				function() {
 				var item = chart1.getSelection()[0];
 					if ( (typeof(item) !== 'undefined') && item.row != null && data1.getValue(item.row,item.column) > 0 ) {
 						var filter = '';
-						if ( item.column == 2 ) {
+						if ( item.column == 1 ) {
+							filter = '&data=%25STATUS=ANSWER%25';
+						} else if ( item.column == 2 ) {
 							filter = '&data=!%25STATUS=ANSWER%25<PPDF>STATUS:regexp:CHANUNAVAIL|CONGESTION|INVALIDARGS</PPDF>';
+						} else if ( item.column == 3 ) {
+							filter = '&data=!%25STATUS=ANSWER%25<PPDF>STATUS:regexp:!CHANUNAVAIL%26!CONGESTION%26!INVALIDARGS</PPDF>';
 						}
 						var new_url = "/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&call_type=transit&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&tg_filter=%25m-%25d***" + data1.getValue(item.row,0) + filter;
 						document.location.href=new_url;
@@ -66,13 +71,13 @@
 				// chart2
 				var data2 = google.visualization.arrayToDataTable( [% JS_DATA_REG %] );
 				var chart2 = new google.visualization.PieChart(document.getElementById('geo_opt'));
-				chart2.draw(data2, { pieHole: 0.4, chartArea:{left:3,top:30,width:'100%',height:'90%'},title: 'География входящих звонков (Топ 20)' } );
+				chart2.draw(data2, { pieHole: 0.4, chartArea:{left:3,top:30,width:'100%',height:'90%'},title: 'Входящие звонки - география (Топ 20)' } );
 
 				google.visualization.events.addListener(chart2, 'select',
 					function() {
 						var item = chart2.getSelection()[0];
 
-						if ( (typeof(item) !== 'undefined') && item.row != null && data2.getValue(item.row,0) !== 'others' && data2.getValue(item.row,0) !== 'unknown' ) {
+						if ( (typeof(item) !== 'undefined') && item.row != null && data2.getValue(item.row,0) !== 'Other' && data2.getValue(item.row,0) !== 'unknown' ) {
 							var new_url = "/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&action=cdr_list&call_type=incoming&uniq=[% USER_CREDS.UNIQ %]"+'&data=%25'+data2.getValue(item.row,0)+'%25';
 							document.location.href=new_url;
 						}
@@ -89,7 +94,30 @@
 			in_data4.unshift( ['Дата','Файлы','Размер (МБ)'] );
 			var data4 = google.visualization.arrayToDataTable( in_data4 );
 			var chart4 = new google.visualization.AreaChart(document.getElementById('files'));
-			chart4.draw(data4, { vAxis: {minValue: 0} , title: 'Записанные файлы'} );
+			chart4.draw(data4, { chartArea:{left:60}, vAxis: {minValue: 0} , title: 'Записанные файлы'} );
+			
+			// chart5 - departmants
+			var in_data5 = [% JS_DATA_DEP %];
+			in_data5.unshift( [% JS_DATA_DEP_DN %] );
+			var data5 = google.visualization.arrayToDataTable( in_data5 );
+			var chart5 = new google.visualization.LineChart(document.getElementById('dep'));
+			chart5.draw(data5, { chartArea:{left:60,width:'55%',height:'70%'}, vAxis: {minValue: 0} , title: 'Входящие звонки - загруженность отделов'} );
+				
+			// chart6
+			var in_data6 = [% JS_DATA_TC %];
+			in_data6.unshift( [% JS_DATA_TC_DN %] );
+			var data6 = google.visualization.arrayToDataTable( in_data6 );
+			var chart6 = new google.visualization.LineChart(document.getElementById('topc'));
+			chart6.draw(data6, { chartArea:{left:60,width:'60%',height:'70%'}, vAxis: {minValue: 0} , title: 'Исходящие звонки - активные пользователи'} );
+		
+			google.visualization.events.addListener(chart6, 'select',
+					function() {
+					var item = chart6.getSelection()[0];
+					if ( (typeof(item) !== 'undefined') && item.row != null && in_data6[0][item.column] !== 'Other' && data6.getValue(item.row,item.column) > 0 ) {
+					var new_url = "/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&caller_id="+in_data6[0][item.column]+"&call_type=transit&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&tg_filter=%25m-%25d***" + data6.getValue(item.row,0);
+					document.location.href=new_url;
+					}
+				} );
 		}
 	</script>
 </head>
@@ -98,24 +126,32 @@
 	<center>
 		<h1>Сводка за предыдущие [% PERIOD %] дней</h1>
 		<table>
-			<tr>
+			<tr align='center'>
 				<td width='50%' height='100%'>
-					<div id="incalls" style="width: 100%; height: 300"></div>
+					<div id="incalls" style="width: 100%; height: 300"><img width="30" src="/xvb/images/loading.gif" style="opacity: 1;"></div>
 				</td>
-				<td width='50%' valign='top'>
-					<div id="outcalls" style="width: 100%; height: 300"></div>
+				<td width='50%'>
+					<div id="dep" style="width: 100%; height: 300"><img width="30" src="/xvb/images/loading.gif" style="opacity: 1;"></div>
 				</td>
 			</tr>
-			<tr>
-				<td width='50%'>
-					<div id="geo_opt" style="width: 100%; height: 300"></div>
+			<tr align='center'>
+				<td width='50%' valign='top'>
+					<div id="outcalls" style="width: 100%; height: 300"><img width="30" src="/xvb/images/loading.gif" style="opacity: 1;"></div>
 				</td>
 				<td width='50%'>
-					<div id="files" style="width: 100%; height: 300"></div>
+					<div id="topc" style="width: 100%; height: 300"><img width="30" src="/xvb/images/loading.gif" style="opacity: 1;"></div>
+				</td>
+			</tr>
+			<tr align='center'>
+				<td width='50%'>
+					<div id="geo_opt" style="width: 100%; height: 300"><img width="30" src="/xvb/images/loading.gif" style="opacity: 1;"></div>
+				</td>
+				<td width='50%'>
+					<div id="files" style="width: 100%; height: 300"><img width="30" src="/xvb/images/loading.gif" style="opacity: 1;"></div>
 				</td>
 			</tr>
 		</table>
-		[% IF JS_DATA_MIS %]
+		[% IF JS_DATA_MIS scalar %]
 		<h3>Пропущенные звонки</h3>
 		<table width='100%' id='d-tbl'>
 			<tr>
