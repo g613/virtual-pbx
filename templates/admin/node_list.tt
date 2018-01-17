@@ -38,7 +38,7 @@
 	<p>
 	<table width='100%' id='list-data'>
 		<tr>
-			<th>Id</th>
+			<th class='rad_l'>Id</th>
 			<th>Download IP</th>
 			<th>Asterisk IP</th>
 			<!--<th>AMI login:password</th>-->
@@ -46,7 +46,7 @@
 			<th>Limits</th>
 			<th>Stat URL</th>
 			<th>Stats</th>
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 			
 		[% IF MSG_PREV ne '' %]

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: calls_list.tt,v 1.12 2017/09/13 18:26:40 gosha Exp $ -->
+<!-- $Id: calls_list.tt,v 1.15 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Live calls - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -58,15 +58,15 @@
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Type</th>
-			<th>Start Date</th>
+			<th class='rad_l'>Type</th>
+			<th>Start date</th>
 			<th>Caller ID</th>
 			<th>Called NUM</th>
 			<th>&nbsp;</th>
 			<th>Call duration</th>
 			<th>Extension</th>
 			<th>Duration</th>
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>

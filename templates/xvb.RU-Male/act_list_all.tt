@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list_all.tt,v 1.11 2016/01/15 11:53:30 gosha Exp $ -->
+<!-- $Id: act_list_all.tt,v 1.14 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Активность - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -72,7 +72,7 @@
 				<input placeholder='Данные' size='15' type='text' name='data' value='[% CDR_DATA | html %]'>
 				&nbsp;
 				<select name="act_type" id="act_type_selector">
-					<option selected value="">любой тип</option>
+					<option selected value="">Действие</option>
 				[% FOREACH at = ACT_TYPES %]
 					<option value="[% at %]">[% at | locale_msg %]</option>
 				[% END %]
@@ -91,12 +91,12 @@
 
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Время действия</th>
-			<th>Номер звонящего</th>
-			<th>Внутренний номер</th>
+			<th class='rad_l'>Время действия</th>
+			<th>Кто звонил</th>
+			<th>Вн. номер</th>
 			<th>Длительность</th>
-			<th>Тип действия</th>
-			<th width='35%'>Данные</th>
+			<th>Действие</th>
+			<th width='35%' class='rad_r'>Данные</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
@@ -108,7 +108,7 @@
 		
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
-			<td>
+			<td class='simple'>
 				<a title='информация о звонке' href="?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]">[% msg.CDR_DATE | html %]</a>
 			</td>
 			<td align='right'>[% msg.CALLER_ID | html %]</td>

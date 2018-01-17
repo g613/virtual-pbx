@@ -39,12 +39,12 @@
 	<p>
 	<table width='100%' id='list-data'>
 		<tr>
-				<th>Partner login</th>
+				<th class='rad_l'>Partner login</th>
 				<th>Password</th>
 				<th>Group</th>
 				<th>Description</th>
 				<th>Actions</th>
-				<th></th>
+				<th class='rad_r'>&nbsp;</th>
 			</tr>
 			
 		[% IF MSG_PREV ne '' %]

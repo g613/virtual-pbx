@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.34 2017/08/24 13:10:08 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.35 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -32,7 +32,7 @@
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th colspan='2'>Статус</th>
+			<th colspan='2' class='rad_l'>Статус</th>
 			<th>Телефон</th>
 			<th>Имя пользователя </th>
 			<th>Исходящий АОН</th>
@@ -40,7 +40,7 @@
 			<th>Группы перехвата</th>
 			<th>SIP имя</th>
 			<th>SIP пароль</th>
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 		
 		[% FOREACH p = PHONES %]

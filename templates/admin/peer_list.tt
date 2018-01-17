@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.24 2017/02/23 18:45:03 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.26 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -66,7 +66,7 @@
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Access code</th>
+			<th class='rad_l'>Access code</th>
 			<th>Tenant name</th>
 			<th>Proxy</th>
 			<th>Port</th>
@@ -74,7 +74,7 @@
 			<th>CallerID</th>
 			<th colspan='2'>Incoming calls</th>
 			<th>&nbsp;</th>
-			<th>Peer ID</th>
+			<th class='rad_r'>Peer ID</th>
 		</tr>
 		
 		[% IF MSG_PREV ne '' %]
@@ -87,7 +87,7 @@
 		
 		[% FOREACH p = SIPDEV %]
 		<tr align='left' class='nocolor' id='d-tr-[% p.DATA_ID %]'>
-			<td><a title='edit user settings' href='?ac=[% p.ACCESS_CODE %]&action=user_info'>[% p.ACCESS_CODE %]</a></td>
+			<td class='simple'><a title='edit user settings' href='?ac=[% p.ACCESS_CODE %]&action=user_info'>[% p.ACCESS_CODE %]</a></td>
 			<td>
 				[% p.FIRST_NAME | html %] [% p.LAST_NAME | html %]
 			</td>

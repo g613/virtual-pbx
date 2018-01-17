@@ -50,14 +50,14 @@
 	<p>
 	<table width='100%' id='list-data'>
 		<tr>
-			<th>Id</th>
+			<th class='rad_l'>Id</th>
 			<th>Name</th>
 			<th>Language</th>
 			<th>Tariff</th>
 			<th>Codec</th>
 			<th>Sound prefix</th>
 			<th>Template prefix</th>
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>

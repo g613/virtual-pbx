@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.89 2017/07/18 12:39:21 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.91 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -88,15 +88,15 @@
 	<table width='95%' id='d-tbl'>
 		[% IF MSG_LIST scalar %]
 		<tr>
-			<th>#</th>
+			<th class='rad_l'>#</th>
 			<th>Date</th>
 			<th>&nbsp;</th>
 			<th>CallerID</th>
 			<th>CalledID</th>
 			<th>Duration</th>
-			<th>Size</th>
 			<th>Type</th>
-			<th>&nbsp;</th>
+			<th>Size</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
@@ -130,8 +130,8 @@
 			[% ELSE %]
 			<td align='center'>--------</td>
 			[% END %]
-			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
 			<td>[% msg.DESCRIPTION | html %]</td>
+			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
 			<td nowrap='nowrap'>
 				<a title='delete message' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs0'></span></a>
 				[% IF msg.FILE_TYPE eq '30' %]

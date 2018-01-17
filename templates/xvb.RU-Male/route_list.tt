@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.22 2017/07/18 12:39:21 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.23 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
@@ -72,7 +72,7 @@
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Приоритет</th>
+			<th class='rad_l'>Приоритет</th>
 			<th>Шаблон номера</th>
 			<th>Преобразование</th>
 			<th>&nbsp;</th>
@@ -82,7 +82,7 @@
 			<th>Исходящий АОН</th>
 			<th>Расписание</th>
 			<th>Шлюз</th>
-			<th colspan='2'>&nbsp;</th>
+			<th colspan='2' class='rad_r'>&nbsp;</th>
 		</tr>
 		
 		[% FOREACH r = ROUTES %]

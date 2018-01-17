@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.17 2016/08/29 14:04:43 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.20 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs / Call Detail</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -43,12 +43,12 @@
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Start Date</th>
+			<th class='rad_l'>Date</th>
 			<th>Caller ID</th>
-			<th>Duration</th>
 			<th>Extension / AC</th>
-			<th>Type</th>
-			<th width='30%'><a class='warning-font' href="?action=call_log&call_id=[% CDR_CALL_ID | html %]&a=msg_download" target="_blank" title="call logs">Data</a></th>
+			<th>Action</th>
+			<th>Duration</th>
+			<th width='30%' class='rad_r'><a class='warning-font' href="?action=call_log&call_id=[% CDR_CALL_ID | html %]&a=msg_download" target="_blank" title="call logs">Data</a></th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
@@ -60,7 +60,7 @@
 		
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
-			<td align='center'>[% msg.CDR_DATE | html %]</td>
+			<td class='simple'>[% msg.CDR_DATE | html %]</td>
 			<td>
 			[% IF msg.CNAM %]
 				'[% msg.CNAM | html %]'&nbsp;&nbsp;&lt;[% msg.CALLER_ID | html %]&gt;
@@ -68,8 +68,7 @@
 				[% msg.CALLER_ID | html %]
 			[% END %]
 			</td>
-			<td>[% msg.CDR_DURATION | duration_str %]</td>
-			<td>
+			<td align='left'>
 				[% IF msg.TYPE eq 'Call' %]
 					<b>[% msg.ACCESS_CODE | html %]</b>
 					<script language='JavaScript'>
@@ -79,7 +78,8 @@
 					[% msg.EXT_NUMBER | html %]
 				[% END %]
 			</td>
-			<td>[% msg.TYPE | html %]</td>
+			<td align='left'>[% msg.TYPE | html %]</td>
+			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td align='left'>[% msg.DATA | html %]</td>
 		</tr>
 		[% END %]

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: dashboard.tt,v 1.11 2017/11/28 07:45:27 gosha Exp $ -->
+<!-- $Id: dashboard.tt,v 1.13 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Dashboard - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -155,15 +155,15 @@
 		<h3>Пропущенные звонки</h3>
 		<table width='100%' id='d-tbl'>
 			<tr>
-				<th colspan="2">Номер звонящего</th>
+				<th colspan='2' class='rad_l'>Номер звонящего</th>
 				<th>Звонков</th>
 				<th>Дата последнего звонка</th>
 				<th>Наши попытки перезвонить</th>
-				<th>Дата последнего звонка</th>
+				<th class='rad_r'>Дата последнего звонка</th>
 			</tr>
 			[% FOREACH cdr = JS_DATA_MIS %]
 			<tr class='nocolor' align='center'>
-				<td>[% cdr.CNAM | html %]</td>
+				<td class='simple'>[% cdr.CNAM | html %]</td>
 				<td><a title='звонки' href="?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&any_did=[% cdr.CALLER_ID | html %]&from_time=[% FROM_TIME | html %]">[% cdr.CID | html %]</a></td>
 				<td>[% cdr.CALLS | html %]</td>
 				<td>[% cdr.DATE | html %]</td>

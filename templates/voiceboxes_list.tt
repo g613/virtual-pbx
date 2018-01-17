@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.62 2017/01/17 18:32:51 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.63 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extensions - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -38,7 +38,7 @@
 
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Extension</th>
+			<th class='rad_l'>Extension</th>
 			<th>Type</th>
 			<th>Name</th>
 			<th>W</th>
@@ -48,7 +48,7 @@
 			<th>G</th>
 			<th>Next Exten</th>
 			<th>Recipient notification</th>
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 		[% FOREACH vb = VB_LIST %]
 		<tr class='nocolor' id='d-tr-[% vb.ID %]' align='center'>

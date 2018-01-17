@@ -84,9 +84,9 @@
 			<td colspan='3'>&nbsp;</td>
 		</tr>
 		<tr>
-			<th>Call type</th>
+			<th class='rad_l'>Call type</th>
 			<th>Call rate</th>
-			<th>Minute rate</th>
+			<th class='rad_r'>Minute rate</th>
 		</tr>
 		<tr class='nocolor'>
 			<td>INCOMING</td>
@@ -137,9 +137,9 @@
 			<td colspan='3'>&nbsp;</td>
 		</tr>
 		<tr>
-			<th>Event type</th>
+			<th class='rad_l'>Event type</th>
 			<th>Event rate</th>
-			<th>Unit rate (sec by default)</th>
+			<th class='rad_r'>Unit rate (sec by default)</th>
 		</tr>
 		<tr class='nocolor'>
 			<td>PLAYBACK</td>

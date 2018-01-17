@@ -74,7 +74,7 @@
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Priority</th>
+			<th class='rad_l'>Priority</th>
 			<th>Pattern</th>
 			<th>Out number</th>
 			<th>&nbsp;</th>
@@ -85,7 +85,7 @@
 			<th>Schedule</th>
 			<th>Peer</th>
 			<th>&nbsp;</th>
-			<th>Actions</th>
+			<th class='rad_r'>Actions</th>
 		</tr>
 		
 		[% FOREACH r = ROUTES %]

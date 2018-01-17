@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.16 2017/07/18 12:39:21 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.17 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Телефонная книга - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -57,13 +57,13 @@
 		
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Имя</th>
+			<th class='rad_l'>Имя</th>
 			<th>Фамилия</th>
 			<th>Телефон</th>
 			<th>Быстрый набор</th>
 			<th>Коментарий</th>
 			<th>&nbsp;</th>
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 
 		[% FOREACH param = PBOOK_LIST %]

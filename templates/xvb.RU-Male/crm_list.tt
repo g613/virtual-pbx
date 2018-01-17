@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: crm_list.tt,v 1.5 2016/04/29 15:01:27 gosha Exp $ -->
+<!-- $Id: crm_list.tt,v 1.6 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Справочник клиентов - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -37,10 +37,10 @@
 
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Клиент</th>
+			<th class='rad_l'>Клиент</th>
 			<th>Переменные</th>
 			<th>Описание</th>
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
@@ -52,10 +52,9 @@
 
 		[% FOREACH param = CRM_LIST %]
 		<tr align='left' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-			<td><a href='?action=crm_info&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.C_NAME | html %]</a></td>
+			<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='?action=crm_info&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.C_NAME | html %]</a></td>
 			<td>[% param.C_VARS | html %]</td>
 			<td>[% param.C_NOTE | html %]</td>
-	
 			<td align='right' nowrap='nowrap'>
 				<a href='?action=crm_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить элемент'><span class='icon-bin fs0'></span></a>
 			</td>

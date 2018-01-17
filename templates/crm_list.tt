@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: crm_list.tt,v 1.4 2016/04/29 15:01:25 gosha Exp $ -->
+<!-- $Id: crm_list.tt,v 1.5 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Customers - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -37,10 +37,10 @@
 
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Customer</th>
+			<th class='rad_l'>Customer</th>
 			<th>Variables</th>
 			<th>Description</th>
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>

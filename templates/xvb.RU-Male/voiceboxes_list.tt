@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.13 2017/09/04 19:11:43 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.15 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список внутренних номеров - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -41,7 +41,7 @@
 
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Номер</th>
+			<th class='rad_l'>Вн. номер</th>
 			<th>Тип</th>
 			<th>Имя</th>
 			<th title='Ждать ввода'>Ж</th>
@@ -51,7 +51,7 @@
 			<th title='Глобальный номер'>Г</th>
 			<th>Перейти к</th>
 			<th>Получатель оповещения</th>
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 		<tr>
 		</tr>

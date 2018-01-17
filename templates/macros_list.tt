@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: macros_list.tt,v 1.17 2016/01/11 14:26:14 gosha Exp $ -->
+<!-- $Id: macros_list.tt,v 1.18 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Macros - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -18,10 +18,10 @@
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Name</th>
+			<th class='rad_l'>Name</th>
 			<th>Description</th>
 			<th>Data</th>
-			<th>Actions</th>
+			<th class='rad_r'>Actions</th>
 		</tr>
 		
 		[% FOREACH m = MACROS %]

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.5 2016/07/27 12:07:35 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.7 2018/01/05 17:13:19 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - All Messages</title>
 
@@ -109,7 +109,7 @@
 	<table width='95%' id='d-tbl'>
 		[% IF MSG_LIST scalar %]
 		<tr>
-			<th>#</th>
+			<th class='rad_l'>#</th>
 			<th>AC</th>
 			<th>Ext</th>
 			<th>Date</th>
@@ -117,8 +117,8 @@
 			<th>CallerID</th>
 			<th>CalledID</th>
 			<th>Duration</th>
-			<th>Size</th>
 			<th>Type</th>
+			<th class='rad_r'>Size</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
@@ -156,8 +156,8 @@
 			[% ELSE %]
 			<td align='center'>--------</td>
 			[% END %]
-			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
 			<td>[% msg.DESCRIPTION | html %]</td>
+			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
 		</tr>
 		[% END %]
 		<tr>

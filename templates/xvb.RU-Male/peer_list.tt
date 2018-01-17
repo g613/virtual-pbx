@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.20 2017/07/18 12:39:21 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.21 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP шлюзы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -25,7 +25,7 @@
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th width='15%'>Прокси (*)</th>
+			<th width='15%' class='rad_l'>Прокси (*)</th>
 			<th>Порт (*)</th>
 			<th>Домен</th>
 			<th>Пользователь</th>
@@ -35,9 +35,9 @@
 			<th>DTMF режим</th>
 			<th>Протокол</th>
 			[% IF USER_CREDS.CUSTOM_REGS %]
-			<th colspan='2'>Вн. номер для входящих</th>
+			<th colspan='2' class='rad_r'>Вн. номер для входящих</th>
 			[% ELSE %]
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 			[% END %]
 		</tr>
 		

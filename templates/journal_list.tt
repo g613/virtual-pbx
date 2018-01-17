@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.32 2016/01/15 11:53:30 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.35 2018/01/05 20:12:55 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Actions journal - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -98,15 +98,16 @@
 
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th width='5%'>Ext</th>
-			<th width='20%'>Date</th>
+			<th width='5%' class='rad_l'>#</th>
+			<th width='15%'>Date</th>
 			<th width='10%'>Action</th>
 			<th width='15%'>Remote IP</th>
-			<th width='40%'>Data</th>
+			<th width='5%'>Ext</th>
+			<th width='40%' class='rad_r'>Data</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='5'>
+			<td align='left' colspan='6'>
 				<a title='previous page' href='?action=j_list&cid=[% J_CID | html %]&action_type=[% J_ACTION %]&from=[% MSG_PREV %]&ext_id=[% J_EXT_ID %]&ext_num=[% J_EXT_NUM | htmlstrict %]&data=[% J_DATA | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
@@ -114,21 +115,22 @@
 
 		[% FOREACH msg = J_LIST %]
 			<tr class='nocolor'>
-				[% IF msg.EXT_ID %]
-				<td>&nbsp;<a href='?action=vb_view&id=[% msg.EXT_ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
-				[% ELSE %]
-				<td>[% msg.EXT_NUMBER | html %]</td>
-				[% END %]
+				<td align='center' class='simple'>[% msg.J_NUM | html %]</td>
 				<td align='center'>[% msg.J_DATE | html %]</td>
 				<td>[% msg.ACTION | html %]</td>
 				<td align='center'>[% msg.CID | html %]</td>
+				[% IF msg.EXT_ID %]
+				<td>&nbsp;<a href='?action=vb_view&id=[% msg.EXT_ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
+				[% ELSE %]
+				<td>&nbsp;[% msg.EXT_NUMBER | html %]</td>
+				[% END %]
 				<td>[% msg.DESCRIPTION | html %]</td>
 			</tr>
 		[% END %]
 
 		<tr>
 		[% IF MSG_NEXT ne '' %]
-			<td align='right' colspan='5'>
+			<td align='right' colspan='6'>
 				<a title='next page' href='?action=j_list&cid=[% J_CID | html %]&action_type=[% J_ACTION %]&from=[% MSG_NEXT %]&ext_id=[% J_EXT_ID %]&ext_num=[% J_EXT_NUM | htmlstrict %]&data=[% J_DATA | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
 			</td>
 		[% ELSE %]

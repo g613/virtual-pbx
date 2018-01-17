@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.54 2017/11/26 19:20:44 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.58 2018/01/05 20:12:55 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -102,16 +102,17 @@
 	<table width='100%' id='d-tbl'>
 		[% IF USE_BILLING %]
 		<tr>
-			<th>Start Date</th>
-			<th>Caller ID</th>
+			<th class='rad_l'>#</th>
+			<th>Date</th>
+			<th colspan='2'>Caller</th>
+			<th>Called</th>
 			<th>Duration</th>
 			<th>Cost</th>
-			<th>Called NUM</th>
-			<th>Type</th>
+			<th class='rad_r'>Type</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='6'>
+			<td align='left' colspan='7'>
 				<a title='previous page' href='?action=cdr_list&tg_filter=[% CDR_TGFILTER | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&any_did=[% CDR_ANY_DID | html %]&cnam=[% CDR_CNAM | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
@@ -119,7 +120,13 @@
 
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
+			<td class='simple'>[% msg.CDR_NUM %]</td>
 			<td><a title='call detail' href='?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
+			<td>
+				[% IF msg.CNAM ne msg.CALLER_ID  %]
+					[% msg.CNAM | html %]
+				[% END %]
+			</td>
 			[% IF msg.DATA contain 'STATUS=ANSWER' %]
 				<td align='right'>[% msg.CALLER_ID | html %]</td>
 			[% ELSIF msg.DATA contain 'STATUS=' %]
@@ -127,9 +134,9 @@
 			[% ELSE %]
 				<td align='right'>[% msg.CALLER_ID | html %]</td>
 			[% END %]
+			<td align='right'>[% msg.CALLED_ID | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td align='right'>[% msg.COST %] ([% msg.DESCRIPTION %])</td>
-			<td align='right'>[% msg.CALLED_ID | html %]</td>
 			<td>[% msg.CALL_TYPE | html %]</td>
 		</tr>
 		[% END %]
@@ -145,15 +152,16 @@
 		</tr>
 		[% ELSE %]
 		<tr>
-			<th>Start Date</th>
-			<th>Caller ID</th>
+			<th class='rad_l'>#</th>
+			<th>Date</th>
+			<th colspan='2'>Caller</th>
+			<th>Called</th>
 			<th>Duration</th>
-			<th>Called NUM</th>
-			<th>Type</th>
+			<th class='rad_r'>Type</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='5'>
+			<td align='left' colspan='7'>
 				<a title='previous page' href='?action=cdr_list&tg_filter=[% CDR_TGFILTER | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&any_did=[% CDR_ANY_DID | html %]&cnam=[% CDR_CNAM | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
@@ -161,21 +169,27 @@
 
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
+			<td>[% msg.CDR_NUM %]</td>
 			<td><a title='call detail' href='?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.CDR_DATE | html %]</a></td>
+			<td>
+				[% IF msg.CNAM ne msg.CALLER_ID  %]
+					[% msg.CNAM | html %]
+				[% END %]
+			</td>
 			[% IF msg.DATA contain 'STATUS=ANSWER' %]
 				<td align='right'>[% msg.CALLER_ID | html %]</td>
 			[% ELSE %]
 				<td align='right' class='warning-font'>[% msg.CALLER_ID | html %]</td>
 			[% END %]
-			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td>[% msg.CALLED_ID | html %]</td>
+			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td>[% msg.CALL_TYPE | html %]</td>
 		</tr>
 		[% END %]
 
 		<tr>
 		[% IF MSG_NEXT ne '' %]
-			<td align='right' colspan='5'>
+			<td align='right' colspan='7'>
 				<a title='next page' href='?action=cdr_list&tg_filter=[% CDR_TGFILTER | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&cnam=[% CDR_CNAM | html %]'><span class='fs0'>►</span></a>
 			</td>
 		[% ELSE %]

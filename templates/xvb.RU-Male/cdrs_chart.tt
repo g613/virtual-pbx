@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.18 2016/08/31 19:29:00 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.19 2018/01/05 06:16:05 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Статистика звонков АТС - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -76,7 +76,7 @@
 					<option value="" selected>все звонки</option>
 					<option value="incoming">входящий</option>
 					<option value="local">локальный</option>
-					<option value="transit">транзит</option>
+					<option value="transit">исходящий</option>
 					<option value="internal">внутрений</option>
 					<option value="callback">обратный</option>
 					<option value="callblast">информатор</option>

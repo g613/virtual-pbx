@@ -80,14 +80,14 @@
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Type</th>
+			<th class='rad_l'>Type</th>
 			<th>Start Date</th>
 			<th>Caller ID</th>
 			<th>Called NUM</th>
 			<th>Access Code</th>
 			<th>Call duration</th>
 			<th>Server ID</th>
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>

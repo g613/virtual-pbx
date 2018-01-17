@@ -37,12 +37,12 @@
 	<p>
 	<table width='98%' id='list-data'>
 		<tr>
-			<th>Id</th>
+			<th class='rad_l'>Id</th>
 			<th>Name</th>
 			<th>Monthly</th>
 			<th>Daily</th>
 			<th>Currency</th>
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 		</tr>
 			

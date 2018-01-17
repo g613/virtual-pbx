@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.316 2017/11/01 20:06:41 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.317 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -2561,12 +2561,12 @@
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%' id='addon-data'>
 							<tr>
-								<th>Phone number</th>
+								<th class='rad_l'>Phone number</th>
 								<th>All calls</th>
 								<th>Answered calls</th>
 								<th>Duaration</th>
 								<th>Duration AVG</th>
-								<th>RingTime AVG</th>
+								<th class='rad_r'>RingTime AVG</th>
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							[% IF param.NUMBER eq '===' %]
@@ -2626,9 +2626,9 @@
 						<td colspan='2' align='center'>
 						<table width='90%'  id='addon-data'>
 							<tr>
-								<th>Variant</th>
+								<th class='rad_l'>Variant</th>
 								<th>Count</th>
-								<th>Percent</th>
+								<th class='rad_r'>Percent</th>
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							[% IF param.DIGIT eq '===' %]
@@ -2659,29 +2659,28 @@
 						<td colspan='2' align='center'>
 						<table width='100%'  id='addon-data'>
 							<tr align='center'>
-								<th colspan='2'>&nbsp;</th>
-								<th>Create time</th>
-								<th>Download time</th>
+								<th class='rad_l'>Create date</th>
 								<th>File size</th>
 								<th>Duaration</th>
+								<th colspan='2' class='rad_r'>&nbsp;</th>
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							<tr align='center' class='nocolor'>
+								<td>[% param.CREATE_DATE | html %]</td>
+								<td align='right'>[% param.FILE_SIZE | fsize %]</td>
+								<td>[% param.DURATION | duration_str | html %]</td>
 								<td>
 									<a href='#' class='r-info'>
 										<span class='icon-info fs0'></span>
 										<span class='r-info'>
-											[% param.TITLE | html %]
+											[% param.TITLE | html %]<br/>
+											Download time: [% param.DOWNLOAD_DATE | html %]
 										</span>
 									</a>
 								</td>
 								<td align='center'>
 									<a title='download file' href='[% param.FILE_URL %]' onclick="return true"><span class='icon-download3 fs0'></span></a>
 								</td>
-								<td>[% param.CREATE_DATE | html %]</td>
-								<td>[% param.DOWNLOAD_DATE | html %]</td>
-								<td align='right'>[% param.FILE_SIZE | fsize %]</td>
-								<td>[% param.DURATION | duration_str | html %]</td>
 							</tr>
 							[% END %]
 						</table>
@@ -2705,12 +2704,12 @@
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%'  id='addon-data'>
 							<tr>
-								<th><a class='warning-font' href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='dynamic agents'>Phone number</a></th>
+								<th class='rad_l'><a class='warning-font' href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='dynamic agents'>Phone number</a></th>
 								<th>All calls</th>
 								<th>Answered calls</th>
 								<th>Duaration</th>
 								<th>Duration AVG</th>
-								<th>RingTime AVG</th>
+								<th class='rad_r'>RingTime AVG</th>
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							[% IF param.NUMBER eq '===' %]
@@ -2749,9 +2748,9 @@
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%'  id='addon-data'>
 							<tr>
-								<th>Call Status</th>
+								<th class='rad_l'>Call Status</th>
 								<th>Count</th>
-								<th>Percent</th>
+								<th class='rad_r'>Percent</th>
 							</tr>
 							<tr align='right' class='nocolor'>
 								<td>Success</td>
@@ -2802,9 +2801,9 @@
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%'  id='addon-data'>
 							<tr>
-								<th>Phone number</th>
+								<th class='rad_l'>Phone number</th>
 								<th>Parking slot</th>
-								<th>Hold time</th>
+								<th class='rad_r'>Hold time</th>
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							<tr align='center' class='nocolor'>
@@ -2832,9 +2831,9 @@
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%'  id='addon-data'>
 							<tr>
-								<th>Call Status</th>
+								<th class='rad_l'>Call Status</th>
 								<th>Count</th>
-								<th>Percent</th>
+								<th class='rad_r'>Percent</th>
 							</tr>
 							<tr align='right' class='nocolor'>
 								<td>Success</td>
@@ -3076,9 +3075,9 @@
 						<td colspan='2' align='center'>
 						<table width='90%' id='d-tbl'>
 							<tr>
-								<th>User Name</th>
+								<th class='rad_l'>User Name</th>
 								<th>Extension Number</th>
-								<th>&nbsp;</th>
+								<th class='rad_r'>&nbsp;</th>
 							</tr>
 							[% IF MSG_PREV ne '' %]
 							<tr>
@@ -3167,7 +3166,7 @@
 				<td colspan='3' align='center'>
 					<table width='90%' id='d-tbl'>
 						<tr>
-							<th>Priority</th>
+							<th class='rad_l'>Priority</th>
 							<th>CallerID</th>
 							<th>Time</th>
 							<th>Day Of Week</th>
@@ -3175,7 +3174,7 @@
 							<th>Month</th>
 							<th>Year</th>
 							<th>Extension Number</th>
-							<th>Actions</th>
+							<th class='rad_r'>Actions</th>
 						</tr>
 						[% FOREACH param = VB_DATA %]
 						<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
@@ -3242,14 +3241,14 @@
 			<td colspan='3' align='center'>
 				<table width='90%' id='d-tbl-d1'>
 					<tr>
-						<th>Priority</th>
+						<th class='rad_l'>Priority</th>
 						<th>Time</th>
 						<th>Day Of Week</th>
 						<th>Day Of Month</th>
 						<th>Month</th>
 						<th>Year</th>
 						<th>Mode</th>
-						<th>Actions</th>
+						<th class='rad_r'>Actions</th>
 					</tr>
 					[% FOREACH param = BLAST_SCHEDULE %]
 					<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
@@ -3326,14 +3325,14 @@
 				<td colspan='3' align='center'>
 				<table width='100%' id='d-tbl'>
 					<tr>
-						<th>Handle time</th>
+						<th class='rad_l'>Handle time</th>
 						<th>Name</th>
 						<th>Phone Number(s)</th>
 						<th>User vars</th>
 						<th>Status</th>
 						<th>Duration</th>
 						<th>Attempt</th>
-						<th>Actions</th>
+						<th class='rad_r'>Actions</th>
 					</tr>
 					[% IF MSG_PREV ne '' %]
 					<tr>
@@ -3429,13 +3428,13 @@
 				<td colspan='3' align='center'>
 					<table width='90%' id='d-tbl'>
 						<tr>
-							<th>Priority</th>
+							<th class='rad_l'>Priority</th>
 							<th>Function</th>
 							<th>Variable</th>
 							<th>Condition</th>
 							<th>Value</th>
 							<th>Extension Number</th>
-							<th>Actions</th>
+							<th class='rad_r'>Actions</th>
 						</tr>
 						[% FOREACH param = VB_DATA %]
 						<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
@@ -3534,7 +3533,7 @@
 				<td colspan='3' align='center'>
 				<table width='100%' id='d-tbl'>
 					<tr>
-						<th>Handle time</th>
+						<th class='rad_l'>Handle time</th>
 						<th>Name</th>
 						<th>Phone Number(s)</th>
 						<th>User vars</th>
@@ -3542,7 +3541,7 @@
 						<th>Duration</th>
 						<th>Attempt</th>
 						<th>Notes</th>
-						<th>Actions</th>
+						<th class='rad_r'>Actions</th>
 					</tr>
 					[% IF MSG_PREV ne '' %]
 					<tr>

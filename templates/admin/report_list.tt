@@ -58,14 +58,14 @@
 	<p>
 	<table width='98%' id='list-data'>
 		<tr>
-			<th>#</th>
+			<th class='rad_l'>#</th>
 			<th width='30px'>&nbsp;</th>
 			<th>Report name</th>
 			<th width='30px'>&nbsp;</th>
 			<th>Create date</th>
 			<th>Owner</th>
 			<th>Cache TTL</th>
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 			
 		[% IF MSG_PREV ne '' %]

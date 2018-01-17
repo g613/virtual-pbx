@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.24 2017/02/23 18:45:03 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.25 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -62,7 +62,7 @@
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Access code</th>
+			<th class='rad_l'>Access code</th>
 			<th>Tenant name</th>
 			<th>&nbsp;</th>
 			<th>Phone</th>
@@ -72,7 +72,7 @@
 			<th>Lines</th>
 			<th>Auth name</th>
 			<th>Password</th>
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 		
 		[% IF MSG_PREV ne '' %]

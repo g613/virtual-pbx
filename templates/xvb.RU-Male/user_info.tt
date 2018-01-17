@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.25 2017/03/03 05:44:35 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.26 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль АТС - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -512,9 +512,9 @@
 					<td colspan='2' id='vb_limits' class='addon_info'>
 						<table width='100%'>
 							<tr align='center'>
-								<th>Тип номера</th>
+								<th class='rad_l'>Тип номера</th>
 								<th>Тек</th>
-								<th>Макс</th>
+								<th class='rad_r'>Макс</th>
 							</tr>
 						[% FOREACH vt = VB_LIMITS %]
 						[% IF vt.ID vb_allow '0' %]

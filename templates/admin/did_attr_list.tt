@@ -37,10 +37,10 @@
 	<p>
 	<table width='98%' id='list-data'>
 		<tr>
-			<th>DID</th>
+			<th class='rad_l'>DID</th>
 			<th>Language</th>
-			<th></th>
-			<th></th>
+			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 			
 		[% IF MSG_PREV ne '' %]

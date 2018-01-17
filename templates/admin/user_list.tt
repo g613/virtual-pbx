@@ -83,7 +83,7 @@
 	<p>
 	<table width='100%' id='list-data'>
 		<tr>
-			<th>Shared DID</th>
+			<th class='rad_l'>Shared DID</th>
 			<th>Access code</th>
 			<th>Tenant name</th>
 			<th>Description</th>
@@ -92,7 +92,7 @@
 			<th>R/O</th>
 			<th>Tariff</th>
 			<th>Balance</th>
-			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
 		</tr>
 			
 		[% IF MSG_PREV ne '' %]

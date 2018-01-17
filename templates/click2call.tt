@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.20 2016/01/11 14:26:14 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.21 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -27,10 +27,10 @@
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th>Link</th>
+			<th class='rad_l'>Link</th>
 			<th>Extension</th>
 			<th>Max calls</th>
-			<th>Actions</th>
+			<th class='rad_r'>Actions</th>
 		</tr>
 		[% FOREACH c2c = C2C_LIST %]
 		<tr align='center' class='nocolor' id='d-tr-[% c2c.ID %]'>

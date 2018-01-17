@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list_all.tt,v 1.11 2016/01/15 11:53:30 gosha Exp $ -->
+<!-- $Id: act_list_all.tt,v 1.14 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - activity - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -73,7 +73,7 @@
 				<input placeholder='Data' size='15' type='text' name='data' value='[% CDR_DATA | html %]'>
 				&nbsp;
 				<select name="act_type" id="act_type_selector">
-					<option value="" selected>all</option>
+					<option value="" selected>Action</option>
 				[% FOREACH at = ACT_TYPES %]
 					<option value="[% at %]">[% at %]</option>
 				[% END %]
@@ -92,12 +92,12 @@
 
 	<table width='95%' id='d-tbl'>
 		<tr>
-			<th>Start Date</th>
+			<th class='rad_l'>Date</th>
 			<th>Caller ID</th>
 			<th>Extension</th>
 			<th>Duration</th>
-			<th>Type</th>
-			<th width='35%'>Data</th>
+			<th>Action</th>
+			<th width='35%' class='rad_r'>Data</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
@@ -109,7 +109,7 @@
 		
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
-			<td align='center'>
+			<td class='simple'>
 				<a title='call detail' href="?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]">[% msg.CDR_DATE | html %]</a>
 			</td>
 			<td align='right'>[% msg.CALLER_ID | html %]</td>

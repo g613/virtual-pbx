@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.79 2017/11/01 20:06:42 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.80 2018/01/05 16:01:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -3019,10 +3019,10 @@
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%'  id='addon-data'>
 							<tr>
-								<th rowspan='2'>Номер телефона</th>
+								<th rowspan='2' class='rad_l'>Номер телефона</th>
 								<th colspan='2'>Звонки</th>
 								<th colspan='2'>Длительность</th>
-								<th rowspan='2'>Среднее время<br> до ответа</th>
+								<th rowspan='2' class='rad_r'>Среднее время<br> до ответа</th>
 							</tr>
 							<tr>
 								<th>всего</th>
@@ -3088,9 +3088,9 @@
 						<td colspan='2' align='center'>
 						<table width='90%'  id='addon-data'>
 							<tr>
-								<th>Вариант ответа</th>
+								<th class='rad_l'>Вариант ответа</th>
 								<th>Количество голосов</th>
-								<th>Процент голосов</th>
+								<th class='rad_r'>Процент голосов</th>
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							[% IF param.DIGIT eq '===' %]
@@ -3121,29 +3121,28 @@
 						<td colspan='2' align='center'>
 						<table width='100%'  id='addon-data'>
 							<tr align='center'>
-								<th colspan='2'>&nbsp;</th>
-								<th>Дата создания</th>
-								<th>Дата скачивания</th>
-								<th>Размер подкаста</th>
+								<th class='rad_l'>Дата</th>
+								<th>Размер</th>
 								<th>Длительность</th>
+								<th colspan='2' class='rad_r'>&nbsp;</th>
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							<tr align='center' class='nocolor'>
+								<td>[% param.CREATE_DATE | html %]</td>
+								<td align='right'>[% param.FILE_SIZE | fsize %]</td>
+								<td>[% param.DURATION | duration_str | html %]</td>
 								<td>
 									<a href='#' class='r-info'>
 										<span class='icon-info fs0'></span>
 										<span class='r-info'>
-											[% param.TITLE | html %]
+											[% param.TITLE | html %]<br/>
+											Скачан: [% param.DOWNLOAD_DATE | html %]
 										</span>
 									</a>
 								</td>
 								<td align='center'>
 									<a title='скачать файл' href='[% param.FILE_URL %]' onclick="return true"><span class='icon-download3 fs0'></span></a>
 								</td>
-								<td>[% param.CREATE_DATE | html %]</td>
-								<td>[% param.DOWNLOAD_DATE | html %]</td>
-								<td align='right'>[% param.FILE_SIZE | fsize %]</td>
-								<td>[% param.DURATION | duration_str | html %]</td>
 							</tr>
 							[% END %]
 						</table>
@@ -3167,10 +3166,10 @@
 						<td colspan='2' align='center'>
 						<table width='100%'  id='addon-data'>
 							<tr>
-								<th rowspan='2'><a class='warning-font' href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='динамические агенты'>Номер телефона</a></th>
+								<th rowspan='2' class='rad_l'><a class='warning-font' href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='динамические агенты'>Номер телефона</a></th>
 								<th colspan='2'>Звонки</th>
 								<th colspan='2'>Длительность</th>
-								<th rowspan='2'>Среднее время<br> до ответа</th>
+								<th rowspan='2' class='rad_r'>Среднее время<br> до ответа</th>
 							</tr>
 							<tr>
 								<th>всего</th>
@@ -3215,9 +3214,9 @@
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%'  id='addon-data'>
 							<tr>
-								<th>Статус звонка</th>
+								<th class='rad_l'>Статус звонка</th>
 								<th>Количество звонков</th>
-								<th>Процент звонков</th>
+								<th class='rad_r'>Процент звонков</th>
 							</tr>
 							<tr align='right' class='nocolor'>
 								<td>Успешный</td>
@@ -3267,9 +3266,9 @@
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%'  id='addon-data'>
 							<tr>
-								<th>Номер звонящего</th>
+								<th class='rad_l'>Номер звонящего</th>
 								<th>Парковочный слот</th>
-								<th>Время ожидания</th>
+								<th class='rad_r'>Время ожидания</th>
 							</tr>
 							[% FOREACH param = VB_DATA %]
 							<tr align='center' class='nocolor'>
@@ -3297,9 +3296,9 @@
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%'  id='addon-data'>
 							<tr>
-								<th>Статус звонка</th>
+								<th class='rad_l'>Статус звонка</th>
 								<th>Количество звонков</th>
-								<th>Процент звонков</th>
+								<th class='rad_r'>Процент звонков</th>
 							</tr>
 							<tr align='right' class='nocolor'>
 								<td>Успешный</td>
@@ -3534,9 +3533,9 @@
 						<td colspan='2' align='center'>
 						<table width='90%' id='d-tbl'>
 							<tr>
-								<th>Имя и фамилия</th>
+								<th class='rad_l'>Имя и фамилия</th>
 								<th>Внутренний номер</th>
-								<th>&nbsp;</th>
+								<th class='rad_r'>&nbsp;</th>
 							</tr>
 							[% IF MSG_PREV ne '' %]
 							<tr>
@@ -3623,7 +3622,7 @@
 				<td colspan='3' align='center'>
 					<table width='90%' id='d-tbl'>
 						<tr>
-							<th>Приоритет</th>
+							<th class='rad_l'>Приоритет</th>
 							<th>Номер звонящего</th>
 							<th>Время</th>
 							<th>День недели</th>
@@ -3631,7 +3630,7 @@
 							<th>Месяц</th>
 							<th>Год</th>
 							<th>Внутренний номер</th>
-							<th>&nbsp;</th>
+							<th class='rad_r'>&nbsp;</th>
 						</tr>
 						[% FOREACH param = VB_DATA %]
 						<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
@@ -3701,14 +3700,14 @@
 				<td colspan='3' align='left'>
 					<table id='d-tbl-d1'>
 						<tr>
-							<th>Приоритет</th>
+							<th class='rad_l'>Приоритет</th>
 							<th>Время</th>
 							<th>День недели</th>
 							<th>День месяца</th>
 							<th>Месяц</th>
 							<th>Год</th>
 							<th>Режим</th>
-							<th>&nbsp;</th>
+							<th class='rad_r'>&nbsp;</th>
 						</tr>
 						[% FOREACH param = BLAST_SCHEDULE %]
 						<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
@@ -3784,14 +3783,14 @@
 				<td colspan='3' align='center'>
 				<table width='100%' id='d-tbl'>
 					<tr>
-						<th>Время обработки</th>
+						<th class='rad_l'>Время обработки</th>
 						<th>Имя</th>
 						<th>Номер(а) телефона</th>
 						<th>Переменные</th>
 						<th>Статус</th>
 						<th>Длительность</th>
 						<th>Попытка</th>
-						<th>&nbsp;</th>
+						<th class='rad_r'>&nbsp;</th>
 					</tr>
 					[% IF MSG_PREV ne '' %]
 					<tr>
@@ -3887,13 +3886,13 @@
 				<td colspan='3' align='center'>
 					<table width='90%' id='d-tbl'>
 						<tr>
-							<th>Приоритет</th>
+							<th class='rad_l'>Приоритет</th>
 							<th>Функция</th>
 							<th>Переменная</th>
 							<th>Условие</th>
 							<th>Значение</th>
 							<th>Внутренний номер</th>
-							<th>&nbsp;</th>
+							<th class='rad_r'>&nbsp;</th>
 						</tr>
 						[% FOREACH param = VB_DATA %]
 						<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
@@ -3993,7 +3992,7 @@
 				<td colspan='3' align='center'>
 				<table width='100%' id='d-tbl'>
 					<tr>
-						<th>Время обработки</th>
+						<th class='rad_l'>Время обработки</th>
 						<th>Имя</th>
 						<th>Номер(а) телефона</th>
 						<th>Переменные</th>
@@ -4001,7 +4000,7 @@
 						<th>Длительность</th>
 						<th>Попытка</th>
 						<th>Примечание</th>
-						<th>&nbsp;</th>
+						<th class='rad_r'>&nbsp;</th>
 					</tr>
 					[% IF MSG_PREV ne '' %]
 					<tr>

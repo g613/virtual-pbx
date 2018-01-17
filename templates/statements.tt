@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.31 2015/08/22 10:05:49 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.32 2018/01/04 19:38:00 gosha Exp $ -->
 <!--SUBJECT:VirtualPBX daily statement:SUBJECT-->
 <head>
 	<BASE href='[% CGI_SERVER %]'>
@@ -115,7 +115,7 @@
 		[% IF USE_BILLING %]
 
 		<tr>
-			<th>Start Date</th>
+			<th>Date</th>
 			<th>Caller ID</th>
 			<th>Called ID</th>
 			<th>Duration</th>
@@ -140,7 +140,7 @@
 		[% ELSE %]
 
 		<tr>
-			<th>Start Date</th>
+			<th>Date</th>
 			<th>Caller ID</th>
 			<th>Called ID</th>
 			<th>Duration</th>
