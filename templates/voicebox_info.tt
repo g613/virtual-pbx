@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.317 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.319 2018/02/10 19:15:59 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1239,6 +1239,12 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
+					<td>CallerID Number: </td>
+					<td>
+						<input size='30' type='text' name='CALLERID_NUM' value='[% VBOX_PREF.CALLERID_NUM | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
 					<td>Ring timeout (sec): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
@@ -1610,15 +1616,15 @@
 				</tr>
 				[% END %]
 				<tr class='addon_info'>
-					<td>CID Name preffix: </td>
+					<td>CallerID Name: </td>
 					<td>
-						<input size='30' type='text' name='CALLERID_PREF' value='[% VBOX_PREF.CALLERID_PREF | html %]'>
+						<input size='30' type='text' name='CALLERID_NAME' value='[% VBOX_PREF.CALLERID_NAME | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td>CID Number preffix: </td>
+					<td>CallerID Number: </td>
 					<td>
-						<input size='30' type='text' name='CALLERIDNUM_PREF' value='[% VBOX_PREF.CALLERIDNUM_PREF | html %]'>
+						<input size='30' type='text' name='CALLERID_NUM' value='[% VBOX_PREF.CALLERID_NUM | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>

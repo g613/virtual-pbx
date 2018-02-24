@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.32 2018/01/04 19:38:00 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.33 2018/02/05 18:55:42 gosha Exp $ -->
 <!--SUBJECT:VirtualPBX daily statement:SUBJECT-->
 <head>
 	<BASE href='[% CGI_SERVER %]'>
@@ -169,8 +169,8 @@
 		[% FOREACH msg = CALL_CENTER %]
 		<h4>[% msg.EXT | html %]</h4>
 			<table width='100%'>
-			<tr><th width='20%'>&nbsp;</th><th width='13%'>All</th><th width='13%'>Answered</th><th width='13%'>Unanswered</th><td width='10%'>&nbsp;</td><th width='31%'>Service Level</th></tr>
-			<tr align='right'><td align='left'>Calls</td><td>[% msg.DATA.ALL_CALLS | html %]</td><td>[% msg.DATA.A_ALL_CALLS | html %]</td><td>[% msg.DATA.N_ALL_CALLS | html %]</td><td></td><td rowspan='6'>
+			<tr><th width='20%'>&nbsp;</th><th width='13%'>All</th><th width='13%'>Answered</th><th width='13%'>Unanswered</th><td width='10%' rowspan='8'>&nbsp;</td><th width='31%'>Service Level</th></tr>
+			<tr align='right'><td align='left'>Calls</td><td>[% msg.DATA.ALL_CALLS | html %]</td><td>[% msg.DATA.A_ALL_CALLS | html %]</td><td>[% msg.DATA.N_ALL_CALLS | html %]</td><td rowspan='7' valign='top'>
 			<table border="0">
 			[% FOREACH sl = msg.DATA.SL_TOT %]
 				<tr  align='right'>
@@ -182,6 +182,7 @@
 			</table>
 			</td></tr>
 			<tr align='right'><td align='left'>Total wait-time</td><td>[% msg.DATA.TOT_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.A_TOT_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_TOT_CALL_WAIT | duration_str %]</td></tr>
+			<tr align='right'><td align='left'>Max wait-time</td><td>&nbsp</td><td>[% msg.DATA.A_MAX_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_MAX_CALL_WAIT | duration_str %]</td></tr>
 			<tr align='right'><td align='left'>Average wait-time</td><td>[% msg.DATA.AVG_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.A_AVG_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_AVG_CALL_WAIT | duration_str %]</td></tr>
 			<tr align='right'><td align='left'>Total duration</td><td></td><td>[% msg.DATA.TOT_CALL_LENGTH | duration_str %]</td></tr>
 			<tr align='right'><td align='left'>Average call duration</td><td></td><td>[% msg.DATA.AVG_CALL_LENGTH | duration_str %]</td></tr>

@@ -1,7 +1,7 @@
 %define CORE_DIR /opt/VirtualPBX
 %define ASTERISK_VARLIB_HOME %{_datadir}/asterisk
 Name: virtual-pbx
-Summary: Voice Application Server / HostedIVR solution based on asterisk - Core files
+Summary: XVB PBX - Core files
 Version: 4
 Release: 1
 License: EPL v1.0 / CC BY 3.0
@@ -46,7 +46,7 @@ The XVB virtual-pbx application is designed for processing incoming/outgoing cal
 ####################################################
 #
 %package voip
-Summary: XVB pbx - VOIP applications
+Summary: XVB PBX - VOIP applications
 Group:   System Environment/Services
 
 Requires: asterisk >= 1.6.0.28
@@ -69,7 +69,7 @@ Voice Application Server / HostedIVR solution based on asterisk - VOIP applicati
 ####################################################
 #
 %package web
-Summary: XVB pbx - WEB interface
+Summary: XVB PBX - WEB interface
 Group:   System Environment/Services
 
 Requires: virtual-pbx = %{version}-%{release}
@@ -89,7 +89,7 @@ Voice Application Server / HostedIVR solution based on asterisk  - WEB interface
 ####################################################
 #
 %package management
-Summary: XVB pbx - Management utilites
+Summary: XVB PBX - Management utilites
 Group:   System Environment/Services
 
 Requires: virtual-pbx = %{version}-%{release}
@@ -101,7 +101,7 @@ Voice Application Server / HostedIVR solution based on asterisk  - Management ut
 ####################################################
 #
 %package sound-files
-Summary: XVB pbx - Sound files
+Summary: XVB PBX - Sound files
 Group:   System Environment/Services
 
 %description sound-files
@@ -111,7 +111,7 @@ Voice Application Server / HostedIVR solution based on asterisk - Sound files
 ####################################################
 #
 %package devel
-Summary: XVB pbx - devel
+Summary: XVB PBX - devel
 Group:   System Environment/Services
 
 %description devel
@@ -121,7 +121,7 @@ Voice Application Server / HostedIVR solution based on asterisk - devel
 ####################################################
 #
 %package balancer
-Summary: XVB pbx - Load balancer
+Summary: XVB PBX - Load balancer
 Group:   System Environment/Services
 Requires: kamailio
 
@@ -333,6 +333,9 @@ touch /etc/asterisk/xvb/xvb-phone-service.conf || true
 touch /etc/asterisk/xvb/xvb-phone-filters.conf || true
 if [ ! -f /etc/asterisk/xvb/xvb-post-agi.conf ]; then
 	echo -e 'exten => _X.,1000(post_agi),Hangup' >> /etc/asterisk/xvb/xvb-post-agi.conf
+fi
+if [ ! -f /etc/asterisk/xvb/xvb-pre-agi.conf ]; then
+	touch /etc/asterisk/xvb/xvb-pre-agi.conf
 fi
 
 chkconfig asterisk on

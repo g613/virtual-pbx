@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.80 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.83 2018/02/23 11:22:28 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -166,9 +166,9 @@
 						<ul>Формат временных интервалов: 
 							начало_интервала-конец_интервала.<br>Форматы:
 							<li><b>время</b> - чч:мм-чч:мм</li>
-							<li><b>день недели</b> - день-день<br>( mon - понедельник, ... tue,wed,thu,<br>fri,sat,... sun - воскресенье )</li>
+							<li><b>день недели</b> - день-день<br>( mon - понедельник, ... tue,wed,thu,<br>fri,sat,... sun - воскресенье или 1 - понедельник ... 7 воскресенье)</li>
 							<li><b>день месяца</b> - день-день ( 1..31 )</li>
-							<li><b>месяц</b> - месяц-месяц<br>( jan - январь, feb,mar,apr,may,jun,jul,aug,<br>sep,oct,nov,... dec - декабрь )</li>
+							<li><b>месяц</b> - месяц-месяц<br>( jan - январь, feb,mar,apr,may,jun,jul,aug,<br>sep,oct,nov,... dec - декабрь<br>или 1 - январь ... 12 - декабрь )</li>
 							<li><b>год</b> - год-год (например 2009-2009)
 							<li><b>*</b> - любое значение</li>
 						</ul>
@@ -1479,6 +1479,16 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
+					<td><a href='#' class='info'>Исходящий АОН:<span>
+							Можно использовать какой-то определенный исходящий АОН. 
+							Например, если установить "911% VAR:CID %", и  
+							если звонит 123456789, то мы увидим на дисплее &lt;911123456789&gt;. Поддерживаются переменные.
+						</span></a></td>
+					<td>
+						<input size='30' type='text' name='CALLERID_NUM' value='[% VBOX_PREF.CALLERID_NUM | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
 					<td>Таймаут соединения (сек): </td>
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
@@ -1890,23 +1900,23 @@
 				</tr>
 				[% END %]
 				<tr class='addon_info'>
-					<td><a href='#' class='info'>Преффикс имени звонящего:<span>
-							Можно использовать какой-то префикс для звонка в эту группу. Например, если 
-							это группа "Sales:", то, установив такой префикс для этой группы, можно видеть, 
-							если звонит 123456789, то мы увидим на дисплее Sales: 123456789 &lt;123456789&gt;
+					<td><a href='#' class='info'>Имя звонящего:<span>
+							Можно использовать какое то имя звонящего для звонка в эту группу. Например, если 
+							установить "Sales: % VAR:CNAM %", то, если звонит 123456789, то мы увидим на 
+							дисплее Sales: 123456789 &lt;123456789&gt;. Поддерживаются переменные.
 						</span></a></td>
 					<td>
-						<input size='30' type='text' name='CALLERID_PREF' value='[% VBOX_PREF.CALLERID_PREF | html %]'>
+						<input size='30' type='text' name='CALLERID_NAME' value='[% VBOX_PREF.CALLERID_NAME | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td><a href='#' class='info'>Преффикс номера звонящего:<span>
-							Можно использовать какой-то префикс для звонка в эту группу. Например, если 
-							установив префикс 911, можно видеть, 
-							если звонит 123456789, то мы увидим на дисплее &lt;911123456789&gt;
+					<td><a href='#' class='info'>Исходящий АОН:<span>
+							Можно использовать какой-то определенный исходящий номер  для звонка в эту 
+							группу. Например, если установить "911% VAR:CID %", и  
+							если звонит 123456789, то мы увидим на дисплее &lt;911123456789&gt;. Поддерживаются переменные.
 						</span></a></td>
 					<td>
-						<input size='30' type='text' name='CALLERIDNUM_PREF' value='[% VBOX_PREF.CALLERIDNUM_PREF | html %]'>
+						<input size='30' type='text' name='CALLERID_NUM' value='[% VBOX_PREF.CALLERID_NUM | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>

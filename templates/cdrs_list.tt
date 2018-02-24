@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.58 2018/01/05 20:12:55 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.59 2018/02/05 18:53:18 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -112,7 +112,7 @@
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='7'>
+			<td align='left' colspan='8'>
 				<a title='previous page' href='?action=cdr_list&tg_filter=[% CDR_TGFILTER | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&any_did=[% CDR_ANY_DID | html %]&cnam=[% CDR_CNAM | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
@@ -143,7 +143,7 @@
 
 		<tr>
 		[% IF MSG_NEXT ne '' %]
-			<td align='right' colspan='6'>
+			<td align='right' colspan='8'>
 				<a title='next page' href='?action=cdr_list&tg_filter=[% CDR_TGFILTER | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&cnam=[% CDR_CNAM | html %]'><span class='fs0'>►</span></a>
 			</td>
 		[% ELSE %]
