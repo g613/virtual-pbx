@@ -1,0 +1,140 @@
+<html>
+<!-- $Id: phone_p_cdrs_list.tt,v 1.4 2018/03/18 16:12:19 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - История звонков</title>
+
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
+
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-ru.min.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	
+	<h1>История звонков</h1>
+	
+	<table width='100%'>
+		<tr>
+			<form method="get" onSubmit='return checkChanges(this)' id='find-form'>
+			<td align='right'>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "00:00",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='С даты'>
+				<a link="#"><span class='fs0'>▾</span></a>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "23:59",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='По дату'>
+				<a link="#"><span class='fs0'>▾</span></a>
+				<input name='action' value='pp_cdr_list' type='hidden'>
+				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]' placeholder='Кто номер'>
+				&nbsp;
+				<input size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]' placeholder='Кому звонил'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				&nbsp;
+				<input size='11' type='text' placeholder='Длительность' name='duration' value='[% CDR_DURATION | html %]'>
+				&nbsp;
+				<select name="call_type" id="call_type_selector">
+					<option value="" selected>все звонки</option>
+					<option value="incoming">входящий</option>
+					<option value="local">локальный</option>
+					<option value="transit">исходящий</option>
+					<option value="internal">внутрений</option>
+					<option value="service">сервисный</option>
+				</select>
+				&nbsp;
+				<input value='Найти' type='submit'>
+				<input name='need_excel' value='' type='hidden' id='find-flt'>
+			</td>
+			</form>
+			<script language='JavaScript'>
+				setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");
+			</script>
+		</tr>
+	</table>
+	
+	<p>
+	<table width='100%' id='d-tbl'>
+		<tr>
+			<th class='rad_l'>#</th>
+			<th>Начало звонка</th>
+			<th colspan='2'>Номер звонящего</th>
+			<th>Номер назначения</th>
+			<th>Длительность</th>
+			<th class='rad_r'>Тип</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='7'>
+				<a title='предыдущая страница' href='?action=pp_cdr_list&duration=[% CDR_DURATION | html %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH msg = CDR_LIST %]
+			<tr class='nocolor' align='center'>
+				<td class='simple'>[% msg.CDR_NUM %]</td>
+				<td>[% msg.CDR_DATE | html %]</td>
+				<td>
+					[% IF msg.CNAM ne msg.CALLER_ID  %]
+						[% msg.CNAM | html %]
+					[% END %]
+				</td>
+				[% IF msg.DATA contain 'STATUS=ANSWER' %]
+					<td align='right'>[% msg.CALLER_ID | html %]</td>
+				[% ELSE %]
+					<td align='right' class='warning-font'>[% msg.CALLER_ID | html %]</td>
+				[% END %]
+				<td>[% msg.CALLED_ID | html %]</td>
+				<td>[% msg.CDR_DURATION | duration_str %]</td>
+				<td>[% msg.CALL_TYPE | locale_msg %]</td>
+			</tr>
+		[% END %]
+
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='7'>
+				<a title='следующая страница' href='?action=pp_cdr_list&&duration=[% CDR_DURATION | html %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>►</span></a>
+			</td>
+		</tr>
+		[% END %]
+	</table>
+	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+	
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
+	

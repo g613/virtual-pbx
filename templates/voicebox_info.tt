@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.319 2018/02/10 19:15:59 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.320 2018/03/18 20:01:00 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1249,6 +1249,15 @@
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 						( 1 ring equals ~ 4 seconds )
+					</td>
+				</tr>
+				<td>Goto if call fail: </td>
+					<td nowrap='nowrap'>
+						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
+						<script language="JavaScript">
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option><option value="***">--------- raw editor ---------</option>');
+							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+						</script>
 					</td>
 				</tr>
 				<tr>

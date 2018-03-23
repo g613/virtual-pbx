@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.33 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.34 2018/03/14 14:59:45 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Все сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -89,8 +89,6 @@
 					<option value="4">Анонс удержания вызова</option>
 					<option value="5">Музыка вместо звонка</option>
 					<option value="6">Факс по запросу</option>
-					<option value="30">Новое сообщение</option>
-					<option value="40">Старое сообщение</option>
 					<option value="40:30">Голосовая почта</option>
 					<option value="41">Запись звонка</option>
 				</select>
@@ -153,11 +151,6 @@
 			<td>[% msg.DESCRIPTION | locale_msg %]</td>
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
 			<td align='right' nowrap='nowrap'>
-				[% IF msg.FILE_TYPE eq '30' %]
-					<a title='Пометить как старое' href='?action=msg_status&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=40'><span class='icon-loop2 fs0'></span></a>
-				[% ELSIF msg.FILE_TYPE eq '40' %]
-					<a title='Пометить как новое' href='?action=msg_status&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=30'><span class='icon-loop2 fs0'></span></a>
-				[% END %] 
 				<a title='удалить сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs0'></span></a>
 			</td>
 		</tr>

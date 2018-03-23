@@ -1,7 +1,7 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.27 2018/03/14 14:59:45 gosha Exp $ -->
+<!-- $Id: phone_p_messages_list.tt,v 1.5 2018/03/18 16:12:19 gosha Exp $ -->
 <head>
-	<title>Virtual PBX - Сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
+	<title>Virtual PBX - Сообщения</title>
 
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 
@@ -18,27 +18,13 @@
 
 <body onLoad="XVBInit()">
 	<center>
+			
+	<h1>Сообщения</h1>
 	
 	<table width='100%'>
-		<tr align='left'>
-			<td width='15%'>
-				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Параметры номера"><span class='icon-cog fs0'></span></a>
-				<a href='?action=get_itunes&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Подкасты"><span class='icon-podcast fs0'></span></a>
-				<a href='?action=get_rss&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Rss"><span class='icon-feed3 fs0'></span></a>
-			</td>
-			<td align='center'>
-				<h1>Сообщения для внутреннего номера # <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
-			</td>
-			<td align='right' width='15%'>
-				<a title='удалить сообщения' href='#' onclick="return SubmitConfirm('ru','Вы действительно хотите удалить ВСЕ найденные сообщения ?')"><span class='icon-bin-all fs2'></span></a>
-			</td>
-		</tr>
-	</table>
-
-	<table width='100%'>
 		<tr>
-			<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)' id='find-form'>
 			<td align='right'>
+				<form method="get" onSubmit='return checkChanges(this)' id='find-form'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -69,9 +55,7 @@
 				</script>
 				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='По дату'>
 				<a link="#"><span class='fs0'>▾</span></a>
-				<input name='action' value='msg_list' type='hidden'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
+				<input name='action' value='pp_msg_list' type='hidden'>
 				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]' placeholder='Кто звонил'>
 				&nbsp;
 				<input size='10' type='text' name='called_id' value='[% CALLED_ID | html %]' placeholder='Кому звонил'>
@@ -80,12 +64,11 @@
 				&nbsp;
 				<input value='Найти' type='submit'>
 				<input name='find_and_delete' value='' type='hidden' id='find-flt'>
-				</td>
-			</form>
+				</form>
+				<script langiage='JavaScript'>setActiveSelector('msg_type_selector',"[% MSG_TYPE | html %]");</script>
+			</td>
 		</tr>
 	</table>
-
-	<p>
 	<table width='100%' id='d-tbl'>
 		[% IF MSG_LIST scalar %]
 		<tr>
@@ -95,17 +78,16 @@
 			<th>Кто звонил</th>
 			<th>Кому звонил</th>
 			<th>Длительность</th>
+			<th>Вн. номер</th>
 			<th>Тип</th>
-			<th>Размер</th>
-			<th class='rad_r'>&nbsp;</th>
+			<th class='rad_r'>Размер</th>
 		</tr>
-		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='8'>
-				<a title='предыдущая страница ([% MSG_PREV %])' href='?action=msg_list&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
-			</td>
-		</tr>
+		[% IF MSG_PREV ne '' %]
+			<td align='left' colspan='9'>
+				<a title='предыдущая страница ([% MSG_PREV %])' href='?action=pp_msg_list&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
 		[% END %]
+		</tr>
 		[% FOREACH msg = MSG_LIST %]
 		<tr class='nocolor' id='d-tr-[% msg.FILE_NAME %]'>
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
@@ -131,30 +113,24 @@
 			[% ELSE %]
 				<td align='center'>--------</td>
 			[% END %]
+			<td>[% msg.EXT_NUMBER | html %]</td>
 			<td>[% msg.DESCRIPTION | locale_msg %]</td>
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
-			<td align='right' nowrap='nowrap'>
-				<a title='удалить сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs0'></span></a>
+		</tr>
+		[% END %]
+		<tr>
+		[% IF MSG_NEXT ne '' %]
+			<td align='right' colspan='9'>
+				<a title='следующая страница ([% MSG_NEXT %])' href='?action=pp_msg_list&duration=[% DURATION | html %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
 			</td>
-			</tr>
-			[% END %]
-			[% IF MSG_NEXT ne '' %]
-			<tr>
-				<td align='right' colspan='9'>
-					<a title='следующая страница ([% MSG_NEXT %])' href='?action=msg_list&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
-				</td>
-			</tr>
-			[% END %]
-			[% ELSE %]
-			<tr>
-				<td colspan='9'>&nbsp;</td>
-			</tr>
-			<tr>
-				<td colspan='9' align='center'><h4>Сообщений нет</h4></td>
-			</tr>
-			[% END %]
+		[% END %]
+		</tr>
+		[% ELSE %]
+		<tr>
+			<td colspan='9' align='center'><h4>Сообщений нет</h4></td>
+		</tr>
+		[% END %]
 	</table>
-	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
@@ -162,4 +138,4 @@
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>
 </html>
-	
+

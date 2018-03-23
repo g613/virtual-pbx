@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: dashboard.tt,v 1.15 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: dashboard.tt,v 1.16 2018/03/03 20:03:09 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Dashboard - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -67,7 +67,12 @@
 					}
 				} );
 
-			[% IF GEO_INFO %]
+			[% IF GEO_INFO eq 'skip' %]
+				// chart3
+				var data3 = google.visualization.arrayToDataTable( [% JS_DATA_ALL %] );
+				var chart3 = new google.visualization.PieChart(document.getElementById('geo_opt'));
+				chart3.draw(data3, { chartArea:{left:3,top:30,width:'100%',height:'100%'}, title: 'Call types'} );
+			[% ELSIF GEO_INFO %]
 				// chart2
 				var data2 = google.visualization.arrayToDataTable( [% JS_DATA_REG %] );
 				var chart2 = new google.visualization.PieChart(document.getElementById('geo_opt'));

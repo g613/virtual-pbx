@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.91 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.92 2018/03/14 14:59:45 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -134,11 +134,6 @@
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
 			<td nowrap='nowrap'>
 				<a title='delete message' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs0'></span></a>
-				[% IF msg.FILE_TYPE eq '30' %]
-					<a title='Mark message as OLD' href='?action=msg_status&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=40&uniq=[% USER_CREDS.UNIQ %]'><span class='icon-loop2 fs0'></span></a>
-				[% ELSIF msg.FILE_TYPE eq '40' %]
-					<a title='Mark message as NEW' href='?action=msg_status&msg=[% msg.FILE_NAME %]&id=[% msg.ID %]&status=30&uniq=[% USER_CREDS.UNIQ %]'><span class='icon-loop2 fs0'></span></a>
-				[% END %] 
 			</td>
 		</tr>
 		[% END %]

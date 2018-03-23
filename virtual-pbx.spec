@@ -169,6 +169,7 @@ mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin
 mv cgi-bin/VirtualPBX-UI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ui
 mv cgi-bin/VirtualPBX-AI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ai
 mv cgi-bin/VirtualPBX-PI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/pi
+mv cgi-bin/VirtualPBX-EI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/phonei
 
 cp contrib/utils/billing_processor.pl contrib/utils/billing_processor_daily.pl
 mv contrib/utils/billing_processor.pl contrib/utils/billing_processor_monthly.pl
@@ -184,11 +185,11 @@ mv contrib/XVB.odt $RPM_BUILD_ROOT/%CORE_DIR/doc/
 mv contrib/XVB-AI.pdf $RPM_BUILD_ROOT/%CORE_DIR/web/
 mv contrib/XVB-AI.odt $RPM_BUILD_ROOT/%CORE_DIR/doc/
 
-mv contrib/fagi.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-fagi
-mv contrib/reg_uac.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-reg_uac
-mv contrib/perl-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-perl-worker
-mv contrib/gearman-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-gearman-worker
-mv contrib/callblast.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-callblast
+mv contrib/rc.d/fagi.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-fagi
+mv contrib/rc.d/reg_uac.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-reg_uac
+mv contrib/rc.d/perl-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-perl-worker
+mv contrib/rc.d/gearman-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-gearman-worker
+mv contrib/rc.d/callblast.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-callblast
 mv sounds/*.tgz $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds/
 mv contrib/asterisk/extensions.conf $RPM_BUILD_ROOT/%{_sysconfdir}/asterisk/xvb/xvb.conf
 mv contrib/httpd.conf $RPM_BUILD_ROOT/%{_sysconfdir}/httpd/conf.d/xvb.conf
@@ -524,6 +525,7 @@ ln -s %CORE_DIR/contrib/utils/xvb-ctl /usr/local/bin/xvb-ctl &>/dev/null || true
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/ai
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/ui
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/pi
+%attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/phonei
 %CORE_DIR/web/*.css
 %CORE_DIR/web/*.pdf
 %CORE_DIR/web/css/*

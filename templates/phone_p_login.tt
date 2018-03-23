@@ -1,0 +1,71 @@
+<html>
+<!-- $Id: phone_p_login.tt,v 1.1 2018/03/18 18:07:24 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - phone portal</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	
+	<p align='center'>
+	
+	<table width='100%'>
+		<tr>
+			<td align='left' width='20%'>
+				<img width='120' border='0' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='center'>
+				<h1>Phone portal</h1>
+			</td>
+			<td align='right' width='20%'>
+				&nbsp;
+			</td>
+		</tr>
+	</table>
+
+	<table class='half-width' width='30%'>
+		<form method='post'>
+			<tr>
+				<td> Login: </td>
+				<td align='center'><input name='login' type='text' size='30'></td>
+				<td>( internal-phone@access-code )</td>
+			</tr>
+			<tr>
+				<td> Password: </td>
+				<td align='center'><input name='pswd' type='password' size='30'></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan='3'>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan='2' align='center'>
+					<input name='action' type='hidden' value='pp_start'>
+					<input type='submit' value='Login'>
+				</td>
+			</tr>
+		</form>
+	</table>
+	</p>
+
+	<p>
+	<table width='100%'>
+		<tr align='center'>
+			<td>&nbsp;
+			[% IF ERROR_STR ne '' %]
+				<span class='error'>[% ERROR_STR | html %]</span>
+			[% END %]
+			</td>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_info.tt,v 1.1 2017/08/23 12:36:38 gosha Exp $ -->
+<!-- $Id: phone_info.tt,v 1.2 2018/03/17 12:58:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phone - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -220,6 +220,14 @@
 				[% END %]
 					>after 5 rings</option>
 				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				WEB password:
+			</td>
+			<td>
+				<input size="30" name='WEB_SECRET' type='text' value="[% PHONE.WEB_SECRET | html %]">
 			</td>
 		</tr>
 		

@@ -1,0 +1,153 @@
+<html>
+<!-- $Id: phone_p_pinfo.tt,v 1.4 2018/03/18 16:12:19 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - о телефоне</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+			
+	<h1>Параметры телефона [% PHONE.callerid | html %]</h1>
+
+	<table width='60%' align='left'>
+		<form method="post" onSubmit='return xmlhttpPost(this,0)'>
+			
+		<tr>
+			<td>
+				Имя пользователя:
+			</td>
+			<td>
+				[% PHONE.DESCRIPTION | html %]
+			</td>
+			<td rowspan='8' valign='top'>
+				<h3>Статус:</h3>
+				<ul>
+				[% IF PHONE.REG_STATUS eq 'Registered' %]
+					<li>[% PHONE.REG_STATUS %]</li>
+					<li>Дата последней регистрации: [% PHONE.REG_TIME | html %]</li>
+					<li>Зарегистрирован до: [% PHONE.REG_EXPIRED | html %]</li>
+					<li>IP: [% PHONE.ipaddr | html %]:[% PHONE.port | html %]</li>
+					<li>UA: [% PHONE.useragent | html %]</li>
+				[% ELSIF PHONE.REG_TIME ne '-' %]
+					<li>[% PHONE.REG_STATUS %]</li>
+					<li>Дата последней регистрации: [% PHONE.REG_TIME | html %]</li>
+					<li>IP: [% PHONE.ipaddr | html %]</li>
+					<li>UA: [% PHONE.useragent | html %]</li>
+				[% ELSE %]
+					<li>Unregistered</li>
+				[% END %]
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Исходящий АОН:
+			</td>
+			<td>
+				[% PHONE.DEFCID | html %]
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				Email адрес для оповещения:
+			</td>
+			<td>
+				[% PHONE.EMAIL | html %]
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				Разрешить доступ только с адресов:
+			</td>
+			<td>
+				[% PHONE.permit | html %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Группы перехвата:
+			</td>
+			<td>
+				[% PHONE.PICKUP_GROUPS | html %]
+			</td>
+		</tr>
+			
+		<tr>
+			<td>
+				Перенаправление звонков на номер:
+			</td>
+			<td>
+				[% PHONE.FWD_NUM | html %]
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				Таймаут перенаправления:
+			</td>
+			<td>
+				<select name="FWD_AFTER">
+					<option value="-1"
+				[% IF PHONE.FWD_AFTER eq '-1' %]
+					selected
+				[% END %]
+					>не перенаправлять</option>
+					<option value="0"
+				[% IF PHONE.FWD_AFTER eq '0' %]
+					selected
+				[% END %]
+					>сразу</option>
+					<option value="12"
+				[% IF PHONE.FWD_AFTER eq '12' %]
+					selected
+				[% END %]
+					>через 3 гудка</option>
+					<option value="20"
+				[% IF PHONE.FWD_AFTER eq '20' %]
+					selected
+				[% END %]
+					>через 5 гудков</option>
+				</select>
+			</td>
+		</tr>		
+		
+		<tr>
+			<td>
+				Режим 'не беспокоить':
+			</td>
+			<td>
+				<input name='RAWDND' type='hidden' value="[% PHONE.RAWDND | html %]" />
+				[% IF PHONE.DND %]
+					<input name='DND' type='checkbox' checked /> ( с [% PHONE.DND | html %] )
+				[% ELSE %]
+					<input name='DND' type='checkbox' />
+				[% END %]
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan='3'>&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan='2' align='center'>
+				<input type='hidden' value='pp_pupdate' name='action'>
+				<input type='submit' value='Сохранить изменения'>
+			</td>
+		</tr>
+	</table>
+	</form>
+	<a name="addarea">&nbsp;</a>
+	</p>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

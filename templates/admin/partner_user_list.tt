@@ -43,7 +43,6 @@
 			</form>
 		</tr>
 	</table>
-	</p>
 
 	<p>
 	<table width='100%' id='list-data'>
@@ -51,11 +50,11 @@
 				<th class='rad_l'>Shared DID</th>
 				<th>Access code</th>
 				<th>Tenant name</th>
-				<th>Language</th>
+				<th>Description</th>
 				<th>Status</th>
 				<th>R/O</th>
 				<th>Balance</th>
-				<th class='rad_r'>Actions</th>
+				<th class='rad_r'>&nbsp;</th>
 			</tr>
 			
 		[% IF MSG_PREV ne '' %]
@@ -73,12 +72,13 @@
 			</td>
 			<td>
 				<a title='view user profile' href='/ui?phone=[% us.VOICENUMBER %]&ac=[% us.ACCESS_CODE %]&pw=[% us.PIN_CODE %][% us.PIN_CODE2 %]&action=user_info'>[% us.ACCESS_CODE | html %]</a>
+				<a title='Edit tenant settings' href='?user_id=[% us.ID %]&action=user_info&partner=[% PARTNER | html %]'><span class='icon-cogs fs0'></span></a>
 			</td>
 			<td align='left'>
 				[% us.FIRST_NAME | html %] [% us.LAST_NAME | html %]
 			</td>
 			<td align='left'>
-				[% us.LANG_NAME | html %]
+				[% us.DESCRIPTION | html %]
 			</td>
 			[% IF us.STATUS %]
 			<td class='success'>
@@ -104,7 +104,6 @@
 			</td>
 			<td>
 				<a title='delete user' href='?action=user_del&user_id=[% us.ID %]&from=[% MSG_FROM %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
-				<a title='Edit tenant settings' href='?user_id=[% us.ID %]&action=user_info&partner=[% PARTNER | html %]'><span class='icon-cogs fs0'></span></a>
 			</td>
 		</tr>
 		[% END %]

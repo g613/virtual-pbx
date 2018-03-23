@@ -649,6 +649,7 @@ create table VPBX_SIPPEERS (
 	EMAIL			VARCHAR(255)	default '',
 	FWD_NUM			VARCHAR(255)	default '',
 	FWD_AFTER		INT(6)			default 0,
+	WEB_SECRET		VARCHAR(50)		default '',
 
 	NEED_REG		INT(1)			not null default 0,
 	REG_EXPIRE		INT(6)			not null default 0,
@@ -887,8 +888,8 @@ create	table VPBX_VBOXES_QUEUES
 	SEND_ATTACH			INT(1)			default 0,
 	WAIT_BUSY_ONLY		INT(1)			default 1,
 	TRANSFER_PREF		VARCHAR(255),
-	CALLERID_PREF		VARCHAR(255),
-	CALLERIDNUM_PREF	VARCHAR(255),
+	CALLERID_NAME		VARCHAR(100),
+	CALLERID_NUM		VARCHAR(100),
 	Q_URL				TEXT(1024),
 	Q_INIT_URL			TEXT(1024),
 	Q_ANSWERED_URL		TEXT(1024),
@@ -1225,6 +1226,8 @@ create	table VPBX_VBOXES_DISA
 	MAX_DIGITS		INT(10)			not null default -1,
 	RING_TIMEOUT	INT(3)			default 30,
 	PHONE_MODE		INT(1)			default 0,
+	CALLERID_NUM	VARCHAR(100),
+	GOTO_IF_FAIL	VARCHAR(255),
 
 	unique(ID),
 
@@ -1734,8 +1737,8 @@ INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(4, 'RETRYDIAL
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(5, 'MOH', 'Music on hold');
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(6, 'FAX', 'Fax on Demand');
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(7, 'ANNOUNCEMENT_CALLER', 'Announcement to caller');
-INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(30, 'NEW', 'New user message');
-INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(40, 'OLD', 'Old user message');
+INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(30, 'NEW', 'VoiceMail');
+INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(40, 'OLD', 'VoiceMail');
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(41, 'MONITOR', 'Call recording');
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(42, 'RXFAX', 'Fax message');
 INSERT INTO VPBX_VBOXES_RECORD_FTYPE(ID, NAME, DESCRIPTION) VALUES(43, 'DTMF', 'DTMF input');
@@ -2412,6 +2415,7 @@ insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('sip.zadarma.com','Za
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('pbx.zadarma.com','ZadarmaPBX',"$_[0]->{'fromdomain'}='pbx.zadarma.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='invite'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'nat'}='yes'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('voip.domru.ru','DOM.RU',"$_[0]->{'fromdomain'}='voip.domru.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; my $suff_lenght = 7; if ( $_[0]->{'DESCRIPTION'} =~ m#/(\\d+)$# ) { $suff_lenght = $1 }; $suff_lenght = -1 * $suff_lenght; $_[0]->{'REG_AUTHNAME'} = substr($_[0]->{'username'},$suff_lenght); $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='port,invite'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'nat'}='yes'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('mpbx.sip.beeline.ru','BeeLine',"$_[0]->{'REG_EXPIRE'}='60'; $_[0]->{'REG_USERNAME'} = $_[0]->{'username'}.'@mpbx.sip.beeline.ru'; $_[0]->{'fromdomain'}='mpbx.sip.beeline.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'port'}='5060'; $_[0]->{'insecure'}='port,invite';");
+-- insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,DATA) VALUES('vpbx.sipout.net','SipOut.Net',"$_[0]->{'fromdomain'}='vpbx.sipout.net'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='g722,ulaw,alaw'; $_[0]->{'nat'}='yes'; $_[0]->{'port'}='5060';");
 
 insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('[87]9\\d{9}','call 2 cell');
 insert into VPBX_ROUTES_TEMPLATES(PATTERN,NAME) values('810.*','call 2 internationals');

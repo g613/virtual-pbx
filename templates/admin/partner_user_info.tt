@@ -30,8 +30,9 @@
 	<center>
 	<table width='100%' class='logo'>
 		<tr>
+			<td width='10%'>&nbsp;</td>
 			<td align='center'><h1>Tenant info</h1></td>
-			<td align='right'>
+			<td width='10%' align='right'>
 				<a title='delete tenat' href='?action=user_del&user_id=[% USER.ID %]&single_user=1' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>
 			</td>
 		</tr>
@@ -213,6 +214,8 @@
 					&nbsp;/&nbsp;<a href='/ui?action=macros_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Macros</a>
 					&nbsp;/&nbsp;<a href='/ui?action=cdr_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>CDRs</a>
 					&nbsp;/&nbsp;<a href='/ui?action=j_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Journals</a>
+					&nbsp;/&nbsp;<a href='/ui?action=act_list_all&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Activity</a>
+					&nbsp;/&nbsp;<a href='/ui?action=msg_list_all&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Messages</a>
 				</td>
 				</tr>
 				</table>

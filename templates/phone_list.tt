@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.57 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.58 2018/03/17 12:58:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -158,6 +158,7 @@
 				<input type='hidden' value="[% p.EMAIL | html %]" name='EMAIL' >
 				<input type='hidden' value="[% p.REC_EXT | html %]" name='REC_EXT'>
 				<input type='hidden' value="[% p.secret | html %]" name='secret'>
+				<input type='hidden' value="[% p.WEB_SECRET | html %]" name='WEB_SECRET'>
 				<input type='hidden' value='phone_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<a title='delete phone' href='?action=phone_del&data_id=[% p.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% p.DATA_ID %]')"><span class='icon-bin fs0'></span></a>

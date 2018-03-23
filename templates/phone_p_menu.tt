@@ -1,0 +1,38 @@
+<html>
+<!-- $Id: phone_p_menu.tt,v 1.1 2018/03/18 18:07:24 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - main menu</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+</head>
+
+<body>
+	<p align='left'>
+		<img border='0' width='120' alt='XVB - Virtual PBX'
+		[% IF USER_CREDS.LOGO_HREF eq '' %]
+			 src='/xvb/images/logo-small.png'
+		[% ELSE %]
+			src='[% USER_CREDS.LOGO_HREF %]'
+		[% END %]
+		/>
+	</p>
+	<p align='left'>
+		<ul>
+			<br />
+			<li><a class='amenu' target='xvb_data' href='?action=pp_pinfo'>Phone info</a></li>
+			<br />
+			
+			<li><a class='amenu' target='xvb_data' href='?action=pp_cdr_list'>Call History</a></li>
+			<br />
+			
+			<li><a class='amenu' target='xvb_data' href='?action=pp_msg_list'>Messages</a></li>
+			
+			<br />
+			<li><a class='amenu' target='_top' href=?action=pp_login&login=0>Exit</a></li>
+		</ul>
+	</p>
+</body>
+</html>

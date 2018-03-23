@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.83 2018/02/23 11:22:28 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.85 2018/03/18 20:01:00 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1493,6 +1493,19 @@
 					<td>
 						<input size='4' type='text' name='RING_TIMEOUT' value='[% VBOX_PREF.RING_TIMEOUT | html %]'>
 						( 1 звонок равен ~ 4 секундам )
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Если не дозвонились, перейти к:<span>
+							Внутренний номер на который будет осуществлен переход в случае неудачного звонка.
+							Используется в случае если необходимо сделать какие либо действия, сложнее чем VoiceMail при неудачном звонке.
+						</span></a></td>
+					<td nowrap='nowrap'>
+						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
+						<script language="JavaScript">
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
+							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
+						</script>
 					</td>
 				</tr>
 				<tr>
