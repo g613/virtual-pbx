@@ -312,6 +312,30 @@ a.amenu {
 	color: #00cc00;
 }
 
+/* Dashboard daily stat */
+.dash-stat1 {
+	background: #3F9ED9;
+	color: #fff;
+	padding: 10px;
+	border-radius: 5px;
+}
+.dash-stat2 {
+	background: #40D4D2;
+	color: #fff;
+	padding: 10px;
+	border-radius: 5px;
+}
+.dash-stat3 {
+	background: #DA405B;
+	color: #fff;
+	padding: 10px;
+	border-radius: 5px;
+}
+.dash-big-stat {
+	font-size: 16px;
+	font-weight: bold;
+}
+
 /* Checkbox */
 .onoffswitch {
 	position: relative; width: 60px;

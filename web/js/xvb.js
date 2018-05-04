@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.116 2016/01/25 13:58:18 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.117 2018/03/17 11:19:52 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -487,10 +487,14 @@ function graphit(g,gwidth){
 
 	coll_width = parseInt(90/total.length-1);
 
-	output='<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><th width="10%">'+(g[0][0])+'</th>';
+	output='<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><th width="10%" class="rad_l" >'+(g[0][0])+'</th>';
 	for (i2=1;i2<g[0].length;i2++) {
 		//output+='<th colspan="2">'+ (g[0][i2]) +'</th>';
-		output+='<th colspan="2" width="'+coll_width+'%">'+g[0][i2]+'</th>';
+		output += '<th colspan="2" width="'+coll_width+'%"';
+		if ( i2 == g[0].length - 1 ) {
+			output += ' class="rad_r" ';
+		}
+		output += '>'+g[0][i2]+'</th>';
 	}
 	output+='</tr><tr><td>&nbsp;</td></tr>';
 

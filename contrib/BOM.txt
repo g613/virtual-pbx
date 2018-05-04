@@ -183,6 +183,7 @@ vm-select-msg-actions4 : "To change your retry-dial message press 1, To delete y
 vm-select-msg-actions5 : "To change your announcement to caller press 1, To delete your announcement to caller press 2, to hear your current announcement to caller press 3, to return to the management menu press #." 
 #
 pbx-transfer : "Transfer. Please enter phone number followed by the #."
+pbx-conf4call : "Please enter phone number followed by the #."
 pbx-invalid : "Call failed."
 #
 digits/0   : "zero"

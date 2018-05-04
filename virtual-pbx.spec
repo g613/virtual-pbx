@@ -144,10 +144,12 @@ mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/asterisk/xvb
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/logrotate.d
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/cron.d
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d
+mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/systemd/system
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/doc
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/db
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/recordings
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/tts
+mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/tmp
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/podcasts
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/helperdb
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/backups
@@ -190,6 +192,7 @@ mv contrib/rc.d/reg_uac.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-reg_ua
 mv contrib/rc.d/perl-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-perl-worker
 mv contrib/rc.d/gearman-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-gearman-worker
 mv contrib/rc.d/callblast.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-callblast
+mv contrib/systemd/*.service $RPM_BUILD_ROOT/%{_sysconfdir}/systemd/system/
 mv sounds/*.tgz $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds/
 mv contrib/asterisk/extensions.conf $RPM_BUILD_ROOT/%{_sysconfdir}/asterisk/xvb/xvb.conf
 mv contrib/httpd.conf $RPM_BUILD_ROOT/%{_sysconfdir}/httpd/conf.d/xvb.conf
@@ -344,17 +347,14 @@ chkconfig xvb-fagi on
 chkconfig xvb-perl-worker on
 chkconfig xvb-callblast on
 
-STR=`LANG=C /etc/rc.d/init.d/asterisk status | grep running`
+STR=`LANG=C service asterisk status | grep running`
 if [ "x$STR" = "x" ]; then
 	service asterisk start;
 else
 	asterisk -rx 'dialplan reload';
-	asterisk -rx 'features reload';
-	# moh reload
-	STR=`rpm -qv asterisk | grep '1.8'`
-	if [ "x$STR" = "x" ]; then
-		asterisk -rx 'moh reload';
-	fi
+	#asterisk -rx 'features reload';
+	asterisk -rx 'module reload features';
+	asterisk -rx 'moh reload';
 fi
 
 # gearman-worker
@@ -446,6 +446,7 @@ ln -s %CORE_DIR/contrib/utils/xvb-ctl /usr/local/bin/xvb-ctl &>/dev/null || true
 %attr(440,asterisk,asterisk) %config(noreplace) %CORE_DIR/etc/xvb.cfg
 %attr(440,asterisk,asterisk) %config(noreplace) %CORE_DIR/etc/locale.cfg
 %attr(755,asterisk,asterisk) %config(noreplace) %CORE_DIR/etc/xvb-rc.cfg
+%attr(775,asterisk,asterisk) %dir %CORE_DIR/tmp
 %attr(440,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/*.conf
 %attr(755,root,root) %CORE_DIR/contrib/utils/backup_restore.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/mc_view.pl
@@ -479,6 +480,7 @@ ln -s %CORE_DIR/contrib/utils/xvb-ctl /usr/local/bin/xvb-ctl &>/dev/null || true
 %attr(755,asterisk,asterisk) %CORE_DIR/agi-bin/*.agi
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_perl_worker
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-perl-worker
+%attr(644,root,root) %{_sysconfdir}/systemd/system/xvb-perl-worker.service
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_gearman_worker
 %attr(755,root,root) %CORE_DIR/contrib/utils/gearman-worker.pl
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-gearman-worker
@@ -486,15 +488,18 @@ ln -s %CORE_DIR/contrib/utils/xvb-ctl /usr/local/bin/xvb-ctl &>/dev/null || true
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_reg_uac
 %attr(755,root,root) %CORE_DIR/contrib/utils/reg_uac.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/sipstatictmpl.pl
+%attr(644,root,root) %{_sysconfdir}/systemd/system/xvb-reg_uac.service
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-reg_uac
 %attr(755,root,root) %CORE_DIR/contrib/utils/node_stat.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/callblast.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/xvb2astconf.pl
-%attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-fagi
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_agi
+%attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-fagi
+%attr(644,root,root) %{_sysconfdir}/systemd/system/xvb-fagi.service
 %attr(755,root,root) %CORE_DIR/contrib/utils/Fagi.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_callblast
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-callblast
+#%attr(644,root,root) %{_sysconfdir}/systemd/system/xvb-callblast.service
 %attr(755,root,root) %CORE_DIR/contrib/utils/podcast_get.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/msg_clean.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/click2call.pl

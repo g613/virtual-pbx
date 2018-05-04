@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_pinfo.tt,v 1.1 2018/03/18 18:07:24 gosha Exp $ -->
+<!-- $Id: phone_p_pinfo.tt,v 1.2 2018/04/07 19:25:28 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phone</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -118,20 +118,30 @@
 				</select>
 			</td>
 		</tr>		
-		
 		<tr>
 			<td>
-				DND:
+				Do Not Disturb mone:
 			</td>
-			<td>
+			<td nowrap="nowrap">
 				<input name='RAWDND' type='hidden' value="[% PHONE.RAWDND | html %]" />
+				<div class="onoffswitch">
+				<input name="DND" type="checkbox" class="onoffswitch-checkbox" id="DND-ch" 
 				[% IF PHONE.DND %]
-					<input name='DND' type='checkbox' checked /> ( activated on [% PHONE.DND | html %] )
-				[% ELSE %]
-					<input name='DND' type='checkbox' />
+					checked
 				[% END %]
+				/>
+				<label class="onoffswitch-label" for="DND-ch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
 			</td>
 		</tr>
+		[% IF PHONE.DND %]
+		<tr>
+			<td></td>
+			<td>( activated on [% PHONE.DND | html %] )</td>
+		</tr>
+		[% END %]
 		
 		<tr>
 			<td colspan='3'>&nbsp;</td>

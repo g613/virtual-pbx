@@ -365,7 +365,7 @@ html * #center {
 }
 
 p.copyright {
-	font-size: 10px;
+	font-size: 8px;
 }
 
 /* tables */
@@ -373,8 +373,7 @@ p.copyright {
 table.statement { 
 	border: 1px solid black;
 }
-
-table th, table td {
+table td {
 	padding: 4px 4px 3px;
 }
 table { 
@@ -414,6 +413,17 @@ th {
 	text-align:center;
 	font-size:12px;
 	padding:5px 5px 5px 5px;
+}
+td.simple {
+	padding: 8px 4px 7px;
+}
+th.rad_r {
+	border-radius: 0 5px 0 0;
+	-moz-border-radius:0 5px 0 0;
+}
+th.rad_l {
+	border-radius: 5px 0 0 0;
+	-moz-border-radius:5px 0 0 0;
 }
 /* legacy */
 table.top_hr {
@@ -472,6 +482,37 @@ li {
 @-webkit-keyframes pulsate { 50% { color: #fff; text-shadow: 0 -1px rgba(0,0,0,.3), 0 0 5px #ffd, 0 0 8px #fff; } }
 @keyframes pulsate { 50% { color: #fff; text-shadow: 0 -1px rgba(0,0,0,.3), 0 0 5px #ffd, 0 0 8px #fff; } }
 .blink { text-shadow: 0 -1px rgba(0,0,0,.1); -webkit-animation: pulsate 1.2s linear infinite; animation: pulsate 1.2s linear infinite; }
+
+/* Dashboard daily stat */
+.dash-stat1 {
+	background: #3F9ED9;
+	color: #fff;
+	padding: 10px;
+	border-radius: 5px;
+}
+.dash-stat2 {
+	background: #40D4D2;
+	color: #fff;
+	padding: 10px;
+	border-radius: 5px;
+}
+.dash-stat3 {
+	background: #DA405B;
+	color: #fff;
+	padding: 10px;
+	border-radius: 5px;
+}
+.dash-big-stat {
+	font-size: 16px;
+	font-weight: bold;
+}
+a.dash:hover {
+	color: #eeeeee;
+}
+a.dash {
+	color: #fff;
+	text-decoration:none;
+}
 
 /* Checkbox */
 .onoffswitch {

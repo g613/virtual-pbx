@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: calls_list.tt,v 1.14 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: calls_list.tt,v 1.15 2018/04/15 19:39:44 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - текущие звонки - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -58,6 +58,7 @@
 	</p>
 	<p>
 	<table width='95%' id='d-tbl'>
+		[% IF CALLS_LIST scalar %]
 		<tr>
 			<th class='rad_l'>Тип звонка</th>
 			<th>Начало звонка</th>
@@ -107,6 +108,14 @@
 			</td>
 		[% END %]
 		</tr>
+		[% ELSE %]
+		<tr>
+				<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td align='center'><h4>Активных звонков нет</h4></td>
+		</tr>
+		[% END %]
 	</table>
 	</p>
 	

@@ -1,0 +1,48 @@
+<html>
+<!-- $Id: phone_p_pbook.tt,v 1.1 2018/04/14 11:21:47 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Телефонная книга</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+			
+	<h1>Телефонная книга</h1>
+
+		
+	<table width='100%' id='d-tbl'>
+		<tr>
+			<th class='rad_l'>Имя</th>
+			<th>Фамилия</th>
+			<th>Телефон</th>
+			<th>Быстрый набор</th>
+			<th>Коментарий</th>
+			<th class='rad_r'>&nbsp;</th>
+		</tr>
+
+		[% FOREACH param = PBOOK_LIST %]
+		<tr align='left' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
+			<td>[% param.FIRST_NAME | html %]</td>
+			<td>[% param.LAST_NAME | html %]</td>
+			<td>[% param.PHONE | html %]</td>
+			<td>[% param.SHORTCUT | html %]</td>
+			<td>[% param.DESCRIPTION | html %]</td>
+			<td>[% param.CRM_CUSTOMER_NAME | html %]</td>
+		</tr>
+		[% END %]
+	</table>
+	<span><a name="addarea">&nbsp;</a><span>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
+	

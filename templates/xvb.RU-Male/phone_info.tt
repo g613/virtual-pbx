@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_info.tt,v 1.5 2018/03/18 18:07:24 gosha Exp $ -->
+<!-- $Id: phone_info.tt,v 1.6 2018/04/07 19:25:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phone - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -236,15 +236,26 @@
 			<td>
 				Режим 'не беспокоить':
 			</td>
-			<td>
+			<td nowrap="nowrap">
 				<input name='RAWDND' type='hidden' value="[% PHONE.RAWDND | html %]" />
+				<div class="onoffswitch">
+				<input name="DND" type="checkbox" class="onoffswitch-checkbox" id="DND-ch" 
 				[% IF PHONE.DND %]
-					<input name='DND' type='checkbox' checked /> ( с [% PHONE.DND | html %] )
-				[% ELSE %]
-					<input name='DND' type='checkbox' />
+					checked
 				[% END %]
+				/>
+				<label class="onoffswitch-label" for="DND-ch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
 			</td>
 		</tr>
+		[% IF PHONE.DND %]
+		<tr>
+			<td></td>
+			<td>( с [% PHONE.DND | html %] )</td>
+		</tr>
+		[% END %]
 
 		<tr>
 			<td colspan='3'>&nbsp;</td>

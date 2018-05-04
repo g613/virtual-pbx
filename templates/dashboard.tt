@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: dashboard.tt,v 1.16 2018/03/03 20:03:09 gosha Exp $ -->
+<!-- $Id: dashboard.tt,v 1.19 2018/04/27 13:55:05 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Dashboard - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -129,6 +129,15 @@
 
 <body onLoad="XVBInit()">
 	<center>
+		<table>
+			<tr align='right'>
+				<td><div class='dash-stat2'><span class='dash-big-stat'>[% DAILY_IN_A | html %]</span><br><a href='/ui?from_time=[% DAILY_FROM | html %]&to_time=[% DAILY_TO | html %]&call_type=incoming&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&data=%25STATUS=ANSWER%25' class='dash'>Answered for today</a></div></td>
+				<td><div class='dash-stat3'><span class='dash-big-stat'>[% DAILY_IN_N | html %]</span><br><a href='/ui?from_time=[% DAILY_FROM | html %]&to_time=[% DAILY_TO | html %]&call_type=incoming&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&data=!%25STATUS=ANSWER%25' class='dash'>Unanswered for today</a></div></td>
+				<td><div class='dash-stat1'><span class='dash-big-stat'>[% DAILY_OUT | html %]</span><br><a href='/ui?from_time=[% DAILY_FROM | html %]&to_time=[% DAILY_TO | html %]&call_type=transit&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]' class='dash'>Outbound for today</a></div></td>
+			</tr>
+		</table>
+		<br>
+
 		<h1>Dashboard ( for previous [% PERIOD %] days )</h1>
 		<table>
 			<tr align='center'>
