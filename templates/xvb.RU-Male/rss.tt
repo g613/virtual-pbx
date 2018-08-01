@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: rss.tt,v 1.5 2015/01/14 15:15:42 gosha Exp $ -->
-<rss version="0.91">
+<!-- $Id: rss.tt,v 1.7 2018/07/05 19:15:45 gosha Exp $ -->
+<rss version="2.0">
 <channel>
 	<title>XVB - VirtualPBX rss feed, Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	<link>[% CGI_SERVER %][% CGI_URL %]</link>

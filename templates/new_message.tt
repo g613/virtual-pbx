@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: new_message.tt,v 1.29 2016/01/07 20:53:11 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.30 2018/07/07 10:55:33 gosha Exp $ -->
 <!--SUBJECT:New message from: [% callerid | html %] in mailbox [% _USER_VBOX.EXT_NUMBER | html %]:SUBJECT-->
 <head>
 	<BASE href="[% CGI_SERVER %]">
@@ -9,6 +9,9 @@
 		font-family:Arial, Helvetica, sans-serif;
 		background:#f7f7f7 repeat-x;
 		font-size:13px;
+	}
+	p.copyright {
+		font-size: 8px;
 	}
 	</style>
 </head>

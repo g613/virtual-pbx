@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.26 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.27 2018/07/28 16:36:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль АТС - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -339,7 +339,11 @@
 						<td>
 						[% FOREACH d = DID %]
 						&nbsp;
-						[% d.DID | html %];
+						[% d.DID | html %]
+						[% IF d.CHANNELS ne '-1' %]
+						( [% d.CHANNELS | html %] )
+						[% END %]
+						;
 						[% END %]
 						</td>
 					</tr>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.17 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.18 2018/05/09 19:47:54 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Телефонная книга - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -27,12 +27,12 @@
 		<tr>
 			<td width='50%' align='left'>
 				<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+					<input type='submit' value='Импорт из CSV'>
 					<input type='file' name='config_file'>
 					<input type='hidden' name='section' value='PBOOK'>
 					<input type='hidden' name='action' value='restore'>
 					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 					<input type='hidden' name='is_excel' value='1'>
-					<input type='submit' value='Импорт из CSV'>
 				</form>
 			</td>
 			<td width='50%' align='right' nowrap='nowrap'>

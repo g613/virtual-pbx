@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_info.tt,v 1.6 2018/04/07 19:25:30 gosha Exp $ -->
+<!-- $Id: phone_info.tt,v 1.7 2018/07/24 18:46:07 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phone - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -62,7 +62,13 @@
 				[% ELSE %]
 					<li>Unregistered</li>
 				[% END %]
-					<li><a href='/phone' target='_top'>Кабинет пользователя телефоном</a></li>
+					<li><a 
+					[% IF PHONE.WEB_SECRET | html %]
+						href='/phone?login=[% PHONE.callerid | html %]@[% USER_CREDS.ACCESS_CODE | html %]&action=pp_start&pswd=[% PHONE.WEB_SECRET | html %]'
+					[% ELSE %]
+						href='/phone'
+					[% END %]
+					target='_top'>Кабинет пользователя телефоном</a></li>
 				</ul>
 			</td>
 		</tr>

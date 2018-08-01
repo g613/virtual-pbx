@@ -245,12 +245,18 @@
 								&nbsp;
 								&nbsp;
 								[% FOREACH d = DIDS %]
-									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&did=[% d.DID | html %]' onclick="return DelConfirm('en')">[% d.DID | html %]</a>;&nbsp;
+									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&did=[% d.DID | html %]' onclick="return DelConfirm('en')">
+									[% d.DID | html %]
+									[% IF d.CHANNELS ne '-1' %]
+									( [% d.CHANNELS | html %] )
+									[% END %]
+									</a>;&nbsp;
 								[% END %]
 								</td>
 								<td valign='top' width='20%' align='center' nowrap='nowrap'>
 								<form method='post'>
-									<input size='11' type='text' name='did'>
+									<input size='11' type='text' placeholder='DID' name='did'>
+									<input size='11' type='text' placeholder='Unlimit lines' name='channels'>
 									&nbsp;
 									<input type='hidden' name='pn' value='[% USER.VOICENUMBER | html %]'>
 									<input type='hidden' name='ac' value='[% USER.ACCESS_CODE | html %]'>

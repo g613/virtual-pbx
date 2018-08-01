@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.33 2018/02/05 18:55:42 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.34 2018/07/07 10:55:33 gosha Exp $ -->
 <!--SUBJECT:VirtualPBX daily statement:SUBJECT-->
 <head>
 	<BASE href='[% CGI_SERVER %]'>
@@ -29,6 +29,9 @@
 	}
 	.warning-font {
 		color:red;
+	}
+	p.copyright {
+		font-size: 8px;
 	}
 	</style>
 	[% IF USER_CREDS.CSS_HREF eq '' %]

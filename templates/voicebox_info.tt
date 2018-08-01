@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.320 2018/03/18 20:01:00 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.322 2018/05/09 19:47:54 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -3172,8 +3172,21 @@
 			[% IF VBOX_PREF.TYPE eq '5' %]
 			<tr><td colspan='3'>&nbsp;</td></tr>
 			<tr>
-				<td colspan='2' align='left'><h4>Schedule data:</h4></td>
+				<td colspan='3' align='left'><h4>Schedule data:</h4></td>
+			</tr>
+			<tr>
+				<td colspan='2' align='left'>
+					<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+					<input type='submit' value='Append data from CSV'>
+					<input type='file' name='config_file'>
+					<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+					<input type='hidden' name='action' value='ext_restore'>
+					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+					<input type='hidden' name='is_excel' value='1'>
+					</form>
+				</td>
 				<td align='right'>
+					<a title='get excel table' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
 					<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete ALL schedule items'><span class='icon-bin-all fs2'></span></a>
 				</td>
 			</tr>

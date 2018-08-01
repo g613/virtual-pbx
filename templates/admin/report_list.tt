@@ -71,7 +71,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='8'>
-				<a title='previous page' href='?action=reports_list&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
+				<a title='previous page' href='?action=report_list&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]

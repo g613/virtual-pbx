@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
-<!-- $Id: itunes.tt,v 1.21 2015/01/14 15:15:42 gosha Exp $ -->
+<!-- $Id: itunes.tt,v 1.23 2018/07/05 19:15:43 gosha Exp $ -->
 <channel>
 	<ttl>60</ttl>
 	<title>XVB - Virtual PBX Ac:[% USER_CREDS.ACCESS_CODE | html %] podcasts</title>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: miss_call.tt,v 1.4 2017/11/01 20:06:42 gosha Exp $ -->
+<!-- $Id: miss_call.tt,v 1.6 2018/07/07 10:55:33 gosha Exp $ -->
 <!--SUBJECT:Пропущенный звонок от: [% _CDR.CALLER_ID | html %]:SUBJECT-->
 <head>
 	<BASE href="[% CGI_SERVER %]">
@@ -10,6 +10,9 @@
 		background:#f7f7f7 repeat-x;
 		font-size:13px;
 	}
+	p.copyright {
+		font-size: 8px;
+	}
 	</style>
 </head>
 
@@ -19,11 +22,17 @@
 
 <p>
 Информация о пропущенном звонке:<br>
-	Кто звонил: <b>[% _CDR.CALLER_ID | html %]</b><br>
+	Кто звонил: <b>[% _CDR.CALLER_ID | html %]</b>
+    [% IF _CDR.CNAM ne '' %]
+    	[% IF _CDR.CNAM ne _CDR.CALLER_ID %]
+		( [% _CDR.CNAM | html %] )
+		[% END %]
+	[% END %]
+	<br>
 	Дата звонка: <b>[% ORIGDATE | html %]</b><br>
 	Внутренний номер: <b>[% _USER_VBOX.EXT_NUMBER | html %]</b><br>
 	Статус: <b>[% _CDR.ENH_STATUS | html %]</b><br>
-	Время ожидания: <b>[% _CDR.ENH_RING_TIME %] ( сек )</b><br>
+	Время ожидания: <b>[% WAIT_TIME %] ( сек )</b><br>
 </p>
 
 -- 
