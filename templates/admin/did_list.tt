@@ -85,7 +85,7 @@
 				[% did.FIRST_NAME | html %] [% did.LAST_NAME | html %]
 			</td>
 			<td>
-				<a title='delete DID' href='?action=did_del&did_id=[% did.ID %]&user_id=[% did.SUBSCR_ID | html %]&from=[% MSG_FROM %]&did=[% did.DID | html %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
+				<a title='delete DID' href='?action=did_del&did_id=[% did.ID %]&user_id=[% did.SUBSCR_ID | html %]&from=[% MSG_FROM %]&did=[% did.DID | htmlstrict %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
 			</td>
 		</tr>
 		[% END %]

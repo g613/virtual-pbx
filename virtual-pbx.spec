@@ -189,6 +189,7 @@ mv contrib/XVB-AI.odt $RPM_BUILD_ROOT/%CORE_DIR/doc/
 
 mv contrib/rc.d/fagi.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-fagi
 mv contrib/rc.d/reg_uac.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-reg_uac
+mv contrib/rc.d/xvb-tcpdump.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-tcpdump
 mv contrib/rc.d/perl-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-perl-worker
 mv contrib/rc.d/gearman-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-gearman-worker
 mv contrib/rc.d/callblast.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-callblast
@@ -202,6 +203,7 @@ mv contrib/BOM-*.txt $RPM_BUILD_ROOT/%CORE_DIR/etc/
 rm -f contrib/sudoers
 mv contrib $RPM_BUILD_ROOT/%CORE_DIR/
 cp $RPM_BUILD_ROOT/%CORE_DIR/contrib/utils/build/tts-gen/common.pl $RPM_BUILD_ROOT/%CORE_DIR/contrib/utils/tts-gen.pl
+cp $RPM_BUILD_ROOT/%CORE_DIR/etc/xvb.cfg $RPM_BUILD_ROOT/%CORE_DIR/contrib/.xvb-defaults
 
 mv 3rdparty $RPM_BUILD_ROOT/%CORE_DIR/
 
@@ -329,7 +331,7 @@ rm -rf $RPM_BUILD_ROOT/%CORE_DIR/contrib/bg-moh/by_name
 if [ -f %{_sysconfdir}/asterisk/features.conf ]; then
 	STR=`grep 'VirtualPBX' %{_sysconfdir}/asterisk/features.conf`
 	if [ "x$STR" = "x" ]; then
-		cat %CORE_DIR/contrib/asterisk/feautures.conf >> %{_sysconfdir}/asterisk/features.conf
+		cat %CORE_DIR/contrib/asterisk/features.conf >> %{_sysconfdir}/asterisk/features.conf
 	fi
 fi
 
@@ -346,6 +348,7 @@ chkconfig asterisk on
 chkconfig xvb-fagi on
 chkconfig xvb-perl-worker on
 chkconfig xvb-callblast on
+chkconfig xvb-tcpdump on
 
 STR=`LANG=C service asterisk status | grep running`
 if [ "x$STR" = "x" ]; then
@@ -371,6 +374,12 @@ fi
 service xvb-perl-worker restart || killall VirtualPBX.agi || true
 service xvb-callblast restart || true
 service xvb-fagi restart
+service xvb-tcpdump restart
+
+# post update script
+if [ -f %CORE_DIR/etc/xvb-postupdate-voip.cfg ]; then
+	%CORE_DIR/etc/xvb-postupdate-voip.cfg || true
+fi
 
 ####################################################
 #
@@ -394,6 +403,10 @@ chkconfig httpd on
 
 service httpd restart
 
+# post update script
+if [ -f %CORE_DIR/etc/xvb-postupdate-web.cfg ]; then
+	%CORE_DIR/etc/xvb-postupdate-web.cfg || true
+fi
 
 ####################################################
 #
@@ -431,6 +444,11 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 
 ln -s %CORE_DIR/contrib/utils/xvb-ctl /usr/local/bin/xvb-ctl &>/dev/null || true
+
+# post update script
+if [ -f %CORE_DIR/etc/xvb-postupdate.cfg ]; then
+	%CORE_DIR/etc/xvb-postupdate.cfg || true
+fi
 
 ####################################################
 #
@@ -470,6 +488,7 @@ ln -s %CORE_DIR/contrib/utils/xvb-ctl /usr/local/bin/xvb-ctl &>/dev/null || true
 %CORE_DIR/contrib/icecast.xml
 %CORE_DIR/contrib/spec-files/*.gz
 %CORE_DIR/etc/BOM-*.txt
+%CORE_DIR/contrib/.xvb-defaults
 
 
 ####################################################
@@ -500,18 +519,20 @@ ln -s %CORE_DIR/contrib/utils/xvb-ctl /usr/local/bin/xvb-ctl &>/dev/null || true
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_callblast
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-callblast
 #%attr(644,root,root) %{_sysconfdir}/systemd/system/xvb-callblast.service
+%attr(644,root,root) %{_sysconfdir}/systemd/system/xvb-tcpdump.service
+%attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-tcpdump
 %attr(755,root,root) %CORE_DIR/contrib/utils/podcast_get.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/msg_clean.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/click2call.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/webhelper.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/billing_gw.pl
-%attr(755,root,root) %CORE_DIR/contrib/utils/sys_status.sh
 %attr(755,root,root) %CORE_DIR/contrib/utils/tts-gen.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/node_diag.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/tts_clean.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/ui_backup.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/event-listener.pl
-%CORE_DIR/contrib/asterisk/feautures.conf
+%attr(755,root,root) %CORE_DIR/contrib/utils/xvb-capt
+%CORE_DIR/contrib/asterisk/features.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*
 %CORE_DIR/contrib/odbc/*
@@ -531,6 +552,7 @@ ln -s %CORE_DIR/contrib/utils/xvb-ctl /usr/local/bin/xvb-ctl &>/dev/null || true
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/ui
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/pi
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/phonei
+%attr(755,root,root) %CORE_DIR/contrib/utils/sysstatus.pl
 %CORE_DIR/web/*.css
 %CORE_DIR/web/*.pdf
 %CORE_DIR/web/css/*

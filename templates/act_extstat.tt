@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.41 2017/06/14 20:09:38 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.42 2019/02/03 15:20:49 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -68,7 +68,7 @@
 								['Position','Count'],
 								'/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&act_type=Queue&caller_id=[% CDR_CALLER_ID | html %]&action=ext_stat&uniq=[% USER_CREDS.UNIQ %]&id=[% VBOX_PREF.ID %]&data=%Q_NUM_OUT=_FILTER_,%&tg_filter=[% CDR_PERIOD | html %]***_PERIOD_'
 							);
-			ExtStatdrawChart1('PN_DURATION','Answered calls / agents - duration',['Agent','Seconds']);
+			ExtStatdrawChart1('PN_DURATION','Answered calls / agents - duration',['Agent','Minutes']);
 			ExtStatdrawChart2(	'Q_NUM',
 								['ANSWER','NOANSWER'],
 								'ALL',

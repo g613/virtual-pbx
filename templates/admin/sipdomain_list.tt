@@ -83,7 +83,7 @@
 				[% d.FIRST_NAME | html %] [% d.LAST_NAME | html %]
 			</td>
 			<td>
-				<a title='delete SIP Domain' href='?action=did_del_sipdomain&domain_id=[% d.ID %]&user_id=[% d.SUBSCR_ID | html %]&from=[% MSG_FROM %]&domain=[% d.DOMAIN | html %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
+				<a title='delete SIP Domain' href='?action=did_del_sipdomain&domain_id=[% d.ID %]&user_id=[% d.SUBSCR_ID | html %]&from=[% MSG_FROM %]&domain=[% d.DOMAIN | htmlstrict %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
 			</td>
 		</tr>
 		[% END %]

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.20 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.21 2019/03/16 14:52:19 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs / Call Detail</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -72,7 +72,8 @@
 				[% IF msg.TYPE eq 'Call' %]
 					<b>[% msg.ACCESS_CODE | html %]</b>
 					<script language='JavaScript'>
-						download_file_url="<a title='download' href='/ui/msg_download/$1/[% msg.ACCESS_CODE %]/$2.mp3?media=mp3'>FILE</a>";
+						var download_file_url="<a title='download' href='/ui/msg_download/$1/[% msg.ACCESS_CODE %]/$2.mp3?media=mp3'>FILE</a>";
+						var listen_file_url="<a title='listen' onclick=\"return ShowPlayer('/ui/msg_download/$1/[% msg.ACCESS_CODE %]/$2?media=mp3;type=listen' )\" href='#'><span class='icon-volume-medium fs0'></span></a>";
 					</script>
 				[% ELSE %]
 					[% msg.EXT_NUMBER | html %]

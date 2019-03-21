@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_pbook.tt,v 1.1 2018/04/14 11:21:47 gosha Exp $ -->
+<!-- $Id: phone_p_pbook.tt,v 1.2 2018/11/05 10:42:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Телефонная книга</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -28,7 +28,7 @@
 
 		[% FOREACH param = PBOOK_LIST %]
 		<tr align='left' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-			<td>[% param.FIRST_NAME | html %]</td>
+			<td class='simple'>[% param.FIRST_NAME | html %]</td>
 			<td>[% param.LAST_NAME | html %]</td>
 			<td>[% param.PHONE | html %]</td>
 			<td>[% param.SHORTCUT | html %]</td>

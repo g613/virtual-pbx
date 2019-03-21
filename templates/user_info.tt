@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.104 2018/07/28 16:36:40 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.108 2019/01/07 16:28:01 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - PBX profile - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -21,7 +21,7 @@
 			<td valign='top'>
 			<table class='user_data'>
 				<tr>
-					<td colspan='2'><h3>Core options:</h3></td>
+					<td colspan='2'><h2>Core options:</h2></td>
 				</tr>
 				<form method="post" action="[% CGI_URL %]" name='user_prefs' onSubmit='return xmlhttpPost(this,0)'>
 				<tr>
@@ -86,7 +86,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Record storage time (days):</td>
+					<td>Records cleanup threshold ( (days or % of limits):</td>
 					<td>
 						<input size='10' type='text' name='MSG_STORE_PERIOD' value='[% USER_CREDS.MSG_STORE_PERIOD | html %]'>
 						( 0 - unlimit )
@@ -190,13 +190,21 @@
 						</select>
 					</td>
 				</tr>
+				<tr>
+					<td>
+						Session variables:
+					</td>
+					<td>
+						<textarea rows='[% USER_CREDS.CUSTOM_VARS | textarea_rows %]'  cols='30' name='CUSTOM_VARS'>[% USER_CREDS.CUSTOM_VARS | html %]</textarea>
+					</td>
+				</tr>
 				[% FOREACH cf = CUSTOM_FIELDS %]
 				<tr>
 					<td>
 						[% cf.NAME | html %]: 
 					</td>
 					<td>
-						<input size='40' name='[% cf.KEY %]' type='text' value="[% cf.VAL | html %]">
+						<input size='30' name='[% cf.KEY %]' type='text' value="[% cf.VAL | html %]">
 					</td>
 				</tr>
 				[% END %]
@@ -214,7 +222,7 @@
 				</tr>
 
 				<tr>
-					<td colspan='2'><h3>MOH file:</h3></td>
+					<td colspan='2'><h2>MOH file:</h2></td>
 				</tr>
 				<tr>
 					<td colspan='2'>
@@ -252,7 +260,7 @@
 					<td colspan='2'>
 					<table class='user_data'>
 						<tr>
-							<td colspan='2'><h3>Backup options:</h3></td>
+							<td colspan='2'><h2>Backup options:</h2></td>
 						</tr>
 						<tr>
 							<form method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
@@ -288,7 +296,7 @@
 				</tr>
 				[% IF USER_CREDS.CUSTOM_FILES %]
 				<tr>
-					<td colspan='2' align='left'>&nbsp;<h3><a href="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=sysmedia_list&uniq=[% USER_CREDS.UNIQ %]">System media files</a></h3></td>
+					<td colspan='2' align='left'>&nbsp;<h2><a href="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=sysmedia_list&uniq=[% USER_CREDS.UNIQ %]">System media files</a></h2></td>
 				</tr>
 				[% END %]
 			</table>
@@ -302,7 +310,7 @@
 						<table width='100%'>
 							<tr>
 								<td>
-									<h3>Balance ( Tariff - [% TARIFF.NAME | html %] ):</h3>
+									<h2>Balance ( Tariff - [% TARIFF.NAME | html %] ):</h2>
 								</td>
 							</tr>
 							<tr>
@@ -322,7 +330,7 @@
 					<td colspan='3'>&nbsp;</td>
 				</tr>
 				<tr>
-					<td colspan='3'><h3>Dial-In numbers:</h3></td>
+					<td colspan='3'><h2>Dial-In numbers:</h2></td>
 				</tr>
 				<tr>
 					<td colspan='3'>
@@ -365,7 +373,7 @@
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
-					<td colspan='3'><h3>Limits:</h3></td>
+					<td colspan='3'><h2>Limits:</h2></td>
 				</tr>
 				<tr>
 					<td>Amount of messages: </td>

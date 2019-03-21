@@ -208,7 +208,7 @@
 						<table width='100%'>
 							<tr>
 								<td>
-									<h4>Balance ( tariff: <a href='?action=tariff_info&tariff_id=[% TARIFF.ID %]'><b>[% TARIFF.NAME | html %]</b> ) :</h4>
+									<h2>Balance ( tariff: <a href='?action=tariff_info&tariff_id=[% TARIFF.ID %]'><b>[% TARIFF.NAME | html %]</b> ) :</h2>
 								</td>
 							</tr>
 							<tr>
@@ -238,14 +238,14 @@
 					<td>
 						<table width='100%'>
 							<tr>
-								<td><h4>Assigned DIDs:</h4></td>
+								<td><h2>Assigned DIDs:</h2></td>
 							</tr>
 							<tr>
 								<td>
 								&nbsp;
 								&nbsp;
 								[% FOREACH d = DIDS %]
-									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&did=[% d.DID | html %]' onclick="return DelConfirm('en')">
+									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&did=[% d.DID | htmlstrict %]' onclick="return DelConfirm('en')">
 									[% d.DID | html %]
 									[% IF d.CHANNELS ne '-1' %]
 									( [% d.CHANNELS | html %] )
@@ -273,14 +273,14 @@
 					<td>
 						<table width='100%'>
 							<tr>
-								<td><h4>SIP domains:</h4></td>
+								<td><h2>SIP domains:</h2></td>
 							</tr>
 							<tr>
 								<td>
 								&nbsp;
 								&nbsp;
 								[% FOREACH d = DOMAINS %]
-									<a title='delete SIPDomain' href='?action=did_del_sipdomain&domain_id=[% d.ID %]&user_id=[% USER.ID | html %]&domain=[% d.DOMAIN | html %]' onclick="return DelConfirm('en')">[% d.DOMAIN | html %]</a>;&nbsp;
+									<a title='delete SIPDomain' href='?action=did_del_sipdomain&domain_id=[% d.ID %]&user_id=[% USER.ID | html %]&domain=[% d.DOMAIN | htmlstrict %]' onclick="return DelConfirm('en')">[% d.DOMAIN | html %]</a>;&nbsp;
 								[% END %]
 								</td>
 								<td valign='top' width='20%' align='center' nowrap='nowrap'>
@@ -300,7 +300,7 @@
 				<tr><td>&nbsp;</td></tr>
 				<tr>
 				<td>
-					<h4>Quick links:</h4>
+					<h2>Quick links:</h2>
 					&nbsp;&nbsp;<a href='/ui?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP Peers</a>
 					&nbsp;/&nbsp;<a href='/ui?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Routes</a>
 					&nbsp;/&nbsp;<a href='/ui?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Phones</a>

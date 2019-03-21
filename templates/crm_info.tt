@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: crm_info.tt,v 1.9 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: crm_info.tt,v 1.11 2018/09/05 18:44:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Customer info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -8,6 +8,9 @@
 	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
 	[% END %]
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	[% IF C2C_SECRET %]
+	<script language='Javascript' src='/xvb/js/base64.js'></script>
+	[% END %]
 </head>
 
 <body onLoad="XVBInit()">
@@ -91,6 +94,11 @@
 						<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 						<noscript><input value='Save changes' type='submit'></noscript>
 					</span>
+					
+					[% IF C2C_SECRET %]
+					<a title='Click2Call' href='#' onclick="click2call_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','en','CRM_DID=[% param.PHONE | html %]')"><span class='icon-phone fs0'></span></a>
+					[% END %]
+
 					<a href='?action=pbook_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='Delete'><span class='icon-bin fs0'></span></a>
 				</td>
 			</form>
@@ -144,7 +152,7 @@
 	<table id='d-tbl-n'>
 	[% FOREACH param = NOTES %]
 		<tr align='left' class='nocolor' id='d-tr-n-[% param.DATA_ID %]'>
-			<td valign='top'>
+			<td valign='top' align='left'>
 			<br/>
 			<b>
 			[% IF param.CALL_ID %]
@@ -160,26 +168,67 @@
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<input type='hidden' name='customer_id' value='[% CRM.DATA_ID %]'>
 				<input type='hidden' name='call_id' value='[% param.CALL_ID %]'>
+				<input type='hidden' name='file_name' value='[% param.FILE_NAME %]'>
 				<input type='hidden' name='type' value='Call'>
 				<input type='hidden' name='ts' value='[% param.START_TIMESTAMP %]'>
-				<textarea rows='2' cols='80' name='description'>Call: [% param.CNAM | html %] [% param.CALLER_ID | html %] на [% param.CALLED_ID | html %], [% param.CDR_DURATION | duration_str %]
-				[% IF msg.DATA contain 'STATUS=ANSWER' %] - answered[% END %]
-				</textarea>
-			</td>
-			<td align='right'>
-				<input type='submit' value='+'>
-			</form>
-		[% ELSE %]
-				<pre>[% param.NOTE | html %]</pre>
+				<input type='hidden' name='call_detail' value='[% param.CNAM | html %] [% param.CALLER_ID | html %]  ==&gt;  [% param.CALLED_ID | html %], [% param.CDR_DURATION | duration_str %]'>
+				<input type='hidden' name='call_status' 
+				[% IF param.DATA contain 'STATUS=ANSWER' %] value='1'><span> [% ELSE %] value='0'><span class='warning-font'>[% END %]
+				Call: [% param.CNAM | html %] [% param.CALLER_ID | html %]  ==&gt;  [% param.CALLED_ID | html %], [% param.CDR_DURATION | duration_str %]
+				</span>
+				<br />	
+				<textarea rows='2' cols='80' name='description'></textarea>
 			</td>
 			<td align='right' nowrap='nowrap'>
+				[% IF param.FILE_NAME %]
+				<a title='listen' 
+					onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download[% param.FILE_NAME %]?media=mp3;type=listen' )"
+					href="#"><span class='icon-volume-medium fs0'></span></a>
+				[% END %]
+				
+				<input type='submit' value='+'>
+			</td>
+			</form>
+		[% ELSE %]
+			[% IF param.CALL_DETAIL %]
+				[% IF param.CALL_STATUS %]
+					<span>
+				[% ELSE %]
+					<span class='warning-font'>
+				[% END %]
+				Call: 
+				[% param.CALL_DETAIL | html %]
+				</span>
+				<br />
+			[% END %]
+			<form method="post" action="[% CGI_URL %]" id='f-n-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
+				<input type='hidden' name='action' value='crm_n_update'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<input type='hidden' name='customer_id' value='[% CRM.DATA_ID %]'>
+				<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
+				<input type='hidden' name='img_id' value='in_t_id-n-[% param.DATA_ID %]'>
+				<textarea rows='[% param.NOTE | textarea_rows %]' cols='80' name='description' class='in_t0'>[% param.NOTE | html %]</textarea>
+			</td>
+			<td align='right' nowrap='nowrap'>
+				
+				<span class='in_t' id='in_t_id-n-[% param.DATA_ID %]'>
+					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-n-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+					<noscript><input value='Save changes' type='submit'></noscript>
+				</span>
+				
+				[% IF param.FILE_NAME %]
+				<a title='listen' 
+					onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download[% param.FILE_NAME %]?media=mp3;type=listen' )"
+					href="#"><span class='icon-volume-medium fs0'></span></a>
+				[% END %]
+				
 				<a href='?action=crm_n_del&data_id=[% param.DATA_ID %]&customer_id=[% CRM.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-n-[% param.DATA_ID %]','d-tbl-n')" title='delete'><span class='icon-bin fs0'></span></a>
 			</td>
+			</form>
 		[% END %]
 		</tr>
 	[% END %]
 	</table>
-
 
 	<script language='JavaScript'>
 	listcolorer( 'd-tbl' );

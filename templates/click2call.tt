@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.21 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.22 2018/09/05 18:44:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -50,7 +50,7 @@
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<a title='delete click2call link' href='?action=c2c_del&data_id=[% c2c.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% c2c.ID %]')"><span class='icon-bin fs0'></span></a>
 				<a title='Click2Call code' href='#' onclick="click2call_code('https://[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','en')"><span class='icon-share fs0'></span></a>
-				<a title='Click2Call' href='#' onclick="click2call_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','en')"><span class='icon-phone fs0'></span></a>
+				<a title='Click2Call' href='#' onclick="click2call_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','en','')"><span class='icon-phone fs0'></span></a>
 				<script language='JavaScript'>
 					stat_icon( '[% c2c.EXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'Click2Call', 'statistics' );
 				</script>

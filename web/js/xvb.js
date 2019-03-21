@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.117 2018/03/17 11:19:52 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.124 2019/02/12 19:40:14 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -11,6 +11,9 @@ function CLStart( obj ) {
 	obj.className='in_t1';
 }
 function CLStop( obj ) {
+	if ( obj == null || obj.form == null ) {
+		return;
+	}
 	if ( obj.type == 'checkbox' ) {
 		if ( obj.checked == obj.defaultChecked ) {
 			obj.className='in_t0';
@@ -31,7 +34,14 @@ function CLStop( obj ) {
 		}
 	}
 	var change_flag = checkChanges( obj.form, 1 );
-	var img_id = 'in_t_id-' + obj.form.data_id.value;
+	var img_id = '';
+
+	if ( obj.form.img_id == null ) {
+		img_id = 'in_t_id-' + obj.form.data_id.value;
+	} else {
+		img_id = obj.form.img_id.value;
+	}
+
 	if ( change_flag == true ) {
 		document.getElementById(img_id).className = 'in_t_open';
 	} else {
@@ -176,7 +186,7 @@ function updateAfterAjax( obj, r_type ) {
 			}
 		} else if ( obj.elements[i].type == 'text' || obj.elements[i].type == 'textarea' ) {
 			obj.elements[i].defaultValue = obj.elements[i].value;
-			if ( r_type == 1 ) {
+			if ( r_type == 1 && obj.elements[i].className == 'in_t2' ) {
 				obj.elements[i].className='in_t0';
 			}
 		} else if ( obj.elements[i].type == 'checkbox' || obj.elements[i].type == 'radio' ) {
@@ -187,12 +197,21 @@ function updateAfterAjax( obj, r_type ) {
 		}
 	}
 	if ( r_type == 1 ) {
-		var img_id = 'in_t_id-' + obj.data_id.value;
+		var img_id = '';
+
+		if ( obj.img_id == null ) {
+			img_id = 'in_t_id-' + obj.data_id.value;
+		} else {
+			img_id = obj.img_id.value;
+		}
 		document.getElementById(img_id).className = 'in_t';
 	}
 }
 
 function checkChanges( obj, skip_shaddow ) {
+	if ( obj == null ) {
+		return;
+	}
 	var change_flag = false;
 	for( i=0; i < obj.elements.length; i++ ) {
 		if ( obj.elements[i].type == 'checkbox' || obj.elements[i].type == 'radio' ) {
@@ -569,7 +588,7 @@ function setShadowAttr() {
 					all_el[i].onfocus = function() { CLStart(this) };
 					all_el[i].onblur = function() { CLStop(this) };
 				}
-			} else if ( all_el[i].tagName == 'SELECT' ) {
+			} else if ( all_el[i].tagName == 'SELECT' && all_el[i].onchange == null ) {
 				all_el[i].onchange = function() { CLStop(this) };
 			}
 		} else if ( all_el[i].tagName == 'A' ) {
@@ -618,6 +637,7 @@ function cdrfilters( element_id, col_num ) {
 	var re = /FILE=(\d+):(\w+\.\w+)/g;
 	var re2 = /(^|, )DTMF=([^,]*)/;
 	var re3 = /(^|, )CALLID=([^,]*)/g;
+	var re4 = /FILE=(\d+):(\w+\.(ul|al|g722|ulaw|alaw|wav))/g;
 
 	/* variables */
 	var url = download_file_url;
@@ -675,7 +695,13 @@ function cdrfilters( element_id, col_num ) {
 			} else {
 				// FILE pattern
 				if ( download_file_url.length > 0 ) {
-					var new_str = data.replace(re, download_file_url);
+					var new_str = data;
+					if ( listen_file_url.length > 0 ) {
+						new_str = data.replace(re4, listen_file_url+download_file_url);
+					}
+					if ( data == new_str ) {
+						new_str = data.replace(re, download_file_url);
+					}
 					if ( data != new_str ) {
 						td_obj[col_num].innerHTML = new_str;
 						data = new_str;
@@ -705,12 +731,12 @@ function dtmf_history_win( data ) {
 }
 
 /* click2call_win */
-function click2call_win( server, key, ac, lang ) {
+function click2call_win( server, key, ac, lang, user_vars ) {
 	var ScreenWidth=window.screen.width;
 	placementx=ScreenWidth/2-220;
 	placementy=200;
 	WinPop=window.open("","click2call","width=450,height=240,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
-	WinPop.document.write('<html>\n<head><title>Click2Call - XVB VirtualPBX</title>\n<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" /></head>\n<body><center><form method="post" action="'+server+'/c2c"><input type="hidden" value="'+key+'" name="key"><input type="hidden" value="'+ac+'" name="ac">');
+	WinPop.document.write('<html>\n<head><title>Click2Call - XVB VirtualPBX</title>\n<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" /></head>\n<body><center><form method="post" action="'+server+'/c2c"><input type="hidden" value="'+key+'" name="key"><input type="hidden" value="'+ac+'" name="ac"><input type="hidden" value="'+user_vars+'" name="user_vars">');
 	if ( lang == 'ru' ) {
 		response_str = Base64.encode('<center>Запрос обработан. Ожидайте звонка.</center>');
 		WinPop.document.write('<h1>Заказ звонка</h1><input type="text" size="30" name="ph" placeholder="введите Ваш номер телефона"><br/><br/><input value="заказать звонок" type="submit"><input type="hidden" name="b64message" value="'+ response_str +'">');
@@ -852,6 +878,55 @@ function exten_dropdown2_hook( value, select_name ) {
 		document.getElementsByName(select_name)[0].className = 'display_yes';
 	} else {
 		document.getElementsByName(select_name)[0].value = value;
+	}
+}
+
+function opt_dropdown( opt_array, select_name, select_id, select_class, cur_name ) {
+	document.write('<select onchange=\'opt_dropdown_hook(this.value,"'+select_id +'","'+select_class+'")');
+	if ( select_class == 'in_t0' ) {
+		document.write('; CLStop(this)');
+	}
+	document.write('\' name="'+ select_name +'-DD" id="'+select_id +'-DD" class="'+ select_class +'">');
+	var item_exists = 0;
+	for( var i=0, l=opt_array.length; i<l; ++i ) {
+		var opt_name = opt_array[i][0];
+		document.write('<option value="'+ opt_name +'"');
+		if ( opt_name === cur_name ) {
+			document.write(' selected ');
+			item_exists = 1;
+		}
+		document.write( '>' +  opt_array[i][1] + '</option>');
+	}
+	if ( item_exists == 0 && cur_name.length > 0 ) {
+		document.write('<option value="'+ cur_name +'" selected>');
+		if ( cur_name.indexOf('% VAR') == -1 ) {
+			document.write('! ');
+		} 
+		if ( cur_name.length > 14 ) {
+			document.write(cur_name.substr(0,12)+'..');
+		} else {
+			document.write(cur_name);
+		}
+		document.write('</option>');
+	}
+	document.write('</select>');
+	document.getElementById(select_id).className = 'display_none';
+	if ( select_class == 'in_t0' ) {
+		document.getElementById(select_id).onblur = function() { CLStop(this) };
+		document.getElementById(select_id).onfocus = function() { CLStart(this) };
+	}
+}
+function opt_dropdown_hook( value, select_id, select_class ) {
+	if ( value == '***' ) {
+		document.getElementById(select_id+'-DD').remove();
+		if ( select_class == 'in_t0' ) {
+			document.getElementById(select_id).className = 'in_t0';
+		} else {
+    			document.getElementById(select_id).className = 'display_yes';
+		}
+		document.getElementById(select_id).focus();
+	} else {
+		document.getElementById(select_id).value = value;
 	}
 }
 /* vb edit icon */
@@ -1762,6 +1837,151 @@ function setActiveSelector(objid,cur_val) {
 		}
 	}
 }
+/* Online Recorder */
+function ShowRecorder() {
+	var el=document.getElementById('shadow');
+	el.style.visibility='visible';
+	var div_id = document.getElementById('center');
+	var player_data = '';
+	
+	if ( typeof(rec_label) !== 'undefined' ) {
+		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;" bgcolor="black"><tr class="player" height="40%"><td colspan="2" align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HideRecorder()"><span class="icon-cross fs0"></a></td></tr><tr><td align="center" valign="center" colspan="2"><div id="controls"><button id="recordButton" onClick="startRecording()" class="recorder">'+ rec_label[0] +'</button><button id="pauseButton" onClick="pauseRecording()" disabled class="recorder">'+ rec_label[1] +'</button><button id="stopButton" onClick="stopRecording()" disabled class="recorder">'+ rec_label[3] +'</button></div></td></tr><tr align="center"><td width="66%"><p id="recordingsList"></p></td><td><p id="recordingUpload"></td></tr></table>';
+	} else {
+		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;" bgcolor="black"><tr class="player" height="40%"><td colspan="2" align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HideRecorder()"><span class="icon-cross fs0"></a></td></tr><tr><td align="center" valign="center" colspan="2"><div id="controls"><button id="recordButton" onClick="startRecording()" class="recorder">Record</button><button id="pauseButton" onClick="pauseRecording()" disabled class="recorder">Pause</button><button id="stopButton" onClick="stopRecording()" disabled class="recorder">Stop</button></div></td></tr><tr align="center"><td width="66%"><p id="recordingsList"></p></td><td><p id="recordingUpload"></td></tr></table>';
+	}
+
+	div_id.innerHTML = player_data;
+	div_id.style.display = 'block';
+	startRecording();
+
+	return false;
+}
+
+function HideRecorder() {
+	var el=document.getElementById('shadow');
+	el.style.visibility='hidden';
+	var div_id = document.getElementById('center');
+	
+	var audio  = document.createElement("audio");
+	var canPlayMP3 = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/mpeg") !== "");
+	var canPlayWAV = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/x-wav") !== "");
+	var canPlayOGG = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/ogg") !== "");
+
+	if ( canPlayMP3 || canPlayWAV || canPlayOGG ) {
+		div_id.innerHTML = '<audio tabindex="0" autoplay="autoplay" controls="controls"></audio>';
+	}
+	div_id.style.display = 'none';
+	
+	return false;
+}
+
+function startRecording() {
+    var constraints = { audio: true, video:false }
+
+	var recordButton = document.getElementById("recordButton");
+	var stopButton = document.getElementById("stopButton");
+	var pauseButton = document.getElementById("pauseButton");
+
+	recordButton.disabled = true;
+	stopButton.disabled = false;
+	pauseButton.disabled = false
+
+        navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+                audioContext = new AudioContext();
+                gumStream = stream;
+                input = audioContext.createMediaStreamSource(stream);
+                rec = new Recorder(input,{numChannels:1})
+                rec.record()
+        }).catch(function(err) {
+                recordButton.disabled = false;
+                stopButton.disabled = true;
+                pauseButton.disabled = true
+        });
+}
+
+function pauseRecording(){
+	var recordButton = document.getElementById("recordButton");
+	var stopButton = document.getElementById("stopButton");
+	var pauseButton = document.getElementById("pauseButton");
+        if (rec.recording){
+                rec.stop();
+				if ( typeof(rec_label) !== 'undefined' ) {
+	                pauseButton.innerHTML = rec_label[2];
+				} else {
+	                pauseButton.innerHTML="Resume";
+				}
+        }else{
+                rec.record()
+				if ( typeof(rec_label) !== 'undefined' ) {
+	                pauseButton.innerHTML = rec_label[1];
+				} else {
+                	pauseButton.innerHTML="Pause";
+				}
+        }
+}
+
+function stopRecording() {
+	var recordButton = document.getElementById("recordButton");
+	var stopButton = document.getElementById("stopButton");
+	var pauseButton = document.getElementById("pauseButton");
+	stopButton.disabled = true;
+	recordButton.disabled = false;
+	pauseButton.disabled = true;
+	if ( typeof(rec_label) !== 'undefined' ) {
+        pauseButton.innerHTML = rec_label[1];
+	} else {
+       	pauseButton.innerHTML="Pause";
+	}
+	rec.stop();
+	gumStream.getAudioTracks()[0].stop();
+	rec.exportWAV(createDownloadLink);
+}
+
+function createDownloadLink(blob) {
+	var url = URL.createObjectURL(blob);
+	var au = document.createElement('audio');
+
+	var filename = new Date().toISOString();
+
+	au.controls = true;
+	au.src = url;
+
+	var upload = document.createElement('button');
+
+	if ( typeof(rec_label) !== 'undefined' ) {
+		upload.innerHTML = rec_label[4];
+	} else {
+		upload.innerHTML = "Upload";
+	}
+	upload.classList.add('recorder');
+	upload.addEventListener("click", function(event){
+                        var xhr=new XMLHttpRequest();
+                        xhr.onload=function(e) {
+                        	if(this.readyState === 4) {
+                        		location.reload();
+                        	}
+                        };
+                        var fd=new FormData();
+		
+						var msgtype = document.getElementById("sysmsgtype");
+		
+						fd.append("msg",blob, filename+'.wav');
+						fd.append("type",msgtype.options[msgtype.selectedIndex].value);
+						fd.append("action","msg_upload");
+						fd.append("go","vb");
+						fd.append("id",document.getElementById("sysmsgid").value);
+						fd.append("uniq",document.getElementById("sysmsguniq").value);
+
+                        xhr.open("POST",server_url,true);
+                        xhr.send(fd);
+                        })
+        recordingsList.innerHTML = '';
+        recordingUpload.innerHTML = '';
+        recordingsList.appendChild(au);
+        recordingUpload.appendChild(upload);
+}
+
+/* =================== recorder =================== */
 
 /* init */
 function XVBInit() {
@@ -1771,4 +1991,3 @@ function XVBInit() {
 	var img = new Image();
 	img.src = '/xvb/images/loading.gif';
 }
-

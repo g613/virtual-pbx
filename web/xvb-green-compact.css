@@ -407,6 +407,54 @@ a.amenu {
 	   background-color: #999999;
 }
 
+/* recorder */
+
+#controls {
+  display: flex;
+  margin-top: 2rem;
+}
+#formats {
+  margin-top: 0.5rem;
+}
+audio {
+  display: block;
+  width: 90%;
+  margin-top: 0.2rem;
+}
+button.recorder {
+  flex-grow: 1;
+  height: 2rem;
+  min-width: 2rem;
+  border: none;
+  border-radius:5px;
+  background:#00cc00;
+  margin-left: 2px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:#ffffff;
+  font-size: 1rem;
+}
+button.recorder:hover, button:focus {
+  outline: none;
+  background: #149974;
+}
+button.recorder::-moz-focus-inner {
+  border: 0;
+}
+button.recorder:active {
+  line-height: 3rem;
+}
+button.recorder:disabled {
+  pointer-events: none;
+  background: lightgray;
+}
+button.recorder:first-child {
+  margin-left: 0;
+}
+
+
 @font-face {
 	font-family: 'icomoon';
 	src:url('/xvb/fonts/icomoon.eot?4f0id7r');

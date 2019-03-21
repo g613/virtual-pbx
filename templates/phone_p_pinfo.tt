@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_pinfo.tt,v 1.2 2018/04/07 19:25:28 gosha Exp $ -->
+<!-- $Id: phone_p_pinfo.tt,v 1.6 2018/11/09 12:06:06 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phone</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -42,6 +42,16 @@
 				[% ELSE %]
 					<li>Unregistered</li>
 				[% END %]
+					<li>Hot-desking phone:
+						<ul>
+						[% IF PHONE.hotdesk_callerid %]
+							<li>[% PHONE.callerid | html %] &#8594; [% PHONE.hotdesk_callerid | html %]</li>
+						[% END %]
+						[% IF PHONE.HOTDESK_CID %]
+							<li>[% PHONE.HOTDESK_CID | html %] &#8594; [% PHONE.callerid | html %] </li>
+						[% END %]
+						</ul>
+					</li>
 				</ul>
 			</td>
 		</tr>
@@ -79,7 +89,18 @@
 				[% PHONE.PICKUP_GROUPS | html %]
 			</td>
 		</tr>
-			
+		
+		[% IF PHONE.HOTDESK_PIN %]
+		<tr>
+			<td>
+				Hot-Desking PIN:
+			</td>
+			<td>
+				[% PHONE.HOTDESK_PIN | html %]
+			</td>
+		</tr>
+		[% END %]
+
 		<tr>
 			<td>
 				Forwarding number:

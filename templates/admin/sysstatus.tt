@@ -1,0 +1,275 @@
+<html>
+<head>
+	<title>Virtual PBX - system satus</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css?r=2121" />
+	<script language="JavaScript" src="/xvb/js/xvb.js?r=2121-[% USER_CREDS.UNIQ %]"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	
+	<script language="javascript">
+
+		google.charts.load('current', {'packages':['corechart','gauge']});
+		google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+			// chart MEM /CPU / SWAP
+			var data = google.visualization.arrayToDataTable([
+					['Label', 'Value'],
+					['CPU', [% CPU.PRC %]],
+					['Memory', [% MEM.PRC %]],
+					['Swap', [% SWAP.PRC %]]
+			]);
+
+
+			var options = {
+          		redFrom: 90, redTo: 100,
+          		yellowFrom:75, yellowTo: 90,
+				minorTicks: 5
+        	};
+
+        	var chart0 = new google.visualization.Gauge(document.getElementById('chart0'));
+
+        	chart0.draw(data, options);
+
+		[% FOREACH dn = DISK %]
+			var data2[% dn.ID %] = google.visualization.arrayToDataTable([
+				['Data', 'Usage' ],
+				['Free',[% dn.FREE %] ],
+				['Used',[% dn.USED %] ]
+			
+		]);
+
+		var options2[% dn.ID %] = {
+		        pieHole: 0.4,
+chartArea:{top:5, width:'90%',height:'90%'},
+        legend: {position: 'bottom'},
+
+		};
+
+		var chart2[% dn.ID %] = new google.visualization.PieChart(document.getElementById('disks2[% dn.ID %]'));
+		chart2[% dn.ID %].draw(data2[% dn.ID %], options2[% dn.ID %]);
+		[% END %]
+	}
+	</script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+	
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png?r=2121' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			</td>
+		</tr>
+	</table>
+
+	<center>
+	
+	<h1>[% NODE | html %] - system status</h1>
+	
+	<p>
+	<table>
+		
+		<tr>
+		<td width='65%' valign='top'>
+			<h2>System resources</h2>
+			<table>
+				<tr>
+					<td valign='top' colspan='2' align='center'>
+						<div id="chart0" style="width: 550px; height: 170px;"><img width="30" src="/xvb/images/loading.gif" style="opacity: 1;"></div>
+					</td>
+				</tr>
+				<tr>
+					<td width='20%'>
+						CPU:
+					</td>
+					<td>
+						[% CPU.CNT | html %] x [% CPU.NAME | html %]
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Memory:
+					</td>
+					<td>
+						total: [% MEM.ALL | fsize | html %], + swap: [% SWAP.ALL | fsize | html %]
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Load average:
+					</td>
+					<td>
+						[% SYS.LA | html %]
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Uptime:
+					</td>
+					<td>
+						[% SYS.UPTIME | html %]
+					</td>
+				</tr>
+			</table>
+		</td>
+
+		<td rowspan='4' valign='top'>
+			<h2>Asterisk</h2>
+			<table align='left'>
+				<tr>
+					<td width='30%'>
+						Uptime:
+					</td>
+					<td>
+						[% AST.UPTIME | html %]
+					</td>
+				</tr>
+				<tr>
+					<td width='20%'>
+						Last reload:
+					</td>
+					<td>
+						[% AST.RELOAD | html %]
+					</td>
+				</tr>
+				<tr>
+					<td width='20%'>
+						Calls / Channels:
+					</td>
+					<td>
+						[% AST.CALLS | html %] / [% AST.CHANNELS | html %]
+					</td>
+				</tr>
+				<tr>
+					<td width='20%'>
+						Calls processed:
+					</td>
+					<td>
+						[% AST.CALLS_ALL | html %]
+					</td>
+				</tr>
+				<tr>
+					<td width='20%'>
+						VPBX limits:
+						<br />
+						<br />
+						<br />
+						<br />
+					</td>
+					<td>
+						[% AST.VPBX_CALLS | html %] / [% AST.VPBX_LIMIT | html %]
+						<br />
+						<br />
+						<br />
+						<br />
+					</td>
+				</tr>
+			</table>
+			
+			<h2>Fail2ban banned IPs<h2>
+			<table width='100%' id='list-data'>
+			<tr>
+				<th class='rad_l'>Jail</th>
+				<th>IP</th>
+				<th class='rad_r'>&nbsp;</th>
+			</tr>
+			
+			[% FOREACH data = F2B %]
+			<tr align='center' class='nocolor'>
+				<td>
+					[% data.JAIL | html %]
+				</td>
+				<td>
+					[% data.IP | html %]
+				</td>
+				<td>
+					<a title='unblock IP' href='https://[% data.NODE %]/ai?action=f2b&ip=[% data.IP | html %]&node=[% data.NODE | html %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
+				</td>
+			</tr>
+			[% END %]
+			</table>
+			<script language='JavaScript'>listcolorer( 'list-data' );</script>	
+		</td>
+		</tr>
+
+		<tr>
+		<td>
+			<br />
+			<h2>Disks</h2>
+			<table>
+			<tr>
+				[% FOREACH dn = DISK %]
+				<td align='center'>
+				<h3>[% dn.ALL %] Gb,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[% dn.NAME %]</h3>
+				<div id="disks2[% dn.ID %]" style="width: 180px; height: 180px;"><img width="30" src="/xvb/images/loading.gif" style="opacity: 1;"></div>
+				</td>
+				[% END %]
+			</tr>
+			</table>
+		</td>
+		</tr>
+
+		<tr>
+			<td>
+			<br />
+				<h2>Raw logs</h2>
+				<textarea rows='50' cols='140'>
+					[% RAW | html %]
+				</textarea>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+			<br />
+			<h2>Config changes<h2>
+			<table id='list-data2'>
+			<tr>
+				<th class='rad_l'>Option</th>
+				<th>Default</th>
+				<th class='rad_r'>Current</th>
+			</tr>
+			
+			[% FOREACH data = CDIFF %]
+			<tr align='left' class='nocolor'>
+				<td align='left'>
+					[% data.0 | html %]
+				</td>
+				<td>
+					[% data.1 | html %]
+				</td>
+				<td>
+					[% data.2 | html %]
+				</td>
+			</tr>
+			[% END %]
+			</table>
+			<script language='JavaScript'>listcolorer( 'list-data2' );</script>
+			</td>
+		</tr>
+
+	</table>
+	<p>
+	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

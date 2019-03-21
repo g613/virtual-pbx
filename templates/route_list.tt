@@ -17,6 +17,11 @@
 		[% FOREACH vb = VB_LIST %]
 		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | html %]','[% vb.NAME | html %]'];
 		[% END %]
+		var did_list = [ ['','auto'] ];
+		[% FOREACH d = DID %]
+		did_list.push(['[% d.DID | html %]','[% d.DID | html %]']);
+		[% END %]
+		did_list.push(['***','raw editor']);
 	</script>
 </head>
 
@@ -98,7 +103,12 @@
 			<td><input class='in_t0' size="14" name='r_EXT_NUMBER' type='text' value="[% r.EXT_NUMBER | html %]"></td>
 			<td><input class='in_t0' size="6" name='r_TLIMIT' type='text' value="[% r.TLIMIT | html %]"></td>
 			<td><input class='in_t0' size="13" name='r_DESCRIPTION' type='text' value="[% r.DESCRIPTION | html %]"></td>
-			<td><input class='in_t0' size="12" name='r_DEFCID' type='text' value="[% r.DEFCID | html %]"></td>
+			<td>
+				<input class='in_t0' size="11" name='r_DEFCID' id="r_DEFCID-[% r.DATA_ID %]" type='text' value="[% r.DEFCID | html %]">
+				<script language="JavaScript">
+					opt_dropdown( did_list,'r_DEFCID','r_DEFCID-[% r.DATA_ID %]','in_t0','[% r.DEFCID | html %]');
+				</script>
+			</td>
 			<td align='left' nowrap='nowrap'>
 				<input class='in_t0' size="9" name='r_SCHEDULE_EXT' type='text' value="[% r.SCHEDULE_EXT | html %]">
 				<script language="JavaScript">
@@ -145,7 +155,12 @@
 			<td><input size="14" name='r_EXT_NUMBER' type='text'></td>
 			<td><input size="6" name='r_TLIMIT' type='text'></td>
 			<td><input size="13" name='r_DESCRIPTION' type='text'></td>
-			<td><input size="12" name='r_DEFCID' type='text'></td>
+			<td>
+				<input size="12" name='r_DEFCID' id="r_DEFCID" type='text'>
+				<script language="JavaScript">
+					opt_dropdown( did_list,'r_DEFCID','r_DEFCID','','');
+				</script>
+			</td>
 			<td align='left'><input size="10" name='r_SCHEDULE_EXT' type='text'></td>
 			<td>
 				<select name="r_PEER_ID">

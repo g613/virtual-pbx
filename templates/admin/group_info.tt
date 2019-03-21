@@ -52,7 +52,7 @@
 			<td rowspan='40' valign='top'>
 				<table>
 					<tr>
-						<td colspan='2'><h4>Limits on the number of extensions:</h4></td>
+						<td colspan='2'><h2>Limits on the number of extensions:</h2></td>
 						<input name='VB_TYPE_0' type='hidden' value="1">
 					</tr>
 					[% FOREACH vb = VB_TYPES %]
@@ -70,7 +70,7 @@
 						<td>-1 - unlimit<br>0 - type not allowed</td>
 					</tr>
 					<tr>
-						<td colspan='2'><h4>Other feautures:</h4></td>
+						<td colspan='2'><h2>Other feautures:</h2></td>
 					</tr>
 					<tr>
 						<td>Upload custom system files: </td>

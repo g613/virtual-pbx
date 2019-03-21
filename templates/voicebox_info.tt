@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.322 2018/05/09 19:47:54 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.328 2019/03/15 20:36:57 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
 	[% END %]
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script language="JavaScript" src="/xvb/js/recorder.js"></script>
 	<script language="JavaScript">
 		var e_list = [];
 		e_list['hangup'] = [ null, null,'Exit from PBX',-2];
@@ -21,6 +22,14 @@
 		for ( var m_num in e_list ) {
 			e_menu[2+e_list[m_num][3]] = m_num;
 		}
+		/* Recorder */
+		URL = window.URL || window.webkitURL;
+		var gumStream;
+		var rec;
+		var input;
+		var AudioContext = window.AudioContext || window.webkitAudioContext;
+		var audioContext;
+		var server_url = "https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]";
 	</script>
 </head>
 
@@ -1525,6 +1534,21 @@
 						</label></div>
 					</td>
 				</tr>
+				<tr>
+					<td>Start record from ringing:</td>
+					<td>
+						<div class="onoffswitch">
+						<input name="RECORD_RINGS" type="checkbox" class="onoffswitch-checkbox" id="RECORD_RINGS-ch" 
+						[% IF VBOX_PREF.RECORD_RINGS %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="RECORD_RINGS-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Send attachment: </td>
 					<td>
@@ -2540,9 +2564,15 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td>URL</td>
+					<td>Pre-call URL</td>
 					<td>
 						<input size='30' type='text' name='URL' value='[% VBOX_PREF.URL | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>After-call URL</td>
+					<td>
+						<input size='30' type='text' name='URL_STAT' value='[% VBOX_PREF.URL_STAT | html %]'>
 					</td>
 				</tr>
 				[% END %]
@@ -3016,13 +3046,10 @@
 					[% END %]
 					[% END %]
 					
-					<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+					<form enctype="multipart/form-data" method="post" id="sysmsg" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 					<tr>
 						<td colspan='2' nowrap='nowrap'>
-							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
-							<input type='hidden' name='action' value='msg_upload'>
-							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-							<select name="type">
+							<select name="type" id='sysmsgtype'>
 								<option selected value="1">Name</option>
 								<option value="2">Greeting</option>
 
@@ -3043,14 +3070,21 @@
 								[% END %]
 							</select> 
 							<input type='file' name='msg'>
+							<input type='hidden' name='id' id='sysmsgid' value='[% VBOX_PREF.ID %]'>
+							<input type='hidden' name='action' value='msg_upload'>
+							<input type='hidden' name='uniq' id='sysmsguniq' value='[% USER_CREDS.UNIQ %]'>
+							<input type='hidden' name='go' value='vb'>
 						</td>
 					<tr>
 					<tr>
-						<td colspan='2' align='right'>
+						<td align='right'>
 							<input type='submit' value='Upload'>
 						</td>
+						</form>
+						<td align='right'>
+						<input type='submit' value='Record' onClick="ShowRecorder(); false">
+						</td>
 					</tr>
-					</form>
 					
 					<tr class='addon_info'>
 						<td colspan='2'>&nbsp;</td>
@@ -3279,12 +3313,13 @@
 						<th class='rad_r'>Actions</th>
 					</tr>
 					[% FOREACH param = BLAST_SCHEDULE %]
-					<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
-						<form method="post" action="[% CGI_URL %]" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
+					<tr align='center' class='nocolor' id='d-tr-n-[% param.DATA_ID %]'>
+						<form method="post" action="[% CGI_URL %]" id='f-n-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
 						<input type='hidden' name='action' value='schedule_update'>
 						<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 						<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+						<input type='hidden' name='img_id' value='in_t_id-n-[% param.DATA_ID %]'>
 						<td><input class='in_t0' size='5' name='priority' type='text' value='[% param.PRIORITY | html %]'></td>
 						<td><input class='in_t0' size='11' name='time_h'type='text' value='[% param.TIME_H | html %]'></td>
 						<td><input class='in_t0' size='5' name='dayofweek' type='text' value='[% param.DAYOFWEEK | html %]'></td>
@@ -3303,9 +3338,9 @@
 							</select> 
 						</td>
 						<td align='left' nowrap='nowrap'>
-							<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]','d-tbl-d1')" title='delete schedule item'><span class='icon-bin fs0'></span></a>
-							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
-								<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
+							<a href='?action=schedule_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-n-[% param.DATA_ID %]','d-tbl-d1')" title='delete schedule item'><span class='icon-bin fs0'></span></a>
+							<span class='in_t' id='in_t_id-n-[% param.DATA_ID %]'>
+								<a href='#' onclick="return xmlhttpPost(document.getElementById('f-n-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 								<noscript><input value='change' type='submit'></noscript>
 							</span>
 						</td>

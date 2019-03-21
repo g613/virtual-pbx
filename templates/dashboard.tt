@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: dashboard.tt,v 1.19 2018/04/27 13:55:05 gosha Exp $ -->
+<!-- $Id: dashboard.tt,v 1.20 2018/08/14 14:09:20 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Dashboard - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -177,8 +177,8 @@
 			</tr>
 			[% FOREACH cdr = JS_DATA_MIS %]
 			<tr class='nocolor' align='center'>
-				<td class='simple'>[% cdr.CNAM | html %]</td>
-				<td><a title='calls' href="?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&any_did=[% cdr.CALLER_ID | html %]&from_time=[% FROM_TIME | html %]">[% cdr.CID | html %]</a></td>
+				<td>[% cdr.CNAM | html %]</td>
+				<td class='simple'><a title='calls' href="?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&any_did=[% cdr.CALLER_ID | html %]&from_time=[% FROM_TIME | html %]">[% cdr.CID | html %]</a></td>
 				<td>[% cdr.CALLS | html %]</td>
 				<td>[% cdr.DATE | html %]</td>
 				<td>[% cdr.OUR_CALLS | html %]</td>
