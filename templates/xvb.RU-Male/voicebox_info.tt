@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.93 2019/03/15 20:36:57 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.101 2019/09/08 17:57:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -19,7 +19,7 @@
 		e_list['back'] = [ null, null, 'Вернуться к предыдущему',-1 ];
 		e_list['repeat'] = [ null, null, 'Повторить текущий',0 ];
 		[% FOREACH vb = VB_LIST %]
-		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | locale_msg %]','[% vb.NAME | html %]',[% vb.VB_IND %]];
+		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | locale_msg %]','[% vb.NAME | html %]',[% vb.VB_IND %],[% vb.TYPE %]];
 		[% END %]
 		var e_menu = [];
 		for ( var m_num in e_list ) {
@@ -33,7 +33,7 @@
 		var input;
 		var AudioContext = window.AudioContext || window.webkitAudioContext;
 		var audioContext;
-		var server_url = "https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]";
+		var server_url = "[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]";
 		var rec_label = [ 'Запись', 'Пауза', 'Продолжить', 'Стоп', 'Загрузить' ];
 	</script>
 </head>
@@ -2205,6 +2205,33 @@
 					</td>
 				</tr>
 				<tr>
+					<td><a href='#' class='info'>Проверка автоответчиков:<span>
+						Режим проверки автоответчиков<br />
+						  - информативная - сохранение статуса в cdr,<br />
+						  - расширенная - система учитывает статус проверки на автоответчик, если система обнаружила что ответил автоответчик то переход на 'Перейти к' будет проигнорирован и звонок завершится,<br />
+						  - не использовать - отключить проверку
+					</span></a></td>
+					<td>
+						<select name="USE_AMD">
+							<option value="0" 
+							[% IF VBOX_PREF.USE_AMD eq '0' %]
+								selected
+							[% END %]
+							>информативная</option>
+							<option value="1" 
+							[% IF VBOX_PREF.USE_AMD eq '1' %]
+								selected
+							[% END %]
+							>расширенная</option>
+							<option value="2" 
+							[% IF VBOX_PREF.USE_AMD eq '2' %]
+								selected
+							[% END %]
+							>не использовать</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
 					<td><a href='#' class='info'>Начать звонить в:<span>
 						Время после которого система начнет совершать звонки.
 					</span></a></td>
@@ -2279,6 +2306,27 @@
 					<td>
 						<input size='4' type='text' name='CALL_LIMIT' value='[% VBOX_PREF.CALL_LIMIT | html %]'>
 						( 0 - не ограничено )
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Привязать к очереди:<span>
+							Установить динамический лимит звонков основываясь на 
+							количестве активных агентов в очереди.<br/>
+							Выберите очередь и установите коэффициент загрузки очереди<br/>
+							x2 - количество звонков == количество агентов умноженное на 2<br/>
+							x 0.5 == количество агентов деленное на 2 и тд.<br/> 
+							Но не более количества 'Одновременных звонков'.
+						</span></a></td>
+					<td nowrap="nowrap">
+						<input size='12' type='text' name='DEPEND_QUEUE' value='[% VBOX_PREF.DEPEND_QUEUE | html %]'>
+						<script language="JavaScript">
+							exten_dropdown2( 'DEPEND_QUEUE','[% VBOX_PREF.DEPEND_QUEUE | html %]','<option value="">------------</option><option value="***">- ручной ввод -</option>',13)
+						</script>
+						 x
+						<input size='5' type='text' name='DEPEND_QUEUE_CAPACITY' value='[% VBOX_PREF.DEPEND_QUEUE_CAPACITY | html %]'>
+						<script language="JavaScript">
+						exten_icon( '[% VBOX_PREF.DEPEND_QUEUE | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
+						</script>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -3408,10 +3456,10 @@
 						<td>Имя пользователя: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.NAME_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.NAME_FILE %]?media=mp3;type=listen' )"
 								href="#"><span class='icon-volume-medium fs0'></span></a>
-							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.NAME_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
-							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.NAME_FILE %]&type=1&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s0','d-tbl-s')"><span class='icon-bin fs0'></span></a>
+							<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.NAME_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.NAME_FILE %]&type=1&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s0','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3420,10 +3468,10 @@
 						<td>Приветствие пользователя: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.GREET_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.GREET_FILE %]?media=mp3;type=listen' )"
 								href="#"><span class='icon-volume-medium fs0'></span></a>
-							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.GREET_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
-							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.GREET_FILE %]&type=2&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s1','d-tbl-s')"><span class='icon-bin fs0'></span></a>
+							<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.GREET_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.GREET_FILE %]&type=2&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s1','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3434,10 +3482,10 @@
 						<td>Объявление для вызываемого: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;type=listen' )"
 								href="#"><span class='icon-volume-medium fs0'></span></a>
-							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
-							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s2','d-tbl-s')"><span class='icon-bin fs0'></span></a>
+							<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s2','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3446,10 +3494,10 @@
 						<td>Объявление для звонящего: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;type=listen' )"
 								href="#"><span class='icon-volume-medium fs0'></span></a>
-							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
-							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s7','d-tbl-s')"><span class='icon-bin fs0'></span></a>
+							<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s7','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3458,10 +3506,10 @@
 						<td>Анонс удержания вызова: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %]?media=mp3;type=listen' )"
 								href="#"><span class='icon-volume-medium fs0'></span></a>
-							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
-							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s3','d-tbl-s')"><span class='icon-bin fs0'></span></a>
+							<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s3','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3473,10 +3521,10 @@
 						<td>Объявление для вызываемого: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;type=listen' )"
 								href="#"><span class='icon-volume-medium fs0'></span></a>
-							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
-							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s4','d-tbl-s')"><span class='icon-bin fs0'></span></a>
+							<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s4','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3485,10 +3533,10 @@
 						<td>Объявление для звонящего: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;type=listen' )"
 								href="#"><span class='icon-volume-medium fs0'></span></a>
-							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
-							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s8','d-tbl-s')"><span class='icon-bin fs0'></span></a>
+							<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s8','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3497,10 +3545,10 @@
 						<td>Анонс удержания вызова: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %]?media=mp3;type=listen' )"
 								href="#"><span class='icon-volume-medium fs0'></span></a>
-							<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
-							<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s5','d-tbl-s')"><span class='icon-bin fs0'></span></a>
+							<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+							<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s5','d-tbl-s')"><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3513,16 +3561,16 @@
 						<td align='right' nowrap='nowrap'>
 							[% IF VB_DATA.C2C_SECRET %]
 							<script language='Javascript' src='/xvb/js/base64.js'></script>
-							<a title='Отправить Факс' href='#' onclick="webfax_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% VB_DATA.C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru','[% USER_CREDS.UNIQ %]')"><span class='icon-phone fs0'></span></a>
+							<a title='Отправить Факс' href='#' onclick="webfax_win('[% USER_CREDS.DOWNLOAD_IP %]','[% VB_DATA.C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru','[% USER_CREDS.UNIQ %]')"><span class='icon-phone fs0'></span></a>
 							[% END %]
-							<a title='скачать tiff' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.FAX_FILE %]'><span class='icon-download3 fs0'></span></a>
-							<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.FAX_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s6','d-tbl-s')" title='удалить факс'><span class='icon-bin fs0'></span></a>
+							<a title='скачать tiff' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.FAX_FILE %]'><span class='icon-download3 fs0'></span></a>
+							<a href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.FAX_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s6','d-tbl-s')" title='удалить факс'><span class='icon-bin fs0'></span></a>
 						</td>
 					</tr>
 					[% END %]
 					[% END %]
 
-					<form enctype="multipart/form-data" method="post" id="sysmsg" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+					<form enctype="multipart/form-data" method="post" id="sysmsg" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 					<tr>
 						<td colspan='2' nowrap='nowrap' align='left'>
 						<select name="type" id='sysmsgtype'>
@@ -3568,7 +3616,7 @@
 					<tr class='addon_info' id='backup-restore'>
 						<td nowrap='nowrap'>
 							[% IF USER_CREDS.ROOT eq '0' %]
-							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 							<input type='file' name='config_file'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
@@ -3578,7 +3626,7 @@
 							[% END %]
 						</td>
 						<td align='center'>
-							<a title='сохранить схему' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/ext_backup/[% VBOX_PREF.ID %]?uniq=[% USER_CREDS.UNIQ | html %]'><span class='icon-download3 fs0'></span></a>
+							<a title='сохранить схему' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/ext_backup/[% VBOX_PREF.ID %]?uniq=[% USER_CREDS.UNIQ | html %]'><span class='icon-download3 fs0'></span></a>
 						</td>
 					</tr>
 
@@ -3653,7 +3701,7 @@
 							</tr>
 							<tr><td colspan='3'>&nbsp;</td></tr>
 							<tr id='csv-import'>
-								<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+								<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 								<td colspan='3' align='right'>
 									<input type='file' name='config_file'>
 									<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -3681,7 +3729,7 @@
 			</tr>
 			<tr>
 				<td colspan='2' align='left'>
-					<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+					<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 					<input type='submit' value='Добавить из CSV файла'>
 					<input type='file' name='config_file'>
 					<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -3936,7 +3984,7 @@
 							</form>
 						</td>
 						<td colspan='4' align='right' nowrap='nowrap'>
-							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 							<input type='file' name='config_file'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
@@ -3955,8 +4003,21 @@
 			[% IF VBOX_PREF.TYPE eq '21' %]
 			<tr><td colspan='3'>&nbsp;</td></tr>
 			<tr>
-				<td colspan='2' align='left'><h4>Список условий для `Перейти если`:</h4></td>
+				<td colspan='3' align='left'><h4>Список условий для `Перейти если`:</h4></td>
+			</tr>
+			<tr>
+				<td colspan='2' align='left'>
+					<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+					<input type='submit' value='Добавить из CSV файла'>
+					<input type='file' name='config_file'>
+					<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
+					<input type='hidden' name='action' value='ext_restore'>
+					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+					<input type='hidden' name='is_excel' value='1'>
+					</form>
+				</td>
 				<td align='right'>
+					<a title='Экспорт в Excel' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=all&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
 					<a href='?action=gotoif_del&id=[% VBOX_PREF.ID %]&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='Удалить все пункты `перейти если`'><span class='icon-bin-all fs2'></span></a>
 				</td>
 			</tr>
@@ -4147,7 +4208,7 @@
 							</form>
 						</td>
 						<td colspan='4' align='right'>
-							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 							<input type='file' name='config_file'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>

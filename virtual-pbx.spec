@@ -193,6 +193,7 @@ mv contrib/rc.d/xvb-tcpdump.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-tc
 mv contrib/rc.d/perl-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-perl-worker
 mv contrib/rc.d/gearman-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-gearman-worker
 mv contrib/rc.d/callblast.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-callblast
+mv contrib/rc.d/check_extip.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-check_extip
 mv contrib/systemd/*.service $RPM_BUILD_ROOT/%{_sysconfdir}/systemd/system/
 mv sounds/*.tgz $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds/
 mv contrib/asterisk/extensions.conf $RPM_BUILD_ROOT/%{_sysconfdir}/asterisk/xvb/xvb.conf
@@ -532,6 +533,10 @@ fi
 %attr(755,root,root) %CORE_DIR/contrib/utils/ui_backup.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/event-listener.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/xvb-capt
+%attr(755,root,root) %CORE_DIR/contrib/utils/check_extip.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_check_extip
+%attr(644,root,root) %{_sysconfdir}/systemd/system/xvb-check_extip.service
+%attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-check_extip
 %CORE_DIR/contrib/asterisk/features.conf
 %CORE_DIR/contrib/asterisk/extconfig.conf
 %CORE_DIR/3rdparty/*
@@ -542,6 +547,7 @@ fi
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/helperdb
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/backups
 %attr(755,root,root) %CORE_DIR/contrib/utils/file2moh.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/chan_utils.pl
 
 ####################################################
 #

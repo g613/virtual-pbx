@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: menu.tt,v 1.7 2018/02/20 19:42:33 gosha Exp $ -->
+<!-- $Id: menu.tt,v 1.8 2019/09/06 11:29:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - main menu</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -7,7 +7,9 @@
 	[% ELSE %]
 	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
 	[% END %]
+	[% IF REFRESH %]
 	<meta http-equiv="refresh" content="[% REFRESH %]" />
+	[% END %]
 </head>
 
 <body>

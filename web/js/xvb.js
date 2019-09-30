@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.124 2019/02/12 19:40:14 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.126 2019/07/16 13:03:39 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -845,25 +845,27 @@ function exten_dropdown( prefix ) {
 		}
 	}
 }
-function exten_dropdown2( select_name, extension, prefix ) {
+function exten_dropdown2( select_name, extension, prefix, ext_type ) {
 	document.write('<select onchange=\'exten_dropdown2_hook(this.value,"'+ select_name +'")\' name="'+ select_name +'-DD">' + prefix);
 	var item_exists = 0;
 	for( var i=0, l=e_menu.length; i<l; ++i ) {
 		var ext_num = e_menu[i];
 		/* by Ext Name */
 		if ( select_name == 'NEXTEXTENSION' || ( ext_num != 'hangup' && ext_num != 'back' && ext_num != 'repeat' ) ) {
-			document.write('<option value="'+ ext_num +'"');
-			if ( ext_num == extension ) {
-				document.write(' selected ');
-				item_exists = 1;
+			if ( typeof(ext_type) == 'undefined' || ( ext_type == e_list[ext_num][4] ) ) {
+				document.write('<option value="'+ ext_num +'"');
+				if ( ext_num == extension ) {
+					document.write(' selected ');
+					item_exists = 1;
+				}
+				document.write( '>' + ext_num + ' - ');
+				if ( e_list[ext_num][2].length > 0 ) {
+					document.write( e_list[ext_num][2] );
+				} else {
+					document.write( e_list[ext_num][1] );
+				}
+				document.write('</option>');
 			}
-			document.write( '>' + ext_num + ' - ');
-			if ( e_list[ext_num][2].length > 0 ) {
-				document.write( e_list[ext_num][2] );
-			} else {
-				document.write( e_list[ext_num][1] );
-			}
-			document.write('</option>');
 		}
 	}
 	if ( item_exists == 0 && extension.length > 0 ) {

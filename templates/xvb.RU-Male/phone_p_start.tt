@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pp_start.tt,v 1.2 2018/03/17 20:45:17 gosha Exp $ -->
+<!-- $Id: phone_p_start.tt,v 1.3 2019/09/08 17:57:25 gosha Exp $ -->
 <frameset cols="134,*" border="0" framespacing="0">
 	<frame name='xvb_menu' src="?action=pp_menu">
 	<frame name='xvb_data' src="?action=pp_pinfo">

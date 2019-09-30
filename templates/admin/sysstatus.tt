@@ -199,7 +199,7 @@ chartArea:{top:5, width:'90%',height:'90%'},
 					[% data.IP | html %]
 				</td>
 				<td>
-					<a title='unblock IP' href='https://[% data.NODE %]/ai?action=f2b&ip=[% data.IP | html %]&node=[% data.NODE | html %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
+					<a title='unblock IP' href='[% data.NODE %]/ai?action=f2b&ip=[% data.IP | html %]&node=[% data.NODE | html %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
 				</td>
 			</tr>
 			[% END %]

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_messages_list.tt,v 1.1 2018/03/18 18:07:24 gosha Exp $ -->
+<!-- $Id: phone_p_messages_list.tt,v 1.2 2019/09/08 17:57:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Messages</title>
 
@@ -93,16 +93,16 @@
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
 			[% IF msg.IS_VOICE %]
 			<td align='center'>
-				<a class='msg' id='msg[% msg.MSG_NUM %]' title='download' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>[% msg.MSG_DATE | html %]</a>
+				<a class='msg' id='msg[% msg.MSG_NUM %]' title='download' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>[% msg.MSG_DATE | html %]</a>
 			</td>
 			<td align='left'>
 				<a title='listen' 
-					onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen','[% msg.MSG_NUM %]' )"
+					onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen','[% msg.MSG_NUM %]' )"
 					href="#"><span class='icon-volume-medium fs0'></span></a>
 			</td>
 			[% ELSE %]
 			<td align='center'>
-				<a class='msg' title='download' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'>[% msg.MSG_DATE | html %]</a>
+				<a class='msg' title='download' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'>[% msg.MSG_DATE | html %]</a>
 			</td>
 			<td></td>
 			[% END %]

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.34 2018/03/14 14:59:45 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.35 2019/09/08 17:57:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Все сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -125,16 +125,16 @@
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
 			[% IF msg.IS_VOICE %]
 			<td align='center'>
-				<a class='msg' id='msg[% msg.MSG_NUM %]' title='скачать сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>[% msg.MSG_DATE | html %]</a>
+				<a class='msg' id='msg[% msg.MSG_NUM %]' title='скачать сообщение' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>[% msg.MSG_DATE | html %]</a>
 			</td>
 			<td align='left'>
 				<a title='прослушать' 
-					onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen','[% msg.MSG_NUM %]' )"
+					onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen','[% msg.MSG_NUM %]' )"
 					href="#"><span class='icon-volume-medium fs0'></span></a>
 			</td>
 			[% ELSE %]
 			<td align='center'>
-				<a class='msg' title='скачать файл' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'>[% msg.MSG_DATE | html %]</a>
+				<a class='msg' title='скачать файл' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'>[% msg.MSG_DATE | html %]</a>
 			</td>
 			<td></td>
 			[% END %]
@@ -151,7 +151,7 @@
 			<td>[% msg.DESCRIPTION | locale_msg %]</td>
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
 			<td align='right' nowrap='nowrap'>
-				<a title='удалить сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs0'></span></a>
+				<a title='удалить сообщение' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs0'></span></a>
 			</td>
 		</tr>
 		[% END %]

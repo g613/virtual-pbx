@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.25 2018/05/09 19:47:54 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.26 2019/09/08 17:57:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Phone book - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -28,7 +28,7 @@
 	<table>
 		<tr id='csv-import'>
 			<td align='left'>
-				<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+				<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 					<input type='submit' value='Append data from CSV'>
 					<input type='file' name='config_file'>
 					<input type='hidden' name='section' value='PBOOK'>

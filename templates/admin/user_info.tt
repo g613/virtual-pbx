@@ -40,7 +40,7 @@
 				Calls: [% USER.CUR_CALLS %]
 			</td>
 			<td width='90%' align='center'>
-				<h1>Tenant info</h1>
+				<h1>[% USER.ACCESS_CODE %] - Tenant info</h1>
 			</td>
 			<td align='right'>
 				<a title='delete tenat' href='?action=user_del&user_id=[% USER.ID %]&single_user=1' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>

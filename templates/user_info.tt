@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.108 2019/01/07 16:28:01 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.109 2019/09/08 17:57:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - PBX profile - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -232,15 +232,15 @@
 								<td>Custom music on hold file: </td>
 								<td align='center' nowrap='nowrap'>
 									<a title='play' 
-										onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% CUSTOM_MOH %]?media=mp3;type=listen' )"
+										onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% CUSTOM_MOH %]?media=mp3;type=listen' )"
 										href="#"><span class='icon-volume-medium fs0'></span></a>
-										<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% CUSTOM_MOH %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
-									&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% CUSTOM_MOH %]&type=1&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr')" title='delete MOH file'><span class='icon-bin fs0'></span></a>
+										<a title='download file' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% CUSTOM_MOH %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs0'></span></a>
+									&nbsp;<a href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% CUSTOM_MOH %]&type=1&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr')" title='delete MOH file'><span class='icon-bin fs0'></span></a>
 								</td>
 							</tr>
 							[% END %]
 							<tr>
-							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
+							<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
 								<td>
 									<input type='file' name='msg'>
 									<input type='hidden' name="type" value='5'>
@@ -263,7 +263,7 @@
 							<td colspan='2'><h2>Backup options:</h2></td>
 						</tr>
 						<tr>
-							<form method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
+							<form method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
 							<td>
 								Media backup: <input type='checkbox' name='full_backup'>
 								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
@@ -278,7 +278,7 @@
 							<td>&nbsp;</td>
 						</tr>
 						<tr>
-							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 							<td>
 								Merge: <input type='checkbox' name='merge'>
 								<input type='file' name='config_file'>
@@ -296,7 +296,7 @@
 				</tr>
 				[% IF USER_CREDS.CUSTOM_FILES %]
 				<tr>
-					<td colspan='2' align='left'>&nbsp;<h2><a href="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=sysmedia_list&uniq=[% USER_CREDS.UNIQ %]">System media files</a></h2></td>
+					<td colspan='2' align='left'>&nbsp;<h2><a href="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=sysmedia_list&uniq=[% USER_CREDS.UNIQ %]">System media files</a></h2></td>
 				</tr>
 				[% END %]
 			</table>

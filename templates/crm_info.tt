@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: crm_info.tt,v 1.11 2018/09/05 18:44:43 gosha Exp $ -->
+<!-- $Id: crm_info.tt,v 1.12 2019/09/08 17:57:24 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Customer info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -96,7 +96,7 @@
 					</span>
 					
 					[% IF C2C_SECRET %]
-					<a title='Click2Call' href='#' onclick="click2call_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','en','CRM_DID=[% param.PHONE | html %]')"><span class='icon-phone fs0'></span></a>
+					<a title='Click2Call' href='#' onclick="click2call_win('[% USER_CREDS.DOWNLOAD_IP %]','[% C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','en','CRM_DID=[% param.PHONE | html %]')"><span class='icon-phone fs0'></span></a>
 					[% END %]
 
 					<a href='?action=pbook_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='Delete'><span class='icon-bin fs0'></span></a>
@@ -182,7 +182,7 @@
 			<td align='right' nowrap='nowrap'>
 				[% IF param.FILE_NAME %]
 				<a title='listen' 
-					onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download[% param.FILE_NAME %]?media=mp3;type=listen' )"
+					onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download[% param.FILE_NAME %]?media=mp3;type=listen' )"
 					href="#"><span class='icon-volume-medium fs0'></span></a>
 				[% END %]
 				
@@ -218,7 +218,7 @@
 				
 				[% IF param.FILE_NAME %]
 				<a title='listen' 
-					onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download[% param.FILE_NAME %]?media=mp3;type=listen' )"
+					onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download[% param.FILE_NAME %]?media=mp3;type=listen' )"
 					href="#"><span class='icon-volume-medium fs0'></span></a>
 				[% END %]
 				

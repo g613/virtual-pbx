@@ -35,7 +35,7 @@
 		</tr>
 	</table>
 	<center>
-	<h1>Live calls</h1>
+	<h1>Live calls - [% CALLS_COUNT %]</h1>
 
 	<p>
 	<table width='100%'>
@@ -108,9 +108,9 @@
 			<td>[% msg.SERVER_ID | html %]</td>
 			<td>
 				[% IF CDR_C2C %]
-					<a title='Listen' href='https://[% msg.NODE_IP %]/c2c?dlm=,&message=Please%20wait%20a%20call&ph=XVBSPY&user_vars=XVB_CHAN=[% msg.CALL_ID %],AST_CHAN=[% msg.AST_ID | htmlstrict %][% CDR_C2C %]'><span class='icon-phone fs0'></span></a>
+					<a title='Listen' href='[% msg.DOWNLOAD_IP %]/c2c?dlm=,&message=Please%20wait%20a%20call&ph=XVBSPY&user_vars=XVB_CHAN=[% msg.CALL_ID %],AST_CHAN=[% msg.AST_ID | htmlstrict %][% CDR_C2C %]'><span class='icon-phone fs0'></span></a>
 				[% END %]
-				<a title='hangup' href='https://[% msg.NODE_IP %]/ai?action=calls_hangup&user_id=[% msg.SUBSCR_ID %]&call_id=[% msg.CALL_ID | html %]' onclick="return DelConfirm('en')"><span class='icon-cancel-circle fs0'></span></a>
+				<a title='hangup' href='[% msg.DOWNLOAD_IP %]/ai?action=calls_hangup&user_id=[% msg.SUBSCR_ID %]&call_id=[% msg.CALL_ID | html %]' onclick="return DelConfirm('en')"><span class='icon-cancel-circle fs0'></span></a>
 			</td>
 		</tr>
 		[% END %]

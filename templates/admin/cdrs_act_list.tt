@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.21 2019/03/16 14:52:19 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.22 2019/03/23 18:12:15 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs / Call Detail</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />

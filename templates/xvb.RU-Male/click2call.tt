@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: click2call.tt,v 1.21 2018/09/05 18:44:43 gosha Exp $ -->
+<!-- $Id: click2call.tt,v 1.22 2019/09/08 17:57:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Click2Call - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -36,7 +36,7 @@
 		[% FOREACH c2c = C2C_LIST %]
 		<tr align='center' class='nocolor' id='d-tr-[% c2c.ID %]'>
 			<form method="post" action="[% CGI_URL %]" id='f-[% c2c.ID %]' onSubmit='return xmlhttpPost(this,1)'>
-			<td align='left'>https://[% USER_CREDS.DOWNLOAD_IP %]/c2c?key=[% c2c.SECRET | html %]&ac=[% USER_CREDS.ACCESS_CODE %]&ph=<b>&lt;номер телефона&gt;</b></td>
+			<td align='left'>[% USER_CREDS.DOWNLOAD_IP %]/c2c?key=[% c2c.SECRET | html %]&ac=[% USER_CREDS.ACCESS_CODE %]&ph=<b>&lt;номер телефона&gt;</b></td>
 			<td align='left' nowrap='nowrap'>
 				<input class='in_t0' size="11" name='redir_to' type='text' value='[% c2c.EXTENSION | html %]'>
 				<script language="JavaScript">
@@ -56,8 +56,8 @@
 				<script language='JavaScript'>
 					stat_icon( '[% c2c.EXTENSION | html %]', '[% USER_CREDS.UNIQ | html %]', 'Click2Call', 'статистика' );
 				</script>
-				<a title='Click2Call' href='#' onclick="click2call_win('https://[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru','')"><span class='icon-phone fs0'></span></a>
-				<a title='Click2Call код' href='#' onclick="click2call_code('https://[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru')"><span class='icon-share fs0'></span></a>
+				<a title='Click2Call' href='#' onclick="click2call_win('[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru','')"><span class='icon-phone fs0'></span></a>
+				<a title='Click2Call код' href='#' onclick="click2call_code('[% USER_CREDS.DOWNLOAD_IP %]','[% c2c.SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru')"><span class='icon-share fs0'></span></a>
 				<a title='удалить click2call ссылку' href='?action=c2c_del&data_id=[% c2c.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% c2c.ID %]')"><span class='icon-bin fs0'></span></a>
 			</td>
 			</form>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.27 2019/03/16 14:52:20 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.28 2019/09/08 17:57:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Активность номера - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -154,8 +154,8 @@
 	</p>
 
 	<script language='JavaScript'>
-		var download_file_url="<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/$1/[% USER_CREDS.ACCESS_CODE %]/$2.[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>FILE</a>";
-		var listen_file_url="<a title='слушать' onclick=\"return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/$1/[% USER_CREDS.ACCESS_CODE %]/$2?media=mp3;type=listen' )\" href='#'><span class='icon-volume-medium fs0'></span></a>";
+		var download_file_url="<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/$1/[% USER_CREDS.ACCESS_CODE %]/$2.[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>FILE</a>";
+		var listen_file_url="<a title='слушать' onclick=\"return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/$1/[% USER_CREDS.ACCESS_CODE %]/$2?media=mp3;type=listen' )\" href='#'><span class='icon-volume-medium fs0'></span></a>";
 		var callback_cdr_url="$1<a title='Информация о звонке' href='?action=act_list&call_id=$2&uniq=[% USER_CREDS.UNIQ %]'>CALL</a>";
 		cdrfilters( 'd-tbl', 5 );
 		listcolorer( 'd-tbl' );

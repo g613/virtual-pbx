@@ -39,7 +39,7 @@
 	<table width='100%' id='list-data'>
 		<tr>
 			<th class='rad_l'>Id</th>
-			<th>Download IP</th>
+			<th>URL</th>
 			<th>Asterisk IP</th>
 			<!--<th>AMI login:password</th>-->
 			<th>Description</th>
@@ -85,7 +85,7 @@
 				<input type='hidden' value='[% node.NODE_ID %]' name='data_id'>
 				<input type='hidden' value='node_update' name='action'>
 				<input type='hidden' value='[% MSG_FROM %]' name='from'>
-				<a title='system status' href='https://[% node.DOWNLOAD_IP | html %]/ai?action=sysstatus&node=[% node.DOWNLOAD_IP | html %]'><span class='icon-info fs0'></span></a>
+				<a title='system status' href='[% node.DOWNLOAD_IP | html %]/ai?action=sysstatus&node=[% node.DOWNLOAD_IP | html %]'><span class='icon-info fs0'></span></a>
 				<a title='delete node' href='?action=node_del&node_id=[% node.NODE_ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
                 <span class='in_t' id='in_t_id-[% node.NODE_ID %]'>
 					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% node.NODE_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>

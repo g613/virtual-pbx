@@ -6,10 +6,10 @@
 	<!-- FACEBOOK META TAGS -->
 	<meta name="medium" content="audio" />
 	<meta name="audio_type" content="audio/mpeg" />
-	<link rel="audio_src" href="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% MSG %].mp3?type=listen;media=mp3"/>
+	<link rel="audio_src" href="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% MSG %].mp3?type=listen;media=mp3"/>
 	<meta name="audio_artist" content="[% USER_CREDS.VOICENUMBER %] # [% USER_CREDS.ACCESS_CODE %] / [% CALLERID | html %]" />
 	<meta name="audio_title" content="Message in mailbox [% USER_CREDS.ACCESS_CODE | html %]@[% USER_CREDS.VOICENUMBER | html %] # [% EXT_NUMBER | html %] from [% CALLERID | html %], on [% DATE | html %]." />
-	<script language="javascript">window.location="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% MSG %].mp3?type=listen;media=mp3"</script>
+	<script language="javascript">window.location="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% MSG %].mp3?type=listen;media=mp3"</script>
 </head>
 <body>
 </body>

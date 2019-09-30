@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: new_message.tt,v 1.30 2018/07/07 10:55:33 gosha Exp $ -->
+<!-- $Id: new_message.tt,v 1.31 2019/09/08 17:57:25 gosha Exp $ -->
 <!--SUBJECT:New message from: [% callerid | html %] in mailbox [% _USER_VBOX.EXT_NUMBER | html %]:SUBJECT-->
 <head>
 	<BASE href="[% CGI_SERVER %]">
@@ -34,8 +34,8 @@ Just wanted to let you know you were just left message in mailbox <b>[% CALLED_I
 <!-- / 
 [% IF is_voice %]
 </p><p>
-<a href="https://twitter.com/intent/tweet?text=Check%20this%20out&url=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/msg_download/[% _USER_VBOX.ID | html %]/[% USER_CREDS.ACCESS_CODE %]/[% file_name | html %].mp3%3fmedia=mp3"><img src="/xvb/images/twitter22.png" alt="Share on twitter" title="Share on facebook" /></a>
-<a href="http://www.facebook.com/share.php?t=VirtualPBX&u=https://[% USER_CREDS.DOWNLOAD_IP | html %]/ui/fbshare/[% _USER_VBOX.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% file_name %]%3fdate=[% origdate | html %]&amp;cid=[% callerid | html %]"><img src="/xvb/images/facebook22.png" alt="Share on facebook" title="Share on facebook" /></a>
+<a href="https://twitter.com/intent/tweet?text=Check%20this%20out&url=[% USER_CREDS.DOWNLOAD_IP | html %]/ui/msg_download/[% _USER_VBOX.ID | html %]/[% USER_CREDS.ACCESS_CODE %]/[% file_name | html %].mp3%3fmedia=mp3"><img src="/xvb/images/twitter22.png" alt="Share on twitter" title="Share on facebook" /></a>
+<a href="http://www.facebook.com/share.php?t=VirtualPBX&u=[% USER_CREDS.DOWNLOAD_IP | html %]/ui/fbshare/[% _USER_VBOX.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% file_name %]%3fdate=[% origdate | html %]&amp;cid=[% callerid | html %]"><img src="/xvb/images/facebook22.png" alt="Share on facebook" title="Share on facebook" /></a>
 </p><p>
 [% END %]
 / -->
