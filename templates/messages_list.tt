@@ -1,7 +1,7 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.93 2019/09/08 17:57:24 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.94 2019/12/08 17:42:43 gosha Exp $ -->
 <head>
-	<title>Virtual PBX - Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
+	<title>Virtual PBX - Files - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 
@@ -27,10 +27,10 @@
 				<a href='?action=get_rss&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Rss"><span class='icon-feed3 fs0'></span></a>
 			</td>
 			<td align='center'>
-				<h1>Messages for Extension Number# <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
+				<h1>Files for Extension# <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
 			</td>
 			<td align='right' width='15%'>
-				<a title='delete messages' href='#' onclick="return SubmitConfirm('def','Are you sure want to delete all found messages ?')"><span class='icon-bin-all fs2'></span></a>
+				<a title='delete files' href='#' onclick="return SubmitConfirm('def','Are you sure want to delete all found files ?')"><span class='icon-bin-all fs2'></span></a>
 			</td>
 		</tr>
 	</table>
@@ -146,7 +146,7 @@
 		</tr>
 		[% ELSE %]
 		<tr>
-			<td colspan='9' align='center'><h4>No messages</h4></td>
+			<td colspan='9' align='center'><h4>No files</h4></td>
 		</tr>
 		[% END %]
 	</table>

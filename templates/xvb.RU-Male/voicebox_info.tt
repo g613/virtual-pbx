@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.101 2019/09/08 17:57:25 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.104 2019/12/08 17:42:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -50,7 +50,7 @@
 				<a href='?action=vb_add&new_ext=new-ext&uniq=[% USER_CREDS.UNIQ %]' title="Добавить новый внутренний номер"><span class='icon-plus-square-o fs0'></span></a>
 				<a href='?action=vb_clone&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Клонировать внутренний номер"><span class='icon-copy fs0'></span></a>
 			[% END %]
-				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Сообщения"><span class='icon-folder-open fs0'></span></a>
+				<a href='?action=msg_list&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Файлы"><span class='icon-folder-open fs0'></span></a>
 				<a href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Активность"><span class='icon-stats-bars fs0'></span></a>
 			[% IF EXTENDED_STAT %]
 				<a href='?action=extended_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Расширенная статистика"><span class='icon-power fs0'></span></a>
@@ -615,6 +615,25 @@
 						[% END %]
 						>
 						<label class="onoffswitch-label" for="WO_CONFIRM-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Записать весь звонок:<span>
+						При установке этого флага будет включена запись всего звонка которая окончится только
+						когда звонок завершиться.
+						</span></a>
+					</td>
+					<td>
+						<div class="onoffswitch">
+						<input name="REC_SESSION" type="checkbox" class="onoffswitch-checkbox" id="REC_SESSION-ch" 
+						[% IF VBOX_PREF.REC_SESSION %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="REC_SESSION-ch">
 							<span class="onoffswitch-inner"></span>
 							<span class="onoffswitch-switch"></span>
 						</label></div>
@@ -4057,7 +4076,7 @@
 									<option value="<=">&lt;=</option>
 									<option value=">=">&gt;=</option>
 									<option value="==">==</option>
-									<option value="!-">!-</option>
+									<option value="!=">!=</option>
 									<option value="contain">contain</option>
 									<option value="regexp">regexp</option>
 								</select> 

@@ -1,7 +1,7 @@
 <html>
-<!-- $Id: phone_p_messages_list.tt,v 1.6 2019/09/08 17:57:25 gosha Exp $ -->
+<!-- $Id: phone_p_messages_list.tt,v 1.7 2019/12/08 17:42:43 gosha Exp $ -->
 <head>
-	<title>Virtual PBX - Сообщения</title>
+	<title>Virtual PBX - Файлы</title>
 
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 
@@ -19,7 +19,7 @@
 <body onLoad="XVBInit()">
 	<center>
 			
-	<h1>Сообщения</h1>
+	<h1>Файлы</h1>
 	
 	<table width='100%'>
 		<tr>
@@ -93,7 +93,7 @@
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
 			[% IF msg.IS_VOICE %]
 			<td align='center'>
-				<a class='msg' id='msg[% msg.MSG_NUM %]' title='скачать сообщение' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>[% msg.MSG_DATE | html %]</a>
+				<a class='msg' id='msg[% msg.MSG_NUM %]' title='скачать файл' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>[% msg.MSG_DATE | html %]</a>
 			</td>
 			<td align='left'>
 				<a title='прослушать' 

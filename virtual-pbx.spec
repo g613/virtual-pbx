@@ -146,13 +146,14 @@ mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/cron.d
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/systemd/system
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/doc
-mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/db
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/recordings
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/tts
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/tmp
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/podcasts
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/helperdb
-mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/backups
+mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/backups/ui
+mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/backups/db
+mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/backups/sys
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/data
 
 #start-devel
@@ -531,6 +532,7 @@ fi
 %attr(755,root,root) %CORE_DIR/contrib/utils/node_diag.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/tts_clean.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/ui_backup.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/sys_backup.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/event-listener.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/xvb-capt
 %attr(755,root,root) %CORE_DIR/contrib/utils/check_extip.pl
@@ -545,7 +547,8 @@ fi
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/tts
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/podcasts
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/helperdb
-%attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/backups
+%attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/backups/sys
+%attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/backups/ui
 %attr(755,root,root) %CORE_DIR/contrib/utils/file2moh.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/chan_utils.pl
 
@@ -581,7 +584,7 @@ fi
 %attr(755,root,root) %CORE_DIR/contrib/utils/billing_processor_monthly.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/queues_hourly_avg.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/tts_mng.pl
-%attr(775,asterisk,asterisk) %dir %CORE_DIR/db
+%attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/backups/db
 
 
 ####################################################

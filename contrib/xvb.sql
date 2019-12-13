@@ -469,7 +469,8 @@ create table VPBX_ACCOUNTS
 
 	I_DIGIT_TIMEOUT	FLOAT(4,2) not null default 1,
 
-	CUSTOM_RULES	TEXT(1024),
+	CUSTOM_RULES	TEXT(4096),
+	CUSTOM_VARS		TEXT(4096),
 
 	DESCRIPTION		TEXT(1024),
 	CREATE_TIME		TIMESTAMP default CURRENT_TIMESTAMP(),
@@ -513,6 +514,7 @@ create table VPBX_DIDS
 
     SUBSCR_ID		INT(16)     	not null,
 	DID				VARCHAR(100)	not null,
+	CHANNELS		INT(16)			not null default -1,
 
     unique			    (DID),
     CONSTRAINT FK_VPBX_DIDS_SUBSCR FOREIGN KEY (SUBSCR_ID) REFERENCES VPBX_ACCOUNTS(ID) ON DELETE CASCADE,
@@ -651,6 +653,9 @@ create table VPBX_SIPPEERS (
 	FWD_AFTER		INT(6)			default 0,
 	WEB_SECRET		VARCHAR(50)		default '',
 
+	HOTDESK_PIN		VARCHAR(50)		default '',
+	HOTDESK_CID		VARCHAR(80)		default '',
+
 	NEED_REG		INT(1)			not null default 0,
 	REG_EXPIRE		INT(6)			not null default 0,
 	REG_USERNAME	VARCHAR(80)		NOT NULL DEFAULT '',
@@ -781,6 +786,7 @@ create	table VPBX_VBOXES_RECORD
 	KEEP_MSG			INT(1)			not null default 1,
 	SEND_ATTACH			INT(1)			not null default 1,
 	WO_CONFIRM			INT(1)			not null default 0,
+	REC_SESSION			INT(1)			not null default 0,
 
 	unique(ID),
 
@@ -815,6 +821,7 @@ create	table VPBX_VBOXES_RECORD_FILES
 	
 	INDEX I_RECORD_FILE_CALLERID (CALLERID),
 	INDEX I_RECORD_FILE_CALLEDID (CALLEDID),
+	INDEX I_RECORD_FILE_CALL_ID (CALL_ID),
 	INDEX I_RECORD_FILE_START_T (CREATE_TIME,ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -884,6 +891,7 @@ create	table VPBX_VBOXES_QUEUES
 	GOTO_IF_FAIL		VARCHAR(255),
 	MOH_ID				INT(16)			not null default 0,
 	RECORD_CALL			INT(1)			default 0,
+	RECORD_RINGS		INT(1)			default 0,
 	KEEP_MSG			INT(1)			default 1,
 	SEND_ATTACH			INT(1)			default 0,
 	WAIT_BUSY_ONLY		INT(1)			default 1,
@@ -1285,6 +1293,10 @@ create	table VPBX_VBOXES_CALLBLAST
 	CALL_LIMIT			INT(3)			default 0,
 	MIN_CALL_DURATION	INT(16)			default 0,
 	RECORD_CALL			INT(1)			default 0,
+	USE_AMD				INT(1)			default 0,
+
+	DEPEND_QUEUE			VARCHAR(255),
+	DEPEND_QUEUE_CAPACITY	FLOAT(4,2) default 1,
 	
 	unique(ID),
 
@@ -1448,6 +1460,7 @@ create	table VPBX_VBOXES_MULTIDIALOUT
 	WAIT_NOTES			INT(1)		default 0,
 	DYNAMIC_CID			INT(1)		default 0,
 	URL					TEXT(1024),
+	URL_STAT			TEXT(1024),
 	unique(ID),
     CONSTRAINT FK_VPBX_VBOXES_MULTIDIALOUT_MOH FOREIGN KEY (MOH_ID) REFERENCES VPBX_MOH(ID) ON UPDATE CASCADE,
     CONSTRAINT FK_VPBX_VBOXES_MULTIDIALOUT FOREIGN KEY (ID) REFERENCES VPBX_VBOXES_CORE(ID) ON DELETE CASCADE
@@ -1623,9 +1636,13 @@ create  table VPBX_CRM_NOTES
 	DATA_ID             INT(16) not null AUTO_INCREMENT,
 	SUBSCR_ID           INT(16) not null,
 	CUSTOMER_ID         INT(16) not null,
+	
 	CALL_ID             VARCHAR(32),
+	CALL_DETAIL         TEXT(512),
+	CALL_STATUS			INT(1) default 0,
 	NOTE                TEXT(4096),
 	TYPE                VARCHAR(50),
+	FILE_NAME			VARCHAR(255),
 
 	CREATE_TIMESTAMP	INT(16),
 
@@ -1713,6 +1730,8 @@ INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(7, 'LeastDura
 INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(8, 'Fastest', 'fastest');
 INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(9, 'memoryhunt', 'memoryhunt');
 INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(10, 'random3', 'random 3');
+INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(11, 'mostduration', 'most duration');
+INSERT INTO VPBX_VBOXES_DIALOUT_TYPE(ID, NAME, DESCRIPTION) VALUES(12, 'mostcalls', 'mostcalls');
 --  MOH CLASS
 INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION) VALUES(-1,'alwaysringing','Always ringing');
 INSERT INTO VPBX_MOH(ID,MOH_CLASS,DESCRIPTION) VALUES(0,'none','Disable');
@@ -2388,7 +2407,7 @@ INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_S
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP,POST_FILTER) values('Transit calls by region',1,unix_timestamp(), "select DATA from VPBX_CDRS cdr_d where (START_TIMESTAMP > [% DATE_START %] or STOP_TIMESTAMP > [% DATE_START %] ) and START_TIMESTAMP < [% DATE_STOP %] and CALL_TYPE = 'transit'",3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))", "sub { my $in_data = shift; unless ( scalar(@$in_data) ) { return ( [], ['=Region','Calls'] ); } my %result; for ( my $i = 0; $i <= $#$in_data; $i++ ) { my $ref = $in_data->[$i]; my $data = $ref->{'DATA'}; if ( $data =~ /REGION=([^,]+)/ ) { my @chunks = split(/\\s*\\/\\s*/,$1); $result{ $chunks[$#chunks] }++; } else { $result{'unknown'}++; } } my $out_data = []; foreach my $k ( sort keys %result ) { push @$out_data, { '=Region' => $k, Calls => $result{$k} }; } return ( $out_data, ['=Region','Calls'] ); };" );
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL) values('Audio files by size',1,unix_timestamp(), "select '< 0.5 M / ~  1 min' as 'File size=', count(*) 'Files=', round(sum(f.FILE_SIZE)/1024/1024,2) 'Total size MB=' from VPBX_VBOXES_RECORD_FILES f where f.FILE_SIZE <= 524288 and f.IS_VOICE = 1 union select '< 1.0 M / ~  2 min' as 'File size=', count(*) 'Files=', round(sum(f.FILE_SIZE)/1024/1024,2) 'Total size MB=' from VPBX_VBOXES_RECORD_FILES f where f.FILE_SIZE <= 1048576 and f.FILE_SIZE > 524288 and f.IS_VOICE = 1 union select '< 2.5 M / ~ 5 min' as 'File size=', count(*) 'Files=', round(sum(f.FILE_SIZE)/1024/1024,2) 'Total size MB=' from VPBX_VBOXES_RECORD_FILES f where f.FILE_SIZE <= 2621440 and f.FILE_SIZE > 1048576 and f.IS_VOICE = 1 union select '< 5.0 M / ~ 10 min' as 'File size=', count(*) 'Files=', round(sum(f.FILE_SIZE)/1024/1024,2) 'Total size MB=' from VPBX_VBOXES_RECORD_FILES f where f.FILE_SIZE < 5242880 and f.FILE_SIZE > 2621440 and f.IS_VOICE = 1 union select '> 5.0 M' as 'File size=', count(*) 'Files=', round(sum(f.FILE_SIZE)/1024/1024,2) 'Total size MB=' from VPBX_VBOXES_RECORD_FILES f where f.FILE_SIZE > 5242880 and f.IS_VOICE = 1", 3600 );
 
-INSERT INTO VPBX_NODES (NODE_ID,NODE_IP,DOWNLOAD_IP,NODE_DESC) values('DEFAULT_NODE','127.0.0.1','127.0.0.1','Default node');
+INSERT INTO VPBX_NODES (NODE_ID,NODE_IP,DOWNLOAD_IP,NODE_DESC) values('DEFAULT_NODE','127.0.0.1','https://127.0.0.1','Default node');
 INSERT INTO VPBX_GROUPS (GROUP_ID,GROUP_NAME,SERVER_ID,CUSTOM_ROUTE,CUSTOM_FILES) values(1,'default','DEFAULT_NODE',1,1);
 INSERT INTO VPBX_GROUPS (GROUP_ID,GROUP_NAME,SERVER_ID,CUSTOM_ROUTE,CUSTOM_FILES,ALLOW_MACROS,MAX_EXTENSIONS,SUB_TEMPLATE_DIR) values(2,'SVB-Free','DEFAULT_NODE',0,0,0,1,'single');
 

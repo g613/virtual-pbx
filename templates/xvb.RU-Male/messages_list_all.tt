@@ -1,7 +1,7 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.35 2019/09/08 17:57:25 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.37 2019/12/13 19:16:41 gosha Exp $ -->
 <head>
-	<title>Virtual PBX - Все сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
+	<title>Virtual PBX - Файлы - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 
@@ -26,10 +26,10 @@
 				<a href='?action=get_rss_all&uniq=[% USER_CREDS.UNIQ %]' title="Rss"><span class='icon-feed3 fs0'></span></a>
 			</td>
 			<td align='center'>
-				<h1>Сообщения</h1>
+				<h1>Файлы</h1>
 			</td>
 			<td align='right' width='15%'>
-				<a title='удалить сообщения' href='#' onclick="return SubmitConfirm('ru','Вы действительно хотите удалить ВСЕ найденные сообщения ?')"><span class='icon-bin-all fs2'></span></a>
+				<a title='удалить файлы' href='#' onclick="return SubmitConfirm('ru','Вы действительно хотите удалить ВСЕ найденные файлы ?')"><span class='icon-bin-all fs2'></span></a>
 			</td>
 		</tr>
 	</table>
@@ -78,7 +78,7 @@
 				<input size='11' type='text' placeholder='Длительность' name='duration' value='[% DURATION | html %]'>
 				&nbsp;
 				<select name="msg_type" id='msg_type_selector'>
-					<option selected='selected' value="">Любые сообщения</option>
+					<option selected='selected' value="">Любые файлы</option>
 					<option value="30:40:41:42:43">Все пользовательские</option>
 					<option value="1:2:3:4:5:6">Все системные</option>
 					<option value=",1">Только голосовые</option>
@@ -125,7 +125,7 @@
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
 			[% IF msg.IS_VOICE %]
 			<td align='center'>
-				<a class='msg' id='msg[% msg.MSG_NUM %]' title='скачать сообщение' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>[% msg.MSG_DATE | html %]</a>
+				<a class='msg' id='msg[% msg.MSG_NUM %]' title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>[% msg.MSG_DATE | html %]</a>
 			</td>
 			<td align='left'>
 				<a title='прослушать' 
@@ -151,7 +151,7 @@
 			<td>[% msg.DESCRIPTION | locale_msg %]</td>
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
 			<td align='right' nowrap='nowrap'>
-				<a title='удалить сообщение' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs0'></span></a>
+				<a title='удалить файл' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs0'></span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -164,7 +164,7 @@
 		</tr>
 		[% ELSE %]
 		<tr>
-			<td colspan='10' align='center'><h4>Сообщений нет</h4></td>
+			<td colspan='10' align='center'><h4>Файлов не найдено</h4></td>
 		</tr>
 		[% END %]
 	</table>

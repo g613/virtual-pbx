@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_cdrs_list.tt,v 1.4 2018/03/18 16:12:19 gosha Exp $ -->
+<!-- $Id: phone_p_cdrs_list.tt,v 1.5 2019/12/08 20:38:08 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - История звонков</title>
 
@@ -91,6 +91,7 @@
 			<th colspan='2'>Номер звонящего</th>
 			<th>Номер назначения</th>
 			<th>Длительность</th>
+			<th>&nbsp;</th>
 			<th class='rad_r'>Тип</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
@@ -117,6 +118,13 @@
 				[% END %]
 				<td>[% msg.CALLED_ID | html %]</td>
 				<td>[% msg.CDR_DURATION | duration_str %]</td>
+				<td>
+				[% IF msg.VB_ID %]
+				<a title='прослушать' 
+					onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.VB_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
+					href="#"><span class='icon-volume-medium fs0'></span></a>
+				[% END %]
+				</td>
 				<td>[% msg.CALL_TYPE | locale_msg %]</td>
 			</tr>
 		[% END %]

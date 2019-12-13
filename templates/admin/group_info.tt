@@ -293,11 +293,11 @@
 			<td><input name='GR_MAX_CALLS_IN' type='text' value="[% GROUP.MAX_CALLS_IN | html %]"></td>
 		</tr>
 		<tr>
-			<td>Maximum size of all messages ( bytes ): </td>
+			<td>Maximum size of all files ( bytes ): </td>
 			<td><input name='GR_MAX_SIZE_MSGS' type='text' value="[% GROUP.MAX_SIZE_MSGS | html %]"></td>
 		</tr>
 		<tr>
-			<td>Maximum all messages: </td>
+			<td>Maximum all files: </td>
 			<td><input name='GR_MAX_ALL_MSGS' type='text' value="[% GROUP.MAX_ALL_MSGS | html %]"></td>
 		</tr>
 		<tr>

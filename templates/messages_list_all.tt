@@ -1,7 +1,7 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.81 2019/09/08 17:57:24 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.83 2019/12/13 19:16:41 gosha Exp $ -->
 <head>
-	<title>Virtual PBX - All Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
+	<title>Virtual PBX - Files - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 
@@ -26,10 +26,10 @@
 				<a href='?action=get_rss_all&uniq=[% USER_CREDS.UNIQ %]' title="Rss"><span class='icon-feed3 fs0'></span></a>
 			</td>
 			<td align='center'>
-				<h1>All Messages</h1>
+				<h1>Files</h1>
 			</td>
 			<td align='right' width='15%'>
-				<a title='delete messages' href='#' onclick="return SubmitConfirm('def','Are you sure want to delete all found messages ?')"><span class='icon-bin-all fs2'></span></a>
+				<a title='delete files' href='#' onclick="return SubmitConfirm('def','Are you sure want to delete all found files ?')"><span class='icon-bin-all fs2'></span></a>
 			</td>
 		</tr>
 	</table>
@@ -78,10 +78,10 @@
 				<input size='8' type='text' placeholder='Duration' name='duration' value='[% DURATION | html %]'>
 				&nbsp;
 				<select name="msg_type" id='msg_type_selector'>
-					<option value="" selected>Any messages</option>
-					<option value="30:40:41:42:43">User messages</option>
-					<option value="1:2:3:4:5:6">System messages</option>
-					<option value=",1">Only voice messages</option>
+					<option value="" selected>Any files</option>
+					<option value="30:40:41:42:43">User files</option>
+					<option value="1:2:3:4:5:6">System files</option>
+					<option value=",1">Only voice files</option>
 					<option value=",0">Fax / DTMF</option>
 					<option value="1">User name</option>
 					<option value="2">User greeting</option>
@@ -169,7 +169,7 @@
 			<td colspan='10'>&nbsp;</td>
 		</tr>
 		<tr>
-			<td colspan='10' align='center'><h4>No messages</h4></td>
+			<td colspan='10' align='center'><h4>No files</h4></td>
 		</tr>
 		<tr>
 			<td colspan='10'>&nbsp;</td>

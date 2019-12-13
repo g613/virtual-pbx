@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_menu.tt,v 1.2 2018/04/14 11:21:47 gosha Exp $ -->
+<!-- $Id: phone_p_menu.tt,v 1.3 2019/12/08 17:42:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - main menu</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -28,7 +28,7 @@
 			<li><a class='amenu' target='xvb_data' href='?action=pp_cdr_list'>Call History</a></li>
 			<br />
 			
-			<li><a class='amenu' target='xvb_data' href='?action=pp_msg_list'>Messages</a></li>
+			<li><a class='amenu' target='xvb_data' href='?action=pp_msg_list'>Files</a></li>
 			<br />
 			
 			<li><a class='amenu' target='xvb_data' href='?action=pp_pbook_list'>Phone book</a></li>
