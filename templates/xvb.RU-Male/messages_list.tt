@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.30 2019/12/13 19:16:41 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.31 2020/01/05 08:52:24 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Файлы - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -90,14 +90,13 @@
 		[% IF MSG_LIST scalar %]
 		<tr>
 			<th class='rad_l'>#</th>
+			<th width='10%'>Действия</th>
 			<th>Дата</th>
-			<th>&nbsp;</th>
 			<th>Кто звонил</th>
 			<th>Кому звонил</th>
 			<th>Длительность</th>
 			<th>Тип</th>
-			<th>Размер</th>
-			<th class='rad_r'>&nbsp;</th>
+			<th class='rad_r'>Размер</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
@@ -110,19 +109,24 @@
 		<tr class='nocolor' id='d-tr-[% msg.FILE_NAME %]'>
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
 			[% IF msg.IS_VOICE %]
-			<td align='center'>
-				<a class='msg' id='msg[% msg.MSG_NUM %]' title='скачать файл' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>[% msg.MSG_DATE | html %]</a>
-			</td>
-			<td align='left'>
+			<td align='right' nowrap='nowrap'>
 				<a title='прослушать' 
 					onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen','[% msg.MSG_NUM %]' )"
-					href="#"><span class='icon-volume-medium fs0'></span></a>
+					href="#"><span class='icon-volume-medium fs3'></span></a>
+					<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs3'></span></a>
+					<a title='удалить файл' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs3'></span></a>
+			</td>
+			<td align='center'>
+				<a class='msg' id='msg[% msg.MSG_NUM %]' title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>[% msg.MSG_DATE | html %]</a>
 			</td>
 			[% ELSE %]
+			<td align='right' nowrap='nowrap'>
+					<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs3'></span></a>
+					<a title='удалить файл' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs3'></span></a>
+			</td>
 			<td align='center'>
 				<a class='msg' title='скачать файл' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'>[% msg.MSG_DATE | html %]</a>
 			</td>
-			<td></td>
 			[% END %]
 			<td>[% msg.CALLERID | html %]</td>
 			<td>[% msg.CALLEDID | html %]</td>
@@ -133,14 +137,11 @@
 			[% END %]
 			<td>[% msg.DESCRIPTION | locale_msg %]</td>
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
-			<td align='right' nowrap='nowrap'>
-				<a title='удалить файл' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs0'></span></a>
-			</td>
 			</tr>
 			[% END %]
 			[% IF MSG_NEXT ne '' %]
 			<tr>
-				<td align='right' colspan='9'>
+				<td align='right' colspan='8'>
 					<a title='следующая страница ([% MSG_NEXT %])' href='?action=msg_list&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
 				</td>
 			</tr>

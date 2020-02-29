@@ -472,6 +472,14 @@ li {
 	color:red;
 	padding: 5px;
 }
+.fs3 {
+        font-size: 20px;
+        color:#177282;
+        padding: 5px;
+}
+.fs3:hover {
+        color:red;
+}
 .icon-cross {
 	color:red;
 	font-size: 20px;

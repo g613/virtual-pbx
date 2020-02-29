@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.21 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.24 2020/02/09 07:11:41 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP шлюзы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -126,7 +126,11 @@
 				<select name='tmpl' onchange="peers_hide(this.form)">
 					<option value=''>--провайдеры--</option>
 					[% FOREACH p = PEERS_TMPL_LIST %]
-						<option value="[% p.HOST %]">[% p.NAME %]</option>
+						[% IF p.HIDE == '1' %]
+							<!--[% p.HOST %]" == [% p.NAME %]-->
+						[% ELSE %]
+							<option value="[% p.HOST %]">[% p.NAME %]</option>
+						[% END %]
 					[% END %]
 					<option value=''>другой</option>
 				</select>

@@ -88,6 +88,14 @@
 					[% USER.ACCESS_CODE | html %]&nbsp;&nbsp;
 				</td>
 			</tr>
+			<tr>
+				<td>
+					Created date:
+				</td>
+				<td>
+					[% USER.CREATE_TIME | html %]&nbsp;&nbsp;
+				</td>
+			</tr>
 			<form method='post' id='find-form'>
 			<tr>
 				<td>

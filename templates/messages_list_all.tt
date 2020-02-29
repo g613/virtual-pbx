@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.83 2019/12/13 19:16:41 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.84 2020/01/05 08:52:24 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Files - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -105,15 +105,14 @@
 		[% IF MSG_LIST scalar %]
 		<tr>
 			<th class='rad_l'>#</th>
+			<th width='10%'>Actions</th>
 			<th>Date</th>
-			<th>&nbsp;</th>
 			<th>CallerID</th>
 			<th>CalledID</th>
 			<th>Duration</th>
 			<th>Ext</th>
 			<th>Type</th>
-			<th>Size</th>
-			<th class='rad_r'>&nbsp;</th>
+			<th class='rad_r'>Size</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
@@ -126,19 +125,24 @@
 		<tr class='nocolor' id='d-tr-[% msg.FILE_NAME %]'>
 			<td>&nbsp;[% msg.MSG_NUM %]</td>
 			[% IF msg.IS_VOICE %]
-			<td align='center'>
-				<a class='msg' id='msg[% msg.MSG_NUM %]' title='download message' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>[% msg.MSG_DATE | html %]</a>
-			</td>
-			<td align='left'>
+			<td align='right' nowrap='nowrap'>
 				<a title='listen' 
 					onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen','[% msg.MSG_NUM %]' )"
-					href="#"><span class='icon-volume-medium fs0'></span></a>
+					href="#"><span class='icon-volume-medium fs3'></span></a>
+					<a title='download' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs3'></span></a>
+					<a title='delete file' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'en','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs3'></span></a>
+			</td>
+			<td align='center'>
+				<a class='msg' id='msg[% msg.MSG_NUM %]' title='download' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>[% msg.MSG_DATE | html %]</a>
 			</td>
 			[% ELSE %]
-			<td align='center'>
-				<a class='msg' title='download file' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'>[% msg.MSG_DATE | html %]</a>
+			<td align='right' nowrap='nowrap'>
+					<a title='download' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><span class='icon-download3 fs3'></span></a>
+					<a title='delete file' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'en','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs3'></span></a>
 			</td>
-			<td></td>
+			<td align='center'>
+				<a class='msg' title='download' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'>[% msg.MSG_DATE | html %]</a>
+			</td>
 			[% END %]
 			<td>
 				<a title='call detail' href="?action=act_list&call_id=[% msg.CALL_ID %]&uniq=[% USER_CREDS.UNIQ %]">[% msg.CALLERID | html %]</a>
@@ -152,9 +156,6 @@
 			<td>&nbsp;<a href='?action=vb_view&id=[% msg.ID | html %]&uniq=[% USER_CREDS.UNIQ %]'>[% msg.EXT_NUMBER | html %]</a></td>
 			<td>[% msg.DESCRIPTION | html %]</td>
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
-			<td nowrap='nowrap'>
-				<a title='delete message' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'en','d-tr-[% msg.FILE_NAME %]')"><span class='icon-bin fs0'></span></a>
-			</td>
 		</tr>
 		[% END %]
 		<tr>

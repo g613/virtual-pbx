@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: crm_info.tt,v 1.13 2019/12/08 17:42:43 gosha Exp $ -->
+<!-- $Id: crm_info.tt,v 1.15 2019/12/29 20:13:37 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Customer info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -11,6 +11,13 @@
 	[% IF C2C_SECRET %]
 	<script language='Javascript' src='/xvb/js/base64.js'></script>
 	[% END %]
+	<script language="JavaScript">
+		var did_list = [ ['','---'] ];
+		[% FOREACH d = PHONES %]
+		did_list.push(['[% d.callerid | html %]','[% d.callerid | html %]']);
+		[% END %]
+		did_list.push(['***','raw editor']);
+	</script>
 </head>
 
 <body onLoad="XVBInit()">
@@ -74,6 +81,7 @@
 				<th>Last name</th>
 				<th>Phone</th>
 				<th>Shortcut</th>
+				<th>Responsible by</th>
 				<th class='rad_r'>&nbsp;</th>
 			</tr>
 
@@ -88,6 +96,12 @@
 				<td><input class='in_t0' size='15' name='ln' type='text' value='[% param.LAST_NAME | html %]'></td>
 				<td><input class='in_t0' size='17' name='ph' type='text' value='[% param.PHONE | html %]'></td>
 				<td><input class='in_t0' size='10' name='shortcut' type='text' value='[% param.SHORTCUT | html %]'></td>
+ 				<td>
+ 					<input class='in_t0' size='11' id='responsible-[% param.DATA_ID %]' name='responsible' type='text' value='[% param.RESPONSIBLE | html %]'>
+ 					<script language="JavaScript">
+ 						opt_dropdown( did_list,'responsible','responsible-[% param.DATA_ID %]','in_t0','[% param.RESPONSIBLE | html %]');
+ 					</script>
+ 				</td>
 	
 				<td align='right' nowrap='nowrap'>
 					<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
@@ -115,6 +129,12 @@
 				<td><input size='15' name='ln' type='text'></td>
 				<td><input size='17' name='ph' type='text'></td>
 				<td><input size='10' name='shortcut' type='text'></td>
+ 				<td>
+ 					<input size='11' id='responsible' name='responsible' type='text'>
+ 					<script language="JavaScript">
+ 						opt_dropdown( did_list,'responsible','responsible','','');
+ 					</script>
+ 				</td>
 			
 				<td align='center'>
 					<input type='submit' value='Add'>

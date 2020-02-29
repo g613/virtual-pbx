@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.126 2019/07/16 13:03:39 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.129 2020/01/04 20:25:32 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -532,7 +532,7 @@ function graphit(g,gwidth){
 			}
 			output+='<td align="right">&nbsp;&nbsp;'+
 				Math.round(parseFloat(g[i][i2]) * Math.pow(10, 2)) / Math.pow(10, 2)
-			+'&nbsp;&nbsp;</td><td><img src="'+graphimage+'" width="'+calwidth+'" height="10"> '+calpercentage+'%</td>';
+			+'&nbsp;&nbsp;</td><td nowrap="nowrap"><img src="'+graphimage+'" width="'+calwidth+'" height="10"> '+calpercentage+'%</td>';
 		}
 		output+='</tr>';
 	}
@@ -630,7 +630,7 @@ function setShadowAttr() {
 }
 
 /* cdr filters */
-function cdrfilters( element_id, col_num ) {
+function cdrfilters( element_id, col_num, new_line ) {
 	/* fiters 
 	var re = /FILE=(\d+):(\w+\.(wav|ul|al|ulaw|alaw|g722|gsm|wav16))/g;
 	*/
@@ -638,6 +638,7 @@ function cdrfilters( element_id, col_num ) {
 	var re2 = /(^|, )DTMF=([^,]*)/;
 	var re3 = /(^|, )CALLID=([^,]*)/g;
 	var re4 = /FILE=(\d+):(\w+\.(ul|al|g722|ulaw|alaw|wav))/g;
+	var re5 = /,/g;
 
 	/* variables */
 	var url = download_file_url;
@@ -692,6 +693,7 @@ function cdrfilters( element_id, col_num ) {
 				var new_str = '<a title="'+dateArray[6]+': '+ dtmf_str[2] +'" href="#" onclick=\'dtmf_history_win("'+out_str+'");return false\'>$1DTMF</a>';
 				new_str = data.replace(re2, new_str);
 				td_obj[col_num].innerHTML = new_str;
+				data = new_str;
 			} else {
 				// FILE pattern
 				if ( download_file_url.length > 0 ) {
@@ -712,7 +714,14 @@ function cdrfilters( element_id, col_num ) {
 					new_str = data.replace(re3, callback_cdr_url);
 					if ( data != new_str ) {
 						td_obj[col_num].innerHTML = new_str;
+						data = new_str;
 					}
+				}
+			}
+			if(typeof(new_line) !== 'undefined') {
+				new_str = data.replace(re5, ',<br />');
+				if ( data != new_str ) {
+					td_obj[col_num].innerHTML = new_str;
 				}
 			}
 		}
@@ -1608,6 +1617,12 @@ function getTimePeriod(lang,period) {
 		} else if ( period == 'cst' ) {
 			period = 'Статус звонка';
 			group_by = 'cst';
+		} else if ( period == 'region' ) {
+			period = 'Регион';
+			group_by = 'region';
+		} else if ( period == 'wt' ) {
+			period = 'Кто завершил';
+			group_by = 'wt';
 		} else if ( period == '6pref' ) {
 			period = 'Префикс DID (6)';
 			group_by = '6pref';
@@ -1669,6 +1684,12 @@ function getTimePeriod(lang,period) {
 		} else if ( period == 'cst' ) {
 			period = 'Call status';
 			group_by = 'cst';
+		} else if ( period == 'region' ) {
+			period = 'Region';
+			group_by = 'region';
+		} else if ( period == 'wt' ) {
+			period = 'Who term';
+			group_by = 'wt';
 		} else if ( period == '6pref' ) {
 			period = 'DID prefix (6)';
 			group_by = '6pref';

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.26 2019/09/08 17:57:25 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.28 2019/12/29 20:13:37 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Phone book - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -8,6 +8,13 @@
 	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
 	[% END %]
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script language="JavaScript">
+		var did_list = [ ['','---'] ];
+		[% FOREACH d = PHONES %]
+		did_list.push(['[% d.callerid | html %]','[% d.callerid | html %]']);
+		[% END %]
+		did_list.push(['***','raw editor']);
+	</script>
 </head>
 
 <body onLoad="XVBInit()">
@@ -62,6 +69,7 @@
 			<th>Last name</th>
 			<th>Phone</th>
 			<th>Shortcut</th>
+			<th>Responsible by</th>
 			<th>Comment</th>
 			<th>&nbsp;</th>
 			<th class='rad_r'>&nbsp;</th>
@@ -78,6 +86,12 @@
 			<td><input class='in_t0' size='18' name='ln' type='text' value='[% param.LAST_NAME | html %]'></td>
 			<td><input class='in_t0' size='20' name='ph' type='text' value='[% param.PHONE | html %]'></td>
 			<td><input class='in_t0' size='15' name='shortcut' type='text' value='[% param.SHORTCUT | html %]'></td>
+			<td>
+				<input class='in_t0' size='11' id='responsible-[% param.DATA_ID %]' name='responsible' type='text' value='[% param.RESPONSIBLE | html %]'>
+				<script language="JavaScript">
+					opt_dropdown( did_list,'responsible','responsible-[% param.DATA_ID %]','in_t0','[% param.RESPONSIBLE | html %]');
+				</script>
+			</td>
 			<td><input class='in_t0' size='25' name='description' type='text' value='[% param.DESCRIPTION | html %]'></td>
 			
 			<td><a href='?action=crm_info&data_id=[% param.CRM_CUSTOMER_ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% param.CRM_CUSTOMER_NAME | html %]</a></td>
@@ -101,6 +115,12 @@
 			<td><input size='18' name='ln' type='text'></td>
 			<td><input size='20' name='ph' type='text'></td>
 			<td><input size='15' name='shortcut' type='text'></td>
+			<td>
+				<input size='11' id='responsible' name='responsible' type='text'>
+				<script language="JavaScript">
+					opt_dropdown( did_list,'responsible','responsible','','');
+				</script>
+			</td>
 			<td><input size='25' name='description' type='text'></td>
 			
 			<td colspan='2' align='center'>

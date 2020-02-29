@@ -1,0 +1,1257 @@
+<html>
+<!-- $Id: integrations.tt,v 1.9 2020/02/22 19:22:42 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Настройка интеграций</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script language="JavaScript">var integration_found=0;</script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+			
+	<h1>Настройка интеграций</h1>
+
+	<br /><br />
+	[% IF HOOKS contain ',AmoCRM,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="13" valign="top" align="left">
+				<img src="/xvb/images/logo_amo.png" width="200" />
+			</td>
+			<td>
+				Путь к скрипту / API url VPBX:
+			</td>
+			<td>
+				[% CGI_SERVER %]/amocrm/[% USER_CREDS.ACCESS_CODE %]/[% C2C_SECRET | html %]
+			</td>
+		</tr>
+
+		<tr>
+			<td width='25%'>
+				Домен AmoCRM ( без .amocrm.ru )
+			</td>
+			<td width='55%'>
+				<input size="40" name='AMO_DOMAIN' type='text' value="[% SESSION_VARS.AMO_DOMAIN | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				API ключ AMO-CRM
+			</td>
+			<td>
+				<input size="40" name='AMO_KEY' type='text' value="[% SESSION_VARS.AMO_KEY | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				AmoCRM login (email)
+			</td>
+			<td>
+				<input size="40" name='AMO_LOGIN' type='text' value="[% SESSION_VARS.AMO_LOGIN | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Пароль:<span>
+					Пароль для интеграции. Не обязательный параметр.
+				</span></a></td>
+			<td>
+				<input size="40" name='AMO_SECRET' type='text' value="[% SESSION_VARS.AMO_SECRET | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Маппинг внутренних номеров / pipeline-ID:<span>
+				Необязательное поле. Оставьте пустым в большинстве случаев.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.AMO_PIPELINE_MAP | textarea_rows %]' cols='30' name='AMO_PIPELINE_MAP'>[% SESSION_VARS.AMO_PIPELINE_MAP | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Запрет неразобранного:<span>
+					при включение данного параметра система не будет 
+					сохранять неизвестные номера в неразобранном
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="AMO_SKIP_UNSORT" type="checkbox" class="onoffswitch-checkbox" id="AMO_SKIP_UNSORT-ch" 
+				[% IF SESSION_VARS.AMO_SKIP_UNSORT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="AMO_SKIP_UNSORT-ch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Запрет неразобранного для исходящих:<span>
+					при включение данного параметра система не будет 
+					сохранять неизвестные номера в неразобранном
+					для исходящих
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="AMO_SKIP_OUT_UNSORT" type="checkbox" class="onoffswitch-checkbox" id="AMO_SKIP_OUT_UNSORT-ch" 
+				[% IF SESSION_VARS.AMO_SKIP_OUT_UNSORT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="AMO_SKIP_OUT_UNSORT-ch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не создавать ЛИДЫ:<span>
+					при включение данного параметра система не будет 
+					создавать лиды
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="AMO_SKIP_LEADS" type="checkbox" class="onoffswitch-checkbox" id="AMO_SKIP_LEADS-ch" 
+				[% IF SESSION_VARS.AMO_SKIP_LEADS %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="AMO_SKIP_LEADS-ch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не создавать отвественного:<span>
+					при включение данного параметра система не будет 
+					создавать ответственного сотрудника для новых
+					контактов
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="AMO_SKIP_RESPONSIBLE" type="checkbox" class="onoffswitch-checkbox" id="AMO_SKIP_RESPONSIBLE-ch" 
+				[% IF SESSION_VARS.AMO_SKIP_RESPONSIBLE %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="AMO_SKIP_RESPONSIBLE-ch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Искать контакт в компаниях:<span>
+					при включение данного параметра система будет 
+					искать контакт не только в списке контактов но и в списке
+					компаний
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="AMO_C_LOOKUP" type="checkbox" class="onoffswitch-checkbox" id="AMO_C_LOOKUP-ch" 
+				[% IF SESSION_VARS.AMO_C_LOOKUP %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="AMO_C_LOOKUP-ch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не переводить на отвественного:<span>
+					при включение данного параметра система не будет 
+					пытаться при входящем звонке вызвать сначала ответственного сотрудника
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="AMO_POPUP" type="hidden" value="all"/> 
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,AMO_C_LOOKUP:1,AMO_SKIP_RESPONSIBLE:1,AMO_SKIP_LEADS:1,AMO_SKIP_OUT_UNSORT:1,AMO_SKIP_UNSORT:1,AMO_POPUP,AMO_SECRET,AMO_LOGIN,AMO_DOMAIN,AMO_KEY,AMO_PIPELINE_MAP"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+
+
+	<!-------------------- Bitrix24 -------------------------------------------------->
+
+	[% IF HOOKS contain ',Bitrix24' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="9" valign="top" align="left">
+				<img src="/xvb/images/logo_bx24.png" width="200" />
+			</td>
+			<td>
+				Адрес обработчика webhook:
+			</td>
+			<td>
+				[% CGI_SERVER %]/cgi-bin/bitrix24-call.cgi/[% USER_CREDS.ACCESS_CODE %]/[% C2C_SECRET | html %]
+			</td>
+		</tr>
+
+		<tr>
+			<td width='25%'>
+				WebHook URL
+			</td>
+			<td width='55%'>
+				<input size="40" name='BX24_URL' type='text' value="[% SESSION_VARS.BX24_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Агент по умолчанию:<span>
+					Номер сотрудника который будет назначаться ответственным
+					по умолчанию для неотвеченных входящих звонков.
+				</span></a></td>
+			<td>
+				<input size="40" name='CRM_DEFAGENT' type='text' value="[% SESSION_VARS.CRM_DEFAGENT | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Отправить файл на bitrix24:<span>
+					при включение данного параметра система  будет 
+					отправлять запись разговора в битрикс
+					при отключенном флаге будет отправляться просто ссылка
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="BX24_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="BX24_ATTACH-ch" 
+				[% IF SESSION_VARS.BX24_ATTACH %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="BX24_ATTACH-ch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Двойная проверка номеров:<span>
+					при включение данного параметра система будет 
+					проверять контакт в формате 7xxxxxxxxxx и 8xxxxxxxxxx
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="BX24_DL" type="checkbox" class="onoffswitch-checkbox" id="BX24_DL-ch" 
+				[% IF SESSION_VARS.BX24_DL %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="BX24_DL-ch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+
+		<tr>
+			<td><a href='#' class='info'>Не логировать исходящие:<span>
+					при включение данного параметра система не будет 
+					создавать лиды для исходящих звонков сотрудников
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NOOUT" type="checkbox" class="onoffswitch-checkbox" id="CRM_NOOUT-ch-1" 
+				[% IF SESSION_VARS.CRM_NOOUT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NOOUT-ch-1">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Зарегистрировать внешнюю линию:<span>
+					при включение данного параметра система 
+					при входящем звонке система зарегистрирует номер на который пришел звонок как
+					внешний номер компании для сбора статистики по номеру получения звонка
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="BX24_REGLINE" type="checkbox" class="onoffswitch-checkbox" id="BX24_REGLINE-ch" 
+				[% IF SESSION_VARS.BX24_REGLINE %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="BX24_REGLINE-ch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не переводить на отвественного:<span>
+					при включение данного параметра система не будет 
+					пытаться при входящем звонке вызвать сначала ответственного сотрудника
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-1" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-1">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="BX24_C2C" type="hidden" value="[% C2C_SECRET | html %]" />
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,BX24_C2C,BX24_URL,CRM_DEFAGENT,BX24_ATTACH:1,BX24_DL:1,CRM_NOOUT:1,BX24_REGLINE:1"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	
+	<!-------------------- AlfaCRM -------------------------------------------------->
+
+	[% IF HOOKS contain ',AlfaCRM,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="5" valign="top" align="left">
+				<img src="/xvb/images/logo_alfa.png" width="200" />
+			</td>
+			<td width='25%'>
+				URL API интеграции
+			</td>
+			<td width='55%'>
+				<input size="40" name='ACRM_URL' type='text' value="[% SESSION_VARS.ACRM_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Маппинг внутренних номеров / pipeline-ID:<span>
+				Необязательное поле. Оставьте пустым в большинстве случаев.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.ACRM_PIPELINE_MAP | textarea_rows %]' cols='30' name='AMO_PIPELINE_MAP'>[% SESSION_VARS.ACRM_PIPELINE_MAP | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не логировать исходящие:<span>
+					при включение данного параметра система не будет 
+					создавать лиды для исходящих звонков сотрудников
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NOOUT" type="checkbox" class="onoffswitch-checkbox" id="CRM_NOOUT-ch-2" 
+				[% IF SESSION_VARS.CRM_NOOUT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NOOUT-ch-2">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не переводить на отвественного:<span>
+					при включение данного параметра система не будет 
+					пытаться при входящем звонке вызвать сначала ответственного сотрудника
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-2" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-2">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,ACRM_URL,CRM_NOOUT:1,ACRM_PIPELINE_MAP"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- EnvyCRM -------------------------------------------------->
+
+	[% IF HOOKS contain ',EnvyCRM,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="8" valign="top" align="left">
+				<img src="/xvb/images/logo_envy.png" width="200" />
+			</td>
+			<td>
+				Адрес запроса для создания звонка:
+			</td>
+			<td>
+				[% CGI_SERVER %]/cgi-bin/envicrm/call/[% USER_CREDS.ACCESS_CODE %]/[% C2C_SECRET | html %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Адрес запроса для проверки сценаря:
+			</td>
+			<td>
+				[% CGI_SERVER %]/cgi-bin/envicrm/test
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Адрес запроса для получения списка:
+			</td>
+			<td>
+				[% CGI_SERVER %]/cgi-bin/envicrm/list
+			</td>
+		</tr>
+
+		<tr>
+			<td width='25%'>
+				EnyCRM token
+			</td>
+			<td width='55%'>
+				<input size="40" name='ENVYCRM_KEY' type='text' value="[% SESSION_VARS.ENVYCRM_KEY | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Агент по умолчанию:<span>
+					Номер сотрудника который будет назначаться ответственным
+					по умолчанию для неотвеченных входящих звонков.
+				</span></a></td>
+			<td>
+				<input size="40" name='CRM_DEFAGENT' type='text' value="[% SESSION_VARS.CRM_DEFAGENT | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не логировать исходящие:<span>
+					при включение данного параметра система не будет 
+					создавать лиды для исходящих звонков сотрудников
+				</span></a></td>
+			<td>
+				<select name="CRM_NOOUT">
+				[% IF SESSION_VARS.CRM_NOOUT eq 'all' %]
+					<option value="all" selected>все</option>
+					<option value="unknown">неизвестные</option>
+					<option value="">нет</option>
+				[% ELSIF SESSION_VARS.CRM_NOOUT eq 'unknown' %]
+					<option value="all">все</option>
+					<option value="unknown" selected>неизвестные</option>
+					<option value="">нет</option>
+				[% ELSE %]
+					<option value="all">все</option>
+					<option value="unknown">неизвестные</option>
+					<option value="" selected>нет</option>
+				[% END %]
+				</select>	
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не переводить на отвественного:<span>
+					при включение данного параметра система не будет 
+					пытаться при входящем звонке вызвать сначала ответственного сотрудника
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-3" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-3">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,ENVYCRM_KEY,CRM_DEFAGENT,CRM_NOOUT"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- PlanFix -------------------------------------------------->
+
+	[% IF HOOKS contain ',PFCRM,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="7" valign="top" align="left">
+				<img src="/xvb/images/logo_planfix.png" width="200" />
+			</td>
+			<td>
+				Адрес АТС:
+			</td>
+			<td>
+				[% CGI_SERVER %]/pfcrm/[% USER_CREDS.ACCESS_CODE %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Ключ авторизации АТС:
+			</td>
+			<td>
+				[% C2C_SECRET | html %]
+			</td>
+		</tr>
+
+		<tr>
+			<td width='25%'>
+				Домен panfix ( без .planfix.ru )
+			</td>
+			<td width='55%'>
+				<input size="40" name='PF_DOMAIN' type='text' value="[% SESSION_VARS.PF_DOMAIN | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				API token
+			</td>
+			<td>
+				<input size="40" name='PF_KEY' type='text' value="[% SESSION_VARS.PF_KEY | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не логировать исходящие:<span>
+					при включение данного параметра система не будет 
+					создавать лиды для исходящих звонков сотрудников
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NOOUT" type="checkbox" class="onoffswitch-checkbox" id="CRM_NOOUT-ch-4" 
+				[% IF SESSION_VARS.CRM_NOOUT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NOOUT-ch-4">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не переводить на отвественного:<span>
+					при включение данного параметра система не будет 
+					пытаться при входящем звонке вызвать сначала ответственного сотрудника
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-4" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-4">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,PF_KEY,PF_DOMAIN,CRM_NOOUT:1"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- UNF -------------------------------------------------->
+
+	[% IF HOOKS contain ',UNFCRM,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="8" valign="top" align="left">
+				<img src="/xvb/images/logo_unf.png" width="200" />
+			</td>
+			<td>
+				Адрес облачной АТС:
+			</td>
+			<td>
+				[% CGI_SERVER %]/unfcrm/[% USER_CREDS.ACCESS_CODE %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Ключ для авторизации в облачной АТС:
+			</td>
+			<td>
+				[% C2C_SECRET | html %]
+			</td>
+		</tr>
+
+		<tr>
+			<td width='25%'>
+				URL УНФ API
+			</td>
+			<td width='55%'>
+				<input size="40" name='UNF_URL' type='text' value="[% SESSION_VARS.UNF_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				API token
+			</td>
+			<td>
+				<input size="40" name='UNF_KEY' type='text' value="[% SESSION_VARS.UNF_KEY | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Агент по умолчанию:<span>
+					Номер сотрудника который будет назначаться ответственным
+					по умолчанию для неотвеченных входящих звонков.
+				</span></a></td>
+			<td>
+				<input size="40" name='CRM_DEFAGENT' type='text' value="[% SESSION_VARS.CRM_DEFAGENT | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не логировать исходящие:<span>
+					при включение данного параметра система не будет 
+					создавать лиды для исходящих звонков сотрудников
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NOOUT" type="checkbox" class="onoffswitch-checkbox" id="CRM_NOOUT-ch-6" 
+				[% IF SESSION_VARS.CRM_NOOUT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NOOUT-ch-6">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не переводить на отвественного:<span>
+					при включение данного параметра система не будет 
+					пытаться при входящем звонке вызвать сначала ответственного сотрудника
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-5" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-5">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,UNF_KEY,UNF_URL,CRM_NOOUT:1,CRM_DEFAGENT"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- Y-Clents -------------------------------------------------->
+
+	[% IF HOOKS contain ',YClients,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="3" valign="top" align="left">
+				<img src="/xvb/images/logo_yclients.png" width="200" />
+			</td>
+			<td width='25%'>
+				API token
+			</td>
+			<td width='55%'>
+				<input size="40" name='YC_TOKEN' type='text' value="[% SESSION_VARS.YC_TOKEN | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не переводить на отвественного:<span>
+					при включение данного параметра система не будет 
+					пытаться при входящем звонке вызвать сначала ответственного сотрудника
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-6" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-6">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,YC_TOKEN"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- Retail -------------------------------------------------->
+
+	[% IF HOOKS contain ',RetailCRM,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="7" valign="top" align="left">
+				<img src="/xvb/images/logo_retail.png" width="200" />
+			</td>
+			<td>
+				Домен RetailCRM ( без .retailcrm.ru )
+			</td>
+			<td>
+				<input size="40" name='RETAILCRM_DOMAIN' type='text' value="[% SESSION_VARS.RETAILCRM_DOMAIN | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td width='25%'>
+				API key
+			</td>
+			<td width='55%'>
+				<input size="40" name='RETAILCRM_KEY' type='text' value="[% SESSION_VARS.RETAILCRM_KEY | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Агент по умолчанию:<span>
+					Номер сотрудника который будет назначаться ответственным
+					по умолчанию для неотвеченных входящих звонков.
+				</span></a></td>
+			<td>
+				<input size="40" name='CRM_DEFAGENT' type='text' value="[% SESSION_VARS.CRM_DEFAGENT | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не логировать исходящие:<span>
+					при включение данного параметра система не будет 
+					создавать лиды для исходящих звонков сотрудников
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NOOUT" type="checkbox" class="onoffswitch-checkbox" id="CRM_NOOUT-ch-5" 
+				[% IF SESSION_VARS.CRM_NOOUT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NOOUT-ch-5">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Создавать клиента:<span>
+					при включение данного параметра система будет 
+					создавать клиента для неизвестных номеров
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="RETAILCRM_AUTOADD" type="checkbox" class="onoffswitch-checkbox" id="RETAILCRM_AUTOADD-ch" 
+				[% IF SESSION_VARS.RETAILCRM_AUTOADD %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="RETAILCRM_AUTOADD-ch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не переводить на отвественного:<span>
+					при включение данного параметра система не будет 
+					пытаться при входящем звонке вызвать сначала ответственного сотрудника
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-7" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-7">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,RETAILCRM_KEY,RETAILCRM_DOMAIN,RETAILCRM_AUTOADD:1,CRM_NOOUT:1,CRM_DEFAGENT"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- UOn -------------------------------------------------->
+
+	[% IF HOOKS contain ',UOn,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="8" valign="top" align="left">
+				<img src="/xvb/images/logo_uon.png" width="200" />
+			</td>
+			<td>
+				Адрес облачной АТС:
+			</td>
+			<td>
+				[% CGI_SERVER %]/uoncrm/[% USER_CREDS.ACCESS_CODE %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Ключ для авторизации в облачной АТС:
+			</td>
+			<td>
+				[% C2C_SECRET | html %]
+			</td>
+		</tr>
+
+		<tr>
+			<td width='25%'>
+				UOn API url
+			</td>
+			<td width='55%'>
+				<input size="40" name='UON_URL' type='text' value="[% SESSION_VARS.UON_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				API token
+			</td>
+			<td>
+				<input size="40" name='UON_KEY' type='text' value="[% SESSION_VARS.UON_KEY | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Агент по умолчанию:<span>
+					Номер сотрудника который будет назначаться ответственным
+					по умолчанию для неотвеченных входящих звонков.
+				</span></a></td>
+			<td>
+				<input size="40" name='CRM_DEFAGENT' type='text' value="[% SESSION_VARS.CRM_DEFAGENT | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не логировать исходящие:<span>
+					при включение данного параметра система не будет 
+					создавать лиды для исходящих звонков сотрудников
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NOOUT" type="checkbox" class="onoffswitch-checkbox" id="CRM_NOOUT-ch-9" 
+				[% IF SESSION_VARS.CRM_NOOUT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NOOUT-ch-9">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не переводить на отвественного:<span>
+					при включение данного параметра система не будет 
+					пытаться при входящем звонке вызвать сначала ответственного сотрудника
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-9" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-9">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,UON_KEY,UON_URL,CRM_NOOUT:1,CRM_DEFAGENT"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+
+	<!-------------------- CommonCRM -------------------------------------------------->
+
+	[% IF HOOKS contain ',CommonCRM,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="8" valign="top" align="left">
+				<img src="/xvb/images/logo_webhooks.png" width="200" />
+			</td>
+			<td width='25%'>
+				Адрес облачной АТС:
+			</td>
+			<td width='55%'>
+				[% CGI_SERVER %]/commoncrm/[% USER_CREDS.ACCESS_CODE %]
+			</td>
+		</tr>
+		<tr>
+			<td width='25%'>
+				Token:
+			</td>
+			<td width='55%'>
+				[% C2C_SECRET | html %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				WebHook URL
+			</td>
+			<td>
+				<input size="40" name='CCRM_URL' type='text' value="[% SESSION_VARS.CCRM_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Запрос отвественного:<span>
+					при включение данного параметра система будет
+					отправлять запрос по указанному адресу чтобы получить ответственного / имя звонящего
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_CNL" type="checkbox" class="onoffswitch-checkbox" id="CRM_CNL-ch-8" 
+				[% IF SESSION_VARS.CRM_CNL %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_CNL-ch-8">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не переводить на отвественного:<span>
+					при включение данного параметра система не будет 
+					пытаться при входящем звонке вызвать сначала ответственного сотрудника
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-8" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-8">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Отправить оповещение о начале звонка:<span>
+					при включение данного параметра система будет
+					отправлять запрос по указанному адресу при старте звонка
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_ESTART" type="checkbox" class="onoffswitch-checkbox" id="CRM_ESTART-ch-8" 
+				[% IF SESSION_VARS.CRM_ESTART %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_ESTART-ch-8">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Отправить оповещение об окончании звонка:<span>
+					при включение данного параметра система будет
+					отправлять запрос по указанному адресу при окончании звонка
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_ESTOP" type="checkbox" class="onoffswitch-checkbox" id="CRM_ESTOP-ch-8" 
+				[% IF SESSION_VARS.CRM_ESTOP %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_ESTOP-ch-8">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_CNL:1,CRM_ESTOP:1,CRM_ESTART:1,CRM_NODR:1,CCRM_URL"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+		
+	<!-------------------- RoiStat -------------------------------------------------->
+
+	[% IF HOOKS contain ',Roistat,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="2" valign="top" align="left">
+				<img src="/xvb/images/logo_roistat.png" width="200" />
+				<br /><br />
+				<br /><br />
+			</td>
+			<td width='25%'>
+				Спсиок номеров для отправки в roistst ( через запятую ):
+			</td>
+			<td width='55%'>
+				<textarea rows='[% SESSION_VARS.ROISTAT_DIDS | textarea_rows %]' cols='30' name='ROISTAT_DIDS'>[% SESSION_VARS.ROISTAT_DIDS | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="ROISTAT_DIDS"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+
+	<!-------------------- MailRuCloud -------------------------------------------------->
+
+	[% IF HOOKS contain ',MailRuCloud,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="8" valign="top" align="left">
+				<img src="/xvb/images/logo_mailru.png" width="200" />
+				<br /><br />
+				<br /><br />
+			</td>
+			<td width='25%'>
+				Login mailru-cloud
+			</td>
+			<td width='55%'>
+				<input size="40" name='MAILRUCLOUD_LOGIN' type='text' value="[% SESSION_VARS.MAILRUCLOUD_LOGIN | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Пароль mailru-cloud
+			</td>
+			<td>
+				<input size="40" name='MAILRUCLOUD_PSWD' type='text' value="[% SESSION_VARS.MAILRUCLOUD_PSWD | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Отправить файл немедленно:<span>
+					при включение данного параметра система будет
+					отправлять файл записи немедленно ( не рекомендуется устанавливать без необходимости 
+					так как на время отправки выполнение сценария звонка прервется )
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="MAILRUCLOUD_NOSPOOL" type="checkbox" class="onoffswitch-checkbox" id="MAILRUCLOUD_NOSPOOL" 
+				[% IF SESSION_VARS.MAILRUCLOUD_NOSPOOL %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="MAILRUCLOUD_NOSPOOL">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="MAILRUCLOUD_PSWD,MAILRUCLOUD_LOGIN,MAILRUCLOUD_NOSPOOL"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+
+	<script language="JavaScript">
+		if ( integration_found == 0 ) {
+			document.write( '<h2>Нет настраиваемых интеграций :(</h2>' );
+		}
+	</script>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
+	

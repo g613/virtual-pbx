@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.22 2019/03/23 18:12:15 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.23 2020/01/02 20:28:37 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs / Call Detail</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -97,7 +97,7 @@
 	<script language='JavaScript'>
 		var callback_cdr_url="$1<a title='cdr' href='?action=cdr_list&call_id=$2'>CALL</a>";
 		var js_date_str="[% JS_DATE_STR | html %]-DTMF history";
-		cdrfilters( 'd-tbl', 5 );
+		cdrfilters( 'd-tbl', 5, 'new_line' );
 		listcolorer( 'd-tbl' );
 	</script>
 
