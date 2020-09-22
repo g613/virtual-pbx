@@ -63,7 +63,7 @@ Requires: perl(Authen::Radius)
 Requires: freeradius
 
 %description voip
-Voice Application Server / HostedIVR solution based on asterisk - VOIP applications
+Voice Application Server / HostedPBX solution based on asterisk - VOIP applications
 
 
 ####################################################
@@ -83,7 +83,7 @@ Requires: perl(JSON::XS)
 Requires: perl(CGI)
 
 %description web
-Voice Application Server / HostedIVR solution based on asterisk  - WEB interface
+Voice Application Server / HostedPBX solution based on asterisk - WEB interface
 
 
 ####################################################
@@ -95,7 +95,7 @@ Group:   System Environment/Services
 Requires: virtual-pbx = %{version}-%{release}
 #Requires: mysql-server
 %description management
-Voice Application Server / HostedIVR solution based on asterisk  - Management utilites
+Voice Application Server / HostedPBX solution based on asterisk - Management utilites
 
 
 ####################################################
@@ -105,7 +105,7 @@ Summary: XVB PBX - Sound files
 Group:   System Environment/Services
 
 %description sound-files
-Voice Application Server / HostedIVR solution based on asterisk - Sound files
+Voice Application Server / HostedPBX solution based on asterisk - Sound files
 
 
 ####################################################
@@ -115,7 +115,7 @@ Summary: XVB PBX - devel
 Group:   System Environment/Services
 
 %description devel
-Voice Application Server / HostedIVR solution based on asterisk - devel
+Voice Application Server / HostedPBX solution based on asterisk - devel
 
 
 ####################################################
@@ -126,7 +126,7 @@ Group:   System Environment/Services
 Requires: kamailio
 
 %description balancer
-Voice Application Server / HostedIVR solution based on asterisk - Load balancer
+Voice Application Server / HostedPBX solution based on asterisk - Load balancer
 
 
 ####################################################

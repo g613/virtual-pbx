@@ -84,14 +84,14 @@
 			<th>Start Date</th>
 			<th>Caller ID</th>
 			<th>Called NUM</th>
-			<th>Access Code</th>
+			<th colspan='2'>Tenant</th>
 			<th>Call duration</th>
 			<th>Server ID</th>
 			<th class='rad_r'>&nbsp;</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='8'>
+			<td align='left' colspan='9'>
 				<a title='previous page' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
@@ -104,6 +104,9 @@
 			<td>[% msg.CALLER_ID | html %]</td>
 			<td>[% msg.CALLED_ID | html %]</td>
 			<td><a title='edit user settings' href='?ac=[% msg.ACCESS_CODE %]&action=user_info'>[% msg.ACCESS_CODE %]</a></td>
+			<td align='left'>
+				[% msg.FIRST_NAME | html %] [% msg.LAST_NAME | html %]
+			</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
 			<td>[% msg.SERVER_ID | html %]</td>
 			<td>
@@ -117,7 +120,7 @@
 
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right' colspan='8'>
+			<td align='right' colspan='9'>
 				<a title='next page' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>

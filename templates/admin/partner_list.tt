@@ -42,6 +42,7 @@
 				<th class='rad_l'>Partner login</th>
 				<th>Password</th>
 				<th>Group</th>
+				<th>R/O mode</th>
 				<th>Description</th>
 				<th>Actions</th>
 				<th class='rad_r'>&nbsp;</th>
@@ -73,6 +74,17 @@
 						<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
 					[% END %]
 				[% END %]
+				</select>
+			</td>
+			<td>
+				<select class='in_t0' name="P_READ_ONLY">
+					[% IF p.READ_ONLY %]
+						<option value="1">yes</option>
+						<option value="0">no</option>
+					[% ELSE %]
+						<option value="0">no</option>
+						<option value="1">yes</option>
+					[% END %]
 				</select>
 			</td>
 			<td align='right'>
@@ -118,7 +130,7 @@
 				<input type='hidden' value='partner_add' name='action'>
 			</td>
 		[% IF MSG_NEXT ne '' %]
-			<td align='right' colspan='10'>
+			<td align='right' colspan='7'>
 				<a title='next page' href='?action=partner_list&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
 			</td>
 		[% END %]

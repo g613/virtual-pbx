@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.104 2019/12/08 17:42:43 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.109 2020/08/14 20:22:15 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -163,16 +163,14 @@
 					<a href='#' class='help'><span class='icon-bubble2 fs0'></span><span class='help'>
 					<h4>Советы:</h4>
 					При заполнении данных расписания можно использовать следуещее:
-					    <ul>CallerID основной черный список ( BL# )</ul>
-						<ul>CallerID основной белый список ( WL# )</ul>
-						<ul>CallerID регулярные выражения ( R#рег-выражение):
-							<li><b>X</b> - цифры 0-9</li>
-							<li><b>Z</b> - цифры 1-9</li>
-							<li><b>N</b> - цифры 2-9</li>
+					    <ul>Доп Фильтры: CallerID основной черный список ( BL# )</ul>
+						<ul>Доп Фильтры: CallerID основной белый список ( WL# )</ul>
+						<ul>Доп Фильтры: CallerID регулярные выражения ( R#рег-выражение):
 							<li><b>[12-49]</b> -  цифры из диапазона<br>(в данном примере, 1,2,3,4,9)</li>
-							<li><b>.</b> - любой один или более символов</li>
 							<li><b>!</b> - отрицание ( R#!712. - все кроме 712.)</li>
 							<li><b>*</b> - любое значение</li>
+							<li><b>V1=123,V2=456</b> - сравнение сессионных 
+							переменных V1 ==123 и V2 == 456</li>
 						</ul>
 						<ul>Формат временных интервалов: 
 							начало_интервала-конец_интервала.<br>Форматы:
@@ -1624,7 +1622,7 @@
 				[% IF VBOX_PREF.TYPE eq '12' %]
 				<!-- Podcast -->
 				<tr>
-					<td>URL подкастов (rss файл): </td>
+					<td>URL подкастов (itunes файл): </td>
 					<td>
 						<input size='30' name="PODCAST_URL" value="[% VBOX_PREF.PODCAST_URL | html %]" type="text">
 					</td>
@@ -1883,7 +1881,7 @@
 							checked
 						[% END %]
 						>
-						<label class="onoffswitch-label" for="KEEP_MSG-ch">
+						<label class="onoffswitch-label" for="JOINEMPTY-ch">
 							<span class="onoffswitch-inner"></span>
 							<span class="onoffswitch-switch"></span>
 						</label></div>
@@ -3767,12 +3765,12 @@
 					<table width='90%' id='d-tbl'>
 						<tr>
 							<th class='rad_l'>Приоритет</th>
-							<th>Номер звонящего</th>
 							<th>Время</th>
 							<th>День недели</th>
 							<th>День месяца</th>
 							<th>Месяц</th>
 							<th>Год</th>
+							<th>Дополнительные фильтры</th>
 							<th>Внутренний номер</th>
 							<th class='rad_r'>&nbsp;</th>
 						</tr>
@@ -3784,12 +3782,12 @@
 							<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 							<td><input class='in_t0' size='5'  name='priority' type='text' value='[% param.PRIORITY | html %]'></td>
-							<td><input class='in_t0' size='11' name='callerid'  type='text' value='[% param.CALLERID | html %]'></td>
 							<td><input class='in_t0' size='11' name='time_h'type='text' value='[% param.TIME_H | html %]'></td>
 							<td><input class='in_t0' size='7'  name='dayofweek' type='text' value='[% param.DAYOFWEEK | html %]'></td>
 							<td><input class='in_t0' size='7'  name='dayofmonth' type='text' value='[% param.DAYOFMONTH | html %]'></td>
 							<td><input class='in_t0' size='5'  name='month' type='text' value='[% param.MONTH | html %]'></td>
 							<td><input class='in_t0' size='9'  name='year' vtype='text' value='[% param.YEAR | html %]'></td>
+							<td><input class='in_t0' size='20' name='callerid'  type='text' value='[% param.CALLERID | html %]'></td>
 							<td>
 								<input class='in_t0' size='11'  name='redirect_to' type='text' value='[% param.REDIRECT_TO | html %]'>
 								<script language="JavaScript">
@@ -3812,12 +3810,12 @@
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 							<td><input size='5' type='text'  name='priority' value='5'></td>
-							<td><input size='11' type='text' name='callerid' value='*'></td>
 							<td><input size='11' type='text' name='time_h' value='*'></td>
 							<td><input size='7' type='text'  name='dayofweek' value='*'></td>
 							<td><input size='7' type='text'  name='dayofmonth' value='*'></td>
 							<td><input size='5' type='text'  name='month' value='*'></td>
 							<td><input size='9' type='text'  name='year' value='*'></td>
+							<td><input size='20' type='text' name='callerid' value='*'></td>
 							<td><input size='11' type='text' name='redirect_to' value='0'></td>
 							<td align='center'>
 								<input type='submit' value='Добавить'>

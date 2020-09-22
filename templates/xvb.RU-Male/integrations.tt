@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: integrations.tt,v 1.11 2020/03/06 19:12:53 gosha Exp $ -->
+<!-- $Id: integrations.tt,v 1.14 2020/05/24 16:54:57 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Настройка интеграций</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -25,7 +25,7 @@
 		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
 		
 		<tr>
-			<td rowspan="13" valign="top" align="left">
+			<td rowspan="14" valign="top" align="left">
 				<img src="/xvb/images/logo_amo.png" width="200" />
 			</td>
 			<td>
@@ -178,6 +178,24 @@
 			</td>
 		</tr>
 		<tr>
+			<td><a href='#' class='info'>Автоматическое создание контакта:<span>
+					при включение данного параметра система будет 
+					автоматически добавлять контакт если номер звонящего не найден в AmoCRM
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="AMO_AUTO_CONTACT" type="checkbox" class="onoffswitch-checkbox" id="AMO_AUTO_CONTACT-ch" 
+				[% IF SESSION_VARS.AMO_AUTO_CONTACT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="AMO_AUTO_CONTACT-ch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
 			<td><a href='#' class='info'>Не переводить на отвественного:<span>
 					при включение данного параметра система не будет 
 					пытаться при входящем звонке вызвать сначала ответственного сотрудника
@@ -206,7 +224,7 @@
 		<input name="AMO_POPUP" type="hidden" value="all"/> 
 		<input name="action" type="hidden" value="sv_update"/> 
 		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,AMO_C_LOOKUP:1,AMO_SKIP_RESPONSIBLE:1,AMO_SKIP_LEADS:1,AMO_SKIP_OUT_UNSORT:1,AMO_SKIP_UNSORT:1,AMO_POPUP,AMO_SECRET,AMO_LOGIN,AMO_DOMAIN,AMO_KEY,AMO_PIPELINE_MAP,AMO_SKIP_DIDS"/> 
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,AMO_AUTO_CONTACT:1,AMO_C_LOOKUP:1,AMO_SKIP_RESPONSIBLE:1,AMO_SKIP_LEADS:1,AMO_SKIP_OUT_UNSORT:1,AMO_SKIP_UNSORT:1,AMO_POPUP,AMO_SECRET,AMO_LOGIN,AMO_DOMAIN,AMO_KEY,AMO_PIPELINE_MAP,AMO_SKIP_DIDS"/> 
 		</form>
 		</table>
 	</p>
@@ -223,7 +241,7 @@
 		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
 		
 		<tr>
-			<td rowspan="9" valign="top" align="left">
+			<td rowspan="10" valign="top" align="left">
 				<img src="/xvb/images/logo_bx24.png" width="200" />
 			</td>
 			<td>
@@ -240,6 +258,14 @@
 			</td>
 			<td width='55%'>
 				<input size="40" name='BX24_URL' type='text' value="[% SESSION_VARS.BX24_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Код авторизации битрикс:<span>
+					Используется для click2call звонков из битрикса
+				</span></a></td>
+			<td>
+				<input size="40" name="BX24_C2C" type="text" value="[% SESSION_VARS.BX24_C2C | html %]" />
 			</td>
 		</tr>
 		<tr>
@@ -352,7 +378,6 @@
 				<br /><br />
 			</td>
 		</tr>
-		<input name="BX24_C2C" type="hidden" value="[% C2C_SECRET | html %]" />
 		<input name="action" type="hidden" value="sv_update"/> 
 		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,BX24_C2C,BX24_URL,CRM_DEFAGENT,BX24_ATTACH:1,BX24_DL:1,CRM_NOOUT:1,BX24_REGLINE:1"/> 
@@ -1144,6 +1169,108 @@
 		<input name="action" type="hidden" value="sv_update"/> 
 		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 		<input name="EXT_VARS" type="hidden" value="CRM_CNL:1,CRM_ESTOP:1,CRM_ESTART:1,CRM_NODR:1,CCRM_URL"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- MoyKlass -------------------------------------------------->
+
+	[% IF HOOKS contain ',MyClass,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="7" valign="top" align="left">
+				<img src="/xvb/images/logo_myclass.png" width="200" />
+			</td>
+			<td width='25%'>
+				МойКласс API ключ
+			</td>
+			<td width='55%'>
+				<input size="40" name='MCL_KEY' type='text' value="[% SESSION_VARS.MCL_KEY | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не логировать звонки на номера:<span>
+				Список DID номеров ( через запятую ) входящие звонки на которые не логируются. Имя звонящего также не проверяется.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.MCL_SKIP_DIDS | textarea_rows %]' cols='30' name='MCL_SKIP_DIDS'>[% SESSION_VARS.MCL_SKIP_DIDS | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не переводить на отвественного:<span>
+					при включение данного параметра система не будет 
+					пытаться при входящем звонке вызвать сначала ответственного сотрудника
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-9" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-9">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Создание ученика:<span>
+					при включение данного параметра система будет
+					создавать нового ученика при посткплении входящего
+					звонка с неизвестного номера
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="MCL_NEWCONTACT" type="checkbox" class="onoffswitch-checkbox" id="MCL_NEWCONTACT-ch-9" 
+				[% IF SESSION_VARS.MCL_NEWCONTACT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="MCL_NEWCONTACT-ch-9">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Проверка внутренних номеров:<span>
+					при включение данного параметра система будет
+					определить внутренний номер телефона сотрудника в имени
+					например 'Лена (#100)' / 'Михаил (#120)'.
+					тоесть 100 и 120 в данном примере внутрение нтелефоны 
+					сотрудников.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="MCL_CHECK_EXT" type="checkbox" class="onoffswitch-checkbox" id="MCL_CHECK_EXT-ch-9" 
+				[% IF SESSION_VARS.MCL_CHECK_EXT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="MCL_CHECK_EXT-ch-9">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,MCL_KEY,MCL_CHECK_EXT:1,MCL_NEWCONTACT:1,MCL_SKIP_DIDS"/> 
 		</form>
 		</table>
 	</p>

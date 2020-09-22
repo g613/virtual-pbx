@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_pbook.tt,v 1.3 2019/12/28 20:46:50 gosha Exp $ -->
+<!-- $Id: phone_p_pbook.tt,v 1.5 2020/09/19 18:23:34 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Phone book</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -19,7 +19,7 @@
 		<tr>
 			<th class='rad_l'>First name</th>
 			<th>Last name</th>
-			<th>Phone</th>
+			<th colspan="2">Phone</th>
 			<th>Shortcut</th>
 			<th>Responsible by</th>
 			<th>Comment</th>
@@ -30,7 +30,14 @@
 		<tr align='left' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
 			<td class='simple'>[% param.FIRST_NAME | html %]</td>
 			<td>[% param.LAST_NAME | html %]</td>
-			<td>[% param.PHONE | html %]</td>
+			<td width="3%">
+				<script>
+					phone_call_filter('[% C2C | html %]','[% PHONE | html %]','[% param.PHONE | html %]');
+				</script>
+			</td>
+			<td>
+				[% param.PHONE | html %]
+			</td>
 			<td>[% param.SHORTCUT | html %]</td>
 			<td>[% param.RESPONSIBLE | html %]</td>
 			<td>[% param.DESCRIPTION | html %]</td>

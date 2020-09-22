@@ -309,14 +309,24 @@
 				<tr>
 				<td>
 					<h2>Quick links:</h2>
-					&nbsp;&nbsp;<a href='/ui?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP Peers</a>
+					<ul>
+					<li>UI
+					&nbsp;&nbsp;<a href='/ai?action=peer_list&ac=[% USER.ACCESS_CODE %]'>SIP Peers</a>
 					&nbsp;/&nbsp;<a href='/ui?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Routes</a>
 					&nbsp;/&nbsp;<a href='/ui?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Phones</a>
-					&nbsp;/&nbsp;<a href='/ui?action=macros_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Macros</a>
 					&nbsp;/&nbsp;<a href='/ui?action=cdr_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>CDRs</a>
 					&nbsp;/&nbsp;<a href='/ui?action=j_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Journals</a>
 					&nbsp;/&nbsp;<a href='/ui?action=act_list_all&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Activity</a>
 					&nbsp;/&nbsp;<a href='/ui?action=msg_list_all&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Files</a>
+					</li>
+					<li>AI
+					&nbsp;&nbsp;<a href='/ai?action=peer_list&ac=[% USER.ACCESS_CODE %]'>SIP Peers</a>
+					&nbsp;/&nbsp;<a href='/ai?action=phone_list&ac=[% USER.ACCESS_CODE %]'>Phones</a>
+					&nbsp;/&nbsp;<a href='/ai?action=cdr_list&ac=[% USER.ACCESS_CODE %]'>CDRs</a>
+					&nbsp;/&nbsp;<a href='/ai?action=j_list&ac=[% USER.ACCESS_CODE %]'>Journals</a>
+					&nbsp;/&nbsp;<a href='/ai?action=msg_list_all&ac=[% USER.ACCESS_CODE %]'>Files</a>
+					</li>
+					</ul>
 				</td>
 				</tr>
 				</table>

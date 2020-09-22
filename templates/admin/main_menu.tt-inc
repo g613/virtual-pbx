@@ -30,5 +30,7 @@
 				|
 				<a href='?action=msg_list_all'>Files</a>
 				|
+            	<a href='?action=act_list_all'>Activity</a></li>
+				|
 				<a href='?action=calls_list'>Calls</a>
 

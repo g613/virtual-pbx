@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: login.tt,v 1.27 2015/01/14 20:39:14 gosha Exp $ -->
+<!-- $Id: login.tt,v 1.28 2020/06/13 18:45:56 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - login</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -16,7 +16,7 @@
 			</td>
 			<td align='center'><h1>Welcome to VirtualPBX</h1></td>
 			<td align='right' width='20%'>
-				<a href='/xvb/XVB.pdf?a=msg_download'><span class='icon-question fs0'></a>
+				<!--<a href='/xvb/XVB.pdf?a=msg_download'><span class='icon-question fs0'></a>-->
 			</td>
 		</tr>
 	</table>

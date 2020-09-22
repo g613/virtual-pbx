@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.129 2020/01/04 20:25:32 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.131 2020/09/19 18:23:38 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -773,6 +773,47 @@ function webfax_win( server, key, ac, lang, uniq ) {
 	}
 	WinPop.document.write('</form></center></body></html>');
 	WinPop.document.close();
+}
+
+/* phonecall */
+function phone_call( key, phone ) {
+	LoadingOn();
+	
+	var xmlHttpReq = false;
+	var self = this;
+	// Mozilla/Safari
+	if (window.XMLHttpRequest) {
+		self.xmlHttpReq = new XMLHttpRequest();
+	}
+	// IE
+	else if (window.ActiveXObject) {
+		self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	self.xmlHttpReq.open('GET', '/c2c?'+key+'&user_vars=CRM_DID='+phone, true);
+
+	self.xmlHttpReq.onreadystatechange = function() {
+		if (self.xmlHttpReq.readyState == 4) {
+			if ( self.xmlHttpReq.statusText == 'Ok' || self.xmlHttpReq.status == 204 || self.xmlHttpReq.status == 1223 ) {
+				//alert( self.xmlHttpReq.responseText );
+			} else {
+				alert('Error: '+ self.xmlHttpReq.responseText );
+			}
+			LoadingOff();
+		}
+	}
+	self.xmlHttpReq.send();
+	return false;
+}
+function phone_call_filter( c2c, src, dst ) {
+	if ( '' != c2c ) {
+		if ( src != dst ) {
+			var reg = /^\d+$/;
+			if ( reg.test(dst) ) {
+				document.write("<a title='call' href='#' onclick=\"return phone_call('"+c2c+"','"+dst+"')\"><span class='icon-phone fs0'></span></a>");
+			}
+		}
+	}
 }
 
 /* click2call code */
