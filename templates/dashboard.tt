@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: dashboard.tt,v 1.20 2018/08/14 14:09:20 gosha Exp $ -->
+<!-- $Id: dashboard.tt,v 1.21 2021/08/28 19:46:36 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Dashboard - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -123,6 +123,35 @@
 					document.location.href=new_url;
 					}
 				} );
+			
+			[% IF JS_DATA_CC.callblast %]
+			// chart7
+			var in_data7 = [% JS_DATA_CB %];
+			in_data7.unshift( ['Date','Agent','Machine'] );
+			var data7 = google.visualization.arrayToDataTable(in_data7);
+			var chart7 = new google.visualization.ColumnChart(document.getElementById('cbcalls'));
+			chart7.draw(data7, {  chartArea:{width:'82%',height:'67%'}, min: 0,isStacked: true, title: 'Callblast', legend: { position: 'bottom', maxLines: 4 },bar: {groupWidth: "91%"}, });
+	                
+			[% IF GEO_INFO %]
+			[% IF GEO_INFO ne 'skip' %]
+			// chart8
+			var data8 = google.visualization.arrayToDataTable( [% JS_DATA_CB_REG %] );
+			var chart8 = new google.visualization.PieChart(document.getElementById('cb_geo_opt'));
+			chart8.draw(data8, { pieHole: 0.4, chartArea:{left:3,top:30,width:'100%',height:'90%'},title: 'Callblast - geoinfo (Top 20)' } );
+
+			google.visualization.events.addListener(chart8, 'select',
+				function() {
+					var item = chart8.getSelection()[0];
+
+					if ( (typeof(item) !== 'undefined') && item.row != null && data8.getValue(item.row,0) !== 'Other' && data2.getValue(item.row,0) !== 'unknown' ) {
+						var new_url = "/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&action=cdr_list&call_type=callblast&uniq=[% USER_CREDS.UNIQ %]"+'&data=%25'+data8.getValue(item.row,0)+'%25';
+						document.location.href=new_url;
+					}
+				} );
+			[% END %]
+			[% END %]
+			
+			[% END %]
 		}
 	</script>
 </head>
@@ -164,6 +193,20 @@
 					<div id="files" style="width: 100%; height: 300"><img width="30" src="/xvb/images/loading.gif" style="opacity: 1;"></div>
 				</td>
 			</tr>
+			[% IF JS_DATA_CC.callblast %]
+			<tr align='center'>
+				<td width='50%' height='100%'>
+					<div id="cbcalls" style="width: 100%; height: 300"><img width="30" src="/xvb/images/loading.gif" style="opacity: 1;"></div>
+				</td>
+				<td width='50%'>
+				[% IF GEO_INFO %]
+				[% IF GEO_INFO ne 'skip' %]
+					<div id="cb_geo_opt" style="width: 100%; height: 300"><img width="30" src="/xvb/images/loading.gif" style="opacity: 1;"></div>
+				[% END %]
+				[% END %]
+				</td>
+			</tr>
+			[% END %]
 		</table>
 		[% IF JS_DATA_MIS scalar %]
 		<h3>Missed calls</h3>

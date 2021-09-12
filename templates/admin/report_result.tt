@@ -112,7 +112,13 @@
 		[% FOREACH t = REPORT_RESULT %]
 		<tr class='nocolor'>
 			[% FOREACH rd = t %]
-				<td align='[% rd.align | html %]'>[% rd.value | html %]</td>
+				<td align='[% rd.align | html %]'>
+				[% IF rd.is_raw %]
+				[% rd.value %]
+				[% ELSE %]
+				[% rd.value | html %]
+				[% END %]
+				</td>
 			[% END %]
 		</tr>
 		[% END %]

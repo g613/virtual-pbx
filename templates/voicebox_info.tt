@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.343 2020/08/14 20:22:15 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.357 2021/02/17 18:44:41 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1637,6 +1637,21 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
+					<td>Wait notes:</td>
+					<td>
+						<div class="onoffswitch">
+						<input name="WAIT_NOTES" type="checkbox" class="onoffswitch-checkbox" id="WAIT_NOTES-ch" 
+						[% IF VBOX_PREF.WAIT_NOTES %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="WAIT_NOTES-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
+				<tr class='addon_info'>
 					<td>Goto if queue fail: </td>
 					<td nowrap='nowrap'>
 						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
@@ -1701,6 +1716,18 @@
 					<td>On Call Answered URL:</td>
 					<td>
 						<input size='30' type='text' name='Q_ANSWERED_URL' value='[% VBOX_PREF.Q_ANSWERED_URL | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Miss call URL</td>
+					<td>
+						<input size='30' type='text' name='MISS_CALL_URL' value='[% VBOX_PREF.MISS_CALL_URL | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Answered call URL</td>
+					<td>
+						<input size='30' type='text' name='ANSW_CALL_URL' value='[% VBOX_PREF.ANSW_CALL_URL | html %]'>
 					</td>
 				</tr>
 				[% END %]
@@ -1872,6 +1899,36 @@
 						</label></div>
 					</td>
 				</tr>
+				<tr class='addon_info'>
+					<td>DTMF logging:</td>
+					<td>
+						<div class="onoffswitch">
+						<input name="DTMF_LOG" type="checkbox" class="onoffswitch-checkbox" id="DTMF_LOG-ch" 
+						[% IF VBOX_PREF.DTMF_LOG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="DTMF_LOG-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Wait notes:</td>
+					<td>
+						<div class="onoffswitch">
+						<input name="WAIT_NOTES" type="checkbox" class="onoffswitch-checkbox" id="WAIT_NOTES-ch" 
+						[% IF VBOX_PREF.WAIT_NOTES %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="WAIT_NOTES-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr>
 					<td>Check anwering machine:</td>
 					<td>
@@ -1886,6 +1943,11 @@
 								selected
 							[% END %]
 							>extended</option>
+							<option value="3" 
+							[% IF VBOX_PREF.USE_AMD eq '3' %]
+								selected
+							[% END %]
+							>strong</option>
 							<option value="2" 
 							[% IF VBOX_PREF.USE_AMD eq '2' %]
 								selected
@@ -1898,16 +1960,40 @@
 					<td>Start CallBlast at: </td>
 					<td>
 						<input name="START_TIMESTAMP" value="[% VBOX_PREF.START_TIMESTAMP | html %]" type="hidden">
-						<input size='16' name="START_DATE" value="[% BLAST_START_DATE | html %]" type="text">
-						&nbsp;yyyy/mm/dd hh:mm
+						<script type="text/javascript">
+							jQuery(document).ready(function() {
+								jQuery("#START_DATE").dynDateTime({
+									showsTime: true,
+									ifFormat: "%Y/%m/%d %H:%M",
+									align: "TL",
+									electric: false,
+									singleClick: false,
+									button: ".next()"
+								});
+							});
+						</script>
+						<input size='16' name="START_DATE" value="[% BLAST_START_DATE | html %]" id='START_DATE' type="text">
+						<a link="#"><span class='fs0'>▾</span></a>
 					</td>
 				</tr>
 				<tr>
 					<td>Stop CallBlast at: </td>
 					<td>
 						<input name="STOP_TIMESTAMP" value="[% VBOX_PREF.STOP_TIMESTAMP | html %]" type="hidden">
-						<input size='16' name="STOP_DATE" value="[% BLAST_STOP_DATE | html %]" type="text">
-						&nbsp;yyyy/mm/dd hh:mm
+						<script type="text/javascript">
+							jQuery(document).ready(function() {
+								jQuery("#STOP_DATE").dynDateTime({
+									showsTime: true,
+									ifFormat: "%Y/%m/%d %H:%M",
+									align: "TL",
+									electric: false,
+									singleClick: false,
+									button: ".next()"
+								});
+							});
+						</script>
+						<input size='16' name="STOP_DATE" value="[% BLAST_STOP_DATE | html %]" id='STOP_DATE' type="text">
+						<a link="#"><span class='fs0'>▾</span></a>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1962,6 +2048,12 @@
 					<td>
 						<input size='20' type='text' name='TZ_NAME' value='[% VBOX_PREF.TZ_NAME | html %]'>
 						<script lang='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'Default')</script>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Success call url:</td>
+					<td>
+						<input size='30' type='text' name='URL_SUCCESS' value='[% VBOX_PREF.URL_SUCCESS | html %]'>
 					</td>
 				</tr>
 				[% END %]
@@ -2612,6 +2704,12 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
+					<td>Calls per second:</td>
+					<td>
+						<input size='4' type='text' name='CPS' value='[% VBOX_PREF.CPS | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
 					<td>Pre-call URL</td>
 					<td>
 						<input size='30' type='text' name='URL' value='[% VBOX_PREF.URL | html %]'>
@@ -2789,7 +2887,7 @@
 					[% IF VB_DATA %]
 					<tr>
 						<td align='left'><h4>Agent statistics ( started [% CALL_STAT_DATE | html %] ):</h4></td>
-						<td align='left'>
+						<td align='right'>
 							<a href='?action=callout_clean&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Are you sure you want to reset statistics ?' )" title='reset call statistics'><span class='icon-loop2 fs0'></span></a>
 						</td>
 					</tr>
@@ -2797,7 +2895,7 @@
 						<td colspan='2' align='center' width='100%'>
 						<table width='100%'  id='addon-data'>
 							<tr>
-								<th class='rad_l'><a class='warning-font' href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='dynamic agents'>Phone number</a></th>
+								<th colspan='2' class='rad_l'><a class='warning-font' href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='dynamic agents'>Phone number</a></th>
 								<th>All calls</th>
 								<th>Answered calls</th>
 								<th>Duaration</th>
@@ -2808,9 +2906,17 @@
 							[% IF param.NUMBER eq '===' %]
 							<tr align='center' class='resume'>
 								<td></td>
+								<td></td>
 							[% ELSE %]
 							<tr align='center' class='nocolor'>
 								<td align='left'><span class='agent_state[% param.STATUS %]'>[% param.NUMBER | html %]</span></td>
+								<td>
+								[% IF param.STATUS eq '0' %]
+									<a href='?action=agent_status&status=1&redir=1&pswd=[% param.PSWD | html %]&agent=[% param.NUMBER | html %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]&rand=[% UNIXTIME %]-[% USER_CREDS.UNIQ %]' title='register agent'><span class='icon-loop2 fs1'></span></a>
+								[% ELSIF param.STATUS eq '1'  %]
+									<a href='?action=agent_status&status=0&redir=1&pswd=[% param.PSWD | html %]&agent=[% param.NUMBER | html %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]&rand=[% UNIXTIME %]-[% USER_CREDS.UNIQ %]' title='unregister agent'><span class='icon-loop2 fs1'></span></a>
+								[% END %]
+								</td>
 							[% END %]
 								<td>[% param.ALL | html %]</td>
 								<td>[% param.ANSWERED | html %]</td>
@@ -3098,8 +3204,8 @@
 					<tr>
 						<td colspan='2' nowrap='nowrap'>
 							<select name="type" id='sysmsgtype'>
-								<option selected value="1">Name</option>
-								<option value="2">Greeting</option>
+								<option selected value="2">Greeting</option>
+								<option value="1">Name</option>
 
 								[% IF VBOX_PREF.TYPE eq '3' %]
 								<option value="3">Announcement to callee</option>
@@ -3437,17 +3543,19 @@
 				<table width='100%' id='d-tbl'>
 					<tr>
 						<th class='rad_l'>Handle time</th>
-						<th>Name</th>
 						<th>Phone Number(s)</th>
+						<th>Name</th>
 						<th>User vars</th>
 						<th>Status</th>
 						<th>Duration</th>
 						<th>Attempt</th>
+						<th>DTMF</th>
+						<th>Notes</th>
 						<th class='rad_r'>Actions</th>
 					</tr>
 					[% IF MSG_PREV ne '' %]
 					<tr>
-						<td align='left' colspan='8'>
+						<td align='left' colspan='10'>
 							<a title='previous page' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>◄</span></a>
 						</td>
 					</tr>
@@ -3478,6 +3586,8 @@
 						</td>
 						<td>[% param.DURATION | duration_str | html %]</td>
 						<td>[% param.ATTEMPT %]</td>
+						<td>[% param.DTMF_LOG | html %]</td>
+						<td>[% param.CALL_NOTE | html %]</td>
 						<td align='left' nowrap='nowrap'>
 							<a href='?action=callblast_del&id=[% VBOX_PREF.ID %]&data_id=[% param.DATA_ID | html %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% param.DATA_ID %]')" title='delete callblast item'><span class='icon-bin fs0'></span></a>
 							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
@@ -3490,7 +3600,7 @@
 					[% END %]
 					[% IF MSG_NEXT ne '' %]
 					<tr>
-						<td align='right' colspan='8'>
+						<td align='right' colspan='10'>
 							<a title='next page' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
 						</td>
 					</tr>
@@ -3501,9 +3611,9 @@
 							<input type='hidden' name='action' value='callblast_add'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-							<input type='text' name='name' value='' size='20' placeholder='Name'>
-							&nbsp;
 							<input size='33' type='text' name='pn' value='' placeholder='Phone number'>
+							&nbsp;
+							<input type='text' name='name' value='' size='20' placeholder='Name'>
 							&nbsp;
 							<input size='25' type='text' name='uv' value='' placeholder='Variables'>
 							&nbsp;
@@ -3659,8 +3769,8 @@
 				<table width='100%' id='d-tbl'>
 					<tr>
 						<th class='rad_l'>Handle time</th>
-						<th>Name</th>
 						<th>Phone Number(s)</th>
+						<th>Name</th>
 						<th>User vars</th>
 						<th>Status</th>
 						<th>Duration</th>
@@ -3685,8 +3795,8 @@
 						<td>
 							[% param.PROCESS_DATE | html %]
 						</td>
-						<td><input class='in_t0' size='20' type='text' name='name' value='[% param.NAME | html %]'></td>
 						<td><input class='in_t0' size='33' type='text' name='pn' value='[% param.PHONE_NUMBER | html %]'></td>
+						<td><input class='in_t0' size='20' type='text' name='name' value='[% param.NAME | html %]'></td>
 						<td><input class='in_t0' size='25' type='text' name='uv' value='[% param.USER_VARS | html %]'></td>
 						<td align='left'>
 							[% IF param.CALL_STATUS contain 'success' %]
@@ -3725,9 +3835,9 @@
 							<input type='hidden' name='action' value='multidialout_add'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-							<input size='20' placeholder='Name' type='text' name='name' value=''>
-							&nbsp;
 							<input size='33' placeholder='Phone number' type='text' name='pn' value=''>
+							&nbsp;
+							<input size='20' placeholder='Name' type='text' name='name' value=''>
 							&nbsp;
 							<input size='25' placeholder='Variables' type='text' name='uv' value=''>
 							&nbsp;

@@ -147,6 +147,8 @@ mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/systemd/system
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/doc
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/recordings
+mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/recordings-sys
+mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/recordings-user
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/tts
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/tmp
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/podcasts
@@ -400,6 +402,9 @@ if [ -f %CORE_DIR/web/xvb-custom.css ]; then
 	cat %CORE_DIR/web/xvb-custom.css >> %CORE_DIR/web/xvb.css
 	cat %CORE_DIR/web/xvb-custom.css >> %CORE_DIR/web/xvb-green.css
 fi
+if [ -f %CORE_DIR/web/images/logo-small-custom.png ]; then
+	cp -a %CORE_DIR/web/images/logo-small-custom.png %CORE_DIR/web/images/logo-small.png
+fi
 
 chkconfig httpd on
 
@@ -544,6 +549,8 @@ fi
 %CORE_DIR/3rdparty/*
 %CORE_DIR/contrib/odbc/*
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/recordings
+%attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/recordings-sys
+%attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/recordings-user
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/tts
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/podcasts
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/helperdb

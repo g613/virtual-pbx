@@ -40,7 +40,7 @@ input[type=submit] {
 input[type=submit]:hover {background:#146674;}
 input[type=submit]:active {background:#a7a7a7;}
 
-input[type=password]:focus, input[type=text]:focus, input[type=select]:focus, textarea:focus {
+input[type=password]:focus, input[type=text]:focus, select:focus, textarea:focus {
 	outline: 0;
 	border:0px;
 	border-color: rgba(82, 168, 236, 0.8);
@@ -58,6 +58,7 @@ input[type=password] {
 	margin:5px 0 0 0;
 	-webkit-box-shadow:0px 0px 4px #bebebe;
 	box-shadow:0px 0px 4px #bebebe;
+	background-color: #ffffff;
 	font-family: inherit;
 	font-size: inherit;
 }
@@ -71,11 +72,12 @@ input[type=text] {
 	margin:5px 0 0 0;
 	-webkit-box-shadow:0px 0px 4px #bebebe;
 	box-shadow:0px 0px 4px #bebebe;
+	background-color: #ffffff;
 	font-family: inherit;
 	font-size: inherit;
 }
 
-input[type=select] {
+select {
 	border:1px solid #dcdcdc;
 	border-radius:4px;
 	-moz-border-radius:4px;
@@ -84,6 +86,13 @@ input[type=select] {
 	margin:5px 0 0 0;
 	-webkit-box-shadow:0px 0px 4px #bebebe;
 	box-shadow:0px 0px 4px #bebebe;
+	color:#5e5e5e;
+	background-color: #ffffff;
+	font-family: inherit;
+	font-size: inherit;
+}
+
+input[type=file] {
 	font-family: inherit;
 	font-size: inherit;
 }
@@ -362,6 +371,9 @@ html * #center {
 
 .agent_state1 {
 	color:green;
+}
+
+.agent_state2 {
 }
 
 p.copyright {

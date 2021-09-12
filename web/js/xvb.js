@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.131 2020/09/19 18:23:38 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.133 2021/08/28 19:46:36 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -393,7 +393,7 @@ function ShowPlayer( file, msg_id ) {
 	}
 
 	if ( canPlayOGG ) {
-		var wav_file = file.replace("wav?media=mp3;","ogg?");
+		var wav_file = file.replace("ogg?media=mp3;","ogg?");
 		wav_file = wav_file.replace("=mp3","=ogg");
 		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player" height="20%"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><span class="icon-cross fs0"></a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
 	} else if ( canPlayMP3 ) {
@@ -634,10 +634,10 @@ function cdrfilters( element_id, col_num, new_line ) {
 	/* fiters 
 	var re = /FILE=(\d+):(\w+\.(wav|ul|al|ulaw|alaw|g722|gsm|wav16))/g;
 	*/
-	var re = /FILE=(\d+):(\w+\.\w+)/g;
+	var re = /FILE=(\d+):([\w-]+\.\w+)/g;
 	var re2 = /(^|, )DTMF=([^,]*)/;
 	var re3 = /(^|, )CALLID=([^,]*)/g;
-	var re4 = /FILE=(\d+):(\w+\.(ul|al|g722|ulaw|alaw|wav))/g;
+	var re4 = /FILE=(\d+):([\w-]+\.(ul|al|g722|ulaw|alaw|wav))/g;
 	var re5 = /,/g;
 
 	/* variables */

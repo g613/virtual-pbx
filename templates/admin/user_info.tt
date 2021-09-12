@@ -186,7 +186,7 @@
 					Description:
 				</td>
 				<td>
-					<textarea rows='5' cols='40' name='US_DESCRIPTION'>[% USER.DESCRIPTION | html %]</textarea>
+					<textarea rows='3' cols='40' name='US_DESCRIPTION'>[% USER.DESCRIPTION | html %]</textarea>
 				</td>
 			</tr>
 			<tr>
@@ -194,7 +194,15 @@
 					Custom group rules:
 				</td>
 				<td>
-					<textarea rows='10' cols='40' name='US_CUSTOM_RULES'>[% USER.CUSTOM_RULES | html %]</textarea>
+					<textarea rows='8' cols='40' name='US_CUSTOM_RULES'>[% USER.CUSTOM_RULES | html %]</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Session vars:
+				</td>
+				<td>
+					<textarea rows='8' cols='40' name='US_CUSTOM_VARS'>[% USER.CUSTOM_VARS | html %]</textarea>
 				</td>
 			</tr>
 			<tr><td colspan='2'>&nbsp;</td></tr>

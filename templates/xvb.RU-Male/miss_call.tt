@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: miss_call.tt,v 1.6 2018/07/07 10:55:33 gosha Exp $ -->
+<!-- $Id: miss_call.tt,v 1.7 2020/10/03 18:54:51 gosha Exp $ -->
 <!--SUBJECT:Пропущенный звонок от: [% _CDR.CALLER_ID | html %]:SUBJECT-->
 <head>
 	<BASE href="[% CGI_SERVER %]">
@@ -29,6 +29,7 @@
 		[% END %]
 	[% END %]
 	<br>
+	На номер: <b>[% _CDR.CALLED_ID | html %]</b><br>
 	Дата звонка: <b>[% ORIGDATE | html %]</b><br>
 	Внутренний номер: <b>[% _USER_VBOX.EXT_NUMBER | html %]</b><br>
 	Статус: <b>[% _CDR.ENH_STATUS | html %]</b><br>

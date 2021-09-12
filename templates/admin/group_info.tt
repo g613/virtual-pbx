@@ -34,6 +34,9 @@
 	
 	<table width='100%'>
 		<tr>
+			<td align='left'>
+				<a title='tenants list' href='?action=user_list&f_group=[% GROUP.GROUP_ID %]'"><span class='icon-folder-open fs0'></span></a>
+			</td>
 			<td width='90%' align='center'>
 				<h1>Group '<b>[% GROUP.GROUP_NAME | html %]</b>'</h1>
 			</td>
@@ -270,10 +273,13 @@
 							<option value="Google">Google</option>
 						[% ELSIF GROUP.ASR_ENGINE eq "Yandex" %]
 							<option value="Yandex">Yandex</option>
+						[% ELSIF GROUP.ASR_ENGINE eq "Silero" %]
+							<option value="Silero">Silero</option>
 						[% END %]
 							<option value="">none</option>
 							<option value="Google">Google</option>
 							<option value="Yandex">Yandex</option>
+							<option value="Silero">Silero</option>
 						</select>
 						</td>
 					</tr>
@@ -337,6 +343,14 @@
 			<td><input name='GR_MAX_CALLBLAST_ITEMS' type='text' value="[% GROUP.MAX_CALLBLAST_ITEMS | html %]"></td>
 		</tr>
 		<tr>
+			<td>Maximum Phones for CallBlast item: </td>
+			<td><input name='GR_MAX_CB_PHONES' type='text' value="[% GROUP.MAX_CB_PHONES | html %]"></td>
+		</tr>
+		<tr>
+			<td>Maximum number of calls for CallBlast ext: </td>
+			<td><input name='GR_MAX_EXT_CB_CALLS' type='text' value="[% GROUP.MAX_EXT_CB_CALLS | html %]"></td>
+		</tr>
+		<tr>
 			<td>Maximum Number of GotoIF items in ext: </td>
 			<td><input name='GR_MAX_GOTOIF_ITEMS' type='text' value="[% GROUP.MAX_GOTOIF_ITEMS | html %]"></td>
 		</tr>
@@ -345,20 +359,12 @@
 			<td><input name='GR_MAX_EXT_PHONES' type='text' value="[% GROUP.MAX_EXT_PHONES | html %]"></td>
 		</tr>
 		<tr>
-			<td>Maximum Phones for CallBlast item: </td>
-			<td><input name='GR_MAX_CB_PHONES' type='text' value="[% GROUP.MAX_CB_PHONES | html %]"></td>
-		</tr>
-		<tr>
 			<td>Maximum Number of Schedule items in ext: </td>
 			<td><input name='GR_MAX_SCHEDULE_ITEMS' type='text' value="[% GROUP.MAX_SCHEDULE_ITEMS | html %]"></td>
 		</tr>
 		<tr>
 			<td>Maximum Number of podcasts in ext: </td>
 			<td><input name='GR_MAX_EXT_PODCAST' type='text' value="[% GROUP.MAX_EXT_PODCAST | html %]"></td>
-		</tr>
-		<tr>
-			<td>Maximum Number of GoogleCallendar events: </td>
-			<td><input name='GR_MAX_GC_EVENTS' type='text' value="[% GROUP.MAX_GC_EVENTS | html %]"></td>
 		</tr>
 		<tr>
 			<td>Maximum Number of Click2Call links: </td>

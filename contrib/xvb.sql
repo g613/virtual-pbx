@@ -347,6 +347,7 @@ create	table VPBX_GROUPS
 	MAX_GOTOIF_ITEMS			INT(10) default 20,
 	MAX_PBOOK_ITEMS				INT(10) default 200,
 	MAX_C2C_ITEMS				INT(5) default 5,
+	MAX_EXT_CB_CALLS			INT(10) default 10,
 
 	MAX_EXT_PHONES				INT(4) default 20,
 	MAX_CB_PHONES				INT(4) default 3,
@@ -433,6 +434,7 @@ create table VPBX_PARTNERS
 	DESCRIPTION		VARCHAR(255),
 	GROUP_ID		INT(16)			not null,
 	PARENT_ID		INT(16)			not null default -1,
+	READ_ONLY		INT(1) 			default 0,
 
     unique			(NAME),
     CONSTRAINT PK_VPBX_PARTNER PRIMARY KEY (ID),
@@ -629,6 +631,7 @@ create table VPBX_SIPPEERS (
 	fullcontact varchar(160) NOT NULL DEFAULT '',
 	regserver varchar(100) default NULL,
 	useragent varchar(60) default NULL,
+	qualify   varchar(5) default NULL
 
 	videosupport		enum('yes','no','always') DEFAULT 'yes',
 	nat					varchar(5) DEFAULT NULL,
@@ -651,7 +654,8 @@ create table VPBX_SIPPEERS (
 	DND				INT(11)			default 0,
 	REC_EXT			VARCHAR(255)	not null default '0',
 	EMAIL			VARCHAR(255)	default '',
-	FWD_NUM			VARCHAR(255)	default '',
+	FWD_NUM			VARCHAR(50)		default '',
+	EXTERNAL_NUM	VARCHAR(50)		default '',
 	FWD_AFTER		INT(6)			default 0,
 	WEB_SECRET		VARCHAR(50)		default '',
 
@@ -824,7 +828,8 @@ create	table VPBX_VBOXES_RECORD_FILES
 	INDEX I_RECORD_FILE_CALLERID (CALLERID),
 	INDEX I_RECORD_FILE_CALLEDID (CALLEDID),
 	INDEX I_RECORD_FILE_CALL_ID (CALL_ID),
-	INDEX I_RECORD_FILE_START_T (CREATE_TIME,ID)
+	INDEX I_RECORD_FILE_START_T (CREATE_TIME,ID),
+	INDEX I_RECORD_FILE_IDT (ID,FILE_TYPE)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 create	table VPBX_VBOXES_DIALOUT
@@ -903,12 +908,15 @@ create	table VPBX_VBOXES_QUEUES
 	Q_URL				TEXT(1024),
 	Q_INIT_URL			TEXT(1024),
 	Q_ANSWERED_URL		TEXT(1024),
+	MISS_CALL_URL		TEXT(1024),
+	ANSW_CALL_URL		TEXT(1024),
 	PARKING_EXT			VARCHAR(255),
 	Q_MAX_W_CALLS		INT(3)			default 0,
 	WRAPUPTIME			INT(6)			default 0,
 	JOINEMPTY			INT(1)			default 0,
 	REMEMBER_AGENT		INT(1)			default 0,
 	MISS_CALL_ALERT		INT(1)			default 0,
+	WAIT_NOTES			INT(1)			default 0,
 
 	unique(ID),
 
@@ -1299,6 +1307,10 @@ create	table VPBX_VBOXES_CALLBLAST
 
 	DEPEND_QUEUE			VARCHAR(255),
 	DEPEND_QUEUE_CAPACITY	FLOAT(4,2) default 1,
+
+	WAIT_NOTES			INT(1)		default 0,
+	DTMF_LOG			INT(1)		default 0,
+	URL_SUCCESS			TEXT(1024),
 	
 	unique(ID),
 
@@ -1326,6 +1338,8 @@ create	table VPBX_VBOXES_CALLBLAST_DATA
 
 	CALL_ID				VARCHAR(32),
 	DURATION			INT(16) not null default 0,
+	CALL_NOTE			VARCHAR(20),
+	DTMF_LOG			VARCHAR(20),
 
 	unique(DATA_ID),
 	unique(ID,PHONE_NUMBER),
@@ -1333,6 +1347,7 @@ create	table VPBX_VBOXES_CALLBLAST_DATA
 	INDEX I_CB_DATA_PROCESS_T (PROCESS_TIMESTAMP),
 	INDEX I_CB_DATA_CREATE_T (CREATE_TIMESTAMP),
 	INDEX I_CB_DATA_STATUS (CALL_STATUS),
+	INDEX I_CB_DATA_NAME (NAME),
 
 	CONSTRAINT FK_VPBX_VBOXES_CALLBLAST_DATA FOREIGN KEY (ID) REFERENCES VPBX_VBOXES_CORE(ID) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -1461,6 +1476,7 @@ create	table VPBX_VBOXES_MULTIDIALOUT
 	SEND_ATTACH			INT(1)		default 0,
 	WAIT_NOTES			INT(1)		default 0,
 	DYNAMIC_CID			INT(1)		default 0,
+	CPS					INT(3)		default 0,
 	URL					TEXT(1024),
 	URL_STAT			TEXT(1024),
 	unique(ID),
@@ -1535,6 +1551,97 @@ create	table VPBX_CDRS
 	INDEX I_CDR_C_STOP_T (STOP_TIMESTAMP,SUBSCR_ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+-- cdr chunks
+
+create	table VPBX_CDRS_ARCHIVE
+(
+	SERVER_ID			VARCHAR(100) not null,
+	CALL_ID				VARCHAR(32),
+	CALL_TYPE			VARCHAR(15),
+    
+    SUBSCR_ID			INT(16)     not null,
+	CALLER_ID			VARCHAR(100),
+	CALLED_ID			VARCHAR(255),
+	CNAM				VARCHAR(255),
+
+	START_TIMESTAMP		DECIMAL(15,5),
+	STOP_TIMESTAMP		DECIMAL(15,5),
+	CREATE_TIMESTAMP	DECIMAL(15,5),
+
+	COST				FLOAT	not null default 0,
+
+	SYS_COST			FLOAT	not null default 0,
+	CURRENCY_ID			INT(16)	not null default 1,
+	PROCESS_TIMESTAMP	DECIMAL(15,5),
+
+	DATA				TEXT(2048),
+
+	STOP_DATE			DATETIME,
+
+	INDEX I_CDR_C_CALL_TYPE (CALL_TYPE),
+	INDEX I_CDR_C_CALLER_ID (CALLER_ID),
+	INDEX I_CDR_C_CALLED_ID (CALLED_ID),
+	INDEX I_CDR_C_STOP_T (STOP_TIMESTAMP,SUBSCR_ID)
+)	ENGINE=INNODB DEFAULT CHARSET=utf8
+
+	PARTITION BY HASH(MONTH(STOP_DATE)) 
+	PARTITIONS 12;
+
+CREATE TRIGGER cdr_cleanup_triger BEFORE DELETE ON VPBX_CDRS FOR EACH ROW
+	INSERT INTO VPBX_CDRS_ARCHIVE
+		( 
+			SERVER_ID,
+			CALL_ID,
+			CALL_TYPE,
+  		  	SUBSCR_ID,
+			CALLER_ID,
+			CALLED_ID,
+			CNAM,
+			START_TIMESTAMP,
+			STOP_TIMESTAMP,
+			CREATE_TIMESTAMP,
+			COST,
+			SYS_COST,
+			CURRENCY_ID,
+			PROCESS_TIMESTAMP,
+			DATA,
+			STOP_DATE
+		)
+	VALUES
+		( 
+			OLD.SERVER_ID,
+			OLD.CALL_ID,
+			OLD.CALL_TYPE,
+  		  	OLD.SUBSCR_ID,
+			OLD.CALLER_ID,
+			OLD.CALLED_ID,
+			OLD.CNAM,
+			OLD.START_TIMESTAMP,
+			OLD.STOP_TIMESTAMP,
+			OLD.CREATE_TIMESTAMP,
+			OLD.COST,
+			OLD.SYS_COST,
+			OLD.CURRENCY_ID,
+			OLD.PROCESS_TIMESTAMP,
+			OLD.DATA,
+			FROM_UNIXTIME(OLD.STOP_TIMESTAMP)
+		);
+
+create or replace view VPBX_CDRS_ALL 
+	(SERVER_ID,CALL_ID,CALL_TYPE,SUBSCR_ID,CALLER_ID,CALLED_ID,CNAM,START_TIMESTAMP,STOP_TIMESTAMP,CREATE_TIMESTAMP,COST,SYS_COST,CURRENCY_ID,PROCESS_TIMESTAMP,DATA)
+	as
+select 
+	SERVER_ID,CALL_ID,CALL_TYPE,SUBSCR_ID,CALLER_ID,CALLED_ID,CNAM,START_TIMESTAMP,STOP_TIMESTAMP,CREATE_TIMESTAMP,COST,SYS_COST,CURRENCY_ID,PROCESS_TIMESTAMP,DATA
+from
+	VPBX_CDRS
+union
+select 
+	SERVER_ID,CALL_ID,CALL_TYPE,SUBSCR_ID,CALLER_ID,CALLED_ID,CNAM,START_TIMESTAMP,STOP_TIMESTAMP,CREATE_TIMESTAMP,COST,SYS_COST,CURRENCY_ID,PROCESS_TIMESTAMP,DATA
+from
+	VPBX_CDRS_ARCHIVE;
+
+-- end of cdr chunks
+
 create	table VPBX_CDRS_ACTIVITY
 (
 	SERVER_ID			VARCHAR(100) not null,
@@ -1566,6 +1673,117 @@ create	table VPBX_CDRS_ACTIVITY
 	INDEX I_CDR_A_STOP_T (STOP_TIMESTAMP,SUBSCR_ID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+-- cdr-activity chunks
+
+create	table VPBX_CDRS_ACTIVITY_ARCHIVE
+(
+	SERVER_ID			VARCHAR(100) not null,
+	CALL_ID				VARCHAR(32),
+    
+    SUBSCR_ID			INT(16)     not null,
+	CALLER_ID			VARCHAR(100),
+	CALLED_ID			VARCHAR(255),
+
+	TYPE				VARCHAR(25),
+	EXT_NUMBER			VARCHAR(255) not null,
+
+	START_TIMESTAMP		DECIMAL(15,5),
+	STOP_TIMESTAMP		DECIMAL(15,5),
+	CREATE_TIMESTAMP	DECIMAL(15,5),
+
+	DATA				TEXT(2048),
+	STOP_DATE			DATETIME,
+
+	INDEX I_CDR_A_EXT_NUMBER (EXT_NUMBER,SUBSCR_ID),
+	INDEX I_CDR_A_TYPE (TYPE,SUBSCR_ID),
+	INDEX I_CDR_A_CALL_ID (CALL_ID),
+	INDEX I_CDR_A_CALLER_ID (CALLER_ID),
+	INDEX I_CDR_A_START_T (START_TIMESTAMP,SUBSCR_ID),
+	INDEX I_CDR_A_STOP_T (STOP_TIMESTAMP,SUBSCR_ID)
+)	ENGINE=INNODB DEFAULT CHARSET=utf8
+
+	PARTITION BY HASH(MONTH(STOP_DATE)) 
+	PARTITIONS 12;
+
+CREATE TRIGGER cdr_a_cleanup_triger BEFORE DELETE ON VPBX_CDRS_ACTIVITY FOR EACH ROW
+	INSERT INTO VPBX_CDRS_ACTIVITY_ARCHIVE
+		( 
+			SERVER_ID,
+			CALL_ID,
+			SUBSCR_ID,
+			CALLER_ID,
+			CALLED_ID,
+			TYPE,
+			EXT_NUMBER,
+			START_TIMESTAMP,
+			STOP_TIMESTAMP,
+			CREATE_TIMESTAMP,
+			DATA,
+			STOP_DATE
+		)
+	VALUES
+		( 
+			OLD.SERVER_ID,
+			OLD.CALL_ID,
+			OLD.SUBSCR_ID,
+			OLD.CALLER_ID,
+			OLD.CALLED_ID,
+			OLD.TYPE,
+			OLD.EXT_NUMBER,
+			OLD.START_TIMESTAMP,
+			OLD.STOP_TIMESTAMP,
+			OLD.CREATE_TIMESTAMP,
+			OLD.DATA,
+			FROM_UNIXTIME(OLD.STOP_TIMESTAMP)
+		);
+
+create or replace view VPBX_CDRS_ACTIVITY_ALL 
+	(
+			SERVER_ID,
+			CALL_ID,
+			SUBSCR_ID,
+			CALLER_ID,
+			CALLED_ID,
+			TYPE,
+			EXT_NUMBER,
+			START_TIMESTAMP,
+			STOP_TIMESTAMP,
+			CREATE_TIMESTAMP,
+			DATA
+		)
+	as
+select 
+	SERVER_ID,
+	CALL_ID,
+	SUBSCR_ID,
+	CALLER_ID,
+	CALLED_ID,
+	TYPE,
+	EXT_NUMBER,
+	START_TIMESTAMP,
+	STOP_TIMESTAMP,
+	CREATE_TIMESTAMP,
+	DATA
+from
+	VPBX_CDRS_ACTIVITY
+union
+select 
+	SERVER_ID,
+	CALL_ID,
+	SUBSCR_ID,
+	CALLER_ID,
+	CALLED_ID,
+	TYPE,
+	EXT_NUMBER,
+	START_TIMESTAMP,
+	STOP_TIMESTAMP,
+	CREATE_TIMESTAMP,
+	DATA
+from
+	VPBX_CDRS_ACTIVITY_ARCHIVE;
+
+-- end of cdr-activity chunks
+
 create	table VPBX_JOURNAL
 (
     SUBSCR_ID			INT(16)     not null,
@@ -1592,7 +1810,8 @@ create	table VPBX_CID_FILTERS
 
     CONSTRAINT FK_VPBX_BL_VB FOREIGN KEY (ID) REFERENCES VPBX_VBOXES_CORE(ID) ON DELETE CASCADE,
 	CONSTRAINT PK_VPBX_CID_DATA PRIMARY KEY (DATA_ID),
-	INDEX I_FILTERS (ID,CID_LIST_TYPE,CID_TYPE)
+	INDEX I_FILTERS (ID,CID_LIST_TYPE,CID_TYPE),
+	INDEX I_FILTERS_CID (CID)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 create table VPBX_ONLINE_CALLS
@@ -1714,11 +1933,11 @@ INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(20, 'WebVar', 'Web vari
 INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(21, 'GotoIf', 'Goto If');
 INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(22, 'DBVar', 'Stored variable');
 INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(23, 'AlarmClock', 'Alarm Clock');
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(24, 'GoogleCalendarSchedule', 'Google Calendar - Schedule');
+-- INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(24, 'GoogleCalendarSchedule', 'Google Calendar - Schedule');
 INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(25, 'RoboText', 'RoboText');
 INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(26, 'Streaming', 'MP3-Streaming');
 INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(27, 'Parking', 'Call parking');
-INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(28, 'GoogleCalendarExplorer', 'Google Calendar - Events');
+-- INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(28, 'GoogleCalendarExplorer', 'Google Calendar - Events');
 INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(29, 'Intercom', 'Paging / Intercom');
 INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(30, 'DtmfTX', 'Play DTMF Tones');
 INSERT INTO VPBX_VBOX_TYPE(ID, NAME, DESCRIPTION) VALUES(31, 'MultiDialout', 'MultiDialout');
@@ -2409,6 +2628,10 @@ INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL) values('Disk uti
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP,POST_FILTER) values('Incoming calls by region',1,unix_timestamp(), "select DATA from VPBX_CDRS cdr_d where (START_TIMESTAMP > [% DATE_START %] or STOP_TIMESTAMP > [% DATE_START %] ) and START_TIMESTAMP < [% DATE_STOP %] and CALL_TYPE = 'incoming'",3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))", "sub { my $in_data = shift; unless ( scalar(@$in_data) ) { return ( [], ['=Region','Calls'] ); } my %result; for ( my $i = 0; $i <= $#$in_data; $i++ ) { my $ref = $in_data->[$i]; my $data = $ref->{'DATA'}; if ( $data =~ /REGION=([^,]+)/ ) { my @chunks = split(/\\s*\\/\\s*/,$1); $result{ $chunks[$#chunks] }++; } else { $result{'unknown'}++; } } my $out_data = []; foreach my $k ( sort keys %result ) { push @$out_data, { '=Region' => $k, Calls => $result{$k} }; } return ( $out_data, ['=Region','Calls'] ); };" );
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP,POST_FILTER) values('Transit calls by region',1,unix_timestamp(), "select DATA from VPBX_CDRS cdr_d where (START_TIMESTAMP > [% DATE_START %] or STOP_TIMESTAMP > [% DATE_START %] ) and START_TIMESTAMP < [% DATE_STOP %] and CALL_TYPE = 'transit'",3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))", "sub { my $in_data = shift; unless ( scalar(@$in_data) ) { return ( [], ['=Region','Calls'] ); } my %result; for ( my $i = 0; $i <= $#$in_data; $i++ ) { my $ref = $in_data->[$i]; my $data = $ref->{'DATA'}; if ( $data =~ /REGION=([^,]+)/ ) { my @chunks = split(/\\s*\\/\\s*/,$1); $result{ $chunks[$#chunks] }++; } else { $result{'unknown'}++; } } my $out_data = []; foreach my $k ( sort keys %result ) { push @$out_data, { '=Region' => $k, Calls => $result{$k} }; } return ( $out_data, ['=Region','Calls'] ); };" );
 INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL) values('Audio files by size',1,unix_timestamp(), "select '< 0.5 M / ~  1 min' as 'File size=', count(*) 'Files=', round(sum(f.FILE_SIZE)/1024/1024,2) 'Total size MB=' from VPBX_VBOXES_RECORD_FILES f where f.FILE_SIZE <= 524288 and f.IS_VOICE = 1 union select '< 1.0 M / ~  2 min' as 'File size=', count(*) 'Files=', round(sum(f.FILE_SIZE)/1024/1024,2) 'Total size MB=' from VPBX_VBOXES_RECORD_FILES f where f.FILE_SIZE <= 1048576 and f.FILE_SIZE > 524288 and f.IS_VOICE = 1 union select '< 2.5 M / ~ 5 min' as 'File size=', count(*) 'Files=', round(sum(f.FILE_SIZE)/1024/1024,2) 'Total size MB=' from VPBX_VBOXES_RECORD_FILES f where f.FILE_SIZE <= 2621440 and f.FILE_SIZE > 1048576 and f.IS_VOICE = 1 union select '< 5.0 M / ~ 10 min' as 'File size=', count(*) 'Files=', round(sum(f.FILE_SIZE)/1024/1024,2) 'Total size MB=' from VPBX_VBOXES_RECORD_FILES f where f.FILE_SIZE < 5242880 and f.FILE_SIZE > 2621440 and f.IS_VOICE = 1 union select '> 5.0 M' as 'File size=', count(*) 'Files=', round(sum(f.FILE_SIZE)/1024/1024,2) 'Total size MB=' from VPBX_VBOXES_RECORD_FILES f where f.FILE_SIZE > 5242880 and f.IS_VOICE = 1", 3600 );
+INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('Journal summary',1,unix_timestamp(), "select ACTION '=Action', count(*) as Amount from VPBX_JOURNAL where CREATE_TIMESTAMP > [% DATE_START %] and CREATE_TIMESTAMP < [% DATE_STOP %] group by ACTION", 3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
+INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('Activity summary',1,unix_timestamp(), "select TYPE '=Activity', count(*) as Amount from VPBX_CDRS_ACTIVITY where CREATE_TIMESTAMP > [% DATE_START %] and CREATE_TIMESTAMP < [% DATE_STOP %] group by TYPE", 3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
+INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('Journal actions. Top 10 tenants.',1,unix_timestamp(), "select a.ACCESS_CODE, a.FIRST_NAME, a.LAST_NAME, count(*) as 'Amount of actions=' from VPBX_ACCOUNTS a, VPBX_CDRS_ACTIVITY c  where a.ID = c.SUBSCR_ID and c.CREATE_TIMESTAMP > [% DATE_START %] and c.CREATE_TIMESTAMP < [% DATE_STOP %] group by a.ACCESS_CODE order by `Amount of actions=` desc limit 10", 3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
+INSERT INTO VPBX_REPORTS (NAME,TYPE,CREATE_TIMESTAMP,QUERY,TTL,DATE_START,DATE_STOP) values('Activity. Top 10 tenants.',1,unix_timestamp(), "select a.ACCESS_CODE, a.FIRST_NAME, a.LAST_NAME, count(*) as 'Amount of activities=' from VPBX_ACCOUNTS a, VPBX_JOURNAL c  where a.ID = c.SUBSCR_ID and c.CREATE_TIMESTAMP > [% DATE_START %] and c.CREATE_TIMESTAMP < [% DATE_STOP %]  group by a.ACCESS_CODE order by `Amount of activities=` desc limit 10", 3600,"UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 1 day),'%Y-%m-%d'))","UNIX_TIMESTAMP(date_format(date_sub(curdate(),interval 0 day),'%Y-%m-%d'))");
 
 INSERT INTO VPBX_NODES (NODE_ID,NODE_IP,DOWNLOAD_IP,NODE_DESC) values('DEFAULT_NODE','127.0.0.1','https://127.0.0.1','Default node');
 INSERT INTO VPBX_GROUPS (GROUP_ID,GROUP_NAME,SERVER_ID,CUSTOM_ROUTE,CUSTOM_FILES) values(1,'default','DEFAULT_NODE',1,1);

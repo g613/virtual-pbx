@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters_core.tt,v 1.11 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: cidfilters_core.tt,v 1.13 2021/01/02 19:03:37 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID фильтры - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -24,9 +24,27 @@
 			абонентов
 			</h1></td>
 			<td align='right' nowrap='nowrap'>
-				<a title='в формате excel' href='?action=cid_list&id=[% VBOX_PREF.ID %]&cid_list_type=[% CID_LIST_TYPE %]&cid_type=2&uniq=[% USER_CREDS.UNIQ %]&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
+				<a title='в формате excel' href='?action=cid_list&cid=[% CID | html %]&id=[% VBOX_PREF.ID %]&cid_list_type=[% CID_LIST_TYPE %]&cid_type=2&uniq=[% USER_CREDS.UNIQ %]&need_excel=1&from=all'"><span class='icon-file-excel fs0'></span></a>
 				<a title='удалить все фильтры' href='?action=cid_del&drop_all=1&data_id=all&cid_type=2&cid_list_type=[% CID_LIST_TYPE %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить все фильтры'><span class='icon-bin-all fs2'></span></a>
 			</td>
+		</tr>
+	</table>
+	
+	<table width='100%'>
+		<tr>
+			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)' id='find-form'>
+			<td align='right'>
+				<input size='20' type='text' placeholder='CID' name='cid' value='[% CID | html %]'>
+				&nbsp;
+				<input value='Найти' type='submit'>
+				<input name='action' value='cid_list' type='hidden'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='need_excel' value='' type='hidden' id='find-flt'>
+				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
+				<input name='cid_list_type' value='[% CID_LIST_TYPE %]' type='hidden'>
+				<input name='cid_type' value='2' type='hidden'>
+			</td>
+			</form>
 		</tr>
 	</table>
 
@@ -36,6 +54,13 @@
 			<th>Описание</th>
 			<th class='rad_r'>&nbsp;</th>
 		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left'>
+				<a title='предыдущая станица' href='?action=cid_list&id=[% VBOX_PREF.ID %]&cid_list_type=[% CID_LIST_TYPE %]&cid_type=2&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&cid=[% CID | html %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
 
 		[% FOREACH param = CID_LIST %]
 		<tr align='center' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
@@ -57,6 +82,15 @@
 		</form>
 		</tr>
 		[% END %]
+		
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='3'>
+				<a title='следующая станица' href='?action=cid_list&id=[% VBOX_PREF.ID %]&cid_list_type=[% CID_LIST_TYPE %]&cid_type=2&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&cid=[% CID | html %]'><span class='fs0'>►</span></a>
+			</td>
+		</tr>
+		[% END %]
+		
 		<tr align='center'>
 		<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 			<input type='hidden' name='action' value='cid_add'>

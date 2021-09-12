@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.109 2020/08/14 20:22:15 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.124 2021/02/17 18:44:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -235,7 +235,7 @@
 					<ul>
 						<li><b>0</b> - узнать дату сообщения</li>
 						<li><b>4</b> - прослушать предыдущее сообщение</li>
-						<li><b>5</b> - повторить сообщение сообщение</li>
+						<li><b>5</b> - повторить сообщение</li>
 						<li><b>6</b> - прослушать следующее сообщение</li>
 						<li><b>9</b> - записать объявление</li>
 					</ul>
@@ -1926,6 +1926,23 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
+					<td><a href='#' class='info'>Ждать примечания агента:<span>
+							При установленном флаге после того как звонящий повесит трубку агент в очереди имеет возможность сохранить примечания к звонку..
+						</span></a></td>
+					<td>
+						<div class="onoffswitch">
+						<input name="WAIT_NOTES" type="checkbox" class="onoffswitch-checkbox" id="WAIT_NOTES-ch" 
+						[% IF VBOX_PREF.WAIT_NOTES %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="WAIT_NOTES-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
+				<tr class='addon_info'>
 					<td><a href='#' class='info'>Если не дозвонились, перейти к:<span>
 							Внутренний номер на который будет осуществлен переход в случае неудачного звонка.
 						</span></a></td>
@@ -2016,12 +2033,31 @@
 							URL который выполняется VirtualPBX после ответа агента, есть 
 							возможность использовать переменные в URL: QID - id очереди, 
 							ANSWERED_NUMBER - номер ответившего агента.
-							Данный метод можно использовать вместо предыдущего ( URL для телефона )
+							Данный метод можно использовать 'URL для телефона'
 							если Ваш телефон не поддерживает WEB запросы.
 						</span></a>
 					</td>
 					<td>
 						<input size='30' type='text' name='Q_ANSWERED_URL' value='[% VBOX_PREF.Q_ANSWERED_URL | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Веб запрос для пропущенных звонков:<span>
+							URL который выполняется VirtualPBX в случае не ответа на звонок 
+							дополнительная переменная WAIT_TIME - время ожидания клиентом.
+						</span></a>
+					</td>
+					<td>
+						<input size='30' type='text' name='MISS_CALL_URL' value='[% VBOX_PREF.MISS_CALL_URL | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Веб запрос для принятых звонков:<span>
+							URL который выполняется VirtualPBX после окончания успешного звонка
+						</span></a>
+					</td>
+					<td>
+						<input size='30' type='text' name='ANSW_CALL_URL' value='[% VBOX_PREF.ANSW_CALL_URL | html %]'>
 					</td>
 				</tr>
 				[% END %]
@@ -2221,11 +2257,46 @@
 						</label></div>
 					</td>
 				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Логировать DTMF:<span>
+							При установленном флаге в статистике сохранится ввод пользователя.
+						</span></a></td>
+					<td>
+						<div class="onoffswitch">
+						<input name="DTMF_LOG" type="checkbox" class="onoffswitch-checkbox" id="DTMF_LOG-ch" 
+						[% IF VBOX_PREF.DTMF_LOG %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="DTMF_LOG-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Ждать примечания агента:<span>
+							При установленном флаге после того как адресат из списка callblast повесит трубку агент в очереди имеет возможность сохранить примечания к звонку..
+						</span></a></td>
+					<td>
+						<div class="onoffswitch">
+						<input name="WAIT_NOTES" type="checkbox" class="onoffswitch-checkbox" id="WAIT_NOTES-ch" 
+						[% IF VBOX_PREF.WAIT_NOTES %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="WAIT_NOTES-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
 				<tr>
 					<td><a href='#' class='info'>Проверка автоответчиков:<span>
 						Режим проверки автоответчиков<br />
-						  - информативная - сохранение статуса в cdr,<br />
-						  - расширенная - система учитывает статус проверки на автоответчик, если система обнаружила что ответил автоответчик то переход на 'Перейти к' будет проигнорирован и звонок завершится,<br />
+						  - информативный - сохранение статуса в cdr,<br />
+						  - расширенный - система учитывает статус проверки на автоответчик, если система обнаружила что ответил автоответчик то переход на 'Перейти к' будет проигнорирован и звонок завершится,<br />
+						  - строгий - считать звонок не удачным если система не определила что ответил человек
 						  - не использовать - отключить проверку
 					</span></a></td>
 					<td>
@@ -2234,12 +2305,17 @@
 							[% IF VBOX_PREF.USE_AMD eq '0' %]
 								selected
 							[% END %]
-							>информативная</option>
+							>информативный</option>
 							<option value="1" 
 							[% IF VBOX_PREF.USE_AMD eq '1' %]
 								selected
 							[% END %]
-							>расширенная</option>
+							>расширенный</option>
+							<option value="3" 
+							[% IF VBOX_PREF.USE_AMD eq '3' %]
+								selected
+							[% END %]
+							>строгий</option>
 							<option value="2" 
 							[% IF VBOX_PREF.USE_AMD eq '2' %]
 								selected
@@ -2267,7 +2343,7 @@
 							});
 						</script>
 						<input size='16' name="START_DATE" value="[% BLAST_START_DATE | html %]" id='START_DATE' type="text">
-						<button type="button">...</button>
+						<a link="#"><span class='fs0'>▾</span></a>
 					</td>
 				</tr>
 				<tr>
@@ -2289,7 +2365,7 @@
 							});
 						</script>
 						<input size='16' name="STOP_DATE" value="[% BLAST_STOP_DATE | html %]" id='STOP_DATE' type="text">
-						<button type="button">...</button>
+						<a link="#"><span class='fs0'>▾</span></a>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -2361,6 +2437,16 @@
 					<td>
 						<input size='20' type='text' name='TZ_NAME' value='[% VBOX_PREF.TZ_NAME | html %]'>
 						<script language='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'По умолчанию')</script>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Веб запрос после успешного звонка:<span>
+							URL который выполняется VirtualPBX после успешного звонка, есть 
+							возможность использовать переменные в URL 
+						</span></a>
+					</td>
+					<td>
+						<input size='30' type='text' name='URL_SUCCESS' value='[% VBOX_PREF.URL_SUCCESS | html %]'>
 					</td>
 				</tr>
 				[% END %]
@@ -3095,6 +3181,14 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
+					<td><a href='#' class='info'>Количество вызовов в секунду:<span>
+							При значении > 0 системы будет ограничивать кол-во новых вызовов.
+						</span></a></td>
+					<td>
+						<input size='4' type='text' name='CPS' value='[% VBOX_PREF.CPS | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
 					<td><a href='#' class='info'>Веб запрос перед звонком:<span>
 							URL который выполняется VirtualPBX перед звонком агента, есть 
 							возможность использовать переменные в URL 
@@ -3292,7 +3386,7 @@
 						<td colspan='2' align='center'>
 						<table width='100%'  id='addon-data'>
 							<tr>
-								<th rowspan='2' class='rad_l'><a class='warning-font' href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='динамические агенты'>Номер телефона</a></th>
+								<th colspan='2' rowspan='2' class='rad_l'><a class='warning-font' href='?action=agent_status&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]' title='динамические агенты'>Номер телефона</a></th>
 								<th colspan='2'>Звонки</th>
 								<th colspan='2'>Длительность</th>
 								<th rowspan='2' class='rad_r'>Среднее время<br> до ответа</th>
@@ -3307,9 +3401,17 @@
 							[% IF param.NUMBER eq '===' %]
 							<tr align='center' class='resume'>
 								<td></td>
+								<td></td>
 							[% ELSE %]
 							<tr align='center' class='nocolor'>
 								<td align='left'><span class='agent_state[% param.STATUS %]'>[% param.NUMBER | html %]</span></td>
+								<td>
+								[% IF param.STATUS eq '0' %]
+									<a href='?action=agent_status&status=1&redir=1&pswd=[% param.PSWD | html %]&agent=[% param.NUMBER | html %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]&rand=[% UNIXTIME %]-[% USER_CREDS.UNIQ %]' title='зарегистрировать агента'><span class='icon-loop2 fs1'></span></a>
+								[% ELSIF param.STATUS eq '1'  %]
+									<a href='?action=agent_status&status=0&redir=1&pswd=[% param.PSWD | html %]&agent=[% param.NUMBER | html %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.ACCESS_CODE %]&rand=[% UNIXTIME %]-[% USER_CREDS.UNIQ %]' title='разрегистрировать агента'><span class='icon-loop2 fs1'></span></a>
+								[% END %]
+								</td>
 							[% END %]
 								<td>[% param.ALL | html %]</td>
 								<td>[% param.ANSWERED | html %]</td>
@@ -3591,8 +3693,8 @@
 					<tr>
 						<td colspan='2' nowrap='nowrap' align='left'>
 						<select name="type" id='sysmsgtype'>
-							<option value="1" selected>Имя пользователя</option>
-							<option value="2">Приветствие пользователя</option>
+							<option value="2" selected>Приветствие пользователя</option>
+							<option value="1">Имя пользователя</option>
 							[% IF VBOX_PREF.TYPE eq '3' %]
 							<option value="3">Объявление для вызываемого</option>
 							<option value="4">Анонс удержания вызова</option>
@@ -3927,17 +4029,19 @@
 				<table width='100%' id='d-tbl'>
 					<tr>
 						<th class='rad_l'>Время обработки</th>
-						<th>Имя</th>
 						<th>Номер(а) телефона</th>
+						<th>Имя</th>
 						<th>Переменные</th>
 						<th>Статус</th>
 						<th>Длительность</th>
 						<th>Попытка</th>
+						<th>DTMF</th>
+						<th>Примечание</th>
 						<th class='rad_r'>&nbsp;</th>
 					</tr>
 					[% IF MSG_PREV ne '' %]
 					<tr>
-						<td align='left' colspan='8'>
+						<td align='left' colspan='10'>
 							<a title='предыдущая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>◄</span></a>
 						</td>
 					</tr>
@@ -3952,8 +4056,8 @@
 						<td>
 							[% param.PROCESS_DATE | html %]
 						</td>
-						<td><input class='in_t0' type='text' size='18' name='name' value='[% param.NAME | html %]'></td>
 						<td><input class='in_t0' type='text' size='25' name='pn' value='[% param.PHONE_NUMBER | html %]'></td>
+						<td><input class='in_t0' type='text' size='18' name='name' value='[% param.NAME | html %]'></td>
 						<td><input class='in_t0' type='text' size='20' name='uv' value='[% param.USER_VARS | html %]'></td>
 						<td align='left'>
 							[% IF param.CALL_STATUS contain 'success' %]
@@ -3968,6 +4072,8 @@
 						</td>
 						<td>[% param.DURATION | duration_str | html %]</td>
 						<td>[% param.ATTEMPT %]</td>
+						<td>[% param.DTMF_LOG | html %]</td>
+						<td>[% param.CALL_NOTE | html %]</td>
 						<td align='right' nowrap='nowrap'>
 							<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
 								<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
@@ -3980,7 +4086,7 @@
 					[% END %]
 					[% IF MSG_NEXT ne '' %]
 					<tr>
-						<td align='right' colspan='8'>
+						<td align='right' colspan='10'>
 							<a title='следующая страница' href='?action=vb_view&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
 						</td>
 					</tr>
@@ -3991,9 +4097,9 @@
 							<input type='hidden' name='action' value='callblast_add'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-							<input type='text' name='name' value='' size='18' placeholder='Имя'>
-							&nbsp;
 							<input size='25' type='text' name='pn' value='' placeholder='Номер телефона'>
+							&nbsp;
+							<input type='text' name='name' value='' size='18' placeholder='Имя'>
 							&nbsp;
 							<input size='20' type='text' name='uv' value='' placeholder='Переменные'>
 							&nbsp;
@@ -4149,8 +4255,8 @@
 				<table width='100%' id='d-tbl'>
 					<tr>
 						<th class='rad_l'>Время обработки</th>
-						<th>Имя</th>
 						<th>Номер(а) телефона</th>
+						<th>Имя</th>
 						<th>Переменные</th>
 						<th>Статус</th>
 						<th>Длительность</th>
@@ -4175,8 +4281,8 @@
 						<td>
 							[% param.PROCESS_DATE | html %]
 						</td>
-						<td><input class='in_t0' type='text' size='20' name='name' value='[% param.NAME | html %]'></td>
 						<td><input class='in_t0' type='text' size='25' name='pn' value='[% param.PHONE_NUMBER | html %]'></td>
+						<td><input class='in_t0' type='text' size='20' name='name' value='[% param.NAME | html %]'></td>
 						<td><input class='in_t0' type='text' size='20' name='uv' value='[% param.USER_VARS | html %]'></td>
 						<td align='left'>
 							[% IF param.CALL_STATUS contain 'success' %]
@@ -4215,9 +4321,9 @@
 							<input type='hidden' name='action' value='multidialout_add'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-							<input type='text' name='name' value='' size='20' placeholder='Имя'>
-							&nbsp;
 							<input size='25' type='text' name='pn' value='' placeholder='Телефон'>
+							&nbsp;
+							<input type='text' name='name' value='' size='20' placeholder='Имя'>
 							&nbsp;
 							<input size='20' type='text' name='uv' value='' placeholder='Переменные'>
 							&nbsp;
