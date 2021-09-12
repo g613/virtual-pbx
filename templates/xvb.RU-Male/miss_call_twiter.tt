@@ -1,0 +1,1 @@
+Пропущенный звонок от [% _CDR.CALLER_ID | html %], на: [% _CDR.CALLED_ID | html %], дата: <b>[% ORIGDATE | html %], время ожидания: [% WAIT_TIME %] ( сек )

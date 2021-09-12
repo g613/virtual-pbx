@@ -1,0 +1,155 @@
+<html>
+<head>
+	<title>Virtual PBX - CDRs</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+	
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+	<h1>Activity</h1>
+	
+	<p>
+	<table width='100%'>
+		<tr>
+			<td align='right'>
+				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)' id='find-form'>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "00:00",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<a link="#"><span class='fs0'>▾</span></a>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "23:59",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<a link="#"><span class='fs0'>▾</span></a>
+				<input size='10' type='text' placeholder='Caller' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Access Code' name='ac' value='[% CDR_AC | html %]'>
+				&nbsp;
+				<input placeholder='Ext' size='10' type='text' name='ext' value='[% CDR_ACT_EXT | html %]'>
+				&nbsp;
+				<input size='8' type='text' placeholder='Duration' name='duration' value='[% CDR_DURATION | html %]'>
+				&nbsp;
+				<input placeholder='Data' size='15' type='text' name='data' value='[% CDR_DATA | html %]'>
+				&nbsp;
+				<select name="act_type" id="act_type_selector">
+					<option value="" selected>Action</option>
+				[% FOREACH at = ACT_TYPES %]
+					<option value="[% at %]">[% at %]</option>
+				[% END %]
+				</select>
+				&nbsp;
+				<input name='action' value='act_list_all' type='hidden'>
+				<input value='Search' type='submit'>
+				<input name='need_excel' value='' type='hidden' id='find-flt'>
+				</form>
+				<script langiage='JavaScript'>setActiveSelector('act_type_selector',"[% CDR_ACT_TYPE | html %]");</script>
+			<td>
+		</tr>
+	</table>
+
+	<table width='95%' id='d-tbl'>
+		<tr>
+			<th class='rad_l'>Date</th>
+			<th colspan='2' width='20%'>Tenant</th>
+			<th>Caller ID</th>
+			<th>Extension</th>
+			<th>Duration</th>
+			<th>Action</th>
+			<th width='30%' class='rad_r'>Data</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='8'>
+				<a title='previous page' href='?action=act_list_all&ext=[% CDR_EXT | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type[% ACT_TYPE | html %]&from=[% MSG_PREV %]&to_time=[% TO_TIME | html %]&from_time=[% FROM_TIME | html %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+		
+		[% FOREACH msg = CDR_LIST %]
+		<tr class='nocolor' align='center'>
+			<td class='simple'>
+				<a title='call detail' href="?action=act_list&call_id=[% msg.CALL_ID %]">[% msg.CDR_DATE | html %]</a>
+			</td>
+			<td><a title='edit user settings' href='?ac=[% msg.ACCESS_CODE %]&action=user_info'>[% msg.ACCESS_CODE %]</a></td>
+			<td align='left'>
+				[% msg.FIRST_NAME | html %] [% msg.LAST_NAME | html %]
+			</td>
+			<td align='right'>[% msg.CALLER_ID | html %]</td>
+			<td align='right'>[% msg.EXT_NUMBER | html %]</td>
+			<td>[% msg.CDR_DURATION | duration_str %]</td>
+			<td align='left'>[% msg.TYPE | html %]</td>
+			<td align='left'>[% msg.DATA | html %]</td>
+		</tr>
+		[% END %]
+		<tr>
+		[% IF MSG_NEXT ne '' %]
+			<td align='right' colspan='8'>
+				<a title='next page' href='?action=act_list_all&ext=[% CDR_EXT | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% ACT_TYPE | html %]&from=[% MSG_NEXT %]&to_time=[% TO_TIME | html %]&from_time=[% FROM_TIME | html %]'><span class='fs0'>►</span></a>
+			</td>
+		[% ELSE %]
+			<td colspan='5'>&nbsp;</td>
+		[% END %]
+		</tr>
+	</table>
+
+	<script language='JavaScript'>
+		listcolorer( 'd-tbl' );
+	</script>
+	
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
+

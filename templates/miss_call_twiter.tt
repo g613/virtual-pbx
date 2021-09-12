@@ -1,0 +1,1 @@
+Call information: caller: <b>[% _CDR.CALLER_ID | html %]</b>, called: <b>[% _CDR.CALLED_ID | html %]</b>, date: <b>[% ORIGDATE | html %]</b>, wait time: <b>[% WAIT_TIME %] ( sec )
