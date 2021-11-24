@@ -36,10 +36,20 @@
 			&nbsp;
 			<input placeholder='Access code' size='10' name='f_ac' type='text'  value='[% F_AC | html %]'>
 			&nbsp;
+			<select name="f_group" id="group_type_selector">
+				<option value="" selected>any group</option>
+				[% FOREACH gr = GROUPS %]
+					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+				[% END %]
+			</select>
+			&nbsp;
 			<input type='hidden' value='user_list' name='action'>
 			<input type='hidden' value='[% PARTNER | html %]' name='partner'>
 			<input value='Search' type='submit'>
 			</td>
+			<script language='JavaScript'>
+				setActiveSelector('group_type_selector',"[% F_GROUP %]");
+			</script>
 			</form>
 		</tr>
 	</table>

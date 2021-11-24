@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: integrations.tt,v 1.15 2020/10/11 17:07:38 gosha Exp $ -->
+<!-- $Id: integrations.tt,v 1.16 2021/10/30 06:12:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Настройка интеграций</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -491,7 +491,7 @@
 				Адрес запроса для создания звонка:
 			</td>
 			<td>
-				[% CGI_SERVER %]/cgi-bin/envicrm/call/[% USER_CREDS.ACCESS_CODE %]/[% C2C_SECRET | html %]
+				[% CGI_SERVER %]/cgi-bin/envycrm/call/[% USER_CREDS.ACCESS_CODE %]/[% C2C_SECRET | html %]
 			</td>
 		</tr>
 		<tr>
@@ -499,7 +499,7 @@
 				Адрес запроса для проверки сценаря:
 			</td>
 			<td>
-				[% CGI_SERVER %]/cgi-bin/envicrm/test
+				[% CGI_SERVER %]/cgi-bin/envycrm/test
 			</td>
 		</tr>
 		<tr>
@@ -507,7 +507,7 @@
 				Адрес запроса для получения списка:
 			</td>
 			<td>
-				[% CGI_SERVER %]/cgi-bin/envicrm/list
+				[% CGI_SERVER %]/cgi-bin/envycrm/list
 			</td>
 		</tr>
 

@@ -41,9 +41,9 @@
 		<tr>
 				<th class='rad_l'>Partner login</th>
 				<th>Password</th>
-				<th>Group</th>
 				<th>R/O mode</th>
 				<th>Description</th>
+				<th>Group</th>
 				<th>Actions</th>
 				<th class='rad_r'>&nbsp;</th>
 			</tr>
@@ -57,24 +57,13 @@
 		[% END %]
 
 		[% FOREACH p = PARTNERS %]
-		<tr align='center' class='nocolor' id='d-tr-[% p.ID %]'>
+		<tr align='center' class='nocolor' id='d-tr-[% p.ID %]' valign='top'>
 			<form method='post' id='f-[% p.ID %]' onSubmit='return xmlhttpPost(this,1)' action="">
 			<td align='right'>
 				<input class='in_t0' size='20' name='P_NAME' type='text' value='[% p.NAME | html %]'></td>
 			</td>
 			<td align='right'>
 				<input class='in_t0' size='20' name='P_PASSWORD' type='text' value='[% p.PASSWORD | html %]'></td>
-			</td>
-			<td>
-				<select class='in_t0' name="P_GROUP_ID">
-				[% FOREACH gr = GROUPS %]
-					[% IF gr.GROUP_ID eq p.GROUP_ID %]
-						<option value="[% gr.GROUP_ID | html %]" selected>[% gr.GROUP_NAME | html %]</option>
-					[% ELSE %]
-						<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
-					[% END %]
-				[% END %]
-				</select>
 			</td>
 			<td>
 				<select class='in_t0' name="P_READ_ONLY">
@@ -89,20 +78,53 @@
 			</td>
 			<td align='right'>
 				<input class='in_t0' size='30' name='P_DESCRIPTION' type='text' value='[% p.DESCRIPTION | html %]'></td>
-			</td>
-			<td align='right'>
 				<input type='hidden' value='[% p.ID %]' name='partner_id'>
 				<input type='hidden' value='[% p.ID %]' name='data_id'>
 				<input type='hidden' value='partner_update' name='action'>
 				<input type='hidden' value='[% MSG_FROM %]' name='from'>
+				<noscript><input value='change' type='submit'></noscript>
+			</td>
+			</form>
+			<td align='left'>
+				<table width='50%'>
+				[% FOREACH gref = p.GROUP_ID_BIN %]
+				[% FOREACH gr = GROUPS %]
+					[% IF gref eq gr.GROUP_ID %]
+						<tr>
+						<td>
+						[% gr.GROUP_NAME | html %]
+						</td>
+						<td>
+						<a title='delete partner group' href='?action=partner_group_del&partner_id=[% p.ID %]&group_id=[% gr.GROUP_ID %]&rnd=[% R_TIME %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
+						</td>
+						</tr>
+					[% END %]
+				[% END %]
+				[% END %]
+				<form method="post">
+				<input type='hidden' value='[% p.ID %]' name='partner_id'>
+				<input type='hidden' value='[% R_TIME %]' name='rnd'>
+				<input type='hidden' value='partner_group_add' name='action'>
+				<td>
+				<select class='in_t0' name="group_id">
+				[% FOREACH gr = GROUPS %]
+					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+				[% END %]
+				</select>
+				</td>
+				<td>
+				<input value='+' type='submit'>
+				</td>
+				</form>
+				</table>
+			</td>
+			<td align='right'>
 				<span class='in_t' id='in_t_id-[% p.ID %]'>
 					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% p.ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
-					<noscript><input value='change' type='submit'></noscript>
 				</span>
 				<a title='login to partner account' href='/pi?partner=[% p.NAME | html %]&password=[% p.PASSWORD | html %]'><span class='icon-enter fs0'></span></a>
 				<a title='delete partner account' href='?action=partner_del&partner_id=[% p.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
 			</td>
-			</form>
 			<td></td>
 		</tr>
 		[% END %]
@@ -115,18 +137,19 @@
 			<td align='right'>
 				<input size='20' name='P_PASSWORD' type='text'></td>
 			</td>
+			<td></td>
+			<td align='right'>
+				<input size='40' name='P_DESCRIPTION' type='text'></td>
+			</td>
 			<td>
-				<select name="P_GROUP_ID">
+				<select name="GROUP_ID">
 				[% FOREACH gr = GROUPS %]
 					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
 				[% END %]
 				</select>
 			</td>
-			<td align='right'>
-				<input size='40' name='P_DESCRIPTION' type='text'></td>
-			</td>
 			<td align='center'>
-				<input value='Add partner' type='submit'>
+				<input value='Add new partner' type='submit'>
 				<input type='hidden' value='partner_add' name='action'>
 			</td>
 		[% IF MSG_NEXT ne '' %]
@@ -146,6 +169,5 @@
 	[% INCLUDE main_menu2.tt-inc-custom %]
 	
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
-	</body>
-</html>
+	<p align='center' class='copyright'><br><a href='/xvb/XVB-EN.pdf?a=msg_download&r=3245'>XVB - VirtualPBX</a> v.4, build: 13245_dev ( Thu Nov  4 18:09:26 2021 GMT )<br><br>-- (c) 2009-2021 by <b>Igor Okunev</b>. All rights reserved. --</p></body></html>
 			

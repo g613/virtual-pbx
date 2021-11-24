@@ -96,6 +96,22 @@
 			</tr>
 			<tr>
 				<td>
+					Group:
+				</td>
+				<td>
+					<select name="US_GROUP_ID">
+					[% FOREACH gr = GROUPS %]
+						[% IF gr.GROUP_ID eq USER.GROUP_ID %]
+							<option value="[% gr.GROUP_ID | html %]" selected>[% gr.GROUP_NAME | html %]</option>
+						[% ELSE %]
+							<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+						[% END %]
+					[% END %]
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
 					Status:
 				</td>
 				<td>
@@ -154,7 +170,7 @@
 						<table width='100%'>
 							<tr>
 								<td colspan='8'>
-									Balance ( <b>Tariff - <b>[% TARIFF.NAME | html %]</b> ):
+									<h2>Balance ( <b>Tariff - <b>[% TARIFF.NAME | html %]</b> ):</h2>
 								</td>
 							</tr>
 							<tr>
@@ -184,8 +200,12 @@
 					<td>
 						<table width='100%'>
 							<tr>
-								<td valign='top' width='20%'><h4>Assigned DIDs:</h4></td>
-								<td valign='top' width='60%'>
+								<td><h2>Assigned DIDs:</h2></td>
+							</tr>
+							<tr>
+								<td>
+								&nbsp;
+								&nbsp;
 								[% FOREACH d = DIDS %]
 									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&partner=[% PARTNER | html %]&did=[% d.DID | html %]' onclick="return DelConfirm('en')">
 									[% d.DID | html %]
@@ -213,7 +233,7 @@
 				</tr>
 				<tr>
 				<td>
-					<h4>Quick links:</h4>
+					<h2>Quick links:</h2>
 					&nbsp;&nbsp;<a href='/ui?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP Peers</a>
 					&nbsp;/&nbsp;<a href='/ui?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Routes</a>
 					&nbsp;/&nbsp;<a href='/ui?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Phones</a>

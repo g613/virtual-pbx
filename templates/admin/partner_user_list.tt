@@ -36,10 +36,20 @@
 			&nbsp;
 			<input placeholder='Access code' size='10' name='f_ac' type='text'  value='[% F_AC | html %]'>
 			&nbsp;
+			<select name="f_group" id="group_type_selector">
+				<option value="" selected>any group</option>
+				[% FOREACH gr = GROUPS %]
+					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+				[% END %]
+			</select>
+			&nbsp;
 			<input type='hidden' value='user_list' name='action'>
 			<input type='hidden' value='[% PARTNER | html %]' name='partner'>
 			<input value='Search' type='submit'>
 			</td>
+			<script language='JavaScript'>
+				setActiveSelector('group_type_selector',"[% F_GROUP %]");
+			</script>
 			</form>
 		</tr>
 	</table>
@@ -51,6 +61,7 @@
 				<th>Access code</th>
 				<th>Tenant name</th>
 				<th>Description</th>
+				<th>Group</th>
 				<th>Status</th>
 				<th>R/O</th>
 				<th>Balance</th>
@@ -80,6 +91,7 @@
 			<td align='left'>
 				[% us.DESCRIPTION | html %]
 			</td>
+			<td align='left'>[% us.GROUP_NAME | html %]</td>
 			[% IF us.STATUS %]
 			<td class='success'>
 				active
@@ -125,13 +137,20 @@
 			<td align='left' colspan='6'>
 				<input placeholder='Shared DID' size='15' type='text' name='phone'>
 				&nbsp;
+				Group: 
+				<select name="group_id">
+				[% FOREACH gr = GROUPS %]
+					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+				[% END %]
+				</select>
+				&nbsp;
 				<input value='Add tenant' type='submit'>
 				<input type='hidden' value='user_add' name='action'>
 				<input type='hidden' value='[% PARTNER | html %]' name='partner'>
 			</td>
 			</form>
 		</tr>
-	</tabel>
+	</table>
 	</p>
 
 	</center>
