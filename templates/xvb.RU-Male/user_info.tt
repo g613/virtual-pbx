@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.36 2020/02/21 19:17:44 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.38 2022/01/05 20:34:59 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль АТС - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -50,6 +50,7 @@
 						<select name='skins' onchange='document.user_prefs.CSS_HREF.value=this.value'>
 							<option value='[% USER_CREDS.CSS_HREF | html %]' selected>Ссылка на таблицу стилей:</option>
 							<option value='/xvb/xvb-green.css'>Стиль зеленая палитра</option>
+							<option value='/xvb/xvb-green2.css'>Стиль - черно-зеленый</option>
 							<option value=''>Стиль по умолчанию</option>
 						</select>
 					</td>
@@ -157,43 +158,108 @@
 				</tr>
 				<tr>
 					<td>Ежедневная статистика:</td>
+					<td></td>
+				</tr>
+				<tr>
 					<td>
-						<select name='STATEMENTS'>
-							[% IF USER_CREDS.STATEMENTS eq '0' %]
-								<option value="0" selected>не требуется</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '2' %]
-								<option value="2" selected>внутренняя активность</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '4' %]
-								<option value="4" selected>список звонков</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '6' %]
-								<option value="6" selected>список звонков и активность</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '8' %]
-								<option value="8" selected>звонки обобщенная</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '10' %]
-								<option value="10" selected>звонки+активность обобщенная</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '12' %]
-								<option value="12" selected>звонки (список+обобщенная)</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '16' %]
-								<option value="16" selected>очереди</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '18' %]
-								<option value="18" selected>очереди+активность</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '26' %]
-								<option value="26" selected>очереди+активность+звонки</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '30' %]
-								<option value="30" selected>вся статистика</option>
-							[% END %]
-								<option value="0">не требуется</option>
-								<option value="2">внутренняя активность</option>
-								<option value="4">список звонков</option>
-								<option value="6">список звонков и активность</option>
-								<option value="8">звонки обобщенная</option>
-								<option value="10">звонки+активность обобщенная</option>
-								<option value="12">звонки (список+обобщенная)</option>
-								<option value="16">очереди</option>
-								<option value="18">очереди+активность</option>
-								<option value="26">очереди+активность+звонки</option>
-								<option value="30">вся статистика</option>
-						</select>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;внутренняя активность
+					</td>
+					<td>
+					<div class="onoffswitch">
+					<input name="ST-1" type="checkbox" class="onoffswitch-checkbox" id="ST-1-ch" 
+					[% IF USER_CREDS.STATEMENTS contain '1;' %]
+						checked
+					[% END %]
+					>
+					<label class="onoffswitch-label" for="ST-1-ch">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;звонки - обобщенная
+					</td>
+					<td>
+					<div class="onoffswitch">
+					<input name="ST-2" type="checkbox" class="onoffswitch-checkbox" id="ST-2-ch"
+					[% IF USER_CREDS.STATEMENTS contain '2;' %]
+						checked
+					[% END %]
+					>
+					<label class="onoffswitch-label" for="ST-2-ch">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;список звонков
+					</td>
+					<td>
+					<div class="onoffswitch">
+					<input name="ST-3" type="checkbox" class="onoffswitch-checkbox" id="ST-3-ch" 
+					[% IF USER_CREDS.STATEMENTS contain '3;' %]
+						checked
+					[% END %]
+					>
+					<label class="onoffswitch-label" for="ST-3-ch">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;пропущенные звонки
+					</td>
+					<td>
+					<div class="onoffswitch">
+					<input name="ST-4" type="checkbox" class="onoffswitch-checkbox" id="ST-4-ch"
+					[% IF USER_CREDS.STATEMENTS contain '4;' %]
+						checked
+					[% END %]
+					>
+					<label class="onoffswitch-label" for="ST-4-ch">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;статистика очередей
+					</td>
+					<td>
+					<div class="onoffswitch">
+					<input name="ST-5" type="checkbox" class="onoffswitch-checkbox" id="ST-5-ch"
+					[% IF USER_CREDS.STATEMENTS contain '5;' %]
+						checked
+					[% END %]
+					>
+					<label class="onoffswitch-label" for="ST-5-ch">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;исходящие звонки - обобщенная
+					</td>
+					<td>
+					<div class="onoffswitch">
+					<input name="ST-6" type="checkbox" class="onoffswitch-checkbox" id="ST-6-ch"
+					[% IF USER_CREDS.STATEMENTS contain '6;' %]
+						checked
+					[% END %]
+					>
+					<label class="onoffswitch-label" for="ST-6-ch">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label></div>
 					</td>
 				</tr>
 				<tr>
@@ -478,7 +544,7 @@
 				</tr>
 				[% END %]
 				<tr>
-					<td>Количество Click2Call ссылок: </td>
+					<td>количество Click2Call ссылок: </td>
 					<td align='right'>[% USER_CREDS.MAX_C2C_ITEMS %]</td>
 				</tr>
 				[% IF USER_CREDS.TTS_GREETING %]

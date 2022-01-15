@@ -432,13 +432,23 @@ create table VPBX_PARTNERS
 	NAME			VARCHAR(100)	not null,
 	PASSWORD		VARCHAR(100)	not null,
 	DESCRIPTION		VARCHAR(255),
-	GROUP_ID		INT(16)			not null,
-	PARENT_ID		INT(16)			not null default -1,
 	READ_ONLY		INT(1) 			default 0,
+	TAG				VARCHAR(100)	unique,
 
     unique			(NAME),
-    CONSTRAINT PK_VPBX_PARTNER PRIMARY KEY (ID),
-    CONSTRAINT FK_VPBX_PARTNER_GR FOREIGN KEY (GROUP_ID) REFERENCES VPBX_GROUPS(GROUP_ID) ON DELETE CASCADE
+    CONSTRAINT PK_VPBX_PARTNER PRIMARY KEY (ID)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+create table VPBX_PARTNERS_GROUP
+(
+	ID	            INT(16)		    not null AUTO_INCREMENT,
+	GROUP_ID		INT(16)			not null,
+	PARTNER_ID		INT(16)			not null,
+
+    unique			(GROUP_ID,PARTNER_ID),
+    CONSTRAINT PK_VPBX_PARTNER_GRID PRIMARY KEY (ID),
+    CONSTRAINT FK_VPBX_PARTNER_GR_N FOREIGN KEY (GROUP_ID) REFERENCES VPBX_GROUPS(GROUP_ID) ON DELETE CASCADE,
+    CONSTRAINT FK_VPBX_PARTNER_N FOREIGN KEY (PARTNER_ID) REFERENCES VPBX_PARTNERS(ID) ON DELETE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 create table VPBX_ACCOUNTS
@@ -458,7 +468,7 @@ create table VPBX_ACCOUNTS
 	LOGO_HREF		VARCHAR(255),
 	CSS_HREF		VARCHAR(255),
 	MSG_IN_PAGE		INT(10)			default 20,
-    STATEMENTS	    INT(1)		    default 0,
+    STATEMENTS	    VARCHAR(50),
 	DEMO_MODE		INT(1) 			default 0,
 	MSG_STORE_PERIOD VARCHAR(255)	not null default '0',
 	
@@ -477,6 +487,8 @@ create table VPBX_ACCOUNTS
 
 	DESCRIPTION		TEXT(1024),
 	CREATE_TIME		TIMESTAMP default CURRENT_TIMESTAMP(),
+	
+	PARTNER_TAG		VARCHAR(100),
     
 	unique			(ACCESS_CODE),
     CONSTRAINT PK_VPBX_SUBSCRIPTION PRIMARY KEY (ID),
@@ -631,7 +643,7 @@ create table VPBX_SIPPEERS (
 	fullcontact varchar(160) NOT NULL DEFAULT '',
 	regserver varchar(100) default NULL,
 	useragent varchar(60) default NULL,
-	qualify   varchar(5) default NULL
+	qualify   varchar(5) default NULL,
 
 	videosupport		enum('yes','no','always') DEFAULT 'yes',
 	nat					varchar(5) DEFAULT NULL,
@@ -2015,6 +2027,7 @@ insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 8, 'degree','de
 insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 9, 'datetime1','datetime 1');
 insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 10, 'datetime2','datetime 2');
 insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 11, 'phone','phone');
+insert into VPBX_SAY_PATTERN(ID,SAY_PATTERN,DESCRIPTION) VALUES( 12, 'text','text');
 -- Time Zones
 INSERT INTO VPBX_TZ(ID,TZ_NAME) VALUES(0, 'Default');
 INSERT INTO VPBX_TZ(ID,TZ_NAME) VALUES(1, 'Africa/Abidjan');
@@ -2659,7 +2672,8 @@ insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,HIDE,DATA) VALUES('voip.mtt.ru','Y
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,HIDE,DATA) VALUES('sip.zadarma.com','Zadarma',0,"$_[0]->{'fromdomain'}='sip.zadarma.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='invite'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'nat'}='yes'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,HIDE,DATA) VALUES('pbx.zadarma.com','ZadarmaPBX',0,"$_[0]->{'fromdomain'}='pbx.zadarma.com'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='invite'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'nat'}='yes'; $_[0]->{'port'}='5060';");
 insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,HIDE,DATA) VALUES('voip.domru.ru','DOM.RU',0,"$_[0]->{'fromdomain'}='voip.domru.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; my $suff_lenght = 7; if ( $_[0]->{'DESCRIPTION'} =~ m#/(\\d+)$# ) { $suff_lenght = $1 }; $suff_lenght = -1 * $suff_lenght; $_[0]->{'REG_AUTHNAME'} = substr($_[0]->{'username'},$suff_lenght); $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'insecure'}='port,invite'; $_[0]->{'allow'}='alaw,ulaw'; $_[0]->{'nat'}='yes'; $_[0]->{'port'}='5060';");
-insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,HIDE,DATA) VALUES('mpbx.sip.beeline.ru','BeeLine',0,"$_[0]->{'REG_EXPIRE'}='60'; $_[0]->{'REG_USERNAME'} = $_[0]->{'username'}.'@mpbx.sip.beeline.ru'; $_[0]->{'fromdomain'}='mpbx.sip.beeline.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'port'}='5060'; $_[0]->{'insecure'}='port,invite';");
+insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,HIDE,DATA) VALUES('mpbx.sip.beeline.ru','BeeLine-OLD',1,"$_[0]->{'REG_EXPIRE'}='60'; $_[0]->{'REG_USERNAME'} = $_[0]->{'username'}.'@mpbx.sip.beeline.ru'; $_[0]->{'fromdomain'}='mpbx.sip.beeline.ru'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'port'}='5060'; $_[0]->{'insecure'}='port,invite';");
+insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,HIDE,DATA) VALUES('ip.beeline.ru','Beeline',0,"$_[0]->{'REG_EXPIRE'}='60'; $_[0]->{'REG_USERNAME'} = $_[0]->{'username'}.'@ip.beeline.ru';$_[0]->{'fromdomain'}='ip.beeline.ru';$_[0]->{'videosupport'}='no';$_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'port'}='5060'; $_[0]->{'insecure'}='port,invite';");
 -- insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,HIDE,DATA) VALUES('.vpbx.mts.ru','MTS FMC',1,"$_[0]->{'REG_EXPIRE'}='1200';$_[0]->{'REG_USERNAME'}=$_[0]->{'username'}.'@'.$_[0]->{'fromdomain'};$_[0]->{'REG_AUTHNAME'}=$_[0]->{'defaultuser'}=$_[0]->{'fromuser'};$_[0]->{'videosupport'}='no';$_[0]->{'dtmfmode'}='rfc2833';$_[0]->{'disallow'}='all'; $_[0]->{'allow'}='ulaw,alaw'; $_[0]->{'port'}='5060'; $_[0]->{'insecure'}='port,invite';");
 -- insert into VPBX_SIPPEERS_TEMPLATES(HOST,NAME,HIDE,DATA) VALUES('vpbx.sipout.net','SipOut.Net',0,"$_[0]->{'fromdomain'}='vpbx.sipout.net'; $_[0]->{'videosupport'}='no'; $_[0]->{'fromuser'}=$_[0]->{'defaultuser'}=$_[0]->{'username'}; $_[0]->{'dtmfmode'}='rfc2833'; $_[0]->{'disallow'}='all'; $_[0]->{'allow'}='g722,ulaw,alaw'; $_[0]->{'nat'}='yes'; $_[0]->{'port'}='5060';");
 

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: integrations.tt,v 1.16 2021/10/30 06:12:17 gosha Exp $ -->
+<!-- $Id: integrations.tt,v 1.20 2022/01/10 19:02:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Настройка интеграций</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1054,7 +1054,7 @@
 		</table>
 	</p>
 	[% END %]
-
+	
 	<!-------------------- CommonCRM -------------------------------------------------->
 
 	[% IF HOOKS contain ',CommonCRM,' %]
@@ -1280,6 +1280,118 @@
 		</table>
 	</p>
 	[% END %]
+	
+	<!-------------------- Simple Calls -------------------------------------------------->
+
+	[% IF HOOKS contain ',SimpleCalls,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="10" valign="top" align="left">
+				<img src="/xvb/images/logo_sc.png" width="200" />
+			</td>
+			<td width='25%'>
+				Ссылка на API АТС:
+			</td>
+			<td width='55%'>
+				[% CGI_SERVER %]/sc-crm.cgi/
+			</td>
+		</tr>
+		<tr>
+			<td width='25%'>
+				Логин API АТС:
+			</td>
+			<td width='55%'>
+				[% USER_CREDS.ACCESS_CODE %]
+			</td>
+		</tr>
+		<tr>
+			<td width='25%'>
+				Пароль API АТС:
+			</td>
+			<td width='55%'>
+				[% C2C_SECRET | html %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				 Адрес внешней системы:
+			</td>
+			<td>
+				<input size="40" name='SCCRM_URL' type='text' value="[% SESSION_VARS.SCCRM_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Агент по умолчанию:<span>
+					Номер сотрудника который будет назначаться ответственным
+					по умолчанию для неотвеченных входящих звонков.
+				</span></a></td>
+			<td>
+				<input size="40" name='CRM_DEFAGENT' type='text' value="[% SESSION_VARS.CRM_DEFAGENT | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не логировать звонки на номера:<span>
+				Список DID номеров ( через запятую ) входящие звонки на которые не логируются.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.SCCRM_SKIP_DIDS | textarea_rows %]' cols='30' name='SCCRM_SKIP_DIDS'>[% SESSION_VARS.SCCRM_SKIP_DIDS | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не логировать исходящие звонки с номера:<span>
+				Список внутренних телефонов ( через запятую ) исходящие звонки с которых не логируются.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.SCCRM_SKIP_EXT | textarea_rows %]' cols='30' name='SCCRM_SKIP_EXT'>[% SESSION_VARS.SCCRM_SKIP_EXT | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не логировать записи для:<span>
+				Список внутренних телефонов ( через запятую ) разговоры которых не передаются в CRM.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.SCCRM_SKIP_REC | textarea_rows %]' cols='30' name='SCCRM_SKIP_REC'>[% SESSION_VARS.SCCRM_SKIP_REC | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Не переводить на отвественного:<span>
+					при включение данного параметра система не будет 
+					пытаться при входящем звонке вызвать сначала ответственного сотрудника
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-10" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-10">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,SCCRM_URL,SCCRM_SKIP_DIDS,SCCRM_SKIP_EXT,SCCRM_SKIP_REC,CRM_DEFAGENT"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+
 		
 	<!-------------------- RoiStat -------------------------------------------------->
 

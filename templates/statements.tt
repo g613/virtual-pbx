@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.34 2018/07/07 10:55:33 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.35 2022/01/03 15:46:03 gosha Exp $ -->
 <!--SUBJECT:VirtualPBX daily statement:SUBJECT-->
 <head>
 	<BASE href='[% CGI_SERVER %]'>
@@ -50,7 +50,190 @@
 		<li>Access code: [% USER_CREDS.ACCESS_CODE | html %]</li>
 		<li>Period: [% REPORT_DATE | html %]</li>
 	</ul>
-		
+
+	[% IF SUMMARY_CALLS scalar %]
+	<h3>Calls summary report:</h3>
+	<table width='100%'>
+		[% IF USE_BILLING %]
+
+		<tr>
+			<th>Call type</th>
+			<th>Count</th>
+			<th>Duration</th>
+			<th>Cost</th>
+			<th>Currency</th>
+		</tr>
+		[% FOREACH msg = SUMMARY_CALLS %]
+		<tr align='center'>
+			<td>[% msg.CALL_TYPE | html %]</td>
+			<td align='right'>[% msg.CNT | html %]</td>
+			<td align='right'>[% msg.DURATION | duration_str %]</td>
+			<td align='right'>[% msg.USER_COST %]</td>
+		</tr>
+		[% END %]
+
+		[% ELSE %]
+			
+		<tr>
+			<th>Call type</th>
+			<th>Count</th>
+			<th>Duration</th>
+		</tr>
+		[% FOREACH msg = SUMMARY_CALLS %]
+		<tr align='center'>
+			<td>[% msg.CALL_TYPE | html %]</td>
+			<td align='right'>[% msg.CNT | html %]</td>
+			<td align='right'>[% msg.DURATION | duration_str %]</td>
+		</tr>
+		[% END %]
+
+		[% END %]
+	</table>
+	[% END %]
+
+	[% IF SUMMARY scalar %]
+	<h3>Activities summary report:</h3>
+	<table width='100%'>
+		<tr>
+			<th>Extension</th>
+			<th>Event</th>
+			<th>Count</th>
+			<th>Duration</th>
+		</tr>
+		[% FOREACH msg = SUMMARY %]
+		<tr align='center'>
+			<td>[% msg.EXT_NUMBER | html %]</td>
+			<td>[% msg.TYPE | html %]</td>
+			<td align='right'>[% msg.CNT | html %]</td>
+			<td align='right'>[% msg.DURATION | duration_str %]</td>
+		</tr>
+		[% END %]
+	</table>
+	[% END %]
+
+	[% IF CALL_CENTER scalar %]
+	<h3>Queues report:</h3>
+		[% FOREACH msg = CALL_CENTER %]
+		<h4>[% msg.EXT | html %]</h4>
+			<table width='100%'>
+			<tr><th width='20%'>&nbsp;</th><th width='13%'>All</th><th width='13%'>Answered</th><th width='13%'>Unanswered</th><td width='10%' rowspan='8'>&nbsp;</td><th width='31%'>Service Level</th></tr>
+			<tr align='right'><td align='left'>Calls</td><td>[% msg.DATA.ALL_CALLS | html %]</td><td>[% msg.DATA.A_ALL_CALLS | html %]</td><td>[% msg.DATA.N_ALL_CALLS | html %]</td><td rowspan='7' valign='top'>
+			<table border="0">
+			[% FOREACH sl = msg.DATA.SL_TOT %]
+				<tr  align='right'>
+					<td align='left'>[% sl.PERIOD | html %]</td>
+					<td>[% sl.VAL | html %]</td>
+					<td>[% sl.PRC | html %] %</td>
+				</tr>
+			[% END %]
+			</table>
+			</td></tr>
+			<tr align='right'><td align='left'>Total wait-time</td><td>[% msg.DATA.TOT_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.A_TOT_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_TOT_CALL_WAIT | duration_str %]</td></tr>
+			<tr align='right'><td align='left'>Max wait-time</td><td>&nbsp</td><td>[% msg.DATA.A_MAX_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_MAX_CALL_WAIT | duration_str %]</td></tr>
+			<tr align='right'><td align='left'>Average wait-time</td><td>[% msg.DATA.AVG_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.A_AVG_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_AVG_CALL_WAIT | duration_str %]</td></tr>
+			<tr align='right'><td align='left'>Total duration</td><td></td><td>[% msg.DATA.TOT_CALL_LENGTH | duration_str %]</td></tr>
+			<tr align='right'><td align='left'>Average call duration</td><td></td><td>[% msg.DATA.AVG_CALL_LENGTH | duration_str %]</td></tr>
+			<tr align='right'><td align='left'>Transferred calls</td><td></td><td>[% msg.DATA.TRAN_CALLS | html %]</td></tr>
+			</table>
+		[% END %]
+	[% END %]
+	
+	[% IF OUT_CALLS scalar %]
+	<h3>Outbound calls:</h3>
+	<table width='100%'>
+		<tr>
+			<th>CallerID</th>
+			<th>Calls</th>
+			<th>Durtaion</th>
+		</tr>
+		[% FOREACH msg = OUT_CALLS %]
+		<tr class='nocolor' align='center'>
+			<td>[% msg.CID | html %]</td>
+			<td>[% msg.CALLS | html %]</td>
+			<td>[% msg.DURATION | duration_str  %]</td>
+		</tr>
+		[% END %]
+	</table>
+	[% END %]
+
+	[% IF MISS_CALLS scalar %]
+	<h3>Miss calls:</h3>
+	<table width='100%'>
+		<tr>
+			<th colspan='2'>CallerID</th>
+			<th>Calls</th>
+			<th>Date of the last call</th>
+			<th>Our redials</th>
+			<th>Date of the last call</th>
+		</tr>
+		[% FOREACH cdr = MISS_CALLS %]
+		<tr class='nocolor' align='center'>
+			<td>[% cdr.CNAM | html %]</td>
+			<td>[% cdr.CID | html %]</td>
+			<td>[% cdr.CALLS | html %]</td>
+			<td>[% cdr.DATE | html %]</td>
+			<td>[% cdr.OUR_CALLS | html %]</td>
+			<td>[% cdr.OUR_DATE | html %]</td>
+		</tr>
+		[% END %]
+	</table>
+	[% END %]
+	
+	[% IF CALLS scalar %]
+	<h3>Calls:</h3>
+	<table width='100%'>
+		[% IF USE_BILLING %]
+
+		<tr>
+			<th>Date</th>
+			<th>Caller ID</th>
+			<th>Called ID</th>
+			<th>Duration</th>
+			<th>Type</th>
+			<th>Cost</th>
+		</tr>
+		[% FOREACH msg = CALLS %]
+		<tr align='center'>
+			<td>[% msg.CDR_DATE | html %]</td>
+			[% IF msg.DATA contain 'STATUS=ANSWER' %]
+				<td align='right'>[% msg.CALLER_ID | html %]</td>
+			[% ELSE %]
+				<td align='right' class='warning-font'>[% msg.CALLER_ID | html %]</td>
+			[% END %]
+			<td>[% msg.CALLED_ID | html %]</td>
+			<td align='right'>[% msg.CDR_DURATION | duration_str %]</td>
+			<td>[% msg.CALL_TYPE | html %]</td>
+			<td>[% msg.COST %] ([% msg.DESCRIPTION | html %])</td>
+		</tr>
+		[% END %]
+
+		[% ELSE %]
+
+		<tr>
+			<th>Date</th>
+			<th>Caller ID</th>
+			<th>Called ID</th>
+			<th>Duration</th>
+			<th>Type</th>
+		</tr>
+		[% FOREACH msg = CALLS %]
+		<tr align='center'>
+			<td>[% msg.CDR_DATE | html %]</td>
+			[% IF msg.DATA contain 'STATUS=ANSWER' %]
+				<td align='right'>[% msg.CALLER_ID | html %]</td>
+			[% ELSE %]
+				<td align='right' class='warning-font'>[% msg.CALLER_ID | html %]</td>
+			[% END %]
+			<td>[% msg.CALLED_ID | html %]</td>
+			<td align='right'>[% msg.CDR_DURATION | duration_str %]</td>
+			<td>[% msg.CALL_TYPE | html %]</td>
+		</tr>
+		[% END %]
+
+		[% END %]
+	</table>
+	[% END %]
+
 	[% IF SUMMARY_CALLS scalar %]
 	<h3>Calls summary report:</h3>
 	<table width='100%'>
@@ -90,108 +273,6 @@
 
 		[% END %]
 	</table>
-	[% END %]
-	
-	[% IF SUMMARY scalar %]
-	<h3>Activities summary report:</h3>
-	<table width='100%'>
-		<tr>
-			<th>Extension</th>
-			<th>Event</th>
-			<th>Count</th>
-			<th>Duration</th>
-		</tr>
-		[% FOREACH msg = SUMMARY %]
-		<tr  align='center'>
-			<td>[% msg.EXT_NUMBER | html %]</td>
-			<td>[% msg.TYPE | html %]</td>
-			<td align='right'>[% msg.CNT | html %]</td>
-			<td align='right'>[% msg.DURATION | duration_str %]</td>
-		</tr>
-		[% END %]
-	</table>
-	[% END %]
-	
-	[% IF CALLS scalar %]
-	<h3>Calls report:</h3>
-	<table width='100%'>
-		[% IF USE_BILLING %]
-
-		<tr>
-			<th>Date</th>
-			<th>Caller ID</th>
-			<th>Called ID</th>
-			<th>Duration</th>
-			<th>Type</th>
-			<th>Cost</th>
-		</tr>
-		[% FOREACH msg = CALLS %]
-		<tr  align='center'>
-			<td>[% msg.CDR_DATE | html %]</td>
-			[% IF msg.DATA contain 'STATUS=ANSWER' %]
-				<td align='right'>[% msg.CALLER_ID | html %]</td>
-			[% ELSE %]
-				<td align='right' class='warning-font'>[% msg.CALLER_ID | html %]</td>
-			[% END %]
-			<td>[% msg.CALLED_ID | html %]</td>
-			<td align='right'>[% msg.CDR_DURATION | duration_str %]</td>
-			<td>[% msg.CALL_TYPE | html %]</td>
-			<td align='right'>[% msg.COST %] ([% msg.DESCRIPTION %])</td>
-		</tr>
-		[% END %]
-
-		[% ELSE %]
-
-		<tr>
-			<th>Date</th>
-			<th>Caller ID</th>
-			<th>Called ID</th>
-			<th>Duration</th>
-			<th>Type</th>
-		</tr>
-		[% FOREACH msg = CALLS %]
-		<tr  align='center'>
-			<td>[% msg.CDR_DATE | html %]</td>
-			[% IF msg.DATA contain 'STATUS=ANSWER' %]
-				<td align='right'>[% msg.CALLER_ID | html %]</td>
-			[% ELSE %]
-				<td align='right' class='warning-font'>[% msg.CALLER_ID | html %]</td>
-			[% END %]
-			<td>[% msg.CALLED_ID | html %]</td>
-			<td align='right'>[% msg.CDR_DURATION | duration_str %]</td>
-			<td>[% msg.CALL_TYPE | html %]</td>
-		</tr>
-		[% END %]
-
-		[% END %]
-	</table>
-	[% END %]
-	
-	[% IF CALL_CENTER scalar %]
-	<h3>Queues report:</h3>
-		[% FOREACH msg = CALL_CENTER %]
-		<h4>[% msg.EXT | html %]</h4>
-			<table width='100%'>
-			<tr><th width='20%'>&nbsp;</th><th width='13%'>All</th><th width='13%'>Answered</th><th width='13%'>Unanswered</th><td width='10%' rowspan='8'>&nbsp;</td><th width='31%'>Service Level</th></tr>
-			<tr align='right'><td align='left'>Calls</td><td>[% msg.DATA.ALL_CALLS | html %]</td><td>[% msg.DATA.A_ALL_CALLS | html %]</td><td>[% msg.DATA.N_ALL_CALLS | html %]</td><td rowspan='7' valign='top'>
-			<table border="0">
-			[% FOREACH sl = msg.DATA.SL_TOT %]
-				<tr  align='right'>
-					<td align='left'>[% sl.PERIOD | html %]</td>
-					<td>[% sl.VAL | html %]</td>
-					<td>[% sl.PRC | html %] %</td>
-				</tr>
-			[% END %]
-			</table>
-			</td></tr>
-			<tr align='right'><td align='left'>Total wait-time</td><td>[% msg.DATA.TOT_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.A_TOT_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_TOT_CALL_WAIT | duration_str %]</td></tr>
-			<tr align='right'><td align='left'>Max wait-time</td><td>&nbsp</td><td>[% msg.DATA.A_MAX_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_MAX_CALL_WAIT | duration_str %]</td></tr>
-			<tr align='right'><td align='left'>Average wait-time</td><td>[% msg.DATA.AVG_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.A_AVG_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_AVG_CALL_WAIT | duration_str %]</td></tr>
-			<tr align='right'><td align='left'>Total duration</td><td></td><td>[% msg.DATA.TOT_CALL_LENGTH | duration_str %]</td></tr>
-			<tr align='right'><td align='left'>Average call duration</td><td></td><td>[% msg.DATA.AVG_CALL_LENGTH | duration_str %]</td></tr>
-			<tr align='right'><td align='left'>Transferred calls</td><td></td><td>[% msg.DATA.TRAN_CALLS | html %]</td></tr>
-			</table>
-		[% END %]
 	[% END %]
 	
 	<br><br>-- <br>

@@ -38,6 +38,7 @@
 		</tr>
 	</table>
 
+	<p>
 	<table width='100%'>
 		<tr>
 		</tr>
@@ -248,7 +249,8 @@
 			</td>
 		</tr>
 	</table>
-	
+	</p>
+
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
 	</body>

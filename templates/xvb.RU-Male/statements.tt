@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: statements.tt,v 1.14 2018/07/07 10:55:33 gosha Exp $ -->
+<!-- $Id: statements.tt,v 1.15 2022/01/03 15:46:03 gosha Exp $ -->
 <!--SUBJECT:VirtualPBX - отчет за день:SUBJECT-->
 <head>
 	<BASE href='[% CGI_SERVER %]'>
@@ -59,7 +59,6 @@
 			<th>Количество</th>
 			<th>Длительность</th>
 			<th>Цена</th>
-			<th>Валюта</th>
 		</tr>
 		[% FOREACH msg = SUMMARY_CALLS %]
 		<tr align='center'>
@@ -67,7 +66,6 @@
 			<td align='right'>[% msg.CNT | html %]</td>
 			<td align='right'>[% msg.DURATION | duration_str %]</td>
 			<td align='right'>[% msg.USER_COST %]</td>
-			<td>[% msg.DESCRIPTION | locale_msg %]</td>
 		</tr>
 		[% END %]
 
@@ -94,7 +92,7 @@
 	<h3>Обобщенный отчет активности:</h3>
 	<table width='100%'>
 		<tr>
-			<th>Внутренний номер</th>
+			<th>Внутренний номер / IVR</th>
 			<th>Активность</th>
 			<th>Количество</th>
 			<th>Длительность</th>
@@ -110,6 +108,74 @@
 	</table>
 	[% END %]
 
+	[% IF CALL_CENTER scalar %]
+	<h3>Статистика очередей:</h3>
+		[% FOREACH msg = CALL_CENTER %]
+		<h4>[% msg.EXT | html %]</h4>
+			<table width='100%'>
+			<tr><th width='20%'>&nbsp;</th><th width='13%'>Получено</th><th width='13%'>Отвечено</th><th width='13%'>Пропущено</th><td width='10%' rowspan='8'>&nbsp;</td><th width='31%'>Уровень обслуживания</th></tr>
+			<tr align='right'><td align='left'>Звонки</td><td>[% msg.DATA.ALL_CALLS | html %]</td><td>[% msg.DATA.A_ALL_CALLS | html %]</td><td>[% msg.DATA.N_ALL_CALLS | html %]</td><td rowspan='7' valign='top'>
+			<table border="0">
+			[% FOREACH sl = msg.DATA.SL_TOT %]
+				<tr  align='right'>
+					<td align='left'>[% sl.PERIOD | html %]</td>
+					<td>[% sl.VAL | html %]</td>
+					<td>[% sl.PRC | html %] %</td>
+				</tr>
+			[% END %]
+			</table>
+			</td></tr>
+			<tr align='right'><td align='left'>Общее время ожидания</td><td>[% msg.DATA.TOT_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.A_TOT_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_TOT_CALL_WAIT | duration_str %]</td></tr>
+			<tr align='right'><td align='left'>Максимальное время ожилания</td><td>&nbsp</td><td>[% msg.DATA.A_MAX_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_MAX_CALL_WAIT | duration_str %]</td></tr>
+			<tr align='right'><td align='left'>Среднее время ожидания</td><td>[% msg.DATA.AVG_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.A_AVG_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_AVG_CALL_WAIT | duration_str %]</td></tr>
+			<tr align='right'><td align='left'>Общая продолжительность</td><td></td><td>[% msg.DATA.TOT_CALL_LENGTH | duration_str %]</td></tr>
+			<tr align='right'><td align='left'>Средняя продолжительность</td><td></td><td>[% msg.DATA.AVG_CALL_LENGTH | duration_str %]</td></tr>
+			<tr align='right'><td align='left'>Переведено звонков</td><td></td><td>[% msg.DATA.TRAN_CALLS | html %]</td></tr>
+			</table>
+		[% END %]
+	[% END %]
+	
+	[% IF OUT_CALLS scalar %]
+	<h3>Обобщенный отчет исходящие звонки:</h3>
+	<table width='100%'>
+		<tr>
+			<th>Номер звонящего</th>
+			<th>Звонков</th>
+			<th>Длительность</th>
+		</tr>
+		[% FOREACH msg = OUT_CALLS %]
+		<tr class='nocolor' align='center'>
+			<td>[% msg.CID | html %]</td>
+			<td>[% msg.CALLS | html %]</td>
+			<td>[% msg.DURATION | duration_str  %]</td>
+		</tr>
+		[% END %]
+	</table>
+	[% END %]
+
+	[% IF MISS_CALLS scalar %]
+	<h3>Пропущенные звонки:</h3>
+	<table width='100%'>
+		<tr>
+			<th colspan='2'>Номер звонящего</th>
+			<th>Звонков</th>
+			<th>Дата последнего звонка</th>
+			<th>Наши попытки перезвонить</th>
+			<th>Дата последнего звонка</th>
+		</tr>
+		[% FOREACH cdr = MISS_CALLS %]
+		<tr class='nocolor' align='center'>
+			<td>[% cdr.CNAM | html %]</td>
+			<td>[% cdr.CID | html %]</td>
+			<td>[% cdr.CALLS | html %]</td>
+			<td>[% cdr.DATE | html %]</td>
+			<td>[% cdr.OUR_CALLS | html %]</td>
+			<td>[% cdr.OUR_DATE | html %]</td>
+		</tr>
+		[% END %]
+	</table>
+	[% END %]
+	
 	[% IF CALLS scalar %]
 	<h3>Отчет по звонкам:</h3>
 	<table width='100%'>
@@ -164,33 +230,7 @@
 		[% END %]
 	</table>
 	[% END %]
-	
-	[% IF CALL_CENTER scalar %]
-	<h3>Статистика очередей:</h3>
-		[% FOREACH msg = CALL_CENTER %]
-		<h4>[% msg.EXT | html %]</h4>
-			<table width='100%'>
-			<tr><th width='20%'>&nbsp;</th><th width='13%'>Получено</th><th width='13%'>Отвечено</th><th width='13%'>Пропущено</th><td width='10%' rowspan='8'>&nbsp;</td><th width='31%'>Уровень обслуживания</th></tr>
-			<tr align='right'><td align='left'>Звонки</td><td>[% msg.DATA.ALL_CALLS | html %]</td><td>[% msg.DATA.A_ALL_CALLS | html %]</td><td>[% msg.DATA.N_ALL_CALLS | html %]</td><td rowspan='7' valign='top'>
-			<table border="0">
-			[% FOREACH sl = msg.DATA.SL_TOT %]
-				<tr  align='right'>
-					<td align='left'>[% sl.PERIOD | html %]</td>
-					<td>[% sl.VAL | html %]</td>
-					<td>[% sl.PRC | html %] %</td>
-				</tr>
-			[% END %]
-			</table>
-			</td></tr>
-			<tr align='right'><td align='left'>Общее время ожидания</td><td>[% msg.DATA.TOT_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.A_TOT_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_TOT_CALL_WAIT | duration_str %]</td></tr>
-			<tr align='right'><td align='left'>Максимальное время ожилания</td><td>&nbsp</td><td>[% msg.DATA.A_MAX_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_MAX_CALL_WAIT | duration_str %]</td></tr>
-			<tr align='right'><td align='left'>Среднее время ожидания</td><td>[% msg.DATA.AVG_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.A_AVG_CALL_WAIT | duration_str %]</td><td>[% msg.DATA.N_AVG_CALL_WAIT | duration_str %]</td></tr>
-			<tr align='right'><td align='left'>Общая продолжительность</td><td></td><td>[% msg.DATA.TOT_CALL_LENGTH | duration_str %]</td></tr>
-			<tr align='right'><td align='left'>Средняя продолжительность</td><td></td><td>[% msg.DATA.AVG_CALL_LENGTH | duration_str %]</td></tr>
-			<tr align='right'><td align='left'>Переведено звонков</td><td></td><td>[% msg.DATA.TRAN_CALLS | html %]</td></tr>
-			</table>
-		[% END %]
-	[% END %]
+		
 	
 	<br><br>-- <br>
 		Спасибо за то, что используете XVB PBX. Удачного дня !

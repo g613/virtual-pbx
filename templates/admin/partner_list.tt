@@ -43,6 +43,7 @@
 				<th>Password</th>
 				<th>R/O mode</th>
 				<th>Description</th>
+				<th>Tag</th>
 				<th>Group</th>
 				<th>Actions</th>
 				<th class='rad_r'>&nbsp;</th>
@@ -82,6 +83,9 @@
 				<input type='hidden' value='[% p.ID %]' name='data_id'>
 				<input type='hidden' value='partner_update' name='action'>
 				<input type='hidden' value='[% MSG_FROM %]' name='from'>
+			</td>
+			<td>
+				<input class='in_t0' size='20' name='P_TAG' type='text' value='[% p.TAG | html %]'></td>
 				<noscript><input value='change' type='submit'></noscript>
 			</td>
 			</form>
@@ -118,6 +122,9 @@
 				</form>
 				</table>
 			</td>
+			<td>
+				
+			</td>
 			<td align='right'>
 				<span class='in_t' id='in_t_id-[% p.ID %]'>
 					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% p.ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
@@ -125,7 +132,6 @@
 				<a title='login to partner account' href='/pi?partner=[% p.NAME | html %]&password=[% p.PASSWORD | html %]'><span class='icon-enter fs0'></span></a>
 				<a title='delete partner account' href='?action=partner_del&partner_id=[% p.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
 			</td>
-			<td></td>
 		</tr>
 		[% END %]
 
@@ -141,6 +147,7 @@
 			<td align='right'>
 				<input size='40' name='P_DESCRIPTION' type='text'></td>
 			</td>
+			<td></td>
 			<td>
 				<select name="GROUP_ID">
 				[% FOREACH gr = GROUPS %]
@@ -169,5 +176,5 @@
 	[% INCLUDE main_menu2.tt-inc-custom %]
 	
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
-	<p align='center' class='copyright'><br><a href='/xvb/XVB-EN.pdf?a=msg_download&r=3245'>XVB - VirtualPBX</a> v.4, build: 13245_dev ( Thu Nov  4 18:09:26 2021 GMT )<br><br>-- (c) 2009-2021 by <b>Igor Okunev</b>. All rights reserved. --</p></body></html>
+	</body></html>
 			

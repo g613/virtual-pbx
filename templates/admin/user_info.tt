@@ -60,8 +60,10 @@
 					Tenant name:
 				</td>
 				<td>
-					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]&nbsp;&nbsp;
-					<a title='Login to tenant account' href='/ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&akey=[% ADMIN_KEY | html %]&action=start&saction=user_info'><span class='icon-enter fs0'></span></a>
+					<a title='Login to tenant account' href='/ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&akey=[% ADMIN_KEY | html %]&action=start&saction=user_info'>
+					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]
+					</a>&nbsp;&nbsp;
+					<a title='Login to tenant account, originl PBX interface' href='/ui4ai?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&akey=[% ADMIN_KEY | html %]&action=start&saction=user_info'><span class='icon-enter fs0'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -169,6 +171,14 @@
 						<option value="1">yes</option>
 					[% END %]
 					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Partner tag:
+				</td>
+				<td>
+					<input size='15' name='US_PARTNER_TAG' type='text' value="[% USER.PARTNER_TAG | html %]">
 				</td>
 			</tr>
 			[% FOREACH cf = CUSTOM_FIELDS %]
@@ -319,7 +329,7 @@
 					<h2>Quick links:</h2>
 					<ul>
 					<li>UI
-					&nbsp;&nbsp;<a href='/ai?action=peer_list&ac=[% USER.ACCESS_CODE %]'>SIP Peers</a>
+					&nbsp;&nbsp;<a href='/ui?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP Peers</a>
 					&nbsp;/&nbsp;<a href='/ui?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Routes</a>
 					&nbsp;/&nbsp;<a href='/ui?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Phones</a>
 					&nbsp;/&nbsp;<a href='/ui?action=cdr_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>CDRs</a>

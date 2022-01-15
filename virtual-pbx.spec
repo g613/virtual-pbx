@@ -171,10 +171,13 @@ mv lib $RPM_BUILD_ROOT/%CORE_DIR/
 mv templates $RPM_BUILD_ROOT/%CORE_DIR/
 mv web $RPM_BUILD_ROOT/%CORE_DIR/
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin
+cp -a cgi-bin/VirtualPBX-UI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ui4ai
 mv cgi-bin/VirtualPBX-UI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ui
 mv cgi-bin/VirtualPBX-AI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ai
 mv cgi-bin/VirtualPBX-PI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/pi
 mv cgi-bin/VirtualPBX-EI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/phonei
+ 
+sed -i 's/#{{UI4AI}}//' $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ui4ai
 
 cp contrib/utils/billing_processor.pl contrib/utils/billing_processor_daily.pl
 mv contrib/utils/billing_processor.pl contrib/utils/billing_processor_monthly.pl
@@ -342,7 +345,7 @@ fi
 touch /etc/asterisk/xvb/xvb-phone-service.conf || true
 touch /etc/asterisk/xvb/xvb-phone-filters.conf || true
 if [ ! -f /etc/asterisk/xvb/xvb-post-agi.conf ]; then
-	echo -e 'exten => _X.,1000(post_agi),Hangup' >> /etc/asterisk/xvb/xvb-post-agi.conf
+	echo -e 'exten => _X.,1500(post_agi),Hangup' >> /etc/asterisk/xvb/xvb-post-agi.conf
 fi
 if [ ! -f /etc/asterisk/xvb/xvb-pre-agi.conf ]; then
 	touch /etc/asterisk/xvb/xvb-pre-agi.conf
@@ -400,7 +403,9 @@ if [ -f %CORE_DIR/web/js/xvb-custom.js ]; then
 fi
 if [ -f %CORE_DIR/web/xvb-custom.css ]; then
 	cat %CORE_DIR/web/xvb-custom.css >> %CORE_DIR/web/xvb.css
-	cat %CORE_DIR/web/xvb-custom.css >> %CORE_DIR/web/xvb-green.css
+	if [ -f %CORE_DIR/web/xvb-green-custom.css ]; then
+		cat %CORE_DIR/web/xvb-green-custom.css >> %CORE_DIR/web/xvb-green.css
+	fi
 fi
 if [ -f %CORE_DIR/web/images/logo-small-custom.png ]; then
 	cp -a %CORE_DIR/web/images/logo-small-custom.png %CORE_DIR/web/images/logo-small.png
@@ -451,6 +456,7 @@ perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_SIPPEERS_TEMPLATE
 perl %CORE_DIR/contrib/utils/nodes_admin/mc_cleanup lists-VPBX_PARTNERS
 
 ln -s %CORE_DIR/contrib/utils/xvb-ctl /usr/local/bin/xvb-ctl &>/dev/null || true
+ln -s %CORE_DIR/contrib/utils/xvb-ctl /usr/local/sbin/xvb-ctl &>/dev/null || true
 
 # post update script
 if [ -f %CORE_DIR/etc/xvb-postupdate.cfg ]; then
@@ -566,6 +572,7 @@ fi
 %attr(644,root,root) %config(noreplace) %{_sysconfdir}/cron.d/virtual-pbx-web.cron
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/ai
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/ui
+%attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/ui4ai
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/pi
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/phonei
 %attr(755,root,root) %CORE_DIR/contrib/utils/sysstatus.pl

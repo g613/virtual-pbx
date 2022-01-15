@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.110 2019/12/08 17:42:43 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.112 2022/01/05 20:34:59 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - PBX profile - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -50,6 +50,7 @@
 						<select name='skins' onchange='javascript:document.user_prefs.CSS_HREF.value=this.value'>
 							<option selected value='[% USER_CREDS.CSS_HREF | html %]'>CSS href:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
 							<option value='/xvb/xvb-green.css'>CSS - green skin</option>
+							<option value='/xvb/xvb-green2.css'>CSS - green & black</option>
 							<option value=''>CSS - default skin</option>
 						</select>
 					</td>
@@ -151,43 +152,108 @@
 				</tr>
 				<tr>
 					<td>Daily statements:</td>
+					<td></td>
+				</tr>	
+				<tr>
 					<td>
-						<select name='STATEMENTS'>
-							[% IF USER_CREDS.STATEMENTS eq '0' %]
-								<option value="0" selected>disable</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '2' %]
-								<option value="2" selected>activities summary</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '4' %]
-								<option value="4" selected>list of calls</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '6' %]
-								<option value="6" selected>list of calls+activities</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '8' %]
-								<option value="8" selected>calls summary</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '10' %]
-								<option value="10" selected>calls+activities summary</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '12' %]
-								<option value="12" selected>calls (summary/list)</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '16' %]
-								<option value="16" selected>queues</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '18' %]
-								<option value="18" selected>queues+activities</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '26' %]
-								<option value="26" selected>queues+activities+calls</option>
-							[% ELSIF USER_CREDS.STATEMENTS eq '30' %]
-								<option value="30" selected>all</option>
-							[% END %]
-								<option value="0">disable</option>
-								<option value="2">activities summary</option>
-								<option value="4">list of calls</option>
-								<option value="6">list of calls+activities</option>
-								<option value="8">calls summary</option>
-								<option value="10">calls+activities summary</option>
-								<option value="12">calls (summary/list)</option>
-								<option value="16">queues</option>
-								<option value="18">queues+activities</option>
-								<option value="26">queues+activities+calls</option>
-								<option value="30">all</option>
-						</select>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;activity
+					</td>
+					<td>
+					<div class="onoffswitch">
+					<input name="ST-1" type="checkbox" class="onoffswitch-checkbox" id="ST-1-ch" 
+					[% IF USER_CREDS.STATEMENTS contain '1;' %]
+						checked
+					[% END %]
+					>
+					<label class="onoffswitch-label" for="ST-1-ch">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;calls - summary
+					</td>
+					<td>
+					<div class="onoffswitch">
+					<input name="ST-2" type="checkbox" class="onoffswitch-checkbox" id="ST-2-ch"
+					[% IF USER_CREDS.STATEMENTS contain '2;' %]
+						checked
+					[% END %]
+					>
+					<label class="onoffswitch-label" for="ST-2-ch">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;calls list
+					</td>
+					<td>
+					<div class="onoffswitch">
+					<input name="ST-3" type="checkbox" class="onoffswitch-checkbox" id="ST-3-ch" 
+					[% IF USER_CREDS.STATEMENTS contain '3;' %]
+						checked
+					[% END %]
+					>
+					<label class="onoffswitch-label" for="ST-3-ch">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;miss calls
+					</td>
+					<td>
+					<div class="onoffswitch">
+					<input name="ST-4" type="checkbox" class="onoffswitch-checkbox" id="ST-4-ch"
+					[% IF USER_CREDS.STATEMENTS contain '4;' %]
+						checked
+					[% END %]
+					>
+					<label class="onoffswitch-label" for="ST-4-ch">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;callcenter stat
+					</td>
+					<td>
+					<div class="onoffswitch">
+					<input name="ST-5" type="checkbox" class="onoffswitch-checkbox" id="ST-5-ch"
+					[% IF USER_CREDS.STATEMENTS contain '5;' %]
+						checked
+					[% END %]
+					>
+					<label class="onoffswitch-label" for="ST-5-ch">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outbound calls - summary
+					</td>
+					<td>
+					<div class="onoffswitch">
+					<input name="ST-6" type="checkbox" class="onoffswitch-checkbox" id="ST-6-ch"
+					[% IF USER_CREDS.STATEMENTS contain '6;' %]
+						checked
+					[% END %]
+					>
+					<label class="onoffswitch-label" for="ST-6-ch">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label></div>
 					</td>
 				</tr>
 				<tr>

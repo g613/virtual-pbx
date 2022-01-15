@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_menu.tt,v 1.4 2019/12/08 17:42:43 gosha Exp $ -->
+<!-- $Id: phone_p_menu.tt,v 1.5 2022/01/05 20:34:59 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - main menu</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -9,7 +9,7 @@
 	[% END %]
 </head>
 
-<body>
+<body class='amenu'>
 	<p align='left'>
 		<img border='0' width='120' alt='XVB - Virtual PBX'
 		[% IF USER_CREDS.LOGO_HREF eq '' %]

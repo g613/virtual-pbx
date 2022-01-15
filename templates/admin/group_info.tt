@@ -149,12 +149,18 @@
 						<td>Enable TTS greetings: </td>
 						<td>
 						<select name="GR_TTS_GREETING">
-						[% IF GROUP.TTS_GREETING %]
-							<option value="1">yes</option>
+						[% IF GROUP.TTS_GREETING eq "1" %]
+							<option value="1" selected>static</option>
+							<option value="2">dinamic</option>
+							<option value="0">no</option>
+						[% ELSIF GROUP.TTS_GREETING eq "2" %]
+							<option value="1">static</option>
+							<option value="2" selected>dinamic</option>
 							<option value="0">no</option>
 						[% ELSE %]
-							<option value="0">no</option>
-							<option value="1">yes</option>
+							<option value="1">static</option>
+							<option value="2">dinamic</option>
+							<option value="0" selected>no</option>
 						[% END %]
 						</select>
 						</td>
