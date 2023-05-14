@@ -1,0 +1,7 @@
+Пропущенный звонок:
+ От: [% _CDR.CALLER_ID %][% IF _CDR.CNAM ne '' %][% IF _CDR.CNAM ne _CDR.CALLER_ID %] ( [% _CDR.CNAM %] )[% END %][% END %]
+ На номер: [% _CDR.CALLED_ID %]
+ Дата звонка: [% ORIGDATE %]
+ Внутренний номер: [% _USER_VBOX.EXT_NUMBER %]
+ Статус: [% _CDR.ENH_STATUS %]
+ Время ожидания: [% WAIT_TIME %] ( сек )

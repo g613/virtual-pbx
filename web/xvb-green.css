@@ -459,6 +459,39 @@ ul {
 li {
 	padding: 10px 0px 5px 0px;
 }
+p.pcap1 {
+  background: #91ef91;
+}
+p.pcap2 {
+  background: #ffa17b;
+}
+p.pcap3 {
+  background: #ffb7c2;
+}
+p.pcap4 {
+  background: #fafad3;
+}
+p.pcap5 {
+  background: #67ceac;
+}
+p.pcap6 {
+  background: #e1ffff;
+}
+p.pcap7 {
+  background: #7ecdee;
+}
+p.pcap8 {
+  background: #b3b6b7;
+}
+p.pcap9 {
+  background: #9485be;
+}
+p.pcap10 {
+  background: #c1e3d3;
+}
+p.pcap11 {
+  background: #f7d091;
+}
 
 /* Icon */
 .fs0 {

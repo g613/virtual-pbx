@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.15 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.16 2022/02/23 18:59:58 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список внутренних номеров - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -50,7 +50,7 @@
 			<th title='Защита пинкодом'>З</th>
 			<th title='Глобальный номер'>Г</th>
 			<th>Перейти к</th>
-			<th>Получатель оповещения</th>
+			<th colspan="2" width="22%">Приветствие</th>
 			<th class='rad_r'>&nbsp;</th>
 		</tr>
 		<tr>
@@ -90,8 +90,15 @@
 					[% vb.NEXTEXTENSION | html %]
 				[% END %]
 			</td>
+			<td align='center'>
+				[% IF vb.GREET_FILE %]
+					<a title='прослушать' 
+						onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% vb.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% vb.GREET_FILE %]?media=mp3;type=listen' )"
+						href="#"><span class='icon-volume-medium fs0'></span></a>
+				[% END %]
+			</td>
 			<td align='left'>
-				[% vb.NOTIFYEMAIL | html %]
+				[% vb.GREETING | html %]
 			</td>
 			<td nowrap="nowrap">
 				<a href='?action=vb_del&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% vb.ID %]')" title='удалить внутренний номер'><span class='icon-bin fs0'></span></a>

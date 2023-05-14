@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.357 2021/02/17 18:44:41 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.364 2023/01/14 13:18:58 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1556,7 +1556,7 @@
 						[% END %]
 						>
 						<label class="onoffswitch-label" for="RECORD_RINGS-ch">
-							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-inner-int"></span>
 							<span class="onoffswitch-switch"></span>
 						</label></div>
 					</td>
@@ -1646,7 +1646,7 @@
 						[% END %]
 						>
 						<label class="onoffswitch-label" for="WAIT_NOTES-ch">
-							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-inner-int"></span>
 							<span class="onoffswitch-switch"></span>
 						</label></div>
 					</td>
@@ -1902,16 +1902,21 @@
 				<tr class='addon_info'>
 					<td>DTMF logging:</td>
 					<td>
-						<div class="onoffswitch">
-						<input name="DTMF_LOG" type="checkbox" class="onoffswitch-checkbox" id="DTMF_LOG-ch" 
-						[% IF VBOX_PREF.DTMF_LOG %]
-							checked
+						<select name="DTMF_LOG">
+						[% IF VBOX_PREF.DTMF_LOG eq '2' %]
+							<option value="2" selected>all</option>
+							<option value="0">no</option>
+							<option value="1">local</option>
+						[% ELSIF VBOX_PREF.DTMF_LOG eq '1' %]
+							<option value="1" selected>local</option>
+							<option value="0">no</option>
+							<option value="2">all</option>
+						[% ELSE %]
+							<option value="0" selected>no</option>
+							<option value="1">local</option>
+							<option value="2">all</option>
 						[% END %]
-						>
-						<label class="onoffswitch-label" for="DTMF_LOG-ch">
-							<span class="onoffswitch-inner"></span>
-							<span class="onoffswitch-switch"></span>
-						</label></div>
+						</select>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1924,7 +1929,7 @@
 						[% END %]
 						>
 						<label class="onoffswitch-label" for="WAIT_NOTES-ch">
-							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-inner-int"></span>
 							<span class="onoffswitch-switch"></span>
 						</label></div>
 					</td>
@@ -2054,6 +2059,26 @@
 					<td>Success call url:</td>
 					<td>
 						<input size='30' type='text' name='URL_SUCCESS' value='[% VBOX_PREF.URL_SUCCESS | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Callback IVR:</a>
+					</td>
+					<td>
+						<input size='30' type='text' name='CALLBACK_EXT' value='[% VBOX_PREF.CALLBACK_EXT | html %]'>
+						<script language="JavaScript">
+							exten_dropdown2( 'CALLBACK_EXT','[% VBOX_PREF.CALLBACK_EXT | html %]','<option value="">------------</option><option value="***">--- raw editor ---</option>')
+						</script>
+						<script language="JavaScript">
+						exten_icon( '[% VBOX_PREF.CALLBACK_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'edit extension' );
+						</script>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Callback ttl:</a>
+					</td>
+					<td>
+						<input size='5' type='text' name='CALLBACK_TTL' value='[% VBOX_PREF.CALLBACK_TTL | html %]'> ( minutes )
 					</td>
 				</tr>
 				[% END %]
@@ -2626,7 +2651,7 @@
 						[% END %]
 						>
 						<label class="onoffswitch-label" for="DYNAMIC_CID-ch">
-							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-inner-int"></span>
 							<span class="onoffswitch-switch"></span>
 						</label></div>
 					</td>
@@ -2941,7 +2966,11 @@
 						<td align='left' colspan='2'><h4>CallBlast statistics:</h4></td>
 					</tr>
 					<tr>
-						<td align='right' colspan='2'>live calls: [% BLAST_CALLS | html %]</td>
+						<td align='right' colspan='2'>live calls: 
+						<a href='?action=callblast_del_cache&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm( 'Вы точно хотите сбросить статистику ?' )" title='обнулить статистику'>
+						[% BLAST_CALLS | html %]
+						</a>
+						</td>
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
@@ -3191,7 +3220,13 @@
 						<td>Fax on Demand: </td>
 						<td align='right' nowrap='nowrap'>
 							[% IF VB_DATA.C2C_SECRET %]
-							<a title='SendFax' href='#' onclick="webfax_win('[% USER_CREDS.DOWNLOAD_IP %]','[% VB_DATA.C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','en','[% USER_CREDS.UNIQ %]')"><span class='icon-phone fs0'></span></a>
+							<a title='SendFax' href='#' onclick="webfax_win('[% USER_CREDS.DOWNLOAD_IP %]','[% VB_DATA.C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','en','[% USER_CREDS.UNIQ %]'
+							[% IF USER_CREDS.ROOT eq '0' %]
+								'0'
+							[% ELSE %]
+								'[% VBOX_PREF.ID %]'
+							[% END %]
+							)"><span class='icon-phone fs0'></span></a>
 							[% END %]
 							<a title='download' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.FAX_FILE %]'><span class='icon-download3 fs0'></span></a>
 							&nbsp;<a title='delete' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% VBOX_PREF.FAX_FILE %]&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-s6','d-tbl-s')"><span class='icon-bin fs0'></span></a>
@@ -3341,7 +3376,7 @@
 									<input type='hidden' name='action' value='ext_restore'>
 									<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 									<input type='hidden' name='is_excel' value='1'>
-									<input type='submit' value='Append data from CSV'>
+									<input type='submit' value='CSV import'>
 								</td>
 								</form>
 							</tr>
@@ -3365,7 +3400,7 @@
 			<tr>
 				<td colspan='2' align='left'>
 					<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
-					<input type='submit' value='Append data from CSV'>
+					<input type='submit' value='CSV import'>
 					<input type='file' name='config_file'>
 					<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 					<input type='hidden' name='action' value='ext_restore'>
@@ -3627,7 +3662,7 @@
 							<input type='hidden' name='action' value='ext_restore'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 							<input type='hidden' name='is_excel' value='1'>
-							<input type='submit' value='Append data from CSV'>
+							<input type='submit' value='CSV import'>
 							</form>
 						</td>
 					</tr>
@@ -3645,7 +3680,7 @@
 			<tr>
 				<td colspan='2' align='left'>
 					<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
-					<input type='submit' value='Append data from CSV'>
+					<input type='submit' value='CSV import'>
 					<input type='file' name='config_file'>
 					<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 					<input type='hidden' name='action' value='ext_restore'>
@@ -3851,7 +3886,7 @@
 							<input type='hidden' name='action' value='ext_restore'>
 							<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 							<input type='hidden' name='is_excel' value='1'>
-							<input type='submit' value='Append data from CSV'>
+							<input type='submit' value='CSV import'>
 							</form>
 						</td>
 					</tr>

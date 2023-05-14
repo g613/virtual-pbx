@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list_all.tt,v 1.16 2019/09/08 17:57:25 gosha Exp $ -->
+<!-- $Id: act_list_all.tt,v 1.17 2022/08/30 19:59:20 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Активность - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -89,6 +89,7 @@
 		</tr>
 	</table>
 
+	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
 			<th class='rad_l'>Время действия</th>
@@ -127,7 +128,10 @@
 		</tr>
 		[% END %]
 	</table>
-
+	[% UNLESS CDR_LIST scalar %]
+		<br /><h3>Ничего не нашлось, попробуйте задать другие фильтры.</h3>
+	[% END %]
+	</p>
 	<script language='JavaScript'>
 		var download_file_url="<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/$1/[% USER_CREDS.ACCESS_CODE %]/$2.[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'>FILE</a>";
 		var listen_file_url="<a title='слушать' onclick=\"return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/$1/[% USER_CREDS.ACCESS_CODE %]/$2?media=mp3;type=listen' )\" href='#'><span class='icon-volume-medium fs0'></span></a>";

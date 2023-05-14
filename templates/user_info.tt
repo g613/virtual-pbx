@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.112 2022/01/05 20:34:59 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.116 2023/04/20 18:47:37 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - PBX profile - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -51,6 +51,7 @@
 							<option selected value='[% USER_CREDS.CSS_HREF | html %]'>CSS href:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
 							<option value='/xvb/xvb-green.css'>CSS - green skin</option>
 							<option value='/xvb/xvb-green2.css'>CSS - green & black</option>
+							<option value='/xvb/xvb-yellow.css'>CSS - yellow & black</option>
 							<option value=''>CSS - default skin</option>
 						</select>
 					</td>
@@ -166,7 +167,7 @@
 					[% END %]
 					>
 					<label class="onoffswitch-label" for="ST-1-ch">
-						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-inner-int"></span>
 						<span class="onoffswitch-switch"></span>
 					</label></div>
 					</td>
@@ -183,7 +184,7 @@
 					[% END %]
 					>
 					<label class="onoffswitch-label" for="ST-2-ch">
-						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-inner-int"></span>
 						<span class="onoffswitch-switch"></span>
 					</label></div>
 					</td>
@@ -200,7 +201,7 @@
 					[% END %]
 					>
 					<label class="onoffswitch-label" for="ST-3-ch">
-						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-inner-int"></span>
 						<span class="onoffswitch-switch"></span>
 					</label></div>
 					</td>
@@ -217,7 +218,7 @@
 					[% END %]
 					>
 					<label class="onoffswitch-label" for="ST-4-ch">
-						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-inner-int"></span>
 						<span class="onoffswitch-switch"></span>
 					</label></div>
 					</td>
@@ -234,7 +235,7 @@
 					[% END %]
 					>
 					<label class="onoffswitch-label" for="ST-5-ch">
-						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-inner-int"></span>
 						<span class="onoffswitch-switch"></span>
 					</label></div>
 					</td>
@@ -251,7 +252,7 @@
 					[% END %]
 					>
 					<label class="onoffswitch-label" for="ST-6-ch">
-						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-inner-int"></span>
 						<span class="onoffswitch-switch"></span>
 					</label></div>
 					</td>
@@ -363,6 +364,15 @@
 				[% IF USER_CREDS.CUSTOM_FILES %]
 				<tr>
 					<td colspan='2' align='left'>&nbsp;<h2><a href="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=sysmedia_list&uniq=[% USER_CREDS.UNIQ %]">System media files</a></h2></td>
+				</tr>
+				[% END %]
+				
+				[% IF USER_CREDS.MAX_ROLES %]
+				<tr>
+					<td align='left' colspan='2'>
+					&nbsp;
+						<h2><a href="?action=role_list&uniq=[% USER_CREDS.UNIQ %]">Custom roles</a></h2>
+					</td>
 				</tr>
 				[% END %]
 			</table>

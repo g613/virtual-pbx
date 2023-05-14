@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.26 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.32 2023/03/31 20:38:30 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -28,7 +28,7 @@
 	</table>
 	<center>
 	
-	<h1>SIP peers</h1>
+	<h1>SIP peers - [% SIPDEV_CNT %]</h1>
 
 	<table width='100%'>
 		<tr>
@@ -66,7 +66,8 @@
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th class='rad_l'>Access code</th>
+			<th class='rad_l'>#</th>
+			<th>Access code</th>
 			<th>Tenant name</th>
 			<th>Proxy</th>
 			<th>Port</th>
@@ -74,12 +75,12 @@
 			<th>CallerID</th>
 			<th colspan='2'>Incoming calls</th>
 			<th>&nbsp;</th>
-			<th class='rad_r'>Peer ID</th>
+			<th colspan='2' class='rad_r'>Peer ID</th>
 		</tr>
 		
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='9'>
+			<td align='left' colspan='12'>
 				<a title='previous page' href='?action=peer_list&ac=[% AC | html %]&pbxmode=[% PBXMODE %]&need_reg=[% NEED_REG | html %]&host=[% HOST | html %]&from=[% MSG_PREV %]&authname=[% NAME | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
@@ -87,6 +88,7 @@
 		
 		[% FOREACH p = SIPDEV %]
 		<tr align='left' class='nocolor' id='d-tr-[% p.DATA_ID %]'>
+			<td align='right'>[% p.IDX %]</td>
 			<td class='simple'><a title='edit user settings' href='?ac=[% p.ACCESS_CODE %]&action=user_info'>[% p.ACCESS_CODE %]</a></td>
 			<td>
 				[% p.FIRST_NAME | html %] [% p.LAST_NAME | html %]
@@ -151,12 +153,17 @@
 			</td>
 			</form>
 			<td>[% p.name %]</td>
+			<td>
+				[% IF p.host eq 'dynamic' %]
+				<a title='change auth name' href='?action=auth_name_reset&dtype=peer&id=[% p.name | html %]&pac=[% p.ACCESS_CODE | html %]&ac=[% AC | html %]&pbxmode=[% PBXMODE %]&need_reg=[% NEED_REG | html %]&host=[% HOST | html %]&from=[% MSG_NEXT %]&authname=[% NAME | html %]'><span class='icon-loop2 fs1'></span></a>
+				[% END %]
+			</td>
 		</tr>
 		[% END %]
 	
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right' colspan='9'>
+			<td align='right' colspan='12'>
 				<a title='previous page' href='?action=peer_list&ac=[% AC | html %]&pbxmode=[% PBXMODE %]&need_reg=[% NEED_REG | html %]&host=[% HOST | html %]&from=[% MSG_NEXT %]&authname=[% NAME | html %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cidfilters_core.tt,v 1.13 2021/01/02 19:03:37 gosha Exp $ -->
+<!-- $Id: cidfilters_core.tt,v 1.15 2022/04/19 14:53:23 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CID фильтры - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -32,19 +32,29 @@
 	
 	<table width='100%'>
 		<tr>
-			<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)' id='find-form'>
-			<td align='right'>
-				<input size='20' type='text' placeholder='CID' name='cid' value='[% CID | html %]'>
-				&nbsp;
-				<input value='Найти' type='submit'>
-				<input name='action' value='cid_list' type='hidden'>
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
-				<input name='need_excel' value='' type='hidden' id='find-flt'>
-				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
-				<input name='cid_list_type' value='[% CID_LIST_TYPE %]' type='hidden'>
-				<input name='cid_type' value='2' type='hidden'>
+			<td align='left'>
+				<form enctype="multipart/form-data" method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+					<input type='submit' value='Импорт из CSV'>
+					<input type='file' name='config_file'>
+					<input type='hidden' name='section' value='CIDFILTERS[% CID_LIST_TYPE %]'>
+					<input type='hidden' name='action' value='restore'>
+					<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+					<input type='hidden' name='is_excel' value='1'>
+				</form>
 			</td>
-			</form>
+			<td align='right'>
+				<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)' id='find-form'>
+					<input size='20' type='text' placeholder='CID' name='cid' value='[% CID | html %]'>
+					&nbsp;
+					<input value='Найти' type='submit'>
+					<input name='action' value='cid_list' type='hidden'>
+					<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+					<input name='need_excel' value='' type='hidden' id='find-flt'>
+					<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
+					<input name='cid_list_type' value='[% CID_LIST_TYPE %]' type='hidden'>
+					<input name='cid_type' value='2' type='hidden'>
+				</form>
+			</td>
 		</tr>
 	</table>
 
@@ -68,6 +78,8 @@
 			<input type='hidden' name='action' value='cid_update'>
 			<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
 			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+			<input type='hidden' name='cid_list_type' value='[% CID_LIST_TYPE %]'>
+			<input type='hidden' name='cid_type' value='2'>
 
 			<td><input class='in_t0' size='50' name='cid' type='text' value='[% param.CID | html %]'></td>
 			<td><input class='in_t0' size='60' name='description'  type='text' value='[% param.DESCRIPTION | html %]'></td>

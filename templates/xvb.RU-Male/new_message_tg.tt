@@ -1,1 +1,6 @@
-[% IF FILE_LINK ne '' %]Новое сообщение для  [% CALLED_ID | html %] # [% _USER_VBOX.EXT_NUMBER | html %] от [% callerid | html %], получено [% origdate | html %][% END %]
+[% IF file_type eq '41' %]Доступна новая запись звонка[% ELSIF file_type eq '42' %]Получен новый факс[% ELSIF file_type eq '43' %]Получены новые DTMF данные[% ELSE %]Новое голосовое сообщение [% END %] для [% CALLED_ID | html %] # [% _USER_VBOX.EXT_NUMBER | html %] от [% callerid | html %], получено [% origdate | html %]
+[% IF SKIP_ATTACH eq '1' %]
+[% IF FILE_LINK ne '' %]
+<a href="[% FILE_LINK %]">скачать файл</a>
+[% END %]
+[% END %]

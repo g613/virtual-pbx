@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_info.tt,v 1.13 2018/11/13 12:45:50 gosha Exp $ -->
+<!-- $Id: phone_info.tt,v 1.15 2023/03/30 20:19:53 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phone - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -229,6 +229,29 @@
 				<input size="30" name='PICKUP_GROUPS' type='text' value="[% PHONE.PICKUP_GROUPS | html %]">
 			</td>
 		</tr>
+		
+		<tr>
+			<td>
+				Менеджер для:
+			</td>
+			<td>
+				<input size="30" name='MANAGER_FOR' type='text' value="[% PHONE.MANAGER_FOR | html %]">
+			</td>
+		</tr>
+
+		<tr>
+			<td><a href='#' class='info'>Запомнить последний набранный номер:<span>
+							Время хранения последнего набранного номера в памяти. Секунды.
+							Данное время используется для прямого доступа при перезвоне
+							абонента и возможности повторного вызова. 
+							0  - системная настройка.
+							-1 - не запоминать.
+							</span></a></td>
+			<td>
+				<input size="30" name='LD_TTL' type='text' value="[% PHONE.LD_TTL | html %]">
+			</td>
+		</tr>
+
 		<tr>
 			<td>
 				Перенаправление звонков на номер:

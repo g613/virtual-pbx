@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.133 2021/08/28 19:46:36 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.148 2023/05/14 18:05:37 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -374,11 +374,22 @@ function ShowEl( Id ) {
 }
 
 function ShowPlayer( file, msg_id ) {
+	
+	var player_data1 = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player" height="20%"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><span class="icon-cross fs0"></a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls" id="audiosource"><source src="';
+	var player_data2 = '"></audio></td></tr></table>';
+	
+	if ( file == "init" ) {
+		document.write(player_data1+player_data2);
+		return true;
+	}
+
+	var div_id = document.getElementById('center');
 	var el=document.getElementById('shadow');
 	el.style.visibility='visible';
-	var div_id = document.getElementById('center');
+
 	var player_data = '';
-	
+	var wav_file = '';
+
 	var audio  = document.createElement("audio");
 	var canPlayMP3 = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/mpeg") !== "");
 	var canPlayWAV = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/x-wav") !== "");
@@ -392,13 +403,14 @@ function ShowPlayer( file, msg_id ) {
 		file = http_file_name;
 	}
 
-	if ( canPlayOGG ) {
+
+	if ( canPlayMP3 ) {
+		var wav_file = file;
+		player_data = player_data1+wav_file+player_data2;
+	} else if ( canPlayOGG ) {
 		var wav_file = file.replace("ogg?media=mp3;","ogg?");
 		wav_file = wav_file.replace("=mp3","=ogg");
-		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player" height="20%"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><span class="icon-cross fs0"></a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
-	} else if ( canPlayMP3 ) {
-		var wav_file = file;
-		player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player" height="20%"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><span class="icon-cross fs0"></a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+		player_data = player_data1+wav_file+player_data2;
 	} else {
 		var plugin = (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) ? navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin : 0;
 		if ( plugin ) {
@@ -407,24 +419,32 @@ function ShowPlayer( file, msg_id ) {
 		} else if ( canPlayWAV ) {
 			var wav_file = file.replace("wav?media=mp3;","wav?");
 			wav_file = wav_file.replace("=mp3","=wav");
-			player_data = '<table width="100%" height="100%" border=0 style="border: solid 1px;"><tr class="player"><td align="right" style="border: solid 1px;"><a class="headers" href="#" onclick="return HidePlayer()"><span class="icon-cross fs0"></a></td></tr><tr><td align="center" valign="center" bgcolor="black"><audio tabindex="0" autoplay="autoplay" controls="controls"><source src="'+wav_file+'"></audio></td></tr></table>';
+			player_data = player_data1+wav_file+player_data2;
 		} else {
 			player_data = 'Your browser not supported';
 		}
 	}
-
-	/*
-		save history
-	*/
+		
 	if ( history.pushState && history.replaceState && msg_id ) {
-		hist_url = document.getElementById('msg'+msg_id).href;
-		current_url = window.location.href;
-		history.replaceState({},"",hist_url);
-		history.replaceState({},"",current_url);
 		document.getElementById('msg'+msg_id).className = 'msgread';
 	}
 
-	div_id.innerHTML = player_data;
+	var audio_el=document.getElementById('audiosource');
+	if ( audio_el && wav_file != '' ) {
+		audio_el.src = wav_file;
+	} else {
+		/*
+			save history
+		*/
+		if ( history.pushState && history.replaceState && msg_id ) {
+			hist_url = document.getElementById('msg'+msg_id).href;
+			current_url = window.location.href;
+			history.replaceState({},"",hist_url);
+			history.replaceState({},"",current_url);
+		}
+		div_id.innerHTML = player_data;
+	}
+
 	div_id.style.display = 'block';
 
 	return false;
@@ -441,7 +461,12 @@ function HidePlayer() {
 	var canPlayOGG = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/ogg") !== "");
 
 	if ( canPlayMP3 || canPlayWAV || canPlayOGG ) {
-		div_id.innerHTML = '<audio tabindex="0" autoplay="autoplay" controls="controls"></audio>';
+		var audio_el=document.getElementById('audiosource');
+		if( (typeof(audio_el) == 'undefined') ) {
+			div_id.innerHTML = '<audio tabindex="0" autoplay="autoplay" controls="controls"></audio>';
+		} else {
+			audio_el.src = '';
+		}
 	}
 	div_id.style.display = 'none';
 	
@@ -501,51 +526,77 @@ function graphit(g,gwidth){
 			}
 	}
 
-	total[3] = total[2] / total[1];
-	max_avg = max_avg/total[3];
+	total[3] = Math.round(total[2]/total[1]);
+	max_avg = Math.round(max_avg/total[3]);
+	
+	for (i2=1;i2<g[0].length;i2++) {
+		if ( g[0][i2] == 'ASR' ) {
+			total[i2] = Math.round(total[i2]/(g.length-1),2);
+			total[i2+1] = Math.round(total[i2+1]/(g.length-1));
+		}
+	}
 
 	coll_width = parseInt(90/total.length-1);
 
 	output='<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><th width="10%" class="rad_l" >'+(g[0][0])+'</th>';
 	for (i2=1;i2<g[0].length;i2++) {
-		//output+='<th colspan="2">'+ (g[0][i2]) +'</th>';
 		output += '<th colspan="2" width="'+coll_width+'%"';
 		if ( i2 == g[0].length - 1 ) {
 			output += ' class="rad_r" ';
 		}
 		output += '>'+g[0][i2]+'</th>';
 	}
-	output+='</tr><tr><td>&nbsp;</td></tr>';
+	output += '</tr><tr><td>&nbsp;</td></tr>';
 
 	for (i=1;i<g.length;i++){
-		output+='<tr class="nocolor"><td align="right"><b>'+g[i][0]+'</b>&nbsp;</td>';
+		output += '<tr class="nocolor"><td align="right"><b>'+g[i][0]+'</b>&nbsp;</td>';
 		for (i2=1;i2<g[0].length;i2++) {
 			if ( total[i2] > 0 ) {
-				calpercentage=Math.round(parseFloat(g[i][i2]*100/total[i2]) * Math.pow(10, 2)) / Math.pow(10, 2)
+				calpercentage=Math.round(g[i][i2]*100/total[i2],2);
 			} else {
 				calpercentage = 0;
 			}
+
+			output += '<td align="right">&nbsp;&nbsp;';
+
 			if( i2 == 3 ) {
 				calwidth=Math.round(gwidth*(calpercentage/(100*max_avg)));
 			} else {
 				calwidth=Math.round(gwidth*(calpercentage/100));
 			}
-			output+='<td align="right">&nbsp;&nbsp;'+
-				Math.round(parseFloat(g[i][i2]) * Math.pow(10, 2)) / Math.pow(10, 2)
-			+'&nbsp;&nbsp;</td><td nowrap="nowrap"><img src="'+graphimage+'" width="'+calwidth+'" height="10"> '+calpercentage+'%</td>';
-		}
-		output+='</tr>';
-	}
 
+			if ( g[0][i2] == 'ACD' || i2 == 2  || i2 == 3 ) {
+				output += duration_str(g[i][i2]);
+			} else {
+				output += g[i][i2];
+			}
+
+			output += '&nbsp;&nbsp;</td>';
+
+			if ( g[0][i2] == 'ACD' || g[0][i2] == 'ASR' ) {
+				output += '<td></td>';
+			} else {
+				output += '<td nowrap="nowrap"><img src="'+graphimage+'" width="'+calwidth+'" height="10"> '+calpercentage+'%</td>';
+			}
+		}
+		output += '</tr>';
+	}
+	
 	output+='<tr><td>&nbsp;</td></tr><tr><td align="right"><b>=</b></td>';
 
 	for (i2=1;i2<g[0].length;i2++) {
-		output+='<td align="right"><b>'+
-			Math.round(parseFloat(total[i2]) * Math.pow(10, 2)) / Math.pow(10, 2)
-		+'</b>&nbsp;&nbsp;</td><td>&nbsp;</td>';
+		output += '<td align="right"><b>';
+
+		if ( g[0][i2] == 'ACD' || i2 == 2  || i2 == 3 ) {
+			output += duration_str(total[i2]);
+		} else {
+			output += total[i2];
+		}
+		
+		output += '</b>&nbsp;&nbsp;</td><td>&nbsp;</td>';
 	}
 	
-	output+='</tr></table>'
+	output += '</tr></table>'
 
 	document.write(output)
 }
@@ -758,17 +809,25 @@ function click2call_win( server, key, ac, lang, user_vars ) {
 }
 
 /* webfax_win */
-function webfax_win( server, key, ac, lang, uniq ) {
+function webfax_win( server, key, ac, lang, uniq, ext_id ) {
 	var ScreenWidth=window.screen.width;
-	placementx=ScreenWidth/2-320;
+	placementx=ScreenWidth/2-370;
 	placementy=200;
-	WinPop=window.open("","webfax","width=640,height=240,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
+	WinPop=window.open("","webfax","width=720,height=240,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
 	WinPop.document.write('<html>\n<head><title>WebFax - XVB VirtualPBX</title>\n<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" /></head>\n<body><center><form method="post" action="'+server+'/c2c"><input type="hidden" value="'+key+'" name="key"><input type="hidden" value="'+ac+'" name="ac">');
 	if ( lang == 'ru' ) {
-		response_str = Base64.encode('<center>Запрос обработан. Ожидайте отправки факса.<br><a href=\''+server+'/ui?action=act_list&call_id=__CALLID__&uniq='+uniq+'\'>Для проверки статуса перейдите по этой ссылке</a></center>');
+		if ( ext_id == '0' ) {
+			response_str = Base64.encode('<center>Запрос обработан. Ожидайте отправки факса.<br><a href=\''+server+'/ui?action=act_list&call_id=__CALLID__&uniq='+uniq+'\'>Для проверки статуса перейдите по этой ссылке</a></center>');
+		} else {
+			response_str = Base64.encode('<center>Запрос обработан. Ожидайте отправки факса.<br><a href=\''+server+'/ui?action=ext_stat&nofltr=1&id='+ext_id+'&call_id=__CALLID__&uniq='+uniq+'\'>Для проверки статуса перейдите по этой ссылке</a></center>');
+		}
 		WinPop.document.write('<h1>Отправка факса</h1><input type="text" size="30" name="ph" placeholder="введите номер факса"><br/><br/><input value="отправить факс" type="submit"><input type="hidden" name="b64message" value="'+ response_str +'">');
 	} else {
-		response_str = '<center>Please wait...<br><a href=\''+server+'/ui?action=act_list&call_id=__CALLID__&uniq='+uniq+'\'>Click here to check status</a></center>';
+		if ( ext_id == '0' ) {
+			response_str = '<center>Please wait...<br><a href=\''+server+'/ui?action=act_list&call_id=__CALLID__&uniq='+uniq+'\'>Click here to check status</a></center>';
+		} else {
+			response_str = '<center>Please wait...<br><a href=\''+server+'/ui?action=ext_stat&nofltr=1&id='+ext_id+'&call_id=__CALLID__&uniq='+uniq+'\'>Click here to check status</a></center>';
+		}
 		WinPop.document.write('<h1>Send Fax</h1><input type="text" size="30" name="ph" placeholder="enter fax number here"><br/><br/><input value="send fax" type="submit"><input type="hidden" name="message" value="'+ response_str +'">');
 	}
 	WinPop.document.write('</form></center></body></html>');
@@ -829,9 +888,67 @@ function click2call_code( server, key, ac, lang ) {
 	} else {
 		WinPop.document.write('WinPop.document.write(\'&lt;h2&gt;Order a Call&lt;/h2&gt;&lt;input type="text" size="25" name="ph" placeholder="enter your phone here"&gt;&lt;br/&gt;&lt;br/&gt;&lt;input value="order a call" type="submit"&gt;&lt;input type="hidden" name="message" value="&lt;center&gt;Please wait a call.&lt;/center&gt;"&gt;\');');
 	}
-	WinPop.document.write('WinPop.document.write(\'&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;\');WinPop.document.close();}&lt;/script&gt;&lt;a title="click2call" href="#" onclick="click2call_win()"&gt;&lt;img border="0" src="https://virtual-pbx.googlecode.com/files/callme.gif" alt="callme" /&gt;&lt;/a&gt;</small></p></body></html>');
+	WinPop.document.write('WinPop.document.write(\'&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;\');WinPop.document.close();}&lt;/script&gt;&lt;a title="click2call" href="#" onclick="click2call_win()"&gt;callme&lt;/a&gt;</small></p></body></html>');
 	WinPop.document.close();
 }
+
+/* click2call xvb-spy */
+function click2call_spy( server, key, ac, user_vars, lang ) {
+	var ScreenWidth=window.screen.width;
+	placementx=ScreenWidth/2-220;
+	placementy=200;
+
+	if ( ac == 'auto' ) {
+		var creds = key.split('@');
+		key = creds[0];
+		ac = creds[1];
+	}
+	
+	WinPop=window.open("","Spy","width=450,height=240,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
+	WinPop.document.write('<html>\n<head><title>XVB Spy</title>\n<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" /></head><body><center><form method="post" action="'+server+'/c2c"><input type="hidden" value="'+user_vars+'" name="user_vars"><input type="hidden" value="'+key+'" name="key"><input type="hidden" value="'+ac+'" name="ac"><input type="hidden" value="," name="dlm">');
+
+	if ( lang == 'ru' ) {
+		response_str = Base64.encode('<center>Запрос обработан. Ожидайте звонка.</center>');
+		WinPop.document.write('<h1>Прослушать звонок</h1><input type="text" size="30" name="ph" placeholder="введите Ваш номер телефона"><br/><br/><input value="позвонитьi мне" type="submit"><input type="hidden" name="b64message" value="'+ response_str +'">');
+	} else {
+		response_str = '<center>Please wait a call.</center>';
+		WinPop.document.write('<h1>Listen call</h1><input type="text" size="30" name="ph" placeholder="enter your phone here"><br/><br/><input value="call me" type="submit"><input type="hidden" name="message" value="'+ response_str +'">');
+	}
+
+	WinPop.document.write('</form></center></body></html>');
+	WinPop.document.close();
+}
+
+function click2call_spy_raw( url ) {
+	LoadingOn();
+	
+	var xmlHttpReq = false;
+	var self = this;
+	// Mozilla/Safari
+	if (window.XMLHttpRequest) {
+		self.xmlHttpReq = new XMLHttpRequest();
+	}
+	// IE
+	else if (window.ActiveXObject) {
+		self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	self.xmlHttpReq.open('GET', url, true);
+
+	self.xmlHttpReq.onreadystatechange = function() {
+		if (self.xmlHttpReq.readyState == 4) {
+			if ( self.xmlHttpReq.statusText == 'Ok' || self.xmlHttpReq.status == 204 || self.xmlHttpReq.status == 1223 ) {
+				alert( self.xmlHttpReq.responseText );
+			} else {
+				alert('Error: '+ self.xmlHttpReq.responseText );
+			}
+			LoadingOff();
+		}
+	}
+	self.xmlHttpReq.send();
+	return false;
+}
+	
 
 /* ext_list_build */
 function ext_list_build( element_id ) {
@@ -1643,6 +1760,9 @@ function getTimePeriod(lang,period) {
 		} else if ( period == 'CALLER_ID' ) {
 			period = 'Номер звонящего';
 			group_by = 'cid';
+		} else if ( period == 'CNAM' ) {
+			period = 'Имя звонящего';
+			group_by = 'cnam';
 		} else if ( period == 'CALL_TYPE' ) {
 			period = 'Тип звонка';
 			group_by = 'ct';
@@ -1673,6 +1793,9 @@ function getTimePeriod(lang,period) {
 		} else if ( period == 'SUBSCR_ID' ) {
 			period = 'ID арендатора';
 			group_by = 'sbscr';
+		} else if ( period == 'srcip' ) {
+			period = 'SRC IP';
+			group_by = 'srcip';
 		} else {
 			period = 'группировать по...';
 		}
@@ -1710,6 +1833,9 @@ function getTimePeriod(lang,period) {
 		} else if ( period == 'CALLER_ID' ) {
 			period = 'CallerID';
 			group_by = 'cid';
+		} else if ( period == 'CNAM' ) {
+			period = 'Caller name';
+			group_by = 'cnam';
 		} else if ( period == 'CALL_TYPE' ) {
 			period = 'Call type';
 			group_by = 'ct';
@@ -1740,6 +1866,9 @@ function getTimePeriod(lang,period) {
 		} else if ( period == 'SUBSCR_ID' ) {
 			period = 'Tenant ID';
 			group_by = 'sbscr';
+		} else if ( period == 'srcip' ) {
+			period = 'SRC IP';
+			group_by = 'srcip';
 		} else {
 			period = 'group by...';
 		}
@@ -2043,6 +2172,23 @@ function createDownloadLink(blob) {
         recordingUpload.innerHTML = '';
         recordingsList.appendChild(au);
         recordingUpload.appendChild(upload);
+}
+
+/* duration string */
+
+function duration_str(duration) {
+
+	var seconds = duration % 60;
+	var minutes = Math.round((duration-(duration%60))/60);
+
+	if ( minutes < 10 )
+		minutes = "0"+minutes;
+	if ( seconds < 10 )
+		seconds = "0"+seconds;
+						
+	var out_str = minutes +':'+ seconds;
+
+	return out_str;
 }
 
 /* =================== recorder =================== */

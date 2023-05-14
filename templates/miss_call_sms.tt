@@ -1,0 +1,7 @@
+Miss call information:
+ Caller: [% _CDR.CALLER_ID %] [% IF _CDR.CNAM ne '' %][% IF _CDR.CNAM ne _CDR.CALLER_ID %] ( [% _CDR.CNAM | html %] )[% END %][% END %]
+ Called: [% _CDR.CALLED_ID %]
+ Call date: [% ORIGDATE %]
+ Extension: [% _USER_VBOX.EXT_NUMBER %]
+ Status: [% _CDR.ENH_STATUS %]
+ Wait time: [% WAIT_TIME %] ( sec )

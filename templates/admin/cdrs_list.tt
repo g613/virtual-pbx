@@ -152,7 +152,9 @@
 		</tr>
 		[% END %]
 	</table>
-		
+ 	[% UNLESS CDR_LIST scalar %]
+ 		<br /><h3>No records, please try to change filters.</h3>
+ 	[% END %]
 	</p>
 	
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>

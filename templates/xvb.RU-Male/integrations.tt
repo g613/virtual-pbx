@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: integrations.tt,v 1.20 2022/01/10 19:02:21 gosha Exp $ -->
+<!-- $Id: integrations.tt,v 1.24 2022/11/06 18:04:27 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Настройка интеграций</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -75,7 +75,7 @@
 				Необязательное поле. Оставьте пустым в большинстве случаев.
 				</span></a></td>
 			<td>
-				<textarea rows='[% SESSION_VARS.AMO_PIPELINE_MAP | textarea_rows %]' cols='30' name='AMO_PIPELINE_MAP'>[% SESSION_VARS.AMO_PIPELINE_MAP | html %]</textarea>
+				<textarea rows='[% SESSION_VARS.AMO_PIPELINE_MAP | textarea_rows %]' cols='38' name='AMO_PIPELINE_MAP'>[% SESSION_VARS.AMO_PIPELINE_MAP | html %]</textarea>
 			</td>
 		</tr>
 		<tr>
@@ -83,7 +83,7 @@
 				Список DID номеров ( через запятую ) входящие звонки на которые не логируются. Имя звонящего также не проверяется.
 				</span></a></td>
 			<td>
-				<textarea rows='[% SESSION_VARS.AMO_SKIP_DIDS | textarea_rows %]' cols='30' name='AMO_SKIP_DIDS'>[% SESSION_VARS.AMO_SKIP_DIDS | html %]</textarea>
+				<textarea rows='[% SESSION_VARS.AMO_SKIP_DIDS | textarea_rows %]' cols='38' name='AMO_SKIP_DIDS'>[% SESSION_VARS.AMO_SKIP_DIDS | html %]</textarea>
 			</td>
 		</tr>
 		<tr>
@@ -283,6 +283,14 @@
 			</td>
 		</tr>
 		<tr>
+			<td><a href='#' class='info'>Не логировать звонки на номера:<span>
+				Список DID номеров ( через запятую ) входящие звонки на которые не логируются. Имя звонящего также не проверяется.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.BX24_SKIP_DIDS | textarea_rows %]' cols='38' name='BX24_SKIP_DIDS'>[% SESSION_VARS.BX24_SKIP_DIDS | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
 			<td><a href='#' class='info'>Отправить файл на bitrix24:<span>
 					при включение данного параметра система  будет 
 					отправлять запись разговора в битрикс
@@ -385,7 +393,7 @@
 		</tr>
 		<input name="action" type="hidden" value="sv_update"/> 
 		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,BX24_C2C,BX24_URL,CRM_DEFAGENT,BX24_ATTACH:1,BX24_DL:1,CRM_NOOUT:1,BX24_REGLINE:1"/> 
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,BX24_C2C,BX24_URL,CRM_DEFAGENT,BX24_SKIP_DIDS,BX24_ATTACH:1,BX24_DL:1,CRM_NOOUT:1,BX24_REGLINE:1"/> 
 		</form>
 		</table>
 	</p>
@@ -417,7 +425,7 @@
 				Необязательное поле. Оставьте пустым в большинстве случаев.
 				</span></a></td>
 			<td>
-				<textarea rows='[% SESSION_VARS.ACRM_PIPELINE_MAP | textarea_rows %]' cols='30' name='AMO_PIPELINE_MAP'>[% SESSION_VARS.ACRM_PIPELINE_MAP | html %]</textarea>
+				<textarea rows='[% SESSION_VARS.ACRM_PIPELINE_MAP | textarea_rows %]' cols='38' name='AMO_PIPELINE_MAP'>[% SESSION_VARS.ACRM_PIPELINE_MAP | html %]</textarea>
 			</td>
 		</tr>
 		<tr>
@@ -1204,7 +1212,7 @@
 				Список DID номеров ( через запятую ) входящие звонки на которые не логируются. Имя звонящего также не проверяется.
 				</span></a></td>
 			<td>
-				<textarea rows='[% SESSION_VARS.MCL_SKIP_DIDS | textarea_rows %]' cols='30' name='MCL_SKIP_DIDS'>[% SESSION_VARS.MCL_SKIP_DIDS | html %]</textarea>
+				<textarea rows='[% SESSION_VARS.MCL_SKIP_DIDS | textarea_rows %]' cols='38' name='MCL_SKIP_DIDS'>[% SESSION_VARS.MCL_SKIP_DIDS | html %]</textarea>
 			</td>
 		</tr>
 		<tr>
@@ -1339,7 +1347,7 @@
 				Список DID номеров ( через запятую ) входящие звонки на которые не логируются.
 				</span></a></td>
 			<td>
-				<textarea rows='[% SESSION_VARS.SCCRM_SKIP_DIDS | textarea_rows %]' cols='30' name='SCCRM_SKIP_DIDS'>[% SESSION_VARS.SCCRM_SKIP_DIDS | html %]</textarea>
+				<textarea rows='[% SESSION_VARS.SCCRM_SKIP_DIDS | textarea_rows %]' cols='38' name='SCCRM_SKIP_DIDS'>[% SESSION_VARS.SCCRM_SKIP_DIDS | html %]</textarea>
 			</td>
 		</tr>
 		<tr>
@@ -1347,7 +1355,7 @@
 				Список внутренних телефонов ( через запятую ) исходящие звонки с которых не логируются.
 				</span></a></td>
 			<td>
-				<textarea rows='[% SESSION_VARS.SCCRM_SKIP_EXT | textarea_rows %]' cols='30' name='SCCRM_SKIP_EXT'>[% SESSION_VARS.SCCRM_SKIP_EXT | html %]</textarea>
+				<textarea rows='[% SESSION_VARS.SCCRM_SKIP_EXT | textarea_rows %]' cols='38' name='SCCRM_SKIP_EXT'>[% SESSION_VARS.SCCRM_SKIP_EXT | html %]</textarea>
 			</td>
 		</tr>
 		<tr>
@@ -1355,7 +1363,7 @@
 				Список внутренних телефонов ( через запятую ) разговоры которых не передаются в CRM.
 				</span></a></td>
 			<td>
-				<textarea rows='[% SESSION_VARS.SCCRM_SKIP_REC | textarea_rows %]' cols='30' name='SCCRM_SKIP_REC'>[% SESSION_VARS.SCCRM_SKIP_REC | html %]</textarea>
+				<textarea rows='[% SESSION_VARS.SCCRM_SKIP_REC | textarea_rows %]' cols='38' name='SCCRM_SKIP_REC'>[% SESSION_VARS.SCCRM_SKIP_REC | html %]</textarea>
 			</td>
 		</tr>
 		<tr>
@@ -1392,6 +1400,88 @@
 	</p>
 	[% END %]
 
+	<!-------------------- HelpDeskEddy -------------------------------------------------->
+
+	[% IF HOOKS contain ',HelpDeskEddy,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="8" valign="top" align="left">
+				<img src="/xvb/images/logo_helpdeskeddy.png" width="200" />
+			</td>
+			<td width='25%'>
+				Ссылка вебхука ( Вебхук для исходящих вызовов ):
+			</td>
+			<td width='55%'>
+				[% CGI_SERVER %]/helpdeskeddy/[% USER_CREDS.ACCESS_CODE %]/[% C2C_SECRET | html %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Канал связи:
+			</td>
+			<td>
+				<input size="60" name='HDE_URL' type='text' value="[% SESSION_VARS.HDE_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Отправить оповещение о начале звонка:<span>
+					при включение данного параметра система будет
+					отправлять запрос по указанному адресу при начале звонка. При выключенном
+					только при при окончании звонка, тоесть итоговый CDR.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_ESTART" type="checkbox" class="onoffswitch-checkbox" id="CRM_ESTART-ch-9" 
+				[% IF SESSION_VARS.CRM_ESTOP %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_ESTART-ch-9">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Отправить файл с записью:<span>
+					при включение данного параметра система будет
+					отправлять файл записи в CRM систему, без данного 
+					флага просто ссылку на записанный файл.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="HDE_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="HDE_ATTACH-ch-1" 
+				[% IF SESSION_VARS.HDE_ATTACH %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="HDE_ATTACH-ch-1">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Сохранить' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_ESTART:1,HDE_ATTACH:1,HDE_URL"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
 		
 	<!-------------------- RoiStat -------------------------------------------------->
 
@@ -1412,7 +1502,7 @@
 				Спсиок номеров для отправки в roistst ( через запятую ):
 			</td>
 			<td width='55%'>
-				<textarea rows='[% SESSION_VARS.ROISTAT_DIDS | textarea_rows %]' cols='30' name='ROISTAT_DIDS'>[% SESSION_VARS.ROISTAT_DIDS | html %]</textarea>
+				<textarea rows='[% SESSION_VARS.ROISTAT_DIDS | textarea_rows %]' cols='38' name='ROISTAT_DIDS'>[% SESSION_VARS.ROISTAT_DIDS | html %]</textarea>
 			</td>
 		</tr>
 		<tr>

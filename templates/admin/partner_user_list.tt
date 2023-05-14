@@ -18,19 +18,17 @@
 
 	<table width='100%' class='logo'>
 		<tr>
-			<td align='left' width='15%'>
+			<td align='left' width='10%'>
 				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
 			</td>
-			<td align='center'>
-				<h1>Tenants</h1>
-			</td>
-			<td align='left' width='15%'>
-				&nbsp;
+			<td align='left'>
+				[% INCLUDE partner_main_menu.tt-inc %]
 			</td>
 		</tr>
 	</table>
 	
 	<center>
+	<h1>Tenants - [% USERS_CNT %]</h1>
 
 	<table width='100%'>
 		<tr>
@@ -61,7 +59,8 @@
 	<p>
 	<table width='100%' id='list-data'>
 		<tr>
-				<th class='rad_l'>Shared DID</th>
+				<th class='rad_l'>#</th>
+				<th>Shared DID</th>
 				<th>Access code</th>
 				<th>Tenant name</th>
 				<th>Description</th>
@@ -74,7 +73,7 @@
 			
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='8'>
+			<td align='left' colspan='10'>
 				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
@@ -82,6 +81,9 @@
 
 		[% FOREACH us = USERS %]
 		<tr align='center' class='nocolor'>
+			<td align='right'>
+				[% us.IDX | html %]
+			</td>
 			<td align='right'>
 				[% us.VOICENUMBER | html %]
 			</td>
@@ -125,7 +127,7 @@
 		[% END %]
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right' colspan='2'>
+			<td align='right' colspan='10'>
 				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
@@ -147,6 +149,8 @@
 					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
 				[% END %]
 				</select>
+				&nbsp;
+				<input size='20' type='text' name='uname' placeholder='Tenant name'>
 				&nbsp;
 				<input value='Add tenant' type='submit'>
 				<input type='hidden' value='user_add' name='action'>

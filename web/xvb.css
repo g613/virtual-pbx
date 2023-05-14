@@ -1,5 +1,5 @@
 body { 
-	color:#177182;
+	color:#111111;
 	font-family:Arial, Helvetica, sans-serif;
 	background:#dedede  repeat-x;
 	font-size:12px;
@@ -8,6 +8,19 @@ body {
 form {
 	padding:0px;
 	border:0;
+}
+
+h1 {
+        color:#177182;
+}
+h2 {
+        color:#177182;
+}
+h3 {
+        color:#177182;
+}
+h4 {
+        color:#177182;
 }
 
 /* center */
@@ -160,7 +173,7 @@ a.amenu {
 /* Tips */
 a.info {
 	position:relative;
-	color:#177182;
+	color:#111111;
 	font-weight: normal;
 	border-bottom:1px dashed #ccc;
 }
@@ -189,7 +202,7 @@ a.info:hover span{
 
 a.l-info {
 	position:relative;
-	color:#177182;
+	color:#111111;
 	font-weight: normal;
 }
 a.l-info:hover {
@@ -217,7 +230,7 @@ a.l-info:hover span.l-info {
 
 a.r-info {
 	position:relative;
-	color:#177182;
+	color:#111111;
 	font-weight: normal;
 }
 a.r-info:hover {
@@ -378,6 +391,7 @@ html * #center {
 
 p.copyright {
 	font-size: 8px;
+    color: #444444;
 }
 
 /* tables */
@@ -426,7 +440,7 @@ th {
 	background:#177182  repeat-x;
 	color:#ffffff;
 	text-align:center;
-	font-size:12px;
+	font-size:13px;
 	padding:5px 3px 5px 5px;
 	font-weight: normal;
 	height: 25px;
@@ -654,6 +668,39 @@ button.recorder:disabled {
 }
 button.recorder:first-child {
   margin-left: 0;
+}
+p.pcap1 {
+  background: #91ef91;
+}
+p.pcap2 {
+  background: #ffa17b;
+}
+p.pcap3 {
+  background: #ffb7c2;
+}
+p.pcap4 {
+  background: #fafad3;
+}
+p.pcap5 {
+  background: #67ceac;
+}
+p.pcap6 {
+  background: #e1ffff;
+}
+p.pcap7 {
+  background: #7ecdee;
+}
+p.pcap8 {
+  background: #b3b6b7;
+}
+p.pcap9 {
+  background: #9485be;
+}
+p.pcap10 {
+  background: #c1e3d3;
+}
+p.pcap11 {
+  background: #f7d091;
 }
 
 /* Icon src */

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.38 2022/01/05 20:34:59 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.43 2023/05/02 13:59:07 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль АТС - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -51,6 +51,7 @@
 							<option value='[% USER_CREDS.CSS_HREF | html %]' selected>Ссылка на таблицу стилей:</option>
 							<option value='/xvb/xvb-green.css'>Стиль зеленая палитра</option>
 							<option value='/xvb/xvb-green2.css'>Стиль - черно-зеленый</option>
+							<option value='/xvb/xvb-yellow.css'>Стиль - желто-черный</option>
 							<option value=''>Стиль по умолчанию</option>
 						</select>
 					</td>
@@ -81,7 +82,7 @@
 				</tr>
 				[% END %]
 				<tr>
-					<td>Сообщений на странице:</td>
+					<td>Строк на странице:</td>
 					<td>
 						<input size='10' type='text' name='MSG_IN_PAGE' value='[% USER_CREDS.MSG_IN_PAGE | html %]'>
 					</td>
@@ -375,6 +376,14 @@
 					[% END %]
 					</td>
 				</tr>
+				[% IF USER_CREDS.MAX_ROLES %]
+				<tr>
+					<td align='left' colspan='2'>
+					&nbsp;
+						<h2><a href="?action=role_list&uniq=[% USER_CREDS.UNIQ %]">Индивидуальные роли</a></h2>
+					</td>
+				</tr>
+				[% END %]
 			</table>
 			</td>
 

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.61 2019/12/08 20:38:08 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.64 2023/03/11 12:45:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -140,7 +140,7 @@
 			<td>
 				[% IF msg.VB_ID %]
 				<a title='listen' 
-					onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.VB_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
+					onclick="return ShowPlayer('[% msg.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.VB_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
 					href="#"><span class='icon-volume-medium fs0'></span></a>
 				[% END %]
 			</td>
@@ -195,7 +195,7 @@
 			<td>
 			[% IF msg.VB_ID %]
 			<a title='listen' 
-			onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.VB_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
+			onclick="return ShowPlayer('[% msg.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.VB_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
 			href="#"><span class='icon-volume-medium fs0'></span></a>
 			[% END %]
 			</td>
@@ -214,11 +214,14 @@
 		</tr>
 		
 		[% END %]
-	</table>
-	
+	</table>	
+ 	[% UNLESS CDR_LIST scalar %]
+ 		<br /><h3>No records, please try to change filters.</h3>
+ 	[% END %]
+
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 	
 	</center>
-	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	<div id='shadow'><div id='loading'></div></div><div id='center' style='display:none;'><script language='JavaScript'>ShowPlayer( 'init',0 );</script></div>
 </html>
 	

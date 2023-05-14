@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: crm_list.tt,v 1.6 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: crm_list.tt,v 1.7 2023/01/07 18:21:42 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Справочник клиентов - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -68,19 +68,22 @@
 			</td>
 		</tr>
 		[% END %]
-		<tr align='center' id='submit_row'>
+		<tr><td></td></tr>
+		<tr align='left' id='submit_row'>
 		<a name="addarea">&nbsp;</a>
 		<form method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+		<td align='left' colspan='4'>
 			<input type='hidden' name='action' value='crm_add'>
 			<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 			
-			<td><input size='18' name='cname' type='text'></td>
-			<td><input size='18' name='vars' type='text'></td>
-			<td><input size='20' name='description' type='text'></td>
-			
-			<td align='center'>
-				<input type='submit' value='Добавить'>
-			</td>
+			<input size='18' name='cname' type='text' placeholder='Клиент'>
+			&nbsp;
+			<input size='18' name='vars' type='text' placeholder='Переменные'>
+			&nbsp;
+			<input size='30' name='description' type='text' placeholder='Описание'>
+			&nbsp;
+			<input type='submit' value='Добавить'>
+		</td>
 		</form>
 		</tr>
 	</table>

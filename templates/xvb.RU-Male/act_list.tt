@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_list.tt,v 1.29 2019/12/08 17:42:43 gosha Exp $ -->
+<!-- $Id: act_list.tt,v 1.31 2022/08/30 19:59:20 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Активность номера - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -38,6 +38,7 @@
 		</tr>
 	</table>
 
+	[% IF SKIP_FILTERS eq '' %]
 	<table width='100%'>
 		<tr>
 			<td align='right'>
@@ -95,6 +96,7 @@
 			</td>
 		</tr>
 	</table>
+	[% END %]
 
 	<p>
 	<table width='100%' id='d-tbl'>
@@ -151,6 +153,9 @@
 		</tr>
 		[% END %]
 	</table>
+	[% UNLESS CDR_LIST scalar %]
+		<br /><h3>Ничего не нашлось, попробуйте задать другие фильтры.</h3>
+	[% END %]
 	</p>
 
 	<script language='JavaScript'>

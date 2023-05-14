@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.25 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.30 2023/03/28 09:43:35 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -29,7 +29,7 @@
 	</table>
 	<center>
 	
-	<h1>SIP phones</h1>
+	<h1>SIP phones - [% SIPDEV_CNT %]</h1>
 	
 	<table width='100%'>
 		<tr>
@@ -62,7 +62,8 @@
 	<p>
 	<table width='100%' id='d-tbl'>
 		<tr>
-			<th class='rad_l'>Access code</th>
+			<th class='rad_l'>#</th>
+			<th>Access code</th>
 			<th>Tenant name</th>
 			<th>&nbsp;</th>
 			<th>Phone</th>
@@ -72,12 +73,12 @@
 			<th>Lines</th>
 			<th>Auth name</th>
 			<th>Password</th>
-			<th class='rad_r'>&nbsp;</th>
+			<th width='3%' class='rad_r'>&nbsp;</th>
 		</tr>
 		
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='11'>
+			<td align='left' colspan='12'>
 				<a title='previous page' href='?action=phone_list&rst=[% RST %]&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_PREV %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
@@ -85,6 +86,7 @@
 		
 		[% FOREACH p = SIPDEV %]
 		<tr align='left' class='nocolor'>
+			<td align='right'>[% p.IDX %]</td>
 			<td><a title='edit user settings' href='?ac=[% p.ACCESS_CODE %]&action=user_info'>[% p.ACCESS_CODE %]</a></td>
 			<td>
 				[% p.FIRST_NAME | html %] [% p.LAST_NAME | html %]
@@ -140,20 +142,48 @@
 				</span>
 			</td>
 			</form>
-			<td>[% p.name %]</td>
-			<td>[% p.secret %]</td>
+			[% IF ALLOW_AUTH_EDIT %]
+			<form method="post" action="" id='f-000[% p.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
+			<td nowrap='nowrap'>
+				<input type='text' value='[% p.name | html %]' class='in_t0' name='newid' size='32' />
+				<input type='hidden' value='auth_name_reset' name='action'>
+				<input type='hidden' value='phone' name='dtype'>
+				<input type='hidden' value='redir' name='mode'>
+				<input type='hidden' value='[% p.name | html %]' name='id'>
+				<input type='hidden' value='[% p.ACCESS_CODE | html %]' name='pac'>
+				<input type='hidden' value='[% RST %]' name='rst'>
+				<input type='hidden' value='[% UA | htmlstrict %]' name='ua'>
+				<input type='hidden' value='[% IP | htmlstrict %]' name='ip'>
+				<input type='hidden' value='[% FROM | htmlstrict %]' name='from'>
+				<input type='hidden' value='[% PHONE | htmlstrict %]' name='phone'>
+				<input type='hidden' value='000[% p.DATA_ID %]' name='data_id'>
+			</td>
 			<td>
-				[% IF ALLOW_RESET %]
-				<a title='change auth name' href='?action=auth_name_reset&id=[% p.name | html %]&ac=[% p.ACCESS_CODE | html %]'><span class='icon-loop2 fs1'></span></a>
-				[% END %]
-			</td>	
+				<input type='text' value='[% p.secret | html %]' class='in_t0' name='newpw' size='32' />
+			</td>
+			<td>
+				<span class='in_t' id='in_t_id-000[% p.DATA_ID %]'>
+					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-000[% p.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='set auth name'></span></a>
+					<noscript><input value='change' type='submit'></noscript>
+				</span>
+			</td>
+			</form>
+			[% ELSE %]
+				<td>[% p.name | html %]</td>
+				<td>[% p.secret | html %]</td>
+				<td>
+					[% IF ALLOW_RESET %]
+					&nbsp;&nbsp;<a title='reset auth name' href='?action=auth_name_reset&dtype=phone&id=[% p.name | html %]&pac=[% p.ACCESS_CODE | html %]&rst=[% RST %]&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% FROM %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><span class='icon-loop2 fs1'></span></a>
+					[% END %]
+				</td>
+			[% END %]
 		</tr>
 		[% END %]
 	
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right' colspan='11'>
-				<a title='previous page' href='?action=phone_list&rst=[% RST %]&&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_NEXT %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><span class='fs0'>►</span></a>
+			<td align='right' colspan='12'>
+				<a title='previous page' href='?action=phone_list&rst=[% RST %]&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_NEXT %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
 		[% END %]

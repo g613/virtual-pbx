@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.35 2019/11/03 18:22:39 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.38 2023/05/14 08:59:04 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - statistics - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -84,7 +84,7 @@
 				</select>
 				&nbsp;
 				<select name='chart_group_period' id='gb_type_selector'>
-					<option value=''>group by...</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='did'>DID</option><option value='cid'>CallerID</option><option value='ct'>call type</option><option value='d10'>duration / 10 sec</option><option value='d30'>duration / 30 sec</option><option value='d60'>duration / 60 sec</option><option value='cst'>call status</option><option value='6pref'>DID prefix (6)</option><option value='c6pref'>Caller prefix (6)</option><option value='region'>Region</option><option value='wt'>Who term</option>
+					<option value=''>group by...</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='did'>DID</option><option value='cid'>CallerID</option><option value='cnam'>Caller name</option><option value='ct'>call type</option><option value='d10'>duration / 10 sec</option><option value='d30'>duration / 30 sec</option><option value='d60'>duration / 60 sec</option><option value='cst'>call status</option><option value='6pref'>DID prefix (6)</option><option value='c6pref'>Caller prefix (6)</option><option value='region'>Region</option><option value='wt'>Who term</option>
 				</select>
 				&nbsp;
 				<input name='need_chart' value='1' type='hidden'>
@@ -106,15 +106,28 @@
 		[% ELSE %]
 		graphx[0] = [ period, 'Calls', 'Minutes', 'Minutes AVG' ];
 		[% END %]
+		[% IF CDR_CALL_TYPE eq 'transit' %]
+			[% IF CDR_WITH_ASR %]
+				graphx[0].push('ASR');
+				graphx[0].push('ACD');
+			[% END %]
+		[% END %]
 		var ind = 1;
+		[% IF USE_BILLING %]
 		[% FOREACH msg = CDR_LIST %]
-			graphx[ind] = [ '[% msg.PERIOD | html %]', [% msg.CNT | html %], [% msg.DURATION %], [% msg.AVG %], [% msg.USER_COST %] ];
+			graphx[ind] = [ '[% msg.PERIOD | locale_msg %]', [% msg.CNT | html %], [% msg.DURATION %], [% msg.AVG %], [% msg.USER_COST %], [% msg.ASR %], [% msg.ACD %] ];
 			ind = ind+1;
+		[% END %]
+		[% ELSE %]
+		[% FOREACH msg = CDR_LIST %]
+			graphx[ind] = [ '[% msg.PERIOD | locale_msg %]', [% msg.CNT | html %], [% msg.DURATION %], [% msg.AVG %], [% msg.ASR %], [% msg.ACD %] ];
+			ind = ind+1;
+		[% END %]
 		[% END %]
 		graphit(graphx,200)
 	</script>
 	[% ELSE %]
-		No records
+ 		<br /><h3>No records, please try to change filters.</h3>
 	[% END %]
 
 	</center>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: calls_list.tt,v 1.18 2019/09/08 17:57:24 gosha Exp $ -->
+<!-- $Id: calls_list.tt,v 1.23 2023/03/04 07:11:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Live calls - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -22,7 +22,7 @@
 		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 		<tr align='right'>
 			<td width='100%'>
-				<input type='hidden' name='c2c' value='[% CDR_C2C %]'>
+				<input type='hidden' name='c2c' value='[% CDR_C2C | html %]'>
 				<input name='action' value='calls_list' type='hidden'>
 				<input size='10' type='text' placeholder='Refresh' name='refresh' value='[% CDR_REFRESH_TIME %]'>
 				&nbsp;
@@ -57,7 +57,6 @@
 
 	<p>
 	<table width='100%' id='d-tbl'>
-		[% IF CALLS_LIST scalar %]
 		<tr>
 			<th class='rad_l'>Type</th>
 			<th>Start date</th>
@@ -72,7 +71,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='9'>
-				<a title='previous page' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]'><span class='fs0'>◄</span></a>
+				<a title='previous page' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C | html %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -93,9 +92,13 @@
 			</td>
 			<td>
 				[% IF CDR_C2C %]
-					<a title='Listen' href='[% msg.DOWNLOAD_IP %]/c2c?dlm=,&message=Please%20wait%20a%20call&ph=XVBSPY&user_vars=XVB_CHAN=[% msg.CALL_ID %],AST_CHAN=[% msg.AST_ID | htmlstrict %][% CDR_C2C %]'><span class='icon-phone fs0'></span></a>
+					[% IF CDR_C2C beginwith "&key=" %]
+						<a title='Listen' href='#' onclick="click2call_spy_raw('[% msg.DOWNLOAD_IP %]/c2c?dlm=,&message=Please%20wait%20a%20call&ph=XVBSPY&user_vars=XVB_CHAN=[% msg.CALL_ID %],AST_CHAN=[% msg.AST_ID | htmlstrict %][% CDR_C2C %]')"><span class='icon-phone fs0'></span></a>
+					[% ELSE %]			
+						<a title='Listen' href='#' onclick="click2call_spy('[% msg.DOWNLOAD_IP %]','[% CDR_C2C %]','[% USER_CREDS.ACCESS_CODE %]','XVB_CHAN=[% msg.CALL_ID %],AST_CHAN=[% msg.AST_ID | htmlstrict %]','en','')"><span class='icon-phone fs0'></span></a>
+					[% END %]
 				[% END %]
-				<a title='Hangup' href='[% msg.DOWNLOAD_IP %]/ui?action=calls_hangup&uniq=[% USER_CREDS.UNIQ %]&call_id=[% msg.CALL_ID | html %]' onclick="return DelConfirm('en')"><span class='icon-cancel-circle fs0'></span></a>
+				<a title='Hangup' href='[% msg.DOWNLOAD_IP %][% CGI_URL %]?action=calls_hangup&uniq=[% USER_CREDS.UNIQ %]&call_id=[% msg.CALL_ID | html %]' onclick="return DelConfirm('en')"><span class='icon-cancel-circle fs0'></span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -103,19 +106,14 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='9'>
-				<a title='next page' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]'><span class='fs0'>►</span></a>
+				<a title='next page' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C | html %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]'><span class='fs0'>►</span></a>
 			</td>
 		[% END %]
 		</tr>
-		[% ELSE %]
-		<tr>
-				<td>&nbsp;</td>
-		</tr>
-		<tr>
-			<td align='center'><h4>No active calls</h4></td>
-		</tr>
-		[% END %]
 	</table>
+ 	[% UNLESS CALLS_LIST scalar %]
+ 		<br /><h3>No active calls.</h3>
+ 	[% END %]
 	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.23 2020/01/02 20:28:37 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.28 2023/04/20 18:10:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs / Call Detail</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -81,7 +81,14 @@
 			</td>
 			<td align='left'>[% msg.TYPE | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
-			<td align='left'>[% msg.DATA | html %]</td>
+			<td align='left'>
+				[% msg.DATA | html %]
+				[% IF msg.TYPE eq 'Call' %]
+					[% IF msg.EXT_NUMBER %]
+						<br><a href='?action=sip_log&call_id=[% msg.EXT_NUMBER | html %]&start_time=[% msg.START_TIMESTAMP %]&xvb_call_id=[% CDR_CALL_ID | html %]&stop_time=[% msg.STOP_TIMESTAMP %]&a=msg_download'>SIP_CALL_ID</a>=[% msg.EXT_NUMBER | html %]
+					[% END %]
+				[% END %]
+			</td>
 		</tr>
 		[% END %]
 		[% IF MSG_NEXT ne '' %]
@@ -92,6 +99,9 @@
 		</tr>
 		[% END %]
 	</table>
+ 	[% UNLESS CDR_LIST scalar %]
+ 		<br /><h3>No records, please try to change filters.</h3>
+ 	[% END %]
 	</p>
 
 	<script language='JavaScript'>

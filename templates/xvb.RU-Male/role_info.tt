@@ -1,0 +1,87 @@
+<html>
+<!-- $Id: role_info.tt,v 1.3 2023/01/08 16:41:24 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - RoleInfo - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	
+	<table width='100%'>
+		<tr>
+			<td align='left' width='10%'>
+				<a title='все роли' href='?action=role_list&uniq=[% USER_CREDS.UNIQ %]'" title='все роли'><span class='icon-folder-open fs0'></span></a>
+			</td>
+			<td align='center'>
+				<h1>Параметры роли '[% ROLE.LOGIN | html %]'</h1>
+			</td>
+			<td align='right' width='10%'>
+				<a title='удалить роль' href='?action=role_del&data_id=[% ROLE.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('ru')" title='удалить роль'><span class='icon-bin-all fs2'></span></a>
+			</td>
+		</tr>
+	</table>
+	
+	<p>
+	<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+	<table width='100%' id='d-tbl'>
+		<tr>
+			<th class='rad_l'>Параметр доступа</th>
+			<th class='rad_r'>Значение</th>
+		</tr>
+		
+		<tr align='left' class='nocolor' id='d-tr-LOGIN'>
+			<td>Логин</td>
+			<td>[% USER_CREDS.ACCESS_CODE | html %]/[% ROLE.LOGIN | html %]</td>
+		</tr>
+		<tr align='left' class='nocolor' id='d-tr-PASSWORD'>
+			<td>Пароль</td>
+			<td><input size="30" name='PASSWORD' type='text' value="[% ROLE.PASSWORD | html %]"></td>
+		</tr>
+		<tr align='left' class='nocolor' id='d-tr-DESCRIPTION'>
+			<td>Описание</td>
+			<td><textarea rows='[% ROLE.DESCRIPTION | textarea_rows %]'  cols='30' name='DESCRIPTION'>[% ROLE.DESCRIPTION | html %]</textarea></td>
+		</tr>
+		<tr><td colspan='2'></td></tr>
+		
+		[% FOREACH f = ROLE_ACTIONS %]
+		<tr align='left' class='nocolor' id='d-tr-[% f.file %]'>
+			<td>[% f.name | locale_msg %]</td>
+			<td align='left'>
+				<div class="onoffswitch">
+				<input name="[% f.name %]" type="checkbox" class="onoffswitch-checkbox" id="[% f.name %]-ch"
+				[% IF f.value eq '1' %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="[% f.name %]-ch">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+				</td>
+		</tr>
+		[% END %]
+		
+		<tr>
+			<td colspan='2' align='center'>
+				<input type='hidden' value='[% ROLE.DATA_ID %]' name='data_id'>
+				<input type='hidden' value='role_update' name='action'>
+				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+				<input type='hidden' name='LOGIN' value="[% ROLE.LOGIN | html %]">
+				<input type='submit' value='Сохранить изменения'>
+			</td>
+		</tr>
+	</table>
+	</form>
+	<a name="addarea">&nbsp;</a>
+	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</html>

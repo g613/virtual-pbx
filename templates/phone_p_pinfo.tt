@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_pinfo.tt,v 1.6 2018/11/09 12:06:06 gosha Exp $ -->
+<!-- $Id: phone_p_pinfo.tt,v 1.8 2023/03/30 20:19:53 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phone</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -89,6 +89,24 @@
 				[% PHONE.PICKUP_GROUPS | html %]
 			</td>
 		</tr>
+		<tr>
+			<td>
+				Manager for:
+			</td>
+			<td>
+				[% PHONE.MANAGER_FOR | html %]
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Last called ttl:<span>
+							Time to keep last called number. Seconds.
+							0  - system setting.
+							-1 - do not store.
+							</span></a></td>
+			<td>
+				[% PHONE.LD_TTL | html %]
+			</td>
+		</tr>
 		
 		[% IF PHONE.HOTDESK_PIN %]
 		<tr>
@@ -152,7 +170,7 @@
 				[% END %]
 				/>
 				<label class="onoffswitch-label" for="DND-ch">
-					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-inner-int"></span>
 					<span class="onoffswitch-switch"></span>
 				</label></div>
 			</td>

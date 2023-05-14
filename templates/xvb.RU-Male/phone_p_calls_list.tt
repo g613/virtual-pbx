@@ -1,0 +1,122 @@
+<html>
+<!-- $Id: phone_p_calls_list.tt,v 1.3 2023/03/04 07:11:25 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - текущие звонки - [% PHONE.callerid | html %]</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language='Javascript' src='/xvb/js/base64.js'></script>
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	[% IF CDR_REFRESH_TIME %]
+	<meta http-equiv="refresh" content="[% CDR_REFRESH_TIME %]">
+	[% END %]
+</head>
+
+<body>
+	<center>
+
+	<h1>Текущие звонки - [% CALLS_COUNT %]</h1>
+
+	<p>
+	<table width='95%'>
+		<form method="get" onSubmit='return checkChanges(this)'>
+		<tr align='right'>
+			<td width='100%'>
+				<input type='hidden' name='c2c' value='[% CDR_C2C | html %]'>
+				<input name='action' value='pp_calls_list' type='hidden'>
+				<input size='10' type='text' placeholder='Обновить' name='refresh' value='[% CDR_REFRESH_TIME %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Кто звонит' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Кому звонит' name='called_id' value='[% CDR_CALLED_ID | html %]'>
+				&nbsp;
+				<input size='12' type='text' placeholder='Длительность' name='duration' value='[% CDR_DURATION | html %]'>
+				&nbsp;
+				<select name="call_type" id="call_type_selector">
+					<option value="" selected>все звонки</option>
+					<option value="incoming">входящий</option>
+					<option value="local">локальный</option>
+					<option value="transit">исходящий</option>
+					<option value="internal">внутрений</option>
+					<option value="callback">обратный</option>
+					<option value="callblast">информатор</option>
+					<option value="click2call">click2call</option>
+					<option value="alarmclock">будильник</option>
+					<option value="service">сервисный</option>
+				</select>
+				&nbsp;
+				<input value='Найти' type='submit'>
+			</td>
+		</tr>
+		</form>
+		<script language='JavaScript'>
+			setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");
+		</script>
+	</table>
+	</p>
+	<p>
+	<table width='95%' id='d-tbl'>
+		<tr>
+			<th class='rad_l'>Тип звонка</th>
+			<th>Начало звонка</th>
+			<th>Кто звонит</th>
+			<th>Кому звонит</th>
+			<th>&nbsp;</th>
+			<th>Длительность звонка</th>
+			<th>Вн. номер</th>
+			<th>Длительность</th>
+			<th class='rad_r'>&nbsp;</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='9'>
+				<a title='предыдущаа станица' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C | html %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH msg = CALLS_LIST %]
+		<tr class='nocolor' align='center'>
+			<td>[% msg.CALL_TYPE | locale_msg %]</td>
+			<td>[% msg.CDR_DATE | html %]</td>
+			<td>[% msg.CALLER_ID | html %]</td>
+			<td>[% msg.CALLED_ID | html %]</td>
+			<td>[% msg.ANSWERED | html %]</td>
+			<td>[% msg.CDR_DURATION | duration_str %]</td>
+			<td>[% msg.EXT_ID | html %]</td>
+			<td>
+				[% IF msg.EXT_ID ne "" %]
+				[% msg.EXT_TS | duration_str %]
+				[% END %]
+			</td>
+			<td>
+				[% IF CDR_C2C %]
+					<a title='Прослушать' href='#' onclick="click2call_spy_raw('[% msg.DOWNLOAD_IP %]/c2c?dlm=,&message=Ждите%20звонка&user_vars=XVB_CHAN=[% msg.CALL_ID %],AST_CHAN=[% msg.AST_ID | htmlstrict %]&ac=[% USER_CREDS.ACCESS_CODE | html %]&key=[% CDR_C2C %]')"><span class='icon-phone fs0'></span></a>
+				[% END %]
+			</td>
+		</tr>
+		[% END %]
+
+		<tr>
+		[% IF MSG_NEXT ne '' %]
+			<td align='right' colspan='9'>
+				<a title='следующаяя страница' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C | html %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]'><span class='fs0'>►</span></a>
+			</td>
+		[% END %]
+		</tr>
+	</table>
+	[% UNLESS CALLS_LIST scalar %]
+		<br /><h3>Активных звонков нет.</h3>
+	[% END %]
+	</p>
+	
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+	
+	</center>
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
+	

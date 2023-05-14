@@ -42,7 +42,7 @@
 	<table width='100%'>
 		<tr>
 			<td align='right'>
-				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)' id='find-form'>
+				<form method="get" action="/ai" onSubmit='return checkChanges(this)' id='find-form'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -112,7 +112,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='8'>
-				<a title='previous page' href='?action=act_list_all&ext=[% CDR_EXT | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type[% ACT_TYPE | html %]&from=[% MSG_PREV %]&to_time=[% TO_TIME | html %]&from_time=[% FROM_TIME | html %]'><span class='fs0'>◄</span></a>
+				<a title='previous page' href='?action=act_list_all&ext=[% CDR_EXT | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% CDR_ACT_TYPE | html %]&from=[% MSG_PREV %]&to_time=[% TO_TIME | html %]&from_time=[% FROM_TIME | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -136,13 +136,16 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='8'>
-				<a title='next page' href='?action=act_list_all&ext=[% CDR_EXT | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% ACT_TYPE | html %]&from=[% MSG_NEXT %]&to_time=[% TO_TIME | html %]&from_time=[% FROM_TIME | html %]'><span class='fs0'>►</span></a>
+				<a title='next page' href='?action=act_list_all&ext=[% CDR_EXT | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% CDR_ACT_TYPE | html %]&from=[% MSG_NEXT %]&to_time=[% TO_TIME | html %]&from_time=[% FROM_TIME | html %]'><span class='fs0'>►</span></a>
 			</td>
 		[% ELSE %]
 			<td colspan='5'>&nbsp;</td>
 		[% END %]
 		</tr>
 	</table>
+ 	[% UNLESS CDR_LIST scalar %]
+ 		<br /><h3>No records, please try to change filters.</h3>
+ 	[% END %]
 
 	<script language='JavaScript'>
 		listcolorer( 'd-tbl' );

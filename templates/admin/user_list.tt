@@ -33,7 +33,7 @@
 	</table>
 
 	<center>
-	<h1>Tenants</h1>
+	<h1>Tenants - [% USERS_CNT %]</h1>
 	
 	<table width='100%'>
 		<tr>
@@ -46,6 +46,8 @@
 				<input placeholder='Tenant name' size='25' name='f_uname' type='text' value='[% F_UNAME | html %]'>
 				&nbsp;
 				<input placeholder='Description' size='20' name='f_desc' type='text' value='[% F_DESC | html %]'>
+				&nbsp;
+				<input placeholder='ID' size='4' name='f_id' type='text' value='[% F_ID | html %]'>
 				&nbsp;
 				<select name="f_group" id="group_type_selector">
 					<option value="" selected>any group</option>
@@ -83,7 +85,9 @@
 	<p>
 	<table width='100%' id='list-data'>
 		<tr>
-			<th class='rad_l'>Shared DID</th>
+			<th class='rad_l'>#</th>
+			<th>ID</th>
+			<th>Shared DID</th>
 			<th>Access code</th>
 			<th>Tenant name</th>
 			<th>Description</th>
@@ -97,14 +101,20 @@
 			
 		[% IF MSG_PREV ne '' %]
 		<tr align='center' class='nocolor'>
-			<td align='left' colspan='10'>
-				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_desc=[% F_DESC | html %]&f_tariff=[% F_TARIFF | html %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><span class='fs0'>◄</span></a>
+			<td align='left' colspan='12'>
+				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_id=[% F_ID | html %]&f_desc=[% F_DESC | html %]&f_tariff=[% F_TARIFF | html %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
 
 		[% FOREACH us = USERS %]
 		<tr align='center' class='nocolor'>
+			<td align='right'>
+				[% us.IDX | html %]
+			</td>
+			<td align='right'>
+				[% us.ID | html %]
+			</td>
 			<td align='right'>
 				[% us.VOICENUMBER | html %]
 			</td>
@@ -152,8 +162,8 @@
 		[% END %]
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right' colspan='10'>
-				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_desc=[% F_DESC | html %]&f_tariff=[% F_TARIFF | html %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><span class='fs0'>►</span></a>
+			<td align='right' colspan='12'>
+				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_id=[% F_ID | html %]&f_desc=[% F_DESC | html %]&f_tariff=[% F_TARIFF | html %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -176,6 +186,8 @@
 					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
 				[% END %]
 				</select>
+				&nbsp;
+				<input size='20' type='text' name='uname' placeholder='Tenant name'>
 				&nbsp;
 				[% IF TEMPLATES scalar %]
 				Template: 

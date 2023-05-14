@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.124 2021/02/17 18:44:42 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.132 2022/11/27 16:42:45 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -621,7 +621,8 @@
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Записать весь звонок:<span>
 						При установке этого флага будет включена запись всего звонка которая окончится только
-						когда звонок завершиться.
+						когда звонок завершиться. При включении данного флага выполнение переходит сразу же к другому
+						пункту IVR ( 'Перейти к' ).
 						</span></a>
 					</td>
 					<td>
@@ -1101,6 +1102,18 @@
 				[% IF VBOX_PREF.TYPE eq '6' %]
 				<!-- Web Request -->
 				<tr>
+					<td>URL запроса: </td>
+					<td>
+						<input size='30' type='text' name='TTS_URL' value='[% VBOX_PREF.TTS_URL | html %]'>
+					</td>
+				</tr>
+				<tr>
+					<td>Параметры POST/PUT: </td>
+					<td>
+						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='30' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
+					</td>
+				</tr>
+				<tr>
 					<td>Метод запроса: </td>
 					<td>
 						<select name="TTS_METHOD">
@@ -1111,18 +1124,6 @@
 							<option value="PUT">PUT</option>
 							<option value="DELETE">DELETE</option>
 						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>Адрес страницы: </td>
-					<td>
-						<input size='30' type='text' name='TTS_URL' value='[% VBOX_PREF.TTS_URL | html %]'>
-					</td>
-				</tr>
-				<tr>
-					<td>Параметры POST/PUT: </td>
-					<td>
-						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='30' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -1151,9 +1152,25 @@
 						</script>
 					</td>
 				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>User Agent:<span>
+							`Притвориться` данным броузером...
+						</span></a></td>
+					<td>
+						<input size='30' type='text' name='TTS_REQ_UA' value='[% VBOX_PREF.TTS_REQ_UA | html %]'>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Cookie:<span>
+							Передать данные cookie на сервер
+						</span></a></td>
+					<td>
+						<input size='30' type='text' name='TTS_REQ_COOKIE' value='[% VBOX_PREF.TTS_REQ_COOKIE | html %]'>
+					</td>
+				</tr>
 				<tr>
-					<td><a href='#' class='info'>Повторить ответ:<span>
-							Количество повторов текста ответа. 0 - не говорить полученный результат.
+					<td><a href='#' class='info'>Воспроизвести ответ:<span>
+							Количество повторов текста ответа. 0 - не говорить полученный результат. Полученный текст читается через систему TTS.
 						</span></a></td>
 					<td>
 						<input size='4' type='text' name='TTS_REPEAT_CNT' value='[% VBOX_PREF.TTS_REPEAT_CNT | html %]'>&nbsp;раз
@@ -1208,22 +1225,6 @@
 								[% END %]
 							[% END %]
 						</select>
-					</td>
-				</tr>
-				<tr class='addon_info'>
-					<td><a href='#' class='info'>User Agent:<span>
-							`Притвориться` данным броузером...
-						</span></a></td>
-					<td>
-						<input size='30' type='text' name='TTS_REQ_UA' value='[% VBOX_PREF.TTS_REQ_UA | html %]'>
-					</td>
-				</tr>
-				<tr class='addon_info'>
-					<td><a href='#' class='info'>Cookie:<span>
-							Передать данные cookie на сервер
-						</span></a></td>
-					<td>
-						<input size='30' type='text' name='TTS_REQ_COOKIE' value='[% VBOX_PREF.TTS_REQ_COOKIE | html %]'>
 					</td>
 				</tr>
 				[% END %]
@@ -2259,19 +2260,24 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Логировать DTMF:<span>
-							При установленном флаге в статистике сохранится ввод пользователя.
+							При установленном флаге в статистике сохранится ввод пользователя. Приветствие - во время приветствия автоинформатора, Все - все DTMF звонка.
 						</span></a></td>
 					<td>
-						<div class="onoffswitch">
-						<input name="DTMF_LOG" type="checkbox" class="onoffswitch-checkbox" id="DTMF_LOG-ch" 
-						[% IF VBOX_PREF.DTMF_LOG %]
-							checked
+						<select name="DTMF_LOG">
+						[% IF VBOX_PREF.DTMF_LOG eq '2' %]
+							<option value="2" selected>все</option>
+							<option value="0">нет</option>
+							<option value="1">приветствия</option>
+						[% ELSIF VBOX_PREF.DTMF_LOG eq '1' %]
+							<option value="1" selected>приветствия</option>
+							<option value="0">нет</option>
+							<option value="2">все</option>
+						[% ELSE %]
+							<option value="0" selected>нет</option>
+							<option value="1">приветствия</option>
+							<option value="2">все</option>
 						[% END %]
-						>
-						<label class="onoffswitch-label" for="DTMF_LOG-ch">
-							<span class="onoffswitch-inner"></span>
-							<span class="onoffswitch-switch"></span>
-						</label></div>
+						</select>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -2449,6 +2455,32 @@
 						<input size='30' type='text' name='URL_SUCCESS' value='[% VBOX_PREF.URL_SUCCESS | html %]'>
 					</td>
 				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Номер IVR для callback:<span>
+							Внутренний номер IVR куда отправить звонок если пользователь
+							до которого не дозвонились сам перезвонил. При обратном звонке
+							данные callblast: 'Логировать DTMF' и 'Примечание' не заполняются.
+						</span></a>
+					</td>
+					<td>
+						<input size='30' type='text' name='CALLBACK_EXT' value='[% VBOX_PREF.CALLBACK_EXT | html %]'>
+						<script language="JavaScript">
+							exten_dropdown2( 'CALLBACK_EXT','[% VBOX_PREF.CALLBACK_EXT | html %]','<option value="">------------</option><option value="***">- ручной ввод -</option>')
+						</script>
+						<script language="JavaScript">
+						exten_icon( '[% VBOX_PREF.CALLBACK_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
+						</script>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Время ожидания callback:<span>
+						Время в минутах в течении которого ждать обратного звонка от пользователя для не успешных вызовов.
+						</span></a>
+					</td>
+					<td>
+						<input size='5' type='text' name='CALLBACK_TTL' value='[% VBOX_PREF.CALLBACK_TTL | html %]'> ( минуты )
+					</td>
+				</tr>
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '19' %]
@@ -2505,7 +2537,7 @@
 				[% IF VBOX_PREF.TYPE eq '20' %]
 				<!-- WebVAR -->
 				<tr>
-					<td>Адрес страницы: </td>
+					<td>URL запроса: </td>
 					<td>
 						<input size='30' type='text' name='WEBVAR_URL' value='[% VBOX_PREF.WEBVAR_URL | html %]'>
 					</td>
@@ -3436,7 +3468,14 @@
 						<td align='left' colspan='2'><h4>Статистика автоинформатора:</h4></td>
 					</tr>
 					<tr>
-						<td align='right' colspan='2'>Звонков сейчас: [% BLAST_CALLS | html %]</td>
+						<td align='right' colspan='2'>
+							Звонков сейчас: 
+							<a href='?action=callblast_del_cache&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm( 'Вы точно хотите сбросить статистику ?' )" title='обнулить статистику'>
+							[% BLAST_CALLS | html %]
+							</a>
+						</td>
+						<td align='right'>
+						</td>
 					</tr>
 					<tr>
 						<td colspan='2' align='center' width='100%'>
@@ -3680,7 +3719,13 @@
 						<td align='right' nowrap='nowrap'>
 							[% IF VB_DATA.C2C_SECRET %]
 							<script language='Javascript' src='/xvb/js/base64.js'></script>
-							<a title='Отправить Факс' href='#' onclick="webfax_win('[% USER_CREDS.DOWNLOAD_IP %]','[% VB_DATA.C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru','[% USER_CREDS.UNIQ %]')"><span class='icon-phone fs0'></span></a>
+							<a title='Отправить Факс' href='#' onclick="webfax_win('[% USER_CREDS.DOWNLOAD_IP %]','[% VB_DATA.C2C_SECRET %]','[% USER_CREDS.ACCESS_CODE %]','ru','[% USER_CREDS.UNIQ %]',
+							[% IF USER_CREDS.ROOT eq '0' %]
+								'0'
+							[% ELSE %]
+								'[% VBOX_PREF.ID %]'
+							[% END %]
+							)"><span class='icon-phone fs0'></span></a>
 							[% END %]
 							<a title='скачать tiff' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.FAX_FILE %]'><span class='icon-download3 fs0'></span></a>
 							<a href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.FAX_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s6','d-tbl-s')" title='удалить факс'><span class='icon-bin fs0'></span></a>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: dashboard.tt,v 1.20 2021/08/28 19:46:36 gosha Exp $ -->
+<!-- $Id: dashboard.tt,v 1.21 2022/05/19 20:31:08 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Dashboard - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -37,7 +37,7 @@
 						} else {
 							filter = '&data=!%25STATUS=ANSWER%25';
 						}
-						var new_url = "/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&action=cdr_list&call_type=incoming&uniq=[% USER_CREDS.UNIQ %]&tg_filter=%25m-%25d***" + data0.getValue(item.row,0) + filter;
+						var new_url = "[% CGI_URL %]?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&action=cdr_list&call_type=incoming&uniq=[% USER_CREDS.UNIQ %]&tg_filter=%25m-%25d***" + data0.getValue(item.row,0) + filter;
 						document.location.href=new_url;
 					}
 				} );
@@ -62,7 +62,7 @@
 						} else if ( item.column == 3 ) {
 							filter = '&data=!%25STATUS=ANSWER%25<PPDF>STATUS:regexp:!CHANUNAVAIL%26!CONGESTION%26!INVALIDARGS</PPDF>';
 						}
-						var new_url = "/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&call_type=transit&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&tg_filter=%25m-%25d***" + data1.getValue(item.row,0) + filter;
+						var new_url = "[% CGI_URL %]?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&call_type=transit&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&tg_filter=%25m-%25d***" + data1.getValue(item.row,0) + filter;
 						document.location.href=new_url;
 					}
 				} );
@@ -83,7 +83,7 @@
 						var item = chart2.getSelection()[0];
 
 						if ( (typeof(item) !== 'undefined') && item.row != null && data2.getValue(item.row,0) !== 'Other' && data2.getValue(item.row,0) !== 'unknown' ) {
-							var new_url = "/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&action=cdr_list&call_type=incoming&uniq=[% USER_CREDS.UNIQ %]"+'&data=%25'+data2.getValue(item.row,0)+'%25';
+							var new_url = "[% CGI_URL %]?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&action=cdr_list&call_type=incoming&uniq=[% USER_CREDS.UNIQ %]"+'&data=%25'+data2.getValue(item.row,0)+'%25';
 							document.location.href=new_url;
 						}
 					} );
@@ -119,7 +119,7 @@
 					function() {
 					var item = chart6.getSelection()[0];
 					if ( (typeof(item) !== 'undefined') && item.row != null && in_data6[0][item.column] !== 'Other' && data6.getValue(item.row,item.column) > 0 ) {
-					var new_url = "/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&caller_id="+in_data6[0][item.column]+"&call_type=transit&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&tg_filter=%25m-%25d***" + data6.getValue(item.row,0);
+					var new_url = "[% CGI_URL %]?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&caller_id="+in_data6[0][item.column]+"&call_type=transit&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&tg_filter=%25m-%25d***" + data6.getValue(item.row,0);
 					document.location.href=new_url;
 					}
 				} );
@@ -144,7 +144,7 @@
 					var item = chart8.getSelection()[0];
 
 					if ( (typeof(item) !== 'undefined') && item.row != null && data8.getValue(item.row,0) !== 'Other' && data2.getValue(item.row,0) !== 'unknown' ) {
-						var new_url = "/ui?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&action=cdr_list&call_type=callblast&uniq=[% USER_CREDS.UNIQ %]"+'&data=%25'+data8.getValue(item.row,0)+'%25';
+						var new_url = "[% CGI_URL %]?from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&action=cdr_list&call_type=callblast&uniq=[% USER_CREDS.UNIQ %]"+'&data=%25'+data8.getValue(item.row,0)+'%25';
 						document.location.href=new_url;
 					}
 				} );
@@ -160,9 +160,9 @@
 	<center>
 		<table>
 			<tr align='right'>
-				<td><div class='dash-stat2'><span class='dash-big-stat'>[% DAILY_IN_A | html %]</span><br><a href='/ui?from_time=[% DAILY_FROM | html %]&to_time=[% DAILY_TO | html %]&call_type=incoming&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&data=%25STATUS=ANSWER%25' class='dash'>Принятые сегодня</a></div></td>
-				<td><div class='dash-stat3'><span class='dash-big-stat'>[% DAILY_IN_N | html %]</span><br><a href='/ui?from_time=[% DAILY_FROM | html %]&to_time=[% DAILY_TO | html %]&call_type=incoming&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&data=!%25STATUS=ANSWER%25' class='dash'>Пропущенные сегодня</a></div></td>
-				<td><div class='dash-stat1'><span class='dash-big-stat'>[% DAILY_OUT | html %]</span><br><a href='/ui?from_time=[% DAILY_FROM | html %]&to_time=[% DAILY_TO | html %]&call_type=transit&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]' class='dash'>Исходящие сегодня</a></div></td>
+				<td><div class='dash-stat2'><span class='dash-big-stat'>[% DAILY_IN_A | html %]</span><br><a href='[% CGI_URL %]?from_time=[% DAILY_FROM | html %]&to_time=[% DAILY_TO | html %]&call_type=incoming&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&data=%25STATUS=ANSWER%25' class='dash'>Принятые сегодня</a></div></td>
+				<td><div class='dash-stat3'><span class='dash-big-stat'>[% DAILY_IN_N | html %]</span><br><a href='[% CGI_URL %]?from_time=[% DAILY_FROM | html %]&to_time=[% DAILY_TO | html %]&call_type=incoming&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]&data=!%25STATUS=ANSWER%25' class='dash'>Пропущенные сегодня</a></div></td>
+				<td><div class='dash-stat1'><span class='dash-big-stat'>[% DAILY_OUT | html %]</span><br><a href='[% CGI_URL %]?from_time=[% DAILY_FROM | html %]&to_time=[% DAILY_TO | html %]&call_type=transit&action=cdr_list&uniq=[% USER_CREDS.UNIQ %]' class='dash'>Исходящие сегодня</a></div></td>
 			</tr>
 		</table>
 		<br>

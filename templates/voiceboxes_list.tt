@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voiceboxes_list.tt,v 1.63 2018/01/05 16:01:42 gosha Exp $ -->
+<!-- $Id: voiceboxes_list.tt,v 1.64 2022/02/23 18:59:56 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extensions - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -47,7 +47,7 @@
 			<th>P</th>
 			<th>G</th>
 			<th>Next Exten</th>
-			<th>Recipient notification</th>
+			<th colspan="2" width="22%">Greeting</th>
 			<th class='rad_r'>&nbsp;</th>
 		</tr>
 		[% FOREACH vb = VB_LIST %]
@@ -81,8 +81,15 @@
 			<td>
 				[% vb.NEXTEXTENSION | html %]
 			</td>
+			<td align='center'>
+				[% IF vb.GREET_FILE %]
+					<a title='listen' 
+						onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% vb.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% vb.GREET_FILE %]?media=mp3;type=listen' )"
+						href="#"><span class='icon-volume-medium fs0'></span></a>
+				[% END %]
+			</td>
 			<td align='left'>
-				[% vb.NOTIFYEMAIL | html %]
+				[% vb.GREETING | html %]
 			</td>
 			<td nowrap="nowrap">
 				<a href='?action=vb_del&id=[% vb.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% vb.ID %]')" title='delete extension'><span class='icon-bin fs0'></span></a>

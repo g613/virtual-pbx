@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.17 2020/01/02 20:28:37 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.19 2023/03/08 20:32:43 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Детализация звонка - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -80,6 +80,6 @@
 
 	</p>
 	</center>
-	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	<div id='shadow'><div id='loading'></div></div><div id='center' style='display:none;'><script language='JavaScript'>ShowPlayer( 'init',0 );</script></div>
 	</body>
 </html>

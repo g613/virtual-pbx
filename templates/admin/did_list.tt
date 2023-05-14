@@ -89,6 +89,13 @@
 			</td>
 		</tr>
 		[% END %]
+		<tr>
+			<td colspan="7" align="right">
+				[% IF MSG_NEXT ne '' %]
+				<a title='next page' href='?action=did_list&from=[% MSG_NEXT %]&f_vn=[% F_VN | html %]&f_ac=[% F_AC | html %]'><span class='fs0'>►</span></a>
+				[% END %]
+			</td>
+		</tr>
 		<form method="post" onSubmit='return checkChanges(this)'>
 		<tr align='center'>
 			<td align='right'><input placeholder='DID' size='15' type='text' name='did'></td>
@@ -102,14 +109,9 @@
 			<td align='left'>
 				<input placeholder='Shared DID' size='15' type='text' name='pn'>
 			</td>
-			<td>
+			<td align="left" colspan="2">
 				<input value='Add DID' type='submit'>
 				<input type='hidden' value='did_add' name='action'>
-			</td>
-			<td>
-				[% IF MSG_NEXT ne '' %]
-				<a title='next page' href='?action=did_list&from=[% MSG_NEXT %]&f_vn=[% F_VN | html %]&f_ac=[% F_AC | html %]'><span class='fs0'>►</span></a>
-				[% END %]
 			</td>
 		</tr>
 		</form>

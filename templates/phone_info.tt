@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_info.tt,v 1.10 2018/11/13 12:45:50 gosha Exp $ -->
+<!-- $Id: phone_info.tt,v 1.13 2023/03/30 20:19:53 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phone - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -233,6 +233,25 @@
 		</tr>
 		<tr>
 			<td>
+				Manager for:
+			</td>
+			<td>
+				<input size="30" name='MANAGER_FOR' type='text' value="[% PHONE.MANAGER_FOR | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Last called ttl:<span>
+							Time to keep last called number. Seconds.
+							0  - system setting.
+							-1 - do not store.
+							</span></a></td>
+			<td>
+				<input size="30" name='LD_TTL' type='text' value="[% PHONE.LD_TTL | html %]">
+			</td>
+		</tr>
+
+		<tr>
+			<td>
 				Forwarding number:
 			</td>
 			<td>
@@ -282,7 +301,7 @@
 				[% END %]
 				/>
 				<label class="onoffswitch-label" for="DND-ch">
-					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-inner-int"></span>
 					<span class="onoffswitch-switch"></span>
 				</label></div>
 			</td>

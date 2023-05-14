@@ -208,15 +208,20 @@
 								&nbsp;
 								&nbsp;
 								[% FOREACH d = DIDS %]
-									<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&partner=[% PARTNER | html %]&did=[% d.DID | html %]' onclick="return DelConfirm('en')">
-									[% d.DID | html %]
+									[% IF DID_MNG %]
+										<a title='delete DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&partner=[% PARTNER | html %]&did=[% d.DID | html %]' onclick="return DelConfirm('en')">[% d.DID | html %]</a>
+									[% ELSE %]
+										[% d.DID | html %]
+									[% END %]
+									
 									[% IF d.CHANNELS ne '-1' %]
 									( [% d.CHANNELS | html %] )
 									[% END %]
-									</a>;&nbsp;
+									;&nbsp;
 								[% END %]
 								</td>
 								<td valign='top' width='20%' align='center' nowrap='nowrap'>
+								[% IF DID_MNG %]
 								<form method="post" onSubmit='return checkChanges(this)'>
 									<input size='11' type='text' name='did'>
 									<input size='11' type='text' placeholder='Unlimit lines' name='channels'>
@@ -227,6 +232,7 @@
 									<input type='hidden' value='did_add' name='action'>
 									<input type='hidden' value='[% PARTNER | html %]' name='partner'>
 								</form>
+								[% END %]
 								</td>
 							</tr>
 						</table>

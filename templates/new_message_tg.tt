@@ -1,1 +1,6 @@
-[% IF FILE_LINK ne '' %]New message in mailbox [% CALLED_ID | html %] # [% _USER_VBOX.EXT_NUMBER | html %] from [% callerid | html %], on [% origdate | html %][% END %]
+[% IF file_type eq '41' %]New call recording[% ELSIF file_type eq '42' %]You got fax[% ELSIF file_type eq '43' %]You got DTMF file[% ELSE %]You got voice message [% END %] for [% CALLED_ID | html %] # [% _USER_VBOX.EXT_NUMBER | html %] from [% callerid | html %], on [% origdate | html %]
+[% IF SKIP_ATTACH eq '1' %]
+[% IF FILE_LINK ne '' %]
+<a href="[% FILE_LINK %]">download file</a>
+[% END %]
+[% END %]

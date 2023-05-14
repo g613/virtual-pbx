@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
-<!-- $Id: itunes.tt,v 1.24 2019/09/08 17:57:24 gosha Exp $ -->
+<!-- $Id: itunes.tt,v 1.25 2023/03/08 17:22:50 gosha Exp $ -->
 <channel>
 	<ttl>60</ttl>
 	<title>XVB - Virtual PBX Ac:[% USER_CREDS.ACCESS_CODE | html %] podcasts</title>
@@ -32,7 +32,7 @@
 	&lt;/ul&gt;
 	</description>
 	<pubDate>[% msg.MSG_DATE2 | html %]</pubDate>
-	<enclosure url="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?type=listen;media=[% USER_CREDS.SOUND_FORMAT %]" length="[% msg.FILE_SIZE %]" type="audio/x-[% USER_CREDS.SOUND_FORMAT %]" />
+	<enclosure url="[% msg.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?type=listen;media=[% USER_CREDS.SOUND_FORMAT %]" length="[% msg.FILE_SIZE %]" type="audio/x-[% USER_CREDS.SOUND_FORMAT %]" />
 	<itunes:author>[% msg.CALLERID | html %]</itunes:author>
 </item>
 [% END %]

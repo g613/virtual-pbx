@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: menu.tt,v 1.35 2022/01/05 20:34:59 gosha Exp $ -->
+<!-- $Id: menu.tt,v 1.42 2023/05/04 16:16:02 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - main menu</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -23,66 +23,102 @@
 		/>
 	</p>
 	<p align='left'>
-		
 		<ul>
 	[% IF USER_CREDS.ROOT eq '0' %]
+			[% IF UI_PERMISSIONS.ACTION_DASHBOARD_LIST eq '1' %]
 			<li><a class='amenu' target='xvb_data' href='?action=dashboard_list&uniq=[% USER_CREDS.UNIQ %]'>Сводка</a></li>
+			[% END %]
 
+			[% IF UI_PERMISSIONS.ACTION_CDR_LIST eq '1' %]
 			<li><a class='amenu' target='xvb_data' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>История звонков</a></li>
-			
+			[% IF UI_PERMISSIONS.ACTION_PERM_CDR_STAT eq '1' %]
 			<li><a class='amenu' target='xvb_data' href='?action=cdr_list&need_chart=1&uniq=[% USER_CREDS.UNIQ %]'>Статистика АТС</a></li>
+			[% END %]
+			[% END %]
 			
 			[% IF USER_CREDS.ALLOW_CTR %]
-				<li><a class='amenu' target='xvb_data' href='?action=calls_list&uniq=[% USER_CREDS.UNIQ %]'>Текущие звонки</a></li>
+			[% IF UI_PERMISSIONS.ACTION_CALLS_LIST eq '1' %]
+			<li><a class='amenu' target='xvb_data' href='?action=calls_list&uniq=[% USER_CREDS.UNIQ %]'>Текущие звонки</a></li>
+			[% END %]
 			[% END %]
 	[% END %]
 			
+			[% IF UI_PERMISSIONS.ACTION_MSG_LIST_ALL eq '1' %]
 			<li><a class='amenu' target='xvb_data' href='?action=msg_list_all&msg_type=30:40:41:42:43&uniq=[% USER_CREDS.UNIQ %]'>Файлы</a></li>
-			
+			[% END %]
+
 	[% IF USER_CREDS.ROOT eq '0' %]
+			[% IF UI_PERMISSIONS.ACTION_ACT_LIST_ALL eq '1' %]
 			<li><a class='amenu' target='xvb_data' href='?action=act_list_all&uniq=[% USER_CREDS.UNIQ %]'>Активность</a></li>
+			[% END %]
 			
 			<br />
+			[% IF UI_PERMISSIONS.ACTION_USER_INFO eq '1' %]
 			<li><a class='amenu' target='xvb_data' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>Профиль АТС</a></li>
+			[% END %]
 
-	[% IF INTEGRATIONS eq '1' %]
+			[% IF INTEGRATIONS eq '1' %]
+			[% IF UI_PERMISSIONS.ACTION_INTEGRATION_LIST eq '1' %]
 			<li><a class='amenu' target='xvb_data' href='?action=integration_list&uniq=[% USER_CREDS.UNIQ %]'>Интеграции</a></li>
-	[% END %]
+			[% END %]
+			[% END %]
 
+			[% IF UI_PERMISSIONS.ACTION_VB_LIST eq '1' %]
 			<li><a class='amenu' target='xvb_data' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>IVR / входящие</a></li>
+			[% END %]
 			
+			[% IF UI_PERMISSIONS.ACTION_PBOOK_LIST eq '1' %]
 			<li><a class='amenu' target='xvb_data' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]'>Телефонная книга</a></li>
+			[% END %]
 		
+			[% IF UI_PERMISSIONS.ACTION_CRM_LIST eq '1' %]
 			<li><a class='amenu' target='xvb_data' href='?action=crm_list&uniq=[% USER_CREDS.UNIQ %]'>Клиенты</a></li>
+			[% END %]
 
 			[% IF USER_CREDS.ALLOW_PHONES %]
-				<li><a class='amenu' target='xvb_data' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>Телефоны</a></li>
-			
+			[% IF UI_PERMISSIONS.ACTION_PHONE_LIST eq '1' %]
+			<li><a class='amenu' target='xvb_data' href='?action=phone_list&uniq=[% USER_CREDS.UNIQ %]'>Телефоны</a></li>
 			[% END %]
+			[% END %]
+			
 			[% IF USER_CREDS.CUSTOM_ROUTE %]
+			
 			[% IF USER_CREDS.MAX_PEERS %]
-				<li><a class='amenu' target='xvb_data' href='?action=peer_list&uniq=[% USER_CREDS.UNIQ %]'>SIP Шлюзы</a></li>
+			[% IF UI_PERMISSIONS.ACTION_PEER_LIST eq '1' %]
+			<li><a class='amenu' target='xvb_data' href='?action=peer_list&uniq=[% USER_CREDS.UNIQ %]'>SIP Шлюзы</a></li>
+			[% END %]
+			[% END %]
+			
+			[% IF UI_PERMISSIONS.ACTION_ROUTE_LIST eq '1' %]
+			<li><a class='amenu' target='xvb_data' href='?action=route_list&uniq=[% USER_CREDS.UNIQ %]'>Маршруты</a></li>
+			[% END %]
 			
 			[% END %]
-				<li><a class='amenu' target='xvb_data' href='?action=route_list&uniq=[% USER_CREDS.UNIQ %]'>Маршруты</a></li>
 			
-			[% END %]
 			[% IF USER_CREDS.MAX_C2C_ITEMS %]
-				<li><a class='amenu' target='xvb_data' href='?action=c2c_list&uniq=[% USER_CREDS.UNIQ %]'>Click2Call</a></li>
-			
+			[% IF UI_PERMISSIONS.ACTION_C2C_LIST eq '1' %]
+			<li><a class='amenu' target='xvb_data' href='?action=c2c_list&uniq=[% USER_CREDS.UNIQ %]'>Click2Call</a></li>
 			[% END %]
-			<li><a class='amenu' target='xvb_data' href='?action=cid_list&cid_list_type=2&cid_type=2&uniq=[% USER_CREDS.UNIQ %]'>Белый список</a></li>
+			[% END %]
 			
+			[% IF UI_PERMISSIONS.ACTION_CID_LIST eq '1' %]
+			<li><a class='amenu' target='xvb_data' href='?action=cid_list&cid_list_type=2&cid_type=2&uniq=[% USER_CREDS.UNIQ %]'>Белый список</a></li>
 			<li><a class='amenu' target='xvb_data' href='?action=cid_list&cid_list_type=1&cid_type=2&uniq=[% USER_CREDS.UNIQ %]'>Черный список</a></li>
+			[% END %]
 			
 			[% IF USER_CREDS.ALLOW_MACROS %]
+			[% IF UI_PERMISSIONS.ACTION_MACROS_LIST eq '1' %]
 			<li><a class='amenu' target='xvb_data' href='?action=macros_list&uniq=[% USER_CREDS.UNIQ %]'>Макросы</a></li>
 			[% END %]
+			[% END %]
 			
+			[% IF UI_PERMISSIONS.ACTION_J_LIST eq '1' %]
 			<li><a class='amenu' target='xvb_data' href='?action=j_list&uniq=[% USER_CREDS.UNIQ %]'>Журнал операций</a></li>
-			
+			[% END %]
 	[% ELSE %]	
+			[% IF UI_PERMISSIONS.ACTION_VB_LIST eq '1' %]
 			<li><a class='amenu' target='xvb_data' href='?action=vb_list&uniq=[% USER_CREDS.UNIQ %]'>IVR / входящие</a></li>
+			[% END %]
 	[% END %]
 			
 			<br />

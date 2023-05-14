@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_cdrs_list.tt,v 1.7 2020/09/06 20:46:00 gosha Exp $ -->
+<!-- $Id: phone_p_cdrs_list.tt,v 1.11 2023/05/04 08:50:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - История звонков</title>
 
@@ -113,8 +113,10 @@
 				</td>
 				[% IF msg.DATA contain 'STATUS=ANSWER' %]
 					<td align='right'>				
-				[% ELSE %]
+				[% ELSIF msg.DATA contain 'STATUS=' %]
 					<td align='right' class='warning-font'>
+				[% ELSE %]
+					<td align='right'>
 				[% END %]
 				<script>
 					phone_call_filter('[% C2C | html %]','[% PHONE | html %]','[% msg.CALLER_ID | html %]');
@@ -134,7 +136,7 @@
 				<td>
 				[% IF msg.VB_ID %]
 				<a title='прослушать' 
-					onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.VB_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
+					onclick="return ShowPlayer('[% msg.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.VB_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
 					href="#"><span class='icon-volume-medium fs0'></span></a>
 				[% END %]
 				</td>
@@ -150,12 +152,15 @@
 		</tr>
 		[% END %]
 	</table>
+	[% UNLESS CDR_LIST scalar %]
+		<br /><h3>Ничего не нашлось, попробуйте задать другие фильтры</h3>
+    [% END %]
 	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 	
 	</center>
-	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	<div id='shadow'><div id='loading'></div></div><div id='center' style='display:none;'><script language='JavaScript'>ShowPlayer( 'init',0 );</script></div>
 	</body>
 </html>
 	

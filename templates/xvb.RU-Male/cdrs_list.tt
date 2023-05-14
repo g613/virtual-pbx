@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.33 2019/12/08 20:38:08 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.37 2023/05/04 08:50:21 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Список звонков - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -141,7 +141,7 @@
 				<td>
 				[% IF msg.VB_ID %]
 				<a title='прослушать' 
-					onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.VB_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
+					onclick="return ShowPlayer('[% msg.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.VB_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
 					href="#"><span class='icon-volume-medium fs0'></span></a>
 				[% END %]
 				</td>
@@ -188,15 +188,17 @@
 				</td>
 				[% IF msg.DATA contain 'STATUS=ANSWER' %]
 					<td align='right'>[% msg.CALLER_ID | html %]</td>
-				[% ELSE %]
+				[% ELSIF msg.DATA contain 'STATUS=' %]
 					<td align='right' class='warning-font'>[% msg.CALLER_ID | html %]</td>
+				[% ELSE %]
+					<td align='right'>[% msg.CALLER_ID | html %]</td>
 				[% END %]
 				<td>[% msg.CALLED_ID | html %]</td>
 				<td>[% msg.CDR_DURATION | duration_str %]</td>
 				<td>
 				[% IF msg.VB_ID %]
 				<a title='прослушать' 
-					onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.VB_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
+					onclick="return ShowPlayer('[% msg.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.VB_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
 					href="#"><span class='icon-volume-medium fs0'></span></a>
 				[% END %]
 				</td>
@@ -213,12 +215,15 @@
 		[% END %]
 		[% END %]
 	</table>
+	[% UNLESS CDR_LIST scalar %]
+		<br /><h3>Ничего не нашлось, попробуйте задать другие фильтры</h3>
+    [% END %]
 	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 	
 	</center>
-	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	<div id='shadow'><div id='loading'></div></div><div id='center' style='display:none;'><script language='JavaScript'>ShowPlayer( 'init',0 );</script></div>
 	</body>
 </html>
 	

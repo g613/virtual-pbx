@@ -11,10 +11,8 @@ Source0:  virtual-pbx-%{release}.tar.gz
 Group:    System Environment/Services
 BuildArch: noarch
 
-Requires: mysql
 Requires: memcached
 Requires: sox
-#Requires: tmpwatch
 Requires: ffmpeg
 Requires: lame
 Requires: mpg123
@@ -36,7 +34,6 @@ Requires: perl(IO::Socket::SSL)
 Requires: perl(Gearman::Client)
 Requires: perl(Gearman::Worker)
 Requires: perl(Authen::SASL)
-#Requires: perl(Net::DNS)
 Provides: perl(Asterisk::AMI) 
 
 %description
@@ -55,7 +52,6 @@ Requires: virtual-pbx = %{version}-%{release}
 Requires: festival
 Requires: libshout
 Requires: lynx
-Requires: mysql-connector-odbc
 Requires: unixODBC
 Requires: perl(Asterisk::AGI) >= 0.09
 Requires: perl(Time::HiRes)
@@ -93,11 +89,10 @@ Summary: XVB PBX - Management utilites
 Group:   System Environment/Services
 
 Requires: virtual-pbx = %{version}-%{release}
-#Requires: mysql-server
 %description management
 Voice Application Server / HostedPBX solution based on asterisk - Management utilites
 
-
+#start-sound
 ####################################################
 #
 %package sound-files
@@ -106,7 +101,7 @@ Group:   System Environment/Services
 
 %description sound-files
 Voice Application Server / HostedPBX solution based on asterisk - Sound files
-
+#end-sound
 
 ####################################################
 #
@@ -201,7 +196,9 @@ mv contrib/rc.d/gearman-worker.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb
 mv contrib/rc.d/callblast.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-callblast
 mv contrib/rc.d/check_extip.rc $RPM_BUILD_ROOT/%{_sysconfdir}/rc.d/init.d/xvb-check_extip
 mv contrib/systemd/*.service $RPM_BUILD_ROOT/%{_sysconfdir}/systemd/system/
+#start-sound
 mv sounds/*.tgz $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds/
+#end-sound
 mv contrib/asterisk/extensions.conf $RPM_BUILD_ROOT/%{_sysconfdir}/asterisk/xvb/xvb.conf
 mv contrib/httpd.conf $RPM_BUILD_ROOT/%{_sysconfdir}/httpd/conf.d/xvb.conf
 mv contrib/logrotate.conf $RPM_BUILD_ROOT/%{_sysconfdir}/logrotate.d/xvb.conf
@@ -209,6 +206,7 @@ mv contrib/BOM.txt $RPM_BUILD_ROOT/%CORE_DIR/etc/BOM-EN.txt
 mv contrib/BOM-*.txt $RPM_BUILD_ROOT/%CORE_DIR/etc/
 rm -f contrib/sudoers
 mv contrib $RPM_BUILD_ROOT/%CORE_DIR/
+mv $RPM_BUILD_ROOT/%CORE_DIR/contrib/asterisk/musiconhold.conf $RPM_BUILD_ROOT/%CORE_DIR/contrib/asterisk/.musiconhold.conf
 cp $RPM_BUILD_ROOT/%CORE_DIR/contrib/utils/build/tts-gen/common.pl $RPM_BUILD_ROOT/%CORE_DIR/contrib/utils/tts-gen.pl
 cp $RPM_BUILD_ROOT/%CORE_DIR/etc/xvb.cfg $RPM_BUILD_ROOT/%CORE_DIR/contrib/.xvb-defaults
 
@@ -258,12 +256,17 @@ rm -rf $RPM_BUILD_ROOT/%CORE_DIR/contrib/utils/build
 rm -rf $RPM_BUILD_ROOT/%CORE_DIR/contrib/utils/nonfree
 rm -f $RPM_BUILD_ROOT/%CORE_DIR/contrib/Diagram.dia
 
+#start-sound
 #
 # Unpack sounds
 #
 cd $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds
 find . -name '*.tgz' -exec tar -xzvf {} ';'
 rm $RPM_BUILD_ROOT/%ASTERISK_VARLIB_HOME/sounds/*.tgz
+mv $RPM_BUILD_ROOT/%CORE_DIR/contrib/asterisk/.musiconhold.conf $RPM_BUILD_ROOT/%CORE_DIR/contrib/asterisk/musiconhold.conf
+#end-sound
+
+rm -f $RPM_BUILD_ROOT/%CORE_DIR/contrib/asterisk/.musiconhold.conf 2> /dev/null
 
 ####################################################
 #
@@ -295,6 +298,7 @@ perl %CORE_DIR/contrib/utils/rpm/sys_update.pl
 
 chkconfig memcached on
 
+#start-sound
 ####################################################
 #
 %post sound-files
@@ -316,6 +320,12 @@ ln -s %ASTERISK_VARLIB_HOME/sounds %CORE_DIR
 #
 find $RPM_BUILD_ROOT/%CORE_DIR/contrib/moh -name '*.wav16' -exec perl %CORE_DIR/contrib/utils/rpm/wave-install.pl {} ';'
 
+#
+# install BackgroundMOH
+#
+find $RPM_BUILD_ROOT/%CORE_DIR/contrib/bg-moh -name '*.wav16' -exec perl %CORE_DIR/contrib/utils/rpm/wave-install.pl {} ';'
+rm -rf $RPM_BUILD_ROOT/%CORE_DIR/contrib/bg-moh/by_name
+
 # fix MOH
 if [ -f %{_sysconfdir}/asterisk/musiconhold.conf ]; then
 	STR=`grep 'VirtualPBX' %{_sysconfdir}/asterisk/musiconhold.conf`
@@ -323,12 +333,7 @@ if [ -f %{_sysconfdir}/asterisk/musiconhold.conf ]; then
 		cat %CORE_DIR/contrib/asterisk/musiconhold.conf >> %{_sysconfdir}/asterisk/musiconhold.conf
 	fi
 fi
-
-#
-# install BackgroundMOH
-#
-find $RPM_BUILD_ROOT/%CORE_DIR/contrib/bg-moh -name '*.wav16' -exec perl %CORE_DIR/contrib/utils/rpm/wave-install.pl {} ';'
-rm -rf $RPM_BUILD_ROOT/%CORE_DIR/contrib/bg-moh/by_name
+#end-sound
 
 ####################################################
 #
@@ -344,11 +349,11 @@ fi
 
 touch /etc/asterisk/xvb/xvb-phone-service.conf || true
 touch /etc/asterisk/xvb/xvb-phone-filters.conf || true
+touch /etc/asterisk/xvb/xvb-dialout-service.conf || true
+touch /etc/asterisk/xvb/xvb-pre-agi.conf || true
+
 if [ ! -f /etc/asterisk/xvb/xvb-post-agi.conf ]; then
 	echo -e 'exten => _X.,1500(post_agi),Hangup' >> /etc/asterisk/xvb/xvb-post-agi.conf
-fi
-if [ ! -f /etc/asterisk/xvb/xvb-pre-agi.conf ]; then
-	touch /etc/asterisk/xvb/xvb-pre-agi.conf
 fi
 
 chkconfig asterisk on
@@ -362,7 +367,6 @@ if [ "x$STR" = "x" ]; then
 	service asterisk start;
 else
 	asterisk -rx 'dialplan reload';
-	#asterisk -rx 'features reload';
 	asterisk -rx 'module reload features';
 	asterisk -rx 'moh reload';
 fi
@@ -401,14 +405,23 @@ mkdir -p /tmp/xvb-download && chmod 777 /tmp/xvb-download
 if [ -f %CORE_DIR/web/js/xvb-custom.js ]; then
 	cat %CORE_DIR/web/js/xvb-custom.js >> %CORE_DIR/web/js/xvb.js
 fi
+if [ -f %CORE_DIR/web/xvb-custom.css-inc ]; then
+	cat %CORE_DIR/web/xvb-custom.css-inc >> %CORE_DIR/web/xvb.css
+	if [ -f %CORE_DIR/web/xvb-green-custom.css-inc ]; then
+		cat %CORE_DIR/web/xvb-green-custom.css-inc >> %CORE_DIR/web/xvb-green.css
+	fi
+fi
 if [ -f %CORE_DIR/web/xvb-custom.css ]; then
-	cat %CORE_DIR/web/xvb-custom.css >> %CORE_DIR/web/xvb.css
+	cat %CORE_DIR/web/xvb-custom.css > %CORE_DIR/web/xvb.css
 	if [ -f %CORE_DIR/web/xvb-green-custom.css ]; then
-		cat %CORE_DIR/web/xvb-green-custom.css >> %CORE_DIR/web/xvb-green.css
+		cat %CORE_DIR/web/xvb-green-custom.css > %CORE_DIR/web/xvb-green.css
 	fi
 fi
 if [ -f %CORE_DIR/web/images/logo-small-custom.png ]; then
 	cp -a %CORE_DIR/web/images/logo-small-custom.png %CORE_DIR/web/images/logo-small.png
+fi
+if [ -f %CORE_DIR/web/images/favicon-custom.ico ]; then
+	cp -a %CORE_DIR/web/images/favicon-custom.ico %CORE_DIR/web/images/favicon.ico
 fi
 
 chkconfig httpd on
@@ -525,9 +538,11 @@ fi
 %attr(755,root,root) %CORE_DIR/contrib/utils/node_stat.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/callblast.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/xvb2astconf.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/asterisk-watchdog.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_agi
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-fagi
 %attr(644,root,root) %{_sysconfdir}/systemd/system/xvb-fagi.service
+%attr(644,root,root) %{_sysconfdir}/systemd/system/xvb-asterisk-watchdog.service
 %attr(755,root,root) %CORE_DIR/contrib/utils/Fagi.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/safe_xvb_callblast
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-callblast
@@ -601,6 +616,7 @@ fi
 %attr(775,asterisk,asterisk) %dir %CORE_DIR/spool/backups/db
 
 
+#start-sound
 ####################################################
 #
 %files sound-files
@@ -608,6 +624,7 @@ fi
 %CORE_DIR/contrib/moh/*
 %CORE_DIR/contrib/bg-moh/*
 %CORE_DIR/contrib/asterisk/musiconhold.conf
+#end-sound
 
 
 ####################################################

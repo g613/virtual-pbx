@@ -84,7 +84,6 @@ chartArea:{top:5, width:'90%',height:'90%'},
 	
 	<p>
 	<table>
-		
 		<tr>
 		<td width='65%' valign='top'>
 			<h2>System resources</h2>
@@ -127,9 +126,53 @@ chartArea:{top:5, width:'90%',height:'90%'},
 					</td>
 				</tr>
 			</table>
+			
+			<br />
+			<h2>Disks</h2>
+			<table>
+			<tr>
+				[% FOREACH dn = DISK %]
+				<td align='center'>
+				<h3>[% dn.ALL %] Gb,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[% dn.NAME %]</h3>
+				<div id="disks2[% dn.ID %]" style="width: 180px; height: 180px;"><img width="30" src="/xvb/images/loading.gif" style="opacity: 1;"></div>
+				</td>
+				[% END %]
+			</tr>
+			</table>
+			
+			<br />
+			<h2>Raw logs</h2>
+			<textarea rows='50' cols='120'>
+				[% RAW | html %]
+			</textarea>
+			
+			<br />
+			<h2>Config changes<h2>
+			<table id='list-data2'>
+			<tr>
+				<th class='rad_l'>Option</th>
+				<th>Default</th>
+				<th class='rad_r'>Current</th>
+			</tr>
+			
+			[% FOREACH data = CDIFF %]
+			<tr align='left' class='nocolor'>
+				<td align='left'>
+					[% data.0 | html %]
+				</td>
+				<td>
+					[% data.1 | html %]
+				</td>
+				<td>
+					[% data.2 | html %]
+				</td>
+			</tr>
+			[% END %]
+			</table>
+			<script language='JavaScript'>listcolorer( 'list-data2' );</script>
 		</td>
 
-		<td rowspan='4' valign='top'>
+		<td valign='top'>
 			<h2>Asterisk</h2>
 			<table align='left'>
 				<tr>
@@ -182,8 +225,14 @@ chartArea:{top:5, width:'90%',height:'90%'},
 				</tr>
 			</table>
 			
-			<h2>Fail2ban banned IPs<h2>
+			
 			<table width='100%' id='list-data'>
+			<tr>
+				<td colspan='2'><h2>Fail2ban banned IPs ( [% F2B_CNT %] )<h2></td>
+				<td align='right'>
+					<a title='unban all IP' href='[% data.NODE %]/ai?action=f2b&ip=all&node=[% NODE | html %]' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>
+				</td>
+			</tr>
 			<tr>
 				<th class='rad_l'>Jail</th>
 				<th>IP</th>
@@ -199,7 +248,7 @@ chartArea:{top:5, width:'90%',height:'90%'},
 					[% data.IP | html %]
 				</td>
 				<td>
-					<a title='unblock IP' href='[% data.NODE %]/ai?action=f2b&ip=[% data.IP | html %]&node=[% data.NODE | html %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
+					<a title='unban IP' href='[% data.NODE %]/ai?action=f2b&ip=[% data.IP | html %]&node=[% data.NODE | html %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
 				</td>
 			</tr>
 			[% END %]
@@ -207,64 +256,8 @@ chartArea:{top:5, width:'90%',height:'90%'},
 			<script language='JavaScript'>listcolorer( 'list-data' );</script>	
 		</td>
 		</tr>
-
-		<tr>
-		<td>
-			<br />
-			<h2>Disks</h2>
-			<table>
-			<tr>
-				[% FOREACH dn = DISK %]
-				<td align='center'>
-				<h3>[% dn.ALL %] Gb,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[% dn.NAME %]</h3>
-				<div id="disks2[% dn.ID %]" style="width: 180px; height: 180px;"><img width="30" src="/xvb/images/loading.gif" style="opacity: 1;"></div>
-				</td>
-				[% END %]
-			</tr>
-			</table>
-		</td>
-		</tr>
-
-		<tr>
-			<td>
-			<br />
-				<h2>Raw logs</h2>
-				<textarea rows='50' cols='140'>
-					[% RAW | html %]
-				</textarea>
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-			<br />
-			<h2>Config changes<h2>
-			<table id='list-data2'>
-			<tr>
-				<th class='rad_l'>Option</th>
-				<th>Default</th>
-				<th class='rad_r'>Current</th>
-			</tr>
-			
-			[% FOREACH data = CDIFF %]
-			<tr align='left' class='nocolor'>
-				<td align='left'>
-					[% data.0 | html %]
-				</td>
-				<td>
-					[% data.1 | html %]
-				</td>
-				<td>
-					[% data.2 | html %]
-				</td>
-			</tr>
-			[% END %]
-			</table>
-			<script language='JavaScript'>listcolorer( 'list-data2' );</script>
-			</td>
-		</tr>
-
 	</table>
+
 	<p>
 	</center>
 	

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: journal_list.tt,v 1.17 2018/01/05 20:12:55 gosha Exp $ -->
+<!-- $Id: journal_list.tt,v 1.18 2022/08/30 19:59:20 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Журнал операций - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -137,6 +137,9 @@
 		</tr>
 		[% END %]
 	</table>
+	[% UNLESS J_LIST scalar %]
+		<br /><h3>Ничего не нашлось, попробуйте задать другие фильтры</h3>
+    [% END %]
 	</p>
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>

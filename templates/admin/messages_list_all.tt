@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.10 2019/12/13 19:16:41 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.12 2023/03/11 12:45:17 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Files</title>
 
@@ -107,7 +107,6 @@
 	</table>
 
 	<table width='95%' id='d-tbl'>
-		[% IF MSG_LIST scalar %]
 		<tr>
 			<th class='rad_l'>#</th>
 			<th>AC</th>
@@ -167,22 +166,14 @@
 			</td>
 		[% END %]
 		</tr>
-		[% ELSE %]
-		<tr>
-			<td colspan='10'>&nbsp;</td>
-		</tr>
-		<tr>
-			<td colspan='10' align='center'><h4>No files</h4></td>
-		</tr>
-		<tr>
-			<td colspan='10'>&nbsp;</td>
-		</tr>
-		[% END %]
 	</table>
+ 	[% UNLESS MSG_LIST scalar %]
+ 		<br /><h3>No files, please try to change filters.</h3>
+ 	[% END %]
 
 	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
 
-	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	<div id='shadow'><div id='loading'></div></div><div id='center' style='display:none;'><script language='JavaScript'>ShowPlayer( 'init',0 );</script></div>
 	</center>
 </body>
 </html>

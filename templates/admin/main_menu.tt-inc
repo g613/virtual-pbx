@@ -1,36 +1,36 @@
-				<a href='?action=node_list'>Nodes</a>
+				<a class='amenu' href='?action=node_list'>Nodes</a>
 				|
-				<a href='?action=group_list'>Groups</a>
+				<a class='amenu' href='ai?action=partner_list'>Partners</a>
 				|
-				<a href='?action=user_list'>Tenants</a>
+				<a class='amenu' href='?action=group_list'>Groups</a>
 				|
-				<a href='ai?action=partner_list'>Partners</a>
+				<a class='amenu' href='?action=user_list'>Tenants</a>
 				|
-				<a href='?action=did_list_sipdomain'>SIP-Domains</a>
+				<a class='amenu' href='?action=did_list_sipdomain'>SIP-Domains</a>
 				|
-				<a href='?action=did_list'>Private DIDs</a>
+				<a class='amenu' href='?action=did_list'>Private DIDs</a>
 				|
-				<a href='?action=did_attr_list'>DIDs attr</a>
+				<a class='amenu' href='?action=did_attr_list'>DIDs attr</a>
 				|
-				<a href='?action=report_list'>SQL-Reports</a>
+				<a class='amenu'  href='?action=report_list'>SQL-Reports</a>
 			[% IF USE_BILLING %]
 				|
-				<a href='?action=tariff_list'>Tariffs</a>
+				<a class='amenu' href='?action=tariff_list'>Tariffs</a>
 			[% END %]
 				|
-				<a href='?action=cdr_list'>CDRs</a>
+				<a class='amenu' href='?action=phone_list'>SIP phones</a>
 				|
-				<a href='?action=cdr_list&need_chart=1'>Statistics</a>
+				<a class='amenu' href='?action=peer_list'>SIP peers</a>
 				|
-				<a href='?action=j_list'>Journals</a>
+				<a class='amenu' href='?action=cdr_list&need_chart=1'>Statistics</a>
 				|
-				<a href='?action=phone_list'>SIP phones</a>
+				<a class='amenu' href='?action=cdr_list'>CDRs</a>
 				|
-				<a href='?action=peer_list'>SIP peers</a>
+				<a class='amenu' href='?action=j_list'>Journals</a>
 				|
-				<a href='?action=msg_list_all'>Files</a>
+				<a class='amenu' href='?action=msg_list_all'>Files</a>
 				|
-            	<a href='?action=act_list_all'>Activity</a></li>
+            	<a class='amenu' href='?action=act_list_all'>Activity</a></li>
 				|
-				<a href='?action=calls_list'>Calls</a>
+				<a class='amenu' href='?action=calls_list'>Calls</a>
 
