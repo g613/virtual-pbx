@@ -1,0 +1,11 @@
+				<a class='amenu' href='?action=user_list&partner=[% PARTNER | html %]&f_status=1'>Арендаторы</a>
+					&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a class='amenu' href='?action=cdr_list&partner=[% PARTNER | html %]'>CDRs</a>
+					&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a class='amenu' href='?action=calls_list&partner=[% PARTNER | html %]'>Звонки</a>
+					&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a class='amenu' href='?action=act_list_all&partner=[% PARTNER | html %]'>Активность</a>
+				[% IF EXTRA_OPTIONS.F2B_ENABLE %]
+					&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a class='amenu' href='?action=f2b&partner=[% PARTNER | html %]'>Fail2Ban</a>
+				[% END %]

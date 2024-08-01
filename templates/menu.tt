@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: menu.tt,v 1.12 2023/05/04 16:16:02 gosha Exp $ -->
+<!-- $Id: menu.tt,v 1.16 2024/07/26 19:19:24 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - main menu</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -55,6 +55,12 @@
 			<br />
 			[% IF UI_PERMISSIONS.ACTION_USER_INFO eq '1' %]
 			<li><a class='amenu' target='xvb_data' href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User profile</a></li>
+			[% END %]
+			
+			[% IF INTEGRATIONS eq '1' %]
+			[% IF UI_PERMISSIONS.ACTION_INTEGRATION_LIST eq '1' %]
+			<li><a class='amenu' target='xvb_data' href='?action=integration_list&uniq=[% USER_CREDS.UNIQ %]'>Integrations</a></li>
+			[% END %]
 			[% END %]
 			
 			[% IF UI_PERMISSIONS.ACTION_VB_LIST eq '1' %]
@@ -115,7 +121,13 @@
 			[% END %]
 	[% END %]
 			<br />
-			<li><a class='amenu' target='_top' href=?action=logout>Logout</a></li>
+			<li><a class='amenu' target='_top' href=?action=logout>Logout
+						[% IF UNAME4LOGOUT eq '1' %]
+                        	[% IF USER_CREDS.FIRST_NAME %]
+                                from @[% USER_CREDS.FIRST_NAME | html %]
+                        	[% END %]
+                        [% END %]
+			</a></li>
 		</ul>
 	</p>
 </body>

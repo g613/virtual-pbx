@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.38 2023/05/14 08:59:04 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.42 2024/01/02 14:52:23 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - statistics - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -19,7 +19,22 @@
 
 <body onLoad="XVBInit()">
 	<center>
-	<h1>Statistics ( [% CDR_HEADER %] )</h1>
+	<table width='100%'>
+		<tr>
+			<td align='left' width='10%'>
+				&nbsp;
+				[% IF CDR_EXTRA_REPORTS %]
+				<a href='?action=report_list&uniq=[% USER_CREDS.UNIQ %]' title="more reports"><span class='icon-power fs0'></span></a>
+				[% END %]
+			</td>	
+			<td align='center'>
+				<h1>Statistics ( [% CDR_HEADER %] )</h1>
+			</td>
+			<td align='right' width='10%'>
+				<a title='download excel file' download='table.csv' id='csvlink' href='data:text/csv;charset=utf-8,'><span class='icon-file-excel fs0'></span></a>
+			</td>
+		</tr>
+	</table>
 
 	<table width='100%'>
 		<script language='JavaScript'>
@@ -84,7 +99,7 @@
 				</select>
 				&nbsp;
 				<select name='chart_group_period' id='gb_type_selector'>
-					<option value=''>group by...</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='did'>DID</option><option value='cid'>CallerID</option><option value='cnam'>Caller name</option><option value='ct'>call type</option><option value='d10'>duration / 10 sec</option><option value='d30'>duration / 30 sec</option><option value='d60'>duration / 60 sec</option><option value='cst'>call status</option><option value='6pref'>DID prefix (6)</option><option value='c6pref'>Caller prefix (6)</option><option value='region'>Region</option><option value='wt'>Who term</option>
+					<option value=''>group by...</option><option value='min'>minute</option><option value='h'>hour</option><option value='hd'>hour of day</option><option value='d'>day</option><option value='dw'>day of week</option><option value='dm'>day of month</option><option value='w'>week</option><option value='m'>month</option><option value='did'>DID</option><option value='cid'>CallerID</option><option value='cnam'>Caller name</option><option value='ct'>call type</option><option value='d10'>duration / 10 sec</option><option value='d30'>duration / 30 sec</option><option value='d60'>duration / 60 sec</option><option value='cst'>call status</option><option value='6pref'>DID prefix (6)</option><option value='c6pref'>Caller prefix (6)</option><option value='region'>Region</option><option value='wt'>Who term</option><option value='gw'>Gateway</option>
 				</select>
 				&nbsp;
 				<input name='need_chart' value='1' type='hidden'>

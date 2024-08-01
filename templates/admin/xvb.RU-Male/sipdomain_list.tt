@@ -1,0 +1,125 @@
+<html>
+<head>
+	<title>Virtual PBX - SIP Domains</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+		
+	<h1>SIP домены</h1>
+	
+	<table width='100%'>
+		<tr>
+			<td align='right'>
+				<form method="post" onSubmit='return checkChanges(this)'>
+					<input size='25' name='f_vn' type='text' placeholder='SIP домен' value='[% F_VN | html %]'>
+					&nbsp;
+					<input size='10' name='f_ac' type='text' placeholder='Код доступа' value='[% F_AC | html %]'>
+					&nbsp;
+					<input type='hidden' value='did_list_sipdomain' name='action'>
+					<input value='Найти' type='submit'>
+				</form>
+			</td>
+		</tr>
+	</table>
+	
+	<p>
+	<table width='100%' id='list-data'>
+		<tr>
+			<th class='rad_l'>&nbsp;</th>
+			<th>SIP домен</th>
+			<th colspan='3'>Назначен</th>
+			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left'>
+				<a title='предыдущая страница' href='?action=did_list_sipdomain&from=[% MSG_PREV %]&f_vn=[% F_VN | htmlstrict %]&f_ac=[% F_AC | html %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+		
+		[% FOREACH d = DOMAINS %]
+		<tr align='center' class='nocolor'>
+			<td></td>
+			<td align='right'>[% d.DOMAIN | html %]</td>
+			<td align='right'>
+				<a href='?action=user_info&ac=[% d.ACCESS_CODE | html %]'>[% d.ACCESS_CODE | html %]</a>
+			</td>
+			<td>
+				@
+			</td>
+			<td align='left'>
+				[% d.VOICENUMBER | html %]
+			</td>
+			<td align='left'>
+				[% d.FIRST_NAME | html %] [% d.LAST_NAME | html %]
+			</td>
+			<td>
+				<a title='удалить SIP домен' href='?action=did_del_sipdomain&domain_id=[% d.ID %]&user_id=[% d.SUBSCR_ID | html %]&from=[% MSG_FROM %]&domain=[% d.DOMAIN | htmlstrict %]' onclick="return DelConfirm('ru')"><span class='icon-bin fs0'></span></a>
+			</td>
+		</tr>
+		[% END %]
+		<form method="post" onSubmit='return checkChanges(this)'>
+		<tr align='center'>
+			<td></td>
+			<td align='right'><input placeholder='SIP домен' size='35' type='text' name='domain'></td>
+			<td align='right'>
+				<input placeholder='Код доступа' size='10' type='text' name='ac'>
+			</td>
+			<td>
+				@
+			</td>
+			<td align='left'>
+				<input placeholder='Общий номер DID' size='15' type='text' name='pn'>
+			</td>
+			<td>
+				<input value='Создать домен' type='submit'>
+				<input type='hidden' value='did_add_sipdomain' name='action'>
+			</td>
+			<td align='right'>
+			[% IF MSG_NEXT ne '' %]
+				<a title='следующая страница' href='?action=did_list_sipdomain&from=[% MSG_NEXT %]&f_vn=[% F_VN | htmlstrict %]&f_ac=[% F_AC | html %]'><span class='fs0'>►</span></a>
+			[% END %]
+			</td>
+		</tr>
+		</form>
+
+	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
+	</p>
+
+	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

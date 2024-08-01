@@ -223,6 +223,14 @@
 					<textarea rows='8' cols='40' name='US_CUSTOM_VARS'>[% USER.CUSTOM_VARS | html %]</textarea>
 				</td>
 			</tr>
+			<tr>
+				<td>
+					IP whitelist for web interface:
+				</td>
+				<td>
+					<textarea rows='3' cols='40' name='US_PERMIT_WEB'>[% USER.PERMIT_WEB | html %]</textarea>
+				</td>
+			</tr>
 			<tr><td colspan='2'>&nbsp;</td></tr>
 			<tr>
 				<td colspan='2' align='center'>
@@ -273,6 +281,9 @@
 						<table width='100%'>
 							<tr>
 								<td><h2>Assigned DIDs:</h2></td>
+								<td align='right'>
+									<a title='delete all DIDs' href='?action=did_del&did_id=all&user_id=[% USER.ID | html %]&did=all' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>
+								</td>
 							</tr>
 							<tr>
 								<td>
@@ -354,6 +365,26 @@
 					&nbsp;/&nbsp;<a href='/ai?action=msg_list_all&ac=[% USER.ACCESS_CODE %]'>Files</a>
 					</li>
 					</ul>
+				</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+				<td>
+					<table>
+						<tr>
+							<td>
+								<h2>Counters:</h2>
+							</td>
+							<td colspan='right'>
+								<a title='clean counters' href='?action=counters_clean&ac=[% USER.ACCESS_CODE %]' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>
+							</td>
+						</tr>
+						<tr>
+							<td colspan='2'>
+								<textarea rows='8' cols='60'>[% USER_COUNTERS | html %]</textarea>
+							</td>
+						</tr>
+					</table>
 				</td>
 				</tr>
 				</table>

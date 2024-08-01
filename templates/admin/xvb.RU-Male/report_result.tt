@@ -1,0 +1,146 @@
+<html>
+<head>
+	<title>Virtual PBX - reports</title>
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<link rel="stylesheet" type="text/css" href="/xvb/css/tablesorter.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/table-sorter/jquery.tablesorter.min.js"></script> 
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+	
+	
+	<table width='100%'>
+		<tr>
+			<td width='85%' align='center'>
+				<h1>[% REPORT_DATA.NAME | html %] - результат выполнения отчета</h1>
+			</td>
+			<td align='right' nowrap='nopwrap'>
+				<a title='get excel table' href='?action=report_run&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&type=[% REPORT_DATA.TYPE %]&report_id=[% REPORT_DATA.ID %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
+				<a title='редактировать отчет' href='?action=report_info&report_id=[% REPORT_DATA.ID %]'><span class='icon-cogs fs0'></span></a>
+				<a title='удалить отчет' href='?action=report_del&report_id=[% REPORT_DATA.ID %]' onclick="return DelConfirm('ru')"><span class='icon-bin-all fs2'></span></a>
+			</td>
+		</tr>
+	</table>
+
+	[% IF REPORT_DATA.DATE_START %]
+	<p>
+	<table width='98%'>
+		<tr>
+			<td align='right'>
+				<form method="get" action='?'>
+				<input name='action' value='report_run' type='hidden'>
+				<input name='report_id' value='[% REPORT_DATA.ID %]' type='hidden'>
+				<input name='type' value='[% REPORT_DATA.TYPE %]' type='hidden'>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "00:00",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='С даты' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<a link="#"><span class='fs0'>▾</span></a>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "23:59",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='По дату' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<a link="#"><span class='fs0'>▾</span></a>
+				<input value='Запустить' type='submit'>
+				</form>
+			</td>
+		</tr>
+	</table>
+	</p>
+	[% END %]
+
+	<p>
+	<table width='98%' class='tablesorter' id='report_table'>
+		<thead>
+		<tr align='center' id='report_header'>
+			[% FOREACH h = REPORT_HDR %]
+				<th>[% h.name | html %]</th>
+			[% END %]
+		</tr>
+		</thead>
+
+		<tbody>
+		[% FOREACH t = REPORT_RESULT %]
+		<tr class='nocolor'>
+			[% FOREACH rd = t %]
+				<td align='[% rd.align | html %]'>
+				[% IF rd.is_raw %]
+				[% rd.value %]
+				[% ELSE %]
+				[% rd.value | html %]
+				[% END %]
+				</td>
+			[% END %]
+		</tr>
+		[% END %]
+		</tbody>
+	
+	</table>
+	</p>
+
+	<script language='Javascript'>
+		$(document).ready(function() 
+			{ 
+				$("#report_table").tablesorter(); 
+			} 
+		); 
+		th_rad_styles('report_header');
+	</script>
+
+	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

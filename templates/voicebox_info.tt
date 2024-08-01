@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.364 2023/01/14 13:18:58 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.376 2024/05/07 15:47:46 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -898,6 +898,12 @@
 
 				[% IF VBOX_PREF.TYPE eq '6' %]
 				<tr>
+					<td>URL: </td>
+					<td>
+						<input size='30' type='text' name='TTS_URL' value='[% VBOX_PREF.TTS_URL | html %]'>
+					</td>
+				</tr>
+				<tr>
 					<td>Request Method: </td>
 					<td>
 						<select name="TTS_METHOD">
@@ -908,12 +914,6 @@
 							<option value="PUT">PUT</option>
 							<option value="DELETE">DELETE</option>
 						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>URL: </td>
-					<td>
-						<input size='30' type='text' name='TTS_URL' value='[% VBOX_PREF.TTS_URL | html %]'>
 					</td>
 				</tr>
 				<tr>
@@ -934,6 +934,18 @@
 							<option value="application/xml">application/xml</option>
 							<option value=""> </option>
 						</select>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>Headers: </td>
+					<td>
+						<textarea rows='[% VBOX_PREF.TTS_REQ_HEADERS | textarea_rows %]' cols='30' name='TTS_REQ_HEADERS'>[% VBOX_PREF.TTS_REQ_HEADERS | html %]</textarea>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td>User Agent: </td>
+					<td>
+						<input size='30' type='text' name='TTS_REQ_UA' value='[% VBOX_PREF.TTS_REQ_UA | html %]'>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -994,18 +1006,6 @@
 								[% END %]
 							[% END %]
 						</select>
-					</td>
-				</tr>
-				<tr class='addon_info'>
-					<td>User Agent: </td>
-					<td>
-						<input size='30' type='text' name='TTS_REQ_UA' value='[% VBOX_PREF.TTS_REQ_UA | html %]'>
-					</td>
-				</tr>
-				<tr class='addon_info'>
-					<td>Cookie: </td>
-					<td>
-						<input size='30' type='text' name='TTS_REQ_COOKIE' value='[% VBOX_PREF.TTS_REQ_COOKIE | html %]'>
 					</td>
 				</tr>
 				[% END %]
@@ -1606,6 +1606,22 @@
 						</label></div>
 					</td>
 				</tr>
+				[% IF DEVICE_STATE %]
+				<tr class='addon_info'>
+					<td>Check phone state:<td>
+						<div class="onoffswitch">
+						<input name="DEVICE_STATE" type="checkbox" class="onoffswitch-checkbox" id="DEVICE_STATE-ch" 
+						[% IF VBOX_PREF.DEVICE_STATE %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="DEVICE_STATE-ch">
+							<span class="onoffswitch-inner-int"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
+				[% END %]
 				<tr class='addon_info'>
 					<td>Join empty: </td>
 					<td>
@@ -1935,33 +1951,6 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Check anwering machine:</td>
-					<td>
-						<select name="USE_AMD">
-							<option value="0" 
-							[% IF VBOX_PREF.USE_AMD eq '0' %]
-								selected
-							[% END %]
-							>info inly</option>
-							<option value="1" 
-							[% IF VBOX_PREF.USE_AMD eq '1' %]
-								selected
-							[% END %]
-							>extended</option>
-							<option value="3" 
-							[% IF VBOX_PREF.USE_AMD eq '3' %]
-								selected
-							[% END %]
-							>strong</option>
-							<option value="2" 
-							[% IF VBOX_PREF.USE_AMD eq '2' %]
-								selected
-							[% END %]
-							>not check</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
 					<td>Start CallBlast at: </td>
 					<td>
 						<input name="START_TIMESTAMP" value="[% VBOX_PREF.START_TIMESTAMP | html %]" type="hidden">
@@ -2055,12 +2044,107 @@
 						<script lang='JavaScript'>tz_dropdown('[% VBOX_PREF.TZ_NAME %]', 'Default')</script>
 					</td>
 				</tr>
+				[% IF ALLOW_FA_DETECT %]
+				<tr class='addon_info'>
+					<td>Ignore answers fast than:</td>
+					<td>
+						<input size='5' type='text' name='FA_DETECT' value='[% VBOX_PREF.FA_DETECT | html %]'> sec
+					</td>
+				</tr>
+				[% END %]
+				<tr>
+					<td>Check anwering machine:</td>
+					<td>
+						<select name="USE_AMD">
+							<option value="0" 
+							[% IF VBOX_PREF.USE_AMD eq '0' %]
+								selected
+							[% END %]
+							>info inly</option>
+							<option value="1" 
+							[% IF VBOX_PREF.USE_AMD eq '1' %]
+								selected
+							[% END %]
+							>extended</option>
+							<option value="3" 
+							[% IF VBOX_PREF.USE_AMD eq '3' %]
+								selected
+							[% END %]
+							>strong</option>
+							<option value="2" 
+							[% IF VBOX_PREF.USE_AMD eq '2' %]
+								selected
+							[% END %]
+							>not check</option>
+						</select>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Answering machin detect opt:<span>
+						Keep empty if not know what is.
+						<br />
+						[initialSilence][,greeting[,afterGreetingSilence[,totalAnalysis Time[,miniumWordLength[,betweenWordSilence[,maximumNumberOfWords[,silenceThreshold[,maximumWordLength]]]]]]]]
+
+						<br />
+initialSilence - 
+    Is maximum initial silence duration before greeting.
+    If this is exceeded, the result is detection as a MACHINE ( 4000 )
+						<br />
+greeting - 
+    is the maximum length of a greeting.
+    If this is exceeded, the result is detection as a MACHINE ( 2000 )
+						<br />
+afterGreetingSilence - 
+    Is the silence after detecting a greeting.
+    If this is exceeded, the result is detection as a HUMAN ( 500 )
+						<br />
+totalAnalysis Time - 
+    Is the maximum time allowed for the algorithm
+    to decide on whether the audio represents a HUMAN, or a MACHINE ( 7200 )
+						<br />
+miniumWordLength - 
+    Is the minimum duration of Voice considered to be a word ( 100 )
+						<br />
+betweenWordSilence - 
+    Is the minimum duration of silence after a word to consider the audio that
+    follows to be a new word ( 50 )
+						<br />
+maximumNumberOfWords - 
+    Is the maximum number of words in a greeting
+    If this is REACHED, then the result is detection as a MACHINE ( 3 )
+						<br />
+silenceThreshold - 
+    What is the average level of noise from 0 to 32767 which if not exceeded,
+    should be considered silence? ( 256 )
+						<br />
+maximumWordLength - 
+    Is the maximum duration of a word to accept.
+    If exceeded, then the result is detection as a MACHINE ( 5000 )
+						</span></a>
+					</td>
+					<td>
+						<input size='30' type='text' name='AMD_OPT' value='[% VBOX_PREF.AMD_OPT | html %]'>
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Success call url:</td>
 					<td>
 						<input size='30' type='text' name='URL_SUCCESS' value='[% VBOX_PREF.URL_SUCCESS | html %]'>
 					</td>
 				</tr>
+				[% IF ALLOW_STATE_UPDATE %]
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Callblast state url:<span>
+							Callback that execute when blast status changed. 
+							STATE variable ( active - have unprocessed items and and task not expired / inactive - all items processd ) can be used for this url.
+							STATISTICS - callblast statistics. Send only in case of STATE == inactive.
+						</span></a>
+					</td>
+					<td>
+						<input size='30' type='text' name='URL_STATE' value='[% VBOX_PREF.URL_STATE | html %]'>
+					</td>
+				</tr>
+				[% END %]
 				<tr class='addon_info'>
 					<td>Callback IVR:</a>
 					</td>
@@ -2747,7 +2831,28 @@
 					</td>
 				</tr>
 				[% END %]
-
+				
+				[% IF VBOX_PREF.TYPE eq '32' %]
+				<!-- Pause -->
+				<tr>
+					<td>Wait during: </td>
+					<td>
+						<input size='3' type='text' name='TIMEOUT' value='[% VBOX_PREF.TIMEOUT | html %]'>
+						sec
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td nowrap='nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input size='3' type='text' name='DURATION' value='[% VBOX_PREF.DURATION | html %]'> sec</td>
+					<td>
+						<select name="MODE">
+							<option value="0" [% IF VBOX_PREF.MODE == '0' %] selected [% END %]>nothing</option>
+							<option value="1" [% IF VBOX_PREF.MODE == '1' %] selected [% END %]>silence</option>
+							<option value="2" [% IF VBOX_PREF.MODE == '2' %] selected [% END %]>noise</option>
+						</select>
+					</td>
+				</tr>
+				[% END %]
+				
 				<tr><td colspan='2'>&nbsp;</td></tr>
 				<tr>
 					<td align='center'>
@@ -3605,8 +3710,8 @@
 						<td>
 							[% param.PROCESS_DATE | html %]
 						</td>
-						<td><input class='in_t0' size='20' type='text' name='name' value='[% param.NAME | html %]'></td>
 						<td><input class='in_t0' size='33' type='text' name='pn' value='[% param.PHONE_NUMBER | html %]'></td>
+						<td><input class='in_t0' size='20' type='text' name='name' value='[% param.NAME | html %]'></td>
 						<td><input class='in_t0' size='25' type='text' name='uv' value='[% param.USER_VARS | html %]'></td>
 						<td align='left'>
 							[% IF param.CALL_STATUS contain 'success' %]

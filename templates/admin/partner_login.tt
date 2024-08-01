@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: partner_login.tt,v 1.6 2014/11/03 20:05:48 gosha Exp $ -->
+<!-- $Id: partner_login.tt,v 1.7 2024/03/31 18:46:10 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - login</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -22,6 +22,8 @@
 	<p align='center'>
 	<table width='50%' class='half-width'>
 		<form method='post'>
+			<input name='action' type='hidden' value='user_list'>
+			<input name='f_status' type='hidden' value='1'>
 			<tr>
 				<td>Login&nbsp;</td>
 				<td><input name='partner' type='text'></td>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.132 2022/11/27 16:42:45 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.142 2024/01/04 19:00:54 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -1108,12 +1108,6 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Параметры POST/PUT: </td>
-					<td>
-						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='30' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
-					</td>
-				</tr>
-				<tr>
 					<td>Метод запроса: </td>
 					<td>
 						<select name="TTS_METHOD">
@@ -1124,6 +1118,12 @@
 							<option value="PUT">PUT</option>
 							<option value="DELETE">DELETE</option>
 						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Параметры POST/PUT: </td>
+					<td>
+						<textarea rows='[% VBOX_PREF.TTS_POST_PARAMS | textarea_rows %]' cols='30' name='TTS_POST_PARAMS'>[% VBOX_PREF.TTS_POST_PARAMS | html %]</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -1141,15 +1141,14 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td><a href='#' class='info'>Если ошибка перейти к:<span>
-							Перейти к данному внутреннему номеру в случае неудачного WEB запроса
+					<td><a href='#' class='info'>Заголовки запроса:<span>
+							Передать данные заголовки. Формат:<br />
+							Заголовок1:значение1<br />
+							Заголовок2:значение2<br />
+							...
 						</span></a></td>
-					<td nowrap='nowrap'>
-						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
-						<script language="JavaScript">
-							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
-							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
-						</script>
+					<td>
+						<textarea rows='[% VBOX_PREF.TTS_REQ_HEADERS | textarea_rows %]' cols='30' name='TTS_REQ_HEADERS'>[% VBOX_PREF.TTS_REQ_HEADERS | html %]</textarea>
 					</td>
 				</tr>
 				<tr class='addon_info'>
@@ -1161,11 +1160,15 @@
 					</td>
 				</tr>
 				<tr class='addon_info'>
-					<td><a href='#' class='info'>Cookie:<span>
-							Передать данные cookie на сервер
+					<td><a href='#' class='info'>Если ошибка перейти к:<span>
+							Перейти к данному внутреннему номеру в случае неудачного WEB запроса
 						</span></a></td>
-					<td>
-						<input size='30' type='text' name='TTS_REQ_COOKIE' value='[% VBOX_PREF.TTS_REQ_COOKIE | html %]'>
+					<td nowrap='nowrap'>
+						<input size='15' type='text' name='GOTO_IF_FAIL' value='[% VBOX_PREF.GOTO_IF_FAIL | html %]'>
+						<script language="JavaScript">
+							exten_dropdown2( 'GOTO_IF_FAIL','[% VBOX_PREF.GOTO_IF_FAIL | html %]','<option value="">------------------------------</option><option value="***">--------- ручной ввод ---------</option>')
+							exten_icon( '[% VBOX_PREF.GOTO_IF_FAIL | html %]', '[% USER_CREDS.UNIQ | html %]', 'информация о внутреннем номере' );
+						</script>
 					</td>
 				</tr>
 				<tr>
@@ -1926,6 +1929,25 @@
 						</label></div>
 					</td>
 				</tr>
+				[% IF DEVICE_STATE %]
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Звонить только не занятым:<span>
+							Не звонить агентом уже разговаривающим по другой линии.
+						</span></a></td>
+					<td>
+						<div class="onoffswitch">
+						<input name="DEVICE_STATE" type="checkbox" class="onoffswitch-checkbox" id="DEVICE_STATE-ch" 
+						[% IF VBOX_PREF.DEVICE_STATE %]
+							checked
+						[% END %]
+						>
+						<label class="onoffswitch-label" for="DEVICE_STATE-ch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label></div>
+					</td>
+				</tr>
+				[% END %]
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Ждать примечания агента:<span>
 							При установленном флаге после того как звонящий повесит трубку агент в очереди имеет возможность сохранить примечания к звонку..
@@ -2021,7 +2043,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Веб запрос при входе в очередь:<span>
-							URL который выполняется VirtualPBX при входе в очередь
+							URL который вызывается при входе в очередь
 							возможность использовать переменные в URL: QID - id очереди.
 						</span></a>
 					</td>
@@ -2031,7 +2053,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Веб запрос после ответа:<span>
-							URL который выполняется VirtualPBX после ответа агента, есть 
+							URL который вызывается после ответа агента, есть 
 							возможность использовать переменные в URL: QID - id очереди, 
 							ANSWERED_NUMBER - номер ответившего агента.
 							Данный метод можно использовать 'URL для телефона'
@@ -2044,7 +2066,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Веб запрос для пропущенных звонков:<span>
-							URL который выполняется VirtualPBX в случае не ответа на звонок 
+							URL который вызывается в случае не ответа на звонок 
 							дополнительная переменная WAIT_TIME - время ожидания клиентом.
 						</span></a>
 					</td>
@@ -2054,7 +2076,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Веб запрос для принятых звонков:<span>
-							URL который выполняется VirtualPBX после окончания успешного звонка
+							URL который вызывается после окончания успешного звонка
 						</span></a>
 					</td>
 					<td>
@@ -2298,40 +2320,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><a href='#' class='info'>Проверка автоответчиков:<span>
-						Режим проверки автоответчиков<br />
-						  - информативный - сохранение статуса в cdr,<br />
-						  - расширенный - система учитывает статус проверки на автоответчик, если система обнаружила что ответил автоответчик то переход на 'Перейти к' будет проигнорирован и звонок завершится,<br />
-						  - строгий - считать звонок не удачным если система не определила что ответил человек
-						  - не использовать - отключить проверку
-					</span></a></td>
-					<td>
-						<select name="USE_AMD">
-							<option value="0" 
-							[% IF VBOX_PREF.USE_AMD eq '0' %]
-								selected
-							[% END %]
-							>информативный</option>
-							<option value="1" 
-							[% IF VBOX_PREF.USE_AMD eq '1' %]
-								selected
-							[% END %]
-							>расширенный</option>
-							<option value="3" 
-							[% IF VBOX_PREF.USE_AMD eq '3' %]
-								selected
-							[% END %]
-							>строгий</option>
-							<option value="2" 
-							[% IF VBOX_PREF.USE_AMD eq '2' %]
-								selected
-							[% END %]
-							>не использовать</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td><a href='#' class='info'>Начать звонить в:<span>
+					<td><a href='#' class='info'>Начать звонить:<span>
 						Время после которого система начнет совершать звонки.
 					</span></a></td>
 					<td nowrap='nowrap'>
@@ -2353,7 +2342,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><a href='#' class='info'>Закончить звонить в:<span>
+					<td><a href='#' class='info'>Закончить звонить:<span>
 						Время после которого система перестанет совершать звонки.
 					</span></a></td>
 					<td nowrap='nowrap'>
@@ -2438,6 +2427,70 @@
 						( 0 - не ограничено [сек] )
 					</td>
 				</tr>
+				[% IF ALLOW_FA_DETECT %]
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Игнорировать ответы быстрее:<span>
+						Если вызываемая сторона ответит быстрее чем через XX секунд, то вызов бедет считаться неуспешным. 0 - отключить проверку
+						</span></a>
+					</td>
+					<td>
+						<input size='5' type='text' name='FA_DETECT' value='[% VBOX_PREF.FA_DETECT | html %]'> секунд
+					</td>
+				</tr>
+				[% END %]
+				<tr>
+					<td><a href='#' class='info'>Проверка автоответчиков:<span>
+						Режим проверки автоответчиков<br />
+						  - информативный - сохранение статуса в cdr,<br />
+						  - расширенный - система учитывает статус проверки на автоответчик, если система обнаружила что ответил автоответчик то переход на 'Перейти к' будет проигнорирован и звонок завершится,<br />
+						  - строгий - считать звонок не удачным если система не определила что ответил человек
+						  - не использовать - отключить проверку
+					</span></a></td>
+					<td>
+						<select name="USE_AMD">
+							<option value="0" 
+							[% IF VBOX_PREF.USE_AMD eq '0' %]
+								selected
+							[% END %]
+							>информативный</option>
+							<option value="1" 
+							[% IF VBOX_PREF.USE_AMD eq '1' %]
+								selected
+							[% END %]
+							>расширенный</option>
+							<option value="3" 
+							[% IF VBOX_PREF.USE_AMD eq '3' %]
+								selected
+							[% END %]
+							>строгий</option>
+							<option value="2" 
+							[% IF VBOX_PREF.USE_AMD eq '2' %]
+								selected
+							[% END %]
+							>не использовать</option>
+						</select>
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Параметры определения автоответчиков:<span>
+						Параметры точной настройки определения автоответчиков. Оставьте пустым для значений по умолчанию если не понимаете зачем это :)
+						<br />
+						[initialSilence][,greeting[,afterGreetingSilence[,totalAnalysis Time[,miniumWordLength[,betweenWordSilence[,maximumNumberOfWords[,silenceThreshold[,maximumWordLength]]]]]]]]
+						<br />initialSilence - максимальная начальная продолжительность молчания перед приветствием. Если это значение превышено, результатом будет обнаружение в качестве МАШИНЫ ( 4000 )
+						<br />greeting - максимальная длина приветствия. Если это значение превышено, результатом будет обнаружение в качестве МАШИНЫ ( 2000 )
+						<br />afterGreetingSilence - тишина после обнаружения приветствия. Если это значение превышено, результатом является обнаружение в качестве ЧЕЛОВЕКА ( 500 )
+						<br />totalAnalysis Time - максимальное время, отведенное для работы алгоритма чтобы решить, представляет ли звук ЧЕЛОВЕКА или МАШИНУ ( 7200 )
+						<br />miniumWordLength - минимальная продолжительность голоса считающаяся словом ( 100 )
+						<br />betweenWordSilence - минимальная продолжительность молчания после слова, позволяющая считать следующий звук новым словом ( 50 )
+						<br />maximumNumberOfWords - максимальное количество слов в приветствии, если достигнуто, то результатом является обнаружение как МАШИНА ( 5 )
+						<br />silenceThreshold - средний уровень шума от 0 до 32767, который, если не превышен, считать тишиной? ( 256  )
+						<br />maximumWordLength - максимальная продолжительность слова. Если превышено, то результатом является обнаружение как МАШИНА ( 5000 )
+						</span></a>
+					</td>
+					<td>
+						<input size='30' type='text' name='AMD_OPT' value='[% VBOX_PREF.AMD_OPT | html %]'> 
+					</td>
+				</tr>
 				<tr class='addon_info'>
 					<td>Часовой пояс: </td>
 					<td>
@@ -2447,7 +2500,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Веб запрос после успешного звонка:<span>
-							URL который выполняется VirtualPBX после успешного звонка, есть 
+							URL который вызывается после успешного звонка, есть 
 							возможность использовать переменные в URL 
 						</span></a>
 					</td>
@@ -2455,6 +2508,20 @@
 						<input size='30' type='text' name='URL_SUCCESS' value='[% VBOX_PREF.URL_SUCCESS | html %]'>
 					</td>
 				</tr>
+				[% IF ALLOW_STATE_UPDATE %]
+				<tr class='addon_info'>
+					<td><a href='#' class='info'>Веб запрос начала/завершения обзвона:<span>
+							URL который вызывается при старте обзвона или завершениии если больше нет данных для обзвона.
+							возможность использовать переменные в URL ( ACCESS_CODE / STATE ) 
+							STATE статус == active / inactive,
+							STATISTICS - статистика обзвона. отправляется при STATE == inactive
+						</span></a>
+					</td>
+					<td>
+						<input size='30' type='text' name='URL_STATE' value='[% VBOX_PREF.URL_STATE | html %]'>
+					</td>
+				</tr>
+				[% END %]
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Номер IVR для callback:<span>
 							Внутренний номер IVR куда отправить звонок если пользователь
@@ -3222,7 +3289,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Веб запрос перед звонком:<span>
-							URL который выполняется VirtualPBX перед звонком агента, есть 
+							URL который вызывается перед звонком агента, есть 
 							возможность использовать переменные в URL 
 						</span></a>
 					</td>
@@ -3232,7 +3299,7 @@
 				</tr>
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Веб запрос после звонка:<span>
-							URL который выполняется VirtualPBX после звонка агента, есть 
+							URL который вызывается после звонка агента, есть 
 							возможность использовать переменные в URL 
 						</span></a>
 					</td>
@@ -3241,6 +3308,29 @@
 					</td>
 				</tr>
 				[% END %]
+
+
+				[% IF VBOX_PREF.TYPE eq '32' %]
+				<!-- Pause -->
+				<tr>
+					<td>Ждать в течении: </td>
+					<td>
+						<input size='3' type='text' name='TIMEOUT' value='[% VBOX_PREF.TIMEOUT | html %]'>
+						сек
+					</td>
+				</tr>
+				<tr class='addon_info'>
+					<td nowrap='nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input size='3' type='text' name='DURATION' value='[% VBOX_PREF.DURATION | html %]'> сек</td>
+					<td>
+						<select name="MODE">
+							<option value="0" [% IF VBOX_PREF.MODE == '0' %] selected [% END %]>ничего</option>
+							<option value="1" [% IF VBOX_PREF.MODE == '1' %] selected [% END %]>тишины</option>
+							<option value="2" [% IF VBOX_PREF.MODE == '2' %] selected [% END %]>шума</option>
+						</select>
+					</td>
+				</tr>
+				[% END %]
+				
 				<tr><td colspan='2'>&nbsp;</td></tr>
 				<tr>
 					<td align='center'>

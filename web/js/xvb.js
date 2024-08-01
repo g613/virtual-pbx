@@ -1,5 +1,5 @@
 /*
-    <!-- $Id: xvb.js,v 1.148 2023/05/14 18:05:37 gosha Exp $ -->
+    <!-- $Id: xvb.js,v 1.162 2024/07/14 20:45:10 gosha Exp $ -->
 */
 var aryClassElements = new Array();
 var isMSIE = /*@cc_on!@*/false;
@@ -328,7 +328,20 @@ function ChangeExten(exten,uniq) {
 
 function MoreExtOptions(link,init_mode,expert_tytle,standard_title) {
 	aryClassElements.length = 0;
-	curOpt = getCookie('xvb_vb_view_mode');
+	var curOpt;
+
+	if (window.localStorage) {
+		curOpt = window.localStorage.getItem('vpbx.ivr_view_mode');
+		if ( curOpt == null ) {
+			// cleanup exists cookie. migrate to local storage
+			curOpt = getCookie('xvb_vb_view_mode');
+			if ( curOpt != null ) {
+				setCookie('xvb_vb_view_mode',curOpt,'Thu, 01 Jan 1970 00:00:01 GMT');
+			}
+		}
+	} else {
+		curOpt = getCookie('xvb_vb_view_mode');
+	}
 
 	if ( curOpt == 'addon_info_open' ) {
 		if ( init_mode != 1 ) {
@@ -356,7 +369,12 @@ function MoreExtOptions(link,init_mode,expert_tytle,standard_title) {
 		aryClassElements[i].className = newOpt;
 	}
 
-	setCookie('xvb_vb_view_mode',newOpt);
+		
+	if (window.localStorage) {
+		window.localStorage.setItem('vpbx.ivr_view_mode', newOpt);
+	} else {
+		setCookie('xvb_vb_view_mode',newOpt);
+	}
 
 	if ( link != null )
 		link.blur();
@@ -365,12 +383,12 @@ function MoreExtOptions(link,init_mode,expert_tytle,standard_title) {
 	return 0;
 }
 
-function HideEl( Id ) {
-	document.getElementById(Id).className = 'addon_info';
-}
-
 function ShowEl( Id ) {
-	document.getElementById(Id).className = 'addon_info_open';
+	if ( document.getElementById(Id).className == 'addon_info' ) {
+		document.getElementById(Id).className = 'addon_info_open';
+	} else {
+		document.getElementById(Id).className = 'addon_info';
+	}
 }
 
 function ShowPlayer( file, msg_id ) {
@@ -515,6 +533,9 @@ function graphit(g,gwidth){
 
 	for (i=1;i<g.length;i++) {
 			for (i2=1;i2<g[0].length;i2++) {
+				if ( typeof(g[i][i2]) == 'undefined' ) {
+					g[i][i2] = 0;
+				}
 				if ( i == 1 ) {
 					total[i2] = g[i][i2];
 				} else {
@@ -537,18 +558,31 @@ function graphit(g,gwidth){
 	}
 
 	coll_width = parseInt(90/total.length-1);
+		
+	var csv_data = [];
 
 	output='<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><th width="10%" class="rad_l" >'+(g[0][0])+'</th>';
+	
+	var row = [];
+	row.push(g[0][0]);
+
 	for (i2=1;i2<g[0].length;i2++) {
 		output += '<th colspan="2" width="'+coll_width+'%"';
 		if ( i2 == g[0].length - 1 ) {
 			output += ' class="rad_r" ';
 		}
 		output += '>'+g[0][i2]+'</th>';
+		row.push(g[0][i2]);
 	}
+  	
 	output += '</tr><tr><td>&nbsp;</td></tr>';
+	csv_data.push(row.join(','));
 
 	for (i=1;i<g.length;i++){
+		
+		row = [];
+		row.push(g[i][0]);
+		
 		output += '<tr class="nocolor"><td align="right"><b>'+g[i][0]+'</b>&nbsp;</td>';
 		for (i2=1;i2<g[0].length;i2++) {
 			if ( total[i2] > 0 ) {
@@ -567,8 +601,10 @@ function graphit(g,gwidth){
 
 			if ( g[0][i2] == 'ACD' || i2 == 2  || i2 == 3 ) {
 				output += duration_str(g[i][i2]);
+				row.push(duration_str(g[i][i2]));
 			} else {
 				output += g[i][i2];
+				row.push(g[i][i2]);
 			}
 
 			output += '&nbsp;&nbsp;</td>';
@@ -580,25 +616,36 @@ function graphit(g,gwidth){
 			}
 		}
 		output += '</tr>';
+  		csv_data.push(row.join(','));
 	}
 	
 	output+='<tr><td>&nbsp;</td></tr><tr><td align="right"><b>=</b></td>';
 
+	row = [];
+	row.push('=');
+	
 	for (i2=1;i2<g[0].length;i2++) {
 		output += '<td align="right"><b>';
 
 		if ( g[0][i2] == 'ACD' || i2 == 2  || i2 == 3 ) {
 			output += duration_str(total[i2]);
+			row.push(duration_str(total[i2]));
 		} else {
 			output += total[i2];
+			row.push(total[i2]);
 		}
 		
 		output += '</b>&nbsp;&nbsp;</td><td>&nbsp;</td>';
 	}
 	
 	output += '</tr></table>'
-
-	document.write(output)
+	document.write(output);
+  	
+	csv_data.push(row.join(','));
+	var excel_link = document.getElementById('csvlink');
+	if ( excel_link != null ) {
+		excel_link.href='data:text/csv;charset=utf-8,'+ encodeURIComponent( csv_data.join('\n') );
+	}
 }
 
 /* Shaddow */
@@ -646,7 +693,7 @@ function setShadowAttr() {
 			/* tag a */
 			if ( all_el[i].href.substr(all_el[i].href.length - 1,1) != '#' && all_el[i].onclick == null ) {
 				var s = all_el[i].href;
-				var re = /msg_download|ext_backup|need_excel=1/;
+				var re = /msg_download|ext_backup|need_excel=1|data:text\/csv/;
 				var result = re.test(s) ? 1 : 0;
 				if ( result == 0 ) {
 					all_el[i].onclick = function() { return LoadingOn() };
@@ -777,6 +824,15 @@ function cdrfilters( element_id, col_num, new_line ) {
 			}
 		}
 	}
+}
+
+/* webrtc_phone_win */
+function webphone_win() {
+	var ScreenWidth=window.screen.width;
+	//var ScreenHeight=window.screen.height;
+	placementx=ScreenWidth-400;
+	placementy=200;
+	window.open("?action=pp_web_phone&nocontrol=1","WebPhone","width=260,height=510,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,menubar=no,resizable=yes,left="+placementx+",top="+placementy);
 }
 
 /* dtmf_history_win */
@@ -985,12 +1041,14 @@ function listcolorer( element_id ) {
 	var ind = 0;
 	for( i=0; i < el.length; i++ ) {
 		if ( el[i].className == 'nocolor' || el[i].className == 'backlight' ) {
-			if ( ind % 2 == 1 ) {
-				el[i].className = 'backlight';
-			} else {
-				el[i].className = 'nocolor';
+			if ( el[i].style.display == '' ) {
+				if ( ind % 2 == 1 ) {
+					el[i].className = 'backlight';
+				} else {
+					el[i].className = 'nocolor';
+				}
+				ind++;
 			}
-			ind++;
 		}
 	}
 }
@@ -1723,158 +1781,143 @@ function ExtStatdrawChart2(chart_param,subparam,divname,title,title2,click_url,k
 }
 
 /* Time Periods */
-function getTimePeriod(lang,period) {
-	var group_by = '';
+function getTimePeriod(lang,group_by_all) {
+	var period = '';
+				
+	var period_chunks = group_by_all.split(',');
+				
 
 	if ( lang == 'ru' ) {
-		if ( period == '%Y-%m-%d' ) {
-			period = 'День';
-			group_by = 'd';
-		} else if ( period == '%w - %W' ) {
-			period = 'День недели';
-			group_by = 'dw';
-		} else if ( period == '%d' ) {
-			period = 'День месяца';
-			group_by = 'dm';
-		} else if ( period == '%V' ) {
-			period = 'Неделя';
-			group_by = 'w';
-		} else if ( period == '%Y-%m' ) {
-			period = 'Месяц';
-			group_by = 'm';
-		} else if ( period == '%Y' ) {
-			period = 'Год';
-			group_by = 'y';
-		} else if ( period == '%H' ) {
-			period = 'Час дня';
-			group_by = 'hd';
-		} else if ( period == '%Y-%m-%d %H' ) {
-			period = 'Час';
-			group_by = 'h';
-		} else if ( period == '%Y-%m-%d %H:%i' ) {
-			period = 'Минута';
-			group_by = 'min';
-		} else if ( period == 'CALLED_ID' ) {
-			period = 'Номер назначения';
-			group_by = 'did';
-		} else if ( period == 'CALLER_ID' ) {
-			period = 'Номер звонящего';
-			group_by = 'cid';
-		} else if ( period == 'CNAM' ) {
-			period = 'Имя звонящего';
-			group_by = 'cnam';
-		} else if ( period == 'CALL_TYPE' ) {
-			period = 'Тип звонка';
-			group_by = 'ct';
-		} else if ( period == 'd10' ) {
-			period = 'Длительность / 10 сек';
-			group_by = 'd10';
-		} else if ( period == 'd30' ) {
-			period = 'Длительность / 30 сек';
-			group_by = 'd30';
-		} else if ( period == 'd60' ) {
-			period = 'Длительность (минуты)';
-			group_by = 'd60';
-		} else if ( period == 'cst' ) {
-			period = 'Статус звонка';
-			group_by = 'cst';
-		} else if ( period == 'region' ) {
-			period = 'Регион';
-			group_by = 'region';
-		} else if ( period == 'wt' ) {
-			period = 'Кто завершил';
-			group_by = 'wt';
-		} else if ( period == '6pref' ) {
-			period = 'Префикс DID (6)';
-			group_by = '6pref';
-		} else if ( period == 'c6pref' ) {
-			period = 'Префикс звонящего (6)';
-			group_by = 'c6pref';
-		} else if ( period == 'SUBSCR_ID' ) {
-			period = 'ID арендатора';
-			group_by = 'sbscr';
-		} else if ( period == 'srcip' ) {
-			period = 'SRC IP';
-			group_by = 'srcip';
-		} else {
-			period = 'группировать по...';
+		for( i2=0; i2 < period_chunks.length; i2++ ) {
+			var group_by = period_chunks[i2];
+			if ( i2 > 0 ) {
+				period = period + '-';
+			}
+			if ( group_by == 'd' ) {
+				period = period + 'День';
+			} else if ( group_by == 'dw' ) {
+				period = period + 'День недели';
+			} else if ( group_by == 'dm' ) {
+				period = period + 'День месяца';
+			} else if ( group_by == 'w' ) {
+				period = period + 'Неделя';
+			} else if ( group_by == 'm' ) {
+				period = period + 'Месяц';
+			} else if ( group_by == 'y' ) {
+				period = period + 'Год';
+			} else if ( group_by == 'hd' ) {
+				period = period + 'Час дня';
+			} else if ( group_by == 'h' ) {
+				period = period + 'Час';
+			} else if ( group_by == 'min' ) {
+				period = period + 'Минута';
+			} else if ( group_by == 'did' ) {
+				period = period + 'Номер назначения';
+			} else if ( group_by == 'cid' ) {
+				period = period + 'Номер звонящего';
+			} else if ( group_by == 'cnam' ) {
+				period = period + 'Имя звонящего';
+			} else if ( group_by == 'ct' ) {
+				period = period + 'Тип звонка';
+			} else if ( group_by == 'd10' ) {
+				period = period + 'Длительность / 10 сек';
+			} else if ( group_by == 'd30' ) {
+				period = period + 'Длительность / 30 сек';
+			} else if ( group_by == 'd60' ) {
+				period = period + 'Длительность (минуты)';
+			} else if ( group_by == 'cst' ) {
+				period = period + 'Статус звонка';
+			} else if ( group_by == 'region' ) {
+				period = period + 'Регион';
+			} else if ( group_by == 'wt' ) {
+				period = period + 'Кто завершил';
+			} else if ( group_by == '6pref' ) {
+				period = period + 'Префикс DID (6)';
+			} else if ( group_by == 'c6pref' ) {
+				period = period + 'Префикс звонящего (6)';
+			} else if ( group_by == 'srcip' ) {
+				period = period + 'SRC IP';
+			} else if ( group_by == 'gw' ) {
+				period = period + 'Шлюз';
+			} else if ( group_by == 'node' ) {
+				period = period + 'Оборудование';
+			} else if ( group_by == 'ac' ) {
+				period = period + 'Access Code';
+			} else if ( group_by == 'sname' ) {
+				period = period + 'Имя арендатора';
+			} else if ( group_by == 'gname' ) {
+				period = period + 'Группа';
+			} else {
+				period = period + group_by;
+			}	
 		}
 	} else {
-		if ( period == '%Y-%m-%d' ) {
-			period = 'Day';
-			group_by = 'd';
-		} else if ( period == '%w - %W' ) {
-			period = 'Day of week';
-			group_by = 'dw';
-		} else if ( period == '%d' ) {
-			period = 'Day of month';
-			group_by = 'dm';
-		} else if ( period == '%V' ) {
-			period = 'Week';
-			group_by = 'w';
-		} else if ( period == '%Y-%m' ) {
-			period = 'Month';
-			group_by = 'm';
-		} else if ( period == '%Y' ) {
-			period = 'Year';
-			group_by = 'y';
-		} else if ( period == '%H' ) {
-			period = 'Hour of day';
-			group_by = 'hd';
-		} else if ( period == '%Y-%m-%d %H' ) {
-			period = 'Hour';
-			group_by = 'h';
-		} else if ( period == '%Y-%m-%d %H:%i' ) {
-			period = 'Minute';
-			group_by = 'min';
-		} else if ( period == 'CALLED_ID' ) {
-			period = 'DID';
-			group_by = 'did';
-		} else if ( period == 'CALLER_ID' ) {
-			period = 'CallerID';
-			group_by = 'cid';
-		} else if ( period == 'CNAM' ) {
-			period = 'Caller name';
-			group_by = 'cnam';
-		} else if ( period == 'CALL_TYPE' ) {
-			period = 'Call type';
-			group_by = 'ct';
-		} else if ( period == 'd10' ) {
-			period = 'Duration / 10 sec';
-			group_by = 'd10';
-		} else if ( period == 'd30' ) {
-			period = 'Duration / 30 sec';
-			group_by = 'd30';
-		} else if ( period == 'd60' ) {
-			period = 'Duration (minutes)';
-			group_by = 'd60';
-		} else if ( period == 'cst' ) {
-			period = 'Call status';
-			group_by = 'cst';
-		} else if ( period == 'region' ) {
-			period = 'Region';
-			group_by = 'region';
-		} else if ( period == 'wt' ) {
-			period = 'Who term';
-			group_by = 'wt';
-		} else if ( period == '6pref' ) {
-			period = 'DID prefix (6)';
-			group_by = '6pref';
-		} else if ( period == 'c6pref' ) {
-			period = 'Caller prefix (6)';
-			group_by = 'c6pref';
-		} else if ( period == 'SUBSCR_ID' ) {
-			period = 'Tenant ID';
-			group_by = 'sbscr';
-		} else if ( period == 'srcip' ) {
-			period = 'SRC IP';
-			group_by = 'srcip';
-		} else {
-			period = 'group by...';
+		for( i2=0; i2 < period_chunks.length; i2++ ) {
+			var group_by = period_chunks[i2];
+			if ( i2 > 0 ) {
+				period = period + '-';
+			}
+			if ( group_by == 'd' ) {
+				period = period + 'Day';
+			} else if ( group_by == 'dw' ) {
+				period = period + 'Day of week';
+			} else if ( group_by == 'dm' ) {
+				period = period + 'Day of month';
+			} else if ( group_by == 'w' ) {
+				period = period + 'Week';
+			} else if ( group_by == 'm' ) {
+				period = period + 'Month';
+			} else if ( group_by == 'y' ) {
+				period = period + 'Year';
+			} else if ( group_by == 'hd' ) {
+				period = period + 'Hour of day';
+			} else if ( group_by == 'h' ) {
+				period = period + 'Hour';
+			} else if ( group_by == 'min' ) {
+				period = period + 'Minute';
+			} else if ( group_by == 'did' ) {
+				period = period + 'DID';
+			} else if ( group_by == 'cid' ) {
+				period = period + 'CallerID';
+			} else if ( group_by == 'cnam' ) {
+				period = period + 'Caller name';
+			} else if ( group_by == 'ct' ) {
+				period = period + 'Call type';
+			} else if ( group_by == 'd10' ) {
+				period = period + 'Duration / 10 sec';
+			} else if ( group_by == 'd30' ) {
+				period = period + 'Duration / 30 sec';
+			} else if ( group_by == 'd60' ) {
+				period = period + 'Duration (minutes)';
+			} else if ( group_by == 'cst' ) {
+				period = period + 'Call status';
+			} else if ( group_by == 'region' ) {
+				period = period + 'Region';
+			} else if ( group_by == 'wt' ) {
+				period = period + 'Who term';
+			} else if ( group_by == '6pref' ) {
+				period = period + 'DID prefix (6)';
+			} else if ( group_by == 'c6pref' ) {
+				period = period + 'Caller prefix (6)';
+			} else if ( group_by == 'srcip' ) {
+				period = period + 'SRC IP';
+			} else if ( group_by == 'gw' ) {
+				period = period + 'Gateway';
+			} else if ( group_by == 'node' ) {
+				period = period + 'ServerID';
+			} else if ( group_by == 'ac' ) {
+				period = period + 'Access Code';
+			} else if ( group_by == 'sname' ) {
+				period = period + 'Tenant name';
+			} else if ( group_by == 'gname' ) {
+				period = period + 'Group';
+			} else {
+				period = period + group_by;
+			}
 		}
 	}
 
-	return { period:period, group_by:group_by };
+	return { period:period, group_by:group_by_all };
 }
 
 /* Ajax row add 
@@ -2189,6 +2232,65 @@ function duration_str(duration) {
 	var out_str = minutes +':'+ seconds;
 
 	return out_str;
+}
+
+/* css radius for th */
+function th_rad_styles(id) {
+	
+	if ( id != null ) {
+		var row = document.getElementById(id);
+		var thElements = row.getElementsByTagName('th');
+
+		thElements[0].classList.add('rad_l');
+		thElements[thElements.length-1].classList.add('rad_r');
+	}
+}
+
+/* filter table data */
+function table_filter( table_id, cells_idx, substring ) {
+
+	var rows = document.getElementById(table_id).getElementsByTagName('tr');
+
+	var re = /^.*input.*\svalue=['"]([^'"]*)['"].*/i;
+	var re2 = /^\^/;
+
+	for (var i = 0; i < rows.length; i++) {
+		if ( rows[i].className == 'nocolor' || rows[i].className == 'backlight' ) {
+			if ( substring.length == 0 || substring == '^' ) {
+				visible = 1;
+			} else {
+				var cells = rows[i].getElementsByTagName("td");
+				var visible = 0;
+				for (var i2 = 0; i2 < cells_idx.length; i2++) {
+					var rowText = cells[ cells_idx[i2] ].innerText;
+					if ( rowText.length == 0 ) {
+						rowText = cells[ cells_idx[i2] ].innerHTML;
+						if ( re.test(rowText) ) {
+							rowText = rowText.replace(re,"$1");
+						} else {
+							rowText = '';
+						}
+					}
+					if ( re2.test(substring) ) {
+						var substring2 = substring.replace(re2,"");
+						if ( rowText.toLowerCase().indexOf(substring2.toLowerCase()) == 0 ) {
+							visible = 1;
+							break;
+						}
+					} else if ( rowText.toLowerCase().indexOf(substring.toLowerCase()) > -1 ) {
+						visible = 1;
+						break;
+					}
+				}
+			}
+			if ( visible == 0 ) {
+				rows[i].style.display ='none';
+			} else {
+				rows[i].style.display = '';
+			}
+		}
+	}
+	listcolorer( table_id );
 }
 
 /* =================== recorder =================== */

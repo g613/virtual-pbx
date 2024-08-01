@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.24 2018/08/23 11:08:05 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.27 2024/04/09 16:12:37 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
@@ -19,7 +19,11 @@
 		[% END %]
 		var did_list = [ ['','автоматически'] ];
 		[% FOREACH d = DID %]
+		[% IF d.VALUE %]
+		did_list.push(['[% d.VALUE | html %]','[% d.DID | html %]']);
+		[% ELSE %]
 		did_list.push(['[% d.DID | html %]','[% d.DID | html %]']);
+		[% END %]
 		[% END %]
 		did_list.push(['***','ручной ввод']);
 	</script>
@@ -101,7 +105,7 @@
 			<td><input class='in_t0' size="6" name='r_TLIMIT' type='text' value="[% r.TLIMIT | html %]"></td>
 			<td><input class='in_t0' size="13" name='r_DESCRIPTION' type='text' value="[% r.DESCRIPTION | html %]"></td>
 			<td>
-				<input class='in_t0' size="11" name='r_DEFCID' id="r_DEFCID-[% r.DATA_ID %]" type='text' value="[% r.DEFCID | html %]">
+				<input class='in_t0' size="16" name='r_DEFCID' id="r_DEFCID-[% r.DATA_ID %]" type='text' value="[% r.DEFCID | html %]">
 				<script language="JavaScript">
 					opt_dropdown( did_list,'r_DEFCID','r_DEFCID-[% r.DATA_ID %]','in_t0','[% r.DEFCID | html %]');
 				</script>
@@ -138,6 +142,7 @@
 					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% r.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
 					<noscript><input value='Сохранить изменения' type='submit'></noscript>
 				</span>
+				<a title="клонировать маршрут" href='?action=route_add&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&clone_id=[% r.DATA_ID %]'><span class='icon-copy fs0'></span></a>
 				<a title='удалить маршрут' href='?action=route_del&data_id=[% r.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% r.DATA_ID %]')"><span class='icon-bin fs0'></span></a>
 			</td>
 			</form>
@@ -147,7 +152,6 @@
 			<form method='post' action='[% CGI_URL %]' name='route' onSubmit='return checkChanges(this)'>
 			<td><input size="6" name='r_PRIORITY' type='text'></td>
 			<td nowrap='nowrap'>
-				
 				<span id='selector-select' style="position:absolute; visibility:hidden">
 				<select name='tmpl' onchange="
 							document.route.r_PATTERN.value=this.value;
@@ -166,7 +170,7 @@
 				
 				<span id='selector-text'>
 				<input size="14" name='r_PATTERN' type='text'>
-				<a href='#' class='l-info' onclick="
+				<a href='#selector-select' class='l-info' onclick="
 							document.getElementById('selector-text').style.visibility='hidden';
 							document.getElementById('selector-select').style.visibility='visible';">
 					<span class='fs0'>▾</span>
@@ -174,13 +178,37 @@
 				</span>
 
 			</td>
-			<td><input size="18" name='r_SUBSTR' type='text'></td>
+			<td nowrap='nowrap'>
+				<span id='selector-select2' style="position:absolute; visibility:hidden">
+				<select name='subst' onchange="
+							document.route.r_SUBSTR.value=this.value;
+							this.form.subst.selectedIndex = 0;
+							document.getElementById('selector-select2').style.visibility='hidden'; 
+							document.getElementById('selector-text2').style.visibility='visible';">
+					
+					<option value="">--шаблоны--</option>
+					<option value="% VAR:DST:-10 %">Последние 10 цифр</option>
+					<option value="% VAR:DST:2 %">Удалить тех-префикс 99</option>
+					<option value="99% VAR:DST %">Добавить тех-префикс 99</option>
+					<option value="">свой шаблон</option>
+				</select>
+				</span>
+				
+				<span id='selector-text2'>
+				<input size="18" name='r_SUBSTR' type='text'>
+				<a href='#selector-select2' class='l-info' onclick="
+							document.getElementById('selector-text2').style.visibility='hidden';
+							document.getElementById('selector-select2').style.visibility='visible';">
+					<span class='fs0'>▾</span>
+				</a>
+				</span>
+			</td>
 			<td>&nbsp;</td>
 			<td><input size="14" name='r_EXT_NUMBER' type='text'></td>
 			<td><input size="6" name='r_TLIMIT' type='text'></td>
 			<td><input size="13" name='r_DESCRIPTION' type='text'></td>
 			<td>
-				<input size="12" name='r_DEFCID' id="r_DEFCID" type='text'>
+				<input size="16" name='r_DEFCID' id="r_DEFCID" type='text'>
 				<script language="JavaScript">
 					opt_dropdown( did_list,'r_DEFCID','r_DEFCID','','');
 				</script>

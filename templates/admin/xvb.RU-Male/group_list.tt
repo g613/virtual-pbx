@@ -1,0 +1,116 @@
+<html>
+<head>
+	<title>Virtual PBX - groups</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+	
+	<h1>Группы</h1>
+
+	<table width='100%'>
+		<tr>
+			<td align='right'>
+				<form method="post" onSubmit='return checkChanges(this)'>
+					<input size='14' name='f_group' type='text' placeholder='Наименование группы' 'value='[% F_GROUP | html %]'>
+					<input type='hidden' value='group_list' name='action'>
+					&nbsp;
+					<input value='Найти' type='submit'>
+				</form>
+			</td>
+		</tr>
+	</table>
+
+	<p>
+	<table width='100%' id='list-data'>
+		<tr>
+			<th class='rad_l'>Индекс</th>
+			<th>Наименование</th>
+			<th>Язык</th>
+			<th>Тариф</th>
+			<th>Кодек</th>
+			<th>Префикс голоса</th>
+			<th>Префикс шаблонов</th>
+			<th class='rad_r'>&nbsp;</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='6'>
+				<a title='предыдущая страница' href='?action=group_list&from=[% MSG_PREV %]&f_group=[% F_GROUP | htmlstrict %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+		
+		[% FOREACH gr = GROUPS %]
+		<tr align='left' class='nocolor'>
+			<td>[% gr.GROUP_ID | html %]</a>
+			<td><a title='настройки группы' href='?action=group_info&group_id=[% gr.GROUP_ID %]'>[% gr.GROUP_NAME | html %]</a>
+			<td>[% gr.LANG_NAME | html %]</td>
+			<td>[% gr.TARIFF_NAME | html %]</td>
+			<td>[% gr.PREF_CODEC | html %]</td>
+			<td>[% gr.SUB_SOUND_DIR | html %]</td>
+			<td>[% gr.SUB_TEMPLATE_DIR | html %]</td>
+			<td align='center'>
+				<a title='клонировать группу' href='?action=clone&tname=GROUP&id=[% gr.GROUP_ID %]&fname=GROUP_NAME&fid=GROUP_ID&newaction=group_info%26group_id'><span class='icon-copy fs0'></span></a>
+				<a title='удалить группу' href='?action=group_del&group_id=[% gr.GROUP_ID %]&from=[% MSG_FROM %]&f_group=[% F_GROUP | html %]' onclick="return DelConfirm('ru')"><span class='icon-bin fs0'></span></a>
+			</td>
+			</form>
+		</tr>
+		[% END %]
+
+		<tr>
+			<form method="post" onSubmit='return checkChanges(this)'>
+			<td align='left' colspan='6'>
+				<input size='15' placeholder='Наименование группы' type='text' name='group_name'>
+				&nbsp;
+				<select name='node_name'>
+					[% FOREACH node = NODES %]
+					<option value="[% node.NODE_ID | html %]">[% node.NODE_ID | html %]</option>
+					[% END %]
+				</select>
+				&nbsp;
+				<input type='hidden' value='group_add' name='action'>
+				<input value='Добавить группу' type='submit'>
+			</td>
+			<td align='right' colspan='2'>
+				[% IF MSG_NEXT ne '' %]
+				<a title='следующая страница' href='?action=group_list&from=[% MSG_NEXT %]&f_group=[% F_GROUP | htmlstrict %]'><span class='fs0'>►</span></a>
+				[% END %]
+			</td>
+		</tr>
+	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
+	</p>
+	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

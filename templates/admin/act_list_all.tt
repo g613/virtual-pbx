@@ -42,7 +42,7 @@
 	<table width='100%'>
 		<tr>
 			<td align='right'>
-				<form method="get" action="/ai" onSubmit='return checkChanges(this)' id='find-form'>
+				<form method="get" onSubmit='return checkChanges(this)' id='find-form'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -83,6 +83,13 @@
 				&nbsp;
 				<input placeholder='Data' size='15' type='text' name='data' value='[% CDR_DATA | html %]'>
 				&nbsp;
+				<select name="group" id="group_type_selector">
+					<option value="" selected>any group</option>
+					[% FOREACH gr = GROUPS %]
+						<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+					[% END %]
+				</select>
+				&nbsp;
 				<select name="act_type" id="act_type_selector">
 					<option value="" selected>Action</option>
 				[% FOREACH at = ACT_TYPES %]
@@ -94,7 +101,10 @@
 				<input value='Search' type='submit'>
 				<input name='need_excel' value='' type='hidden' id='find-flt'>
 				</form>
-				<script langiage='JavaScript'>setActiveSelector('act_type_selector',"[% CDR_ACT_TYPE | html %]");</script>
+				<script language='JavaScript'>
+					setActiveSelector('group_type_selector',"[% CDR_GROUP %]");
+					setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");
+				</script>
 			<td>
 		</tr>
 	</table>
@@ -112,7 +122,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='8'>
-				<a title='previous page' href='?action=act_list_all&ext=[% CDR_EXT | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% CDR_ACT_TYPE | html %]&from=[% MSG_PREV %]&to_time=[% TO_TIME | html %]&from_time=[% FROM_TIME | html %]'><span class='fs0'>◄</span></a>
+				<a title='previous page' href='?action=act_list_all&group=[% CDR_GROUP | html %]&ext=[% CDR_EXT | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% CDR_ACT_TYPE | html %]&from=[% MSG_PREV %]&to_time=[% TO_TIME | html %]&from_time=[% FROM_TIME | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -120,7 +130,7 @@
 		[% FOREACH msg = CDR_LIST %]
 		<tr class='nocolor' align='center'>
 			<td class='simple'>
-				<a title='call detail' href="?action=act_list&call_id=[% msg.CALL_ID %]">[% msg.CDR_DATE | html %]</a>
+				<a title='call detail' href="?action=cdr_list&call_id=[% msg.CALL_ID %]">[% msg.CDR_DATE | html %]</a>
 			</td>
 			<td><a title='edit user settings' href='?ac=[% msg.ACCESS_CODE %]&action=user_info'>[% msg.ACCESS_CODE %]</a></td>
 			<td align='left'>
@@ -136,7 +146,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='8'>
-				<a title='next page' href='?action=act_list_all&ext=[% CDR_EXT | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% CDR_ACT_TYPE | html %]&from=[% MSG_NEXT %]&to_time=[% TO_TIME | html %]&from_time=[% FROM_TIME | html %]'><span class='fs0'>►</span></a>
+				<a title='next page' href='?action=act_list_all&group=[% CDR_GROUP | html %]&ext=[% CDR_EXT | html %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&id=[% VBOX_PREF.ID %]&act_type=[% CDR_ACT_TYPE | html %]&from=[% MSG_NEXT %]&to_time=[% TO_TIME | html %]&from_time=[% FROM_TIME | html %]'><span class='fs0'>►</span></a>
 			</td>
 		[% ELSE %]
 			<td colspan='5'>&nbsp;</td>

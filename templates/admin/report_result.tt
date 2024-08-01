@@ -45,7 +45,7 @@
 				<h1>[% REPORT_DATA.NAME | html %] - report result</h1>
 			</td>
 			<td align='right' nowrap='nopwrap'>
-				<a title='get excel table' href='?action=report_run&report_id=[% REPORT_DATA.ID %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
+				<a title='get excel table' href='?action=report_run&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&type=[% REPORT_DATA.TYPE %]&report_id=[% REPORT_DATA.ID %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
 				<a title='edit report' href='?action=report_info&report_id=[% REPORT_DATA.ID %]'><span class='icon-cogs fs0'></span></a>
 				<a title='delete report' href='?action=report_del&report_id=[% REPORT_DATA.ID %]' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>
 			</td>
@@ -60,6 +60,7 @@
 				<form method="get" action='?'>
 				<input name='action' value='report_run' type='hidden'>
 				<input name='report_id' value='[% REPORT_DATA.ID %]' type='hidden'>
+				<input name='type' value='[% REPORT_DATA.TYPE %]' type='hidden'>
 				<script type="text/javascript">
 					jQuery(document).ready(function() {
 						jQuery("#from_time").dynDateTime({
@@ -101,7 +102,7 @@
 	<p>
 	<table width='98%' class='tablesorter' id='report_table'>
 		<thead>
-		<tr align='center'>
+		<tr align='center' id='report_header'>
 			[% FOREACH h = REPORT_HDR %]
 				<th>[% h.name | html %]</th>
 			[% END %]
@@ -133,6 +134,7 @@
 				$("#report_table").tablesorter(); 
 			} 
 		); 
+		th_rad_styles('report_header');
 	</script>
 
 	</center>

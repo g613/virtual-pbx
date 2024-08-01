@@ -1,0 +1,514 @@
+<html>
+<head>
+	<title>Virtual PBX - group [% GROUP.GROUP_NAME | html %]</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+	
+	<table width='100%'>
+		<tr>
+			<td align='left'>
+				<a title='список арендаторов' href='?action=user_list&f_group=[% GROUP.GROUP_ID %]'"><span class='icon-folder-open fs0'></span></a>
+			</td>
+			<td width='90%' align='center'>
+				<h1>Настройки группы '<b>[% GROUP.GROUP_NAME | html %]</b>'</h1>
+			</td>
+			<td align='right'>
+				<a title='удалить группу' href='?action=group_del&group_id=[% GROUP.GROUP_ID %]' onclick="return DelConfirm('ru')"><span class='icon-bin-all fs2'></span></a>
+			</td>
+		</tr>
+	</table>
+	
+	<p>
+	<table width='90%'>
+		<form method='post'>
+		<tr>
+			<td>Наименование группы: </td>
+			<td><input name='GR_GROUP_NAME' type='text' value="[% GROUP.GROUP_NAME | html %]"></td>
+			<td rowspan='40' valign='top'>
+				<table>
+					<tr>
+						<td colspan='2'><h2>Ограничение на количество пунктов IVR:</h2></td>
+						<input name='VB_TYPE_0' type='hidden' value="1">
+					</tr>
+					[% FOREACH vb = VB_TYPES %]
+					<tr>
+						<td>
+							[% vb.DESCRIPTION | locale_msg %]
+						</td>
+						<td>
+							<input name='GR_VBL_[% vb.ID %]' type='text' size='5' value="[% vb.LIMIT_VALUE %]">
+						</td>
+					</tr>
+					[% END %]
+					<tr>
+						<td>&nbsp;</td>
+						<td>-1 - без ограничения<br>0 - запрещено</td>
+					</tr>
+					<tr>
+						<td colspan='2'><h2>Другие настройки:</h2></td>
+					</tr>
+					<tr>
+						<td>Разрешить переустанавливтаь системные сообщения: </td>
+						<td>
+							<select name="GR_CUSTOM_FILES">
+							[% IF GROUP.CUSTOM_FILES %]
+								<option value="1">да</option>
+								<option value="0">нет</option>
+							[% ELSE %]
+								<option value="0">нет</option>
+								<option value="1">да</option>
+							[% END %]
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Звонки по sip-uri: </td>
+						<td>
+						<select name="GR_DIALOUT_DIRECT">
+						[% IF GROUP.DIALOUT_DIRECT %]
+							<option value="1">да</option>
+							<option value="0">нет</option>
+						[% ELSE %]
+							<option value="0">нет</option>
+							<option value="1">да</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Исходящие через свои шлюзы: </td>
+						<td>
+						<select name="GR_CUSTOM_ROUTE">
+						[% IF GROUP.CUSTOM_ROUTE %]
+							<option value="1">да</option>
+							<option value="0">нет</option>
+						[% ELSE %]
+							<option value="0">нет</option>
+							<option value="1">да</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Входящие со своих шлюзов: </td>
+						<td>
+						<select name="GR_CUSTOM_REGS">
+						[% IF GROUP.CUSTOM_REGS %]
+							<option value="1">да</option>
+							<option value="0">нет</option>
+						[% ELSE %]
+							<option value="0">нет</option>
+							<option value="1">да</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>SIP телефоны для арендатора: </td>
+						<td>
+						<select name="GR_ALLOW_PHONES">
+						[% IF GROUP.ALLOW_PHONES %]
+							<option value="1">да</option>
+							<option value="0">нет</option>
+						[% ELSE %]
+							<option value="0">нет</option>
+							<option value="1">да</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>TTS приветствия: </td>
+						<td>
+						<select name="GR_TTS_GREETING">
+						[% IF GROUP.TTS_GREETING eq "1" %]
+							<option value="1" selected>статические</option>
+							<option value="2">динамические</option>
+							<option value="0">нет</option>
+						[% ELSIF GROUP.TTS_GREETING eq "2" %]
+							<option value="1">статические</option>
+							<option value="2" selected>динамические</option>
+							<option value="0">нет</option>
+						[% ELSE %]
+							<option value="1">статические</option>
+							<option value="2">динамические</option>
+							<option value="0" selected>нет</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Разрешить макросы: </td>
+						<td>
+						<select name="GR_ALLOW_MACROS">
+						[% IF GROUP.ALLOW_MACROS %]
+							<option value="1">да</option>
+							<option value="0">нет</option>
+						[% ELSE %]
+							<option value="0">нет</option>
+							<option value="1">да</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Расширенные функции автоинформатора: </td>
+						<td>
+						<select name="GR_ADVANCED_CALLBLAST">
+						[% IF GROUP.ADVANCED_CALLBLAST %]
+							<option value="1">да</option>
+							<option value="0">нет</option>
+						[% ELSE %]
+							<option value="0">нет</option>
+							<option value="1">да</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Разрешить WEB API: </td>
+						<td>
+						<select name="GR_ALLOW_API">
+						[% IF GROUP.ALLOW_API %]
+							<option value="1">да</option>
+							<option value="0">нет</option>
+						[% ELSE %]
+							<option value="0">нет</option>
+							<option value="1">да</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Разрешить вещание через IceCast: </td>
+						<td>
+						<select name="GR_ALLOW_ICECAST">
+						[% IF GROUP.ALLOW_ICECAST %]
+							<option value="1">да</option>
+							<option value="0">нет</option>
+						[% ELSE %]
+							<option value="0">нет</option>
+							<option value="1">да</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Разрешить расширенную статистику: </td>
+						<td>
+						<select name="GR_ALLOW_EXTSTAT">
+						[% IF GROUP.ALLOW_EXTSTAT %]
+							<option value="1">да</option>
+							<option value="0">нет</option>
+						[% ELSE %]
+							<option value="0">нет</option>
+							<option value="1">да</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Разрешить Google Analytics: </td>
+						<td>
+						<select name="GR_ALLOW_GA">
+						[% IF GROUP.ALLOW_GA eq "1" %]
+							<option value="1">режим 1</option>
+						[% ELSIF GROUP.ALLOW_GA eq "2" %]
+							<option value="2">режим 2</option>
+						[% ELSIF GROUP.ALLOW_GA eq "3" %]
+							<option value="3">режим 3</option>
+						[% ELSE %]
+							<option value="0">нет</option>
+						[% END %]
+							<option value="0">нет</option>
+							<option value="1">режим 1</option>
+							<option value="2">режим 2</option>
+							<option value="3">режим 3</option>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Отслеживание звонков: </td>
+						<td>
+						<select name="GR_ALLOW_CTR">
+						[% IF GROUP.ALLOW_CTR %]
+							<option value="1">да</option>
+							<option value="0">нет</option>
+						[% ELSE %]
+							<option value="0">нет</option>
+							<option value="1">да</option>
+						[% END %]
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Разрешить ASR: </td>
+						<td>
+						<select name="GR_ASR_ENGINE">
+						[% IF GROUP.ASR_ENGINE eq "" %]
+							<option value="">нет</option>
+						[% ELSIF GROUP.ASR_ENGINE eq "Google" %]
+							<option value="Google">Google</option>
+						[% ELSIF GROUP.ASR_ENGINE eq "Yandex" %]
+							<option value="Yandex">Yandex</option>
+						[% ELSIF GROUP.ASR_ENGINE eq "Silero" %]
+							<option value="Silero">Silero</option>
+						[% END %]
+							<option value="">нет</option>
+							<option value="Google">Google</option>
+							<option value="Yandex">Yandex</option>
+							<option value="Silero">Silero</option>
+						</select>
+						</td>
+					</tr>
+			</table>
+			</td>
+		</tr>
+		<tr>
+			<td>Asterisk context для исходящих: </td>
+			<td><input name='GR_DIALOUT_CONTEXT' type='text' value="[% GROUP.DIALOUT_CONTEXT | html %]"></td>
+		</tr>
+		<tr>
+			<td>Asterisk context для конференций: </td>
+			<td><input name='GR_CONFERENCE_CONTEXT' type='text' value="[% GROUP.CONFERENCE_CONTEXT | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество одновременных входящих: </td>
+			<td><input name='GR_MAX_CALLS_IN' type='text' value="[% GROUP.MAX_CALLS_IN | html %]"></td>
+		</tr>
+		<tr>
+			<td>Размер всех сообщений (байт): </td>
+			<td><input name='GR_MAX_SIZE_MSGS' type='text' value="[% GROUP.MAX_SIZE_MSGS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Максимальное кол-во файлов: </td>
+			<td><input name='GR_MAX_ALL_MSGS' type='text' value="[% GROUP.MAX_ALL_MSGS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Максимальное кол-во ролей: </td>
+			<td><input name='GR_MAX_ROLES' type='text' value="[% GROUP.MAX_ROLES | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество пунктов IVR: </td>
+			<td><input name='GR_MAX_EXTENSIONS' type='text' value="[% GROUP.MAX_EXTENSIONS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество CID фильтров: </td>
+			<td><input name='GR_MAX_EXT_CIDS' type='text' value="[% GROUP.MAX_EXT_CIDS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество записей в телефонной книге: </td>
+			<td><input name='GR_MAX_PBOOK_ITEMS' type='text' value="[% GROUP.MAX_PBOOK_ITEMS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество маршрутов: </td>
+			<td><input name='GR_MAX_ROUTES' type='text' value="[% GROUP.MAX_ROUTES | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество SIP шлюзов: </td>
+			<td><input name='GR_MAX_PEERS' type='text' value="[% GROUP.MAX_PEERS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество внешних регистраций: </td>
+			<td><input name='GR_MAX_REGS' type='text' value="[% GROUP.MAX_REGS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество SIP телефонов: </td>
+			<td><input name='GR_MAX_PHONES' type='text' value="[% GROUP.MAX_PHONES | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество макросов: </td>
+			<td><input name='GR_MAX_MACROS' type='text' value="[% GROUP.MAX_MACROS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество строк автоинформатора: </td>
+			<td><input name='GR_MAX_CALLBLAST_ITEMS' type='text' value="[% GROUP.MAX_CALLBLAST_ITEMS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество телефонов в строке автоинформатора: </td>
+			<td><input name='GR_MAX_CB_PHONES' type='text' value="[% GROUP.MAX_CB_PHONES | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество звонков автоинформатора для одного IVR: </td>
+			<td><input name='GR_MAX_EXT_CB_CALLS' type='text' value="[% GROUP.MAX_EXT_CB_CALLS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество пунктов перейти-если в одном IVR: </td>
+			<td><input name='GR_MAX_GOTOIF_ITEMS' type='text' value="[% GROUP.MAX_GOTOIF_ITEMS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество телефонов очереди и исходящего звонка: </td>
+			<td><input name='GR_MAX_EXT_PHONES' type='text' value="[% GROUP.MAX_EXT_PHONES | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество строк расписания в одном IVR: </td>
+			<td><input name='GR_MAX_SCHEDULE_ITEMS' type='text' value="[% GROUP.MAX_SCHEDULE_ITEMS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество подкастов одном IVR: </td>
+			<td><input name='GR_MAX_EXT_PODCAST' type='text' value="[% GROUP.MAX_EXT_PODCAST | html %]"></td>
+		</tr>
+		<tr>
+			<td>Количество Click2Call ссылок: </td>
+			<td><input name='GR_MAX_C2C_ITEMS' type='text' value="[% GROUP.MAX_C2C_ITEMS | html %]"></td>
+		</tr>
+		<tr>
+			<td>Максимальный размер email вожения ( байты ): </td>
+			<td><input name='GR_MAX_ATTACH_SIZE' type='text' value="[% GROUP.MAX_ATTACH_SIZE | html %]"></td>
+		</tr>
+		<tr>
+			<td>Максимальный размер текста для скачиваемого для TTS: </td>
+			<td><input name='GR_MAX_DOWNLOAD_SIZE' type='text' value="[% GROUP.MAX_DOWNLOAD_SIZE | html %]"></td>
+		</tr>
+		<tr>
+			<td>Максимальный размер строки для TTS ( байты ): </td>
+			<td><input name='GR_MAX_TTS_LENGTH' type='text' value="[% GROUP.MAX_TTS_LENGTH | html %]"></td>
+		</tr>
+		<tr>
+			<td>Максимальная продолжительность входящих звоков (сек): </td>
+			<td><input name='GR_MAX_CALL_DURATION' type='text' value="[% GROUP.MAX_CALL_DURATION | html %]"></td>
+		</tr>
+		<tr>
+			<td>Максимальная длина сообщения голосовой почты (сек): </td>
+			<td><input name='GR_MAX_MESSAGE_DURATION' type='text' value="[% GROUP.MAX_MESSAGE_DURATION | html %]"></td>
+		</tr>
+		<tr>
+			<td>Максимальная длительность имени пользователя ( сек ): </td>
+			<td><input name='GR_MAX_NAME_DURATION' type='text' value="[% GROUP.MAX_NAME_DURATION | html %]"></td>
+		</tr>
+		<tr>
+			<td>Максимальная длительность приветствия в IVR ( сек ): </td>
+			<td><input name='GR_MAX_GREET_DURATION' type='text' value="[% GROUP.MAX_GREET_DURATION | html %]"></td>
+		</tr>
+		<tr>
+			<td>Максимальная длительность анонса вызываемому (сек): </td>
+			<td><input name='GR_MAX_ANNOUNCEMENT_DURATION' type='text' value="[% GROUP.MAX_ANNOUNCEMENT_DURATION | html %]"></td>
+		</tr>
+		<tr>
+			<td>Максимальная длительность анонса звонящему ( сек ): </td>
+			<td><input name='GR_MAX_ANNOUNCEMENT_CALLER_DURATION' type='text' value="[% GROUP.MAX_ANNOUNCEMENT_CALLER_DURATION | html %]"></td>
+		</tr>
+		<tr>
+			<td>Максимальная длительность анонса повтора звонка ( сек ): </td>
+			<td><input name='GR_MAX_RETRYDIAL_DURATION' type='text' value="[% GROUP.MAX_RETRYDIAL_DURATION | html %]"></td>
+		</tr>
+		<tr>
+			<td>Максимальная длина файла музыи на удержание ( сек ): </td>
+			<td><input name='GR_MAX_MOH_DURATION' type='text' value="[% GROUP.MAX_MOH_DURATION | html %]"></td>
+		</tr>
+		<tr>
+			<td>Префикс кастомных UI шаблонов: </td>
+			<td><input name='GR_SUB_TEMPLATE_DIR' type='text' value="[% GROUP.SUB_TEMPLATE_DIR | html %]"></td>
+		</tr>
+		<tr>
+			<td>Префикс кастомных звуковых файлов: </td>
+			<td><input name='GR_SUB_SOUND_DIR' type='text' value="[% GROUP.SUB_SOUND_DIR | html %]"></td>
+		</tr>
+		<tr>
+			<td>Кодек для хранения звуковых файлов: </td>
+			<td><input name='GR_PREF_CODEC' type='text' value="[% GROUP.PREF_CODEC | html %]"></td>
+		</tr>
+		<tr>
+			<td>Телефонные features-коды ( * - для всех ):</td>
+			<td>
+				<textarea rows='2' cols='22' name='GR_PH_FEATURES'>[% GROUP.PH_FEATURES | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>Список плагинов ( разделенные запятой ):</td>
+			<td>
+				<textarea rows='2' cols='22' name='GR_HOOKS'>[% GROUP.HOOKS | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td>Язык интерфейса / IVR :</td>
+			<td>
+				<select name='GR_PREF_LANG'>
+					[% FOREACH lang = LANG %]
+						[% IF GROUP.PREF_LANG eq lang.ID %]
+							<option value="[% lang.ID %]" selected>[% lang.DESCRIPTION | locale_msg %]</option>
+						[% ELSE %]
+							<option value="[% lang.ID | html %]">[% lang.DESCRIPTION | locale_msg %]</option>
+						[% END %]
+					[% END %]
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>ID оборудования:</td>
+			<td>
+				<select name='GR_SERVER_ID'>
+					[% FOREACH node = NODES %]
+						[% IF GROUP.SERVER_ID eq node.NODE_ID %]
+							<option value="[% node.NODE_ID | html %]" selected>[% node.NODE_ID | html %]</option>
+						[% ELSE %]
+							<option value="[% node.NODE_ID | html %]">[% node.NODE_ID | html %]</option>
+						[% END %]
+					[% END %]
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Тариф:</td>
+			<td>
+				<select name='GR_TARIFF_ID'>
+					[% FOREACH t = TARIFFS %]
+						[% IF GROUP.TARIFF_ID eq t.ID %]
+							<option value="[% t.ID | html %]" selected>[% t.NAME | html %]</option>
+						[% ELSE %]
+							<option value="[% t.ID | html %]">[% t.NAME | html %]</option>
+						[% END %]
+					[% END %]
+				</select>
+				<a title='информация о тарифе' href='?action=tariff_info&tariff_id=[% GROUP.TARIFF_ID %]'><span class='icon-info fs0'></span></a>
+			</td>
+		</tr>
+		<tr>
+			<td colspan='3'>&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan='3' align ='center'>
+				<input type='hidden' value='[% GROUP.GROUP_ID %]' name='group_id'>
+				<input type='hidden' value='group_update' name='action'>
+				<input type='hidden' value='gr' name='go'>
+				<input value='Сохранить изменения' type='submit'>
+			</td>
+		</tr>
+		</form>
+	</table>
+	</p>
+	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

@@ -1,0 +1,201 @@
+<html>
+<!-- $Id: phone_list.tt,v 1.3 2024/04/07 21:06:33 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - SIP Phones</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+	
+	<h1>SIP телефоны - [% SIPDEV_CNT %]</h1>
+	
+	<table width='100%'>
+		<tr>
+			<td align='right'>
+				<form method="post" onSubmit='return checkChanges(this)'>
+					<input size='11' name='ac' type='text' placeholder='Код доступа' value='[% AC | html %]'>
+					&nbsp;
+					<input size='6' name='phone' type='text' placeholder='Телефон' value='[% PHONE | html %]'>
+					&nbsp;
+					<input size='10' name='ip' type='text' placeholder='IP телефона' value='[% IP | html %]'>
+					&nbsp;
+					<input size='11' name='authname' type='text' placeholder='Логин' value='[% AUTHNAME | html %]'>
+					&nbsp;
+					<input size='11' name='ua' type='text' placeholder='Модель телефона' value='[% UA | html %]'>
+					&nbsp;
+					<select name="rst" id='rst_selector'>
+						<option value="" selected>статус</option>
+						<option value="1">зарегистрирован</option>
+						<option value="0">не зарегистрирован</option>
+					</select>
+					&nbsp;
+					<input type='hidden' value='phone_list' name='action'>
+					<input value='Найти' type='submit'>
+				</form>
+				<script language='JavaScript'>setActiveSelector('rst_selector',"[% RST %]");</script>
+			</td>
+		</tr>
+	</table>
+	
+	<p>
+	<table width='100%' id='d-tbl'>
+		<tr>
+			<th class='rad_l'>#</th>
+			<th>Код достпа</th>
+			<th>Арендатор</th>
+			<th>&nbsp;</th>
+			<th>Телефон</th>
+			<th>IP телефона</th>
+			<th>&nbsp;</th>
+			<th>АОН</th>
+			<th>Ёмкость</th>
+			<th>Логин</th>
+			<th>Пароль</th>
+			<th width='3%' class='rad_r'>&nbsp;</th>
+		</tr>
+		
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='12'>
+				<a title='предыдущая страница' href='?action=phone_list&rst=[% RST %]&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_PREV %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+		
+		[% FOREACH p = SIPDEV %]
+		<tr align='left' class='nocolor'>
+			<td align='right'>[% p.IDX %]</td>
+			<td><a title='настройки арендатора' href='?ac=[% p.ACCESS_CODE %]&action=user_info'>[% p.ACCESS_CODE %]</a></td>
+			<td>
+				[% p.FIRST_NAME | html %] [% p.LAST_NAME | html %]
+			</td>
+			<td align='center'>
+				[% IF p.REG_STATUS eq 'Registered' %]
+					<a href='#' class='l-info'>
+					<span class='fs1'>✓</span>
+					<span class='l-info'>
+						[% p.REG_STATUS %]<br>
+						Дата регистрации: [% p.REG_TIME | html %]<br>
+						Заканчивается: [% p.REG_EXPIRED | html %]<br>
+						IP: [% p.ipaddr | html %]:[% p.port | html %]<br>
+						UA: [% p.useragent | html %]
+					</span>
+					</a>
+				[% ELSIF p.REG_TIME ne '-' %]
+					<a href='#' class='l-info'>
+					<span class='icon-info fs1'></span>
+					<span class='l-info'>
+						[% p.REG_STATUS %]<br>
+						Reg date: [% p.REG_TIME | html %]<br>
+						Expired: [% p.REG_EXPIRED | html %]<br>
+						IP: [% p.ipaddr | html %]<br>
+						UA: [% p.useragent | html %]
+					</span>
+					</a>
+				[% END %]
+			</td>
+			<td>[% p.callerid | html %]</td>
+			<td>[% p.ipaddr | html %]</td>
+			<td align='center'>
+				[% IF p.deny %]
+					<a href='#' class='l-info'>
+					<span class='fs1'>✓</span>
+					<span class='l-info'>
+					Доступ только с: [% p.permit | html %]
+					</span>
+					</a>
+				[% END %]
+			</td>
+			<td>[% p.DEFCID | html %]</td>
+			<form method='post' id='f-[% p.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)' action="">
+			<td nowrap='nowrap'>
+				<input class='in_t0' name='limit' type='text' value='[% p.CO_LIMIT %]' size='2' />
+				<input type='hidden' value='[% p.DATA_ID %]' name='data_id'>
+				<input type='hidden' value='sip_call_limit' name='action'>
+				<input type='hidden' name='user_id' value='[% p.SUBSCR_ID %]'>
+				<input type='hidden' name='phone' value='[% p.callerid %]'>
+				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
+					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% p.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+					<noscript><input value='change' type='submit'></noscript>
+				</span>
+			</td>
+			</form>
+			[% IF ALLOW_AUTH_EDIT %]
+			<form method="post" action="" id='f-000[% p.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
+			<td nowrap='nowrap'>
+				<input type='text' value='[% p.name | html %]' class='in_t0' name='newid' size='32' />
+				<input type='hidden' value='auth_name_reset' name='action'>
+				<input type='hidden' value='phone' name='dtype'>
+				<input type='hidden' value='redir' name='mode'>
+				<input type='hidden' value='[% p.name | html %]' name='id'>
+				<input type='hidden' value='[% p.ACCESS_CODE | html %]' name='pac'>
+				<input type='hidden' value='[% RST %]' name='rst'>
+				<input type='hidden' value='[% UA | htmlstrict %]' name='ua'>
+				<input type='hidden' value='[% IP | htmlstrict %]' name='ip'>
+				<input type='hidden' value='[% FROM | htmlstrict %]' name='from'>
+				<input type='hidden' value='[% PHONE | htmlstrict %]' name='phone'>
+				<input type='hidden' value='000[% p.DATA_ID %]' name='data_id'>
+			</td>
+			<td>
+				<input type='text' value='[% p.secret | html %]' class='in_t0' name='newpw' size='32' />
+			</td>
+			<td>
+				<span class='in_t' id='in_t_id-000[% p.DATA_ID %]'>
+					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-000[% p.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='изменить логин'></span></a>
+					<noscript><input value='change' type='submit'></noscript>
+				</span>
+			</td>
+			</form>
+			[% ELSE %]
+				<td>[% p.name | html %]</td>
+				<td>[% p.secret | html %]</td>
+				<td>
+					[% IF ALLOW_RESET %]
+					&nbsp;&nbsp;<a title='сбросить логин' href='?action=auth_name_reset&dtype=phone&id=[% p.name | html %]&pac=[% p.ACCESS_CODE | html %]&rst=[% RST %]&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% FROM %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><span class='icon-loop2 fs1'></span></a>
+					[% END %]
+				</td>
+			[% END %]
+		</tr>
+		[% END %]
+	
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='12'>
+				<a title='предыдущая страница' href='?action=phone_list&rst=[% RST %]&ua=[% UA | htmlstrict %]&ac=[% AC | html %]&ip=[% IP | html %]&from=[% MSG_NEXT %]&phone=[% PHONE | htmlstrict %]&authname=[% NAME | html %]'><span class='fs0'>►</span></a>
+			</td>
+		</tr>
+		[% END %]
+	</table>
+	</p>
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+
+	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

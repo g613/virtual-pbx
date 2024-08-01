@@ -17,6 +17,7 @@ Requires: ffmpeg
 Requires: lame
 Requires: mpg123
 Requires: libmad
+Requires: psmisc
 Requires: perl
 Requires: perl-MailTools
 Requires: perl(DBI)
@@ -153,6 +154,9 @@ mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/backups/db
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/spool/backups/sys
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/data
 
+cp -a cgi-bin/VirtualPBX-UI.cgi cgi-bin/VirtualPBX-UI4AI.cgi
+sed -i 's/#{{UI4AI}}//' cgi-bin/VirtualPBX-UI4AI.cgi
+
 #start-devel
 perl contrib/utils/build/proj-obf.pl
 perl contrib/utils/viewlogs.pl dump project.files.sub $RPM_BUILD_ROOT/%CORE_DIR/devel/%{release}/data/sub
@@ -166,14 +170,12 @@ mv lib $RPM_BUILD_ROOT/%CORE_DIR/
 mv templates $RPM_BUILD_ROOT/%CORE_DIR/
 mv web $RPM_BUILD_ROOT/%CORE_DIR/
 mkdir -p $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin
-cp -a cgi-bin/VirtualPBX-UI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ui4ai
+mv cgi-bin/VirtualPBX-UI4AI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ui4ai
 mv cgi-bin/VirtualPBX-UI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ui
 mv cgi-bin/VirtualPBX-AI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ai
 mv cgi-bin/VirtualPBX-PI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/pi
 mv cgi-bin/VirtualPBX-EI.cgi $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/phonei
  
-sed -i 's/#{{UI4AI}}//' $RPM_BUILD_ROOT/%CORE_DIR/web/cgi-bin/ui4ai
-
 cp contrib/utils/billing_processor.pl contrib/utils/billing_processor_daily.pl
 mv contrib/utils/billing_processor.pl contrib/utils/billing_processor_monthly.pl
 mv contrib/virtual-pbx*.cron $RPM_BUILD_ROOT/%{_sysconfdir}/cron.d/
@@ -246,6 +248,9 @@ ln -s . xvb.EN-Male
 ln -s . xvb.EN-Female
 ln -s . single/xvb.EN-Male
 ln -s . single/xvb.EN-Female
+cd - > /dev/null
+cd $RPM_BUILD_ROOT/%CORE_DIR/templates/admin
+ln -s xvb.RU-Male xvb.RU-Female
 
 cd - > /dev/null
 
@@ -290,7 +295,11 @@ touch /var/log/VirtualPBX/XVB.log
 touch /var/log/VirtualPBX/XVB.stderr
 touch /var/log/VirtualPBX/XVB.cdr
 touch /var/log/VirtualPBX/XVB.secure
-chown -R asterisk.asterisk /var/log/VirtualPBX || true
+chown -R asterisk:asterisk /var/log/VirtualPBX || true
+
+if [ -f %CORE_DIR/etc/locale.cfg-custom ]; then
+	cat %CORE_DIR/etc/locale.cfg-custom >> %CORE_DIR/etc/locale.cfg
+fi
 
 # updates
 perl %CORE_DIR/contrib/utils/rpm/cfg_update.pl
@@ -359,8 +368,6 @@ fi
 chkconfig asterisk on
 chkconfig xvb-fagi on
 chkconfig xvb-perl-worker on
-chkconfig xvb-callblast on
-chkconfig xvb-tcpdump on
 
 STR=`LANG=C service asterisk status | grep running`
 if [ "x$STR" = "x" ]; then
@@ -381,11 +388,14 @@ STR=`ps ax | grep [Rr]eg_uac.pl`
 if [ "x$STR" != "x" ]; then
 	service xvb-reg_uac restart || killall reg_uac.pl || true
 fi
+# callblast
+STR=`ps ax | grep [Ss]afe_xvb_callblast`
+if [ "x$STR" != "x" ]; then
+	service xvb-callblast restart || true
+fi
 
 service xvb-perl-worker restart || killall VirtualPBX.agi || true
-service xvb-callblast restart || true
 service xvb-fagi restart
-service xvb-tcpdump restart
 
 # post update script
 if [ -f %CORE_DIR/etc/xvb-postupdate-voip.cfg ]; then
@@ -438,7 +448,7 @@ fi
 %post management
 
 # auto start DB
-chkconfig mysqld on || chkconfig mariadb on
+chkconfig mariadb on 2> /dev/null || chkconfig mysqld on 
 
 # db update
 perl %CORE_DIR/contrib/utils/rpm/db_update.pl
@@ -475,6 +485,10 @@ ln -s %CORE_DIR/contrib/utils/xvb-ctl /usr/local/sbin/xvb-ctl &>/dev/null || tru
 if [ -f %CORE_DIR/etc/xvb-postupdate.cfg ]; then
 	%CORE_DIR/etc/xvb-postupdate.cfg || true
 fi
+
+touch /etc/fail2ban/jail.d/00-xvb-pbx-ignoreip.conf
+chown root:asterisk /etc/fail2ban/jail.d/00-xvb-pbx-ignoreip.conf
+chmod 664 /etc/fail2ban/jail.d/00-xvb-pbx-ignoreip.conf
 
 ####################################################
 #
@@ -551,6 +565,8 @@ fi
 %attr(755,root,root) %{_sysconfdir}/rc.d/init.d/xvb-tcpdump
 %attr(755,root,root) %CORE_DIR/contrib/utils/podcast_get.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/msg_clean.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/msg_backup.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/msg_soft_limits.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/click2call.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/webhelper.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/billing_gw.pl
@@ -591,10 +607,12 @@ fi
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/pi
 %attr(755,asterisk,asterisk) %CORE_DIR/web/cgi-bin/phonei
 %attr(755,root,root) %CORE_DIR/contrib/utils/sysstatus.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/dashboard_cache.pl
 %CORE_DIR/web/*.css
 %CORE_DIR/web/*.pdf
 %CORE_DIR/web/css/*
 %CORE_DIR/web/images/*
+%CORE_DIR/web/sounds/*
 %CORE_DIR/web/js/*
 %CORE_DIR/web/fonts/*
 %CORE_DIR/web/ump3player.swf
@@ -609,6 +627,7 @@ fi
 %attr(755,root,root) %CORE_DIR/contrib/utils/journals_clean.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/cdr_reports.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/cdr_clean.pl
+%attr(755,root,root) %CORE_DIR/contrib/utils/cdr_reload.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/billing_processor_daily.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/billing_processor_monthly.pl
 %attr(755,root,root) %CORE_DIR/contrib/utils/queues_hourly_avg.pl

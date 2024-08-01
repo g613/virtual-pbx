@@ -80,7 +80,16 @@ chartArea:{top:5, width:'90%',height:'90%'},
 
 	<center>
 	
-	<h1>[% NODE | html %] - system status</h1>
+	<table width='100%'>
+		<tr>
+			<td width='95%' align='center'>
+				<h1>[% NODE | html %] - system status</h1>
+			</td>
+			<td align='right'>
+				<a title='delete node' href='?action=node_del&node_id=[% NODE %]' onclick="return DelConfirm('en')"><span class='icon-bin fs2'></span></a>
+			</td>
+		</tr>
+	</table>
 	
 	<p>
 	<table>
@@ -225,12 +234,43 @@ chartArea:{top:5, width:'90%',height:'90%'},
 				</tr>
 			</table>
 			
-			
+			<h2>Fail2ban</h2>
+
+			<table width='100%'>
+			<tr>
+				<td><h3>White list ( [% F2B_CNT_WL %] )</h3></td>
+				<td align='right'>
+					<a title='clean all White List IP' href='/ai?action=f2b&ip=all&mode=wldel&node=[% NODE | html %]' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan='2'>
+				[% FOREACH data = F2B_WL %]
+					<a title='delete IP from white list' href='/ai?action=f2b&mode=wldel&ip=[% data | html %]&node=[% NODE | html %]' onclick="return DelConfirm('en')">[% data | html %]</a>&nbsp;&nbsp;
+				[% END %]
+				</td>
+			</tr>
+			<tr>
+				<form method='post'>
+				<td>
+					<input size='20' type='text' placeholder='IP' name='ip'>
+				</td>
+				<td>
+					<input value='Add IP' type='submit'>
+					<input type='hidden' name='mode' value='wladd'>
+					<input type='hidden' value='f2b' name='action'>
+				</td>
+				</form>
+			</tr>
+			</table>
+			<br />
+			<br />
+			<br />
 			<table width='100%' id='list-data'>
 			<tr>
-				<td colspan='2'><h2>Fail2ban banned IPs ( [% F2B_CNT %] )<h2></td>
+				<td colspan='2'><h3>Banned IPs ( [% F2B_CNT %] )</h3></td>
 				<td align='right'>
-					<a title='unban all IP' href='[% data.NODE %]/ai?action=f2b&ip=all&node=[% NODE | html %]' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>
+					<a title='unban all IP' href='/ai?action=f2b&mode=bldel&ip=all&node=[% NODE | html %]' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>
 				</td>
 			</tr>
 			<tr>
@@ -248,7 +288,7 @@ chartArea:{top:5, width:'90%',height:'90%'},
 					[% data.IP | html %]
 				</td>
 				<td>
-					<a title='unban IP' href='[% data.NODE %]/ai?action=f2b&ip=[% data.IP | html %]&node=[% data.NODE | html %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
+					<a title='unban IP' href='/ai?action=f2b&mode=bldel&ip=[% data.IP | html %]&node=[% data.NODE | html %]' onclick="return DelConfirm('en')"><span class='icon-bin fs0'></span></a>
 				</td>
 			</tr>
 			[% END %]

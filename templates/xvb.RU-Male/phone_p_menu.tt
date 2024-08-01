@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_menu.tt,v 1.7 2023/03/04 07:11:25 gosha Exp $ -->
+<!-- $Id: phone_p_menu.tt,v 1.9 2023/12/27 08:41:45 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - main menu</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -35,11 +35,21 @@
 			<li><a class='amenu' target='xvb_data' href='?action=pp_cdr_list'>История звонков</a></li>
 			<br />
 			
+			[% IF PHONE.MANAGER_FOR %]
+			<li><a class='amenu' target='xvb_data' href='?action=pp_cdr_list&need_chart=1'>Статистика</a></li>
+			<br />
+			[% END %]
+			
 			<li><a class='amenu' target='xvb_data' href='?action=pp_msg_list'>Файлы</a></li>
 			<br />
 			
 			<li><a class='amenu' target='xvb_data' href='?action=pp_pbook_list'>Телефонная книга</a></li>
 			<br />
+			
+			[% IF WEBRTC %]
+			<li><a class='amenu' target='_top' href='?action=pp_start&web_phone=1'>Web телефон</a></li>
+			<br />
+			[% END %]
 			
 			<li><a class='amenu' target='_top' href=?action=pp_login&login=0>Выход</a></li>
 		</ul>

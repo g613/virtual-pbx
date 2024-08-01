@@ -1,0 +1,114 @@
+<html>
+<head>
+	<title>Virtual PBX - DIDs attr</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+
+	<h1>Атрибуты общих номеров</h1>
+
+	<p>
+	<table width='98%' id='list-data'>
+		<tr>
+			<th class='rad_l'>Общий DID</th>
+			<th>Язык</th>
+			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
+		</tr>
+			
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='4'>
+				<a title='предыдущая страница' href='?action=did_attr_list&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH t = DIDS %]
+		<tr align='center' class='nocolor' id='d-tr-[% t.DID %]'>
+			<form method='post' id='f-[% t.DID %]' onSubmit='return xmlhttpPost(this,1)' action="">
+			<td><input class='in_t0' size='30' name='T_DID' type='text' value='[% t.DID | html %]'></td>
+			<td>
+				<select class='in_t0' name='T_LANG_ID'>
+					[% FOREACH lang = LANG %]
+						[% IF t.LANG_ID eq lang.ID %]
+							<option value="[% lang.ID %]" selected>[% lang.DESCRIPTION | locale_msg %]</option>
+						[% ELSE %]
+							<option value="[% lang.ID | html %]">[% lang.DESCRIPTION | locale_msg %]</option>
+						[% END %]
+					[% END %]
+				</select>
+			</td>
+			<td align='right'>
+				<input type='hidden' value='[% t.DID %]' name='data_id'>
+				<input type='hidden' value='did_attr_update' name='action'>
+				<input type='hidden' value='[% MSG_FROM %]' name='from'>
+				<span class='in_t' id='in_t_id-[% t.DID %]'>
+					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% t.DID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+					<noscript><input value='Change' type='submit'></noscript>
+				</span>
+				<a title='удалить общий номер' href='?action=did_attr_del&did=[% t.DID | htmlstrict %]&from=[% MSG_FROM %]' onclick="return DelConfirm('ru')"><span class='icon-bin fs0'></span></a>
+			</td>
+			</form>
+			<td></td>
+		</tr>
+		[% END %]
+		<form method="post" onSubmit='return checkChanges(this)'>
+		<tr align='center'>
+			<td><input size='30' name='T_DID' type='text'></td>
+			<td>
+				<select class='in_t0' name='T_LANG_ID'>
+					[% FOREACH lang = LANG %]
+						<option value="[% lang.ID | html %]">[% lang.DESCRIPTION | locale_msg %]</option>
+					[% END %]
+				</select>
+			</td>
+			<td>
+				<input value='Добавить' type='submit'>
+				<input type='hidden' value='did_attr_add' name='action'>
+			</td>
+			[% IF MSG_NEXT ne '' %]
+			<td align='right'>
+				<a title='следующая страница' href='?action=did_attr_list&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
+			</td>
+			[% END %]
+		</tr>
+		</form>
+	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
+	</p>
+
+	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

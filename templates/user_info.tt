@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.116 2023/04/20 18:47:37 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.117 2024/06/25 17:28:23 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - PBX profile - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -444,6 +444,18 @@
 					</table>
 					</td>
 				</tr>
+				
+				[% IF USER_CREDS.PERMIT_WEB %]
+				<tr>
+					<td colspan='3'>&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan='3'><h2>IP white list for web interface:</h2></td>
+				</tr>
+				<tr>
+					<td colspan='3'>[% USER_CREDS.PERMIT_WEB | html %]</td>
+				</tr>
+				[% END %]
 
 				<tr>
 					<td>&nbsp;</td>

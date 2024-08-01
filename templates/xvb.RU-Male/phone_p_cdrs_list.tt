@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_cdrs_list.tt,v 1.11 2023/05/04 08:50:21 gosha Exp $ -->
+<!-- $Id: phone_p_cdrs_list.tt,v 1.15 2024/01/23 15:17:56 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - История звонков</title>
 
@@ -20,7 +20,14 @@
 <body onLoad="XVBInit()">
 	<center>
 	
-	<h1>История звонков</h1>
+	<table width='100%'>
+		<tr>
+			<td align='center'><h1>История звонков</h1></td>
+			<td align='right' width='10%'>
+				<a title='скачать в формате excel' href='#' onclick="return SubmitConfirm('');"><span class='icon-file-excel fs0'></span></a>
+			</td>
+		</tr>
+	</table>
 	
 	<table width='100%'>
 		<tr>
@@ -88,15 +95,16 @@
 		<tr>
 			<th class='rad_l'>#</th>
 			<th>Начало звонка</th>
-			<th colspan='2'>Номер звонящего</th>
-			<th>Номер назначения</th>
+			<th colspan='3'>Номер звонящего</th>
+			<th colspan='2'>Номер назначения</th>
 			<th>Длительность</th>
 			<th>&nbsp;</th>
-			<th class='rad_r'>Тип</th>
+			<th>Тип</th>
+			<th class='rad_r' width='12%'>&nbsp;</th>
 		</tr>
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='8'>
+			<td align='left' colspan='11'>
 				<a title='предыдущая страница' href='?action=pp_cdr_list&duration=[% CDR_DURATION | html %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
@@ -118,19 +126,20 @@
 				[% ELSE %]
 					<td align='right'>
 				[% END %]
+				[% msg.CALLER_ID | html %]	
+				</td>
+				<td align='left'>
 				<script>
 					phone_call_filter('[% C2C | html %]','[% PHONE | html %]','[% msg.CALLER_ID | html %]');
 				</script>
-				
-				[% msg.CALLER_ID | html %]
-				
 				</td>
-
 				<td align='right'>
+				[% msg.CALLED_ID | html %]
+				</td>
+				<td align='left'>
 				<script>
 					phone_call_filter('[% C2C | html %]','[% PHONE | html %]','[% msg.CALLED_ID | html %]');
 				</script>
-				[% msg.CALLED_ID | html %]
 				</td>
 				<td>[% msg.CDR_DURATION | duration_str %]</td>
 				<td>
@@ -140,13 +149,14 @@
 					href="#"><span class='icon-volume-medium fs0'></span></a>
 				[% END %]
 				</td>
-				<td>[% msg.CALL_TYPE | locale_msg %]</td>
+				<td><a href='#' onclick='ShowEl("cdr_detail_[% msg.CDR_NUM %]"); return false'>[% msg.CALL_TYPE | locale_msg %]</a></td>
+				<td align='left'><span id="cdr_detail_[% msg.CDR_NUM %]" class='addon_info'>[% msg.DATA | html %]</span></td>
 			</tr>
 		[% END %]
 
 		[% IF MSG_NEXT ne '' %]
 		<tr>
-			<td align='right' colspan='8'>
+			<td align='right' colspan='11'>
 				<a title='следующая страница' href='?action=pp_cdr_list&&duration=[% CDR_DURATION | html %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
@@ -157,8 +167,14 @@
     [% END %]
 	</p>
 
-	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
-	
+	<script language='JavaScript'>
+		listcolorer( 'd-tbl' );
+		var download_file_url = '';
+		var listen_file_url = '';
+		var callback_cdr_url = '';
+		cdrfilters( 'd-tbl', 8, 'new_line' );
+	</script>
+
 	</center>
 	<div id='shadow'><div id='loading'></div></div><div id='center' style='display:none;'><script language='JavaScript'>ShowPlayer( 'init',0 );</script></div>
 	</body>

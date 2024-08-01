@@ -1,0 +1,36 @@
+				<a class='amenu' href='?action=node_list'>Оборудование</a>
+				|
+				<a class='amenu' href='ai?action=partner_list'>Партнеры</a>
+				|
+				<a class='amenu' href='?action=group_list'>Группы</a>
+				|
+				<a class='amenu' href='?action=user_list&f_status=1'>Арендаторы</a>
+				|
+				<a class='amenu' href='?action=did_list_sipdomain'>SIP-домены</a>
+				|
+				<a class='amenu' href='?action=did_list'>Выделенные DID</a>
+				|
+				<a class='amenu' href='?action=did_attr_list'>DID атрибуты</a>
+				|
+				<a class='amenu'  href='?action=report_list'>SQL-отчеты</a>
+			[% IF USE_BILLING %]
+				|
+				<a class='amenu' href='?action=tariff_list'>Тарифы</a>
+			[% END %]
+				|
+				<a class='amenu' href='?action=phone_list'>SIP телефоны</a>
+				|
+				<a class='amenu' href='?action=peer_list'>SIP шлюзы</a>
+				|
+				<a class='amenu' href='?action=cdr_list&need_chart=1'>Статистика</a>
+				|
+				<a class='amenu' href='?action=cdr_list'>CDRs</a>
+				|
+				<a class='amenu' href='?action=j_list'>Журналы</a>
+				|
+				<a class='amenu' href='?action=msg_list_all'>Файлы</a>
+				|
+            	<a class='amenu' href='?action=act_list_all'>Активность</a></li>
+				|
+				<a class='amenu' href='?action=calls_list'>Звонки</a>
+

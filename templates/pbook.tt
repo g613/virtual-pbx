@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.29 2022/03/03 15:53:11 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.31 2024/07/16 19:34:39 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Phone book - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -22,6 +22,10 @@
 
 	<table width='100%'>
 		<tr>
+			<td align='left' width='10%' nowrap='nowrap'>
+				<span class='icon-search fs1'></span>&nbsp;
+				<input size='24' name='filter' id='filter' type='text' placeholder='filter'>
+			</td>
 			<td width='85%' align='center'>
 				<h1>Phone book</h1>
 			</td>
@@ -31,7 +35,13 @@
 			</td>
 		</tr>
 	</table>
-		
+
+	<script language='JavaScript'>
+		var el = document.getElementById("filter");
+		var cells_idx = [0,1,2,3,5,6];
+		el.addEventListener('input', e => {table_filter('d-tbl', cells_idx, e.target.value )});
+	</script>
+
 	<table>
 		<tr id='csv-import'>
 			<td align='left'>

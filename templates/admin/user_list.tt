@@ -64,7 +64,7 @@
 				</select>
 				&nbsp;
 				<select name="f_status" id="status_type_selector">
-				   	<option value="" selected>Any</option>
+				   	<option value="" selected>any status</option>
 					<option value="1">Active</option>
 					<option value="0">Locked</option>
 				</select>

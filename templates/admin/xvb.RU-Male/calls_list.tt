@@ -1,0 +1,162 @@
+<html>
+<head>
+	<title>Virtual PBX - Live calls</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	[% IF CDR_REFRESH_TIME %]
+	<meta http-equiv="refresh" content="[% CDR_REFRESH_TIME %]">
+	[% END %]
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+	
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+	<h1>Активные звонки - [% CALLS_COUNT %]</h1>
+
+	<p>
+	<table width='100%'>
+		<form method="get" onSubmit='return checkChanges(this)'>
+		<tr align='right'>
+			<td width='100%'>
+				<input name='action' value='calls_list' type='hidden'>
+				<input size='40' type='text' placeholder='C2C key' name='c2c' value='[% CDR_C2C %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Автообновление' name='refresh' value='[% CDR_REFRESH_TIME %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Кто звонит' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Кому звонят' name='called_id' value='[% CDR_CALLED_ID | html %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Код доступа' name='ac' value='[% CDR_AC | html %]'>
+				&nbsp;
+				<input size='8' type='text' placeholder='Длительность' name='duration' value='[% CDR_DURATION | html %]'>
+				&nbsp;
+				<select name="group" id="group_type_selector">
+					<option value="" selected>любая группа</option>
+					[% FOREACH gr = GROUPS %]
+						<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+					[% END %]
+				</select>
+				&nbsp;
+				<select name="call_type" id="call_type_selector">
+					<option value="" selected>все звонки</option>
+					<option value="incoming">входящие</option>
+					<option value="local">локальные</option>
+					<option value="transit">исходящие</option>
+					<option value="internal">внутренние</option>
+					<option value="callback">обратный</option>
+					<option value="callblast">автоинформатор</option>
+					<option value="click2call">с сайта</option>
+					<option value="alarmclock">будильник</option>
+					<option value="service">сервисный</option>
+				</select>
+				&nbsp;
+				<input value='Найти' type='submit'>
+			</td>
+			<script language='JavaScript'>
+				setActiveSelector('group_type_selector',"[% CDR_GROUP %]");
+				setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");
+			</script>
+		</tr>
+		</form>
+	</table>
+	</p>
+	<p>
+	<table width='100%' id='d-tbl'>
+		<tr>
+			<th class='rad_l'>Тип</th>
+			<th>Дата начала</th>
+			<th colspan='2'>Кто звонит</th>
+			<th>Кому звонят</th>
+			<th colspan='2'>Арендатор</th>
+			<th>Длительность</th>
+			<th>Сервер</th>
+			<th class='rad_r'>&nbsp;</th>
+		</tr>
+
+		<!--
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='10'>
+				<a title='предыдущая страница' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&group=[% CDR_GROUP %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+		-->
+
+		[% FOREACH msg = CALLS_LIST %]
+		<tr class='nocolor' align='center'>
+			<td>[% msg.CALL_TYPE | html %]</td>
+			<td><a title='информация о звонке' href='?action=call_log&call_id=[% msg.CALL_ID %]'>[% msg.CDR_DATE | html %]</a></td>
+			<td>[% msg.CNAM | html %]</td>
+			<td align='right'>[% msg.CALLER_ID | html %]</td>
+			<td>[% msg.CALLED_ID | html %]</td>
+			<td><a title='перейти в кбинет арендатора' href='?ac=[% msg.ACCESS_CODE %]&action=user_info'>[% msg.ACCESS_CODE %]</a></td>
+			<td align='left'>
+				[% msg.FIRST_NAME | html %] [% msg.LAST_NAME | html %]
+			</td>
+			<td>[% msg.CDR_DURATION | duration_str %]</td>
+			<td>[% msg.SERVER_ID | html %]</td>
+			<td>
+				[% IF CDR_C2C %]
+					[% IF CDR_C2C contain "&key=" %]
+						<a title='прослушать' href='#' onclick="click2call_spy_raw('[% msg.DOWNLOAD_IP %]/c2c?dlm=,&message=Please%20wait%20a%20call&ph=XVBSPY&user_vars=XVB_CHAN=[% msg.CALL_ID %],AST_CHAN=[% msg.AST_ID | htmlstrict %][% CDR_C2C %]')"><span class='icon-phone fs0'></span></a>
+					[% ELSE %]			
+						<a title='прослушать' href='#' onclick="click2call_spy('[% msg.DOWNLOAD_IP %]','[% CDR_C2C %]','auto','XVB_CHAN=[% msg.CALL_ID %],AST_CHAN=[% msg.AST_ID | htmlstrict %]','ru','')"><span class='icon-phone fs0'></span></a>
+					[% END %]
+				[% END %]
+				<a title='завершить звонок' href='[% msg.DOWNLOAD_IP %]/ai?action=calls_hangup&user_id=[% msg.SUBSCR_ID %]&call_id=[% msg.CALL_ID | html %]' onclick="return DelConfirm('ru')"><span class='icon-cancel-circle fs0'></span></a>
+			</td>
+		</tr>
+		[% END %]
+
+		<!--
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='10'>
+				<a title='следующая страница' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&group=[% CDR_GROUP %]'><span class='fs0'>►</span></a>
+			</td>
+		</tr>
+		[% END %]
+		-->
+
+	</table>
+ 	[% UNLESS CALLS_LIST scalar %]
+ 		<br /><h3>Данных не найдено, попробуйте задать другой фильтр</h3>
+ 	[% END %]
+	</p>
+	
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+	
+	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
+	

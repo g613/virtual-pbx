@@ -84,6 +84,13 @@
 				&nbsp;
 				<input size='10' type='text' placeholder='Data' name='data' value='[% CDR_DATA | html %]'>
 				&nbsp;
+				<select name="group" id="group_type_selector">
+					<option value="" selected>any group</option>
+					[% FOREACH gr = GROUPS %]
+						<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+					[% END %]
+				</select>
+				&nbsp;
 				<select name="call_type" id='call_type_selector'>
 					<option value="" selected>all calls</option>
 					<option value="incoming">incoming</option>
@@ -98,7 +105,10 @@
 				</select>
 				&nbsp;
 				<input value='Search' type='submit'>
-				<script language='JavaScript'>setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");</script>
+				<script language='JavaScript'>
+					setActiveSelector('group_type_selector',"[% CDR_GROUP %]");
+					setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");
+				</script>
 			</td>
 		</tr>
 		</form>
@@ -164,5 +174,6 @@
 	[% INCLUDE main_menu2.tt-inc-custom %]
 	
 	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
 </html>
 	

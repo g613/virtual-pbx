@@ -1,0 +1,277 @@
+<html>
+<head>
+	<title>Virtual PBX - tenants</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='left'>
+				[% INCLUDE partner_main_menu.tt-inc %]
+			</td>
+		</tr>
+	</table>
+	
+	<center>
+	<table width='100%' class='logo'>
+		<tr>
+			<td width='10%'>&nbsp;</td>
+			<td align='center'><h1>Информация об арендаторе</h1></td>
+			<td width='10%' align='right'>
+				<a title='удалить арендатора' href='?action=user_del&user_id=[% USER.ID %]&single_user=1' onclick="return DelConfirm('ru')"><span class='icon-bin-all fs2'></span></a>
+			</td>
+		</tr>
+	</table>
+
+	<p>
+	<table width='100%'>
+		<tr>
+		</tr>
+		<tr>
+			<td width='50%' valign='top'>
+			<table width='100%'>
+			<form method='post' onSubmit='return checkChanges(this)'>
+			<tr>
+				<td>
+					Наименование арендатора:
+				</td>
+				<td>
+					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]&nbsp;&nbsp;
+					<a title='интерфейс арендатора' href='/ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&action=start&saction=user_info'><span class='icon-enter fs0'></span></a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					E-mail:
+				</td>
+				<td>
+					[% USER.EMAIL | html %]
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Язык интерфейса / IVR:
+				</td>
+				<td align='left'>
+					[% USER.LANG_NAME | html %]
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Код доступа:
+				</td>
+				<td>
+					[% USER.ACCESS_CODE | html %]
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Pin-код:
+				</td>
+				<td>
+					[% USER.PIN_CODE | html %][% USER.PIN_CODE2 %]
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Общий DID: 
+				</td>
+				<td>
+					<input size='15' name='US_VOICENUMBER' type='text' value="[% USER.VOICENUMBER | html %]">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Группа:
+				</td>
+				<td>
+					<select name="US_GROUP_ID">
+					[% FOREACH gr = GROUPS %]
+						[% IF gr.GROUP_ID eq USER.GROUP_ID %]
+							<option value="[% gr.GROUP_ID | html %]" selected>[% gr.GROUP_NAME | html %]</option>
+						[% ELSE %]
+							<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+						[% END %]
+					[% END %]
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Статус:
+				</td>
+				<td>
+					<select name="US_STATUS">
+					[% IF USER.STATUS %]
+						<option value="1">активный</option>
+						<option value="0">заблокирован</option>
+					[% ELSE %]
+						<option value="0">заблокирован</option>
+						<option value="1">активный</option>
+					[% END %]
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Запрет изменений ( R/O ):
+				</td>
+				<td>
+					<select name="US_DEMO_MODE">
+					[% IF USER.DEMO_MODE %]
+						<option value="1">да</option>
+						<option value="0">нет</option>
+					[% ELSE %]
+						<option value="0">нет</option>
+						<option value="1">да</option>
+					[% END %]
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Описание:
+				</td>
+				<td>
+					<textarea rows='5' cols='40' name='US_DESCRIPTION'>[% USER.DESCRIPTION | html %]</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Белый список IP для доступа к web:
+				</td>
+				<td>
+					<textarea rows='3' cols='40' name='US_PERMIT_WEB'>[% USER.PERMIT_WEB | html %]</textarea>
+				</td>
+			</tr>
+			<tr><td colspan='2'>&nbsp;</td></tr>
+			<tr>
+				<td colspan='2' align='center'>
+					<input type='hidden' value='[% USER.ID %]' name='user_id'>
+					<input type='hidden' value='user_update' name='action'>
+					<input type='hidden' value='[% PARTNER | html %]' name='partner'>
+					<input value='Сохранить изменения' type='submit'>
+				</td>
+			</tr>
+			</form>
+			</table>
+			</td>
+			<td valign='top'>
+				<table width='100%'>
+				[% IF USE_BILLING %]
+				<tr>
+					<td>
+						<table width='100%'>
+							<tr>
+								<td colspan='8'>
+									<h2>Баланс ( <b>Тариф - <b>[% TARIFF.NAME | html %]</b> ):</h2>
+								</td>
+							</tr>
+							<tr>
+								<td colspan='4'>
+									&nbsp;
+									&nbsp;
+									<b>[% USER.USER_BALANCE %]</b> [% TARIFF.DESCRIPTION %]
+								</td>
+								<td colspan='4' align='right'>
+									<form method="post" onSubmit='return checkChanges(this)'>
+									<input size='5' type='text' name='balance'>
+									<input type='hidden' value='[% USER.ID %]' name='user_id'>
+									<input type='hidden' value='[% USER.CURRENCY_ID %]' name='cur_id'>
+									<input type='hidden' value='balance_update' name='action'>
+									<input type='hidden' value='[% PARTNER | html %]' name='partner'>
+									&nbsp;
+									<input value='+/-' type='submit'>
+									</form>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				[% END %]
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<td>
+						<table width='100%'>
+							<tr>
+								<td><h2>Выделенные DID:</h2></td>
+								[% IF DID_MNG %]
+								<td align='right'>
+									<a title='удалить все DIDs' href='?action=did_del&did_id=all&user_id=[% USER.ID | html %]&did=all&partner=[% PARTNER | html %]' onclick="return DelConfirm('ru')"><span class='icon-bin-all fs2'></span></a>
+								</td>
+								[% END %]
+							</tr>
+							<tr>
+								<td>
+								&nbsp;
+								&nbsp;
+								[% FOREACH d = DIDS %]
+									[% IF DID_MNG %]
+										<a title='удалить DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&partner=[% PARTNER | html %]&did=[% d.DID | html %]' onclick="return DelConfirm('ru')">[% d.DID | html %]</a>
+									[% ELSE %]
+										[% d.DID | html %]
+									[% END %]
+									
+									[% IF d.CHANNELS ne '-1' %]
+									( [% d.CHANNELS | html %] )
+									[% END %]
+									;&nbsp;
+								[% END %]
+								</td>
+								<td valign='top' width='20%' align='center' nowrap='nowrap'>
+								[% IF DID_MNG %]
+								<form method="post" onSubmit='return checkChanges(this)'>
+									<input size='11' type='text' name='did'>
+									<input size='11' type='text' placeholder='Ёмкость' name='channels'>
+									<input type='hidden' name='pn' value='[% USER.VOICENUMBER | html %]'>
+									<input type='hidden' name='ac' value='[% USER.ACCESS_CODE | html %]'>
+									&nbsp;
+									<input value='Добавить DID' type='submit'>
+									<input type='hidden' value='did_add' name='action'>
+									<input type='hidden' value='[% PARTNER | html %]' name='partner'>
+								</form>
+								[% END %]
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+				<td>
+					<h2>Ссылки:</h2>
+					&nbsp;&nbsp;<a href='/ui4ai?action=role_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Роли</a>
+					&nbsp;/&nbsp;<a href='/ui4ai?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP шлюзы</a>
+					&nbsp;/&nbsp;<a href='/ui4ai?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Маршруты</a>
+					&nbsp;/&nbsp;<a href='/ui4ai?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Телефоны</a>
+					&nbsp;/&nbsp;<a href='/ui4ai?action=cdr_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>CDRs</a>
+					&nbsp;/&nbsp;<a href='/ui4ai?action=j_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Журнал</a>
+					&nbsp;/&nbsp;<a href='/ui4ai?action=act_list_all&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Активность</a>
+					&nbsp;/&nbsp;<a href='/ui4ai?action=msg_list_all&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Файлы</a>
+				</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	</p>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
+			

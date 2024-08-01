@@ -1,0 +1,1540 @@
+<html>
+<!-- $Id: integrations.tt,v 1.3 2024/04/24 18:44:32 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Настройка интеграций</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script language="JavaScript">var integration_found=0;</script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+			
+	<h1>Integrations setup</h1>
+
+	<br /><br />
+	[% IF HOOKS contain ',AmoCRM,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="14" valign="top" align="left">
+				<img src="/xvb/images/logo_amo.png" width="200" />
+			</td>
+			<td>
+				XVB-PBX API url:
+			</td>
+			<td>
+				[% CGI_SERVER %]/amocrm/[% USER_CREDS.ACCESS_CODE %]/[% C2C_SECRET | html %]
+			</td>
+		</tr>
+
+		<tr>
+			<td width='25%'>
+				AmoCRM domain ( without .amocrm.ru ):
+			</td>
+			<td width='55%'>
+				<input size="40" name='AMO_DOMAIN' type='text' value="[% SESSION_VARS.AMO_DOMAIN | html %]">
+			</td>
+		</tr>
+		<!--
+		<tr>
+			<td>
+				AMO-CRM API key:
+			</td>
+			<td>
+				<input size="40" name='AMO_KEY' type='text' value="[% SESSION_VARS.AMO_KEY | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				AmoCRM login (email):
+			</td>
+			<td>
+				<input size="40" name='AMO_LOGIN' type='text' value="[% SESSION_VARS.AMO_LOGIN | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Password:<span>
+					Integration password. Optional parameter.
+				</span></a></td>
+			<td>
+				<input size="40" name='AMO_SECRET' type='text' value="[% SESSION_VARS.AMO_SECRET | html %]">
+			</td>
+		</tr>
+		-->
+		<tr>
+			<td><a href='#' class='info'>Extensions mappaing / pipeline-ID:<span>
+				Optional parameter. Keep empty if not sure.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.AMO_PIPELINE_MAP | textarea_rows %]' cols='38' name='AMO_PIPELINE_MAP'>[% SESSION_VARS.AMO_PIPELINE_MAP | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Do not loging following DIDs:<span>
+				DID list separated by commas that not tracking by CRM. CNAM-lookup also not doing in this case.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.AMO_SKIP_DIDS | textarea_rows %]' cols='38' name='AMO_SKIP_DIDS'>[% SESSION_VARS.AMO_SKIP_DIDS | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip unsorted:<span>
+					System will not store unknown numbers in case of enabling this flag.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="AMO_SKIP_UNSORT" type="checkbox" class="onoffswitch-checkbox" id="AMO_SKIP_UNSORT-ch" 
+				[% IF SESSION_VARS.AMO_SKIP_UNSORT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="AMO_SKIP_UNSORT-ch">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip unsort for outbound only:<span>
+					System will not store unknown numbers for outbound calls in case of enabling this flag.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="AMO_SKIP_OUT_UNSORT" type="checkbox" class="onoffswitch-checkbox" id="AMO_SKIP_OUT_UNSORT-ch" 
+				[% IF SESSION_VARS.AMO_SKIP_OUT_UNSORT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="AMO_SKIP_OUT_UNSORT-ch">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Do not create leads:<span>
+					No any leads will be created in case of enabling this flag.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="AMO_SKIP_LEADS" type="checkbox" class="onoffswitch-checkbox" id="AMO_SKIP_LEADS-ch" 
+				[% IF SESSION_VARS.AMO_SKIP_LEADS %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="AMO_SKIP_LEADS-ch">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Do not create a responsible person.:<span>
+					In case of enabling this flag the system will not create responsible person for new  phone numbers.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="AMO_SKIP_RESPONSIBLE" type="checkbox" class="onoffswitch-checkbox" id="AMO_SKIP_RESPONSIBLE-ch" 
+				[% IF SESSION_VARS.AMO_SKIP_RESPONSIBLE %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="AMO_SKIP_RESPONSIBLE-ch">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Search by company name:<span>
+					In case of enabling this flag the system will try to lookup CNAM by contact name and company name together.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="AMO_C_LOOKUP" type="checkbox" class="onoffswitch-checkbox" id="AMO_C_LOOKUP-ch" 
+				[% IF SESSION_VARS.AMO_C_LOOKUP %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="AMO_C_LOOKUP-ch">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Automatic contact creation:<span>
+					in case of enabling this flag the system will automaticly create contact in AmoCRM if number not associated anyone yet.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="AMO_AUTO_CONTACT" type="checkbox" class="onoffswitch-checkbox" id="AMO_AUTO_CONTACT-ch" 
+				[% IF SESSION_VARS.AMO_AUTO_CONTACT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="AMO_AUTO_CONTACT-ch">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip call to responsible person:<span>
+					Do not call to responsible person first for inbound calls, instead will use standard ivr call-flow.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="AMO_POPUP" type="hidden" value="all"/> 
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<!--
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,AMO_AUTO_CONTACT:1,AMO_C_LOOKUP:1,AMO_SKIP_RESPONSIBLE:1,AMO_SKIP_LEADS:1,AMO_SKIP_OUT_UNSORT:1,AMO_SKIP_UNSORT:1,AMO_POPUP,AMO_SECRET,AMO_LOGIN,AMO_DOMAIN,AMO_KEY,AMO_PIPELINE_MAP,AMO_SKIP_DIDS"/> 
+		-->
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,AMO_AUTO_CONTACT:1,AMO_C_LOOKUP:1,AMO_SKIP_RESPONSIBLE:1,AMO_SKIP_LEADS:1,AMO_SKIP_OUT_UNSORT:1,AMO_SKIP_UNSORT:1,AMO_POPUP,AMO_DOMAIN,AMO_PIPELINE_MAP,AMO_SKIP_DIDS"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+
+
+	<!-------------------- Bitrix24 -------------------------------------------------->
+
+	[% IF HOOKS contain ',Bitrix24' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="11" valign="top" align="left">
+				<img src="/xvb/images/logo_bx24.png" width="200" />
+			</td>
+			<td>
+				XVB-PBX API url:
+			</td>
+			<td>
+				[% CGI_SERVER %]/cgi-bin/bitrix24-call.cgi/[% USER_CREDS.ACCESS_CODE %]/[% C2C_SECRET | html %]
+			</td>
+		</tr>
+
+		<tr>
+			<td width='25%'>
+				CRM WebHook url
+			</td>
+			<td width='55%'>
+				<input size="40" name='BX24_URL' type='text' value="[% SESSION_VARS.BX24_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Activation code:<span>
+					Using for click2call calls from bitrix24
+				</span></a></td>
+			<td>
+				<input size="40" name="BX24_C2C" type="text" value="[% SESSION_VARS.BX24_C2C | html %]" />
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Default agent:<span>
+					Employee extension who will use to assign all unanswered calls.
+				</span></a></td>
+			<td>
+				<input size="40" name='CRM_DEFAGENT' type='text' value="[% SESSION_VARS.CRM_DEFAGENT | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Do not loging following DIDs:<span>
+				DID list separated by commas that not tracking by CRM. CNAM-lookup also not doing in this case.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.BX24_SKIP_DIDS | textarea_rows %]' cols='38' name='BX24_SKIP_DIDS'>[% SESSION_VARS.BX24_SKIP_DIDS | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Send files to bitrix24:<span>
+					in case of enabling this flag system will put recordings to bitrix24 servver, in case of disabling system will send links to file.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="BX24_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="BX24_ATTACH-ch" 
+				[% IF SESSION_VARS.BX24_ATTACH %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="BX24_ATTACH-ch">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Double lookup:<span>
+					if enabling system will try to lookup 7xxxxxxxxxx and 8xxxxxxxxxx phone numbers format. actual for RU phones only.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="BX24_DL" type="checkbox" class="onoffswitch-checkbox" id="BX24_DL-ch" 
+				[% IF SESSION_VARS.BX24_DL %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="BX24_DL-ch">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+
+		<tr>
+			<td><a href='#' class='info'>Skip tracking outbound calls:<span>
+					System will not track outbound calls to CRM in case of enabling this flag.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NOOUT" type="checkbox" class="onoffswitch-checkbox" id="CRM_NOOUT-ch-1" 
+				[% IF SESSION_VARS.CRM_NOOUT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NOOUT-ch-1">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Register external line:<span>
+					Register inbound DID as external number in CRM in case of inboud calls if enabling this flag.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="BX24_REGLINE" type="checkbox" class="onoffswitch-checkbox" id="BX24_REGLINE-ch" 
+				[% IF SESSION_VARS.BX24_REGLINE %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="BX24_REGLINE-ch">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip call to responsible person:<span>
+					Do not call to responsible person first for inbound calls, instead will use standard ivr call-flow.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-1" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-1">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,BX24_C2C,BX24_URL,CRM_DEFAGENT,BX24_SKIP_DIDS,BX24_ATTACH:1,BX24_DL:1,CRM_NOOUT:1,BX24_REGLINE:1"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	
+	<!-------------------- AlfaCRM -------------------------------------------------->
+
+	[% IF HOOKS contain ',AlfaCRM,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="5" valign="top" align="left">
+				<img src="/xvb/images/logo_alfa.png" width="200" />
+			</td>
+			<td width='25%'>
+				CRM API url:
+			</td>
+			<td width='55%'>
+				<input size="40" name='ACRM_URL' type='text' value="[% SESSION_VARS.ACRM_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Extensions mappaing / pipeline-ID:<span>
+				Optional parameter. Keep empty if not sure.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.ACRM_PIPELINE_MAP | textarea_rows %]' cols='38' name='AMO_PIPELINE_MAP'>[% SESSION_VARS.ACRM_PIPELINE_MAP | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip tracking outbound calls:<span>
+					System will not track outbound calls to CRM in case of enabling this flag.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NOOUT" type="checkbox" class="onoffswitch-checkbox" id="CRM_NOOUT-ch-2" 
+				[% IF SESSION_VARS.CRM_NOOUT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NOOUT-ch-2">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip call to responsible person:<span>
+					Do not call to responsible person first for inbound calls, instead will use standard ivr call-flow.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-2" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-2">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,ACRM_URL,CRM_NOOUT:1,ACRM_PIPELINE_MAP"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- EnvyCRM -------------------------------------------------->
+
+	[% IF HOOKS contain ',EnvyCRM,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="8" valign="top" align="left">
+				<img src="/xvb/images/logo_envy.png" width="200" />
+			</td>
+			<td>
+				Call request url:
+			</td>
+			<td>
+				[% CGI_SERVER %]/cgi-bin/envycrm/call/[% USER_CREDS.ACCESS_CODE %]/[% C2C_SECRET | html %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Test request url:
+			</td>
+			<td>
+				[% CGI_SERVER %]/cgi-bin/envycrm/test
+			</td>
+		</tr>
+		<tr>
+			<td>
+				List request url:
+			</td>
+			<td>
+				[% CGI_SERVER %]/cgi-bin/envycrm/list
+			</td>
+		</tr>
+
+		<tr>
+			<td width='25%'>
+				EnyCRM token
+			</td>
+			<td width='55%'>
+				<input size="40" name='ENVYCRM_KEY' type='text' value="[% SESSION_VARS.ENVYCRM_KEY | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Default agent:<span>
+					Employee extension who will use to assign all unanswered calls.
+				</span></a></td>
+			<td>
+				<input size="40" name='CRM_DEFAGENT' type='text' value="[% SESSION_VARS.CRM_DEFAGENT | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip tracking outbound calls:<span>
+					System will not track outbound calls to CRM in case of enabling this flag.
+				</span></a></td>
+			<td>
+				<select name="CRM_NOOUT">
+				[% IF SESSION_VARS.CRM_NOOUT eq 'all' %]
+					<option value="all" selected>all</option>
+					<option value="unknown">unknown</option>
+					<option value="">no</option>
+				[% ELSIF SESSION_VARS.CRM_NOOUT eq 'unknown' %]
+					<option value="all">all</option>
+					<option value="unknown" selected>unknown</option>
+					<option value="">no</option>
+				[% ELSE %]
+					<option value="all">all</option>
+					<option value="unknown">unknown</option>
+					<option value="" selected>no</option>
+				[% END %]
+				</select>	
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip call to responsible person:<span>
+					Do not call to responsible person first for inbound calls, instead will use standard ivr call-flow.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-3" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-3">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,ENVYCRM_KEY,CRM_DEFAGENT,CRM_NOOUT"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- PlanFix -------------------------------------------------->
+
+	[% IF HOOKS contain ',PFCRM,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="7" valign="top" align="left">
+				<img src="/xvb/images/logo_planfix.png" width="200" />
+			</td>
+			<td>
+				XVB-PBX url:
+			</td>
+			<td>
+				[% CGI_SERVER %]/pfcrm/[% USER_CREDS.ACCESS_CODE %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Auth key:
+			</td>
+			<td>
+				[% C2C_SECRET | html %]
+			</td>
+		</tr>
+
+		<tr>
+			<td width='25%'>
+				Planfix domain ( without .planfix.ru )
+			</td>
+			<td width='55%'>
+				<input size="40" name='PF_DOMAIN' type='text' value="[% SESSION_VARS.PF_DOMAIN | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				API token
+			</td>
+			<td>
+				<input size="40" name='PF_KEY' type='text' value="[% SESSION_VARS.PF_KEY | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip tracking outbound calls:<span>
+					System will not track outbound calls to CRM in case of enabling this flag.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NOOUT" type="checkbox" class="onoffswitch-checkbox" id="CRM_NOOUT-ch-4" 
+				[% IF SESSION_VARS.CRM_NOOUT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NOOUT-ch-4">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip call to responsible person:<span>
+					Do not call to responsible person first for inbound calls, instead will use standard ivr call-flow.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-4" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-4">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,PF_KEY,PF_DOMAIN,CRM_NOOUT:1"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- UNF -------------------------------------------------->
+
+	[% IF HOOKS contain ',UNFCRM,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="8" valign="top" align="left">
+				<img src="/xvb/images/logo_unf.png" width="200" />
+			</td>
+			<td>
+				XVB-PBX API url:
+			</td>
+			<td>
+				[% CGI_SERVER %]/unfcrm/[% USER_CREDS.ACCESS_CODE %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				XVB-PBX auth key:
+			</td>
+			<td>
+				[% C2C_SECRET | html %]
+			</td>
+		</tr>
+
+		<tr>
+			<td width='25%'>
+				CRM API url:
+			</td>
+			<td width='55%'>
+				<input size="40" name='UNF_URL' type='text' value="[% SESSION_VARS.UNF_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				CRM API token:
+			</td>
+			<td>
+				<input size="40" name='UNF_KEY' type='text' value="[% SESSION_VARS.UNF_KEY | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Default agent:<span>
+					Employee extension who will use to assign all unanswered calls.
+				</span></a></td>
+			<td>
+				<input size="40" name='CRM_DEFAGENT' type='text' value="[% SESSION_VARS.CRM_DEFAGENT | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip tracking outbound calls:<span>
+					System will not track outbound calls to CRM in case of enabling this flag.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NOOUT" type="checkbox" class="onoffswitch-checkbox" id="CRM_NOOUT-ch-6" 
+				[% IF SESSION_VARS.CRM_NOOUT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NOOUT-ch-6">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip call to responsible person:<span>
+					Do not call to responsible person first for inbound calls, instead will use standard ivr call-flow.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-5" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-5">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,UNF_KEY,UNF_URL,CRM_NOOUT:1,CRM_DEFAGENT"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- Y-Clents -------------------------------------------------->
+
+	[% IF HOOKS contain ',YClients,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="3" valign="top" align="left">
+				<img src="/xvb/images/logo_yclients.png" width="200" />
+			</td>
+			<td width='25%'>
+				CRM API token
+			</td>
+			<td width='55%'>
+				<input size="40" name='YC_TOKEN' type='text' value="[% SESSION_VARS.YC_TOKEN | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip call to responsible person:<span>
+					Do not call to responsible person first for inbound calls, instead will use standard ivr call-flow.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-6" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-6">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,YC_TOKEN"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- Retail -------------------------------------------------->
+
+	[% IF HOOKS contain ',RetailCRM,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="7" valign="top" align="left">
+				<img src="/xvb/images/logo_retail.png" width="200" />
+			</td>
+			<td>
+				RetailCRM domain ( without .retailcrm.ru )
+			</td>
+			<td>
+				<input size="40" name='RETAILCRM_DOMAIN' type='text' value="[% SESSION_VARS.RETAILCRM_DOMAIN | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td width='25%'>
+				CRM API key:
+			</td>
+			<td width='55%'>
+				<input size="40" name='RETAILCRM_KEY' type='text' value="[% SESSION_VARS.RETAILCRM_KEY | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Default agent:<span>
+					Employee extension who will use to assign all unanswered calls.
+				</span></a></td>
+			<td>
+				<input size="40" name='CRM_DEFAGENT' type='text' value="[% SESSION_VARS.CRM_DEFAGENT | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip tracking outbound calls:<span>
+					System will not track outbound calls to CRM in case of enabling this flag.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NOOUT" type="checkbox" class="onoffswitch-checkbox" id="CRM_NOOUT-ch-5" 
+				[% IF SESSION_VARS.CRM_NOOUT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NOOUT-ch-5">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Create leads:<span>
+					Leads will be created for new numbers in case of enabling this flag.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="RETAILCRM_AUTOADD" type="checkbox" class="onoffswitch-checkbox" id="RETAILCRM_AUTOADD-ch" 
+				[% IF SESSION_VARS.RETAILCRM_AUTOADD %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="RETAILCRM_AUTOADD-ch">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip call to responsible person:<span>
+					Do not call to responsible person first for inbound calls, instead will use standard ivr call-flow.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-7" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-7">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,RETAILCRM_KEY,RETAILCRM_DOMAIN,RETAILCRM_AUTOADD:1,CRM_NOOUT:1,CRM_DEFAGENT"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- UOn -------------------------------------------------->
+
+	[% IF HOOKS contain ',UOn,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="8" valign="top" align="left">
+				<img src="/xvb/images/logo_uon.png" width="200" />
+			</td>
+			<td>
+				XVB-PBX API url:
+			</td>
+			<td>
+				[% CGI_SERVER %]/uoncrm/[% USER_CREDS.ACCESS_CODE %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				XVB-PBX auth key:
+			</td>
+			<td>
+				[% C2C_SECRET | html %]
+			</td>
+		</tr>
+
+		<tr>
+			<td width='25%'>
+				UOn API url:
+			</td>
+			<td width='55%'>
+				<input size="40" name='UON_URL' type='text' value="[% SESSION_VARS.UON_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				API token
+			</td>
+			<td>
+				<input size="40" name='UON_KEY' type='text' value="[% SESSION_VARS.UON_KEY | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Default agent:<span>
+					Employee extension who will use to assign all unanswered calls.
+				</span></a></td>
+			<td>
+				<input size="40" name='CRM_DEFAGENT' type='text' value="[% SESSION_VARS.CRM_DEFAGENT | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip tracking outbound calls:<span>
+					System will not track outbound calls to CRM in case of enabling this flag.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NOOUT" type="checkbox" class="onoffswitch-checkbox" id="CRM_NOOUT-ch-9" 
+				[% IF SESSION_VARS.CRM_NOOUT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NOOUT-ch-9">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip call to responsible person:<span>
+					Do not call to responsible person first for inbound calls, instead will use standard ivr call-flow.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-9" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-9">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,UON_KEY,UON_URL,CRM_NOOUT:1,CRM_DEFAGENT"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- CommonCRM -------------------------------------------------->
+
+	[% IF HOOKS contain ',CommonCRM,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="8" valign="top" align="left">
+				<img src="/xvb/images/logo_webhooks.png" width="200" />
+			</td>
+			<td width='25%'>
+				XVB-PBX API url:
+			</td>
+			<td width='55%'>
+				[% CGI_SERVER %]/commoncrm/[% USER_CREDS.ACCESS_CODE %]
+			</td>
+		</tr>
+		<tr>
+			<td width='25%'>
+				Token:
+			</td>
+			<td width='55%'>
+				[% C2C_SECRET | html %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				WebHook url
+			</td>
+			<td>
+				<input size="40" name='CCRM_URL' type='text' value="[% SESSION_VARS.CCRM_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Lookup for responsible person / CNAM:<span>
+					Lookup responsible person for try dial him first. CNAM lookuped same time.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_CNL" type="checkbox" class="onoffswitch-checkbox" id="CRM_CNL-ch-8" 
+				[% IF SESSION_VARS.CRM_CNL %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_CNL-ch-8">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip call to responsible person:<span>
+					Do not call to responsible person first for inbound calls, instead will use standard ivr call-flow.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-8" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-8">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Send call start event:</a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_ESTART" type="checkbox" class="onoffswitch-checkbox" id="CRM_ESTART-ch-8" 
+				[% IF SESSION_VARS.CRM_ESTART %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_ESTART-ch-8">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Send call stop event:</a></td></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_ESTOP" type="checkbox" class="onoffswitch-checkbox" id="CRM_ESTOP-ch-8" 
+				[% IF SESSION_VARS.CRM_ESTOP %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_ESTOP-ch-8">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_CNL:1,CRM_ESTOP:1,CRM_ESTART:1,CRM_NODR:1,CCRM_URL"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- MoyKlass -------------------------------------------------->
+
+	[% IF HOOKS contain ',MyClass,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="7" valign="top" align="left">
+				<img src="/xvb/images/logo_myclass.png" width="200" />
+			</td>
+			<td width='25%'>
+				CRM API key
+			</td>
+			<td width='55%'>
+				<input size="40" name='MCL_KEY' type='text' value="[% SESSION_VARS.MCL_KEY | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Do not loging following DIDs:<span>
+				DID list separated by commas that not tracking by CRM. CNAM-lookup also not doing in this case.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.MCL_SKIP_DIDS | textarea_rows %]' cols='38' name='MCL_SKIP_DIDS'>[% SESSION_VARS.MCL_SKIP_DIDS | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip call to responsible person:<span>
+					Do not call to responsible person first for inbound calls, instead will use standard ivr call-flow.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-9" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-9">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Create leads:<span>
+					Leads will be created for new numbers in case of enabling this flag.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="MCL_NEWCONTACT" type="checkbox" class="onoffswitch-checkbox" id="MCL_NEWCONTACT-ch-9" 
+				[% IF SESSION_VARS.MCL_NEWCONTACT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="MCL_NEWCONTACT-ch-9">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>CNAM parsing:<span>
+					If enabling the system will try to lookup internal extensions in cname. Like 'Elena (#100)' / 'Michael (#120)' for 100 / 120.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="MCL_CHECK_EXT" type="checkbox" class="onoffswitch-checkbox" id="MCL_CHECK_EXT-ch-9" 
+				[% IF SESSION_VARS.MCL_CHECK_EXT %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="MCL_CHECK_EXT-ch-9">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,MCL_KEY,MCL_CHECK_EXT:1,MCL_NEWCONTACT:1,MCL_SKIP_DIDS"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+	<!-------------------- Simple Calls -------------------------------------------------->
+
+	[% IF HOOKS contain ',SimpleCalls,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="10" valign="top" align="left">
+				<img src="/xvb/images/logo_sc.png" width="200" />
+			</td>
+			<td width='25%'>
+				XVB-PBX API url:
+			</td>
+			<td width='55%'>
+				[% CGI_SERVER %]/sc-crm.cgi/
+			</td>
+		</tr>
+		<tr>
+			<td width='25%'>
+				XVB-PBX API Login:
+			</td>
+			<td width='55%'>
+				[% USER_CREDS.ACCESS_CODE %]
+			</td>
+		</tr>
+		<tr>
+			<td width='25%'>
+				XVB-PBX API Password:
+			</td>
+			<td width='55%'>
+				[% C2C_SECRET | html %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				CRM API url:
+			</td>
+			<td>
+				<input size="40" name='SCCRM_URL' type='text' value="[% SESSION_VARS.SCCRM_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Default agent:<span>
+					Employee extension who will use to assign all unanswered calls.
+				</span></a></td>
+			<td>
+				<input size="40" name='CRM_DEFAGENT' type='text' value="[% SESSION_VARS.CRM_DEFAGENT | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Do not loging following DIDs:<span>
+				DID list separated by commas that not tracking by CRM. CNAM-lookup also not doing in this case.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.SCCRM_SKIP_DIDS | textarea_rows %]' cols='38' name='SCCRM_SKIP_DIDS'>[% SESSION_VARS.SCCRM_SKIP_DIDS | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Do not loging following phones:<span>
+				Local phone list separated by commas that not tracking by CRM.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.SCCRM_SKIP_EXT | textarea_rows %]' cols='38' name='SCCRM_SKIP_EXT'>[% SESSION_VARS.SCCRM_SKIP_EXT | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip call-recordings for phones:<span>
+					System will not send call-recordings to CRM from these local phones ( commas separated ) in case of enabling this flag.
+				</span></a></td>
+			<td>
+				<textarea rows='[% SESSION_VARS.SCCRM_SKIP_REC | textarea_rows %]' cols='38' name='SCCRM_SKIP_REC'>[% SESSION_VARS.SCCRM_SKIP_REC | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Skip call to responsible person:<span>
+					Do not call to responsible person first for inbound calls, instead will use standard ivr call-flow.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_NODR" type="checkbox" class="onoffswitch-checkbox" id="CRM_NODR-ch-10" 
+				[% IF SESSION_VARS.CRM_NODR %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_NODR-ch-10">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_NODR:1,SCCRM_URL,SCCRM_SKIP_DIDS,SCCRM_SKIP_EXT,SCCRM_SKIP_REC,CRM_DEFAGENT"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+
+	<!-------------------- HelpDeskEddy -------------------------------------------------->
+
+	[% IF HOOKS contain ',HelpDeskEddy,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="8" valign="top" align="left">
+				<img src="/xvb/images/logo_helpdeskeddy.png" width="200" />
+			</td>
+			<td width='25%'>
+				XVB-PBX API url:
+			</td>
+			<td width='55%'>
+				[% CGI_SERVER %]/helpdeskeddy/[% USER_CREDS.ACCESS_CODE %]/[% C2C_SECRET | html %]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Channel:
+			</td>
+			<td>
+				<input size="60" name='HDE_URL' type='text' value="[% SESSION_VARS.HDE_URL | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Send call start event:</a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="CRM_ESTART" type="checkbox" class="onoffswitch-checkbox" id="CRM_ESTART-ch-9" 
+				[% IF SESSION_VARS.CRM_ESTOP %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="CRM_ESTART-ch-9">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Send files to CRM:<span>
+					in case of enabling this flag system will put recordings to CRM servver, in case of disabling system will send links to file.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="HDE_ATTACH" type="checkbox" class="onoffswitch-checkbox" id="HDE_ATTACH-ch-1" 
+				[% IF SESSION_VARS.HDE_ATTACH %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="HDE_ATTACH-ch-1">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="CRM_ESTART:1,HDE_ATTACH:1,HDE_URL"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+	
+		
+	<!-------------------- RoiStat -------------------------------------------------->
+
+	[% IF HOOKS contain ',Roistat,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="2" valign="top" align="left">
+				<img src="/xvb/images/logo_roistat.png" width="200" />
+				<br /><br />
+				<br /><br />
+			</td>
+			<td width='25%'>
+				DID list to send roistst ( commas separated ):
+			</td>
+			<td width='55%'>
+				<textarea rows='[% SESSION_VARS.ROISTAT_DIDS | textarea_rows %]' cols='38' name='ROISTAT_DIDS'>[% SESSION_VARS.ROISTAT_DIDS | html %]</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="ROISTAT_DIDS"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+
+	<!-------------------- MailRuCloud -------------------------------------------------->
+
+	[% IF HOOKS contain ',MailRuCloud,' %]
+	<script language="JavaScript">integration_found=1;</script>
+	<p>	
+		<table width='60%' align='left'>
+
+		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
+		
+		<tr>
+			<td rowspan="8" valign="top" align="left">
+				<img src="/xvb/images/logo_mailru.png" width="200" />
+				<br /><br />
+				<br /><br />
+			</td>
+			<td width='25%'>
+				mailru-cloud login:
+			</td>
+			<td width='55%'>
+				<input size="40" name='MAILRUCLOUD_LOGIN' type='text' value="[% SESSION_VARS.MAILRUCLOUD_LOGIN | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				 mailru-cloud password:
+			</td>
+			<td>
+				<input size="40" name='MAILRUCLOUD_PSWD' type='text' value="[% SESSION_VARS.MAILRUCLOUD_PSWD | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td><a href='#' class='info'>Direct file send:<span>
+					Not use if not sure.
+				</span></a></td>
+			<td>
+				<div class="onoffswitch">
+				<input name="MAILRUCLOUD_NOSPOOL" type="checkbox" class="onoffswitch-checkbox" id="MAILRUCLOUD_NOSPOOL" 
+				[% IF SESSION_VARS.MAILRUCLOUD_NOSPOOL %]
+					checked
+				[% END %]
+				>
+				<label class="onoffswitch-label" for="MAILRUCLOUD_NOSPOOL">
+					<span class="onoffswitch-inner-int"></span>
+					<span class="onoffswitch-switch"></span>
+				</label></div>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align='left'>
+				<input value='Save settings' type='submit'>
+				<br /><br />
+				<br /><br />
+			</td>
+		</tr>
+		<input name="action" type="hidden" value="sv_update"/> 
+		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+		<input name="EXT_VARS" type="hidden" value="MAILRUCLOUD_PSWD,MAILRUCLOUD_LOGIN,MAILRUCLOUD_NOSPOOL"/> 
+		</form>
+		</table>
+	</p>
+	[% END %]
+
+	[% INCLUDE integrations.tt-custom %]
+
+	<script language="JavaScript">
+		if ( integration_found == 0 ) {
+			document.write( '<h2>No integrations(</h2>' );
+		}
+	</script>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
+	

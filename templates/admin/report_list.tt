@@ -44,10 +44,21 @@
 					<input value='Run' type='submit'>
 				</form>
 			</td>
-			<td align='right'>
+			<td align='right' nowrap="nowrap">
 				<form method="post" onSubmit='return checkChanges(this)'>
 					<input size='20' name='name' type='text' placeholder='Report name' value='[% SEARCH_NAME %]'>
 					<input type='hidden' value='report_list' name='action'>
+					&nbsp;
+					<select name='type'>
+						<option value="">type</option>
+						<option value="1">admin</option>
+						<option value="0">user</option>
+						[% IF SEARCH_TYPE eq '1' %]
+							<option value="1" selected>admin</option>
+						[% ELSIF SEARCH_TYPE eq '0' %]
+							<option value="0" selected>user</option>
+						[% END %]
+					</select>	
 					&nbsp;
 					<input value='Search' type='submit'>
 				</form>
@@ -71,7 +82,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='8'>
-				<a title='previous page' href='?action=report_list&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
+				<a title='previous page' href='?action=report_list&type=[% SEARCH_TYPE %]&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -80,10 +91,10 @@
 		<tr align='center' class='nocolor'>
 			<td>[% t.ID %]</td>
 			<td>
-				<a title='get excel table' href='?action=report_run&report_id=[% t.ID %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
+				<a title='get excel table' href='?action=report_run&type=[% t.TYPE  %]&report_id=[% t.ID %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
 			</td>
 			<td align='left'>
-				<a title='run report' href='?action=report_run&report_id=[% t.ID %]'>[% t.NAME | html %]</a>
+				<a title='run report' href='?action=report_run&type=[% t.TYPE  %]&report_id=[% t.ID %]'>[% t.NAME | html %]</a>
 			</td>
 			<td>
 				<a title='edit report' href='?action=report_info&report_id=[% t.ID %]'><span class='icon-cogs fs0'></span></a>
@@ -114,7 +125,7 @@
 			</td>
 			<td align='right' colspan='4'>
 				[% IF MSG_NEXT ne '' %]
-				<a title='next page' href='?action=report_list&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
+				<a title='next page' href='?action=report_list&type=[% SEARCH_TYPE %]&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
 				[% END %]
 			</td>
 		</tr>

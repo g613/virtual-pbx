@@ -4,7 +4,7 @@
 				|
 				<a class='amenu' href='?action=group_list'>Groups</a>
 				|
-				<a class='amenu' href='?action=user_list'>Tenants</a>
+				<a class='amenu' href='?action=user_list&f_status=1'>Tenants</a>
 				|
 				<a class='amenu' href='?action=did_list_sipdomain'>SIP-Domains</a>
 				|

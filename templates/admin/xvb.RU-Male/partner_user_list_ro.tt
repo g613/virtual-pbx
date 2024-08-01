@@ -1,0 +1,137 @@
+<html>
+<head>
+	<title>Virtual PBX - tenants</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr>
+			<td align='left' width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='left'>
+				[% INCLUDE partner_main_menu.tt-inc %]
+			</td>
+		</tr>
+	</table>
+	
+	<center>
+	<h1>Арендаторы - [% USERS_CNT %]</h1>
+
+	<table width='100%'>
+		<tr>
+			<td align='right'>
+			<form method="post" onSubmit='return checkChanges(this)'>
+			<input placeholder='Общий DID' size='12' name='f_vn' type='text' value='[% F_VN | html %]'>
+			&nbsp;
+			<input placeholder='Код доступа' size='12' name='f_ac' type='text' value='[% F_AC | html %]'>
+			&nbsp;
+			<select name="f_group" id="group_type_selector">
+				<option value="" selected>любая группа</option>
+				[% FOREACH gr = GROUPS %]
+					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+				[% END %]
+			</select>
+			&nbsp;
+			<input type='hidden' value='user_list' name='action'>
+			<input type='hidden' value='[% PARTNER | html %]' name='partner'>
+			<input value='Найти' type='submit'>
+			</td>
+			<script language='JavaScript'>
+				setActiveSelector('group_type_selector',"[% F_GROUP %]");
+			</script>
+			</form>
+		</tr>
+	</table>
+
+	<p>
+	<table width='100%' id='list-data'>
+		<tr>
+			<th class='rad_l'>#</th>
+			<th>Общий DID</th>
+			<th>Код доступа</th>
+			<th>Арендатор</th>
+			<th>Описание</th>
+			<th>Группа</th>
+			<th>Статус</th>
+			<th>R/O</th>
+			<th class='rad_r'>Баланс</th>
+		</tr>
+			
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='8'>
+				<a title='предыдущая страница' href='?action=user_list&from=[% MSG_PREV %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH us = USERS %]
+		<tr align='center' class='nocolor'>
+			<td align='right'>
+				[% us.IDX | html %]
+			</td>
+			<td align='right'>
+				[% us.VOICENUMBER | html %]
+			</td>
+			<td>
+				<a title='настройки арендатора' href='/ui?phone=[% us.VOICENUMBER %]&ac=[% us.ACCESS_CODE %]&pw=[% us.PIN_CODE %][% us.PIN_CODE2 %]&action=user_info'>[% us.ACCESS_CODE | html %]</a>
+			</td>
+			<td align='left'>
+				[% us.FIRST_NAME | html %] [% us.LAST_NAME | html %]
+			</td>
+			<td align='left'>
+				[% us.DESCRIPTION | html %]
+			</td>
+			[% IF us.STATUS %]
+			<td class='success'>
+				активный
+			[% ELSE %]
+			<td class='error'>
+				заблокирован
+			[% END %]
+			</td>
+			<td class='ext_pv'>
+				[% IF us.DEMO_MODE %]
+					+
+				[% ELSE %]
+					-
+				[% END %]
+			</td>
+			<td align='right'>
+			[% IF USE_BILLING %]
+				[% us.USER_BALANCE %] [% us.CURRENCY_NAME | html %]
+			[% ELSE %]
+				-
+			[% END %]
+			</td>
+		</tr>
+		[% END %]
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='8'>
+				<a title='следующая страница' href='?action=user_list&from=[% MSG_NEXT %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]'><span class='fs0'>►</span></a>
+			</td>
+		</tr>
+		[% END %]
+	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
+	</p>
+	
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
+			

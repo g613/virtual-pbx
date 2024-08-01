@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: role_info.tt,v 1.3 2023/01/08 16:41:24 gosha Exp $ -->
+<!-- $Id: role_info.tt,v 1.6 2024/06/25 17:42:52 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - RoleInfo - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -46,6 +46,24 @@
 		<tr align='left' class='nocolor' id='d-tr-DESCRIPTION'>
 			<td>Описание</td>
 			<td><textarea rows='[% ROLE.DESCRIPTION | textarea_rows %]'  cols='30' name='DESCRIPTION'>[% ROLE.DESCRIPTION | html %]</textarea></td>
+		</tr>
+		<tr align='left' class='nocolor' id='d-tr-PERMIT_WEB'>
+			<td>Доступ из сетей:</td>
+			<td><input size="30" name='PERMIT_WEB' type='text' value="[% ROLE.PERMIT_WEB | html %]"></td>
+		</tr>
+		<tr align='left' class='nocolor' id='d-tr-LANG_ID'>
+			<td>Язык интерфейса:</td>
+			<td>
+				<select name='LANG_ID' id='lang_selector'>
+					<option value="0">по умолчанию</option>
+				[% FOREACH lang = LANG %]
+					<option value="[% lang.ID | html %]">[% lang.LANG_LOCALE | locale_msg %]</option>
+				[% END %]
+				</select>
+				<script language='JavaScript'>
+					setActiveSelector('lang_selector',[% ROLE.LANG_ID %]);
+				</script>
+			</td>
 		</tr>
 		<tr><td colspan='2'></td></tr>
 		

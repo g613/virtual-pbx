@@ -31,6 +31,8 @@ call-limits-in : "Exceeded the number of simultaneous calls, please call later."
 #
 gotoif-intro : "."
 #
+pause-intro : "."
+#
 webvar-intro : "Please wait"
 webvar-input-params : "Please input data. Press # when finish."
 #

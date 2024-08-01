@@ -19,7 +19,11 @@
 		[% END %]
 		var did_list = [ ['','auto'] ];
 		[% FOREACH d = DID %]
+		[% IF d.VALUE %]
+		did_list.push(['[% d.VALUE | html %]','[% d.DID | html %]']);
+		[% ELSE %]
 		did_list.push(['[% d.DID | html %]','[% d.DID | html %]']);
+		[% END %]
 		[% END %]
 		did_list.push(['***','raw editor']);
 	</script>
@@ -104,7 +108,7 @@
 			<td><input class='in_t0' size="6" name='r_TLIMIT' type='text' value="[% r.TLIMIT | html %]"></td>
 			<td><input class='in_t0' size="13" name='r_DESCRIPTION' type='text' value="[% r.DESCRIPTION | html %]"></td>
 			<td>
-				<input class='in_t0' size="11" name='r_DEFCID' id="r_DEFCID-[% r.DATA_ID %]" type='text' value="[% r.DEFCID | html %]">
+				<input class='in_t0' size="16" name='r_DEFCID' id="r_DEFCID-[% r.DATA_ID %]" type='text' value="[% r.DEFCID | html %]">
 				<script language="JavaScript">
 					opt_dropdown( did_list,'r_DEFCID','r_DEFCID-[% r.DATA_ID %]','in_t0','[% r.DEFCID | html %]');
 				</script>
@@ -137,11 +141,12 @@
 				<input type='hidden' value='[% r.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='route_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-				<a title='delete route' href='?action=route_del&data_id=[% r.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% r.DATA_ID %]')"><span class='icon-bin fs0'></span></a>
 				<span class='in_t' id='in_t_id-[% r.DATA_ID %]'>
 					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% r.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 					<noscript><input value='change' type='submit'></noscript>
 				</span>
+				<a title="clone route" href='?action=route_add&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&clone_id=[% r.DATA_ID %]'><span class='icon-copy fs0'></span></a>
+				<a title='delete route' href='?action=route_del&data_id=[% r.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% r.DATA_ID %]')"><span class='icon-bin fs0'></span></a>
 			</td>
 			</form>
 		</tr>
@@ -156,7 +161,7 @@
 			<td><input size="6" name='r_TLIMIT' type='text'></td>
 			<td><input size="13" name='r_DESCRIPTION' type='text'></td>
 			<td>
-				<input size="12" name='r_DEFCID' id="r_DEFCID" type='text'>
+				<input size="16" name='r_DEFCID' id="r_DEFCID" type='text'>
 				<script language="JavaScript">
 					opt_dropdown( did_list,'r_DEFCID','r_DEFCID','','');
 				</script>

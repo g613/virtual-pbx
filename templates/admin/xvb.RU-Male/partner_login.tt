@@ -1,0 +1,61 @@
+<html>
+<!-- $Id: partner_login.tt,v 1.1 2024/04/07 13:51:10 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - login</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<table width='100%' class='logo'>
+		<tr>
+			<td align='left' width='20%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+		</tr>
+	</table>
+			
+	<center>
+	
+	<h1>Добро пожаловать в VirtualPBX</h1>
+
+	<p align='center'>
+	<table width='50%' class='half-width'>
+		<form method='post'>
+			<input name='action' type='hidden' value='user_list'>
+			<input name='f_status' type='hidden' value='1'>
+			<tr>
+				<td>Логин&nbsp;</td>
+				<td><input name='partner' type='text'></td>
+			</tr>
+			<tr>
+				<td>Пароль&nbsp;</td>
+				<td><input name='password' type='password'></td>
+			</tr>
+			<tr>
+				<td colspan='2'>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan='2' align='center'>
+					<input type='submit' value='Login'>
+				</td>
+			</tr>
+		</form>
+	</table>
+	</p>
+
+	<p>
+	<table width='100%'>
+		<tr align='center'>
+			<td>&nbsp;
+			[% IF ERROR_STR ne '' %]
+				<span class='error'>[% ERROR_STR | html %]</span>
+			[% END %]
+			</td>
+		</tr>
+	</table>
+	</p>
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>

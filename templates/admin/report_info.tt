@@ -53,6 +53,7 @@
 			<td align='right'>
 			<form method="get" action='?'>
 			<input name='action' value='report_run' type='hidden'>
+			<input name='type' value='[% REPORT_DATA.TYPE %]' type='hidden'>
 			<input name='report_id' value='[% REPORT_DATA.ID %]' type='hidden'>
 			
 			[% IF REPORT_DATA.DATE_START %]
@@ -156,7 +157,19 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan='3' align='center'>
+			<td>Groups permissions: </td>
+			<td colspan='3' align='left'>
+				<input type='text' size='60' name='R_ACCESS_GROUPS' value='[% REPORT_DATA.ACCESS_GROUPS | html %]'>
+			</td>
+		</tr>
+		<tr>
+			<td>Tenants permissions: </td>
+			<td colspan='3' align='left'>
+				<input type='text' size='60' name='R_ACCESS_ACCOUNTS' value='[% REPORT_DATA.ACCESS_ACCOUNTS | html %]'>
+			</td>
+		</tr>
+		<tr>
+			<td colspan='4' align='center'>
 				<input type='hidden' value='report_update' name='action'>
 				<input type='hidden' value='[% REPORT_DATA.ID %]' name='report_id'>
 				<input type='submit' value='Save changes'>

@@ -1,0 +1,142 @@
+<html>
+<head>
+	<title>Virtual PBX - reports</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+	
+	<h1>SQL отчеты</h1>
+
+	<table width='100%'>
+		<tr>
+			<td align='left' width='50%'>
+				<form method="post" onSubmit='return checkChanges(this)'>
+					<input type='hidden' name='action' value='report_run'>
+					<input placeholder='# отчета' type='text' name='report_id' size='10'>
+					&nbsp;
+					<input value='Запустить' type='submit'>
+				</form>
+			</td>
+			<td align='right' nowrap="nowrap">
+				<form method="post" onSubmit='return checkChanges(this)'>
+					<input size='20' name='name' type='text' placeholder='Наименование отчета' value='[% SEARCH_NAME %]'>
+					<input type='hidden' value='report_list' name='action'>
+					&nbsp;
+					<select name='type'>
+						<option value="">владелец</option>
+						<option value="1">администратор</option>
+						<option value="0">арендатор</option>
+						[% IF SEARCH_TYPE eq '1' %]
+							<option value="1" selected>администратор</option>
+						[% ELSIF SEARCH_TYPE eq '0' %]
+							<option value="0" selected>арендатор</option>
+						[% END %]
+					</select>	
+					&nbsp;
+					<input value='Найти' type='submit'>
+				</form>
+			</td>
+		</tr>
+	</table>
+	
+	<p>
+	<table width='98%' id='list-data'>
+		<tr>
+			<th class='rad_l'>#</th>
+			<th width='30px'>&nbsp;</th>
+			<th>Наименование отчета</th>
+			<th width='30px'>&nbsp;</th>
+			<th>Дата создания</th>
+			<th>Владелец</th>
+			<th>Время кэширования</th>
+			<th class='rad_r'>&nbsp;</th>
+		</tr>
+			
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='8'>
+				<a title='предыдущая страница' href='?action=report_list&type=[% SEARCH_TYPE %]&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH t = REPORTS %]
+		<tr align='center' class='nocolor'>
+			<td>[% t.ID %]</td>
+			<td>
+				<a title='get excel table' href='?action=report_run&type=[% t.TYPE  %]&report_id=[% t.ID %]&need_excel=1'><span class='icon-file-excel fs0'></span></a>
+			</td>
+			<td align='left'>
+				<a title='запустить отчет' href='?action=report_run&type=[% t.TYPE  %]&report_id=[% t.ID %]'>[% t.NAME | html %]</a>
+			</td>
+			<td>
+				<a title='редактировать отчет' href='?action=report_info&report_id=[% t.ID %]'><span class='icon-cogs fs0'></span></a>
+			</td>
+			<td>[% t.CREATE_DATE %]</td>
+			<td>
+				[% IF t.TYPE eq '1' %]
+					администратор
+				[% ELSE %]
+					арендатор
+				[% END %]
+			</td>
+			<td>[% t.TTL | duration_str | html %]</td>
+			<td>
+				<a title='удалить отчет' href='?action=report_del&report_id=[% t.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('ru')"><span class='icon-bin fs0'></span></a>
+			</td>
+		</tr>
+		[% END %]
+	
+		<tr>
+			<td align='left' colspan='4'>
+				<form method="post" onSubmit='return checkChanges(this)'>
+				&nbsp;
+				<input placeholder='Наименование отчета' size='20' name='R_NAME' type='text'>
+				<input type='hidden' value='report_add' name='action'>
+				<input value='Создать отчет' type='submit'>
+				</form>
+			</td>
+			<td align='right' colspan='4'>
+				[% IF MSG_NEXT ne '' %]
+				<a title='следующая страница' href='?action=report_list&type=[% SEARCH_TYPE %]&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
+				[% END %]
+			</td>
+		</tr>
+	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
+	</p>
+
+	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

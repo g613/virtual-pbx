@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.32 2023/03/31 20:38:30 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.33 2023/12/09 17:51:50 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -73,6 +73,7 @@
 			<th>Port</th>
 			<th>Domain</th>
 			<th>CallerID</th>
+			<th>Capacity</th>
 			<th colspan='2'>Incoming calls</th>
 			<th>&nbsp;</th>
 			<th colspan='2' class='rad_r'>Peer ID</th>
@@ -107,6 +108,7 @@
 			<td>[% p.port | html %]</td>
 			<td>[% p.fromdomain | html %]</td>
 			<td>[% p.fromuser | html %]</td>
+			<td>[% p.CO_LIMIT | html %]</td>
 			
 			<form method='post' id='f-[% p.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)' action="">
 			<td>

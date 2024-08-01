@@ -1,0 +1,75 @@
+<html>
+<head>
+	<title>Virtual PBX - reports</title>
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+	<h1>Отчеты</h1>
+
+
+	<table width='100%'>
+		<tr>
+			<td align='right'>
+				<form method="post" onSubmit='return checkChanges(this)'>
+					<input size='20' name='name' type='text' placeholder='Report name' value='[% SEARCH_NAME %]'>
+					<input type='hidden' value='report_list' name='action'>
+					<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+					&nbsp;
+					<input value='Найти' type='submit'>
+				</form>
+			</td>
+		</tr>
+	</table>
+	
+	<p>
+	<table width='98%' id='list-data'>
+		<tr>
+			<th class='rad_l'>#</th>
+			<th>Нименование отчета</th>
+			<th class='rad_r'>&nbsp;</th>
+		</tr>
+			
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='3'>
+				<a title='предыдущая страница' href='?action=report_list&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_PREV %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH t = REPORTS %]
+		<tr align='center' class='nocolor'>
+			<td>[% t.ID %]</td>
+			<td align='left'>
+				<a title='запустить отчет' href='?action=report_run&report_id=[% t.ID %]&uniq=[% USER_CREDS.UNIQ %]'>[% t.NAME | html %]</a>
+			</td>
+			<td>
+				<a title='excel формат' href='?action=report_run&report_id=[% t.ID %]&need_excel=1&uniq=[% USER_CREDS.UNIQ %]'><span class='icon-file-excel fs0'></span></a>
+			</td>
+		</tr>
+		[% END %]
+	
+		<tr>
+			<td align='right' colspan='3'>
+				[% IF MSG_NEXT ne '' %]
+				<a title='следующая страница' href='?action=report_list&name=[% SEARCH_NAME | htmlstrict %]&from=[% MSG_NEXT %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
+				[% END %]
+			</td>
+		</tr>
+	</table>
+	[% UNLESS REPORTS scalar %]
+		<br /><h3>Ничего не нашлось</h3>
+   	[% END %]
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
+	</p>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>

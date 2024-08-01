@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_info.tt,v 1.15 2023/03/30 20:19:53 gosha Exp $ -->
+<!-- $Id: phone_info.tt,v 1.19 2024/06/17 14:38:53 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phone - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -124,6 +124,20 @@
 			</td>
 		</tr>
 		<tr>
+			<td>Язык WEB интерфейса:</td>
+			<td>
+				<select name='LANG_ID' id='lang_selector'>
+					<option value="0">по умолчанию</option>
+				[% FOREACH lang = LANG %]
+					<option value="[% lang.ID | html %]">[% lang.LANG_LOCALE | locale_msg %]</option>
+				[% END %]
+				</select>
+				<script language='JavaScript'>
+					setActiveSelector('lang_selector',[% PHONE.LANG_ID %]);
+				</script>
+			</td>
+		</tr>
+		<tr>
 			<td>
 				PIN-код общего рабочего места:
 			</td>
@@ -203,13 +217,20 @@
 				<input  size="30" name='EMAIL' type='text' value="[% PHONE.EMAIL | html %]">
 			</td>
 		</tr>
-
 		<tr>
 			<td>
-				Разрешить доступ только с адресов:
+				Разрешить доступ к звонкам только с адресов:
 			</td>
 			<td>
 				<input size="30" name='trusted_ip' type='text' value="[% PHONE.permit | html %]">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Разрешить доступ к web только с адресов:
+			</td>
+			<td>
+				<input size="30" name='PERMIT_WEB' type='text' value="[% PHONE.PERMIT_WEB | html %]">
 			</td>
 		</tr>
 		<tr>
@@ -238,6 +259,15 @@
 				<input size="30" name='MANAGER_FOR' type='text' value="[% PHONE.MANAGER_FOR | html %]">
 			</td>
 		</tr>
+		
+		<tr>
+			<td>
+				Сессионные переменные:
+			</td>
+			<td>
+				<input size="30" name='CUSTOM_VARS' type='text' value="[% PHONE.CUSTOM_VARS | html %]">
+			</td>
+		</tr>
 
 		<tr>
 			<td><a href='#' class='info'>Запомнить последний набранный номер:<span>
@@ -251,7 +281,7 @@
 				<input size="30" name='LD_TTL' type='text' value="[% PHONE.LD_TTL | html %]">
 			</td>
 		</tr>
-
+				
 		<tr>
 			<td>
 				Перенаправление звонков на номер:

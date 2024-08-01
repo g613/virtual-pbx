@@ -1,0 +1,178 @@
+<html>
+<!-- $Id: messages_list_all.tt,v 1.3 2024/04/07 21:06:33 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Files</title>
+
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
+
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+	
+	<h1>Файлы</h1>
+
+	<table width='100%'>
+		<tr>
+			<td align='right'>
+				<form method="get" onSubmit='return checkChanges(this)' id='find-form'>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "00:00",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='С дату' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<a link="#"><span class='fs0'>▾</span></a>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "23:59",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='По дату' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<a link="#"><span class='fs0'>▾</span></a>
+				<input name='action' value='msg_list_all' type='hidden'>
+				<input placeholder='Код доступа' size='10' type='text' name='ac' value='[% ACCESS_CODE | html %]'>
+				&nbsp;
+				<input placeholder='Кто звонил' size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]'>
+				&nbsp;
+				<input placeholder='Кому звонили' size='10' type='text' name='called_id' value='[% CALLED_ID | html %]'>
+				&nbsp;
+				<input size='10' type='text' name='any_did' placeholder='CID или DID' value='[% ANY_DID | html %]'>
+				&nbsp;
+				<input size='8' type='text' placeholder='Длительность' name='duration' value='[% DURATION | html %]'>
+				&nbsp;
+				<select name="msg_type" id='msg_type_selector'>
+					<option selected='selected' value="">Любые файлы</option>
+					<option value="30:40:41:42:43">Все пользовательские</option>
+					<option value="1:2:3:4:5:6">Все системные</option>
+					<option value=",1">Только голосовые</option>
+					<option value=",0">Факсы / DTMF</option>
+					<option value="1">Наименование пользователя</option>
+					<option value="2">Приветствие пользователя</option>
+					<option value="3">Анонс исходящего звонка</option>
+					<option value="4">Анонс удержания вызова</option>
+					<option value="5">Музыка вместо звонка</option>
+					<option value="6">Факс по запросу</option>
+					<option value="40:30">Голосовая почта</option>
+					<option value="41">Запись звонка</option>
+				</select>
+				&nbsp;
+				<input value='Найти' type='submit'>
+				</form>
+				<script langiage='JavaScript'>setActiveSelector('msg_type_selector',"[% MSG_TYPE | html %]");</script>
+			</td>
+		</tr>
+	</table>
+
+	<table width='95%' id='d-tbl'>
+		<tr>
+			<th class='rad_l'>#</th>
+			<th>Код доступа</th>
+			<th>Вн номер</th>
+			<th>Дата</th>
+			<th>&nbsp;</th>
+			<th>Кто звонил</th>
+			<th>Сому звонили</th>
+			<th>Длительность</th>
+			<th>Тип</th>
+			<th class='rad_r'>Размер</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='9'>
+				<a title='предыдущая страница' href='?action=msg_list_all&duration=[% DURATION | html %]&msg_type=[% MSG_TYPE | html %]&from=[% MSG_PREV %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&any_did=[% ANY_DID | html %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+		[% FOREACH msg = MSG_LIST %]
+		<tr class='nocolor' id='d-tr-[% msg.FILE_NAME %]'>
+			<td>&nbsp;[% msg.MSG_NUM %]</td>
+			<td><a title='настройки арендатора' href='?ac=[% msg.ACCESS_CODE %]&action=user_info'>[% msg.ACCESS_CODE %]</a></td>
+			<td>[% msg.EXT_NUMBER | html %]</td>
+			[% IF msg.IS_VOICE %]
+			<td align='center'>
+				<a class='msg' id='msg[% msg.MSG_NUM %]' title='скачать' href='[% msg.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% msg.ACCESS_CODE %]/[% msg.FILE_NAME %].mp3?media=mp3'>[% msg.MSG_DATE | html %]</a>
+			</td>
+			<td align='left'>
+				<a title='прослушать' 
+					onclick="return ShowPlayer('[% msg.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% msg.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen','[% msg.MSG_NUM %]' )"
+					href="#"><span class='icon-volume-medium fs0'></span></a>
+			</td>
+			[% ELSE %]
+			<td align='center'>
+				<a class='msg' title='скачать' href='[% msg.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% msg.ACCESS_CODE %]/[% msg.FILE_NAME %]'>[% msg.MSG_DATE | html %]</a>
+			</td>
+			<td></td>
+			[% END %]
+			<td>
+				<a title='детализация звонка' href="?action=cdr_list&call_id=[% msg.CALL_ID %]">[% msg.CALLERID | html %]</a>
+			</td>
+			<td>[% msg.CALLEDID | html %]</td>
+			[% IF msg.IS_VOICE %]
+			<td align='center'>[% msg.DURATION | duration_str | html %]</td>
+			[% ELSE %]
+			<td align='center'>--------</td>
+			[% END %]
+			<td>[% msg.DESCRIPTION | locale_msg %]</td>
+			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
+		</tr>
+		[% END %]
+		<tr>
+		[% IF MSG_NEXT ne '' %]
+			<td align='right' colspan='10'>
+				<a title='следующая страница' href='?action=msg_list_all&duration=[% DURATION | html %]&msg_type=[% MSG_TYPE | html %]&from=[% MSG_NEXT %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&any_did=[% ANY_DID | html %]'><span class='fs0'>►</span></a>
+			</td>
+		[% END %]
+		</tr>
+	</table>
+ 	[% UNLESS MSG_LIST scalar %]
+		<br /><h3>Файлов не найдено, попробуйте задать другие фильтры</h3>
+ 	[% END %]
+
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+
+	<div id='shadow'><div id='loading'></div></div><div id='center' style='display:none;'><script language='JavaScript'>ShowPlayer( 'init',0 );</script></div>
+	</center>
+</body>
+</html>
+	

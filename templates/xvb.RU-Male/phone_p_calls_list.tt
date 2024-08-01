@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_calls_list.tt,v 1.3 2023/03/04 07:11:25 gosha Exp $ -->
+<!-- $Id: phone_p_calls_list.tt,v 1.5 2024/06/25 15:19:52 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - текущие звонки - [% PHONE.callerid | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -62,26 +62,29 @@
 			<th class='rad_l'>Тип звонка</th>
 			<th>Начало звонка</th>
 			<th>Кто звонит</th>
-			<th>Кому звонит</th>
+			<th colspan='2'>Кому звонит</th>
 			<th>&nbsp;</th>
 			<th>Длительность звонка</th>
 			<th>Вн. номер</th>
 			<th>Длительность</th>
 			<th class='rad_r'>&nbsp;</th>
 		</tr>
+		<!--
 		[% IF MSG_PREV ne '' %]
 		<tr>
-			<td align='left' colspan='9'>
+			<td align='left' colspan='10'>
 				<a title='предыдущаа станица' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C | html %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
+		-->
 
 		[% FOREACH msg = CALLS_LIST %]
 		<tr class='nocolor' align='center'>
 			<td>[% msg.CALL_TYPE | locale_msg %]</td>
 			<td>[% msg.CDR_DATE | html %]</td>
 			<td>[% msg.CALLER_ID | html %]</td>
+			<td>[% msg.CNAM | html %]</td>
 			<td>[% msg.CALLED_ID | html %]</td>
 			<td>[% msg.ANSWERED | html %]</td>
 			<td>[% msg.CDR_DURATION | duration_str %]</td>
@@ -93,19 +96,22 @@
 			</td>
 			<td>
 				[% IF CDR_C2C %]
-					<a title='Прослушать' href='#' onclick="click2call_spy_raw('[% msg.DOWNLOAD_IP %]/c2c?dlm=,&message=Ждите%20звонка&user_vars=XVB_CHAN=[% msg.CALL_ID %],AST_CHAN=[% msg.AST_ID | htmlstrict %]&ac=[% USER_CREDS.ACCESS_CODE | html %]&key=[% CDR_C2C %]')"><span class='icon-phone fs0'></span></a>
+					<a title='Прослушать' href='#' onclick="click2call_spy_raw('[% msg.DOWNLOAD_IP %]/c2c?dlm=,&message=Ждите%20звонка&user_vars=XVB_CHAN=[% msg.CALL_ID %],AST_CHAN=[% msg.AST_ID | htmlstrict %],SPYMODE=0&ac=[% USER_CREDS.ACCESS_CODE | html %]&key=[% CDR_C2C %]')"><span class='icon-phone fs0'></span></a>
+					<a title='Суфлировать' href='#' onclick="click2call_spy_raw('[% msg.DOWNLOAD_IP %]/c2c?dlm=,&message=Ждите%20звонка&user_vars=XVB_CHAN=[% msg.CALL_ID %],AST_CHAN=[% msg.AST_ID | htmlstrict %],SPYMODE=1&ac=[% USER_CREDS.ACCESS_CODE | html %]&key=[% CDR_C2C %]')"><span class='icon-volume-medium fs0'></span></a>
 				[% END %]
 			</td>
 		</tr>
 		[% END %]
 
+		<!--
 		<tr>
 		[% IF MSG_NEXT ne '' %]
-			<td align='right' colspan='9'>
+			<td align='right' colspan='10'>
 				<a title='следующаяя страница' href='?action=calls_list&duration=[% CDR_DURATION | html %]&c2c=[% CDR_C2C | html %]&refresh=[% CDR_REFRESH_TIME %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE | html %]&called_id=[% CDR_CALLED_ID | html %]&caller_id=[% CDR_CALLER_ID | html %]'><span class='fs0'>►</span></a>
 			</td>
 		[% END %]
 		</tr>
+		-->
 	</table>
 	[% UNLESS CALLS_LIST scalar %]
 		<br /><h3>Активных звонков нет.</h3>

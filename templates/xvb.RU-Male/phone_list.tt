@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_list.tt,v 1.39 2018/11/13 12:45:50 gosha Exp $ -->
+<!-- $Id: phone_list.tt,v 1.43 2024/03/14 21:02:01 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phones - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -15,7 +15,11 @@
 		[% END %]
 		var did_list = [ ['','автоматически'] ];
 		[% FOREACH d = DID %]
+		[% IF d.VALUE %]
+		did_list.push(['[% d.VALUE | html %]','[% d.DID | html %]']);
+		[% ELSE %]
 		did_list.push(['[% d.DID | html %]','[% d.DID | html %]']);
+		[% END %]
 		[% END %]
 		[% IF USER_CREDS.MAX_PEERS > 0 %]
 			[% IF USER_CREDS.CUSTOM_ROUTE %]
@@ -96,6 +100,14 @@
 					</span>
 					</a>
 					[% END %]
+				[% END %]
+				[% IF p.MANAGER_FOR %]
+					<a href='#' class='l-info'>
+					<span class='icon-power fs1'></span>
+					<span class='l-info'>
+						Менеджер телефонов [% p.MANAGER_FOR | html %]
+					</span>
+					</a>
 				[% END %]
 			</td>
 			<td align='center'>
@@ -184,6 +196,7 @@
 				<input type='hidden' value="[% p.secret | html %]" name='secret'>
 				<input type='hidden' value="[% p.WEB_SECRET | html %]" name='WEB_SECRET'>
 				<input type='hidden' value="[% p.HOTDESK_PIN | html %]" name='HOTDESK_PIN'>
+				<input type='hidden' value="[% p.MANAGER_FOR | html %]" name='MANAGER_FOR'>
 				<input type='hidden' value='phone_update' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<span class='in_t' id='in_t_id-[% p.DATA_ID %]'>
@@ -203,6 +216,15 @@
 				&nbsp;
 				<input size="20" name='DESCRIPTION' type='text' placeholder='Имя'>
 				&nbsp;
+				<select name="REC_MODE">
+					<option value="0">Запись</option>
+					<option value="0">Выключено</option>
+					<option value="1">По запросу</option>
+					<option value="2">Всегда</option>
+					<option value="3">Внутренние</option>
+					<option value="4">Внешние</option>
+				</select>
+				&nbsp;
 				АОН:
 				&nbsp;
 				<input size="14" name='DEFCID' id="DEFCID" type='text'>
@@ -215,7 +237,6 @@
 				<input type='hidden' value='' name='PICKUP_GROUPS'>
 				<input type='hidden' value='' name='EMAIL'>
 				<input type='hidden' value='0' name='REC_EXT'>
-				<input type='hidden' value='0' name='REC_MODE'>
 				<input value='Добавить' type='submit'>
 			</td>
 			</form>

@@ -1,0 +1,305 @@
+<html>
+<head>
+	<title>Virtual PBX - tariff info</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+			
+	<table width='100%'>
+		<tr>
+			<td width='90%' align='center'>
+				<h1>Тариф '[% NAME | html %]'</h1>
+			</td>
+			<td align='right'>
+				<a title='delete tariff' href='?action=tariff_del&tariff_id=[% ID %]' onclick="return DelConfirm('ru')"><span class='icon-bin-all fs2'></span></a>
+			</td>
+		</tr>
+	</table>
+
+	<p align='center'>
+	<table width='98%' id='list-data'>
+		<form method="post" onSubmit='return checkChanges(this)'>
+		<tr class='nocolor'>
+			<td>Id</td>
+			<td align='left' colspan='2'>[% ID | html %]</td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Наименование тарифа</td>
+			<td align='left' colspan='2'><input class='in_t0'  size='25' name='T_NAME' type='text' value='[% NAME | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Валюта</td>
+			<td align='left' colspan='2'>
+				<select class='in_t0'name='T_CURRENCY_ID'>
+					[% FOREACH c = CURRENCY %]
+						[% IF CURRENCY_ID eq c.CUR_ID %]
+							<option value="[% c.CUR_ID | html %]" selected>[% c.DESCRIPTION | locale_msg %]</option>
+						[% ELSE %]
+							<option value="[% c.CUR_ID | html %]">[% c.DESCRIPTION | locale_msg %]</option>
+						[% END %]
+					[% END %]
+				</select>
+			</td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Месячный платеж</td>
+			<td align='left' colspan='2'><input class='in_t0' name='T_MONTHLY_PRICE' type='text' value='[% MONTHLY_PRICE | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Дневной платеж</td>
+			<td align='left' colspan='2'><input class='in_t0' name='T_DAILY_PRICE' type='text' value='[% DAILY_PRICE | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>URL внешнего биллинга</td>
+			<td align='left' colspan='2'><input class='in_t0' name='T_BILLING_URL' type='text' value='[% BILLING_URL | html %]' size='100'></td>
+		</tr>
+		<tr>
+			<td colspan='3'>&nbsp;</td>
+		</tr>
+		<tr>
+			<th class='rad_l'>Тип звонка</th>
+			<th>Стоимость факта звонка</th>
+			<th class='rad_r'>Стоимость минуты</th>
+		</tr>
+		<tr class='nocolor'>
+			<td>Входящий</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_INCOMING' type='text' value='[% CALL_PRICE_INCOMING | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_INCOMING' type='text' value='[% MINUTE_PRICE_INCOMING | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Локальный</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_LOCAL' type='text' value='[% CALL_PRICE_LOCAL | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_LOCAL' type='text' value='[% MINUTE_PRICE_LOCAL | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Исходящий</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_TRANSIT' type='text' value='[% CALL_PRICE_TRANSIT | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_TRANSIT' type='text' value='[% MINUTE_PRICE_TRANSIT | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Внутренний</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_INTERNAL' type='text' value='[% CALL_PRICE_INTERNAL | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_INTERNAL' type='text' value='[% MINUTE_PRICE_INTERNAL | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Обратный</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_CALLBACK' type='text' value='[% CALL_PRICE_CALLBACK | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_CALLBACK' type='text' value='[% MINUTE_PRICE_CALLBACK | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Автоинформатор</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_CALLBLAST' type='text' value='[% CALL_PRICE_CALLBLAST | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_CALLBLAST' type='text' value='[% MINUTE_PRICE_CALLBLAST | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>click2call</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_CLICK2CALL' type='text' value='[% CALL_PRICE_CLICK2CALL | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_CLICK2CALL' type='text' value='[% MINUTE_PRICE_CLICK2CALL | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Будильник</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_ALARMCLOCK' type='text' value='[% CALL_PRICE_ALARMCLOCK | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_ALARMCLOCK' type='text' value='[% MINUTE_PRICE_ALARMCLOCK | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Сервисный</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_SERVICE' type='text' value='[% CALL_PRICE_SERVICE | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_SERVICE' type='text' value='[% MINUTE_PRICE_SERVICE | html %]'></td>
+		</tr>
+		<tr>
+			<td colspan='3'>&nbsp;</td>
+		</tr>
+		<tr>
+			<th class='rad_l'>Тип активности</th>
+			<th>Стоимость за факт</th>
+			<th class='rad_r'>Стоимость (за секунду)</th>
+		</tr>
+		<tr class='nocolor'>
+			<td>Прослушивание приветствия</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_PLAYBACK' type='text' value='[% CALL_PRICE_E_PLAYBACK | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_PLAYBACK' type='text' value='[% MINUTE_PRICE_E_PLAYBACK | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Запсиь голосовой почты</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_RECORDVMMESSAGES' type='text' value='[% CALL_PRICE_E_RECORDVMMESSAGES | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_RECORDVMMESSAGES' type='text' value='[% MINUTE_PRICE_E_RECORDVMMESSAGES | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Установка хранимой переменной</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_DBVAR' type='text' value='[% CALL_PRICE_E_DBVAR | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DBVAR' type='text' value='[% MINUTE_PRICE_E_DBVAR | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Прием факса</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_FAXRX' type='text' value='[% CALL_PRICE_E_FAXRX | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_FAXRX' type='text' value='[% MINUTE_PRICE_E_FAXRX | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Установка пользовательской переменной</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_USERVAR' type='text' value='[% CALL_PRICE_E_USERVAR | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_USERVAR' type='text' value='[% MINUTE_PRICE_E_USERVAR | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Чтение TTS</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_ROBOTEXT' type='text' value='[% CALL_PRICE_E_ROBOTEXT | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_ROBOTEXT' type='text' value='[% MINUTE_PRICE_E_ROBOTEXT | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>WEB-запрос</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_WEBREQUEST' type='text' value='[% CALL_PRICE_E_WEBREQUEST | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_WEBREQUEST' type='text' value='[% MINUTE_PRICE_E_WEBREQUEST | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Intercom</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_INTERCOM' type='text' value='[% CALL_PRICE_E_INTERCOM | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_INTERCOM' type='text' value='[% MINUTE_PRICE_E_INTERCOM | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Запись</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_RECORD' type='text' value='[% CALL_PRICE_E_RECORD | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_RECORD' type='text' value='[% MINUTE_PRICE_E_RECORD | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Исходящий звонок</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_DIALOUT' type='text' value='[% CALL_PRICE_E_DIALOUT | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DIALOUT' type='text' value='[% MINUTE_PRICE_E_DIALOUT | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Прослушивание подкаста</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_PODCAST' type='text' value='[% CALL_PRICE_E_PODCAST | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_PODCAST' type='text' value='[% MINUTE_PRICE_E_PODCAST | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>голосование</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_VOTING' type='text' value='[% CALL_PRICE_E_VOTING | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_VOTING' type='text' value='[% MINUTE_PRICE_E_VOTING | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>WEB-переменная</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_WEBVAR' type='text' value='[% CALL_PRICE_E_WEBVAR | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_WEBVAR' type='text' value='[% MINUTE_PRICE_E_WEBVAR | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Отправка факса</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_FAXTX' type='text' value='[% CALL_PRICE_E_FAXTX | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_FAXTX' type='text' value='[% MINUTE_PRICE_E_FAXTX | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Прослушивание вещания</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_STREAMING' type='text' value='[% CALL_PRICE_E_STREAMING | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_STREAMING' type='text' value='[% MINUTE_PRICE_E_STREAMING | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>BBS</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_BBS' type='text' value='[% CALL_PRICE_E_BBS | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_BBS' type='text' value='[% MINUTE_PRICE_E_BBS | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Конференция</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_CONFERENCE' type='text' value='[% CALL_PRICE_E_CONFERENCE | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_CONFERENCE' type='text' value='[% MINUTE_PRICE_E_CONFERENCE | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Чтение даты</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_DATETIME' type='text' value='[% CALL_PRICE_E_DATETIME | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DATETIME' type='text' value='[% MINUTE_PRICE_E_DATETIME | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>DISA</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_DISA' type='text' value='[% CALL_PRICE_E_DISA | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DISA' type='text' value='[% MINUTE_PRICE_E_DISA | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Очередь</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_QUEUE' type='text' value='[% CALL_PRICE_E_QUEUE | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_QUEUE' type='text' value='[% MINUTE_PRICE_E_QUEUE | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Прием DTMF</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_DTMFRX' type='text' value='[% CALL_PRICE_E_DTMFRX | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DTMFRX' type='text' value='[% MINUTE_PRICE_E_DTMFRX | html %]'></td>
+		</tr>
+		
+		<tr class='nocolor'>
+			<td>Отправка DTMF</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_DTMFTX' type='text' value='[% CALL_PRICE_E_DTMFTX | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_DTMFTX' type='text' value='[% MINUTE_PRICE_E_DTMFTX | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Автообзвон</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_MULTIDIALOUT' type='text' value='[% CALL_PRICE_E_MULTIDIALOUT | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_MULTIDIALOUT' type='text' value='[% MINUTE_PRICE_E_MULTIDIALOUT | html %]'></td>
+		</tr>
+		<tr class='nocolor'>
+			<td>Пауза</td>
+			<td><input class='in_t0' name='T_CALL_PRICE_E_PAUSE' type='text' value='[% CALL_PRICE_E_PAUSE | html %]'></td>
+			<td><input class='in_t0' name='T_MINUTE_PRICE_E_PAUSE' type='text' value='[% MINUTE_PRICE_E_PAUSE | html %]'></td>
+		</tr>
+		
+		<tr>
+			<td colspan='3' align='center'>
+			<input type='hidden' value='[% ID %]' name='tariff_id'>
+			<input type='hidden' value='[% ID %]' name='data_id'>
+			<input type='hidden' value='tariff_update' name='action'>
+			<input value='Сохранить изменения' type='submit'>
+			</td>
+		</tr>
+		</form>
+	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
+	</p>
+
+	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

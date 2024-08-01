@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.55 2022/12/13 13:56:54 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.57 2023/12/09 17:51:50 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Peers - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -31,14 +31,17 @@
 			<th>User</th>
 			<th>Password</th>
 			<th>CallerID</th>
+			[% IF DEVICE_STATE %]
+			<th>Capacity</th>
+			[% END %]
 			<th>Peer Name</th>
 			<th>DTMF mode</th>
-			<th>Proto</th>
+			<th>Protocol</th>
 			[% IF USER_CREDS.CUSTOM_REGS %]
-			<th colspan='2'>Incoming exten</th>
-			<th width='1%'></th>
+			<th colspan='2' class='rad_r'>Incoming exten</th>
+			[% ELSE %]
+			<th class='rad_r'>&nbsp;</th>
 			[% END %]
-			<th class='rad_r'>Actions</th>
 		</tr>
 		
 		[% FOREACH p = PEERS %]
@@ -50,6 +53,11 @@
 			<td><input class='in_t0' size="12" name='username' type='text' value="[% p.username | html %]"></td>
 			<td><input class='in_t0' size="10" name='secret' type='text' value="[% p.secret | html %]"></td>
 			<td><input class='in_t0' size="12" name='fromuser' type='text' value="[% p.fromuser | html %]"></td>
+			[% IF DEVICE_STATE %]
+			<td>
+				<input class='in_t0' type='text' size='5' value='[% p.CO_LIMIT %]' name='CO_LIMIT'>
+			</td>
+			[% END %]
 			<td>
 				<input class='in_t0' size="17" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]">
 				[% IF p.setvar contain 'PBXMODE=1;' %]
@@ -78,17 +86,14 @@
 				</select>
 			</td>
 			[% IF USER_CREDS.CUSTOM_REGS %]
-			<td>
-				<input class='in_t0' name='NEED_REG' type='checkbox' title='Allow incoming calls'
+			<td align='left' nowrap='nowrap'>
+				<input class='in_t0' name='NEED_REG' type='checkbox' title='Incoming calls'
 				[% IF p.NEED_REG %]
 				checked 
 				[% END %]
 				/>
-			</td>
-			<td>
-				<input class='in_t0' size="8" name='INC_EXT' type='text' value="[% p.INC_EXT | html %]">
-			</td>
-			<td align='center'>
+				<input class='in_t0' size="4" name='INC_EXT' type='text' value="[% p.INC_EXT | html %]">
+				&nbsp;
 			[% IF p.REG_DATA %]
 					<a href='#' class='r-info'>
 				[% IF p.REG_DATA.state eq 'Registered' %]
@@ -140,7 +145,7 @@
 	
 				<span id='selector-text'>
 				<input size="14" name='host' type='text'>
-				<a href='#' class='l-info' onclick="
+				<a href='#selector-select' class='l-info' onclick="
 							document.getElementById('selector-text').style.visibility='hidden';
 							document.getElementById('selector-select').style.visibility='visible';">
 					<span class='fs0'>▾</span>
@@ -153,6 +158,11 @@
 			<td><input size="12" name='username' type='text'></td>
 			<td><input size="10" name='secret' type='text'></td>
 			<td><input size="12" name='fromuser' type='text'></td>
+			[% IF DEVICE_STATE %]
+			<td>
+				<input type='text' size='5' value='' name='CO_LIMIT'>
+			</td>
+			[% END %]
 			<td><input size="17" name='DESCRIPTION' type='text'></td>
 			<td>
 				<select name="dtmfmode">

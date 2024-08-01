@@ -1,0 +1,150 @@
+<html>
+<!-- $Id: phone_p_cdrs_chart.tt,v 1.2 2024/01/23 15:17:56 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - Статистика АТС - [% PHONE.callerid | html %]</title>
+
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
+
+	[% IF USER_CREDS.CSS_HREF eq '' %]
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	[% ELSE %]
+	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
+	[% END %]
+	
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-ru.min.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<center>
+			
+	<table width='100%'>
+		<tr>
+			<td align='left' width='10%'>&nbsp;</td>
+			<td align='center'>
+				<h1>Статистика АТС ( [% CDR_HEADER %] )</h1>
+			</td>
+			<td align='right' width='10%'>
+				<a title='скачать в формате excel' download='table.csv' id='csvlink' href='data:text/csv;charset=utf-8,'><span class='icon-file-excel fs0'></span></a>
+			</td>
+		</tr>
+	</table>
+
+	<table width='100%'>
+		<script language='JavaScript'>
+			var time_period = getTimePeriod( 'ru','[% CDR_PERIOD %]' );
+			var period = time_period.period;
+			var group_by = time_period.group_by;
+		</script>
+		<tr>
+			<form method="get" onSubmit='return checkChanges(this)'>
+			<td align='right'>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "00:00",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='С даты'>
+				<a link="#"><span class='fs0'>▾</span></a>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "23:59",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='По дату'>
+				<a link="#"><span class='fs0'>▾</span></a>
+				<input name='action' value='pp_cdr_list' type='hidden'>
+				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]' placeholder='Кто звонил'>
+				&nbsp;
+				<input size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]' placeholder='Кому звонил'>
+				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
+				<input name='need_chart' value='1' type='hidden'>
+				&nbsp;
+				<input size='11' type='text' placeholder='Длительность' name='duration' value='[% CDR_DURATION | html %]'>
+				&nbsp;
+				<input placeholder='Данные' size='15' type='text' name='data' value='[% CDR_DATA | html %]'>
+				&nbsp;
+				<select name="call_type" id="call_type_selector">
+					<option value="" selected>все звонки</option>
+					<option value="incoming">входящий</option>
+					<option value="local">локальный</option>
+					<option value="transit">исходящий</option>
+					<option value="internal">внутрений</option>
+					<option value="callback">обратный</option>
+					<option value="callblast">информатор</option>
+					<option value="click2call">click2call</option>
+					<option value="alarmclock">будильник</option>
+					<option value="service">сервисный</option>
+				</select>
+				&nbsp;
+				<select name='chart_group_period' id='gb_type_selector'>
+					<option value=''>группировать по...</option><option value='min'>минута</option><option value='h'>час</option><option value='hd'>час дня</option><option value='d'>день</option><option value='dw'>день недели</option><option value='dw'>день месяца</option><option value='w'>неделя</option><option value='m'>месяц</option><option value='y'>год</option><option value='did'>номер назначения</option><option value='cid'>номер звонящего</option><option value='cnam'>имя звонящего</option><option value='ct'>тип звонка</option><option value='d10'>длительность / 10 сек</option><option value='d30'>длительность / 30 сек</option><option value='d60'>длительность / 60 сек</option><option value='cst'>статус звонка</option><option value='6pref'>Префикс DID (6)</option><option value='c6pref'>Префикс звонящего (6)</option><option value='region'>Регион</option><option value='wt'>Кто завершил</option>
+				</select>
+				&nbsp;
+				<input value='Найти' type='submit'>
+			</td>
+			</form>
+			<script language='JavaScript'>
+				setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");
+				setActiveSelector('gb_type_selector',group_by);
+			</script>
+		</tr>
+	</table>
+	
+	<p>
+	[% IF CDR_LIST scalar %]
+	<script language='JavaScript'>
+		var graphx=new Array();
+		[% IF USE_BILLING %]
+		graphx[0] = [ period, 'Звонки', 'Минуты', 'Минуты в среднем', 'Стоимость' ];
+		[% ELSE %]
+		graphx[0] = [ period, 'Звонки', 'Минуты', 'Минуты в среднем' ];
+		[% END %]
+		[% IF CDR_CALL_TYPE eq 'transit' %]
+			[% IF CDR_WITH_ASR %]
+				graphx[0].push('ASR');
+				graphx[0].push('ACD');
+			[% END %]
+		[% END %]
+		var ind = 1;
+		[% IF USE_BILLING %]
+		[% FOREACH msg = CDR_LIST %]
+			graphx[ind] = [ '[% msg.PERIOD | locale_msg %]', [% msg.CNT | html %], [% msg.DURATION %], [% msg.AVG %], [% msg.USER_COST %], [% msg.ASR %], [% msg.ACD %] ];
+			ind = ind+1;
+		[% END %]
+		[% ELSE %]
+		[% FOREACH msg = CDR_LIST %]
+			graphx[ind] = [ '[% msg.PERIOD | locale_msg %]', [% msg.CNT | html %], [% msg.DURATION %], [% msg.AVG %], [% msg.ASR %], [% msg.ACD %] ];
+			ind = ind+1;
+		[% END %]
+		[% END %]
+		graphit(graphx,200)
+	</script>
+	[% ELSE %]
+		<br /><h3>Ничего не нашлось, попробуйте задать другие фильтры</h3>
+	[% END %]
+	</p>
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
+	

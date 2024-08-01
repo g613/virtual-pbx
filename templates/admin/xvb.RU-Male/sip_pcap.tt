@@ -1,0 +1,62 @@
+<html>
+<head>
+	<title>Virtual PBX - SIP details</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css?r=4175-[% UNIXTIME %]" />
+	<script language="JavaScript" src="/xvb/js/xvb.js?r=4175-[% UNIXTIME %]"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png?r=4175' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	
+	<center>	
+	<h1>SIP детализация для звонка: <a href="?action=cdr_list&call_id=[% XVB_CALL_ID %]">[% XVB_CALL_ID %]</a></h1>
+	
+	<table>
+		<tr align="left">
+		<td>
+		<pre>
+[% DATA %]
+		</pre>
+		</td>
+		</tr>
+		<tr align="left">
+		<td>
+		#</br>
+		[% IF CMD %]
+		# сгенерированно командой:</br>
+		[% CMD %]
+		[% ELSE %]
+		не нашли pcap-файлов.
+		[% END %]
+		</td>
+		</tr>
+	</table>
+	</center>
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: peer_list.tt,v 1.25 2022/12/13 13:56:55 gosha Exp $ -->
+<!-- $Id: peer_list.tt,v 1.27 2023/12/09 17:51:50 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP шлюзы - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -31,6 +31,9 @@
 			<th>Пользователь</th>
 			<th>Пароль</th>
 			<th>Исходящий АОН</th>
+			[% IF DEVICE_STATE %]
+			<th>Ёмкость</th>
+			[% END %]
 			<th>Имя шлюза</th>
 			<th>DTMF режим</th>
 			<th>Протокол</th>
@@ -50,6 +53,11 @@
 			<td><input class='in_t0' size="12" name='username' type='text' value="[% p.username | html %]"></td>
 			<td><input class='in_t0' size="10" name='secret' type='text' value="[% p.secret | html %]"></td>
 			<td><input class='in_t0' size="12" name='fromuser' type='text' value="[% p.fromuser | html %]"></td>
+			[% IF DEVICE_STATE %]
+			<td>
+				<input class='in_t0' type='text' size='5' value='[% p.CO_LIMIT %]' name='CO_LIMIT'>
+			</td>
+			[% END %]
 			<td align='left' nowrap='nowrap'>
 				<input class='in_t0' size="15" name='DESCRIPTION' type='text' value="[% p.DESCRIPTION | html %]">
 				[% IF p.setvar contain 'PBXMODE=1;' %]
@@ -138,7 +146,7 @@
 	
 				<span id='selector-text'>
 				<input size="14" name='host' type='text'>
-				<a href='#' class='l-info' onclick="
+				<a href='#selector-select' class='l-info' onclick="
 							document.getElementById('selector-text').style.visibility='hidden';
 							document.getElementById('selector-select').style.visibility='visible';">
 					<span class='fs0'>▾</span>
@@ -151,6 +159,11 @@
 			<td><input size="12" name='username' type='text'></td>
 			<td><input size="10" name='secret' type='text'></td>
 			<td><input size="12" name='fromuser' type='text'></td>
+			[% IF DEVICE_STATE %]
+			<td>
+				<input type='text' size='5' value='' name='CO_LIMIT'>
+			</td>
+			[% END %]
 			<td align='left'><input size="15" name='DESCRIPTION' type='text'></td>
 			<td>
 				<select name="dtmfmode">

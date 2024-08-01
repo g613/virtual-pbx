@@ -1,7 +1,15 @@
 <html>
-<!-- $Id: phone_p_start.tt,v 1.1 2018/03/18 18:07:24 gosha Exp $ -->
+<!-- $Id: phone_p_start.tt,v 1.2 2023/12/27 08:41:45 gosha Exp $ -->
 <frameset cols="134,*" border="0" framespacing="0">
-	<frame name='xvb_menu' src="?action=pp_menu">
-	<frame name='xvb_data' src="?action=pp_pinfo">
+	[% IF WITH_PHONE %]
+	<frame name='xvb_menu' src="?action=pp_menu&skip_web_phone=1">
+	<frameset cols="*,260">
+		<frame name='xvb_data' src="?action=pp_pinfo">
+		<frame name='xvb_phone' src="?action=pp_web_phone">
+	</frameset>
+	[% ELSE %]
+		<frame name='xvb_menu' src="?action=pp_menu">
+		<frame name='xvb_data' src="?action=pp_pinfo">
+	[% END %]
 </frameset>
 </html>

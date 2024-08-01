@@ -1,0 +1,220 @@
+<html>
+<head>
+	<title>Virtual PBX - tenants</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+
+	<center>
+	<h1>Арендаторы - [% USERS_CNT %]</h1>
+	
+	<table width='100%'>
+		<tr>
+			<form method="post" onSubmit='return checkChanges(this)'>
+			<td align='right'>
+				<input placeholder='Общий DID' size='12' name='f_vn' type='text' value='[% F_VN | html %]'>
+				&nbsp;
+				<input placeholder='Код доступа' size='12' name='f_ac' type='text' value='[% F_AC | html %]'>
+				&nbsp;
+				<input placeholder='Арендатор' size='25' name='f_uname' type='text' value='[% F_UNAME | html %]'>
+				&nbsp;
+				<input placeholder='Описание' size='20' name='f_desc' type='text' value='[% F_DESC | html %]'>
+				&nbsp;
+				<input placeholder='ID' size='4' name='f_id' type='text' value='[% F_ID | html %]'>
+				&nbsp;
+				<select name="f_group" id="group_type_selector">
+					<option value="" selected>любая группа</option>
+					[% FOREACH gr = GROUPS %]
+						<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+					[% END %]
+				</select>
+				&nbsp;
+				<select name="f_tariff" id="tarif_type_selector">
+					<option value="" selected>любой тариф</option>
+					[% FOREACH t = TARIFFS %]
+						<option value="[% t.ID | html %]">[% t.NAME | html %]</option>
+					[% END %]
+				</select>
+				&nbsp;
+				<select name="f_status" id="status_type_selector">
+				   	<option value="" selected>статус</option>
+					<option value="1">активный</option>
+					<option value="0">заблокирован</option>
+				</select>
+				&nbsp;
+				<input type='hidden' value='user_list' name='action'>
+				&nbsp;
+				<input value='Найти' type='submit'>
+			</td>
+			<script language='JavaScript'>
+				setActiveSelector('status_type_selector',"[% F_STATUS %]");
+				setActiveSelector('group_type_selector',"[% F_GROUP %]");
+				setActiveSelector('tarif_type_selector',"[% F_TARIFF %]");
+			</script>
+			</form>
+		</tr>
+	</table>
+
+	<p>
+	<table width='100%' id='list-data'>
+		<tr>
+			<th class='rad_l'>#</th>
+			<th>ID</th>
+			<th>Общий DID</th>
+			<th>Код доступа</th>
+			<th>Арендатор</th>
+			<th>Описание</th>
+			<th>Группа</th>
+			<th>Статус</th>
+			<th>R/O</th>
+			<th>Тариф</th>
+			<th>Баланс</th>
+			<th class='rad_r'>&nbsp;</th>
+		</tr>
+			
+		[% IF MSG_PREV ne '' %]
+		<tr align='center' class='nocolor'>
+			<td align='left' colspan='12'>
+				<a title='предыдущая страница' href='?action=user_list&from=[% MSG_PREV %]&f_id=[% F_ID | html %]&f_desc=[% F_DESC | html %]&f_tariff=[% F_TARIFF | html %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH us = USERS %]
+		<tr align='center' class='nocolor'>
+			<td align='right'>
+				[% us.IDX | html %]
+			</td>
+			<td align='right'>
+				[% us.ID | html %]
+			</td>
+			<td align='right'>
+				[% us.VOICENUMBER | html %]
+			</td>
+			<td>
+				<a title='интерфейс арендатора' href='/ui?phone=[% us.VOICENUMBER %]&ac=[% us.ACCESS_CODE %]&pw=[% us.PIN_CODE %][% us.PIN_CODE2 %]&action=start&saction=dashboard_load_list'>[% us.ACCESS_CODE | html %]</a>
+				<a title='настройка арендатора' href='?ac=[% us.ACCESS_CODE %]&action=user_info'>&nbsp;&nbsp;&nbsp;<span class='icon-cogs fs0'></span></a>
+			</td>
+			<td align='left'>
+				[% us.FIRST_NAME | html %] [% us.LAST_NAME | html %]
+			</td>
+			<td align='left'>
+				[% us.DESCRIPTION | html %]
+			</td>
+			<td align='left'>[% us.GROUP_NAME | html %]</td>
+			[% IF us.STATUS %]
+			<td class='success'>
+				активный
+			[% ELSE %]
+			<td class='error'>
+				заблокирован
+			[% END %]
+			</td>
+			<td class='ext_pv'>
+				[% IF us.DEMO_MODE %]
+					+
+				[% ELSE %]
+					-
+				[% END %]
+			</td>
+			<td align='left'>
+				[% us.TARIFF_NAME | html %]
+			</td>
+			<td align='right'>
+			[% IF USE_BILLING %]
+				[% us.USER_BALANCE %] [% us.CURRENCY_NAME | html %]
+			[% ELSE %]
+				-
+			[% END %]
+			</td>
+			<td>
+				<a title='удалить' href='?action=user_del&user_id=[% us.ID %]&from=[% MSG_FROM %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]' onclick="return DelConfirm('ru')"><span class='icon-bin fs0'></span></a>
+</a>
+			</td>
+		</tr>
+		[% END %]
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='12'>
+				<a title='следующая страница' href='?action=user_list&from=[% MSG_NEXT %]&f_id=[% F_ID | html %]&f_desc=[% F_DESC | html %]&f_tariff=[% F_TARIFF | html %]&f_uname=[% F_UNAME | html %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><span class='fs0'>►</span></a>
+			</td>
+		</tr>
+		[% END %]
+	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
+	</p>
+	
+	<p>
+	<table width='100%'>
+		<form method="post" onSubmit='return checkChanges(this)'>
+		<tr align='left'>
+			<td>
+				&nbsp;
+				Общий DID: 
+				<input size='11' type='text' name='phone' id='shdid'>
+				&nbsp;
+				Группа: 
+				<select name="group_id">
+				[% FOREACH gr = GROUPS %]
+					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+				[% END %]
+				</select>
+				&nbsp;
+				<input size='20' type='text' name='uname' placeholder='Арендатор'>
+				&nbsp;
+				[% IF TEMPLATES scalar %]
+				Шаблон: 
+				<select name="conf_file">
+				[% FOREACH tmpl = TEMPLATES %]
+					<option value="[% tmpl.FILE | html %]">[% tmpl.DESC | html %]</option>
+				[% END %]
+				</select>
+				&nbsp;
+				[% END %]
+				<input value='Добавить арендатора' type='submit'>
+				<input type='hidden' value='user_add' name='action'>
+			</td>
+		</tr>
+		</form>
+		<script language="JavaScript">
+			var shdidid = document.getElementById('shdid');
+			shdidid.value = '[% DEF_SH_DID | html %]';
+		</script>
+	</table>
+	</p>
+
+	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
+			

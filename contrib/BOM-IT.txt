@@ -31,6 +31,8 @@ call-limits-in : "Superato il numero di chiamate simultanee, si prega di richiam
 #
 gotoif-intro : "."
 #
+pause-intro : "."
+#
 webvar-intro : "Attendere"
 webvar-input-params : "Si prega di dati di ingresso Premere # quando finitura."
 #

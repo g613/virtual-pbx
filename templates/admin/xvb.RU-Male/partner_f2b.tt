@@ -1,0 +1,100 @@
+<html>
+<head>
+	<title>Virtual PBX - tenants</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+		<!--
+		alert('[% CGI_ERROR | html %]')
+		-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr>
+			<td align='left' width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='left'>
+				[% INCLUDE partner_main_menu.tt-inc %]
+			</td>
+		</tr>
+	</table>
+	
+	<center>
+	
+	<h1>Fail2ban</h1>
+			
+	<table width='60%'>
+		<tr>
+			<td><h2>Белый список ( [% F2B_CNT_WL %] )</h2></td>
+			<td align='right'>
+				<a title='очистить белый список' href='/pi?action=f2b&ip=all&mode=wldel&partner=[% PARTNER %]&node=[% NODE | html %]' onclick="return DelConfirm('ru')"><span class='icon-bin-all fs2'></span></a>
+			</td>
+		</tr>
+		<tr>
+			<td colspan='2'>
+			[% FOREACH data = F2B_WL %]
+				<a title='удалть IP из белого списка' href='/pi?action=f2b&mode=wldel&partner=[% PARTNER %]&ip=[% data | html %]&node=[% NODE | html %]' onclick="return DelConfirm('ru')">[% data | html %]</a>&nbsp;&nbsp;
+			[% END %]
+			</td>
+		</tr>
+		<tr>
+			<form method='post'>
+			<td colspan="2">
+				<input size='20' type='text' placeholder='IP' name='ip'>
+				&nbsp;
+				&nbsp;
+				&nbsp;
+				<input value='Добавить IP' type='submit'>
+				<input type='hidden' name='mode' value='wladd'>
+				<input type='hidden' value='f2b' name='action'>
+				<input type='hidden' value='[% PARTNER %]' name='partner'>
+			</td>
+			</form>
+		</tr>
+	</table>
+	<br />
+	<br />
+	<br />
+	
+	<table width='60%' id='list-data'>
+		<tr>
+			<td colspan='2'><h2>Заблокированные IP адреса ( [% F2B_CNT %] )</h2></td>
+			<td align='right'>
+				<a title='разблокировать все IP' href='/pi?action=f2b&partner=[% PARTNER %]&ip=all&node=[% NODE | html %]' onclick="return DelConfirm('ru')"><span class='icon-bin-all fs2'></span></a>
+			</td>
+		</tr>
+		<tr>
+			<th class='rad_l'>Jail</th>
+			<th>IP</th>
+			<th class='rad_r'>&nbsp;</th>
+		</tr>
+			
+		[% FOREACH data = F2B %]
+		<tr align='center' class='nocolor'>
+			<td>
+				[% data.JAIL | html %]
+			</td>
+			<td>
+				[% data.IP | html %]
+			</td>
+			<td>
+				<a title='разблокировтаь IP' href='[% data.NODE %]/pi?action=f2b&partner=[% PARTNER %]&ip=[% data.IP | html %]&node=[% data.NODE | html %]' onclick="return DelConfirm('ru')"><span class='icon-bin fs0'></span></a>
+			</td>
+		</tr>
+		[% END %]
+	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>	
+	
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
+			

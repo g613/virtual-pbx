@@ -1,0 +1,105 @@
+<html>
+<head>
+	<title>Virtual PBX - tariffs</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+	
+	<h1>Тарифы</h1>
+	
+	<p>
+	<table width='98%' id='list-data'>
+		<tr>
+			<th class='rad_l'>Id</th>
+			<th>Наименование</th>
+			<th>Месячный платеж</th>
+			<th>Дневной платеж</th>
+			<th>Валюта</th>
+			<th class='rad_r'>&nbsp;</th>
+		</tr>
+		</tr>
+			
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='6'>
+				<a title='предыдущая страница' href='?action=tariff_list&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH t = TARIFFS %]
+		<tr align='center' class='nocolor'>
+			<td>[% t.ID | html %]</td>
+			<td align='left'><a href='?action=tariff_info&tariff_id=[% t.ID %]'>[% t.NAME | html %]</a></td>
+			<td>[% t.MONTHLY_PRICE | html %]</td>
+			<td>[% t.DAILY_PRICE | html %]</td>
+			<td>
+					[% FOREACH c = CURRENCY %]
+						[% IF t.CURRENCY_ID eq c.CUR_ID %]
+							[% c.DESCRIPTION | html %]
+						[% END %]
+					[% END %]
+			</td>
+			<td>
+				<a title='clone tariff' href='?action=clone&noauto=1&tname=TARIFF&id=[% t.ID %]&fname=NAME&fid=ID&newaction=tariff_info%26tariff_id'><span class='icon-copy fs0'></span></a>
+				<a title='delete tariff' href='?action=tariff_del&tariff_id=[% t.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('ru')"><span class='icon-bin fs0'></span></a>
+			</td>
+			</form>
+		</tr>
+		[% END %]
+		
+		<form method="post" onSubmit='return checkChanges(this)'>
+		<tr>
+			<td colspan='3' align='left'>
+			<input placeholder='ID' size='3' name='T_ID' type='text'>
+			&nbsp;
+			<input placeholder='Наименование тарифа' size='25' name='T_NAME' type='text'>
+			&nbsp;
+			<input type='hidden' value='tariff_add' name='action'>
+			<input value='Добавить тариф' type='submit'>
+			</td>
+			<td align='right' colspan='3'>
+			[% IF MSG_NEXT ne '' %]
+				<a title='следующая страница' href='?action=tariff_list&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
+			[% END %]
+			</td>
+		</tr>
+		</form>
+	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
+	</p>
+
+	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

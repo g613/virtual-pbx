@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.43 2023/05/02 13:59:07 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.45 2024/06/25 17:28:23 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль АТС - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -270,7 +270,6 @@
 					<td>
 						<textarea rows='[% USER_CREDS.CUSTOM_VARS | textarea_rows %]'  cols='30' name='CUSTOM_VARS'>[% USER_CREDS.CUSTOM_VARS | html %]</textarea>
 					</td>
-					</td>
 				</tr>
 				[% FOREACH cf = CUSTOM_FIELDS %]
 				<tr>
@@ -453,6 +452,18 @@
 					</td>
 				</tr>
 			
+				[% IF USER_CREDS.PERMIT_WEB %]
+				<tr>
+					<td colspan='3'>&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan='3'><h2>Белый список IP для web интерфейса:</h2></td>
+				</tr>
+				<tr>
+					<td colspan='3'>[% USER_CREDS.PERMIT_WEB | html %]</td>
+				</tr>
+				[% END %]
+
 				<tr>
 					<td colspan='3'>&nbsp;</td>
 				</tr>

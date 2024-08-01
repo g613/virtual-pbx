@@ -1,0 +1,185 @@
+<html>
+<!-- $Id: cdrs_chart.tt,v 1.3 2024/04/07 21:06:33 gosha Exp $ -->
+<head>
+	<title>Virtual PBX - statistics</title>
+
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
+
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	<center>
+	<table width='100%'>
+		<tr>
+			<td align='center'>
+				<h1>Статистика ( [% CDR_HEADER %] )</h1>
+			</td>
+			<td align='right' width='10%'>
+				<a title='download excel file' download='table.csv' id='csvlink' href='data:text/csv;charset=utf-8,'><span class='icon-file-excel fs0'></span></a>
+			</td>
+		</tr>
+	</table>
+
+	<table width='100%'>
+		<script language='JavaScript'>
+			var time_period = getTimePeriod( 'ru', '[% CDR_PERIOD %]' );
+			var period = time_period.period;
+			var group_by = time_period.group_by;
+			var periods_list = [ ['','auto'] ];
+			periods_list.push(['min'   ,'[min]    минуты']);
+			periods_list.push(['h'     ,'[h]      час']);
+			periods_list.push(['hd'    ,'[hd]     час дня']);
+			periods_list.push(['d'     ,'[d]      день']);
+			periods_list.push(['dw'    ,'[dw]     день недели']);
+			periods_list.push(['dm'    ,'[dm]     день месяца']);
+			periods_list.push(['w'     ,'[w]      неделя']);
+			periods_list.push(['m'     ,'[m]      месяц']);
+			periods_list.push(['did'   ,'[did]    DID']);
+			periods_list.push(['cid'   ,'[cid]    кто звонил']);
+			periods_list.push(['cnam'  ,'[cnam]   имя звонящего']);
+			periods_list.push(['ct'    ,'[ct]     тип звонка']);
+			periods_list.push(['d10'   ,'[d10]    длительность / 10 сек']);
+			periods_list.push(['d30'   ,'[d30]    длительность / 30 сек']);
+			periods_list.push(['d60'   ,'[d60]    длительность / 60 сек']);
+			periods_list.push(['cst'   ,'[cst]    статус звонка']);
+			periods_list.push(['6pref' ,'[6pref]  префикс DID  (6)']);
+			periods_list.push(['c6pref','[c6pref] префикс звонящего (6)']);
+			periods_list.push(['region','[region] регион']);
+			periods_list.push(['wt'    ,'[wt]     кто завершил']);
+			periods_list.push(['srcip' ,'[srcip]  SRC IP']);
+			periods_list.push(['gw'    ,'[gw]     шлюз']);
+			periods_list.push(['node'  ,'[node]   оборудование']);
+			periods_list.push(['ac'    ,'[ac]     код доступа']);
+			periods_list.push(['sname' ,'[sname]  Арендатор']);
+			periods_list.push(['gname' ,'[gname]  группа']);
+			periods_list.push(['***','ввести вручную']);
+		</script>
+		<tr align='left'>
+			<td align='right'>
+				<form method="get" onSubmit='return checkChanges(this)'>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "00:00",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='С даты' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<a link="#"><span class='fs0'>▾</span></a>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "23:59",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='По дату' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<a link="#"><span class='fs0'>▾</span></a>
+				<input name='action' value='cdr_list' type='hidden'>
+				<input placeholder='Кто звонил' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				&nbsp;
+				<input placeholder='Кому звонили' size='10' type='text' name='called_id' value='[% CDR_CALLED_ID | html %]'>
+				&nbsp;
+				<input size='8' type='text' placeholder='Длительность' name='duration' value='[% CDR_DURATION | html %]'>
+				&nbsp;
+				<input placeholder='Данные' size='15' type='text' name='data' value='[% CDR_DATA | html %]'>
+				&nbsp;
+				<select name="call_type" id='call_type_selector'>
+					<option value="" selected>все звонки</option>
+					<option value="incoming">входящий</option>
+					<option value="local">локальный</option>
+					<option value="transit">исходящий</option>
+					<option value="internal">внутрений</option>
+					<option value="callback">обратный</option>
+					<option value="callblast">информатор</option>
+					<option value="click2call">click2call</option>
+					<option value="alarmclock">будильник</option>
+					<option value="service">сервисный</option>
+				</select>
+				&nbsp;
+				<input name='chart_group_period' id="chart_group_period" type='text' value="[% CDR_PERIOD | html %]">
+				<script language="JavaScript">
+					opt_dropdown( periods_list,'chart_group_period','chart_group_period','','[% CDR_PERIOD | html %]');
+				</script>
+				&nbsp;
+				<input name='need_chart' value='1' type='hidden'>
+				<input value='Найти' type='submit'>
+				</form>
+				<script language='JavaScript'>
+					setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");
+					setActiveSelector('gb_type_selector',group_by);
+				</script>
+			</td>
+		</tr>
+	</table>
+	
+	[% IF CDR_LIST scalar %]
+	<script language='JavaScript'>
+		var graphx=new Array();
+		[% IF USE_BILLING %]
+		graphx[0] = [ period, 'Звонки', 'Минуты', 'Минуты в среднем', 'Стоимость' ];
+		[% ELSE %]
+		graphx[0] = [ period, 'Звонки', 'Минуты', 'Минуты в среднем' ];
+		[% END %]
+		[% IF CDR_CALL_TYPE eq 'transit' %]
+			[% IF CDR_WITH_ASR %]
+				graphx[0].push('ASR');
+				graphx[0].push('ACD');
+			[% END %]
+		[% END %]
+		var ind = 1;
+		[% IF USE_BILLING %]
+		[% FOREACH msg = CDR_LIST %]
+			graphx[ind] = [ '[% msg.PERIOD | locale_msg %]', [% msg.CNT | html %], [% msg.DURATION %], [% msg.AVG %], [% msg.USER_COST %], [% msg.ASR %], [% msg.ACD %] ];
+			ind = ind+1;
+		[% END %]
+		[% ELSE %]
+		[% FOREACH msg = CDR_LIST %]
+			graphx[ind] = [ '[% msg.PERIOD | locale_msg %]', [% msg.CNT | html %], [% msg.DURATION %], [% msg.AVG %], [% msg.ASR %], [% msg.ACD %] ];
+			ind = ind+1;
+		[% END %]
+		[% END %]
+		graphit(graphx,200)
+	</script>
+	[% ELSE %]
+		<br /><h3>Ничего не нашлось, попробуйте задать другие фильтры</h3>
+	[% END %]
+
+	</center>
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
+	

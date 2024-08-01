@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_menu.tt,v 1.5 2023/03/04 07:11:25 gosha Exp $ -->
+<!-- $Id: phone_p_menu.tt,v 1.7 2023/12/27 08:41:44 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - main menu</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -32,14 +32,24 @@
 			[% END %]
 			[% END %]
 			
-			<li><a class='amenu' target='xvb_data' href='?action=pp_cdr_list'>Call History</a></li>
+			<li><a class='amenu' target='xvb_data' href='?action=pp_cdr_list'>Calls History</a></li>
 			<br />
+
+			[% IF PHONE.MANAGER_FOR %]
+			<li><a class='amenu' target='xvb_data' href='?action=pp_cdr_list&need_chart=1'>Statistics</a></li>
+			<br />
+			[% END %]
 			
 			<li><a class='amenu' target='xvb_data' href='?action=pp_msg_list'>Files</a></li>
 			<br />
 			
 			<li><a class='amenu' target='xvb_data' href='?action=pp_pbook_list'>Phone book</a></li>
 			<br />
+				
+			[% IF WEBRTC %]
+			<li><a class='amenu' target='_top' href='?action=pp_start&web_phone=1'>Web phone</a></li>
+			<br />
+			[% END %]
 			
 			<li><a class='amenu' target='_top' href=?action=pp_login&login=0>Exit</a></li>
 		</ul>

@@ -1,0 +1,195 @@
+<html>
+<head>
+	<title>Virtual PBX - partners</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	
+	<center>
+	
+	<h1>Партнеры - [% PARTNERS_CNT %]</h1>
+	
+	<p>
+	<table width='100%' id='list-data'>
+		<tr>
+				<th class='rad_l'>#</th>
+				<th>Учетная запись</th>
+				<th>Пароль</th>
+				<th>Описание</th>
+				<th>Метка</th>
+				<th>Доп опции</th>
+				<th>R/O режим</th>
+				<th>Уаправление DID</th>
+				<th>Группы</th>
+				<th class='rad_r'>Действия</th>
+			</tr>
+			
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='10'>
+				<a title='предыдущая страница' href='?action=partner_list&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH p = PARTNERS %]
+		<tr align='center' class='nocolor' id='d-tr-[% p.ID %]' valign='top'>
+			<td align='right'>
+				[% p.IDX %]'
+			</td>
+			<form method='post' id='f-[% p.ID %]' onSubmit='return xmlhttpPost(this,1)' action="">
+			<td align='right'>
+				<input class='in_t0' size='15' name='P_NAME' type='text' value='[% p.NAME | html %]'></td>
+			</td>
+			<td align='right'>
+				<input class='in_t0' size='15' name='P_PASSWORD' type='text' value='[% p.PASSWORD | html %]'></td>
+			</td>
+			<td align='right'>
+				<input class='in_t0' size='20' name='P_DESCRIPTION' type='text' value='[% p.DESCRIPTION | html %]'></td>
+				<input type='hidden' value='[% p.ID %]' name='partner_id'>
+				<input type='hidden' value='[% p.ID %]' name='data_id'>
+				<input type='hidden' value='partner_update' name='action'>
+				<input type='hidden' value='[% MSG_FROM %]' name='from'>
+			</td>
+			<td>
+				<input class='in_t0' size='15' name='P_TAG' type='text' value='[% p.TAG | html %]'></td>
+			</td>
+			<td>
+				<textarea class='in_t0' rows='2' cols='20' name='P_OPTIONS'>[% p.OPTIONS | html %]</textarea>
+			</td>
+			<td>
+				<select class='in_t0' name="P_READ_ONLY">
+					[% IF p.READ_ONLY %]
+						<option value="1">да</option>
+						<option value="0">нет</option>
+					[% ELSE %]
+						<option value="0">нет</option>
+						<option value="1">да</option>
+					[% END %]
+				</select>
+			</td>
+			<td>
+				<select class='in_t0' name="P_DID_MNG">
+					[% IF p.DID_MNG %]
+						<option value="1">да</option>
+						<option value="0">нет</option>
+					[% ELSE %]
+						<option value="0">нет</option>
+						<option value="1">да</option>
+					[% END %]
+				</select>
+				<noscript><input value='change' type='submit'></noscript>
+			</td>
+			</form>
+			<td align='left'>
+				<table width='50%'>
+				[% FOREACH gref = p.GROUP_ID_BIN %]
+				[% FOREACH gr = GROUPS %]
+					[% IF gref eq gr.GROUP_ID %]
+						<tr>
+						<td>
+						[% gr.GROUP_NAME | html %]
+						</td>
+						<td>
+						<a title='удалить группу у партнера' href='?action=partner_group_del&partner_id=[% p.ID %]&group_id=[% gr.GROUP_ID %]&rnd=[% UNIXTIME %]' onclick="return DelConfirm('ru')"><span class='icon-bin fs0'></span></a>
+						</td>
+						</tr>
+					[% END %]
+				[% END %]
+				[% END %]
+				<form method="post">
+				<input type='hidden' value='[% p.ID %]' name='partner_id'>
+				<input type='hidden' value='[% UNIXTIME %]' name='rnd'>
+				<input type='hidden' value='partner_group_add' name='action'>
+				<td>
+				<select class='in_t0' name="group_id">
+				[% FOREACH gr = GROUPS %]
+					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+				[% END %]
+				</select>
+				</td>
+				<td>
+				<input value='+' type='submit'>
+				</td>
+				</form>
+				</table>
+			</td>
+			<td align='right'>
+				<span class='in_t' id='in_t_id-[% p.ID %]'>
+					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% p.ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+				</span>
+				<a title='Войти в интерфейс партнера' href='/pi?action=user_list&f_status=1&partner=[% p.NAME | html %]&password=[% p.PASSWORD | html %]'><span class='icon-enter fs0'></span></a>
+				<a title='Удалить партнера' href='?action=partner_del&partner_id=[% p.ID %]&from=[% MSG_FROM %]' onclick="return DelConfirm('ru')"><span class='icon-bin fs0'></span></a>
+			</td>
+		</tr>
+		[% END %]
+
+		<form method="post" onSubmit='return checkChanges(this)'>
+		<tr align='center'>
+			<td align='right' colspan='2'>
+				<input size='20' name='P_NAME' type='text'></td>
+			</td>
+			<td align='right'>
+				<input size='20' name='P_PASSWORD' type='text'></td>
+			</td>
+			<td align='right'>
+				<input size='20' name='P_DESCRIPTION' type='text'></td>
+			</td>
+			<td colspan='4'></td>
+			<td align='left'>
+				<select name="GROUP_ID">
+				[% FOREACH gr = GROUPS %]
+					<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+				[% END %]
+				</select>
+			</td>
+			<td align='center'>
+				<input value='Добавить партнера' type='submit'>
+				<input type='hidden' value='partner_add' name='action'>
+			</td>
+		[% IF MSG_NEXT ne '' %]
+			<td align='right' colspan='10'>
+				<a title='следующая страница' href='?action=partner_list&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
+			</td>
+		[% END %]
+		</tr>
+		</form>
+
+	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
+	</p>
+	
+	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body></html>
+			

@@ -1,0 +1,403 @@
+<html>
+<head>
+	<title>Virtual PBX - tenant info</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='документация'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	
+	<center>
+	
+	<table width='100%'>
+		<tr>
+			<td align='left'>
+				Звонки: [% USER.CUR_CALLS %]
+			</td>
+			<td width='90%' align='center'>
+				<h1>[% USER.ACCESS_CODE %] - информация об арендаторе</h1>
+			</td>
+			<td align='right'>
+				<a title='удалить' href='?action=user_del&user_id=[% USER.ID %]&single_user=1' onclick="return DelConfirm('ru')"><span class='icon-bin-all fs2'></span></a>
+			</td>
+		</tr>
+	</table>
+	
+	<p>
+	<table width='100%'>
+		<tr>
+		</tr>
+		<tr>
+			<td width='50%' valign='top'>
+			<table width='100%'>
+			<tr>
+				<td>
+					Наименование арендатора:
+				</td>
+				<td>
+					<a title='Интерфейс арендатора' href='/ui?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&akey=[% ADMIN_KEY | html %]&action=start&saction=user_info'>
+					[% USER.FIRST_NAME | html %] [% USER.LAST_NAME | html %]
+					</a>&nbsp;&nbsp;
+					<a title='Login to tenant account, originl PBX interface' href='/ui4ai?phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]&akey=[% ADMIN_KEY | html %]&action=start&saction=user_info'><span class='icon-enter fs0'></span></a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					E-mail:
+				</td>
+				<td>
+					[% USER.EMAIL | html %]
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Язык интерфейса:
+				</td>
+				<td align='left'>
+					[% USER.LANG_NAME | html %]
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Код доступа:
+				</td>
+				<td>
+					[% USER.ACCESS_CODE | html %]&nbsp;&nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					ID арендатора:
+				</td>
+				<td>
+					[% USER.ID | html %]&nbsp;&nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Дата создания:
+				</td>
+				<td>
+					[% USER.CREATE_TIME | html %]&nbsp;&nbsp;
+				</td>
+			</tr>
+			<form method='post' id='find-form'>
+			<tr>
+				<td>
+					Pin код:
+				</td>
+				<td nowrap='nowrap'>
+					<input size='30' type='text' name='pin' value='[% USER.PIN_CODE | html %][% USER.PIN_CODE2 %]'>
+					<input type='hidden' value='[% USER.ID %]' name='user_id'>
+					<input type='hidden' value='user_update_pin' name='action'>
+					<input type='hidden' name='ai' value=''id='find-flt'>
+					<a title='сбросить pin код' href='#' onclick="return SubmitConfirm('');"><span class='icon-loop2 fs0'></span></a>
+				</td>
+			</tr>
+			</form>
+			<tr>
+				<td></td>
+			</tr>
+			<form method='post' onSubmit='return checkChanges(this)'>
+			<tr>
+				<td>
+					Общий DID: 
+				</td>
+				<td>
+					<input size='15' name='US_VOICENUMBER' type='text' value="[% USER.VOICENUMBER | html %]">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Группа:
+				</td>
+				<td>
+					<select name="US_GROUP_ID">
+					[% FOREACH gr = GROUPS %]
+						[% IF gr.GROUP_ID eq USER.GROUP_ID %]
+							<option value="[% gr.GROUP_ID | html %]" selected>[% gr.GROUP_NAME | html %]</option>
+						[% ELSE %]
+							<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+						[% END %]
+					[% END %]
+					</select>
+					<a title='информация о группе' href='?action=group_info&group_id=[% USER.GROUP_ID %]'><span class='icon-info fs0'></span></a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Статус:
+				</td>
+				<td>
+					<select name="US_STATUS">
+					[% IF USER.STATUS %]
+						<option value="1">активный</option>
+						<option value="0">заблокирован</option>
+					[% ELSE %]
+						<option value="0">заблокирован</option>
+						<option value="1">активный</option>
+					[% END %]
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Запрет изменений ( R/O ):
+				</td>
+				<td>
+					<select name="US_DEMO_MODE">
+					[% IF USER.DEMO_MODE %]
+						<option value="1">да</option>
+						<option value="0">нет</option>
+					[% ELSE %]
+						<option value="0">нет</option>
+						<option value="1">да</option>
+					[% END %]
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Метка партнера:
+				</td>
+				<td>
+					<input size='15' name='US_PARTNER_TAG' type='text' value="[% USER.PARTNER_TAG | html %]">
+				</td>
+			</tr>
+			[% FOREACH cf = CUSTOM_FIELDS %]
+			<tr>
+				<td>
+					[% cf.NAME | html %]: 
+				</td>
+				<td>
+					<input size='40' name='US_[% cf.KEY %]' type='text' value="[% cf.VAL | html %]">
+				</td>
+			</tr>
+			[% END %]
+			<tr>
+				<td>
+					Описание:
+				</td>
+				<td>
+					<textarea rows='3' cols='40' name='US_DESCRIPTION'>[% USER.DESCRIPTION | html %]</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Кастомизация настроек:
+				</td>
+				<td>
+					<textarea rows='8' cols='40' name='US_CUSTOM_RULES'>[% USER.CUSTOM_RULES | html %]</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Сессионные переменные:
+				</td>
+				<td>
+					<textarea rows='8' cols='40' name='US_CUSTOM_VARS'>[% USER.CUSTOM_VARS | html %]</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Белый список IP для доступа к web:
+				</td>
+				<td>
+					<textarea rows='3' cols='40' name='US_PERMIT_WEB'>[% USER.PERMIT_WEB | html %]</textarea>
+				</td>
+			</tr>
+			<tr><td colspan='2'>&nbsp;</td></tr>
+			<tr>
+				<td colspan='2' align='center'>
+					<input type='hidden' value='[% USER.ID %]' name='user_id'>
+					<input type='hidden' value='user_update' name='action'>
+					<input value='Сохранить изменения' type='submit'>
+				</td>
+			</tr>
+			</form>
+			</table>
+			</td>
+			<td valign='top'>
+				<table width='100%'>
+				[% IF USE_BILLING %]
+				<tr>
+					<td>
+						<table width='100%'>
+							<tr>
+								<td>
+									<h2>Баланс ( тариф: <a href='?action=tariff_info&tariff_id=[% TARIFF.ID %]'><b>[% TARIFF.NAME | html %]</b> ) :</h2>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									&nbsp;
+									&nbsp;
+									&nbsp;
+									<b>[% USER.USER_BALANCE %]</b> [% TARIFF.DESCRIPTION %]
+								</td>
+								<td align='right'>
+									<form method='post'>
+									<input size='5' type='text' name='balance'>
+									&nbsp;
+									<input type='hidden' value='[% USER.ID %]' name='user_id'>
+									<input type='hidden' value='[% USER.CURRENCY_ID %]' name='cur_id'>
+									<input type='hidden' value='balance_update' name='action'>
+									<input value='+/-' type='submit'>
+									</form>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				[% END %]
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<td>
+						<table width='100%'>
+							<tr>
+								<td><h2>Выделенные DIDs:</h2></td>
+								<td align='right'>
+									<a title='удалить все DIDs' href='?action=did_del&did_id=all&user_id=[% USER.ID | html %]&did=all' onclick="return DelConfirm('ru')"><span class='icon-bin-all fs2'></span></a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								&nbsp;
+								&nbsp;
+								[% FOREACH d = DIDS %]
+									<a title='удалить DID' href='?action=did_del&did_id=[% d.ID %]&user_id=[% USER.ID | html %]&did=[% d.DID | htmlstrict %]' onclick="return DelConfirm('ru')">
+									[% d.DID | html %]
+									[% IF d.CHANNELS ne '-1' %]
+									( [% d.CHANNELS | html %] )
+									[% END %]
+									</a>;&nbsp;
+								[% END %]
+								</td>
+								<td valign='top' width='20%' align='center' nowrap='nowrap'>
+								<form method='post'>
+									<input size='11' type='text' placeholder='DID' name='did'>
+									<input size='11' type='text' placeholder='Ёмкость' name='channels'>
+									&nbsp;
+									<input type='hidden' name='pn' value='[% USER.VOICENUMBER | html %]'>
+									<input type='hidden' name='ac' value='[% USER.ACCESS_CODE | html %]'>
+									<input value='Добавить DID' type='submit'>
+									<input type='hidden' value='did_add' name='action'>
+								</form>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<td>
+						<table width='100%'>
+							<tr>
+								<td><h2>SIP домены:</h2></td>
+							</tr>
+							<tr>
+								<td>
+								&nbsp;
+								&nbsp;
+								[% FOREACH d = DOMAINS %]
+									<a title='удалить SIP домен' href='?action=did_del_sipdomain&domain_id=[% d.ID %]&user_id=[% USER.ID | html %]&domain=[% d.DOMAIN | htmlstrict %]' onclick="return DelConfirm('ru')">[% d.DOMAIN | html %]</a>;&nbsp;
+								[% END %]
+								</td>
+								<td valign='top' width='20%' align='center' nowrap='nowrap'>
+								<form>
+									<input size='20' type='text' name='domain'>
+									&nbsp;
+									<input type='hidden' name='pn' value='[% USER.VOICENUMBER | html %]'>
+									<input type='hidden' name='ac' value='[% USER.ACCESS_CODE | html %]'>
+									<input value='Добавить Sip домен' type='submit'>
+									<input type='hidden' value='did_add_sipdomain' name='action'>
+								</form>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+				<td>
+					<h2>Ссылки:</h2>
+					<ul>
+					<li>Интерфейс арендатора
+					&nbsp;&nbsp;<a href='/ui4ai?action=role_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Роли</a>
+					&nbsp;/&nbsp;<a href='/ui4ai?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP шлюзы</a>
+					&nbsp;/&nbsp;<a href='/ui4ai?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Маршруты</a>
+					&nbsp;/&nbsp;<a href='/ui4ai?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Телефоны</a>
+					&nbsp;/&nbsp;<a href='/ui4ai?action=cdr_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>CDRs</a>
+					&nbsp;/&nbsp;<a href='/ui4ai?action=j_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Журнал</a>
+					&nbsp;/&nbsp;<a href='/ui4ai?action=act_list_all&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Активность</a>
+					&nbsp;/&nbsp;<a href='/ui4ai?action=msg_list_all&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Файлы</a>
+					</li>
+					<li>Интерфейс администратора
+					&nbsp;&nbsp;<a href='/ai?action=peer_list&ac=[% USER.ACCESS_CODE %]'>SIP шлюзы</a>
+					&nbsp;/&nbsp;<a href='/ai?action=phone_list&ac=[% USER.ACCESS_CODE %]'>Телефоны</a>
+					&nbsp;/&nbsp;<a href='/ai?action=cdr_list&ac=[% USER.ACCESS_CODE %]'>CDRs</a>
+					&nbsp;/&nbsp;<a href='/ai?action=j_list&ac=[% USER.ACCESS_CODE %]'>Журналы</a>
+					&nbsp;/&nbsp;<a href='/ai?action=msg_list_all&ac=[% USER.ACCESS_CODE %]'>Файлы</a>
+					</li>
+					</ul>
+				</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+				<td>
+					<table>
+						<tr>
+							<td>
+								<h2>Счетчики:</h2>
+							</td>
+							<td colspan='right'>
+								<a title='сбросить счетчики' href='?action=counters_clean&ac=[% USER.ACCESS_CODE %]' onclick="return DelConfirm('ru')"><span class='icon-bin-all fs2'></span></a>
+							</td>
+						</tr>
+						<tr>
+							<td colspan='2'>
+								<textarea rows='8' cols='60'>[% USER_COUNTERS | html %]</textarea>
+							</td>
+						</tr>
+					</table>
+				</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	</p>
+	
+	</center>
+	
+	[% INCLUDE main_menu2.tt-inc-custom %]
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>
+			

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: integrations.tt,v 1.24 2022/11/06 18:04:27 gosha Exp $ -->
+<!-- $Id: integrations.tt,v 1.27 2024/04/24 18:44:33 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Настройка интеграций</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -246,7 +246,7 @@
 		<form method="post" action="[% CGI_URL %]" onSubmit='return xmlhttpPost(this,0)'>
 		
 		<tr>
-			<td rowspan="10" valign="top" align="left">
+			<td rowspan="11" valign="top" align="left">
 				<img src="/xvb/images/logo_bx24.png" width="200" />
 			</td>
 			<td>
@@ -1586,9 +1586,11 @@
 	</p>
 	[% END %]
 
+	[% INCLUDE integrations.tt-custom %]
+
 	<script language="JavaScript">
 		if ( integration_found == 0 ) {
-			document.write( '<h2>Нет настраиваемых интеграций :(</h2>' );
+			document.write( '<h2>Нет настраиваемых интеграций(</h2>' );
 		}
 	</script>
 

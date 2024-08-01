@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_pbook.tt,v 1.6 2020/09/19 18:23:36 gosha Exp $ -->
+<!-- $Id: phone_p_pbook.tt,v 1.9 2024/07/16 19:34:40 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Телефонная книга</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -13,9 +13,26 @@
 <body onLoad="XVBInit()">
 	<center>
 			
-	<h1>Телефонная книга</h1>
+	<table width='100%'>
+		<tr>
+			<td align='left' width='10%' nowrap='nowrap'>
+				<span class='icon-search fs1'></span>&nbsp;
+				<input size='24' name='filter' id='filter' type='text' placeholder='фильтр контактов'>
+			</td>
+			<td align='center'><h1>Телефонная книга</h1></td>
+			<td align='right' width='10%'>
+				<a title='скачать книгу в формате excel' href='?action=pp_pbook_list&format=excel&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
+				<a href='?action=pp_pbook_del&data_id=all&ut=[% UNIXTIME %]' onclick="return DelConfirm('ru')" title='удалить все данные'><span class='icon-bin-all fs2'></span></a>
+			</td>
+		</tr>
+	</table>
+			
+	<script language='JavaScript'>
+		var el = document.getElementById("filter");
+		var cells_idx = [0,1,3,4,5,6];
+		el.addEventListener('input', e => {table_filter('d-tbl', cells_idx, e.target.value )});
+	</script>
 
-		
 	<table width='100%' id='d-tbl'>
 		<tr>
 			<th class='rad_l'>Имя</th>
@@ -24,10 +41,40 @@
 			<th>Быстрый набор</th>
 			<th>Ответственный</th>
 			<th>Коментарий</th>
-			<th class='rad_r'>&nbsp;</th>
+			<th colspan='2' class='rad_r'>&nbsp;</th>
 		</tr>
 
-		[% FOREACH param = PBOOK_LIST %]
+		[% FOREACH param = PBOOK_LIST_P %]
+		<tr align='left' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
+			<form method="post" action="" id='f-[% param.DATA_ID %]' onSubmit='return xmlhttpPost(this,1)'>
+				<input type='hidden' name='action' value='pp_pbook_update'>
+				<input type='hidden' name='data_id' value='[% param.DATA_ID %]'>
+			
+				<td><input class='in_t0' size='18' name='fn' type='text' value='[% param.FIRST_NAME | html %]'></td>
+				<td><input class='in_t0' size='18' name='ln' type='text' value='[% param.LAST_NAME | html %]'></td>
+				<td width="3%">
+					<script>
+						phone_call_filter('[% C2C | html %]','[% PHONE | html %]','[% param.PHONE | html %]');
+					</script>
+				</td>
+				<td><input class='in_t0' size='20' name='ph' type='text' value='[% param.PHONE | html %]'></td>
+				<td><input class='in_t0' size='15' name='shortcut' type='text' value='[% param.SHORTCUT | html %]'></td>
+				<td align='center'>[% param.RESPONSIBLE | html %]</td>
+				<td><input class='in_t0' size='25' name='description' type='text' value='[% param.DESCRIPTION | html %]'></td>
+				<td>&nbsp;</td>
+			
+				<td align='right' nowrap='nowrap'>
+					<span class='in_t' id='in_t_id-[% param.DATA_ID %]'>
+						<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% param.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='сохранить изменения'></span></a>
+						<noscript><input value='Сохранить изменения' type='submit'></noscript>
+					</span>
+					<a href='?action=pp_pbook_del&data_id=[% param.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]'  onclick="return xmlhttpDel(this,'ru','d-tr-[% param.DATA_ID %]')" title='удалить элемент'><span class='icon-bin fs0'></span></a>
+				</td>
+			</form>
+		</tr>
+		[% END %]
+	
+		[% FOREACH param = PBOOK_LIST_S %]
 		<tr align='left' class='nocolor' id='d-tr-[% param.DATA_ID %]'>
 			<td class='simple'>[% param.FIRST_NAME | html %]</td>
 			<td>[% param.LAST_NAME | html %]</td>
@@ -40,11 +87,28 @@
 				[% param.PHONE | html %]
 			</td>
 			<td>[% param.SHORTCUT | html %]</td>
-			<td>[% param.RESPONSIBLE | html %]</td>
+			<td align='center'>[% param.RESPONSIBLE | html %]</td>
 			<td>[% param.DESCRIPTION | html %]</td>
-			<td>[% param.CRM_CUSTOMER_NAME | html %]</td>
+			<td colspan='2'>[% param.CRM_CUSTOMER_NAME | html %]</td>
 		</tr>
 		[% END %]
+		
+		<tr align='center' id='submit_row'>
+		<form method="post" onSubmit='return checkChanges(this)'>
+			<input type='hidden' name='action' value='pp_pbook_add'>
+			
+			<td><input size='18' name='fn' type='text'></td>
+			<td><input size='18' name='ln' type='text'></td>
+			<td colspan='2'><input size='20' name='ph' type='text'></td>
+			<td><input size='15' name='shortcut' type='text'></td>
+			<td>&nbsp;</td>
+			<td><input size='25' name='description' type='text'></td>
+			
+			<td colspan='9' align='center'>
+				<input type='submit' value='Добавить'>
+			</td>
+		</form>
+		</tr>
 	</table>
 	<span><a name="addarea">&nbsp;</a><span>
 

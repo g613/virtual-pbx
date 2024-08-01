@@ -45,12 +45,19 @@
 				[% END %]
 			</select>
 			&nbsp;
+			<select name="f_status" id="status_type_selector">
+			   	<option value="" selected>any status</option>
+				<option value="1">Active</option>
+				<option value="0">Locked</option>
+			</select>
+			&nbsp;
 			<input type='hidden' value='user_list' name='action'>
 			<input type='hidden' value='[% PARTNER | html %]' name='partner'>
 			<input value='Search' type='submit'>
 			</td>
 			<script language='JavaScript'>
 				setActiveSelector('group_type_selector',"[% F_GROUP %]");
+				setActiveSelector('status_type_selector',"[% F_STATUS %]");
 			</script>
 			</form>
 		</tr>
@@ -74,7 +81,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='10'>
-				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]'><span class='fs0'>◄</span></a>
+				<a title='previous page' href='?action=user_list&from=[% MSG_PREV %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -128,7 +135,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='10'>
-				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]'><span class='fs0'>►</span></a>
+				<a title='next page' href='?action=user_list&from=[% MSG_NEXT %]&f_ac=[% F_AC %]&f_vn=[% F_VN %]&partner=[% PARTNER | html %]&f_group=[% F_GROUP %]&f_status=[% F_STATUS %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
 		[% END %]

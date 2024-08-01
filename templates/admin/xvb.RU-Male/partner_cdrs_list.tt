@@ -1,0 +1,173 @@
+<html>
+<head>
+	<title>Virtual PBX - CDRs</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
+	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+	
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='left'>
+				[% INCLUDE partner_main_menu.tt-inc %]
+			</td>
+		</tr>
+	</table>
+	<center>
+	<h1>История звонков</h1>
+
+	<p>
+	<table width='100%'>
+		<form method="get" onSubmit='return checkChanges(this)'>
+		<tr align='right'>
+			<td width='100%'>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "00:00",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='С даты' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<a link="#"><span class='fs0'>▾</span></a>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "23:59",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='По дату' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<a link="#"><span class='fs0'>▾</span></a>
+				<input name='action' value='cdr_list' type='hidden'>
+				<input name='partner' value='[% PARTNER | html %]' type='hidden'>
+				<input size='10' type='text' placeholder='Кто звонил' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Кому звонили' name='called_id' value='[% CDR_CALLED_ID | html %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Код доступа' name='ac' value='[% CDR_AC | html %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Длительность' name='duration' value='[% CDR_DURATION | html %]'>
+				&nbsp;
+				<input size='10' type='text' placeholder='Данные' name='data' value='[% CDR_DATA | html %]'>
+				&nbsp;
+				<select name="group" id="group_type_selector">
+					<option value="" selected>любая группа</option>
+					[% FOREACH gr = GROUPS %]
+						<option value="[% gr.GROUP_ID | html %]">[% gr.GROUP_NAME | html %]</option>
+					[% END %]
+				</select>
+				&nbsp;
+				<select name="call_type" id="call_type_selector">
+					<option value="" selected>все звонки</option>
+					<option value="incoming">входящий</option>
+					<option value="local">локальный</option>
+					<option value="transit">исходящий</option>
+					<option value="internal">внутрений</option>
+					<option value="callback">обратный</option>
+					<option value="callblast">информатор</option>
+					<option value="click2call">с сайта</option>
+					<option value="alarmclock">будильник</option>
+					<option value="service">сервисный</option>
+				</select>
+				&nbsp;
+				<input value='Search' type='submit'>
+				<script language='JavaScript'>
+					setActiveSelector('call_type_selector',"[% CDR_CALL_TYPE %]");
+					setActiveSelector('group_type_selector',"[% CDR_GROUP %]");
+				</script>
+			</td>
+		</tr>
+		</form>
+	</table>
+	</p>
+	<p>
+	<table width='100%' id='d-tbl'>
+		<tr>
+			<th class='rad_l'>Дата</th>
+			<th>Кто звонил</th>
+			<th>Кому звонили</th>
+			<th>Длительность</th>
+			<th>Цена</th>
+			<th>Тип звонка</th>
+			<th colspan='2' width='30%' class='rad_r'>Арендатор</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='8'>
+				<a title='предыдущая страница' href='?action=cdr_list&partner=[% PARTNER | html %]&group=[% CDR_GROUP | html %]&from=[% MSG_PREV %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+
+		[% FOREACH msg = CDR_LIST %]
+		<tr class='nocolor' align='center'>
+			<td class='simple'><a title='информация о звонке' href='?action=cdr_list&call_id=[% msg.CALL_ID %]&partner=[% PARTNER | html %]'>[% msg.CDR_DATE | html %]</a></td>
+			[% IF msg.DATA contain 'STATUS=ANSWER' %]
+				<td align='right'>[% msg.CALLER_ID | html %]</td>
+			[% ELSIF msg.DATA contain 'STATUS=' %]
+				<td align='right' class='warning-font'>[% msg.CALLER_ID | html %]</td>
+			[% ELSE %]
+				<td align='right'>[% msg.CALLER_ID | html %]</td>
+			[% END %]
+			<td align='right'>[% msg.CALLED_ID | html %]</td>
+			<td>[% msg.CDR_DURATION | duration_str %]</td>
+			<td align='right'>[% msg.COST %] ([% msg.DESCRIPTION %])</td>
+			<td>[% msg.CALL_TYPE | locale_msg %]</td>
+			<td><a title='перейти в кбинет арендатора' href='?ac=[% msg.ACCESS_CODE %]&action=user_info&partner=[% PARTNER | html %]'>[% msg.ACCESS_CODE %]</a></td>
+			<td align='left'>
+				[% msg.FIRST_NAME | html %] [% msg.LAST_NAME | html %]
+			</td>
+		</tr>
+		[% END %]
+	
+		[% IF MSG_NEXT ne '' %]
+		<tr>
+			<td align='right' colspan='8'>
+				<a title='следующая страница' href='?action=cdr_list&partner=[% PARTNER | html %]&group=[% CDR_GROUP | html %]&from=[% MSG_NEXT %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>►</span></a>
+			</td>
+		</tr>
+		[% END %]
+	</table>
+ 	[% UNLESS CDR_LIST scalar %]
+ 		<br /><h3>No records, please try to change filters.</h3>
+ 	[% END %]
+	</p>
+	
+	<script language='JavaScript'>listcolorer( 'd-tbl' );</script>
+	
+	</center>
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+</body>
+</html>
+	
