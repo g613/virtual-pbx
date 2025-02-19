@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.214 2014/09/07 18:36:24 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.217 2019/11/08 13:02:53 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Информация о внутреннем номере - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -122,9 +122,7 @@
 					<ul>
 						<li><b>*9</b> - для трансфера звонка</li>
 						<li><b>*8</b> - для парковки звонка</li>
-						[% IF ASTERISK_VERSION eq '18' %]
 						<li><b>*4XXX</b> - изменение тембра голоса</li>
-						[% END %]
 						<li><b>*3XX</b> - фоновая музыка \ звуки</li>
 							<ul>
 								<li><b>01</b> - мяч</li>
@@ -194,9 +192,7 @@
 					<ul>
 						<li><b>*9</b> - для трансфера звонка</li>
 						<li><b>*8</b> - для парковки звонка</li>
-						[% IF ASTERISK_VERSION eq '18' %]
 						<li><b>*4XXX</b> - изменение тембра голоса</li>
-						[% END %]
 						<li><b>*3XX</b> - фоновая музыка \ звуки</li>
 							<ul>
 								<li><b>01</b> - мяч</li>
@@ -523,7 +519,6 @@
 						<input size='4' name="VOLUME_TX" value="[% VBOX_PREF.VOLUME_TX | html %]" type="text">
 					</td>
 				</tr>
-				[% IF ASTERISK_VERSION eq '18' %]
 				<tr class='addon_info'>
 					<td><a href='#' class='info'>Тембр голоса Вх/Исх:<span>
 						Допустимые значения от 0.1 ( низкий тембр ) до 4 ( высокий тембр )
@@ -535,10 +530,6 @@
 						<input size='4' name="PITCH_TX" value="[% VBOX_PREF.PITCH_TX | html %]" type="text">
 					</td>
 				</tr>
-				[% ELSE %]
-					<input name="PITCH_RX" value="[% VBOX_PREF.PITCH_RX | html %]" type="hidden">
-					<input name="PITCH_TX" value="[% VBOX_PREF.PITCH_TX | html %]" type="hidden">
-				[% END %]
 				<tr class='addon_info'><td colspan='2'>&nbsp;</td></tr>
 
 				[% IF VBOX_PREF.TYPE eq '1' %]
@@ -1361,7 +1352,6 @@
 					[% END %]
 					</td>
 				</tr>
-				[% IF ASTERISK_VERSION ne '18' %]
 				<tr class='addon_info'>
 					<td>Режим 'шпиона':</td>
 					<td>
@@ -1372,7 +1362,6 @@
 						[% END %]
 					</td>
 				</tr>
-				[% END %]
 				[% END %]
 
 				[% IF VBOX_PREF.TYPE eq '12' %]
@@ -2905,10 +2894,10 @@
 						<td>Имя пользователя: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.NAME_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.NAME_FILE %]?media=mp3;type=listen' )"
 								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.NAME_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.NAME_FILE %]&type=1&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s0','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+							&nbsp;<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.NAME_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.NAME_FILE %]&type=1&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s0','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
@@ -2917,10 +2906,10 @@
 						<td>Приветствие пользователя: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.GREET_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.GREET_FILE %]?media=mp3;type=listen' )"
 								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.GREET_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.GREET_FILE %]&type=2&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s1','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+							&nbsp;<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.GREET_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.GREET_FILE %]&type=2&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s1','d-tbl-s')"><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
@@ -2931,10 +2920,10 @@
 						<td>Объявление для вызываемого: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;type=listen' )"
 								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s2','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+							&nbsp;<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s2','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
@@ -2943,10 +2932,10 @@
 						<td>Объявление для звонящего: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;type=listen' )"
 								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s7','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+							&nbsp;<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s7','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
@@ -2955,10 +2944,10 @@
 						<td>Анонс удержания вызова: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %]?media=mp3;type=listen' )"
 								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s3','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+							&nbsp;<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s3','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
@@ -2970,10 +2959,10 @@
 						<td>Объявление для вызываемого: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %]?media=mp3;type=listen' )"
 								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s4','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+							&nbsp;<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s4','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
@@ -2982,10 +2971,10 @@
 						<td>Объявление для звонящего: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]?media=mp3;type=listen' )"
 								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s8','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+							&nbsp;<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.ANNOUNCEMENT_CALLER_FILE %]&type=3&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s8','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
@@ -2994,10 +2983,10 @@
 						<td>Анонс удержания вызова: </td>
 						<td align='right' nowrap='nowrap'>
 							<a title='прослушать' 
-								onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %]?media=mp3;type=listen' )"
+								onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %]?media=mp3;type=listen' )"
 								href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-							&nbsp;<a title='скачать' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-							&nbsp;<a title='удалить' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s5','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+							&nbsp;<a title='скачать' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.RETRYDIAL_FILE %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+							&nbsp;<a title='удалить' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.RETRYDIAL_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s5','d-tbl-s')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
@@ -3008,14 +2997,14 @@
 					<tr class='nocolor' id='d-tr-s6'>
 						<td>Факс по запросу: </td>
 						<td align='right' nowrap='nowrap'>
-							<a title='скачать tiff' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.FAX_FILE %]'><img border='0' src='/xvb/images/msg_download_tif.png' alt='fax' /></a>
-							&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.FAX_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s6','d-tbl-s')" title='удалить факс'><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+							<a title='скачать tiff' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% VBOX_PREF.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% VBOX_PREF.FAX_FILE %]'><img border='0' src='/xvb/images/msg_download_tif.png' alt='fax' /></a>
+							&nbsp;<a href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% VBOX_PREF.FAX_FILE %]&type=4&id=[% VBOX_PREF.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-s6','d-tbl-s')" title='удалить факс'><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 						</td>
 					</tr>
 					[% END %]
 					[% END %]
 
-					<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+					<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 					<tr>
 						<td nowrap='nowrap'>
 						<select name="type">
@@ -3056,7 +3045,7 @@
 					<tr class='addon_info' id='backup-restore'>
 						<td nowrap='nowrap'>
 							[% IF USER_CREDS.ROOT eq '0' %]
-							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 							<input type='file' name='config_file'>
 							<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
 							<input type='hidden' name='action' value='ext_restore'>
@@ -3066,7 +3055,7 @@
 							[% END %]
 						</td>
 						<td align='center'>
-							<a title='сохранить схему' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/ext_backup/[% VBOX_PREF.ID %]?uniq=[% USER_CREDS.UNIQ | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='схема' /></a>
+							<a title='сохранить схему' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/ext_backup/[% VBOX_PREF.ID %]?uniq=[% USER_CREDS.UNIQ | html %]'><img border='0' src='/xvb/images/msg_download.png' alt='схема' /></a>
 						</td>
 					</tr>
 
@@ -3141,7 +3130,7 @@
 							</tr>
 							<tr><td colspan='3'>&nbsp;</td></tr>
 							<tr id='csv-import'>
-								<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+								<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 								<td colspan='3' align='right'>
 									<input type='file' name='config_file'>
 									<input type='hidden' name='id' value='[% VBOX_PREF.ID %]'>
@@ -3399,7 +3388,7 @@
 					</tr>
 					<tr><td colspan='8'>&nbsp;</td></tr>
 						<tr id='csv-import'>
-						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+						<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 						<td colspan='3'>&nbsp;</td>
 						<td colspan='5' align='right'>
 							<input type='file' name='config_file'>
@@ -3460,7 +3449,7 @@
 									<option value="<=">&lt;=</option>
 									<option value=">=">&gt;=</option>
 									<option value="==">==</option>
-									<option value="!-">!-</option>
+									<option value="!=">!=</option>
 									<option value="contain">contain</option>
 									<option value="regexp">regexp</option>
 								</select> 
@@ -3613,7 +3602,7 @@
 					</tr>
 					<tr><td colspan='8'>&nbsp;</td></tr>
 						<tr id='csv-import'>
-						<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+						<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 						<td colspan='3'>&nbsp;</td>
 						<td colspan='5' align='right'>
 							<input type='file' name='config_file'>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.376 2024/05/07 15:47:46 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.377 2025/02/02 15:09:50 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	
@@ -1967,7 +1967,7 @@
 							});
 						</script>
 						<input size='16' name="START_DATE" value="[% BLAST_START_DATE | html %]" id='START_DATE' type="text">
-						<a link="#"><span class='fs0'>▾</span></a>
+						<a link="#"><span class='icon-calendar fs1'></span></a>
 					</td>
 				</tr>
 				<tr>
@@ -1987,7 +1987,7 @@
 							});
 						</script>
 						<input size='16' name="STOP_DATE" value="[% BLAST_STOP_DATE | html %]" id='STOP_DATE' type="text">
-						<a link="#"><span class='fs0'>▾</span></a>
+						<a link="#"><span class='icon-calendar fs1'></span></a>
 					</td>
 				</tr>
 				<tr class='addon_info'>

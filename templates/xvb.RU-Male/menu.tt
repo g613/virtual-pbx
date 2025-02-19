@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: menu.tt,v 1.45 2024/07/26 19:19:24 gosha Exp $ -->
+<!-- $Id: menu.tt,v 1.46 2024/08/10 19:50:31 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - main menu</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -122,7 +122,7 @@
 	[% END %]
 			
 			<br />
-			<li><a class='amenu' target='_top' href=?action=logout>Выход
+			<li><a class='amenu' target='_top' href=?action=logout&lang=[% USER_CREDS.LANG_NAME | html %]>Выход
 						[% IF UNAME4LOGOUT eq '1' %]
                         	[% IF USER_CREDS.FIRST_NAME %]
                                 из @[% USER_CREDS.FIRST_NAME | html %]

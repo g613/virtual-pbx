@@ -11,12 +11,16 @@
 				<a class='amenu' href='?action=did_list'>Private DIDs</a>
 				|
 				<a class='amenu' href='?action=did_attr_list'>DIDs attr</a>
+			[% IF DYNAMIC_DIALOUT %]
 				|
-				<a class='amenu'  href='?action=report_list'>SQL-Reports</a>
+				<a class='amenu' href='?action=route_list'>Routes</a>
+			[% END %]
 			[% IF USE_BILLING %]
 				|
 				<a class='amenu' href='?action=tariff_list'>Tariffs</a>
 			[% END %]
+				|
+				<a class='amenu'  href='?action=report_list'>SQL-Reports</a>
 				|
 				<a class='amenu' href='?action=phone_list'>SIP phones</a>
 				|

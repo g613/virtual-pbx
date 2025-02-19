@@ -348,10 +348,10 @@
 					<h2>Ссылки:</h2>
 					<ul>
 					<li>Интерфейс арендатора
-					&nbsp;&nbsp;<a href='/ui4ai?action=role_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Роли</a>
-					&nbsp;/&nbsp;<a href='/ui4ai?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP шлюзы</a>
-					&nbsp;/&nbsp;<a href='/ui4ai?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Маршруты</a>
-					&nbsp;/&nbsp;<a href='/ui4ai?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Телефоны</a>
+					&nbsp;&nbsp;<a href='/ui?action=role_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Роли ( [% LIMITS.ROLES %] )</a>
+					&nbsp;/&nbsp;<a href='/ui?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP шлюзы ( [% LIMITS.PEERS %] )</a>
+					&nbsp;/&nbsp;<a href='/ui?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Маршруты ( [% LIMITS.ROUTES %] )</a>
+					&nbsp;/&nbsp;<a href='/ui?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Телефоны ( [% LIMITS.PHONES %] )</a>
 					&nbsp;/&nbsp;<a href='/ui4ai?action=cdr_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>CDRs</a>
 					&nbsp;/&nbsp;<a href='/ui4ai?action=j_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Журнал</a>
 					&nbsp;/&nbsp;<a href='/ui4ai?action=act_list_all&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Активность</a>

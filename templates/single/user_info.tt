@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.23 2014/09/07 18:36:24 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.25 2019/12/08 17:56:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - User info - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -41,7 +41,7 @@
 				<a class='headers' href='?action=vb_view&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX</a>
 			</td>
 			<td align='center'>
-				<a class='headers' href='?action=msg_list&uniq=[% USER_CREDS.UNIQ %]'>Messages</a>
+				<a class='headers' href='?action=msg_list&uniq=[% USER_CREDS.UNIQ %]'>Files</a>
 			</td>
 		</tr>
 	</table>
@@ -269,7 +269,7 @@
 					<td colspan='2'><h4>Limits:</h4></td>
 				</tr>
 				<tr>
-					<td>Maximum all messages: </td>
+					<td>Maximum all files: </td>
 					<td align='right'>[% USER_CREDS.MAX_ALL_MSGS %]</td>
 				</tr>
 				<tr>
@@ -355,7 +355,7 @@
 					<td colspan='2'><h4>Backup options:</h4></td>
 				</tr>
 				<tr>
-					<form method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
+					<form method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
 					<td>
 						Media backup: <input type='checkbox' name='full_backup'>
 						<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
@@ -370,7 +370,7 @@
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
-					<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
+					<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
 					<td>
 						Merge: <input type='checkbox' name='merge'>
 						<input type='file' name='config_file'>
@@ -401,7 +401,7 @@
 				<a class='headers' href='?action=vb_view&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=msg_list&uniq=[% USER_CREDS.UNIQ %]'>Messages</a>
+				<a class='headers' href='?action=msg_list&uniq=[% USER_CREDS.UNIQ %]'>Files</a>
 			</td>
 		</tr>
 	</table>

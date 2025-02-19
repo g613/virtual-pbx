@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: route_list.tt,v 1.27 2024/04/09 16:12:37 gosha Exp $ -->
+<!-- $Id: route_list.tt,v 1.29 2025/02/02 15:09:54 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Маршруты - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
@@ -68,7 +68,7 @@
 				});
 				</script>
 				<input size='16' type='text' name='datetime' value='[% ROUTE_DATE | html %]' id='datetime' placeholder='Дата'>
-				<a link="#"><span class='fs0'>▾</span></a>
+				<a link="#"><span class='icon-calendar fs1'></span></a>
 				&nbsp;
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='need_lookup' value='1' type='hidden'>
@@ -150,7 +150,7 @@
 		[% END %]
 		<tr align='center'>
 			<form method='post' action='[% CGI_URL %]' name='route' onSubmit='return checkChanges(this)'>
-			<td><input size="6" name='r_PRIORITY' type='text'></td>
+			<td><input size="6" name='r_PRIORITY' type='text' value='5'></td>
 			<td nowrap='nowrap'>
 				<span id='selector-select' style="position:absolute; visibility:hidden">
 				<select name='tmpl' onchange="
@@ -205,7 +205,7 @@
 			</td>
 			<td>&nbsp;</td>
 			<td><input size="14" name='r_EXT_NUMBER' type='text'></td>
-			<td><input size="6" name='r_TLIMIT' type='text'></td>
+			<td><input size="6" name='r_TLIMIT' type='text' value='0'></td>
 			<td><input size="13" name='r_DESCRIPTION' type='text'></td>
 			<td>
 				<input size="16" name='r_DEFCID' id="r_DEFCID" type='text'>

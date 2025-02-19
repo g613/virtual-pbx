@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.18 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.19 2024/11/27 16:42:00 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -15,7 +15,7 @@
 	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
 	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-ru.min.js"></script>
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	
 	<script language="javascript">
 

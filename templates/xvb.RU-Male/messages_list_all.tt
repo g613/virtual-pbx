@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list_all.tt,v 1.42 2023/03/08 20:32:43 gosha Exp $ -->
+<!-- $Id: messages_list_all.tt,v 1.49 2025/02/16 17:34:55 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Файлы - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% USER_CREDS.ROOT | html %]</title>
 
@@ -27,6 +27,9 @@
 			</td>
 			<td align='center'>
 				<h1>Файлы</h1>
+				[% IF FROM_TIME %]
+				<h3>с [% FROM_TIME | html %] по [% TO_TIME | html %]</h3>
+				[% END %]
 			</td>
 			<td align='right' width='15%'>
 				<a title='удалить файлы' href='#' onclick="return SubmitConfirm('ru','Вы действительно хотите удалить ВСЕ найденные файлы ?')"><span class='icon-bin-all fs2'></span></a>
@@ -38,36 +41,7 @@
 		<tr>
 			<td align='right'>
 				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)' id='find-form'>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "00:00",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='С даты'>
-				<a link="#"><span class='fs0'>▾</span></a>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "23:59",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='По дату'>
-				<a link="#"><span class='fs0'>▾</span></a>
+				[% TIME_INTERVAL_SELECTOR %]
 				<input name='action' value='msg_list_all' type='hidden'>
 				<input name='any_did' value='[% ANY_DID | html %]' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
@@ -116,7 +90,7 @@
 		<tr>
 		[% IF MSG_PREV ne '' %]
 			<td align='left' colspan='9'>
-				<a title='предыдущая страница ([% MSG_PREV %])' href='?action=msg_list_all&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&any_did=[% ANY_DID | html %]'><span class='fs0'>◄</span></a>
+				<a title='предыдущая страница ([% MSG_PREV %])' href='?action=msg_list_all&smart_time=[% SMART_TIME | html %]&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_PREV %]&any_did=[% ANY_DID | html %]'><span class='fs0'>◄</span></a>
 		[% END %]
 		</tr>
 		[% FOREACH msg = MSG_LIST %]
@@ -159,7 +133,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='9'>
-				<a title='следующая страница ([% MSG_NEXT %])' href='?action=msg_list_all&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&any_did=[% ANY_DID | html %]'><span class='fs0'>►</span></a>
+				<a title='следующая страница ([% MSG_NEXT %])' href='?action=msg_list_all&smart_time=[% SMART_TIME | html %]&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&msg_type=[% MSG_TYPE | html %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]&from=[% MSG_NEXT %]&any_did=[% ANY_DID | html %]'><span class='fs0'>►</span></a>
 			</td>
 		[% END %]
 		</tr>

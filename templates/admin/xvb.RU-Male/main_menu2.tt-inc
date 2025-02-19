@@ -12,12 +12,16 @@
 				<a class='amenu' href='?action=did_list'>Выделенные DID</a>
 				|
 				<a class='amenu' href='?action=did_attr_list'>DIDs атрибуты</a>
+			[% IF DYNAMIC_DIALOUT %]
 				|
-				<a class='amenu' href='?action=report_list'>SQL-отчеты</a>
+				<a class='amenu' href='?action=route_list'>Маршруты</a>
+			[% END %]
 			[% IF USE_BILLING %]
 				|
 				<a class='amenu' href='?action=tariff_list'>Тарифы</a>
 			[% END %]
+				|
+				<a class='amenu' href='?action=report_list'>SQL-отчеты</a>
 				|
 				<a class='amenu' href='?action=cdr_list'>CDRs</a>
 				|

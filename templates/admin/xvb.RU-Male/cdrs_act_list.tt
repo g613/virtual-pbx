@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_act_list.tt,v 1.3 2024/04/07 21:06:33 gosha Exp $ -->
+<!-- $Id: cdrs_act_list.tt,v 1.4 2024/09/20 15:25:59 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs / Call Detail</title>
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -44,8 +44,8 @@
 				<h1>Детализация звонка</h1>
 			</td>
 			<td align='right' width='10%'>
-				<a href="?action=call_log&call_id=[% CDR_CALL_ID | html %]&a=msg_download" target="_blank" title="call logs">Лог звонка</a> / 
-				<a href='?action=sip_log&call_id=[% SIP_CALL_ID | html %]&start_time=[% SIP_CALL_START %]&xvb_call_id=[% CDR_CALL_ID | html %]&stop_time=[% SIP_CALL_STOP %]&a=msg_download'>SIP дамп</a>
+				<a href="[% SIP_NODE_IP %]/ai?action=call_log&call_id=[% CDR_CALL_ID | html %]&a=msg_download" target="_blank" title="call logs">Лог звонка</a> / 
+				<a href='[% SIP_NODE_IP %]/ai?action=sip_log&call_id=[% SIP_CALL_ID | html %]&start_time=[% SIP_CALL_START %]&xvb_call_id=[% CDR_CALL_ID | html %]&stop_time=[% SIP_CALL_STOP %]&a=msg_download'>SIP дамп</a>
 			</td>
 		</tr>
 	</table>

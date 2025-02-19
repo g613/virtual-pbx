@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_login.tt,v 1.3 2018/03/18 16:12:19 gosha Exp $ -->
+<!-- $Id: phone_p_login.tt,v 1.4 2024/08/10 20:00:51 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - кабинет абонента</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -47,6 +47,7 @@
 			<tr>
 				<td colspan='2' align='center'>
 					<input name='action' type='hidden' value='pp_start'>
+					<input name='lang' type='hidden' value='[% USER_CREDS.LANG_NAME | html %]'>
 					<input type='submit' value='Войти'>
 				</td>
 			</tr>

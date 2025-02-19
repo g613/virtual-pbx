@@ -1,0 +1,123 @@
+<html>
+<head>
+	<title>Virtual PBX - Private DIDs</title>
+	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
+	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+</head>
+
+<body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td align='left'>
+				[% INCLUDE partner_main_menu.tt-inc %]
+			</td>
+		</tr>
+	</table>
+	<center>
+	<h1>Выделенные DID номера</h1>
+
+	<table width='100%'>
+		<tr>
+			<td align='right'>
+				<form method="post" onSubmit='return checkChanges(this)'>
+					<input size='11' name='f_vn' type='text' placeholder='DID' value='[% F_VN | html %]'>
+					&nbsp;
+					<input size='10' name='f_ac' type='text' placeholder='Код доступа' value='[% F_AC | html %]'>
+					&nbsp;
+					<input type='hidden' value='did_list' name='action'>
+					<input name='partner' value='[% PARTNER | html %]' type='hidden'>
+					<input value='Найти' type='submit'>
+				</form>
+			</td>
+		</tr>
+	</table>
+		
+	<p>
+	<table width='100%' id='list-data'>
+		<tr>
+			<th class='rad_l'>DID</th>
+			<th>Емкость каналов</th>
+			<th colspan='3'>Кому назначен</th>
+			<th>&nbsp;</th>
+			<th class='rad_r'>&nbsp;</th>
+		</tr>
+		[% IF MSG_PREV ne '' %]
+		<tr>
+			<td align='left' colspan='7'>
+				<a title='предыдущая страница' href='?action=did_list&from=[% MSG_PREV %]&f_vn=[% F_VN | html %]&f_ac=[% F_AC | html %]&partner=[% PARTNER | html %]'><span class='fs0'>◄</span></a>
+			</td>
+		</tr>
+		[% END %]
+		
+		[% FOREACH did = DIDS %]
+		<tr align='center' class='nocolor'>
+			<td align='right'>[% did.DID | html %]</td>
+			<td align='right'>
+				[% did.CHANNELS | html %]
+			</td>
+			<td align='right'>
+				<a href='?action=user_info&ac=[% did.ACCESS_CODE | html %]&partner=[% PARTNER | html %]'>[% did.ACCESS_CODE | html %]</a>
+			</td>
+			<td>
+				@
+			</td>
+			<td align='left'>
+				[% did.VOICENUMBER | html %]
+			</td>
+			<td align='left'>
+				[% did.FIRST_NAME | html %] [% did.LAST_NAME | html %]
+			</td>
+			<td>
+				<a title='удалить DID' href='?action=did_del&did_id=[% did.ID %]&user_id=[% did.SUBSCR_ID | html %]&from=[% MSG_FROM %]&did=[% did.DID | htmlstrict %]&partner=[% PARTNER | html %]' onclick="return DelConfirm('ru')"><span class='icon-bin fs0'></span></a>
+			</td>
+		</tr>
+		[% END %]
+		<tr>
+			<td colspan="7" align="right">
+				[% IF MSG_NEXT ne '' %]
+				<a title='следующая страница' href='?action=did_list&from=[% MSG_NEXT %]&f_vn=[% F_VN | html %]&f_ac=[% F_AC | html %]&partner=[% PARTNER | html %]'><span class='fs0'>►</span></a>
+				[% END %]
+			</td>
+		</tr>
+		<form method="post" onSubmit='return checkChanges(this)'>
+		<tr align='center'>
+			<td align='right'><input placeholder='DID' size='15' type='text' name='did'></td>
+			<td align='right'><input placeholder='емкость' size='10' type='text' name='channels'></td>
+			<td align='right'>
+				<input placeholder='Код доступа' size='10' type='text' name='ac'>
+			</td>
+			<td>
+				@
+			</td>
+			<td align='left'>
+				<input placeholder='Общий DID' size='15' type='text' name='pn'>
+			</td>
+			<td align="left" colspan="2">
+				<input value='Добавить DID' type='submit'>
+				<input type='hidden' value='did_add' name='action'>
+				<input name='partner' value='[% PARTNER | html %]' type='hidden'>
+			</td>
+		</tr>
+		</form>
+
+	</table>
+	<script language='JavaScript'>listcolorer( 'list-data' );</script>
+	</p>
+
+	</center>
+	
+	<div id='shadow'><div id='loading'></div></div><div id='center'></div>
+	</body>
+</html>

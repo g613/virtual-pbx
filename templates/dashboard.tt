@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: dashboard.tt,v 1.22 2022/05/19 20:31:08 gosha Exp $ -->
+<!-- $Id: dashboard.tt,v 1.23 2025/01/28 10:32:57 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Dashboard - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -167,7 +167,7 @@
 		</table>
 		<br>
 
-		<h1>Dashboard ( for previous [% PERIOD %] days )</h1>
+		<h1>Summary [% PERIOD_DATES | html  %]</h1>
 		<table>
 			<tr align='center'>
 				<td width='50%' height='100%'>

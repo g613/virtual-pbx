@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_cdrs_list.tt,v 1.15 2024/01/23 15:17:56 gosha Exp $ -->
+<!-- $Id: phone_p_cdrs_list.tt,v 1.22 2025/02/16 17:34:55 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - История звонков</title>
 
@@ -22,7 +22,12 @@
 	
 	<table width='100%'>
 		<tr>
-			<td align='center'><h1>История звонков</h1></td>
+			<td align='center'>
+			<h1>История звонков</h1>
+			[% IF FROM_TIME %]
+			<h3>с [% FROM_TIME | html %] по [% TO_TIME | html %]</h3>
+			[% END %]
+			</td>
 			<td align='right' width='10%'>
 				<a title='скачать в формате excel' href='#' onclick="return SubmitConfirm('');"><span class='icon-file-excel fs0'></span></a>
 			</td>
@@ -33,36 +38,7 @@
 		<tr>
 			<form method="get" onSubmit='return checkChanges(this)' id='find-form'>
 			<td align='right'>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "00:00",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='С даты'>
-				<a link="#"><span class='fs0'>▾</span></a>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "23:59",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='По дату'>
-				<a link="#"><span class='fs0'>▾</span></a>
+				[% TIME_INTERVAL_SELECTOR %]
 				<input name='action' value='pp_cdr_list' type='hidden'>
 				<input size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]' placeholder='Кто номер'>
 				&nbsp;
@@ -105,7 +81,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='11'>
-				<a title='предыдущая страница' href='?action=pp_cdr_list&duration=[% CDR_DURATION | html %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>◄</span></a>
+				<a title='предыдущая страница' href='?action=pp_cdr_list&smart_time=[% SMART_TIME | html %]&duration=[% CDR_DURATION | html %]&from=[% MSG_PREV %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -157,7 +133,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='11'>
-				<a title='следующая страница' href='?action=pp_cdr_list&&duration=[% CDR_DURATION | html %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>►</span></a>
+				<a title='следующая страница' href='?action=pp_cdr_list&smart_time=[% SMART_TIME | html %]&duration=[% CDR_DURATION | html %]&from=[% MSG_NEXT %]&call_type=[% CDR_CALL_TYPE %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
 		[% END %]

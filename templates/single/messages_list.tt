@@ -1,7 +1,7 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.9 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.11 2019/12/08 17:56:25 gosha Exp $ -->
 <head>
-	<title>Virtual PBX - Messages - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
+	<title>Virtual PBX - Files - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 
@@ -29,7 +29,7 @@
 				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
 			[% END %]
 			</td>
-			<td align='center'><h2>Messages</h2></td>
+			<td align='center'><h2>Files</h2></td>
 			<td align='right' width='20%'><a href=?action=logout>logout</a></td>
 		</tr>
 	</table>
@@ -41,7 +41,7 @@
 			<td>
 				<a href='?action=user_info&uniq=[% USER_CREDS.UNIQ %]'>User Prefs</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=msg_delete&clear_ext=1&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all messages?')">Clear VoiceBOX</a>
+				<a href='?action=msg_delete&clear_ext=1&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all files?')">Clear VoiceBOX</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=get_itunes&uniq=[% USER_CREDS.UNIQ %]'>Itunes</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -97,20 +97,20 @@
 					<tr>
 					<td>
 				[% IF msg.IS_VOICE %]
-						<a title='download media' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+						<a title='download media' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% ELSE %]
-						<a title='download file' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+						<a title='download file' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% END %]
 					</td>
 
 					<td>
-						<a title='delete message' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+						<a title='delete file' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 					</td>
 
 				[% IF msg.IS_VOICE %]
 					<td>
 						<a title='play' 
-							onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
+							onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
 							href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
 					</td>
 				[% END %]
@@ -135,11 +135,11 @@
 			<td colspan='7'>&nbsp;</td>
 		</tr>
 		<tr>
-			<td colspan='7' align='center'><h4>No messages</h4></td>
+			<td colspan='7' align='center'><h4>No files</h4></td>
 		</tr>
 		[% END %]
 
-		<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
+		<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
 		<tr class='noclolor'>
 			<td colspan='6' align='right'>
 				<input type='file' name='msg'>

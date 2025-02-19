@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_web_phone.tt,v 1.8 2024/05/20 10:42:16 gosha Exp $ -->
+<!-- $Id: phone_p_web_phone.tt,v 1.9 2024/10/27 19:05:49 gosha Exp $ -->
 <head>
 	<title>XVB-PBX phone</title>
 	
@@ -15,7 +15,7 @@
 	
 	<style type="text/css">
     	.call-options {
-		padding: 5px;
+		padding: 5px 0 5px 0;
 		border: 1px solid #eee;
 		border: 1px solid rgba(0, 0, 0, 0.08);
 		-webkit-border-radius: 4px;
@@ -49,6 +49,7 @@
         var oNotifICall;
         var oConfigCall;
         var oReadyStateTimer;
+		var uiAutoAnswer = 0;
 
         C =
         {
@@ -217,6 +218,16 @@
 		select[2].value = phone;
 		select[2].text = description;
 	}
+        
+		function AutoAnswer() {
+			if ( uiAutoAnswer == 0 ) {
+				uiAutoAnswer = 1;
+				btnAutoAnswer.setAttribute("class", "btn btn-success");
+			} else {
+				uiAutoAnswer = 0; 
+				btnAutoAnswer.setAttribute("class", "btn btn-primary");
+			}
+        };
 
         function loadCredentials() {
             if (window.localStorage) {
@@ -440,7 +451,7 @@
         function uiCallTerminated(s_description) {
             uiBtnCallSetText("Call");
             btnHangUp.value = 'HangUp';
-            btnHoldResume.value = 'hold';
+            btnHoldResume.value = 'Hold';
             btnMute.value = "Mute";
             btnCall.disabled = false;
             btnHangUp.disabled = true;
@@ -459,6 +470,8 @@
             }
 
             setTimeout(function () { if (!oSipSessionCall) txtCallStatus.innerHTML = ''; }, 2500);
+			
+			try { hangupTone.play(); } catch (e) { };
         }
 
         // Callback function for SIP Stacks
@@ -516,15 +529,20 @@
                             // start listening for events
                             oSipSessionCall.setConfiguration(oConfigCall);
 
-                            uiBtnCallSetText('Answer');
-                            btnHangUp.value = 'Reject';
-                            btnCall.disabled = false;
-                            btnHangUp.disabled = false;
-
-                            startRingTone();
-
                             var sRemoteNumber = (oSipSessionCall.getRemoteFriendlyName() || 'unknown');
                             txtCallStatus.innerHTML = "<i>Incoming call from [<b>" + sRemoteNumber + "</b>]</i>";
+							
+							if ( uiAutoAnswer == 1 ) {
+								btnHangUp.disabled = false;
+								try { autoanswerTone.play(); } catch (e) { };
+                				oSipSessionCall.accept(oConfigCall);
+							} else {
+								uiBtnCallSetText('Answer');
+								btnHangUp.value = 'Reject';
+								btnCall.disabled = false;
+								btnHangUp.disabled = false;
+								startRingTone();
+							}
                             showNotifICall(sRemoteNumber);
                         }
 
@@ -775,9 +793,13 @@
 </head>
 
 
+	[% UNLESS PHONE_ONLY %]
 <body style="padding:10px 0px 0px 0px">
-	<center style="padding:5px 0px 0px 0px">
+	[% ELSE %]
+<body style="padding:0px 25% 0 25%">
+	[% END %]
 
+	<center style="padding:5px 0px 0px 0px">
 	<table width="100%">
 	[% UNLESS NOCONTROL %]
 	<tr>
@@ -841,7 +863,7 @@
 			<tr><td><input type="button" style="width: 33%" class="btn" value="4" onclick="sipSendDTMF('4');" /><input type="button" style="width: 33%" class="btn" value="5" onclick="sipSendDTMF('5');" /><input type="button" style="width: 33%" class="btn" value="6" onclick="sipSendDTMF('6');" /></td></tr>
 			<tr><td><input type="button" style="width: 33%" class="btn" value="7" onclick="sipSendDTMF('7');" /><input type="button" style="width: 33%" class="btn" value="8" onclick="sipSendDTMF('8');" /><input type="button" style="width: 33%" class="btn" value="9" onclick="sipSendDTMF('9');" /></td></tr>
 			<tr><td><input type="button" style="width: 33%" class="btn" value="*" onclick="sipSendDTMF('*');" /><input type="button" style="width: 33%" class="btn" value="0" onclick="sipSendDTMF('0');" /><input type="button" style="width: 33%" class="btn" value="#" onclick="sipSendDTMF('#');" /></td></tr>
-			<tr><td><input type="button" style="width: 50%" class="btn" id="btnMute" value="Mute" onclick='sipToggleMute();'  /><input type="button" style="width: 50%" class="btn" id="btnHoldResume" value="Hold" onclick='sipToggleHoldResume();'  /></td></tr>
+			<tr><td><input type="button" style="width: 33%" value="AutoAnsw" onclick="AutoAnswer();" class="btn btn-primary" id="btnAutoAnswer" /><input type="button" style="width: 33%" class="btn" id="btnMute" value="Mute" onclick='sipToggleMute();'  /><input type="button" style="width: 33%" class="btn" id="btnHoldResume" value="Hold" onclick='sipToggleHoldResume();'  /></td></tr>
 		</table>
 		</div>
 		</td>
@@ -858,7 +880,6 @@
 	</tr>
 	<tr>
 		<td align="right">
-
 			<!-- FixMe -->
 			<input type="hidden" id="txtDisplayName" value="[% PHONE.name %]" />
 			<input type="hidden" id="txtPrivateIdentity" value="[% PHONE.name %]" />
@@ -891,5 +912,7 @@
 	<audio id="ringtone" loop src="/xvb/sounds/ringtone.wav"> </audio>
 	<audio id="ringbacktone" loop src="/xvb/sounds/ringbacktone.wav"> </audio>
 	<audio id="dtmfTone" src="/xvb/sounds/dtmf.wav"> </audio>
+	<audio id="hangupTone" src="/xvb/sounds/hanguptone.wav"> </audio>
+	<audio id="autoanswerTone" src="/xvb/sounds/autoanswertone.wav"> </audio>
 </body>
 </html>

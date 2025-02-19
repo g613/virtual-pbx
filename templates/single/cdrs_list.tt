@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_list.tt,v 1.12 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: cdrs_list.tt,v 1.13 2019/12/08 17:56:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - CDRs - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -44,7 +44,7 @@
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=vb_view&uniq=[% USER_CREDS.UNIQ %]'>VoiceBOX info</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=msg_list&uniq=[% USER_CREDS.UNIQ %]'>Messages</a>
+				<a href='?action=msg_list&uniq=[% USER_CREDS.UNIQ %]'>Files</a>
 			</td>
 		</tr>
 	</table>

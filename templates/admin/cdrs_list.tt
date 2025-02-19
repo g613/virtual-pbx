@@ -37,42 +37,16 @@
 	</table>
 	<center>
 	<h1>CDRs</h1>
+	[% IF FROM_TIME %]
+	<h3>from [% FROM_TIME | html %] to [% TO_TIME | html %]</h3>
+	[% END %]
 
 	<p>
 	<table width='100%'>
 		<form method="get" onSubmit='return checkChanges(this)'>
 		<tr align='right'>
 			<td width='100%'>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "00:00",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<a link="#"><span class='fs0'>▾</span></a>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "23:59",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<a link="#"><span class='fs0'>▾</span></a>
+				[% TIME_INTERVAL_SELECTOR %]
 				<input name='action' value='cdr_list' type='hidden'>
 				<input size='10' type='text' placeholder='Caller' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				&nbsp;
@@ -128,7 +102,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='8'>
-				<a title='previous page' href='?action=cdr_list&from=[% MSG_PREV %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>◄</span></a>
+				<a title='previous page' href='?action=cdr_list&smart_time=[% SMART_TIME | html %]&from=[% MSG_PREV %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -157,7 +131,7 @@
 		[% IF MSG_NEXT ne '' %]
 		<tr>
 			<td align='right' colspan='8'>
-				<a title='next page' href='?action=cdr_list&from=[% MSG_NEXT %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>►</span></a>
+				<a title='next page' href='?action=cdr_list&smart_time=[% SMART_TIME | html %]&from=[% MSG_NEXT %]&data=[% CDR_DATA | htmlstrict %]&duration=[% CDR_DURATION | html %]&call_type=[% CDR_CALL_TYPE | html %]&ac=[% CDR_AC | html %]&called_id=[% CDR_CALLED_ID | htmlstrict %]&caller_id=[% CDR_CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]'><span class='fs0'>►</span></a>
 			</td>
 		</tr>
 		[% END %]

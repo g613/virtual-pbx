@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: cdrs_chart.tt,v 1.42 2024/01/02 14:52:23 gosha Exp $ -->
+<!-- $Id: cdrs_chart.tt,v 1.48 2025/02/16 17:34:54 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - statistics - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -28,10 +28,19 @@
 				[% END %]
 			</td>	
 			<td align='center'>
-				<h1>Statistics ( [% CDR_HEADER %] )</h1>
+				<h1>Statistics</h1>
+				[% IF FROM_TIME %]
+				<h3>from [% FROM_TIME | html %] to [% TO_TIME | html %]</h3>
+				[% END %]
 			</td>
 			<td align='right' width='10%'>
+				[% IF EXCEL_MODE eq 'xlsx' %]
+				<a title='download excel file' href='#' onclick="return SubmitConfirm('');"><span class='icon-file-excel fs0'></span></a>
+				[% ELSE %]
 				<a title='download excel file' download='table.csv' id='csvlink' href='data:text/csv;charset=utf-8,'><span class='icon-file-excel fs0'></span></a>
+				[% END %]
+				&nbsp;
+				<a title='print' href="#" onclick="window.print();"><span class='icon-printer fs0'></span></a>
 			</td>
 		</tr>
 	</table>
@@ -44,37 +53,8 @@
 		</script>
 		<tr align='left'>
 			<td align='right'>
-				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "00:00",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<a link="#"><span class='fs0'>▾</span></a>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "23:59",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<a link="#"><span class='fs0'>▾</span></a>
+				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)' id='find-form'>
+				[% TIME_INTERVAL_SELECTOR %]
 				<input name='action' value='cdr_list' type='hidden'>
 				<input placeholder='Caller' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				&nbsp;
@@ -103,6 +83,7 @@
 				</select>
 				&nbsp;
 				<input name='need_chart' value='1' type='hidden'>
+				<input name='raw_chart_data' value='' type='hidden' id='find-flt'>
 				<input value='Search' type='submit'>
 				</form>
 				<script language='JavaScript'>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.45 2024/06/25 17:28:23 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.48 2025/01/22 20:00:47 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль АТС - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -8,6 +8,15 @@
 	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
 	[% END %]
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
+	<script language="JavaScript">
+		var did_list = [];
+		did_list.push(['/xvb/xvb-green.css','зеленая палитра']);
+		did_list.push(['/xvb/xvb-green2.css','черно-зеленый']);
+		did_list.push(['/xvb/xvb-yellow.css','желто-черный']);
+		did_list.push(['/xvb/xvb-aqua.css','морская волна']);
+		did_list.push(['','по умолчанию']);
+		did_list.push(['***','своя ссылка']);
+	</script>
 </head>
 
 <body onLoad="checkfr('uniq=[% USER_CREDS.UNIQ %]&saction=user_info');XVBInit()">
@@ -47,16 +56,13 @@
 				</tr>
 				<tr>
 					<td>
-						<select name='skins' onchange='document.user_prefs.CSS_HREF.value=this.value'>
-							<option value='[% USER_CREDS.CSS_HREF | html %]' selected>Ссылка на таблицу стилей:</option>
-							<option value='/xvb/xvb-green.css'>Стиль зеленая палитра</option>
-							<option value='/xvb/xvb-green2.css'>Стиль - черно-зеленый</option>
-							<option value='/xvb/xvb-yellow.css'>Стиль - желто-черный</option>
-							<option value=''>Стиль по умолчанию</option>
-						</select>
+						CSS стиль:
 					</td>
 					<td>
-						<input size='30' type='text' name='CSS_HREF' value='[% USER_CREDS.CSS_HREF | html %]'>
+						<input size="30" name='CSS_HREF' type='text' value="[% USER_CREDS.CSS_HREF | html %]" id="CSS_HREF">
+						<script language="JavaScript">
+							opt_dropdown( did_list,'CSS_HREF','CSS_HREF','','[% USER_CREDS.CSS_HREF | html %]');
+						</script>
 					</td>
 				</tr>
 				<tr>
@@ -331,42 +337,117 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan='2'>
-					<table class='user_data'>
+					<td colspan='2'><h2>Резервное копирование:</h2></td>
+				</tr>
+						
+				<tr>
+					<td valign='bottom'>
+						<table>
+						<form method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
 						<tr>
-							<td colspan='2'><h2>Резервное копирование:</h2></td>
+							<td>
+								<table>
+								<tr>
+									<td width='60%'>Сохранить звуковые файлы</td>
+									<td align='left'>
+										<input type='checkbox' checked name='full_backup'>
+										<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
+										<input type='hidden' name='action' value='backup'>
+									</td>
+								</tr>
+								</table>
+							</td>
 						</tr>
 						<tr>
-							<form method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
 							<td>
-								Сохранить звуковые файлы: <input type='checkbox' name='full_backup'>
-								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-								<input type='hidden' name='action' value='backup'>
-							</td>
-							<td align='center'>
 								<input name='submit' type='submit' value='Сохранить конфигурацию'>
 							</td>
-							</form>
 						</tr>
+						</form>
+						</table>
+					</td>
+					<td valign='bottom'>
+						<table>
+						<form enctype="multipart/form-data" method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 						<tr>
-							<td>&nbsp;</td>
-						</tr>
-						<tr>
-							<form enctype="multipart/form-data" method="post" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 							<td>
-								<a href='#' class='info'>Добавить<span>при включении данного флага старые данные не удаляются</span></a>: <input type='checkbox' name='merge'>
 								<input type='file' name='config_file'>
 								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 								<input type='hidden' name='action' value='restore'>
 							</td>
-							<td align='center'>
+						</tr>
+						[% IF SYS_BACKUPS scalar %]
+						<tr>
+							<td>
+								<select name='config_id'>
+								<option value="">системные архивы</option>
+								[% FOREACH f_ind = SYS_BACKUPS %]
+									<option value="[% f_ind.ID %]">[% f_ind.F_DATE | html %]</option>
+								[% END %]
+								</select>
+							</td>
+						</tr>
+						[% END %]
+						<tr>
+							<td>
+							<table>
+								<tr>
+									<td width='60%'><a href='#' class='info'>Обьединить с существующей<span>при включении данного флага старые данные не удаляются</span></a></td>
+									<td align='left'><input type='checkbox' checked  name='merge'></td>
+								</tr>
+							</table>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<table>
+									<tr>
+										<td width='60%'>Восстановить все данные</td>
+										<td align='left'><input type='checkbox' name='ss_all' checked onclick='ShowEl("bk-selector-select"); return true'></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span id='bk-selector-select' class='addon_info'>
+								<table>
+									<tr><td>&nbsp;&nbsp;&nbsp;Профиль арендатора</td><td align='left'><input type='checkbox' name='ss_profile'></td></tr>
+									<tr><td width='60%'>&nbsp;&nbsp;&nbsp;IVR</td><td align='left'><input type='checkbox' name='ss_ivr'></td></tr>
+									<tr><td>&nbsp;&nbsp;&nbsp;Телефонная книга</td><td align='left'><input type='checkbox' name='ss_pbook'></td></tr>
+									[% IF USER_CREDS.ALLOW_PHONES %]
+										<tr><td>&nbsp;&nbsp;&nbsp;Телефоны</td><td align='left'><input type='checkbox' name='ss_phones'></td></tr>
+									[% END %]
+									[% IF USER_CREDS.CUSTOM_ROUTE %]
+										<tr><td>&nbsp;&nbsp;&nbsp;Шлюзы & Маршруты</td><td align='left'><input type='checkbox' name='ss_routing'></td></tr>
+									[% END %]
+									[% IF USER_CREDS.MAX_C2C_ITEMS %]
+										<tr><td>&nbsp;&nbsp;&nbsp;Click2Call</td><td align='left'><input type='checkbox' name='ss_c2c'></td></tr>
+									[% END %]
+									[% IF USER_CREDS.CUSTOM_FILES %]
+										<tr><td>&nbsp;&nbsp;&nbsp;Системные файлы</td><td align='left'><input type='checkbox' name='ss_files'></td></tr>
+									[% END %]
+									[% IF USER_CREDS.ALLOW_MACROS %]
+										<tr><td>&nbsp;&nbsp;&nbsp;Макросы</td><td align='left'><input type='checkbox' name='ss_macros'></td></tr>
+									[% END %]
+									[% IF USER_CREDS.MAX_ROLES %]
+										<tr><td>&nbsp;&nbsp;&nbsp;Индивидуальные роли</td><td align='left'><input type='checkbox' name='ss_roles'></td></tr>
+									[% END %]
+									<tr><td>&nbsp;&nbsp;&nbsp;Клиенты</td><td align='left'><input type='checkbox' name='ss_crm'></td></tr>
+								</table>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
 								<input type='submit' value='Загрузить конфигурацию'>
 							</td>
-							</form>
 						</tr>
-					</table>
+						</form>
+						</table>
 					</td>
 				</tr>
+
 				<tr>
 					<td align='left' colspan='2'>
 					&nbsp;

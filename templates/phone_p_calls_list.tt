@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_calls_list.tt,v 1.4 2024/07/12 11:41:25 gosha Exp $ -->
+<!-- $Id: phone_p_calls_list.tt,v 1.5 2024/10/01 12:01:23 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - online calls - [% PHONE.callerid | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -21,7 +21,7 @@
 
 	<p>
 	<table width='95%'>
-		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
+		<form method="get" onSubmit='return checkChanges(this)'>
 		<tr align='right'>
 			<td width='100%'>
 				<input type='hidden' name='c2c' value='[% CDR_C2C | html %]'>

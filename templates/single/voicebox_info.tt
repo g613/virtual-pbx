@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: voicebox_info.tt,v 1.35 2014/09/07 18:36:24 gosha Exp $ -->
+<!-- $Id: voicebox_info.tt,v 1.36 2019/12/08 17:56:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension info - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -40,7 +40,7 @@
 				<a class='headers' href='?action=msg_list&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=msg_delete&clear_ext=1&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all messages?')">Clear extension</a>
+				<a class='headers' href='?action=msg_delete&clear_ext=1&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all files?')">Clear extension</a>
 			</td>
 			<td>
 				<a class='headers' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
@@ -1225,7 +1225,7 @@
 				<a class='headers' href='?action=cdr_list&uniq=[% USER_CREDS.UNIQ %]'>CDRs</a>
 			</td>
 			<td>
-				<a class='headers' href='?action=msg_delete&clear_ext=1&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all messages?')">Clear extension</a>
+				<a class='headers' href='?action=msg_delete&clear_ext=1&uniq=[% USER_CREDS.UNIQ %]' onclick="return confirm('Are you sure you want to delete all files?')">Clear extension</a>
 			</td>
 			<td>
 				<a class='headers' href='?action=msg_list&uniq=[% USER_CREDS.UNIQ %]'>View messages</a>

@@ -57,44 +57,18 @@
 			<input name='report_id' value='[% REPORT_DATA.ID %]' type='hidden'>
 			
 			[% IF REPORT_DATA.DATE_START %]
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "00:00",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<button type="button">...</button>
-				&nbsp;
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "23:59",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<button type="button">...</button>
-				&nbsp;
-				<input value='Run' type='submit'>
-				&nbsp;
-				<input name='need_excel' value='Excel' type='submit'>
-			[% ELSE %]
-				<input value='Run' type='submit'>
+				[% TIME_INTERVAL_SELECTOR %]
 			[% END %]
+			
+			[% FOREACH param = EXTRA_PARAMS %]
+				<input size='10' type='text' placeholder='[% param.label | html %]' name='[% param.name | html %]' value='[% param.value | html %]'>
+				&nbsp;
+			[% END %]
+
+			<input value='Run' type='submit'>
+			&nbsp;
+			<input name='need_excel' value='Excel' type='submit'>
+
 			</form>
 			</td>
 		</tr>
@@ -106,13 +80,15 @@
 		<tr>
 			<td>Create date: </td>
 			<td>[% REPORT_DATA.CREATE_DATE %]</td>
-			<td rowspan='8' valign='midle' align='center'>
+			<td rowspan='9' valign='midle' align='center'>
 				<p align='left'>SQL query:</p>
-				<textarea rows='16' cols='45' name='R_QUERY'>[% REPORT_DATA.QUERY | html %]</textarea>
+				<textarea rows='20' cols='45' name='R_QUERY'>[% REPORT_DATA.QUERY | html %]</textarea>
+				<p align='left'><input type='file' name='R_FILE'></p>
 			</td>
-			<td rowspan='8' valign='midle' align='center'>
+			<td rowspan='9' valign='midle' align='center'>
 				<p align='left'>Post filter:</p>
-				<textarea rows='16' cols='45' name='R_POST_FILTER'>[% REPORT_DATA.POST_FILTER | html %]</textarea>
+				<textarea rows='20' cols='45' name='R_POST_FILTER'>[% REPORT_DATA.POST_FILTER | html %]</textarea>
+				<p align='left'><input type='file' name='R_FILTER_FILE'></p>
 			</td>
 		</tr>
 		<tr>
@@ -126,6 +102,12 @@
 		<tr>
 			<td>Default stop date: </td>
 			<td><input type='text' size='30' value='[% REPORT_DATA.DATE_STOP | html %]' name='R_DATE_STOP'></td>
+		</tr>
+		<tr>
+			<td>Extra filters: </td>
+			<td align='left'>
+				<textarea rows='2' cols='45' name='R_EXTRA_PARAMS'>[% REPORT_DATA.EXTRA_PARAMS | html %]</textarea>
+			</td>
 		</tr>
 		<tr>
 			<td>Cache TTL: </td>
@@ -145,27 +127,15 @@
 			</td>
 		</tr>
 		<tr>
-			<td>SQL file: </td>
-			<td>
-				<input type='file' name='R_FILE'>
-			</td>
-		</tr>
-		<tr>
-			<td>Filter file: </td>
-			<td>
-				<input type='file' name='R_FILTER_FILE'>
-			</td>
-		</tr>
-		<tr>
 			<td>Groups permissions: </td>
-			<td colspan='3' align='left'>
-				<input type='text' size='60' name='R_ACCESS_GROUPS' value='[% REPORT_DATA.ACCESS_GROUPS | html %]'>
+			<td align='left'>
+				<textarea rows='2' cols='45' name='R_ACCESS_GROUPS'>[% REPORT_DATA.ACCESS_GROUPS | html %]</textarea>
 			</td>
 		</tr>
 		<tr>
 			<td>Tenants permissions: </td>
-			<td colspan='3' align='left'>
-				<input type='text' size='60' name='R_ACCESS_ACCOUNTS' value='[% REPORT_DATA.ACCESS_ACCOUNTS | html %]'>
+			<td align='left'>
+				<textarea rows='2' cols='45' name='R_ACCESS_ACCOUNTS'>[% REPORT_DATA.ACCESS_ACCOUNTS | html %]</textarea>
 			</td>
 		</tr>
 		<tr>

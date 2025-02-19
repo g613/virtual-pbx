@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: pbook.tt,v 1.31 2024/07/16 19:34:39 gosha Exp $ -->
+<!-- $Id: pbook.tt,v 1.32 2024/12/20 20:14:29 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Phone book - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -29,7 +29,7 @@
 			<td width='85%' align='center'>
 				<h1>Phone book</h1>
 			</td>
-			<td align='right'>
+			<td align='right' width='10%'>
 				<a title='excel file' href='?action=pbook_list&uniq=[% USER_CREDS.UNIQ %]&format=excel&need_excel=1'"><span class='icon-file-excel fs0'></span></a>
 				<a href='?action=pbook_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')" title='delete all records'><span class='icon-bin-all fs2'></span></a>
 			</td>

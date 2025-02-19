@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_menu.tt,v 1.7 2023/12/27 08:41:44 gosha Exp $ -->
+<!-- $Id: phone_p_menu.tt,v 1.8 2024/08/10 19:50:31 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - main menu</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -51,7 +51,7 @@
 			<br />
 			[% END %]
 			
-			<li><a class='amenu' target='_top' href=?action=pp_login&login=0>Exit</a></li>
+			<li><a class='amenu' target='_top' href=?action=pp_login&login=0&lang=[% USER_CREDS.LANG_NAME | html %]>Exit</a></li>
 		</ul>
 	</p>
 </body>

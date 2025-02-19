@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: rss.tt,v 1.7 2014/02/14 04:04:34 gosha Exp $ -->
+<!-- $Id: rss.tt,v 1.8 2019/09/08 17:57:25 gosha Exp $ -->
 <rss version="0.91">
 <channel>
 	<title>VirtualPBX RSS feed  Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
@@ -22,9 +22,9 @@
 	<title>id:[% msg.FILE_ID %] Message from [% msg.CALLERID | html %]</title>
 	<guid isPermaLink="false">[% msg.ID | html %]-[% msg.FILE_NAME | html %]</guid>
 	[% IF msg.IS_VOICE %]
-		<link>https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?type=listen;media=[% USER_CREDS.SOUND_FORMAT %]</link>
+		<link>[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?type=listen;media=[% USER_CREDS.SOUND_FORMAT %]</link>
 	[% ELSE %]
-		<link>https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]</link>
+		<link>[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]</link>
 	[% END %]
 	<description>
 	&lt;ul&gt;

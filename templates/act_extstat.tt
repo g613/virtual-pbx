@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: act_extstat.tt,v 1.43 2022/05/19 20:31:08 gosha Exp $ -->
+<!-- $Id: act_extstat.tt,v 1.48 2025/02/16 17:34:54 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Extension extended stats - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 
@@ -15,7 +15,7 @@
 	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
 	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	
 	<script language="javascript">
 
@@ -154,7 +154,7 @@
 				<a href='?action=vb_view&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Extension detail"><span class='icon-cog fs0'></span></a>
 				<a href='?action=ext_stat&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' title="Activity"><span class='icon-stats-bars fs0'></span></a>
 				<script language='Javascript'>
-					document.write( "<a href='?need_print=1&id=[% VBOX_PREF.ID %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&caller_id=[% CDR_CALLER_ID | html %]&data=[% CDR_DATA | html %]&action=extended_stat&uniq=[% USER_CREDS.UNIQ %]&a=msg_download&chart_group_period="+ group_by +"' target='_blank' title='Print version'><span class='icon-printer fs0'></span></a>" );
+					document.write( "<a href='?need_print=1&id=[% VBOX_PREF.ID %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&caller_id=[% CDR_CALLER_ID | html %]&data=[% CDR_DATA | html %]&action=extended_stat&uniq=[% USER_CREDS.UNIQ %]&a=msg_download&chart_group_period="+ group_by +"' target='_blank' title='Print version'><span class='icon-share fs0'></span></a>" );
 				</script>
 				[% END %]
 			</td>
@@ -171,7 +171,12 @@
 				</script>
 			)</h3>
 			</td>
-			<td width='8%'>&nbsp;</td>
+			<td width='8%'>
+				&nbsp;
+				[% IF NEED_PRINT eq '1' %]
+				<a title='print' href="#" onclick="window.print();"><span class='icon-printer fs0'></span></a>
+				[% END %]
+			</td>
 		</tr>
 	</table>
 
@@ -182,36 +187,7 @@
 		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 		<tr align='right'>
 			<td width='100%'>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "00:00",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<a link="#"><span class='fs0'>▾</span></a>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "23:59",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<a link="#"><span class='fs0'>▾</span></a>
+				[% TIME_INTERVAL_SELECTOR %]
 				<input placeholder='Caller' size='10' type='text' name='caller_id' value='[% CDR_CALLER_ID | html %]'>
 				&nbsp;
 				<input placeholder='Data' size='15' type='text' name='data' value='[% CDR_DATA | html %]'>

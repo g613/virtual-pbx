@@ -45,7 +45,6 @@
 		<tr>
 			<td width='50%' valign='top'>
 			<table width='100%'>
-			<form method='post' onSubmit='return checkChanges(this)'>
 			<tr>
 				<td>
 					Tenant name:
@@ -79,14 +78,22 @@
 					[% USER.ACCESS_CODE | html %]
 				</td>
 			</tr>
+			<form method='post' id='find-form'>
 			<tr>
 				<td>
 					Pin code:
 				</td>
-				<td>
-					[% USER.PIN_CODE | html %][% USER.PIN_CODE2 %]
+				<td nowrap='nowrap'>
+					<input size='30' type='text' name='pin' value='[% USER.PIN_CODE | html %][% USER.PIN_CODE2 %]'>
+					<input type='hidden' value='[% USER.ID %]' name='user_id'>
+					<input type='hidden' value='user_update_pin' name='action'>
+					<input type='hidden' name='ai' value=''id='find-flt'>
+					<input type='hidden' value='[% PARTNER | html %]' name='partner'>
+					<a title='update pin code' href='#' onclick="return SubmitConfirm('');"><span class='icon-loop2 fs0'></span></a>
 				</td>
 			</tr>
+			</form>
+			<form method='post' onSubmit='return checkChanges(this)'>
 			<tr>
 				<td>
 					Shared DID: 
@@ -159,6 +166,16 @@
 					<textarea rows='3' cols='40' name='US_PERMIT_WEB'>[% USER.PERMIT_WEB | html %]</textarea>
 				</td>
 			</tr>
+			[% IF EXTRA_OPTIONS.CR_ENABLE %]
+			<tr>
+				<td>
+					Custom group rules:
+				</td>
+				<td>
+					<textarea rows='8' cols='40' name='US_CUSTOM_RULES'>[% USER.CUSTOM_RULES | html %]</textarea>
+				</td>
+			</tr>
+			[% END %]
 			<tr><td colspan='2'>&nbsp;</td></tr>
 			<tr>
 				<td colspan='2' align='center'>
@@ -254,9 +271,10 @@
 				<tr>
 				<td>
 					<h2>Quick links:</h2>
-					&nbsp;&nbsp;<a href='/ui?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP Peers</a>
-					&nbsp;/&nbsp;<a href='/ui?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Routes</a>
-					&nbsp;/&nbsp;<a href='/ui?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Phones</a>
+					&nbsp;&nbsp;<a href='/ui?action=role_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Roles ( [% LIMITS.ROLES %] )</a>
+					&nbsp;/&nbsp;<a href='/ui?action=peer_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>SIP Peers ( [% LIMITS.PEERS %] )</a>
+					&nbsp;/&nbsp;<a href='/ui?action=route_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Routes ( [% LIMITS.ROUTES %] )</a>
+					&nbsp;/&nbsp;<a href='/ui?action=phone_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Phones ( [% LIMITS.PHONES %] )</a>
 					&nbsp;/&nbsp;<a href='/ui?action=macros_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Macros</a>
 					&nbsp;/&nbsp;<a href='/ui?action=cdr_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>CDRs</a>
 					&nbsp;/&nbsp;<a href='/ui?action=j_list&phone=[% USER.VOICENUMBER %]&ac=[% USER.ACCESS_CODE %]&pw=[% USER.PIN_CODE %][% USER.PIN_CODE2 %]'>Journals</a>

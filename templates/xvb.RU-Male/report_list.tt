@@ -32,7 +32,7 @@
 	<table width='98%' id='list-data'>
 		<tr>
 			<th class='rad_l'>#</th>
-			<th>Нименование отчета</th>
+			<th>Наименование отчета</th>
 			<th class='rad_r'>&nbsp;</th>
 		</tr>
 			

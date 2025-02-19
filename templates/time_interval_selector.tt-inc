@@ -1,0 +1,56 @@
+				<span id='custom_time_span' style="visibility:hidden">
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "00:00",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='From date' size='1' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<a link="#"><span class='icon-calendar fs1'></span></a>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "23:59",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='To date' size='1' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<a link="#"><span class='icon-calendar fs1'></span></a>
+				</span>
+				<span id='predef_time_span'>
+					<select name='smart_time' id='predef_time_selector' onchange="time_intervals('custom_time_span','predef_time_span','predef_time_selector','from_time','to_time')">
+						<option value=''>Select period</option>
+						<option value='today'>Today</option>
+						<option value='yesterday'>Yesterday</option>
+						<option value='prev7days'>Previous 7 days</option>
+						<option value='prev30days'>Previous 30 days</option>
+						<option value='thisweek'>This week</option>
+						<option value='prevweek'>Previous week</option>
+						<option value='thismonth'>This month</option>
+						<option value='prevmonth'>Previous month</option>
+						<option value='thisquarter'>This quarter</option>
+						<option value='prevquarter'>Previous quarter</option>
+						<option value='thisyear'>This year</option>
+						<option value='prevworkweek'>Last work week</option>
+						<option value='prevholydays'>Last weekend</option>
+						<option value='custom'>Custom interval</option>
+				</select>
+				<script type="text/javascript">
+					setActiveSelector('predef_time_selector',"[% SMART_TIME %]");
+				</script>
+				&nbsp;
+				</span>
+

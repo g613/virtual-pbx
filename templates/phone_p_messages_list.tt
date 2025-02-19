@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_p_messages_list.tt,v 1.7 2023/03/11 12:45:17 gosha Exp $ -->
+<!-- $Id: phone_p_messages_list.tt,v 1.12 2025/02/16 17:34:54 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Files</title>
 
@@ -20,41 +20,15 @@
 	<center>
 			
 	<h1>Files</h1>
+	[% IF FROM_TIME %]
+	<h3>from [% FROM_TIME | html %] to [% TO_TIME | html %]</h3>
+	[% END %]
 	
 	<table width='100%'>
 		<tr>
 			<td align='right'>
 				<form method="get" onSubmit='return checkChanges(this)' id='find-form'>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "00:00",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time' placeholder='From date'>
-				<a link="#"><span class='fs0'>▾</span></a>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "23:59",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time' placeholder='To date'>
-				<a link="#"><span class='fs0'>▾</span></a>
+				[% TIME_INTERVAL_SELECTOR %]
 				<input name='action' value='pp_msg_list' type='hidden'>
 				<input size='10' type='text' name='caller_id' value='[% CALLER_ID | html %]' placeholder='Caller'>
 				&nbsp;
@@ -84,7 +58,7 @@
 		<tr>
 		[% IF MSG_PREV ne '' %]
 			<td align='left' colspan='9'>
-				<a title='previous page ([% MSG_PREV %])' href='?action=pp_msg_list&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
+				<a title='previous page ([% MSG_PREV %])' href='?action=pp_msg_list&smart_time=[% SMART_TIME | html %]&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&from=[% MSG_PREV %]'><span class='fs0'>◄</span></a>
 		[% END %]
 		</tr>
 		[% FOREACH msg = MSG_LIST %]
@@ -120,7 +94,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='9'>
-				<a title='next page ([% MSG_NEXT %])' href='?action=pp_msg_list&duration=[% DURATION | html %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
+				<a title='next page ([% MSG_NEXT %])' href='?action=pp_msg_list&smart_time=[% SMART_TIME | html %]&duration=[% DURATION | html %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&from=[% MSG_NEXT %]'><span class='fs0'>►</span></a>
 			</td>
 		[% END %]
 		</tr>

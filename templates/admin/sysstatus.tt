@@ -150,11 +150,20 @@ chartArea:{top:5, width:'90%',height:'90%'},
 			</table>
 			
 			<br />
-			<h2>Raw logs</h2>
-			<textarea rows='50' cols='120'>
+			<h2>Diagnostics</h2>
+			<textarea rows='25' cols='120'>
 				[% RAW | html %]
 			</textarea>
-			
+			<br />
+			<br />
+			<a href="/ai?action=report&type=sysstate">System info</a>&nbsp;&nbsp;/ 
+			<a href="/ai?action=report&type=xvblog">PBX log file</a>&nbsp;&nbsp;/
+			<a href="/ai?action=report&type=xvberr">PBX errors</a>&nbsp;&nbsp;/
+			<a href="/ai?action=report&type=xvbcrm">CRM log file</a>&nbsp;&nbsp;/
+			<a href="/ai?action=report&type=asterisk">Asterisk log file</a>
+	
+			<br />
+			<br />
 			<br />
 			<h2>Config changes<h2>
 			<table id='list-data2'>

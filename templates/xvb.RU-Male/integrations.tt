@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: integrations.tt,v 1.27 2024/04/24 18:44:33 gosha Exp $ -->
+<!-- $Id: integrations.tt,v 1.29 2024/09/14 20:47:55 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Настройка интеграций</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -216,6 +216,22 @@
 			</td>
 		</tr>
 		<tr>
+			<td><a href='#' class='info'>Информирование о входящем:<span>
+				показать всплываюзщее окно о входящем звонке в CRM
+				</span></a></td>
+			<td>
+				<select name="AMO_POPUP">
+				[% IF SESSION_VARS.AMO_POPUP eq 'all' %]
+					<option value="all" selected>да</option>
+					<option value="">нет</option>
+				[% ELSE %]
+					<option value="all">да</option>
+					<option value="" selected>нет</option>
+				[% END %]
+				</select>	
+			</td>
+		</tr>
+		<tr>
 			<td></td>
 			<td align='left'>
 				<input value='Сохранить' type='submit'>
@@ -223,7 +239,6 @@
 				<br /><br />
 			</td>
 		</tr>
-		<input name="AMO_POPUP" type="hidden" value="all"/> 
 		<input name="action" type="hidden" value="sv_update"/> 
 		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 		<!--
@@ -1172,6 +1187,22 @@
 			</td>
 		</tr>
 		<tr>
+			<td><a href='#' class='info'>Формат данных:<span>
+					Формат данных передаваемых в webhook
+				</span></a></td>
+			<td>
+				<select name="CCRM_DF">
+				[% IF SESSION_VARS.CCRM_DF eq 'json' %]
+					<option value="json" selected>json</option>
+					<option value="html-form">html-form</option>
+				[% ELSE %]
+					<option value="json">json</option>
+					<option value="html-form" selected>html-form</option>
+				[% END %]
+				</select>	
+			</td>
+		</tr>
+		<tr>
 			<td></td>
 			<td align='left'>
 				<input value='Сохранить' type='submit'>
@@ -1181,7 +1212,7 @@
 		</tr>
 		<input name="action" type="hidden" value="sv_update"/> 
 		<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
-		<input name="EXT_VARS" type="hidden" value="CRM_CNL:1,CRM_ESTOP:1,CRM_ESTART:1,CRM_NODR:1,CCRM_URL"/> 
+		<input name="EXT_VARS" type="hidden" value="CRM_CNL:1,CRM_ESTOP:1,CRM_ESTART:1,CRM_NODR:1,CCRM_URL,CCRM_DF"/> 
 		</form>
 		</table>
 	</p>

@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: phone_info.tt,v 1.18 2024/06/17 14:38:52 gosha Exp $ -->
+<!-- $Id: phone_info.tt,v 1.19 2024/12/20 20:14:29 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - SIP Phone - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -320,7 +320,7 @@
 		</tr>
 		<tr>
 			<td>
-				Do Not Disturb mone:
+				Do Not Disturb mode:
 			</td>
 			<td nowrap="nowrap">
 				<input name='RAWDND' type='hidden' value="[% PHONE.RAWDND | html %]" />

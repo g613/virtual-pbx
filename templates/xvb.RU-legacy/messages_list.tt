@@ -1,7 +1,7 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.35 2014/09/07 18:30:40 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.37 2019/12/08 17:42:43 gosha Exp $ -->
 <head>
-	<title>Virtual PBX - Сообщения - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
+	<title>Virtual PBX - Файлы - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 
@@ -28,7 +28,7 @@
 				<img border='0' src='[% USER_CREDS.LOGO_HREF %]' alt='Virtual PBX' />
 			[% END %]
 			</td>
-			<td align='center'><h2>Сообщения для внутреннего номера # <b>[% VBOX_PREF.EXT_NUMBER | html %]</h2></td>
+			<td align='center'><h2>Файлы для внутреннего номера # <b>[% VBOX_PREF.EXT_NUMBER | html %]</h2></td>
 			<td align='right' width='20%'><a href=?action=logout>выход</a></td>
 		</tr>
 	</table>
@@ -38,9 +38,9 @@
 	<table width='95%'>
 		<tr align='left'>
 			<td>
-				<a href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Все сообщения</a>
+				<a href='?action=msg_list_all&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Все файлы</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
-				<a href='?action=msg_delete&clear_ext=1&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Вы действительно хотите удалить все сообщения?')">Удалить сообщения</a>
+				<a href='?action=msg_delete&clear_ext=1&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('def','Вы действительно хотите удалить все файлы?')">Удалить файлы</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href='?action=get_itunes&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]'>Подкасты</a>
 				&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -87,15 +87,15 @@
 			<td align='right'>[% msg.FILE_SIZE | fsize %]&nbsp;</td>
 			<td nowrap='nowrap'>
 				[% IF msg.IS_VOICE %]
-					<a title='скачать сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+					<a title='скачать сообщение' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% ELSE %]
-					<a title='скачать файл' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+					<a title='скачать файл' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
 				[% END %]
-					<a title='удалить сообщение' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
+					<a title='удалить сообщение' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% msg.FILE_NAME %]&type=[% msg.FILE_TYPE %]&id=[% msg.ID %]' onclick="return xmlhttpDel(this,'ru','d-tr-[% msg.FILE_NAME %]')"><img border='0' src='/xvb/images/msg_delete.png' alt='delete' /></a>
 				
 				[% IF msg.IS_VOICE %]
 					<a title='прослушать' 
-						onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
+						onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% msg.ID %]/[% USER_CREDS.ACCESS_CODE %]/[% msg.FILE_NAME %]?media=mp3;type=listen' )"
 						href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
 				[% END %]
 				[% IF msg.FILE_TYPE eq '30' %]

@@ -1,0 +1,56 @@
+				<span id='custom_time_span' style="visibility:hidden">
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#from_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "00:00",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='С даты' size='1' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
+				<a link="#"><span class='icon-calendar fs1'></span></a>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery("#to_time").dynDateTime({
+							showsTime: true,
+							ifFormat: "%Y/%m/%d %H:%M",
+							align: "TL",
+							electric: false,
+							singleClick: false,
+							xdate: "23:59",
+							button: ".next()"
+						});
+				});
+				</script>
+				<input placeholder='По дату' size='1' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
+				<a link="#"><span class='icon-calendar fs1'></span></a>
+				</span>
+				<span id='predef_time_span'>
+					<select name='smart_time' id='predef_time_selector' onchange="time_intervals('custom_time_span','predef_time_span','predef_time_selector','from_time','to_time')">
+						<option value=''>Выберитe период</option>
+						<option value='today'>Сегодня</option>
+						<option value='yesterday'>Вчера</option>
+						<option value='prev7days'>Предыдущие 7 дней</option>
+						<option value='prev30days'>Предыдущие 30 дней</option>
+						<option value='thisweek'>Текущая неделя</option>
+						<option value='prevweek'>Предыдущая неделя</option>
+						<option value='thismonth'>Текущий месяц</option>
+						<option value='prevmonth'>Предыдущий месяц</option>
+						<option value='thisquarter'>Текущий квартал</option>
+						<option value='prevquarter'>Предыдущий квартал</option>
+						<option value='thisyear'>Текущий год</option>
+						<option value='prevworkweek'>Прошедшая рабочая неделя</option>
+						<option value='prevholydays'>Прошедшие выходные</option>
+						<option value='custom'>Свой диапазон</option>
+					</select>
+					<script type="text/javascript">
+						setActiveSelector('predef_time_selector',"[% SMART_TIME %]");
+					</script>
+					&nbsp;
+				</span>
+

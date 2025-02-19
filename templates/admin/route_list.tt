@@ -1,7 +1,7 @@
 <html>
 <!-- $Id -->
 <head>
-	<title>Virtual PBX - Routes - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
+	<title>Virtual PBX - Routes</title>
 	<link rel="stylesheet" type="text/css" media="all" href="/xvb/css/calendar-blue.css"  />
 	[% IF USER_CREDS.CSS_HREF eq '' %]
 	<link rel="stylesheet" type="text/css" href="/xvb/xvb.css" />
@@ -9,40 +9,47 @@
 	<link rel="stylesheet" type="text/css" href="[% USER_CREDS.CSS_HREF %]" />
 	[% END %]
 	<script language="JavaScript" src="/xvb/js/xvb.js"></script>
-	<script type="text/javascript" src="/xvb/js/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="/xvb/js/jquery/calendar/jquery.dynDateTime.min.js"></script>
-	<script type="text/javascript" src="/xvb/js/jquery/calendar/lang/calendar-en.min.js"></script>
-	<script language="JavaScript">
-		var e_list = [];
-		[% FOREACH vb = VB_LIST %]
-		e_list['[% vb.EXT_NUMBER | html %]'] = ['[% vb.ID %]','[% vb.DESCRIPTION | html %]','[% vb.NAME | html %]'];
-		[% END %]
-		var did_list = [ ['','auto'] ];
-		[% FOREACH d = DID %]
-		[% IF d.VALUE %]
-		did_list.push(['[% d.VALUE | html %]','[% d.DID | html %]']);
-		[% ELSE %]
-		did_list.push(['[% d.DID | html %]','[% d.DID | html %]']);
-		[% END %]
-		[% END %]
-		did_list.push(['***','raw editor']);
-	</script>
 </head>
 
 <body onLoad="XVBInit()">
+	[% IF CGI_ERROR ne '' %]
+	<script language="JavaScript" type="text/javascript">
+	<!--
+		alert('[% CGI_ERROR | html %]')
+	//-->
+	</script>
+	<noscript>[% CGI_ERROR | html %]</noscript>
+	[% END %]
+	
+	<table width='100%' class='logo'>
+		<tr align='left'>
+			<td width='10%'>
+				<img border='0' width='120' src='/xvb/images/logo-small.png' alt='Virtual PBX' />
+			</td>
+			<td valign='middle'>
+				[% INCLUDE main_menu.tt-inc %]
+				[% INCLUDE main_menu.tt-inc-custom %]
+			</td>
+			<td align='right'>
+				<a href='/xvb/XVB-AI.pdf?a=msg_download' title='about'><span class='icon-question fs0'></span></a>
+				[% INCLUDE version.tt %]
+			<td>
+		</tr>
+	</table>
+	
 	<center>
 			
 	<table width='100%'>
 		<tr align='center'>
 			<td>
-				<h1>Routes</h1>
+				<h1>System routes</h1>
 			</td>
 			<td align='right' width='5%'>
-				<a title='delete all routes' href='?action=route_del&data_id=all&uniq=[% USER_CREDS.UNIQ %]' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>
+				<a title='delete all routes' href='?action=route_del&data_id=all' onclick="return DelConfirm('en')"><span class='icon-bin-all fs2'></span></a>
 			</td>
 		</tr>
 	</table>
-
+	
 	<table width='95%'>
 		<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)'>
 		<tr align='right'>
@@ -57,22 +64,6 @@
 				&nbsp;
 				<input size='15' type='text' placeholder='Variables' name='vars' value='[% ROUTE_VARS | html %]'>
 				&nbsp;
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#datetime").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							button: ".next()"
-						});
-				});
-				</script>
-				<input size='16' type='text' name='datetime' value='[% ROUTE_DATE | html %]' id='datetime' placeholder='Date'>
-				<a link="#"><span class='icon-calendar fs1'></span></a>
-				&nbsp;
-				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='need_lookup' value='1' type='hidden'>
 				<input value='Lookup' type='submit'>
 			</td>
@@ -88,10 +79,8 @@
 			<th>Out number</th>
 			<th>&nbsp;</th>
 			<th>Permissions</th>
-			<th>Time Limits</th>
 			<th>Route Name</th>
 			<th>CallerID</th>
-			<th>Schedule</th>
 			<th>Peer</th>
 			<th>&nbsp;</th>
 			<th class='rad_r'>Actions</th>
@@ -105,31 +94,9 @@
 			<td><input class='in_t0' size="18" name='r_SUBSTR' type='text' value="[% r.SUBSTR | html %]"></td>
 			<td>[% r.SUBSTR_RESULT | html %]</td>
 			<td><input class='in_t0' size="14" name='r_EXT_NUMBER' type='text' value="[% r.EXT_NUMBER | html %]"></td>
-			<td><input class='in_t0' size="6" name='r_TLIMIT' type='text' value="[% r.TLIMIT | html %]"></td>
 			<td><input class='in_t0' size="13" name='r_DESCRIPTION' type='text' value="[% r.DESCRIPTION | html %]"></td>
-			<td>
-				<input class='in_t0' size="16" name='r_DEFCID' id="r_DEFCID-[% r.DATA_ID %]" type='text' value="[% r.DEFCID | html %]">
-				<script language="JavaScript">
-					opt_dropdown( did_list,'r_DEFCID','r_DEFCID-[% r.DATA_ID %]','in_t0','[% r.DEFCID | html %]');
-				</script>
-			</td>
-			<td align='left' nowrap='nowrap'>
-				<input class='in_t0' size="9" name='r_SCHEDULE_EXT' type='text' value="[% r.SCHEDULE_EXT | html %]">
-				<script language="JavaScript">
-					exten_icon( '[% r.SCHEDULE_EXT | html %]', '[% USER_CREDS.UNIQ | html %]', 'extension info' );
-				</script>
-			</td>
-			<td>
-				<select name="r_PEER_ID" class='in_t0'>
-				[% FOREACH p = PEERS %]
-					[% IF p.DATA_ID eq r.PEER_ID %]
-						<option value="[% p.DATA_ID | html %]" selected>[% p.DESCRIPTION | html %]</option>
-					[% ELSE %]
-						<option value="[% p.DATA_ID | html %]">[% p.DESCRIPTION | html %]</option>
-					[% END %]
-				[% END %]
-				</select>
-			</td>
+			<td><input class='in_t0' size="16" name='r_DEFCID' type='text' value="[% r.DEFCID | html %]"></td>
+			<td><input class='in_t0' size="16" name='r_PEER' type='text' value="[% r.PEER | html %]"></td>
 			<td align='center'>
 				<input class='in_t0' name='r_LAST_ROUTE' type='checkbox' title='Last route'
 				[% IF r.LAST_ROUTE %]
@@ -140,13 +107,12 @@
 			<td align='left'>
 				<input type='hidden' value='[% r.DATA_ID %]' name='data_id'>
 				<input type='hidden' value='route_update' name='action'>
-				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>
 				<span class='in_t' id='in_t_id-[% r.DATA_ID %]'>
 					<a href='#' onclick="return xmlhttpPost(document.getElementById('f-[% r.DATA_ID %]'),1);"><span class='icon-floppy-disk fs0 blink' title='save changes'></span></a>
 					<noscript><input value='change' type='submit'></noscript>
 				</span>
-				<a title="clone route" href='?action=route_add&id=[% VBOX_PREF.ID %]&uniq=[% USER_CREDS.UNIQ %]&clone_id=[% r.DATA_ID %]'><span class='icon-copy fs0'></span></a>
-				<a title='delete route' href='?action=route_del&data_id=[% r.DATA_ID %]&uniq=[% USER_CREDS.UNIQ %]' onclick="return xmlhttpDel(this,'en','d-tr-[% r.DATA_ID %]')"><span class='icon-bin fs0'></span></a>
+				<a title="clone route" href='?action=route_add&clone_id=[% r.DATA_ID %]'><span class='icon-copy fs0'></span></a>
+				<a title='delete route' href='?action=route_del&data_id=[% r.DATA_ID %]' onclick="return xmlhttpDel(this,'en','d-tr-[% r.DATA_ID %]')"><span class='icon-bin fs0'></span></a>
 			</td>
 			</form>
 		</tr>
@@ -158,22 +124,9 @@
 			<td><input size="18" name='r_SUBSTR' type='text'></td>
 			<td>&nbsp;</td>
 			<td><input size="14" name='r_EXT_NUMBER' type='text'></td>
-			<td><input size="6" name='r_TLIMIT' type='text' value='0'></td>
 			<td><input size="13" name='r_DESCRIPTION' type='text'></td>
-			<td>
-				<input size="16" name='r_DEFCID' id="r_DEFCID" type='text'>
-				<script language="JavaScript">
-					opt_dropdown( did_list,'r_DEFCID','r_DEFCID','','');
-				</script>
-			</td>
-			<td align='left'><input size="10" name='r_SCHEDULE_EXT' type='text'></td>
-			<td>
-				<select name="r_PEER_ID">
-				[% FOREACH p = PEERS %]
-					<option value="[% p.DATA_ID | html %]" selected>[% p.DESCRIPTION | html %]</option>
-				[% END %]
-				</select>
-			</td>
+			<td><input size="16" name='r_DEFCID' id="r_DEFCID" type='text'></td>
+			<td><input size="16" name='r_PEER' id="r_PEER" type='text'></td>
 			<td colspan='2'>
 				<input type='hidden' value='route_add' name='action'>
 				<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>

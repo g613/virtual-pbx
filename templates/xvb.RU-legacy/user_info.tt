@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: user_info.tt,v 1.86 2014/09/07 18:36:24 gosha Exp $ -->
+<!-- $Id: user_info.tt,v 1.87 2019/09/08 17:57:25 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Профиль пользователя - Ac:[% USER_CREDS.ACCESS_CODE | html %]</title>
 	[% IF USER_CREDS.CSS_HREF eq '' %]
@@ -280,15 +280,15 @@ SIP-домен: [% d.DOMAIN | html %]
 								<td>Текущая музыка вместо гудков</td>
 								<td align='center' nowrap='nowrap'>
 									<a title='прослушать' 
-										onclick="return ShowPlayer('https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% CUSTOM_MOH %]?media=mp3;type=listen' )"
+										onclick="return ShowPlayer('[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% CUSTOM_MOH %]?media=mp3;type=listen' )"
 										href="#"><img border='0' src='/xvb/images/msg_listen.png' alt='play' /></a>
-									&nbsp;<a title='скачать файл' href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% CUSTOM_MOH %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
-									&nbsp;<a href='https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% CUSTOM_MOH %]&type=1' onclick="return xmlhttpDel(this,'ru','d-tr')" title='удалить файл'><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
+									&nbsp;<a title='скачать файл' href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]/msg_download/[% ROOT_EXT_ID %]/[% USER_CREDS.ACCESS_CODE %]/[% CUSTOM_MOH %].[% USER_CREDS.SOUND_FORMAT %]?media=[% USER_CREDS.SOUND_FORMAT %]'><img border='0' src='/xvb/images/msg_download.png' alt='download' /></a>
+									&nbsp;<a href='[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]?action=msg_delete&uniq=[% USER_CREDS.UNIQ %]&msg=[% CUSTOM_MOH %]&type=1' onclick="return xmlhttpDel(this,'ru','d-tr')" title='удалить файл'><img border='0'  src='/xvb/images/msg_delete.png' alt='delete' /></a>
 								</td>
 							</tr>
 							[% END %]
 							<tr>
-							<form enctype="multipart/form-data" method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
+							<form enctype="multipart/form-data" method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]" onSubmit='return checkChanges(this)'>
 								<td>
 									<input type='file' name='msg'>
 									<input type='hidden' name="type" value='5'>
@@ -310,7 +310,7 @@ SIP-домен: [% d.DOMAIN | html %]
 							<td colspan='2'><h4>Резервное копирование:</h4></td>
 						</tr>
 						<tr>
-							<form method="post" action="https://[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
+							<form method="post" action="[% USER_CREDS.DOWNLOAD_IP %][% CGI_URL %]">
 							<td>
 								Сохранить звуковые файлы: <input type='checkbox' name='full_backup'>
 								<input type='hidden' name='uniq' value='[% USER_CREDS.UNIQ %]'>

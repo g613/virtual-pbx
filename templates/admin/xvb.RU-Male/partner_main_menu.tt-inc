@@ -1,5 +1,7 @@
 				<a class='amenu' href='?action=user_list&partner=[% PARTNER | html %]&f_status=1'>Арендаторы</a>
 					&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a class='amenu' href='?action=did_list&partner=[% PARTNER | html %]&f_status=1'>Выделенные DID</a>
+					&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a class='amenu' href='?action=cdr_list&partner=[% PARTNER | html %]'>CDRs</a>
 					&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a class='amenu' href='?action=calls_list&partner=[% PARTNER | html %]'>Звонки</a>

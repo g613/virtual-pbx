@@ -1,5 +1,5 @@
 <html>
-<!-- $Id: messages_list.tt,v 1.99 2023/03/11 12:45:17 gosha Exp $ -->
+<!-- $Id: messages_list.tt,v 1.104 2025/02/16 17:34:54 gosha Exp $ -->
 <head>
 	<title>Virtual PBX - Files - Ac:[% USER_CREDS.ACCESS_CODE | html %], Ext: [% VBOX_PREF.EXT_NUMBER | html %]</title>
 
@@ -28,6 +28,9 @@
 			</td>
 			<td align='center'>
 				<h1>Files for Extension# <b>[% VBOX_PREF.EXT_NUMBER | html %]</h1>
+				[% IF FROM_TIME %]
+				<h3>from [% FROM_TIME | html %] to [% TO_TIME | html %]</h3>
+				[% END %]
 			</td>
 			<td align='right' width='15%'>
 				<a title='delete files' href='#' onclick="return SubmitConfirm('def','Are you sure want to delete all found files ?')"><span class='icon-bin-all fs2'></span></a>
@@ -39,36 +42,7 @@
 		<tr>
 			<td align='right'>
 				<form method="get" action="[% CGI_URL %]" onSubmit='return checkChanges(this)' id='find-form'>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "00:00",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input placeholder='From date' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<a link="#"><span class='fs0'>▾</span></a>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "23:59",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input placeholder='To date' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<a link="#"><span class='fs0'>▾</span></a>
+				[% TIME_INTERVAL_SELECTOR %]
 				<input name='action' value='msg_list' type='hidden'>
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input name='id' value='[% VBOX_PREF.ID %]' type='hidden'>
@@ -99,7 +73,7 @@
 		[% IF MSG_PREV ne '' %]
 		<tr>
 			<td align='left' colspan='8'>
-				<a title='previous page' href='?action=msg_list&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>◄</span></a>
+				<a title='previous page' href='?action=msg_list&smart_time=[% SMART_TIME | html %]&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&from=[% MSG_PREV %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>◄</span></a>
 			</td>
 		</tr>
 		[% END %]
@@ -140,7 +114,7 @@
 		<tr>
 		[% IF MSG_NEXT ne '' %]
 			<td align='right' colspan='9'>
-				<a title='next page' href='?action=msg_list&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
+				<a title='next page' href='?action=msg_list&smart_time=[% SMART_TIME | html %]&duration=[% DURATION | html %]&id=[% VBOX_PREF.ID %]&from=[% MSG_NEXT %]&called_id=[% CALLED_ID | htmlstrict %]&caller_id=[% CALLER_ID | htmlstrict %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&uniq=[% USER_CREDS.UNIQ %]'><span class='fs0'>►</span></a>
 			</td>
 		[% END %]
 		</tr>

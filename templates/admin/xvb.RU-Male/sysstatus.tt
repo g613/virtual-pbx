@@ -150,11 +150,20 @@ chartArea:{top:5, width:'90%',height:'90%'},
 			</table>
 			
 			<br />
-			<h2>Последние данные из лог файлов</h2>
-			<textarea rows='50' cols='120'>
+			<h2>Диагностика</h2>
+			<textarea rows='25' cols='100'>
 				[% RAW | html %]
 			</textarea>
-			
+			<br />
+			<br />
+			<a href="/ai?action=report&type=sysstate">Отчет о системе</a>&nbsp;&nbsp;/ 
+			<a href="/ai?action=report&type=xvblog">Лог файл АТС</a>&nbsp;&nbsp;/
+			<a href="/ai?action=report&type=xvberr">Ошибки АТС</a>&nbsp;&nbsp;/
+			<a href="/ai?action=report&type=xvbcrm">Журнал интеграций</a>&nbsp;&nbsp;/
+			<a href="/ai?action=report&type=asterisk">Журнал asterisk</a>
+	
+			<br />
+			<br />
 			<br />
 			<h2>Изменения конфигурации<h2>
 			<table id='list-data2'>

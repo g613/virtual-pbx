@@ -20,53 +20,38 @@
 
 	<table width='100%'>
 		<tr>
+			<td align='right' nowrap='nopwrap'>
+				<a href='?action=report_list&uniq=[% USER_CREDS.UNIQ %]' title="все отчеты"><span class='icon-folder-open fs0'></span></a>
+			</td>
 			<td width='85%' align='center'>
-				<h1>[% REPORT_DATA.NAME | html %] - результаты отчета</h1>
+				<h1>Результат выполнения отчета '[% REPORT_DATA.NAME | html %]'</h1>
+				[% IF FROM_TIME %]
+				<h3>с [% FROM_TIME | html %] по [% TO_TIME | html %]</h3>
+				[% END %]
 			</td>
 			<td align='right' nowrap='nopwrap'>
-				<a title='excel формат' href='?action=report_run&report_id=[% REPORT_DATA.ID %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&need_excel=1&uniq=[% USER_CREDS.UNIQ %]'><span class='icon-file-excel fs0'></span></a>
+				<a title='excel формат' href='?action=report_run&report_id=[% REPORT_DATA.ID %]&from_time=[% FROM_TIME | html %]&to_time=[% TO_TIME | html %]&need_excel=1&uniq=[% USER_CREDS.UNIQ %][% FOREACH param = EXTRA_PARAMS %]&[% param.name | html %]=[% param.value | html %][% END %]'><span class='icon-file-excel fs0'></span></a>
+				&nbsp;
+				<a title='печать' href="#" onclick="window.print();"><span class='icon-printer fs0'></span></a>
 			</td>
 		</tr>
 	</table>
 
-	[% IF REPORT_DATA.DATE_START %]
 	<p>
 	<table width='98%'>
 		<tr>
 			<td align='right'>
 				<form method="get" action='?'>
+				
+				[% IF REPORT_DATA.DATE_START %]
+				[% TIME_INTERVAL_SELECTOR %]
+				[% END %]
 				<input name='action' value='report_run' type='hidden'>
 				<input name='report_id' value='[% REPORT_DATA.ID %]' type='hidden'>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#from_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "00:00",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input placeholder='С даты' size='16' type='text' name='from_time' value='[% FROM_TIME | html %]' id='from_time'>
-				<a link="#"><span class='fs0'>▾</span></a>
-				<script type="text/javascript">
-					jQuery(document).ready(function() {
-						jQuery("#to_time").dynDateTime({
-							showsTime: true,
-							ifFormat: "%Y/%m/%d %H:%M",
-							align: "TL",
-							electric: false,
-							singleClick: false,
-							xdate: "23:59",
-							button: ".next()"
-						});
-				});
-				</script>
-				<input placeholder='До даты' size='16' type='text' name='to_time' value='[% TO_TIME | html %]' id='to_time'>
-				<a link="#"><span class='fs0'>▾</span></a>
+				[% FOREACH param = EXTRA_PARAMS %]
+					<input size='10' type='text' placeholder='[% param.label | html %]' name='[% param.name | html %]' value='[% param.value | html %]'>
+					&nbsp;
+				[% END %]
 				<input name='uniq' value='[% USER_CREDS.UNIQ %]' type='hidden'>
 				<input value='Найти' type='submit'>
 				</form>
@@ -74,8 +59,12 @@
 		</tr>
 	</table>
 	</p>
-	[% END %]
 
+ 	[% UNLESS REPORT_RESULT scalar %]
+ 		[% UNLESS REPORT_RAW_DATA %]
+			<br /><h3>Ничего не нашлось, попробуйте задать другие фильтры</h3>
+		[% END %]
+	[% ELSE %]
 	<p>
 	<table width='98%' class='tablesorter' id='report_table'>
 		<thead>
@@ -113,6 +102,13 @@
 		); 
 		th_rad_styles('report_header');
 	</script>
+	[% END %]
+
+ 	[% IF REPORT_RAW_DATA %]
+		<p>
+		[% REPORT_RAW_DATA %]
+		</p>
+	[% END %]
 
 	</center>
 	
